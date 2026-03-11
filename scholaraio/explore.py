@@ -123,7 +123,7 @@ def _build_filter(
     if year_range:
         parts.append(f"publication_year:{year_range}")
     if min_citations is not None:
-        parts.append(f"cited_by_count:>{min_citations}")
+        parts.append(f"cited_by_count:>={min_citations}")
     if oa_type:
         parts.append(f"type:{oa_type}")
 

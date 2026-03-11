@@ -145,6 +145,7 @@ class IngestConfig:
         contact_email: Crossref polite pool 联系邮箱（User-Agent），建议放 config.local.yaml。
         chunk_page_limit: 超长 PDF 自动切分的页数阈值。超过此值的 PDF 在 MinerU
             转换前自动拆分为多个短 PDF，转换后合并为单个 Markdown。
+        mineru_batch_size: MinerU 云 API 每批提交文件数上限，默认 20。
     """
     extractor: str = "robust"                 # regex | auto | llm | robust
     mineru_endpoint: str = "http://localhost:8000"
@@ -153,6 +154,7 @@ class IngestConfig:
     abstract_llm_mode: str = "verify"        # off | fallback | verify
     contact_email: str = ""
     chunk_page_limit: int = 100              # auto-split PDFs exceeding this page count
+    mineru_batch_size: int = 20              # cloud batch size per request
 
 
 @dataclass
@@ -225,6 +227,7 @@ class Config:
         for d in (
             self.papers_dir,
             self._root / "data" / "inbox",
+            self._root / "data" / "inbox-thesis",
             self._root / "data" / "inbox-doc",
             self._root / "data" / "pending",
             self._root / "workspace",
@@ -382,6 +385,8 @@ def _build_config(data: dict, root: Path) -> Config:
         mineru_api_key=ingest_data.get("mineru_api_key") or "",
         abstract_llm_mode=ingest_data.get("abstract_llm_mode", "verify"),
         contact_email=ingest_data.get("contact_email") or "",
+        mineru_batch_size=int(ingest_data.get("mineru_batch_size") or 20),
+        chunk_page_limit=int(ingest_data.get("chunk_page_limit") or 100),
     )
 
     embed_data = data.get("embed", {}) or {}
