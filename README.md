@@ -5,7 +5,7 @@
 
 # ScholarAIO
 
-**Scholar All-In-One — a knowledge infrastructure for AI coding agents.**
+**Scholar All-In-One — a knowledge infrastructure for AI agents.**
 
 [English](README.md) | [中文](README_CN.md)
 

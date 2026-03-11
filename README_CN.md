@@ -5,7 +5,7 @@
 
 # ScholarAIO
 
-**Scholar All-In-One — 为 AI coding agent 打造的科研知识基础设施。**
+**Scholar All-In-One — 为 AI agent 打造的科研知识基础设施。**
 
 [English](README.md) | [中文](README_CN.md)
 
