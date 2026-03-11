@@ -184,10 +184,6 @@ data/papers/         # Your paper library (gitignored)
 data/inbox/          # Drop PDFs here for ingestion
 ```
 
-## Contributing
-
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
 ## Citation
 
 If you use ScholarAIO in your research, please cite:

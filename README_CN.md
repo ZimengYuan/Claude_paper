@@ -184,10 +184,6 @@ data/papers/         # 你的论文库（不进 git）
 data/inbox/          # 放入 PDF 即可入库
 ```
 
-## 参与贡献
-
-欢迎贡献！请参阅 [CONTRIBUTING.md](CONTRIBUTING.md) 了解详情。
-
 ## 引用
 
 如果 ScholarAIO 对你的研究有帮助，欢迎引用：
