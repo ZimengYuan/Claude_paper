@@ -264,14 +264,14 @@ def fetch_explore(
     if not filt and not keyword:
         raise ValueError("至少需要一个过滤条件（issn / concept / author / keyword 等）")
 
-    # Incremental mode: load existing DOIs to skip duplicates
-    existing_dois: set[str] = set()
+    # Incremental mode: load existing IDs (DOI or openalex_id) to skip duplicates
+    existing_pids: set[str] = set()
     if incremental and papers_file.exists():
         for p in iter_papers(name, cfg):
-            doi = p.get("doi", "")
-            if doi:
-                existing_dois.add(doi.lower())
-        _log.info("incremental mode: %d existing papers loaded", len(existing_dois))
+            pid = p.get("doi", "").lower() or p.get("openalex_id", "")
+            if pid:
+                existing_pids.add(pid)
+        _log.info("incremental mode: %d existing papers loaded", len(existing_pids))
 
     from scholaraio.metrics import timer
 
@@ -295,13 +295,17 @@ def fetch_explore(
                 if not papers:
                     break
                 for p in papers:
-                    # Skip duplicates in incremental mode
-                    if incremental and p.get("doi", "").lower() in existing_dois:
-                        continue
+                    # Skip duplicates in incremental mode (by DOI or openalex_id)
+                    if incremental:
+                        pid = p.get("doi", "").lower() or p.get("openalex_id", "")
+                        if pid and pid in existing_pids:
+                            continue
                     f_handle.write(json.dumps(p, ensure_ascii=False) + "\n")
                     total += 1
-                    if incremental and p.get("doi"):
-                        existing_dois.add(p["doi"].lower())
+                    if incremental:
+                        pid = p.get("doi", "").lower() or p.get("openalex_id", "")
+                        if pid:
+                            existing_pids.add(pid)
                 _log.info("page %d: +%d papers (total %d, %.0fs)",
                           page, len(papers), total, t.elapsed)
         finally:

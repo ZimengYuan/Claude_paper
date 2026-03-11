@@ -944,7 +944,13 @@ def _split_pdf(pdf_path: Path, chunk_size: int = DEFAULT_CHUNK_PAGES,
         List of chunk PDF paths in page order.
         If total pages <= chunk_size, returns ``[pdf_path]`` unchanged.
     """
-    import pymupdf
+    try:
+        import pymupdf
+    except ImportError:
+        raise ImportError(
+            "pymupdf is required for splitting long PDFs. "
+            "Install it with: pip install pymupdf"
+        )
 
     page_count = _get_pdf_page_count(pdf_path)
     if page_count <= chunk_size:
