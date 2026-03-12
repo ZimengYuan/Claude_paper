@@ -65,6 +65,7 @@ class LLMConfig:
     timeout: int = 30
     timeout_toc: int = 120
     timeout_clean: int = 90
+    concurrency: int = 8
 
 
 @dataclass
