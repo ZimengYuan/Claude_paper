@@ -1,21 +1,26 @@
 {
   "name": "scholaraio-marketplace",
   "owner": {
-    "name": "ZimoLiao"
+    "name": "ZimoLiao",
+    "email": "zimoliao@mail.ustc.edu.cn"
   },
   "metadata": {
-    "description": "ScholarAIO — Academic research terminal for Claude Code. Literature search, reading, analysis, topic modeling, citation graphs, and scholarly writing.",
+    "description": "ScholarAIO — Academic research terminal for Claude Code. Search, read, and analyze papers from your local knowledge base while coding.",
     "version": "1.0.0"
   },
   "plugins": [
     {
       "name": "scholaraio",
       "source": "./",
-      "description": "Full ScholarAIO skill suite (22 skills): literature search, paper reading, ingestion, topic modeling, citation graphs, workspace management, academic writing, and more.",
+      "description": "Full ScholarAIO skill suite (22 skills): literature search (keyword/semantic/fusion), paper reading (L1-L4), ingestion, topic modeling, citation graphs, workspace management, BibTeX export, academic writing, and more. Requires Python 3.10+; auto-installs on first session.",
       "version": "1.0.0",
       "author": {
-        "name": "ZimoLiao"
+        "name": "ZimoLiao",
+        "email": "zimoliao@mail.ustc.edu.cn"
       },
+      "homepage": "https://github.com/ZimoLiao/scholaraio",
+      "repository": "https://github.com/ZimoLiao/scholaraio",
+      "license": "MIT",
       "keywords": [
         "academic",
         "research",
@@ -28,7 +33,8 @@
         "topic-modeling",
         "bibtex"
       ],
-      "category": "research"
+      "category": "research",
+      "strict": false
     }
   ]
 }
