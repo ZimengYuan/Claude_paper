@@ -19,8 +19,8 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install ruff
-      - run: ruff check scholaraio/
-      - run: ruff format --check scholaraio/
+      - run: ruff check scholaraio/ tests/
+      - run: ruff format --check scholaraio/ tests/
 
   typecheck:
     runs-on: ubuntu-latest

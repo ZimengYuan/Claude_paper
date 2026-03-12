@@ -8,9 +8,8 @@ Does NOT test: add/remove (requires index DB with lookup_paper).
 from __future__ import annotations
 
 import json
-from pathlib import Path
 
-from scholaraio.workspace import create, read_paper_ids, list_workspaces
+from scholaraio.workspace import create, list_workspaces, read_paper_ids
 
 
 class TestWorkspaceCreate:
@@ -18,7 +17,7 @@ class TestWorkspaceCreate:
 
     def test_create_initializes_directory(self, tmp_path):
         ws_dir = tmp_path / "workspace" / "test-ws"
-        result = create(ws_dir)
+        create(ws_dir)
         assert ws_dir.is_dir()
         assert (ws_dir / "papers.json").exists()
 

@@ -1,13 +1,13 @@
-"""Contract tests for the L1-L4 layer loading system.
+"""Contract tests for the L1-L2 layer loading system.
 
 Verifies: each layer returns the documented fields from well-formed data.
-Does NOT test: internal JSON parsing details, LLM enrichment paths.
+Does NOT test: internal JSON parsing details, LLM enrichment paths, or L3/L4
+layers that require LLM enrichment or full-text paper files.
 """
 
 from __future__ import annotations
 
 import json
-from pathlib import Path
 
 from scholaraio.loader import load_l1, load_l2
 

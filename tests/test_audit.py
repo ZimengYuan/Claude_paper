@@ -7,7 +7,6 @@ Does NOT test: specific rule implementations or diagnostic messages.
 from __future__ import annotations
 
 import json
-from pathlib import Path
 
 from scholaraio.audit import Issue, audit_papers
 
@@ -27,14 +26,16 @@ class TestAuditDetection:
         d = tmp_papers / "NoDoi-2023-Test"
         d.mkdir()
         (d / "meta.json").write_text(
-            json.dumps({
-                "id": "cccc-3333",
-                "title": "Test Paper",
-                "authors": ["Author"],
-                "year": 2023,
-                "doi": "",
-                "paper_type": "journal-article",
-            }),
+            json.dumps(
+                {
+                    "id": "cccc-3333",
+                    "title": "Test Paper",
+                    "authors": ["Author"],
+                    "year": 2023,
+                    "doi": "",
+                    "paper_type": "journal-article",
+                }
+            ),
         )
         (d / "paper.md").write_text("# Test Paper\n\nSome content here for testing.")
 
