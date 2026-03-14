@@ -11,7 +11,7 @@ import json
 from typing import cast
 
 from scholaraio.config import Config
-from scholaraio.loader import L3_SKIP_TYPES, enrich_l3, load_l1, load_l2
+from scholaraio.loader import L3_SKIP_TYPES, append_notes, enrich_l3, load_l1, load_l2, load_notes
 
 # enrich_l3 requires a Config argument but the skip-by-type branch
 # returns before it is used.  We use a typed sentinel so mypy is happy.
@@ -98,3 +98,63 @@ class TestEnrichL3Skip:
         """All documented skip types are present in the set."""
         for t in ("thesis", "book", "monograph", "document", "dissertation"):
             assert t in L3_SKIP_TYPES
+
+
+class TestLoadNotes:
+    """load_notes contract: returns notes text or None."""
+
+    def test_no_notes_file_returns_none(self, tmp_path):
+        d = tmp_path / "SomePaper"
+        d.mkdir()
+        assert load_notes(d) is None
+
+    def test_empty_notes_file_returns_none(self, tmp_path):
+        d = tmp_path / "SomePaper"
+        d.mkdir()
+        (d / "notes.md").write_text("", encoding="utf-8")
+        assert load_notes(d) is None
+
+    def test_whitespace_only_returns_none(self, tmp_path):
+        d = tmp_path / "SomePaper"
+        d.mkdir()
+        (d / "notes.md").write_text("  \n\n  ", encoding="utf-8")
+        assert load_notes(d) is None
+
+    def test_returns_content(self, tmp_path):
+        d = tmp_path / "SomePaper"
+        d.mkdir()
+        content = "## 2026-03-14 | ws-test | literature-review\n\nKey finding."
+        (d / "notes.md").write_text(content, encoding="utf-8")
+        assert load_notes(d) == content
+
+
+class TestAppendNotes:
+    """append_notes contract: creates or appends to notes.md."""
+
+    def test_creates_notes_if_absent(self, tmp_path):
+        d = tmp_path / "SomePaper"
+        d.mkdir()
+        append_notes(d, "## 2026-03-14 | ws | skill\n\nFirst note.")
+        notes = load_notes(d)
+        assert notes is not None
+        assert "First note." in notes
+
+    def test_appends_with_separator(self, tmp_path):
+        d = tmp_path / "SomePaper"
+        d.mkdir()
+        append_notes(d, "## Section 1\n\nFirst.")
+        append_notes(d, "## Section 2\n\nSecond.")
+        content = (d / "notes.md").read_text(encoding="utf-8")
+        assert "## Section 1" in content
+        assert "## Section 2" in content
+        # Two sections separated by blank line
+        assert "\n\n## Section 2" in content
+
+    def test_trailing_newlines_stripped(self, tmp_path):
+        d = tmp_path / "SomePaper"
+        d.mkdir()
+        append_notes(d, "Note with trailing newlines\n\n\n")
+        content = (d / "notes.md").read_text(encoding="utf-8")
+        # Should end with exactly one newline
+        assert content.endswith("newlines\n")
+        assert not content.endswith("newlines\n\n")

@@ -73,39 +73,61 @@ def create(ws_dir: Path) -> Path:
     return pj
 
 
-def add(ws_dir: Path, paper_refs: list[str], db_path: Path) -> list[dict]:
+def add(
+    ws_dir: Path,
+    paper_refs: list[str],
+    db_path: Path,
+    *,
+    resolved: list[dict] | None = None,
+) -> list[dict]:
     """添加论文到工作区。
 
     通过 UUID、目录名或 DOI 解析论文，去重后追加到 papers.json。
 
+    当调用方已持有解析好的论文信息时，可通过 *resolved* 参数直接传入，
+    跳过逐个 ``lookup_paper()`` 查询（避免 O(N) 次 DB 连接开销）。
+
     Args:
         ws_dir: 工作区目录路径。
         paper_refs: 论文引用列表（UUID / 目录名 / DOI）。
+            当 *resolved* 非空时本参数被忽略。
         db_path: index.db 路径，用于 lookup_paper。
+        resolved: 预解析的论文列表，每个元素须含 ``"id"`` 和
+            ``"dir_name"`` 键。提供时跳过 lookup_paper 查询。
 
     Returns:
         新增条目列表。
     """
-    from scholaraio.index import lookup_paper
-
     entries = _read(ws_dir)
     existing_ids = {e["id"] for e in entries}
     added: list[dict] = []
     now = datetime.now(timezone.utc).isoformat()
 
-    for ref in paper_refs:
-        record = lookup_paper(db_path, ref)
-        if record is None:
-            _log.warning("无法解析论文引用: %s", ref)
-            continue
-        uid = record["id"]
-        if uid in existing_ids:
-            _log.debug("已存在，跳过: %s", ref)
-            continue
-        entry = {"id": uid, "dir_name": record["dir_name"], "added_at": now}
-        entries.append(entry)
-        existing_ids.add(uid)
-        added.append(entry)
+    if resolved is not None:
+        for rec in resolved:
+            uid = rec["id"]
+            if uid in existing_ids:
+                continue
+            entry = {"id": uid, "dir_name": rec["dir_name"], "added_at": now}
+            entries.append(entry)
+            existing_ids.add(uid)
+            added.append(entry)
+    else:
+        from scholaraio.index import lookup_paper
+
+        for ref in paper_refs:
+            record = lookup_paper(db_path, ref)
+            if record is None:
+                _log.warning("无法解析论文引用: %s", ref)
+                continue
+            uid = record["id"]
+            if uid in existing_ids:
+                _log.debug("已存在，跳过: %s", ref)
+                continue
+            entry = {"id": uid, "dir_name": record["dir_name"], "added_at": now}
+            entries.append(entry)
+            existing_ids.add(uid)
+            added.append(entry)
 
     if added:
         _write(ws_dir, entries)

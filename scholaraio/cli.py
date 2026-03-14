@@ -1202,18 +1202,22 @@ def cmd_ws(args: argparse.Namespace, cfg) -> None:
             try:
                 with sqlite3.connect(cfg.index_db) as conn:
                     conn.row_factory = sqlite3.Row
-                    rows = conn.execute("SELECT id FROM papers_registry").fetchall()
+                    rows = conn.execute("SELECT id, dir_name FROM papers_registry").fetchall()
             except sqlite3.OperationalError as e:
-                # Common cases: table does not exist, schema not initialized, etc.
                 _log.debug("索引数据库查询失败: %s", e)
                 ui("索引数据库结构不完整或尚未初始化。")
                 ui("请先运行: scholaraio index")
                 return
 
-            paper_refs = [r["id"] for r in rows]
-            if not paper_refs:
+            resolved = [{"id": r["id"], "dir_name": r["dir_name"]} for r in rows]
+            if not resolved:
                 ui("主库中没有论文")
                 return
+            added = workspace.add(ws_dir, [], cfg.index_db, resolved=resolved)
+            ui(f"已添加 {len(added)} 篇论文到 {args.name}")
+            for e in added:
+                ui(f"  + {e['dir_name']}")
+            return
         elif args.add_topic is not None:
             from scholaraio.topics import get_topic_papers, load_model
 
