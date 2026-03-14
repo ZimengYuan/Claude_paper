@@ -140,9 +140,7 @@ def step_office_convert(ctx: InboxCtx) -> StepResult:
     try:
         from markitdown import MarkItDown
     except ImportError:
-        _log.error(
-            "MarkItDown 未安装，无法转换 Office 文件。请运行: pip install 'markitdown[docx,pptx,xlsx]'"
-        )
+        _log.error("MarkItDown 未安装，无法转换 Office 文件。请运行: pip install 'markitdown[docx,pptx,xlsx]'")
         ctx.status = "failed"
         return StepResult.FAIL
 
@@ -684,7 +682,9 @@ def step_refetch(json_path: Path, cfg: Config, opts: dict) -> StepResult:
 
 
 STEPS: dict[str, StepDef] = {
-    "office_convert": StepDef(fn=step_office_convert, scope="inbox", desc="Office 文档（DOCX/XLSX/PPTX）→ Markdown（MarkItDown）"),
+    "office_convert": StepDef(
+        fn=step_office_convert, scope="inbox", desc="Office 文档（DOCX/XLSX/PPTX）→ Markdown（MarkItDown）"
+    ),
     "mineru": StepDef(fn=step_mineru, scope="inbox", desc="PDF → Markdown（MinerU）"),
     "extract": StepDef(fn=step_extract, scope="inbox", desc="Markdown → 元数据提取"),
     "extract_doc": StepDef(fn=step_extract_doc, scope="inbox", desc="文档 → LLM 元数据提取"),
