@@ -108,14 +108,11 @@ def add(
         for idx, rec in enumerate(resolved):
             if not isinstance(rec, dict):
                 raise ValueError(
-                    f"resolved[{idx}] must be a dict with keys {sorted(required_keys)}, "
-                    f"got {type(rec).__name__!s}"
+                    f"resolved[{idx}] must be a dict with keys {sorted(required_keys)}, got {type(rec).__name__!s}"
                 )
             missing = required_keys.difference(rec.keys())
             if missing:
-                raise ValueError(
-                    f"resolved[{idx}] is missing required keys {sorted(missing)}: {rec!r}"
-                )
+                raise ValueError(f"resolved[{idx}] is missing required keys {sorted(missing)}: {rec!r}")
             uid = rec["id"]
             if uid in existing_ids:
                 continue
