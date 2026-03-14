@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
-- **MCP `build_topics`**: `nr_topics=0` now correctly maps to `"auto"` (automatic topic count detection) instead of `None` (no reduction); added `-1` as explicit "no reduction" value
+- **MCP `build_topics`**: `nr_topics=0` now correctly maps to `"auto"` (automatic topic merging/reduction) instead of `None` (no reduction); added `-1` as explicit "no reduction" value
 
 ## [0.1.0] — 2026-03-13
 
