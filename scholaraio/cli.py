@@ -1233,7 +1233,7 @@ def cmd_ws(args: argparse.Namespace, cfg) -> None:
                 return
             paper_refs = [p["paper_id"] for p in papers]
             ui(f"主题 {args.add_topic}: 找到 {len(paper_refs)} 篇论文")
-        elif args.add_search:
+        elif args.add_search is not None:
             from scholaraio.index import unified_search
 
             results = unified_search(

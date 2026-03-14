@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 
-from scholaraio.workspace import create, list_workspaces, read_paper_ids
+from scholaraio.workspace import add, create, list_workspaces, read_paper_ids
 
 
 class TestWorkspaceCreate:
@@ -54,6 +54,31 @@ class TestReadPaperIds:
     def test_nonexistent_workspace_returns_empty(self, tmp_path):
         ids = read_paper_ids(tmp_path / "nonexistent")
         assert ids == set()
+
+
+class TestAddResolved:
+    """add(resolved=...) contract: batch-add pre-resolved papers."""
+
+    def test_adds_and_deduplicates(self, tmp_path):
+        ws_dir = tmp_path / "ws"
+        create(ws_dir)
+        resolved = [
+            {"id": "aaaa-1111", "dir_name": "Smith-2023-Test"},
+            {"id": "bbbb-2222", "dir_name": "Wang-2024-Test"},
+        ]
+        added = add(ws_dir, [], tmp_path / "unused.db", resolved=resolved)
+        assert len(added) == 2
+        assert read_paper_ids(ws_dir) == {"aaaa-1111", "bbbb-2222"}
+
+        # Second call with overlap — only new paper added
+        resolved2 = [
+            {"id": "bbbb-2222", "dir_name": "Wang-2024-Test"},
+            {"id": "cccc-3333", "dir_name": "Li-2025-New"},
+        ]
+        added2 = add(ws_dir, [], tmp_path / "unused.db", resolved=resolved2)
+        assert len(added2) == 1
+        assert added2[0]["id"] == "cccc-3333"
+        assert read_paper_ids(ws_dir) == {"aaaa-1111", "bbbb-2222", "cccc-3333"}
 
 
 class TestListWorkspaces:

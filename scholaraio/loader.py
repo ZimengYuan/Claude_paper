@@ -146,8 +146,10 @@ def load_notes(paper_dir: Path) -> str | None:
     """
     notes_path = paper_dir / _NOTES_FILENAME
     if notes_path.exists():
-        text = notes_path.read_text(encoding="utf-8").strip()
-        return text if text else None
+        text = notes_path.read_text(encoding="utf-8")
+        if not text.strip():
+            return None
+        return text
     return None
 
 
