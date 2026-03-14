@@ -42,7 +42,7 @@ MinerU 解析的 Markdown 保留了高质量公式（LaTeX）和图片附件（`
 | 模块 | 功能 |
 |------|------|
 | `config.py` | 配置加载（YAML 多层覆盖 + 路径解析 + API key 查找） |
-| `papers.py` | 论文路径 helper（UUID → 目录映射，所有模块通过它访问论文路径） |
+| `papers.py` | 论文路径工具（遍历/构造论文目录 + `meta.json` 读写 + 论文 UUID 生成） |
 | `log.py` | 日志初始化（文件 + 控制台 + 会话追踪） |
 | `ingest/mineru.py` | PDF → MinerU Markdown（云 API / 本地） |
 | `ingest/extractor.py` | 元数据提取（regex / auto / robust / llm 四种模式） |
