@@ -313,7 +313,7 @@ System maintenance:
 
 Tool skills (wrapping CLI commands):
 1. Implement the Python function in `scholaraio/`
-2. Expose it as a CLI subcommand in `cli.py`
+2. Expose it as a CLI subcommand in `scholaraio/cli.py`
 3. Test the CLI command with real data to confirm it works
 4. Create the skill file at `.claude/skills/<name>/SKILL.md`
 

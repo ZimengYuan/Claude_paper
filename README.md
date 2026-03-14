@@ -46,7 +46,7 @@ claude    # Launch Claude Code in the project directory — that's it
 
 |  | Feature | Details |
 |--|---------|---------|
-| **PDF Parsing** | Deep structure extraction | [MinerU](https://github.com/opendatalab/MinerU) → Markdown with figures, tables, LaTeX equations preserved. Long PDFs (>100 pp) auto-split and merged |
+| **PDF Parsing** | Deep structure extraction | [MinerU](https://github.com/opendatalab/MinerU) → Markdown with figures, tables, LaTeX equations preserved. Long PDFs (>100 pp) are auto-split and merged |
 | **Not Just Papers** | Any document goes in | Journal articles, theses, technical reports, standards, lecture notes — three inboxes for different document types, each with tailored metadata handling |
 | **Hybrid Search** | Keyword + semantic fusion | FTS5 + Qwen3 embeddings + FAISS → RRF ranking |
 | **Topic Discovery** | Auto-clustering | BERTopic + 6 interactive HTML visualizations — works on both your library and explore datasets |
@@ -119,7 +119,7 @@ Main config: `config.yaml` (tracked). Secrets: `config.local.yaml` (gitignored).
 
 | Key | Purpose | Get it |
 |-----|---------|--------|
-| `DEEPSEEK_API_KEY` | LLM — metadata extraction, enrichment, academic discussion | [DeepSeek](https://platform.deepseek.com/) (default), or switch backend to Claude / Gemini / Ollama / any OpenAI-compatible API |
+| LLM API key | Metadata extraction, enrichment, academic discussion | Set `llm.api_key` in `config.local.yaml`, or use env vars: `SCHOLARAIO_LLM_API_KEY` (universal), `DEEPSEEK_API_KEY`, `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`. Default backend: [DeepSeek](https://platform.deepseek.com/); also supports Claude, Gemini, Ollama, and any OpenAI-compatible API |
 | `MINERU_API_KEY` | PDF → structured Markdown | Free at [mineru.net](https://mineru.net/apiManage/token) or [self-host](https://github.com/opendatalab/MinerU) |
 
 > **Both are optional.** Without LLM: regex-only extraction. Without MinerU: place `.md` files in `data/inbox/` directly.
