@@ -400,13 +400,15 @@ def get_extractor(config: Config) -> MetadataExtractor:
 
     if mode == "llm":
         api_key = config.resolved_api_key()
-        if not api_key:
+        backend = config.llm.backend
+        if not api_key and backend not in ("gemini-mcp", "codex-mcp"):
             _log.warning("[LLM] no API key found; set SCHOLARAIO_LLM_API_KEY or llm.api_key in config.local.yaml")
         return LLMExtractor(config.llm, api_key=api_key)
 
     if mode == "robust":
         api_key = config.resolved_api_key()
-        if not api_key:
+        backend = config.llm.backend
+        if not api_key and backend not in ("gemini-mcp", "codex-mcp"):
             raise RuntimeError(
                 "robust 模式需要 LLM API key。\n"
                 "请在 config.local.yaml 中设置 llm.api_key，"

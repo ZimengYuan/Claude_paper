@@ -80,7 +80,7 @@ When the main agent delegates paper analysis to a subagent, information flows at
 | `vectors.py` | Semantic vectors + incremental indexing + GPU adaptive batch processing |
 | `topics.py` | BERTopic topic modeling + 6 HTML visualizations |
 | `loader.py` | L1-L4 layered loading + enrich_toc + enrich_l3 |
-| `explore.py` | Multi-dimensional literature exploration (OpenAlex multi-filter + keyword + semantic + unified search + topics, isolated in `data/explore/`) |
+| `services/explore_service.py` | Local-library trend analysis (current `data/papers` + main `topic_model`, representative papers, roadmap readiness) |
 | `workspace.py` | Workspace paper subset management (reuses search/export) |
 | `export.py` | BibTeX export |
 | `audit.py` | Data quality audit + repair |
@@ -111,14 +111,11 @@ PDF → mineru.py → .md     (or place .md directly to skip MinerU)
                    ↓
              cli.py → skills → coding agent
 
-explore.py — Multi-dimensional literature exploration (independent data flow, isolated from main library)
-  OpenAlex API (multi-filter: ISSN/concept/author/institution/keyword/source-type etc.)
-    → data/explore/<name>/papers.jsonl (supports incremental update, DOI-based dedup)
-                 → explore.db (paper_vectors + explore_fts FTS5 full-text index)
-                 → faiss.index (FAISS semantic search)
-  Search: semantic / keyword / unified — three modes
-  Topic modeling/visualization/queries reuse topics.py (via papers_map parameter)
-                 → topic_model/ (BERTopic, unified format) + viz/ (HTML)
+explore_service.py — Local-library trend analysis (no external database)
+  data/papers/ + data/topic_model/
+    → trend overview (years / authors / journals / citations)
+    → representative papers (top cited + recent)
+    → roadmap readiness and roadmap generation from the main topic model
 
 workspace.py — Workspace paper subset management (thin layer, reuses search/export)
   workspace/<name>/papers.json → references papers in data/papers/ (UUID index)
@@ -141,7 +138,7 @@ The embedding pipeline in `vectors.py` automatically adjusts batch size based on
 3. **Runtime Bucketing**: Groups texts by token length (64/128/.../16384), interpolates optimal batch_size per bucket from profile
 4. **OOM Fallback**: On OOM, halves batch_size and retries; if bs=1 still OOMs, falls back to CPU
 
-All paths calling `_embed_batch()` (main library embed, explore embed, BERTopic's QwenEmbedder) automatically benefit.
+All paths calling `_embed_batch()` (main library embed and BERTopic's QwenEmbedder) automatically benefit.
 
 ### Layered Loading Design (L1-L4)
 
@@ -223,21 +220,14 @@ data/pending/
 
 Note: Theses are auto-ingested (from thesis inbox or LLM classification) and never go to pending.
 
-### data/explore/ Directory
+### explore
 
-```
-data/explore/<name>/
-├── papers.jsonl        # Papers fetched from OpenAlex (title/abstract/authors/year/doi/cited_by_count)
-├── meta.json           # Exploration metadata (query params/count/fetched_at)
-├── explore.db          # SQLite (paper_vectors table + explore_fts FTS5 full-text index)
-├── faiss.index         # FAISS IndexFlatIP (cosine similarity)
-├── faiss_ids.json      # paper_id list corresponding to FAISS index
-└── topic_model/
-    ├── bertopic_model.pkl   # BERTopic model (unified format, same as main library)
-    ├── scholaraio_meta.pkl  # Additional metadata (paper_ids/metas/topics/embeddings/docs)
-    ├── info.json            # Statistics (n_topics/n_outliers/n_papers)
-    └── viz/                 # 6 HTML visualizations
-```
+The external `data/explore/` silo has been removed.
+
+`/explore` now analyzes the current main library directly:
+- paper stats come from `data/papers/`
+- topic readiness and roadmap come from `data/topic_model/`
+- representative papers are drawn from the local library only
 
 ### sources/ Abstraction Layer
 
@@ -287,7 +277,7 @@ Knowledge base management:
 - `enrich` — Enrich paper content (TOC / conclusion / abstract / citation count)
 - `ingest` — Ingest papers + rebuild indexes (pipeline presets)
 - `topics` — Topic exploration (BERTopic clustering + merge + visualization)
-- `explore` — Multi-dimensional literature exploration (OpenAlex multi-filter + keyword/semantic/unified search + BERTopic)
+- `explore` — Current-library trend analysis (overview + representative papers + roadmap readiness)
 - `graph` — Citation graph queries
 - `citations` — Citation count queries and refresh
 - `index` — Rebuild keyword / semantic indexes

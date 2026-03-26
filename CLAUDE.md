@@ -77,7 +77,7 @@ MinerU 解析的 Markdown 保留了高质量公式（LaTeX）和图片附件（`
 | `vectors.py` | 语义向量 + 增量索引 + GPU 自适应批处理 |
 | `topics.py` | BERTopic 主题建模 + 6 种 HTML 可视化 |
 | `loader.py` | L1-L4 分层加载 + enrich_toc + enrich_l3 |
-| `explore.py` | 多维文献探索（OpenAlex 多维过滤 + 关键词 + 语义 + 融合检索 + 主题，数据隔离在 `data/explore/`） |
+| `services/explore_service.py` | 本地主库趋势分析（基于 `data/papers` + 主 `topic_model`，输出代表论文、趋势摘要、roadmap 就绪状态） |
 | `workspace.py` | 工作区论文子集管理（复用搜索/导出） |
 | `export.py` | BibTeX / RIS / Markdown 文献列表 / DOCX 导出 |
 | `citation_styles.py` | 引用格式管理（内置 APA/Vancouver/Chicago/MLA + 动态加载自定义格式，存于 `data/citation_styles/`） |
@@ -109,14 +109,11 @@ PDF → mineru.py → .md     （或直接放 .md 跳过 MinerU）
                    ↓
              cli.py → .claude/skills/ → Claude Code
 
-explore.py — 多维文献探索（独立数据流，与主库隔离）
-  OpenAlex API（多维过滤：ISSN/concept/author/institution/keyword/source-type 等）
-    → data/explore/<name>/papers.jsonl（支持增量更新，DOI 去重追加）
-                 → explore.db (paper_vectors + FTS5 全文索引)
-                 → faiss.index (FAISS 语义检索)
-  搜索：语义 / 关键词 / 融合 三种模式
-  主题建模/可视化/查询复用 topics.py（通过 papers_map 参数）
-                 → topic_model/ (BERTopic, 统一格式) + viz/ (HTML)
+explore_service.py — 本地主库趋势分析（不再依赖外部数据库）
+  data/papers/ + data/topic_model/
+    → 趋势概览（年份 / 作者 / 期刊 / 引用）
+    → 代表论文（高引用 + 近年论文）
+    → roadmap 就绪状态与基于主 topic model 的 roadmap 生成
 
 workspace.py — 工作区论文子集管理（薄层，复用现有搜索/导出）
   workspace/<name>/papers.json → 指向 data/papers/ 中论文（UUID 索引）
@@ -139,7 +136,7 @@ import-endnote / import-zotero — 外部文献管理工具导入（完整 pipel
 3. **运行时分桶**：按 token 长度将文本分组（64/128/.../16384），每组根据 profile 插值算出最优 batch_size
 4. **OOM 兜底**：遇 OOM 自动减半 batch_size 重试，bs=1 仍 OOM 则降级 CPU
 
-所有调用 `_embed_batch()` 的路径（主库 embed、explore embed、BERTopic 的 QwenEmbedder）均自动受益。
+所有调用 `_embed_batch()` 的路径（主库 embed、BERTopic 的 QwenEmbedder）均自动受益。
 
 ### 分层加载设计（L1-L4）
 
@@ -225,21 +222,14 @@ pending.json 中 `issue` 字段标识原因：
 
 注：thesis 自动入库（来自 thesis inbox 或 LLM 判定），不经过 pending。
 
-### data/explore/ 目录
+### explore
 
-```
-data/explore/<name>/
-├── papers.jsonl        # OpenAlex 拉取的全量论文（title/abstract/authors/year/doi/cited_by_count）
-├── meta.json           # 探索库元信息（查询参数/count/fetched_at）
-├── explore.db          # SQLite（paper_vectors 表 + explore_fts FTS5 全文索引）
-├── faiss.index         # FAISS IndexFlatIP（cosine similarity）
-├── faiss_ids.json      # FAISS index 对应的 paper_id 列表
-└── topic_model/
-    ├── bertopic_model.pkl   # BERTopic 模型（统一格式，与主库相同）
-    ├── scholaraio_meta.pkl  # 附加元数据（paper_ids/metas/topics/embeddings/docs）
-    ├── info.json            # 统计（n_topics/n_outliers/n_papers）
-    └── viz/                 # 6 种 HTML 可视化
-```
+外部 `data/explore/` 独立文献库已经移除。
+
+现在 `/explore` 直接分析当前主库：
+- 论文统计来自 `data/papers/`
+- topic readiness 与 roadmap 来自主 `data/topic_model/`
+- 代表论文只从本地库抽取
 
 ### sources/ 抽象层
 
@@ -290,7 +280,7 @@ Skills 定义在 `.claude/skills/` 目录，遵循 [Agent Skills](https://agents
 - `enrich` — 富化论文内容（TOC / 结论 / 摘要 / 引用量）
 - `ingest` — 入库论文与文档（PDF / DOCX / XLSX / PPTX / MD）+ 索引重建
 - `topics` — 主题探索（BERTopic 聚类 + 合并 + 可视化）
-- `explore` — 多维文献探索（OpenAlex 多维过滤 + 关键词/语义/融合检索 + BERTopic）
+- `explore` — 本地主库趋势分析（概览 + 代表论文 + roadmap 就绪状态）
 - `graph` — 引用图谱查询
 - `citations` — 引用量查询和补查
 - `index` — 重建关键词 / 语义索引
@@ -380,6 +370,16 @@ Skills 安装后以 `/scholaraio:search`、`/scholaraio:show` 等命名空间形
 - **LLM key**（DeepSeek / OpenAI）：元数据提取 + 内容富化。不配置则降级为纯正则，enrich 不可用
 - **MinerU key**：PDF → Markdown 云转换。不配置则只能手动放 `.md` 入库
 - 嵌入模型（Qwen3-Embedding-0.6B，~1.2GB）首次 embed/vsearch 时自动下载。海外用户在 `config.yaml` 中将 `embed.source` 改为 `huggingface`
+
+### Zotero 集成说明
+
+- **数据流向**：Zotero → ScholarAIO（单向导入），不支持反向同步
+- **Zotero MCP**：用户环境中的 `zotero-mcp` 只有**阅读权限**，没有写入权限
+- **本地 Zotero**：`zotero.sqlite` 位于 `/home/nie/Zotero/`，仅作为数据源使用
+- **定期同步**：已配置 cron 任务，每周日（上午 9:00）自动检查 Zotero 与知识库的一致性并导入新论文
+  - 脚本位置：`scripts/check_zotero_sync.py`
+  - 日志位置：`data/zotero_sync.log`
+  - 手动运行：`python scripts/check_zotero_sync.py`
 
 ## 关键约定
 

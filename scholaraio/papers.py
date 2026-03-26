@@ -152,3 +152,323 @@ def update_meta(paper_d: Path, **fields) -> dict:
     data.update(fields)
     write_meta(paper_d, data)
     return data
+
+
+# ============================================================================
+#  Tags and Read Status
+# ============================================================================
+
+
+def get_tags(paper_d: Path) -> list[str]:
+    """Get tags for a paper.
+
+    Args:
+        paper_d: Paper directory path.
+
+    Returns:
+        List of tags, empty list if none.
+    """
+    meta = read_meta(paper_d)
+    return meta.get("tags", []) or []
+
+
+def set_tags(paper_d: Path, tags: list[str]) -> list[str]:
+    """Set tags for a paper.
+
+    Args:
+        paper_d: Paper directory path.
+        tags: List of tags to set.
+
+    Returns:
+        The updated list of tags.
+    """
+    return update_meta(paper_d, tags=tags).get("tags", []) or []
+
+
+def add_tag(paper_d: Path, tag: str) -> list[str]:
+    """Add a tag to a paper.
+
+    Args:
+        paper_d: Paper directory path.
+        tag: Tag to add.
+
+    Returns:
+        Updated list of tags.
+    """
+    tags = get_tags(paper_d)
+    if tag not in tags:
+        tags.append(tag)
+        set_tags(paper_d, tags)
+    return tags
+
+
+def remove_tag(paper_d: Path, tag: str) -> list[str]:
+    """Remove a tag from a paper.
+
+    Args:
+        paper_d: Paper directory path.
+        tag: Tag to remove.
+
+    Returns:
+        Updated list of tags.
+    """
+    tags = get_tags(paper_d)
+    if tag in tags:
+        tags.remove(tag)
+        set_tags(paper_d, tags)
+    return tags
+
+
+def get_read_status(paper_d: Path) -> str:
+    """Get read status for a paper.
+
+    Args:
+        paper_d: Paper directory path.
+
+    Returns:
+        Read status: "unread", "reading", "read", or "skipped".
+    """
+    meta = read_meta(paper_d)
+    return meta.get("read_status", "unread")
+
+
+def set_read_status(paper_d: Path, status: str) -> str:
+    """Set read status for a paper.
+
+    Args:
+        paper_d: Paper directory path.
+        status: Read status: "unread", "reading", "read", or "skipped".
+
+    Returns:
+        The updated read status.
+    """
+    valid_statuses = {"unread", "reading", "read", "skipped"}
+    if status not in valid_statuses:
+        raise ValueError(f"Invalid read status: {status}. Must be one of: {valid_statuses}")
+
+    import datetime
+    return update_meta(paper_d, read_status=status, read_at=datetime.datetime.now().isoformat()).get("read_status", status)
+
+
+# ============================================================================
+#  Learning Materials
+# ============================================================================
+
+
+def summary_path(paper_d: Path) -> Path:
+    """Return the summary.md path for a paper."""
+    return paper_d / "summary.md"
+
+
+def method_path(paper_d: Path) -> Path:
+    """Return the method.md path for a paper."""
+    return paper_d / "method.md"
+
+
+def sensemaking_path(paper_d: Path) -> Path:
+    """Return the sensemaking.json path for a paper."""
+    return paper_d / "sensemaking.json"
+
+
+def reflection_path(paper_d: Path) -> Path:
+    """Return the reflection.md path for a paper."""
+    return paper_d / "reflection.md"
+
+
+def user_notes_path(paper_d: Path) -> Path:
+    """Return the user.md path for a paper."""
+    return paper_d / "user.md"
+
+
+def read_summary(paper_d: Path) -> str | None:
+    """Read summary.md from a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+
+    Returns:
+        Content of summary.md, or None if not exists.
+    """
+    p = summary_path(paper_d)
+    if p.exists():
+        return p.read_text(encoding="utf-8")
+    return None
+
+
+def write_summary(paper_d: Path, content: str) -> None:
+    """Write summary.md to a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+        content: Summary content to write.
+    """
+    # Strip title line if it starts with # Summary: or similar
+    lines = content.split('\n')
+    # Remove first line if it's a title header with paper name
+    if lines and lines[0].strip().startswith('# Summary:'):
+        lines = lines[1:]
+    # Also strip any subsequent lines that look like "Title: ..." or "Authors: ..."
+    cleaned_lines = []
+    for line in lines:
+        if line.strip().startswith('Title:') or line.strip().startswith('Authors:'):
+            continue
+        cleaned_lines.append(line)
+    content = '\n'.join(cleaned_lines).strip()
+
+    p = summary_path(paper_d)
+    p.write_text(content, encoding="utf-8")
+
+
+def read_method(paper_d: Path) -> str | None:
+    """Read method.md from a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+
+    Returns:
+        Content of method.md, or None if not exists.
+    """
+    p = method_path(paper_d)
+    if p.exists():
+        return p.read_text(encoding="utf-8")
+    return None
+
+
+def write_method(paper_d: Path, content: str) -> None:
+    """Write method.md to a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+        content: Method content to write.
+    """
+    # Strip title line if it starts with # Method or similar
+    lines = content.split('\n')
+    # Remove first line if it's a title header with paper name
+    if lines and lines[0].strip().startswith('# Method'):
+        lines = lines[1:]
+    # Also strip any subsequent lines that look like "Title: ..." or "Authors: ..."
+    cleaned_lines = []
+    for line in lines:
+        if line.strip().startswith('Title:') or line.strip().startswith('Authors:'):
+            continue
+        cleaned_lines.append(line)
+    content = '\n'.join(cleaned_lines).strip()
+
+    p = method_path(paper_d)
+    p.write_text(content, encoding="utf-8")
+
+
+def read_sensemaking(paper_d: Path) -> dict | None:
+    """Read sensemaking.json from a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+
+    Returns:
+        Parsed JSON dict, or None if not exists.
+    """
+    p = sensemaking_path(paper_d)
+    if p.exists():
+        try:
+            return json.loads(p.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            return None
+    return None
+
+
+def write_sensemaking(paper_d: Path, data: dict) -> None:
+    """Write sensemaking.json to a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+        data: Sensemaking data to write.
+    """
+    p = sensemaking_path(paper_d)
+    p.write_text(
+        json.dumps(data, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
+
+def read_reflection(paper_d: Path) -> str | None:
+    """Read reflection.md from a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+
+    Returns:
+        Content of reflection.md, or None if not exists.
+    """
+    p = reflection_path(paper_d)
+    if p.exists():
+        return p.read_text(encoding="utf-8")
+    return None
+
+
+def write_reflection(paper_d: Path, content: str) -> None:
+    """Write reflection.md to a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+        content: Reflection content to write.
+    """
+    p = reflection_path(paper_d)
+    p.write_text(content, encoding="utf-8")
+
+
+def read_user_notes(paper_d: Path) -> str | None:
+    """Read user.md from a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+
+    Returns:
+        Content of user.md, or None if not exists.
+    """
+    p = user_notes_path(paper_d)
+    if p.exists():
+        return p.read_text(encoding="utf-8")
+    return None
+
+
+def write_user_notes(paper_d: Path, content: str) -> None:
+    """Write user.md to a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+        content: User notes content to write.
+    """
+    p = user_notes_path(paper_d)
+    p.write_text(content, encoding="utf-8")
+
+
+# ============================================================================
+#  AlphaXiv Summary
+# ============================================================================
+
+
+def get_alphaxiv_summary(paper_d: Path) -> str | None:
+    """Get AlphaXiv summary from meta.json.
+
+    Args:
+        paper_d: Paper directory path.
+
+    Returns:
+        AlphaXiv summary, or None if not exists.
+    """
+    meta = read_meta(paper_d)
+    return meta.get("alphaxiv_summary")
+
+
+def set_alphaxiv_summary(paper_d: Path, summary: str) -> str:
+    """Set AlphaXiv summary in meta.json.
+
+    Args:
+        paper_d: Paper directory path.
+        summary: AlphaXiv summary to set.
+
+    Returns:
+        The updated summary.
+    """
+    import datetime
+    return update_meta(paper_d, alphaxiv_summary=summary, generated_at=datetime.datetime.now().isoformat()).get("alphaxiv_summary", summary)

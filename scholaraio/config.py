@@ -187,6 +187,17 @@ class ZoteroConfig:
 
 
 @dataclass
+class UserConfig:
+    """用户信息与偏好配置。
+
+    Attributes:
+        profile: 用户背景一句话描述，用于论文意义建构 (Sensemaking)。
+    """
+
+    profile: str = "一个关注 AI 教育和认知科学的研究者"
+
+
+@dataclass
 class Config:
     """ScholarAIO 全局配置，由 :func:`load_config` 构建。
 
@@ -199,6 +210,7 @@ class Config:
         topics: BERTopic 主题建模配置。
         log: 日志与指标配置。
         zotero: Zotero 集成配置。
+        user: 用户信息与偏好配置。
     """
 
     paths: PathsConfig = field(default_factory=PathsConfig)
@@ -209,6 +221,7 @@ class Config:
     topics: TopicsConfig = field(default_factory=TopicsConfig)
     log: LogConfig = field(default_factory=LogConfig)
     zotero: ZoteroConfig = field(default_factory=ZoteroConfig)
+    user: UserConfig = field(default_factory=UserConfig)
 
     # Root directory of the config file (used to resolve relative paths)
     _root: Path = field(default_factory=Path.cwd, repr=False, compare=False)
@@ -464,6 +477,11 @@ def _build_config(data: dict, root: Path) -> Config:
         library_type=zotero_data.get("library_type", "user"),
     )
 
+    user_data = data.get("user", {}) or {}
+    user = UserConfig(
+        profile=user_data.get("profile", "一个关注 AI 教育和认知科学的研究者"),
+    )
+
     return Config(
         paths=paths,
         llm=llm,
@@ -473,5 +491,6 @@ def _build_config(data: dict, root: Path) -> Config:
         topics=topics,
         log=log,
         zotero=zotero,
+        user=user,
         _root=root,
     )

@@ -12,8 +12,8 @@ paths:
 #   anthropic:     ANTHROPIC_API_KEY
 #   google:        GOOGLE_API_KEY / GEMINI_API_KEY
 llm:
-  backend: openai-compat # openai-compat | anthropic | google
-  model: deepseek-chat
+  backend: gemini-mcp # openai-compat | anthropic | google | gemini-mcp
+  model: gemini-2.5-pro
   base_url: https://api.deepseek.com
   api_key: null # → config.local.yaml
   timeout: 30 # Normal LLM call timeout (sec) 普通调用超时（秒）
@@ -62,7 +62,7 @@ ingest:
 embed:
   model: Qwen/Qwen3-Embedding-0.6B
   cache_dir: ~/.cache/modelscope/hub/models
-  device: auto # auto | cpu | cuda
+  device: cuda # auto | cpu | cuda
   top_k: 10 # vsearch default results vsearch 默认返回条数
   source: modelscope # modelscope (China) | huggingface (international) 模型下载源
 

@@ -30,6 +30,54 @@ _log = logging.getLogger(__name__)
 # ============================================================================
 
 
+ALPHAXV_BASE = "https://api.alphaxiv.org"
+
+
+def query_alphaxiv(arxiv_id: str) -> dict:
+    """查询 AlphaXiv API 获取论文摘要。
+
+    AlphaXiv 提供 arXiv 论文的 AI 增强摘要。
+
+    Args:
+        arxiv_id: arXiv 论文 ID（如 "2301.12345"）。
+
+    Returns:
+        API 返回的论文数据字典，未找到时返回空字典。
+    """
+    import urllib.parse
+
+    # AlphaXiv uses arXiv ID format
+    url = f"{ALPHAXV_BASE}/paper/{urllib.parse.quote(arxiv_id)}"
+
+    try:
+        resp = SESSION.get(url, timeout=TIMEOUT)
+        if resp.status_code == 404:
+            return {}
+        resp.raise_for_status()
+        data = resp.json()
+        return data
+    except (requests.RequestException, ValueError, KeyError) as e:
+        _log.warning("[AlphaXiv] %s", e)
+        return {}
+
+
+def fetch_alphaxiv_summary(arxiv_id: str) -> str | None:
+    """获取 AlphaXiv 摘要文本。
+
+    Args:
+        arxiv_id: arXiv 论文 ID。
+
+    Returns:
+        AlphaXiv 摘要文本，未找到时返回 None。
+    """
+    data = query_alphaxiv(arxiv_id)
+    if not data:
+        return None
+
+    # AlphaXiv response typically contains 'summary' or 'paper_summary' field
+    return data.get("summary") or data.get("paper_summary") or data.get("abstract")
+
+
 def query_semantic_scholar(doi: str = "", title: str = "") -> dict:
     """查询 Semantic Scholar API。
 

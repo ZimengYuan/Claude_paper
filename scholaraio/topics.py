@@ -122,6 +122,7 @@ def _load_embeddings_and_docs(
                     "year": p.get("year", ""),
                     "journal": p.get("journal", ""),
                     "citation_count": cite,
+                    "abstract": abstract,
                 }
             )
             vecs.append(_unpack(blob))
@@ -165,6 +166,7 @@ def _load_embeddings_and_docs(
                     "year": meta.get("year", ""),
                     "journal": meta.get("journal", ""),
                     "citation_count": meta.get("citation_count", {}),
+                    "abstract": abstract,
                 }
             )
             vecs.append(_unpack(blob))

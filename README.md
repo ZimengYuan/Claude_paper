@@ -49,8 +49,8 @@ claude    # Launch Claude Code in the project directory — that's it
 | **PDF Parsing** | Deep structure extraction | [MinerU](https://github.com/opendatalab/MinerU) → Markdown with figures, tables, LaTeX equations preserved. Long PDFs (>100 pp) are auto-split and merged |
 | **Not Just Papers** | Any document goes in | Journal articles, theses, technical reports, standards, lecture notes — three inboxes for different document types, each with tailored metadata handling |
 | **Hybrid Search** | Keyword + semantic fusion | Keyword + semantic embeddings → RRF ranking |
-| **Topic Discovery** | Auto-clustering | BERTopic + 6 interactive HTML visualizations — works on both your library and explore datasets |
-| **Literature Exploration** | Multi-dimensional discovery | OpenAlex with 9 filter dimensions (journal, concept, author, institution, keyword, source type, year, citations, work type) → embed → cluster → search |
+| **Topic Discovery** | Auto-clustering | BERTopic + 6 interactive HTML visualizations over your local library |
+| **Library Trend Desk** | Local-library analysis | Analyze your current `data/papers` + main `topic_model` for year trends, representative papers, and roadmap readiness |
 | **Citation Graph** | References & impact | Forward/backward citations, shared references across your library |
 | **Layered Reading** | Read at the depth you need | L1 metadata → L2 abstract → L3 conclusion → L4 full text |
 | **Multi-Source Import** | Bring your existing library | Endnote XML/RIS, Zotero (API + SQLite, with collection → workspace mapping), PDF, Markdown — more sources planned |
@@ -169,8 +169,7 @@ scholaraio shared-refs A B    Shared references between papers
 
 **Explore & Topics**
 ```
-scholaraio explore fetch ...  Literature exploration (OpenAlex multi-filter)
-scholaraio explore search ... Search within an explore library
+scholaraio explore info     Local-library trend overview
 scholaraio topics             BERTopic topic modeling
 ```
 

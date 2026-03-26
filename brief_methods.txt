@@ -1,0 +1,18 @@
+data/papers/Santana-2025-An-Introduction-to-Deep-Reinforcement-and-Imitation-Learning/method.md | Line count < 50
+data/papers/Jeon-2025-Residual-MPC-Blending-Reinforcement-Learning-with-GPU-Parallelized-Model-Predictive-Control/method.md | Line count < 50
+data/papers/Yang-2026-RISE-Self-Improving-Robot-Policy-with-Compositional-World-Model/method.md | Line count < 50
+data/papers/Zhang-2026-PhysMoDPO-Physically-Plausible-Humanoid-Motion-with-Preference-Optimization/method.md | Missing sections: 核心技术方案, 实现细节, 实验设置, 优缺点
+data/papers/Carroll-2026-SCDP-Learning-Humanoid-Locomotion-from-Partial-Observations-via-Mixed-Observation-Distillation/method.md | Line count < 50
+data/papers/Xu-2025-Unified-Humanoid-Fall-Safety-Policy-from-a-Few-Demonstrations/method.md | Line count < 50
+data/papers/Werner-2025-Architecture-Is-All-You-Need-Diversity-Enabled-Sweet-Spots-for-Robust-Humanoid-Locomotion/method.md | Line count < 50
+data/papers/Lee-2025-SimBa-Simplicity-Bias-for-Scaling-Up-Parameters-in-Deep-Reinforcement-Learning/method.md | Line count < 50
+data/papers/Zhuang-2024-Humanoid-Parkour-Learning/method.md | Line count < 50
+data/papers/Tang-2025-AI-Researcher-Autonomous-Scientific-Innovation/method.md | Line count < 50
+data/papers/Xu-2026-Iterative-Closed-Loop-Motion-Synthesis-for-Scaling-the-Capabilities-of-Humanoid-Control/method.md | Line count < 50
+data/papers/Ji-2024-StyleVR-Stylizing-Character-Animations-With-Normalizing-Flows/method.md | Line count < 50
+data/papers/Sun-2022-PaCo-Parameter-Compositional-Multi-Task-Reinforcement-Learning/method.md | Line count < 50
+data/papers/Schperberg-2026-Safe-Whole-Body-Loco-Manipulation-via-Combined-Model-and-Learning-based-Control/method.md | Line count < 50
+data/papers/Sood-2025-APEX-Action-Priors-Enable-Efficient-Exploration-for-Robust-Motion-Tracking-on-Legged-Robots/method.md | Line count < 50
+data/papers/Zhang-2026-AdaMorph-Unified-Motion-Retargeting-via-Embodiment-Aware-Adaptive-Transformers/method.md | Line count < 50
+data/papers/Sun-2025-HANDO-Hierarchical-Autonomous-Navigation-and-Dexterous-Omni-loco-manipulation/method.md | Line count < 50
+data/papers/Nakkiran-2024-Step-by-Step-Diffusion-An-Elementary-Tutorial/method.md | Line count < 50

@@ -1,7 +1,7 @@
 """Contract tests for the federated_search MCP tool.
 
-Stubs out unified_search, explore_unified_search, and search_arxiv so tests
-run without any index files, network access, or external dependencies.
+Stubs out unified_search and search_arxiv so tests run without any index files,
+network access, or external dependencies.
 """
 
 from __future__ import annotations
@@ -15,7 +15,6 @@ from unittest.mock import MagicMock, patch
 # ---------------------------------------------------------------------------
 
 _MAIN_PAPER = {"title": "Attention Is All You Need", "doi": "10.1234/attn", "score": 0.9}
-_EXPLORE_PAPER = {"title": "BERT Pre-training", "doi": "10.5678/bert", "score": 0.8}
 _ARXIV_PAPER = {
     "title": "New Transformer",
     "authors": ["Alice"],
@@ -90,42 +89,20 @@ class TestFederatedSearchMain:
 
 
 # ---------------------------------------------------------------------------
-# Tests: explore scope
+# Tests: unsupported scope
 # ---------------------------------------------------------------------------
 
 
-class TestFederatedSearchExplore:
-    def test_explore_named_silo(self, tmp_path):
+class TestFederatedSearchUnsupportedScope:
+    def test_removed_explore_scope_returns_unknown_scope(self, tmp_path):
         cfg = _make_cfg(tmp_path)
-        fake_db = tmp_path / "explore.db"
-        fake_db.touch()
-
-        with (
-            patch("scholaraio.mcp_server._get_cfg", return_value=cfg),
-            patch("scholaraio.explore._db_path", return_value=fake_db),
-            patch("scholaraio.explore.explore_unified_search", return_value=[_EXPLORE_PAPER]),
-        ):
+        with patch("scholaraio.mcp_server._get_cfg", return_value=cfg):
             from scholaraio.mcp_server import federated_search
 
-            result = json.loads(federated_search("bert", scope="explore:my-silo"))
+            result = json.loads(federated_search("bert", scope="explore:legacy"))
 
-        assert "explore:my-silo" in result
-        assert result["explore:my-silo"][0]["title"] == "BERT Pre-training"
-
-    def test_explore_db_not_found(self, tmp_path):
-        cfg = _make_cfg(tmp_path)
-        missing_db = tmp_path / "missing.db"  # does NOT exist
-
-        with (
-            patch("scholaraio.mcp_server._get_cfg", return_value=cfg),
-            patch("scholaraio.explore._db_path", return_value=missing_db),
-        ):
-            from scholaraio.mcp_server import federated_search
-
-            result = json.loads(federated_search("bert", scope="explore:ghost"))
-
-        assert result["explore:ghost"][0]["error"] == "db_not_found"
-        assert "message" in result["explore:ghost"][0]
+        assert result["explore:legacy"][0]["error"] == "unknown_scope"
+        assert "main / arxiv" in result["explore:legacy"][0]["message"]
 
 
 # ---------------------------------------------------------------------------

@@ -426,10 +426,12 @@ def call_llm(
         llm_cfg = config.llm
         resolved_key = api_key or config.resolved_api_key()
 
-    if not resolved_key:
+    backend = llm_cfg.backend
+
+    # MCP backends (gemini-mcp, codex-mcp) don't need an API key
+    if backend not in ("gemini-mcp", "codex-mcp") and not resolved_key:
         raise RuntimeError("未配置 LLM API key。")
 
-    backend = llm_cfg.backend
     _timeout = timeout or llm_cfg.timeout
 
     t0 = time.monotonic()
@@ -452,6 +454,24 @@ def call_llm(
                 prompt,
                 llm_cfg,
                 resolved_key,
+                system=system,
+                json_mode=json_mode,
+                max_tokens=max_tokens,
+                timeout=_timeout,
+            )
+        elif backend == "gemini-mcp":
+            content, tokens_in, tokens_out, tokens_total, model_name = _call_gemini_mcp(
+                prompt,
+                llm_cfg,
+                system=system,
+                json_mode=json_mode,
+                max_tokens=max_tokens,
+                timeout=_timeout,
+            )
+        elif backend == "codex-mcp":
+            content, tokens_in, tokens_out, tokens_total, model_name = _call_codex_mcp(
+                prompt,
+                llm_cfg,
                 system=system,
                 json_mode=json_mode,
                 max_tokens=max_tokens,
@@ -655,3 +675,136 @@ def _call_google(
     tokens_total = usage.get("totalTokenCount", tokens_in + tokens_out)
     model_name = llm_cfg.model
     return content, tokens_in, tokens_out, tokens_total, model_name
+
+
+def _call_gemini_mcp(
+    prompt: str,
+    llm_cfg: LLMConfig,
+    *,
+    system: str | None,
+    json_mode: bool,
+    max_tokens: int,
+    timeout: int,
+) -> tuple[str, int, int, int, str]:
+    """Google Gemini via MCP tool (gemini-cli).
+
+    Uses subprocess to call Claude Code with the gemini-cli MCP tool.
+    """
+    import subprocess
+
+    # Build the full prompt with system message if provided
+    full_prompt = prompt
+    if system:
+        full_prompt = f"{system}\n\n{prompt}"
+
+    # Use claude CLI to call the MCP tool
+    # The --print flag makes it output just the result
+    cmd = [
+        "claude",
+        "--print",
+        "-p",
+        full_prompt,
+        "--allowed-tools",
+        "mcp__gemini-cli__ask-gemini",
+        "--dangerously-skip-permissions",
+    ]
+
+    # Add model parameter if specified
+    model = getattr(llm_cfg, "model", "gemini-2.5-pro")
+    if model and model != "gemini-2.5-pro":
+        cmd.extend(["--model", model])
+
+    try:
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+
+        if result.returncode != 0:
+            stderr = result.stderr.strip()
+            raise RuntimeError(f"MCP call failed: {stderr}")
+
+        content = result.stdout.strip()
+
+        # Note: MCP tool doesn't return token usage, so we estimate
+        # In a real implementation, you might want to parse this from the MCP response
+        tokens_in = len(full_prompt) // 4  # rough estimate
+        tokens_out = len(content) // 4  # rough estimate
+        tokens_total = tokens_in + tokens_out
+
+        return content, tokens_in, tokens_out, tokens_total, f"gemini-mcp:{model}"
+
+    except FileNotFoundError:
+        raise RuntimeError(
+            "Claude Code CLI not found. Please ensure 'claude' is installed and in PATH."
+        ) from None
+    except subprocess.TimeoutExpired:
+        raise RuntimeError(f"MCP call timed out after {timeout} seconds") from None
+
+
+def _call_codex_mcp(
+    prompt: str,
+    llm_cfg: LLMConfig,
+    *,
+    system: str | None,
+    json_mode: bool,
+    max_tokens: int,
+    timeout: int,
+) -> tuple[str, int, int, int, str]:
+    """OpenAI Codex via MCP tool (codex-cli).
+
+    Uses subprocess to call Claude Code with the codex-cli MCP tool.
+    """
+    import subprocess
+
+    # Build the full prompt with system message if provided
+    full_prompt = prompt
+    if system:
+        full_prompt = f"{system}\n\n{prompt}"
+
+    # Use claude CLI to call the MCP tool
+    # The --print flag makes it output just the result
+    cmd = [
+        "claude",
+        "--print",
+        "-p",
+        full_prompt,
+        "--allowed-tools",
+        "mcp__codex-cli__codex",
+        "--dangerously-skip-permissions",
+    ]
+
+    # Add model parameter if specified
+    model = getattr(llm_cfg, "model", "gpt-5.3-codex")
+    if model and model != "gpt-5.3-codex":
+        cmd.extend(["--model", model])
+
+    try:
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+
+        if result.returncode != 0:
+            stderr = result.stderr.strip()
+            raise RuntimeError(f"MCP call failed: {stderr}")
+
+        content = result.stdout.strip()
+
+        # Note: MCP tool doesn't return token usage, so we estimate
+        tokens_in = len(full_prompt) // 4  # rough estimate
+        tokens_out = len(content) // 4  # rough estimate
+        tokens_total = tokens_in + tokens_out
+
+        return content, tokens_in, tokens_out, tokens_total, f"codex-mcp:{model}"
+
+    except FileNotFoundError:
+        raise RuntimeError(
+            "Claude Code CLI not found. Please ensure 'claude' is installed and in PATH."
+        ) from None
+    except subprocess.TimeoutExpired:
+        raise RuntimeError(f"MCP call timed out after {timeout} seconds") from None

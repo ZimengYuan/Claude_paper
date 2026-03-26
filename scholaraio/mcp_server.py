@@ -1469,11 +1469,11 @@ def federated_search(
     scope: str = "main",
     top_k: int = 10,
 ) -> str:
-    """Search across multiple sources: main library, explore silos, and arXiv.
+    """Search across multiple sources: main library and arXiv.
 
     Args:
         query: Search query text.
-        scope: Comma-separated list of sources: main / explore:NAME / explore:* / arxiv.
+        scope: Comma-separated list of sources: main / arxiv.
         top_k: Maximum results per source (default 10).
     """
     import sqlite3
@@ -1495,45 +1495,6 @@ def federated_search(
                 except Exception as e:
                     _log.exception("federated_search main error")
                     output["main"] = [{"error": "internal", "message": str(e)}]
-
-        elif src.startswith("explore:"):
-            explore_name = src[len("explore:") :]
-            from scholaraio.explore import validate_explore_name
-
-            if explore_name != "*" and not validate_explore_name(explore_name):
-                output[src] = [
-                    {
-                        "error": "invalid_explore_name",
-                        "message": f"Invalid explore library name '{explore_name}'. Names must be non-empty and must not contain path separators or '..'.",
-                    }
-                ]
-                continue
-            if explore_name == "*":
-                from scholaraio.explore import list_explore_libs
-
-                names = list_explore_libs(cfg)
-                if not names:
-                    output["explore:*"] = [
-                        {
-                            "error": "no_explore_libs",
-                            "message": "No explore libraries found. Run: scholaraio explore fetch --name <name>",
-                        }
-                    ]
-            else:
-                names = [explore_name]
-            for name in names:
-                from scholaraio.explore import explore_db_path, explore_unified_search
-
-                db = explore_db_path(name, cfg)
-                if not db.exists():
-                    output[f"explore:{name}"] = [{"error": "db_not_found", "message": f"Explore DB not found: {name}"}]
-                    continue
-                try:
-                    results = explore_unified_search(name, query, top_k=top_k, cfg=cfg)
-                    output[f"explore:{name}"] = results
-                except Exception as e:
-                    _log.exception("federated_search explore:%s error", name)
-                    output[f"explore:{name}"] = [{"error": "internal", "message": str(e)}]
 
         elif src == "arxiv":
             from scholaraio.sources.arxiv import search_arxiv
@@ -1564,11 +1525,290 @@ def federated_search(
             output[src] = [
                 {
                     "error": "unknown_scope",
-                    "message": f"Unknown scope '{src}'. Supported: main / explore:NAME / explore:* / arxiv",
+                    "message": f"Unknown scope '{src}'. Supported: main / arxiv",
                 }
             ]
 
     return json.dumps(output, ensure_ascii=False)
+
+
+# ============================================================================
+#  Tags and Read Status
+# ============================================================================
+
+
+@mcp.tool()
+def set_tags(paper_ref: str, tags: list[str]) -> str:
+    """Set tags for a paper.
+
+    Args:
+        paper_ref: Paper ID (directory name) or DOI.
+        tags: List of tags to set.
+    """
+    try:
+        from scholaraio.papers import iter_paper_dirs, set_tags as _set_tags, read_meta
+
+        cfg = _get_cfg()
+        papers_dir = cfg.papers_dir
+
+        # Resolve paper_ref to directory
+        paper_d = None
+        for d in iter_paper_dirs(papers_dir):
+            if d.name == paper_ref or (read_meta(d).get("doi") or "").lower() == paper_ref.lower():
+                paper_d = d
+                break
+
+        if not paper_d:
+            return _error("not_found", f"Paper not found: {paper_ref}")
+
+        new_tags = _set_tags(paper_d, tags)
+        return json.dumps({"success": True, "paper": paper_d.name, "tags": new_tags}, ensure_ascii=False)
+    except Exception as e:
+        _log.exception("set_tags failed")
+        return _error("internal", str(e))
+
+
+@mcp.tool()
+def get_tags(paper_ref: str) -> str:
+    """Get tags for a paper.
+
+    Args:
+        paper_ref: Paper ID (directory name) or DOI.
+    """
+    try:
+        from scholaraio.papers import iter_paper_dirs, get_tags as _get_tags, read_meta
+
+        cfg = _get_cfg()
+        papers_dir = cfg.papers_dir
+
+        # Resolve paper_ref to directory
+        paper_d = None
+        for d in iter_paper_dirs(papers_dir):
+            if d.name == paper_ref or (read_meta(d).get("doi") or "").lower() == paper_ref.lower():
+                paper_d = d
+                break
+
+        if not paper_d:
+            return _error("not_found", f"Paper not found: {paper_ref}")
+
+        tags = _get_tags(paper_d)
+        return json.dumps({"paper": paper_d.name, "tags": tags}, ensure_ascii=False)
+    except Exception as e:
+        _log.exception("get_tags failed")
+        return _error("internal", str(e))
+
+
+@mcp.tool()
+def set_read_status(paper_ref: str, status: str) -> str:
+    """Set read status for a paper.
+
+    Args:
+        paper_ref: Paper ID (directory name) or DOI.
+        status: Read status: unread | reading | read | skipped.
+    """
+    try:
+        from scholaraio.papers import iter_paper_dirs, set_read_status as _set_read_status, read_meta
+
+        cfg = _get_cfg()
+        papers_dir = cfg.papers_dir
+
+        valid_statuses = {"unread", "reading", "read", "skipped"}
+        if status not in valid_statuses:
+            return _error("invalid_status", f"Invalid status: {status}. Must be one of: {valid_statuses}")
+
+        # Resolve paper_ref to directory
+        paper_d = None
+        for d in iter_paper_dirs(papers_dir):
+            if d.name == paper_ref or (read_meta(d).get("doi") or "").lower() == paper_ref.lower():
+                paper_d = d
+                break
+
+        if not paper_d:
+            return _error("not_found", f"Paper not found: {paper_ref}")
+
+        new_status = _set_read_status(paper_d, status)
+        return json.dumps({"success": True, "paper": paper_d.name, "read_status": new_status}, ensure_ascii=False)
+    except Exception as e:
+        _log.exception("set_read_status failed")
+        return _error("internal", str(e))
+
+
+@mcp.tool()
+def get_read_status(paper_ref: str) -> str:
+    """Get read status for a paper.
+
+    Args:
+        paper_ref: Paper ID (directory name) or DOI.
+    """
+    try:
+        from scholaraio.papers import iter_paper_dirs, get_read_status as _get_read_status, read_meta
+
+        cfg = _get_cfg()
+        papers_dir = cfg.papers_dir
+
+        # Resolve paper_ref to directory
+        paper_d = None
+        for d in iter_paper_dirs(papers_dir):
+            if d.name == paper_ref or (read_meta(d).get("doi") or "").lower() == paper_ref.lower():
+                paper_d = d
+                break
+
+        if not paper_d:
+            return _error("not_found", f"Paper not found: {paper_ref}")
+
+        status = _get_read_status(paper_d)
+        return json.dumps({"paper": paper_d.name, "read_status": status}, ensure_ascii=False)
+    except Exception as e:
+        _log.exception("get_read_status failed")
+        return _error("internal", str(e))
+
+
+@mcp.tool()
+def list_papers_by_tag(tag: str) -> str:
+    """List papers with a specific tag.
+
+    Args:
+        tag: Tag to filter by.
+    """
+    try:
+        from scholaraio.papers import iter_paper_dirs, get_tags, read_meta
+
+        cfg = _get_cfg()
+        papers_dir = cfg.papers_dir
+
+        results = []
+        for d in iter_paper_dirs(papers_dir):
+            tags = get_tags(d)
+            if tag in tags:
+                meta = read_meta(d)
+                results.append({
+                    "dir_name": d.name,
+                    "title": meta.get("title", ""),
+                    "year": meta.get("year", ""),
+                    "tags": tags,
+                })
+
+        return json.dumps({"tag": tag, "count": len(results), "papers": results}, ensure_ascii=False)
+    except Exception as e:
+        _log.exception("list_papers_by_tag failed")
+        return _error("internal", str(e))
+
+
+@mcp.tool()
+def list_papers_by_status(status: str) -> str:
+    """List papers by read status.
+
+    Args:
+        status: Read status to filter by: unread | reading | read | skipped.
+    """
+    try:
+        from scholaraio.papers import iter_paper_dirs, get_read_status, read_meta
+
+        cfg = _get_cfg()
+        papers_dir = cfg.papers_dir
+
+        valid_statuses = {"unread", "reading", "read", "skipped"}
+        if status not in valid_statuses:
+            return _error("invalid_status", f"Invalid status: {status}. Must be one of: {valid_statuses}")
+
+        results = []
+        for d in iter_paper_dirs(papers_dir):
+            paper_status = get_read_status(d)
+            if paper_status == status:
+                meta = read_meta(d)
+                results.append({
+                    "dir_name": d.name,
+                    "title": meta.get("title", ""),
+                    "year": meta.get("year", ""),
+                    "read_status": paper_status,
+                })
+
+        return json.dumps({"status": status, "count": len(results), "papers": results}, ensure_ascii=False)
+    except Exception as e:
+        _log.exception("list_papers_by_status failed")
+        return _error("internal", str(e))
+
+
+# ============================================================================
+#  Knowledge Base
+# ============================================================================
+
+
+@mcp.tool()
+def add_to_knowledge_base(note: str, category: str = "general") -> str:
+    """Add a note to the global knowledge base.
+
+    Args:
+        note: Note content to add.
+        category: Category for organization (default: "general").
+    """
+    try:
+        from scholaraio.knowledge import append_knowledge
+
+        cfg = _get_cfg()
+        append_knowledge(cfg._root, note, category)
+        return json.dumps({"success": True, "message": "Note added to knowledge base"}, ensure_ascii=False)
+    except Exception as e:
+        _log.exception("add_to_knowledge_base failed")
+        return _error("internal", str(e))
+
+
+@mcp.tool()
+def search_knowledge_base(query: str) -> str:
+    """Search the knowledge base.
+
+    Args:
+        query: Search query.
+    """
+    try:
+        from scholaraio.knowledge import search_knowledge
+
+        cfg = _get_cfg()
+        results = search_knowledge(cfg._root, query)
+        return json.dumps({"query": query, "count": len(results), "results": results}, ensure_ascii=False)
+    except Exception as e:
+        _log.exception("search_knowledge_base failed")
+        return _error("internal", str(e))
+
+
+@mcp.tool()
+def get_knowledge_graph() -> str:
+    """Get the knowledge graph data.
+
+    Returns:
+        Knowledge graph with nodes and edges.
+    """
+    try:
+        from scholaraio.knowledge import get_knowledge_graph
+
+        cfg = _get_cfg()
+        graph = get_knowledge_graph(cfg._root)
+        return json.dumps(graph, ensure_ascii=False)
+    except Exception as e:
+        _log.exception("get_knowledge_graph failed")
+        return _error("internal", str(e))
+
+
+@mcp.tool()
+def build_knowledge_graph() -> str:
+    """Build knowledge graph from all papers.
+
+    Returns:
+        Knowledge graph with all papers and their tags/concepts.
+    """
+    try:
+        from scholaraio.knowledge import build_paper_graph
+
+        cfg = _get_cfg()
+        graph = build_paper_graph(cfg._root)
+        return json.dumps({
+            "success": True,
+            "nodes": len(graph.get("nodes", [])),
+            "edges": len(graph.get("edges", [])),
+        }, ensure_ascii=False)
+    except Exception as e:
+        _log.exception("build_knowledge_graph failed")
+        return _error("internal", str(e))
 
 
 # ============================================================================
