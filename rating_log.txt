@@ -977,3 +977,15 @@ Rating generation failed: MCP call timed out after 30 seconds
 Failed: MCP call timed out after 30 seconds
 
 Santana-2025-An-Introduction-to-Deep-Reinforcement-and-Imitation-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Sawdayee-2025-Dance-Like-a-Chicken-Low-Rank-Stylization-for-Human-Motion-Diffusion
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Scharpf-1980-Finite-elements-made-simple
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Schperberg-2026-Safe-Whole-Body-Loco-Manipulation-via-Combined-Model-and-Learning-based-Control
