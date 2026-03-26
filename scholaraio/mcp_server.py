@@ -1599,6 +1599,54 @@ def get_tags(paper_ref: str) -> str:
 
 
 @mcp.tool()
+def set_close_read(paper_ref: str, enabled: bool = True) -> str:
+    """Mark or unmark a paper as close-read (精读).
+
+    Adding close-read triggers background generation for summary, method, rating, and sensemaking.
+
+    Args:
+        paper_ref: Paper ID (directory name) or DOI.
+        enabled: True to add 精读, False to remove it.
+    """
+    try:
+        from scholaraio.services.paper_service import set_paper_close_read as _set_paper_close_read
+
+        result = _set_paper_close_read(_get_cfg(), paper_ref, enabled=enabled)
+        result["paper_ref"] = paper_ref
+        return json.dumps(result, ensure_ascii=False)
+    except Exception as e:
+        _log.exception("set_close_read failed")
+        return _error("internal", str(e))
+
+
+@mcp.tool()
+def generate_sensemaking(paper_ref: str, force: bool = False) -> str:
+    """Generate or refresh sensemaking.json for a paper.
+
+    Args:
+        paper_ref: Paper ID (directory name) or DOI.
+        force: Overwrite existing sensemaking.json when True.
+    """
+    try:
+        from scholaraio.generate import generate_sensemaking as _generate_sensemaking
+        from scholaraio.papers import read_sensemaking
+        from scholaraio.services.common import resolve_paper_dir
+
+        cfg = _get_cfg()
+        paper_d = resolve_paper_dir(cfg, paper_ref)
+        output_path = _generate_sensemaking(paper_d, cfg, force=force)
+        return json.dumps({
+            "success": True,
+            "paper": paper_d.name,
+            "path": output_path,
+            "sensemaking": read_sensemaking(paper_d),
+        }, ensure_ascii=False)
+    except Exception as e:
+        _log.exception("generate_sensemaking failed")
+        return _error("internal", str(e))
+
+
+@mcp.tool()
 def set_read_status(paper_ref: str, status: str) -> str:
     """Set read status for a paper.
 

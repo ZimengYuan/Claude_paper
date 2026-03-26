@@ -66,12 +66,13 @@
       >
         <div class="flex items-start justify-between gap-3">
           <h3 class="text-lg font-semibold text-gray-900 line-clamp-2">{{ paper.title }}</h3>
-          <span
-            class="shrink-0 px-2 py-1 text-xs font-medium rounded-full"
+          <button
+            class="shrink-0 px-2 py-1 text-xs font-medium rounded-full transition-colors"
             :class="statusClass(paper.read_status)"
+            @click.stop="toggleReadStatus(paper)"
           >
             {{ paper.read_status === 'read' ? '已读' : '未读' }}
-          </span>
+          </button>
         </div>
         <p class="mt-2 text-sm text-gray-600">{{ paper.authors?.join(', ') }}</p>
         <p class="mt-1 text-xs text-gray-500">{{ paper.year }} · {{ paper.journal }}</p>
@@ -233,6 +234,21 @@ const handleProjectChange = async () => {
 const clearProjectFilter = async () => {
   projectFilter.value = ''
   await loadPapers()
+}
+
+const toggleReadStatus = async (paper) => {
+  const next = paper.read_status === 'read' ? 'unread' : 'read'
+  try {
+    const encodedId = encodeURIComponent(paper.dir_name)
+    await fetch(`/api/papers/${encodedId}/status`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: next })
+    })
+    paper.read_status = next
+  } catch (e) {
+    console.error('Failed to toggle read status:', e)
+  }
 }
 
 const goToPaper = (dirName) => {

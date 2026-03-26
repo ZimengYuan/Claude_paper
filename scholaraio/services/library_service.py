@@ -6,6 +6,7 @@ from scholaraio.papers import (
     iter_paper_dirs,
     read_meta,
     read_method,
+    read_sensemaking,
     read_summary,
 )
 from scholaraio.services.common import ServiceError
@@ -36,6 +37,7 @@ def _material_flags(paper_dir, meta: dict) -> dict[str, bool]:
         "summary": _has_text(read_summary(paper_dir) or meta.get("summary")),
         "method": _has_text(read_method(paper_dir) or meta.get("method_summary")),
         "rating": bool(meta.get("rating")),
+        "sensemaking": bool(read_sensemaking(paper_dir)),
     }
 
 

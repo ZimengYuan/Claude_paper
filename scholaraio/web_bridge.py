@@ -85,6 +85,16 @@ def _action_set_tags(payload: dict[str, Any], cfg: Any) -> Any:
     )
 
 
+def _action_set_close_read(payload: dict[str, Any], cfg: Any) -> Any:
+    from scholaraio.services.paper_service import set_paper_close_read
+
+    return set_paper_close_read(
+        cfg,
+        str(_require(payload, 'paper_ref')),
+        bool(payload.get('enabled', True)),
+    )
+
+
 def _action_enqueue_generate(payload: dict[str, Any], cfg: Any) -> Any:
     from scholaraio.services.generation_service import enqueue_generation_task
 
@@ -206,6 +216,7 @@ _ACTIONS: dict[str, ActionFn] = {
     'get_paper_markdown': _action_get_paper_markdown,
     'set_read_status': _action_set_read_status,
     'set_tags': _action_set_tags,
+    'set_close_read': _action_set_close_read,
     'enqueue_generate': _action_enqueue_generate,
     'enqueue_generate_batch': _action_enqueue_generate_batch,
     'get_graph': _action_get_graph,

@@ -636,7 +636,7 @@ Generate the sensemaking JSON based on the system prompt and the user profile: {
             system=SENSEMAKING_SYSTEM.format(profile=profile),
             json_mode=True,
             max_tokens=2000,
-            timeout=cfg.llm.timeout,
+            timeout=max(cfg.llm.timeout, cfg.llm.timeout_clean),
             purpose="generate.sensemaking",
         )
 

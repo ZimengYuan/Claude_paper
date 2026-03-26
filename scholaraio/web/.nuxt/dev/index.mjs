@@ -2175,7 +2175,29 @@ _LDW4xmEKRPSTKdi7vSJi9PfJNqga_hN44lM15KrA1L8,
 _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 ];
 
-const assets = {};
+const assets = {
+  "/index.mjs": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1f0e0-HAWvrPPLpcRap7wup2Swd8HEAGU\"",
+    "mtime": "2026-03-25T07:24:43.800Z",
+    "size": 127200,
+    "path": "index.mjs"
+  },
+  "/timing.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"18e-0pRLUDweg+nNOYiHMfwI/i1Hccs\"",
+    "mtime": "2026-03-25T07:24:43.800Z",
+    "size": 398,
+    "path": "timing.js"
+  },
+  "/index.mjs.map": {
+    "type": "application/json",
+    "etag": "\"76e96-//l6D9C5QcPf4gK1eQeeKbhlb/M\"",
+    "mtime": "2026-03-25T07:24:43.800Z",
+    "size": 487062,
+    "path": "index.mjs.map"
+  }
+};
 
 function readAsset (id) {
   const serverDir = dirname$1(fileURLToPath(globalThis._importMeta_.url));
@@ -2645,6 +2667,7 @@ const _lazy_vYaSo7 = () => Promise.resolve().then(function () { return knowledge
 const _lazy_GCTEz6 = () => Promise.resolve().then(function () { return fromPaper_post$1; });
 const _lazy_ii_kXS = () => Promise.resolve().then(function () { return search_get$1; });
 const _lazy_KIq2iR = () => Promise.resolve().then(function () { return _id__get$1; });
+const _lazy_DkE5hz = () => Promise.resolve().then(function () { return closeRead_post$1; });
 const _lazy_vHH6CF = () => Promise.resolve().then(function () { return content_get$1; });
 const _lazy_5hoki2 = () => Promise.resolve().then(function () { return generate_post$1; });
 const _lazy_H54QwV = () => Promise.resolve().then(function () { return status_post$1; });
@@ -2668,6 +2691,7 @@ const handlers = [
   { route: '/api/knowledge/from-paper', handler: _lazy_GCTEz6, lazy: true, middleware: false, method: "post" },
   { route: '/api/knowledge/search', handler: _lazy_ii_kXS, lazy: true, middleware: false, method: "get" },
   { route: '/api/papers/:id', handler: _lazy_KIq2iR, lazy: true, middleware: false, method: "get" },
+  { route: '/api/papers/:id/close-read', handler: _lazy_DkE5hz, lazy: true, middleware: false, method: "post" },
   { route: '/api/papers/:id/content', handler: _lazy_vHH6CF, lazy: true, middleware: false, method: "get" },
   { route: '/api/papers/:id/generate', handler: _lazy_5hoki2, lazy: true, middleware: false, method: "post" },
   { route: '/api/papers/:id/status', handler: _lazy_H54QwV, lazy: true, middleware: false, method: "post" },
@@ -3308,6 +3332,27 @@ const _id__get = defineEventHandler(async (event) => {
 const _id__get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
   default: _id__get
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const closeRead_post = defineEventHandler(async (event) => {
+  const id = getRouterParam(event, "id");
+  const body = await readBody(event);
+  try {
+    return await callScholarBridge("set_close_read", {
+      paper_ref: decodeURIComponent(id || ""),
+      enabled: typeof body.enabled === "boolean" ? body.enabled : true
+    });
+  } catch (error) {
+    throw createError({
+      statusCode: error.statusCode || 500,
+      message: error.message || "Failed to update close-read state"
+    });
+  }
+});
+
+const closeRead_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: closeRead_post
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const content_get = defineEventHandler(async (event) => {

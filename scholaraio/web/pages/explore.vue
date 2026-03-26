@@ -102,6 +102,7 @@
         </div>
 
         <template v-if="selectedLibrary">
+          <!-- Overview header -->
           <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
               <div class="max-w-3xl">
@@ -135,195 +136,246 @@
             </div>
           </section>
 
-          <section class="grid gap-4 xl:grid-cols-[minmax(0,1.3fr),minmax(0,0.7fr)]">
-            <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-              <div>
-                <h3 class="text-base font-semibold text-slate-900">Trend Highlights</h3>
-                <p class="mt-1 text-xs text-slate-500">先用统计视角判断这个方向更偏前沿快照，还是已经形成相对稳定的文献结构</p>
-              </div>
-
-              <div v-if="trendHighlights.length" class="mt-4 space-y-3">
-                <div v-for="highlight in trendHighlights" :key="highlight" class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-700">
-                  {{ highlight }}
-                </div>
-              </div>
-              <div v-else class="mt-4 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm text-slate-500">
-                当前主库还没有足够的统计信息可供总结。
-              </div>
-
-              <div class="mt-6 grid gap-5 lg:grid-cols-2">
-                <div class="rounded-2xl border border-slate-200 p-4">
-                  <div class="flex items-center justify-between gap-2">
-                    <h4 class="text-sm font-semibold text-slate-900">Year Distribution</h4>
-                    <span class="text-xs text-slate-500">last {{ yearDistribution.length }} buckets</span>
-                  </div>
-                  <div v-if="yearDistribution.length" class="mt-4 space-y-3">
-                    <div v-for="item in yearDistribution" :key="item.year" class="space-y-1.5">
-                      <div class="flex items-center justify-between text-xs text-slate-500">
-                        <span>{{ item.year }}</span>
-                        <span>{{ formatCount(item.count) }}</span>
-                      </div>
-                      <div class="h-2 overflow-hidden rounded-full bg-slate-100">
-                        <div class="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400" :style="{ width: item.width }"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div v-else class="mt-4 text-sm text-slate-500">No year distribution available.</div>
-                </div>
-
-                <div class="space-y-5">
-                  <div class="rounded-2xl border border-slate-200 p-4">
-                    <h4 class="text-sm font-semibold text-slate-900">Top Authors</h4>
-                    <div v-if="topAuthors.length" class="mt-3 space-y-2">
-                      <div v-for="author in topAuthors" :key="author.name" class="flex items-center justify-between gap-3 text-sm">
-                        <span class="min-w-0 truncate text-slate-700">{{ author.name }}</span>
-                        <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">{{ author.count }}</span>
-                      </div>
-                    </div>
-                    <div v-else class="mt-3 text-sm text-slate-500">No author aggregate available.</div>
-                  </div>
-
-                  <div class="rounded-2xl border border-slate-200 p-4">
-                    <h4 class="text-sm font-semibold text-slate-900">Top Journals & Venues</h4>
-                    <div v-if="topJournals.length" class="mt-3 space-y-3">
-                      <div v-for="item in topJournals" :key="item.name" class="space-y-1.5">
-                        <div class="flex items-center justify-between text-xs text-slate-500">
-                          <span>{{ item.name }}</span>
-                          <span>{{ formatPercent(item.share) }}</span>
-                        </div>
-                        <div class="h-2 overflow-hidden rounded-full bg-slate-100">
-                          <div class="h-full rounded-full bg-slate-700" :style="{ width: percentWidth(item.share) }"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div v-else class="mt-3 text-sm text-slate-500">No venue distribution available.</div>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-              <div class="flex items-center justify-between gap-3">
-                <div>
-                  <h3 class="text-base font-semibold text-slate-900">Topic Readiness</h3>
-                  <p class="mt-1 text-xs text-slate-500">roadmap 依赖 topic model，因此这里先判断“主题结构是否就绪”</p>
-                </div>
-                <span class="rounded-full px-3 py-1 text-xs font-medium" :class="selectedLibrary.has_topics ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'">
-                  {{ selectedLibrary.has_topics ? 'Topics available' : 'Topics missing' }}
-                </span>
-              </div>
-
-              <div v-if="topicOverview.length" class="mt-4 space-y-3">
-                <article v-for="topic in topicOverview" :key="topic.topic_id" class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                  <div class="flex items-start justify-between gap-3">
-                    <div>
-                      <h4 class="text-sm font-semibold text-slate-900">{{ topic.name || ('Topic ' + topic.topic_id) }}</h4>
-                      <p class="mt-1 text-xs text-slate-500">{{ formatCount(topic.count) }} papers</p>
-                    </div>
-                    <span class="rounded-full bg-white px-2 py-1 text-[10px] font-medium text-slate-600">Topic {{ topic.topic_id }}</span>
-                  </div>
-                  <div v-if="topic.keywords?.length" class="mt-3 flex flex-wrap gap-2">
-                    <span v-for="keyword in topic.keywords.slice(0, 6)" :key="keyword" class="rounded-full bg-white px-2.5 py-1 text-[11px] text-slate-700">
-                      {{ keyword }}
-                    </span>
-                  </div>
-                </article>
-              </div>
-              <div v-else class="mt-4 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm leading-6 text-slate-600">
-                当前主库还没有 topic model，所以 roadmap 还不能生成。你仍然可以先用年份、作者、期刊和代表论文把握趋势；等主 topic model 建好以后，再看更系统的技术演化图谱。
-              </div>
-            </article>
-          </section>
-
-          <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-              <div>
-                <h3 class="text-base font-semibold text-slate-900">Representative Papers</h3>
-                <p class="mt-1 text-xs text-slate-500">从“高引用代表作”和“近年论文”两个视角观察当前主库的技术重心</p>
-              </div>
-              <div class="inline-flex rounded-full border border-slate-200 bg-slate-50 p-1 text-sm">
-                <button class="rounded-full px-4 py-2 transition" :class="paperView === 'top' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'" @click="paperView = 'top'">
-                  Top Cited
-                </button>
-                <button class="rounded-full px-4 py-2 transition" :class="paperView === 'recent' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'" @click="paperView = 'recent'">
-                  Recent Papers
-                </button>
-              </div>
+          <!-- Main tabbed content -->
+          <section class="rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div class="flex border-b border-slate-200">
+              <button
+                v-for="tab in exploreTabs"
+                :key="tab.key"
+                class="relative px-5 py-3 text-sm font-medium transition-colors"
+                :class="exploreTab === tab.key
+                  ? 'text-blue-600 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-blue-600'
+                  : 'text-slate-500 hover:text-slate-700'"
+                @click="exploreTab = tab.key"
+              >
+                {{ tab.label }}
+              </button>
             </div>
 
-            <div v-if="displayedResults.length === 0" class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-10 text-center text-sm text-slate-500">
-              No representative papers to show.
-            </div>
-            <div v-else class="mt-6 grid gap-4 md:grid-cols-2">
-              <article v-for="(paper, index) in displayedResults" :key="paper.paper_ref || paper.title || index" class="flex h-full flex-col rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:-translate-y-0.5 hover:shadow-md">
-                <div class="flex items-start justify-between gap-3">
-                  <div class="min-w-0">
-                    <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">#{{ index + 1 }} · {{ paperView === 'top' ? 'citation leader' : 'recent sample' }}</div>
-                    <h4 class="mt-2 line-clamp-2 text-base font-semibold text-slate-900">{{ paper.title }}</h4>
+            <div class="p-5 sm:p-6">
+              <!-- Tab: Trends -->
+              <div v-if="exploreTab === 'trends'">
+                <div class="grid gap-4 xl:grid-cols-[minmax(0,1.3fr),minmax(0,0.7fr)]">
+                  <div>
+                    <h3 class="text-base font-semibold text-slate-900">Trend Highlights</h3>
+                    <p class="mt-1 text-xs text-slate-500">先用统计视角判断这个方向更偏前沿快照，还是已经形成相对稳定的文献结构</p>
+
+                    <div v-if="trendHighlights.length" class="mt-4 space-y-3">
+                      <div v-for="highlight in trendHighlights" :key="highlight" class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-700">
+                        {{ highlight }}
+                      </div>
+                    </div>
+                    <div v-else class="mt-4 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm text-slate-500">
+                      当前主库还没有足够的统计信息可供总结。
+                    </div>
+
+                    <div class="mt-6 grid gap-5 lg:grid-cols-2">
+                      <div class="rounded-2xl border border-slate-200 p-4">
+                        <div class="flex items-center justify-between gap-2">
+                          <h4 class="text-sm font-semibold text-slate-900">Year Distribution</h4>
+                          <span class="text-xs text-slate-500">last {{ yearDistribution.length }} buckets</span>
+                        </div>
+                        <div v-if="yearDistribution.length" class="mt-4 space-y-3">
+                          <div v-for="item in yearDistribution" :key="item.year" class="space-y-1.5">
+                            <div class="flex items-center justify-between text-xs text-slate-500">
+                              <span>{{ item.year }}</span>
+                              <span>{{ formatCount(item.count) }}</span>
+                            </div>
+                            <div class="h-2 overflow-hidden rounded-full bg-slate-100">
+                              <div class="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400" :style="{ width: item.width }"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div v-else class="mt-4 text-sm text-slate-500">No year distribution available.</div>
+                      </div>
+
+                      <div class="space-y-5">
+                        <div class="rounded-2xl border border-slate-200 p-4">
+                          <h4 class="text-sm font-semibold text-slate-900">Top Authors</h4>
+                          <div v-if="topAuthors.length" class="mt-3 space-y-2">
+                            <div v-for="author in topAuthors" :key="author.name" class="flex items-center justify-between gap-3 text-sm">
+                              <span class="min-w-0 truncate text-slate-700">{{ author.name }}</span>
+                              <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">{{ author.count }}</span>
+                            </div>
+                          </div>
+                          <div v-else class="mt-3 text-sm text-slate-500">No author aggregate available.</div>
+                        </div>
+
+                        <div class="rounded-2xl border border-slate-200 p-4">
+                          <h4 class="text-sm font-semibold text-slate-900">Top Journals & Venues</h4>
+                          <div v-if="topJournals.length" class="mt-3 space-y-3">
+                            <div v-for="item in topJournals" :key="item.name" class="space-y-1.5">
+                              <div class="flex items-center justify-between text-xs text-slate-500">
+                                <span>{{ item.name }}</span>
+                                <span>{{ formatPercent(item.share) }}</span>
+                              </div>
+                              <div class="h-2 overflow-hidden rounded-full bg-slate-100">
+                                <div class="h-full rounded-full bg-slate-700" :style="{ width: percentWidth(item.share) }"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div v-else class="mt-3 text-sm text-slate-500">No venue distribution available.</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <span class="shrink-0 rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700">
-                    {{ formatCount(paper.cited_by_count || 0) }} cites
-                  </span>
+
+                  <div>
+                    <div class="flex items-center justify-between gap-3">
+                      <h3 class="text-base font-semibold text-slate-900">Topic Readiness</h3>
+                      <span class="rounded-full px-3 py-1 text-xs font-medium" :class="selectedLibrary.has_topics ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'">
+                        {{ selectedLibrary.has_topics ? 'Topics available' : 'Topics missing' }}
+                      </span>
+                    </div>
+                    <p class="mt-1 text-xs text-slate-500">roadmap 依赖 topic model，因此这里先判断“主题结构是否就绪”</p>
+
+                    <div v-if="topicOverview.length" class="mt-4">
+                      <!-- Per-topic tabs -->
+                      <div class="flex flex-wrap gap-1 border-b border-slate-200 pb-1">
+                        <button
+                          v-for="topic in topicOverview"
+                          :key="topic.topic_id"
+                          class="rounded-t-lg px-3 py-1.5 text-xs font-medium transition-colors"
+                          :class="activeTopicId === topic.topic_id
+                            ? 'bg-slate-100 text-slate-900'
+                            : 'text-slate-500 hover:text-slate-700'"
+                          @click="activeTopicId = topic.topic_id"
+                        >
+                          {{ topic.name || ('Topic ' + topic.topic_id) }}
+                        </button>
+                      </div>
+                      <!-- Active topic detail -->
+                      <div v-if="activeTopic" class="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                        <div class="flex items-start justify-between gap-3">
+                          <div>
+                            <h4 class="text-sm font-semibold text-slate-900">{{ activeTopic.name || ('Topic ' + activeTopic.topic_id) }}</h4>
+                            <p class="mt-1 text-xs text-slate-500">{{ formatCount(activeTopic.count) }} papers</p>
+                          </div>
+                          <span class="rounded-full bg-white px-2 py-1 text-[10px] font-medium text-slate-600">Topic {{ activeTopic.topic_id }}</span>
+                        </div>
+                        <div v-if="activeTopic.keywords?.length" class="mt-3 flex flex-wrap gap-2">
+                          <span v-for="keyword in activeTopic.keywords.slice(0, 8)" :key="keyword" class="rounded-full bg-white px-2.5 py-1 text-[11px] text-slate-700">
+                            {{ keyword }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-else class="mt-4 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm leading-6 text-slate-600">
+                      当前主库还没有 topic model。
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tab: Papers -->
+              <div v-if="exploreTab === 'papers'">
+                <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                  <div>
+                    <h3 class="text-base font-semibold text-slate-900">Representative Papers</h3>
+                    <p class="mt-1 text-xs text-slate-500">从“高引用代表作”和“近年论文”两个视角观察当前主库的技术重心</p>
+                  </div>
+                  <div class="inline-flex rounded-full border border-slate-200 bg-slate-50 p-1 text-sm">
+                    <button class="rounded-full px-4 py-2 transition" :class="paperView === 'top' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'" @click="paperView = 'top'">
+                      Top Cited
+                    </button>
+                    <button class="rounded-full px-4 py-2 transition" :class="paperView === 'recent' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'" @click="paperView = 'recent'">
+                      Recent Papers
+                    </button>
+                  </div>
                 </div>
 
-                <p class="mt-3 line-clamp-2 text-sm text-slate-600">{{ paper.authors?.join(', ') || 'Unknown author' }}</p>
-                <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-500">
-                  <span class="rounded-full bg-white px-2.5 py-1">{{ paper.year || '?' }}</span>
-                  <span class="rounded-full bg-white px-2.5 py-1">{{ paper.type || 'article' }}</span>
+                <div v-if="displayedResults.length === 0" class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-10 text-center text-sm text-slate-500">
+                  No representative papers to show.
                 </div>
-                <p v-if="paper.abstract" class="mt-4 line-clamp-4 text-sm leading-6 text-slate-600">{{ paper.abstract }}</p>
-                <div class="mt-4 flex items-center justify-between gap-3 pt-4">
-                  <div class="min-w-0 text-[11px] text-slate-400">
-                    <div v-if="paper.doi" class="truncate">{{ paper.doi }}</div>
-                    <div v-else class="truncate">{{ paper.paper_id || paper.dir_name || 'No local ref' }}</div>
+                <div v-else class="mt-6 grid gap-4 md:grid-cols-2">
+                  <article v-for="(paper, index) in displayedResults" :key="paper.paper_ref || paper.title || index" class="flex h-full flex-col rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:-translate-y-0.5 hover:shadow-md">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0">
+                        <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">#{{ index + 1 }} · {{ paperView === 'top' ? 'citation leader' : 'recent sample' }}</div>
+                        <h4 class="mt-2 line-clamp-2 text-base font-semibold text-slate-900">{{ paper.title }}</h4>
+                      </div>
+                      <span class="shrink-0 rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700">
+                        {{ formatCount(paper.cited_by_count || 0) }} cites
+                      </span>
+                    </div>
+
+                    <p class="mt-3 line-clamp-2 text-sm text-slate-600">{{ paper.authors?.join(', ') || 'Unknown author' }}</p>
+                    <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                      <span class="rounded-full bg-white px-2.5 py-1">{{ paper.year || '?' }}</span>
+                      <span class="rounded-full bg-white px-2.5 py-1">{{ paper.type || 'article' }}</span>
+                    </div>
+                    <p v-if="paper.abstract" class="mt-4 line-clamp-4 text-sm leading-6 text-slate-600">{{ paper.abstract }}</p>
+                    <div class="mt-4 flex items-center justify-between gap-3 pt-4">
+                      <div class="min-w-0 text-[11px] text-slate-400">
+                        <div v-if="paper.doi" class="truncate">{{ paper.doi }}</div>
+                        <div v-else class="truncate">{{ paper.paper_id || paper.dir_name || 'No local ref' }}</div>
+                      </div>
+                      <div class="flex flex-wrap gap-2">
+                        <button class="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-white" @click.stop="openPaperRef(paper.paper_ref)">
+                          Open Paper
+                        </button>
+                        <a v-if="paper.doi" :href="`https://doi.org/${paper.doi}`" target="_blank" rel="noreferrer" class="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-white">
+                          DOI
+                        </a>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </div>
+
+              <!-- Tab: Roadmap -->
+              <div v-if="exploreTab === 'roadmap'">
+                <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                  <div>
+                    <h3 class="text-lg font-semibold text-slate-900">Library Evolution & Future Trends</h3>
+                    <p class="mt-1 text-xs leading-5 text-slate-500">roadmap 会基于当前主库的 topic model，把整批本地论文聚成几个宏观方向，再生成技术演进和未来预测。</p>
                   </div>
                   <div class="flex flex-wrap gap-2">
-                    <button class="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-white" @click.stop="openPaperRef(paper.paper_ref)">
-                      Open Paper
+                    <button
+                      class="rounded-full px-4 py-2 text-sm font-medium transition"
+                      :class="canGenerateRoadmap ? 'bg-slate-900 text-white hover:bg-slate-800 disabled:bg-slate-400' : 'bg-slate-100 text-slate-400 cursor-not-allowed'"
+                      :disabled="roadmapLoading || !canGenerateRoadmap"
+                      @click="generateRoadmap()"
+                    >
+                      {{ roadmapLoading ? 'Generating...' : (roadmap ? 'Refresh Roadmap' : 'Generate Roadmap') }}
                     </button>
-                    <a v-if="paper.doi" :href="`https://doi.org/${paper.doi}`" target="_blank" rel="noreferrer" class="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-white">
-                      DOI
-                    </a>
+                    <button v-if="roadmap && !roadmapLoading" class="rounded-full border border-slate-200 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50" @click="generateRoadmap(true)">
+                      Force Regenerate
+                    </button>
                   </div>
                 </div>
-              </article>
-            </div>
-          </section>
 
-          <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-              <div>
-                <h3 class="text-lg font-semibold text-slate-900">Library Evolution & Future Trends</h3>
-                <p class="mt-1 text-xs leading-5 text-slate-500">roadmap 会基于当前主库的 topic model，把整批本地论文聚成几个宏观方向，再生成技术演进和未来预测。</p>
+                <div v-if="!canGenerateRoadmap" class="mt-5 rounded-2xl border border-dashed border-amber-300 bg-amber-50 px-4 py-5 text-sm leading-6 text-amber-800">
+                  当前主库还没有 topic model，roadmap 暂时不可生成。等主 topic model 建好以后，这里会输出“阶段划分、关键方法、关键论文和未来趋势”。
+                </div>
+                <div v-else-if="roadmapLoading" class="mt-6 flex flex-col items-center rounded-2xl border border-slate-200 bg-slate-50 px-4 py-12 text-center">
+                  <div class="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-blue-600"></div>
+                  <p class="mt-4 text-sm leading-6 text-slate-500">
+                    Analyzing {{ formatCount(selectedLibrary.count) }} local papers across main-library topics.<br>
+                    This may take 1-2 minutes depending on topic size and model latency.
+                  </p>
+                </div>
+                <div v-else-if="roadmap" class="mt-6">
+                  <!-- Per-direction tabs -->
+                  <div v-if="roadmapSections.length > 1" class="flex flex-wrap gap-1 border-b border-slate-200 pb-1">
+                    <button
+                      v-for="(section, idx) in roadmapSections"
+                      :key="idx"
+                      class="rounded-t-lg px-3 py-1.5 text-xs font-medium transition-colors"
+                      :class="activeRoadmapSection === idx
+                        ? 'bg-slate-100 text-slate-900'
+                        : 'text-slate-500 hover:text-slate-700'"
+                      @click="activeRoadmapSection = idx"
+                    >
+                      {{ section.title }}
+                    </button>
+                  </div>
+                  <div class="roadmap-content prose prose-slate mt-4 max-w-none" @click="handleRoadmapClick" v-html="activeRoadmapHtml"></div>
+                </div>
+                <div v-else class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-8 text-sm leading-6 text-slate-600">
+                  roadmap 还没有生成。你现在可以先通过趋势摘要、主题结构和代表论文判断当前主库的技术重心。
+                </div>
               </div>
-              <div class="flex flex-wrap gap-2">
-                <button
-                  class="rounded-full px-4 py-2 text-sm font-medium transition"
-                  :class="canGenerateRoadmap ? 'bg-slate-900 text-white hover:bg-slate-800 disabled:bg-slate-400' : 'bg-slate-100 text-slate-400 cursor-not-allowed'"
-                  :disabled="roadmapLoading || !canGenerateRoadmap"
-                  @click="generateRoadmap()"
-                >
-                  {{ roadmapLoading ? 'Generating...' : (roadmap ? 'Refresh Roadmap' : 'Generate Roadmap') }}
-                </button>
-                <button v-if="roadmap && !roadmapLoading" class="rounded-full border border-slate-200 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50" @click="generateRoadmap(true)">
-                  Force Regenerate
-                </button>
-              </div>
-            </div>
-
-            <div v-if="!canGenerateRoadmap" class="mt-5 rounded-2xl border border-dashed border-amber-300 bg-amber-50 px-4 py-5 text-sm leading-6 text-amber-800">
-              当前主库还没有 topic model，roadmap 暂时不可生成。等主 topic model 建好以后，这里会输出“阶段划分、关键方法、关键论文和未来趋势”。
-            </div>
-            <div v-else-if="roadmapLoading" class="mt-6 flex flex-col items-center rounded-2xl border border-slate-200 bg-slate-50 px-4 py-12 text-center">
-              <div class="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-blue-600"></div>
-              <p class="mt-4 text-sm leading-6 text-slate-500">
-                Analyzing {{ formatCount(selectedLibrary.count) }} local papers across main-library topics.<br>
-                This may take 1-2 minutes depending on topic size and model latency.
-              </p>
-            </div>
-            <div v-else-if="roadmap" class="roadmap-content prose prose-slate mt-6 max-w-none" @click="handleRoadmapClick" v-html="renderedRoadmap"></div>
-            <div v-else class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-8 text-sm leading-6 text-slate-600">
-              roadmap 还没有生成。你现在可以先通过上面的趋势摘要、主题结构和代表论文判断当前主库的技术重心；确认值得后，再生成完整演化图谱。
             </div>
           </section>
         </template>
@@ -352,6 +404,21 @@ const roadmap = ref('')
 const notice = ref('')
 const errorMessage = ref('')
 const paperView = ref('top')
+const exploreTab = ref('trends')
+const activeTopicId = ref(null)
+
+const exploreTabs = [
+  { key: 'trends', label: 'Trends & Topics' },
+  { key: 'papers', label: 'Papers' },
+  { key: 'roadmap', label: 'Roadmap' },
+]
+
+const activeTopic = computed(() => {
+  if (activeTopicId.value == null && topicOverview.value.length > 0) {
+    return topicOverview.value[0]
+  }
+  return topicOverview.value.find(t => t.topic_id === activeTopicId.value) || null
+})
 
 const filteredLibraries = computed(() => {
   const query = libraryQuery.value.trim().toLowerCase()
@@ -415,13 +482,43 @@ const roadmapStatusLabel = computed(() => {
 })
 
 const normalizedRoadmap = computed(() => normalizeRoadmapMarkdown(roadmap.value))
+const activeRoadmapSection = ref(0)
 
-const renderedRoadmap = computed(() => {
-  if (!normalizedRoadmap.value) return ''
-  const html = marked.parse(normalizedRoadmap.value, { gfm: true, breaks: true })
+const roadmapSections = computed(() => {
+  const source = normalizedRoadmap.value
+  if (!source) return []
+  const parts = source.split(/^## /m)
+  const intro = parts[0].trim()
+  const sections = []
+  if (intro && !parts[1]) {
+    sections.push({ title: 'Overview', body: intro })
+    return sections
+  }
+  for (let i = 1; i < parts.length; i++) {
+    const chunk = parts[i]
+    const newlineIdx = chunk.indexOf('\n')
+    const title = newlineIdx >= 0 ? chunk.slice(0, newlineIdx).replace(/---\s*$/, '').trim() : chunk.trim()
+    const body = newlineIdx >= 0 ? chunk.slice(newlineIdx + 1).replace(/\n---\s*$/, '').trim() : ''
+    if (title) sections.push({ title, body: body || '' })
+  }
+  if (intro && sections.length) {
+    sections.unshift({ title: 'Overview', body: intro })
+  }
+  return sections
+})
+
+function renderRoadmapHtml(md) {
+  if (!md) return ''
+  const html = marked.parse(md, { gfm: true, breaks: true })
   return html.replace(/<a href="paper_id:([^"]+)">([^<]+)<\/a>/g, (match, id, text) => {
     return `<span class="paper-link cursor-pointer text-blue-600 hover:underline font-medium" data-paper-id="${id}">${text}</span>`
   })
+}
+
+const activeRoadmapHtml = computed(() => {
+  const section = roadmapSections.value[activeRoadmapSection.value]
+  if (!section) return ''
+  return renderRoadmapHtml(section.body)
 })
 
 function formatCount(value) {
@@ -556,6 +653,7 @@ async function selectLibrary(name) {
   selectedName.value = name
   selectedLibrary.value = null
   roadmap.value = ''
+  activeRoadmapSection.value = 0
   paperView.value = 'top'
   detailLoading.value = true
   errorMessage.value = ''

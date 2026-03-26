@@ -11,52 +11,157 @@
     <div v-else-if="paper" class="grid grid-cols-1 gap-8 lg:grid-cols-3">
       <div class="space-y-6 lg:col-span-2">
         <div>
-          <h1 class="text-2xl font-bold text-gray-900">{{ paper.title }}</h1>
-          <p class="mt-2 text-gray-600">{{ paper.authors?.join(', ') }}</p>
-          <p class="mt-1 text-sm text-gray-500">{{ paper.year }} · {{ paper.journal }}</p>
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h1 class="text-2xl font-bold text-gray-900">{{ paper.title }}</h1>
+              <p class="mt-2 text-gray-600">{{ paper.authors?.join(', ') }}</p>
+              <p class="mt-1 text-sm text-gray-500">{{ paper.year }} · {{ paper.journal }}</p>
+            </div>
+            <span
+              class="rounded-full border px-3 py-1 text-xs font-medium"
+              :class="paper.is_close_read ? 'border-amber-200 bg-amber-50 text-amber-700' : 'border-gray-200 bg-gray-50 text-gray-500'"
+            >
+              {{ paper.is_close_read ? '已收藏 / 精读' : '未收藏' }}
+            </span>
+          </div>
         </div>
 
-        <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-          <div class="flex items-center justify-between gap-3">
-            <div>
-              <h2 class="text-lg font-semibold text-gray-900">Summary</h2>
-              <p class="mt-1 text-xs text-gray-500">Library papers should already have a generated summary.</p>
-            </div>
-            <span class="rounded-full border px-2 py-0.5 text-xs" :class="materialClass(Boolean(summary))">Summary</span>
+        <section class="rounded-xl border border-gray-200 bg-white shadow-sm">
+          <!-- Tab bar -->
+          <div class="flex border-b border-gray-200">
+            <button
+              v-for="tab in contentTabs"
+              :key="tab.key"
+              class="relative flex items-center gap-1.5 px-5 py-3 text-sm font-medium transition-colors"
+              :class="activeTab === tab.key
+                ? 'text-blue-600 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-blue-600'
+                : 'text-gray-500 hover:text-gray-700'"
+              @click="activeTab = tab.key"
+            >
+              {{ tab.label }}
+              <span
+                class="inline-block h-1.5 w-1.5 rounded-full"
+                :class="tab.ready ? 'bg-blue-500' : 'bg-gray-300'"
+              ></span>
+            </button>
           </div>
-          <div v-if="summary" class="markdown-body prose mt-4 max-w-none" v-html="renderMarkdown(summary)"></div>
-          <p v-else class="mt-4 text-sm text-gray-500">No summary found for this paper.</p>
-        </section>
 
-        <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-          <div class="flex items-center justify-between gap-3">
-            <div>
-              <h2 class="text-lg font-semibold text-gray-900">Method</h2>
-              <p class="mt-1 text-xs text-gray-500">Method explanation generated from the parsed markdown.</p>
+          <!-- Tab panels -->
+          <div class="p-5">
+            <!-- Summary -->
+            <div v-if="activeTab === 'summary'">
+              <div v-if="summary" class="markdown-body prose max-w-none" v-html="renderMarkdown(summary)"></div>
+              <p v-else class="text-sm text-gray-500">No summary found for this paper.</p>
             </div>
-            <span class="rounded-full border px-2 py-0.5 text-xs" :class="materialClass(Boolean(method))">Method</span>
+
+            <!-- Method -->
+            <div v-if="activeTab === 'method'">
+              <div v-if="method" class="markdown-body prose max-w-none" v-html="renderMarkdown(method)"></div>
+              <p v-else class="text-sm text-gray-500">No method summary found for this paper.</p>
+            </div>
+
+            <!-- Sensemaking -->
+            <div v-if="activeTab === 'sensemaking'">
+              <div v-if="hasSensemaking" class="space-y-4">
+                <div class="grid gap-3 md:grid-cols-2">
+                  <div
+                    v-for="entry in sensemakingShiftEntries"
+                    :key="entry.label"
+                    class="rounded-lg border border-gray-200 bg-gray-50 p-4"
+                  >
+                    <div class="text-xs font-medium uppercase tracking-wide text-gray-500">{{ entry.label }}</div>
+                    <p class="mt-2 text-sm text-gray-700">{{ entry.value }}</p>
+                  </div>
+                </div>
+
+                <div v-if="sensemakingCoreClaim" class="rounded-lg border border-blue-100 bg-blue-50 p-4">
+                  <div class="text-xs font-medium uppercase tracking-wide text-blue-700">Core Claim</div>
+                  <p class="mt-2 text-sm text-blue-900">{{ sensemakingCoreClaim }}</p>
+                </div>
+
+                <div v-if="sensemakingUserPerspective" class="rounded-lg border border-purple-100 bg-purple-50 p-4">
+                  <div class="text-xs font-medium uppercase tracking-wide text-purple-700">User Perspective</div>
+                  <p class="mt-2 text-sm text-purple-900">{{ sensemakingUserPerspective }}</p>
+                </div>
+
+                <div v-if="sensemakingDelta" class="rounded-lg border border-amber-100 bg-amber-50 p-4">
+                  <div class="text-xs font-medium uppercase tracking-wide text-amber-700">Delta</div>
+                  <p class="mt-2 text-sm text-amber-900">{{ sensemakingDelta }}</p>
+                </div>
+
+                <div v-if="sensemakingOneChange" class="rounded-lg border border-green-100 bg-green-50 p-4">
+                  <div class="text-xs font-medium uppercase tracking-wide text-green-700">One Change</div>
+                  <p class="mt-2 text-sm text-green-900">{{ sensemakingOneChange }}</p>
+                </div>
+
+                <div v-if="sensemakingProbes.length" class="space-y-3">
+                  <div class="text-xs font-medium uppercase tracking-wide text-gray-500">Probe Exchange</div>
+                  <div
+                    v-for="(item, index) in sensemakingProbes"
+                    :key="index"
+                    class="rounded-lg border border-gray-200 p-4"
+                  >
+                    <p class="text-xs font-medium uppercase tracking-wide text-gray-500">Probe</p>
+                    <p class="mt-1 text-sm text-gray-800">{{ item.probe }}</p>
+                    <p class="mt-3 text-xs font-medium uppercase tracking-wide text-gray-500">Response</p>
+                    <p class="mt-1 text-sm text-gray-700">{{ item.response }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <p v-else class="text-sm text-gray-500">
+                这篇论文还没有生成 sensemaking 结果。点击右侧“收藏论文”后，会按精读流程进入生成队列。
+              </p>
+            </div>
           </div>
-          <div v-if="method" class="markdown-body prose mt-4 max-w-none" v-html="renderMarkdown(method)"></div>
-          <p v-else class="mt-4 text-sm text-gray-500">No method summary found for this paper.</p>
         </section>
       </div>
 
       <div class="lg:col-span-1">
         <div class="mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <h3 class="mb-3 font-semibold text-gray-900">Status</h3>
-          <select v-model="readStatus" class="w-full rounded-md border border-gray-300 px-3 py-2" @change="updateStatus">
-            <option value="unread">未读</option>
-            <option value="read">已读</option>
-          </select>
+          <div class="flex items-start justify-between gap-3">
+            <h3 class="font-semibold text-gray-900">Status</h3>
+            <span
+              class="rounded-full border px-2 py-0.5 text-xs"
+              :class="paper.is_close_read ? 'border-amber-200 bg-amber-50 text-amber-700' : 'border-gray-200 bg-gray-50 text-gray-500'"
+            >
+              {{ paper.is_close_read ? '精读中' : '未收藏' }}
+            </span>
+          </div>
+
+          <button
+            class="mt-4 w-full rounded-md px-3 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60"
+            :class="paper.is_close_read ? 'bg-amber-100 text-amber-800 hover:bg-amber-200' : 'bg-amber-500 text-white hover:bg-amber-600'"
+            :disabled="closeReadLoading"
+            @click="toggleCloseRead"
+          >
+            {{ closeReadLoading ? 'Updating...' : (paper.is_close_read ? '取消收藏' : '收藏论文') }}
+          </button>
+
+          <p v-if="closeReadMessage" class="mt-3 text-xs" :class="closeReadMessageClass">
+            {{ closeReadMessage }}
+          </p>
+
+          <div class="mt-4 border-t border-gray-100 pt-4">
+            <label class="mb-2 block text-sm font-medium text-gray-700">Read Status</label>
+            <button
+              class="w-full rounded-md px-3 py-2 text-sm font-medium transition-colors"
+              :class="readStatus === 'read' ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+              @click="readStatus = readStatus === 'read' ? 'unread' : 'read'; updateStatus()"
+            >
+              {{ readStatus === 'read' ? '已读 ✓' : '未读' }}
+            </button>
+          </div>
         </div>
 
         <div class="mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
           <h3 class="font-semibold text-gray-900">Materials</h3>
-          <p class="mt-1 text-xs text-gray-500">summary / method / rating</p>
+          <p class="mt-1 text-xs text-gray-500">summary / method / rating / sensemaking</p>
           <div class="mt-3 flex flex-wrap gap-2">
             <span class="rounded-full border px-2 py-0.5 text-xs" :class="materialClass(Boolean(summary))">Summary</span>
             <span class="rounded-full border px-2 py-0.5 text-xs" :class="materialClass(Boolean(method))">Method</span>
             <span class="rounded-full border px-2 py-0.5 text-xs" :class="materialClass(Boolean(paper.rating))">Rating</span>
+            <span class="rounded-full border px-2 py-0.5 text-xs" :class="materialClass(hasSensemaking)">Sensemaking</span>
           </div>
         </div>
 
@@ -176,8 +281,48 @@ const method = ref('')
 const readStatus = ref('unread')
 const newTag = ref('')
 const addingToKnowledge = ref(false)
+const closeReadLoading = ref(false)
+const closeReadMessage = ref('')
+const closeReadMessageTone = ref('info')
+const activeTab = ref('summary')
+
+const contentTabs = computed(() => [
+  { key: 'summary', label: 'Summary', ready: Boolean(summary.value) },
+  { key: 'method', label: 'Method', ready: Boolean(method.value) },
+  { key: 'sensemaking', label: 'Sensemaking', ready: hasSensemaking.value },
+])
 
 const goBack = () => navigateTo('/')
+
+const fetchJson = async (url, options = undefined) => {
+  const response = await fetch(url, options)
+  const contentType = response.headers.get('content-type') || ''
+  const payload = contentType.includes('application/json') ? await response.json() : await response.text()
+
+  if (response.ok === false) {
+    const message = typeof payload === 'object' && payload !== null
+      ? payload.message || payload.statusMessage
+      : ''
+    throw new Error(message || `Request failed (${response.status})`)
+  }
+
+  return payload
+}
+
+const applyPaperPayload = (payload) => {
+  paper.value = payload
+  readStatus.value = payload.read_status || 'unread'
+  summary.value = payload.summary || ''
+  method.value = payload.method_summary || ''
+}
+
+const syncTagState = (result, fallbackTags) => {
+  if (paper.value == null) return
+  paper.value.tags = Array.isArray(result?.tags) ? result.tags : fallbackTags
+  paper.value.is_close_read = typeof result?.is_close_read === 'boolean'
+    ? result.is_close_read
+    : (paper.value.tags || []).includes('精读')
+}
 
 const ratingClass = (score) => {
   if (score == null) return 'text-gray-400'
@@ -192,12 +337,34 @@ const materialClass = (enabled) => {
     : 'border-gray-200 bg-gray-50 text-gray-400'
 }
 
+const closeReadMessageClass = computed(() => {
+  return closeReadMessageTone.value === 'success' ? 'text-green-600' : 'text-gray-500'
+})
+
 const parsedSource = computed(() => paper.value?.parsed_source || null)
+const hasSensemaking = computed(() => Boolean(paper.value?.sensemaking))
 const parsedFieldEntries = computed(() => {
   return Object.entries(parsedSource.value?.recognized_fields || {}).map(([key, value]) => ({
     key,
     value: Array.isArray(value) ? value.join(', ') : String(value)
   }))
+})
+
+const sensemakingShiftEntries = computed(() => {
+  const reconstruction = paper.value?.sensemaking?.act3_reconstruction || {}
+  return [
+    { label: 'Before', value: reconstruction.before },
+    { label: 'After', value: reconstruction.after }
+  ].filter((entry) => keepValue(entry.value))
+})
+
+const sensemakingCoreClaim = computed(() => paper.value?.sensemaking?.act1_comprehension?.core_claim || '')
+const sensemakingUserPerspective = computed(() => paper.value?.sensemaking?.act1_comprehension?.user_perspective || '')
+const sensemakingDelta = computed(() => paper.value?.sensemaking?.act3_reconstruction?.delta || '')
+const sensemakingOneChange = computed(() => paper.value?.sensemaking?.act3_reconstruction?.one_change || '')
+const sensemakingProbes = computed(() => {
+  const exchange = paper.value?.sensemaking?.act2_collision?.probe_exchange
+  return Array.isArray(exchange) ? exchange.filter((item) => keepValue(item?.probe) || keepValue(item?.response)) : []
 })
 
 function keepValue(value) {
@@ -241,16 +408,8 @@ const overallRatingText = computed(() => {
 const loadPaper = async () => {
   try {
     const encodedId = encodeURIComponent(paperId.value)
-    const paperRes = await fetch('/api/papers/' + encodedId)
-
-    if (paperRes.ok === false) {
-      throw new Error('Failed to load paper (' + paperRes.status + ')')
-    }
-
-    paper.value = await paperRes.json()
-    readStatus.value = paper.value.read_status || 'unread'
-    summary.value = paper.value.summary || ''
-    method.value = paper.value.method_summary || ''
+    const payload = await fetchJson('/api/papers/' + encodedId)
+    applyPaperPayload(payload)
   } catch (error) {
     console.error('Failed to load paper:', error)
   } finally {
@@ -261,7 +420,7 @@ const loadPaper = async () => {
 const updateStatus = async () => {
   try {
     const encodedId = encodeURIComponent(paperId.value)
-    await fetch('/api/papers/' + encodedId + '/status', {
+    await fetchJson('/api/papers/' + encodedId + '/status', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status: readStatus.value })
@@ -272,18 +431,16 @@ const updateStatus = async () => {
 }
 
 const addTag = async () => {
-  if (newTag.value.trim() === '') return
+  if (newTag.value.trim() === '' || paper.value == null) return
   try {
     const encodedId = encodeURIComponent(paperId.value)
-    const nextTags = [...(paper.value?.tags || []), newTag.value.trim()]
-    await fetch('/api/papers/' + encodedId + '/tags', {
+    const nextTags = [...(paper.value.tags || []), newTag.value.trim()]
+    const result = await fetchJson('/api/papers/' + encodedId + '/tags', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ tags: nextTags })
     })
-    if (paper.value) {
-      paper.value.tags = nextTags
-    }
+    syncTagState(result, nextTags)
     newTag.value = ''
   } catch (error) {
     console.error('Failed to add tag:', error)
@@ -291,19 +448,51 @@ const addTag = async () => {
 }
 
 const removeTag = async (tag) => {
+  if (paper.value == null) return
   try {
     const encodedId = encodeURIComponent(paperId.value)
-    const nextTags = (paper.value?.tags || []).filter((item) => item !== tag)
-    await fetch('/api/papers/' + encodedId + '/tags', {
+    const nextTags = (paper.value.tags || []).filter((item) => item !== tag)
+    const result = await fetchJson('/api/papers/' + encodedId + '/tags', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ tags: nextTags })
     })
-    if (paper.value) {
-      paper.value.tags = nextTags
-    }
+    syncTagState(result, nextTags)
   } catch (error) {
     console.error('Failed to remove tag:', error)
+  }
+}
+
+const toggleCloseRead = async () => {
+  if (paper.value == null) return
+  closeReadLoading.value = true
+  closeReadMessage.value = ''
+
+  try {
+    const enabled = !paper.value.is_close_read
+    const encodedId = encodeURIComponent(paperId.value)
+    const result = await fetchJson('/api/papers/' + encodedId + '/close-read', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ enabled })
+    })
+
+    syncTagState(result, enabled
+      ? [...new Set([...(paper.value.tags || []), '精读'])]
+      : (paper.value.tags || []).filter((tag) => tag !== '精读'))
+
+    closeReadMessageTone.value = 'success'
+    closeReadMessage.value = enabled
+      ? (result.task_id
+        ? '已加入精读，后台开始生成 summary / method / rating / sensemaking。'
+        : '已加入精读。')
+      : '已取消收藏，这篇论文不再标记为精读。'
+  } catch (error) {
+    console.error('Failed to update close-read state:', error)
+    closeReadMessageTone.value = 'info'
+    closeReadMessage.value = '更新收藏状态失败，请稍后重试。'
+  } finally {
+    closeReadLoading.value = false
   }
 }
 
@@ -311,7 +500,7 @@ const addToKnowledge = async () => {
   if (summary.value === '') return
   addingToKnowledge.value = true
   try {
-    await fetch('/api/knowledge/from-paper', {
+    await fetchJson('/api/knowledge/from-paper', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -14,6 +14,10 @@ from scholaraio.papers import (
 from scholaraio.services.common import ServiceError, resolve_paper_dir
 
 
+CLOSE_READ_TAG = '精读'
+CLOSE_READ_GENERATION_TYPES = ['summary', 'method', 'rating', 'sensemaking']
+
+
 def _normalize_read_status(status: str | None) -> str:
     return status if status in {"unread", "read"} else "unread"
 
@@ -101,6 +105,8 @@ def get_paper_detail(cfg, paper_ref: str) -> dict:
     method_summary = read_method(paper_dir) or meta.get("method_summary") or ""
     sensemaking = read_sensemaking(paper_dir)
 
+    tags = meta.get("tags") or []
+
     return {
         "dir_name": paper_dir.name,
         "title": meta.get("title") or "",
@@ -115,7 +121,8 @@ def get_paper_detail(cfg, paper_ref: str) -> dict:
         "volume": meta.get("volume") or "",
         "issue": meta.get("issue") or "",
         "pages": meta.get("pages") or "",
-        "tags": meta.get("tags") or [],
+        "tags": tags,
+        "is_close_read": CLOSE_READ_TAG in tags,
         "read_status": _normalize_read_status(meta.get("read_status")),
         "read_at": meta.get("read_at"),
         "citation_count": best_citation(meta),
@@ -147,24 +154,44 @@ def update_paper_read_status(cfg, paper_ref: str, status: str) -> dict:
 
 def update_paper_tags(cfg, paper_ref: str, tags: list[str]) -> dict:
     paper_dir = resolve_paper_dir(cfg, paper_ref)
-    
-    # Check if '精读' is being added
+
     old_meta = read_meta(paper_dir)
     old_tags = old_meta.get("tags") or []
-    is_adding_close_read = "精读" in tags and "精读" not in old_tags
-
     cleaned = _clean_tags(tags)
-    updated = set_tags(paper_dir, cleaned)
+    is_adding_close_read = CLOSE_READ_TAG in cleaned and CLOSE_READ_TAG not in old_tags
 
-    # Trigger background generation if '精读' was added
+    updated = set_tags(paper_dir, cleaned)
+    result = {
+        "success": True,
+        "tags": updated,
+        "is_close_read": CLOSE_READ_TAG in updated,
+    }
+
     if is_adding_close_read:
         from scholaraio.services.generation_service import enqueue_generation_task
+
         try:
-            # We trigger generation for all materials when close-read is added
-            enqueue_generation_task(cfg, paper_ref, types=["summary", "method", "rating", "sensemaking"])
+            task = enqueue_generation_task(cfg, paper_ref, types=CLOSE_READ_GENERATION_TYPES)
+            result["task_id"] = task.get("task_id")
+            result["queued_types"] = list(CLOSE_READ_GENERATION_TYPES)
         except Exception as e:
-            # Log error but don't fail the tag update
             import logging
+
             logging.getLogger(__name__).error(f"Failed to enqueue generation task: {e}")
 
-    return {"success": True, "tags": updated}
+    return result
+
+
+def set_paper_close_read(cfg, paper_ref: str, enabled: bool = True) -> dict:
+    paper_dir = resolve_paper_dir(cfg, paper_ref)
+    meta = read_meta(paper_dir)
+    current_tags = _clean_tags(meta.get("tags") or [])
+
+    if enabled:
+        next_tags = current_tags if CLOSE_READ_TAG in current_tags else [*current_tags, CLOSE_READ_TAG]
+    else:
+        next_tags = [tag for tag in current_tags if tag != CLOSE_READ_TAG]
+
+    result = update_paper_tags(cfg, paper_ref, next_tags)
+    result["close_read"] = bool(enabled)
+    return result

@@ -4,7 +4,7 @@
 <!-- <img src="docs/assets/logo.png" width="200" alt="ScholarAIO Logo"> -->
 
 # ScholarAIO
-
+https://github.com/ZimoLiao/scholaraio 
 **Scholar All-In-One — a knowledge infrastructure for AI agents.**
 
 [English](README.md) | [中文](README_CN.md)
