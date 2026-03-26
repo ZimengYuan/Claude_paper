@@ -26,113 +26,6 @@
       </div>
     </div>
 
-    <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-6">
-        <label class="block text-sm font-medium text-gray-700">
-          <span class="mb-1 block">Mode</span>
-          <select v-model="filters.mode" class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm">
-            <option value="citation">Citation Graph</option>
-            <option value="structure">Structure Graph</option>
-            <option value="topic">Topic Graph</option>
-          </select>
-        </label>
-
-        <label class="block text-sm font-medium text-gray-700">
-          <span class="mb-1 block">Scope</span>
-          <select v-model="filters.scope" class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm">
-            <option value="library">Library</option>
-            <option value="project">Project</option>
-            <option value="paper">Paper</option>
-          </select>
-        </label>
-
-        <label class="block text-sm font-medium text-gray-700" :class="{ 'opacity-50': filters.scope !== 'project' }">
-          <span class="mb-1 block">Project</span>
-          <select
-            v-model="filters.project"
-            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-            :disabled="filters.scope !== 'project' || projects.length === 0"
-          >
-            <option value="">{{ projects.length ? 'Select a project' : 'No projects' }}</option>
-            <option v-for="project in projects" :key="project.name" :value="project.name">
-              {{ project.name }} ({{ project.paper_count }})
-            </option>
-          </select>
-        </label>
-
-        <label class="block text-sm font-medium text-gray-700" :class="{ 'opacity-50': filters.scope !== 'paper' }">
-          <span class="mb-1 block">Paper Ref</span>
-          <input
-            v-model.trim="filters.paperRef"
-            type="text"
-            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-            :disabled="filters.scope !== 'paper'"
-            placeholder="dir_name / UUID / DOI"
-          >
-        </label>
-
-        <label class="block text-sm font-medium text-gray-700" :class="{ 'opacity-50': filters.mode !== 'structure' }">
-          <span class="mb-1 block">Min Shared</span>
-          <input
-            v-model.number="filters.minShared"
-            type="number"
-            min="1"
-            max="20"
-            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-            :disabled="filters.mode !== 'structure'"
-          >
-        </label>
-
-        <label class="block text-sm font-medium text-gray-700">
-          <span class="mb-1 block">Max Nodes</span>
-          <input
-            v-model.number="filters.maxNodes"
-            type="number"
-            min="5"
-            max="300"
-            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-          >
-        </label>
-      </div>
-
-      <div v-if="filters.mode === 'structure'" class="mt-4 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3">
-        <div class="flex items-start justify-between gap-3">
-          <div>
-            <div class="text-sm font-medium text-slate-900">Edge Threshold</div>
-            <div class="mt-1 text-xs text-slate-500">
-              Hide weaker structure links by weight so community clusters stand out more clearly.
-            </div>
-          </div>
-          <button
-            class="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
-            :disabled="thresholdBounds.max <= 0"
-            @click="resetThreshold"
-          >
-            Show All
-          </button>
-        </div>
-
-        <div class="mt-3 flex items-center gap-4">
-          <input
-            v-model.number="structureThreshold"
-            type="range"
-            class="w-full accent-slate-700"
-            :min="thresholdBounds.min"
-            :max="thresholdBounds.max"
-            :step="thresholdBounds.step"
-            :disabled="thresholdBounds.max <= 0"
-          >
-          <div class="w-24 rounded-md border border-slate-200 bg-white px-3 py-2 text-right text-sm font-medium text-slate-700">
-            {{ thresholdDisplay }}
-          </div>
-        </div>
-      </div>
-
-      <p class="mt-3 text-xs text-gray-500">
-        Citation Graph shows who cites whom. Structure Graph merges direct citations with shared references into a paper-to-paper map. Topic Graph shows BERTopic clusters and related-topic links.
-      </p>
-    </div>
-
     <div v-if="errorMessage" class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
       {{ errorMessage }}
     </div>
@@ -141,20 +34,20 @@
       {{ infoMessage }}
     </div>
 
-    <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr),320px]">
+    <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr),340px]">
       <ClientOnly>
         <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-          <div v-if="loading" class="flex h-[680px] items-center justify-center">
+          <div v-if="loading" class="flex h-[800px] items-center justify-center">
             <div class="h-12 w-12 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600"></div>
           </div>
-          <div v-else-if="nodeCount === 0" class="flex h-[680px] items-center justify-center text-center text-sm text-gray-500">
+          <div v-else-if="nodeCount === 0" class="flex h-[800px] items-center justify-center text-center text-sm text-gray-500">
             No graph data available for this scope.
           </div>
-          <div v-else ref="graphContainer" class="h-[680px] w-full"></div>
+          <div v-else ref="graphContainer" class="h-[800px] w-full"></div>
         </div>
         <template #fallback>
           <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-            <div class="flex h-[680px] items-center justify-center">
+            <div class="flex h-[800px] items-center justify-center">
               <div class="h-12 w-12 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600"></div>
             </div>
           </div>
@@ -162,6 +55,101 @@
       </ClientOnly>
 
       <div class="space-y-4">
+        <!-- Control Panel -->
+        <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+          <h2 class="text-sm font-semibold text-gray-900 mb-4">Graph Controls</h2>
+          
+          <div class="space-y-4">
+            <label class="block text-sm font-medium text-gray-700">
+              <span class="mb-1 block">Mode</span>
+              <select v-model="filters.mode" class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50">
+                <option value="citation">Citation Graph</option>
+                <option value="structure">Structure Graph</option>
+                <option value="topic">Topic Graph</option>
+              </select>
+            </label>
+
+            <label class="block text-sm font-medium text-gray-700">
+              <span class="mb-1 block">Scope</span>
+              <select v-model="filters.scope" class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50">
+                <option value="library">Library</option>
+                <option value="project">Project</option>
+                <option value="paper">Paper</option>
+              </select>
+            </label>
+
+            <label v-if="filters.scope === 'project'" class="block text-sm font-medium text-gray-700">
+              <span class="mb-1 block">Project</span>
+              <select
+                v-model="filters.project"
+                class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50"
+              >
+                <option value="">{{ projects.length ? 'Select a project' : 'No projects' }}</option>
+                <option v-for="project in projects" :key="project.name" :value="project.name">
+                  {{ project.name }} ({{ project.paper_count }})
+                </option>
+              </select>
+            </label>
+
+            <label v-if="filters.scope === 'paper'" class="block text-sm font-medium text-gray-700">
+              <span class="mb-1 block">Paper Ref</span>
+              <input
+                v-model.trim="filters.paperRef"
+                type="text"
+                class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50"
+                placeholder="dir_name / UUID / DOI"
+              >
+            </label>
+
+            <div class="grid grid-cols-2 gap-3">
+              <label class="block text-sm font-medium text-gray-700" :class="{ 'opacity-50': filters.mode !== 'structure' }">
+                <span class="mb-1 block">Min Shared</span>
+                <input
+                  v-model.number="filters.minShared"
+                  type="number"
+                  min="1"
+                  max="20"
+                  class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50"
+                  :disabled="filters.mode !== 'structure'"
+                >
+              </label>
+
+              <label class="block text-sm font-medium text-gray-700">
+                <span class="mb-1 block">Max Nodes</span>
+                <input
+                  v-model.number="filters.maxNodes"
+                  type="number"
+                  min="5"
+                  max="300"
+                  class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50"
+                >
+              </label>
+            </div>
+            
+            <div v-if="filters.mode === 'structure'" class="rounded-lg border border-slate-200 bg-slate-50 p-3 mt-2 text-xs">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-medium text-slate-700">Edge Threshold</span>
+                <span class="font-bold text-slate-900">{{ thresholdDisplay }}</span>
+              </div>
+              <input
+                v-model.number="structureThreshold"
+                type="range"
+                class="w-full accent-slate-700 mb-2"
+                :min="thresholdBounds.min"
+                :max="thresholdBounds.max"
+                :step="thresholdBounds.step"
+                :disabled="thresholdBounds.max <= 0"
+              >
+              <button
+                class="w-full rounded border border-slate-300 bg-white py-1 px-2 text-center text-slate-600 hover:bg-slate-100 disabled:opacity-50"
+                :disabled="thresholdBounds.max <= 0"
+                @click="resetThreshold"
+              >
+                Reset to Show All
+              </button>
+            </div>
+          </div>
+        </div>
         <div class="grid grid-cols-2 gap-3">
           <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
             <div class="text-2xl font-semibold text-gray-900">{{ nodeCount }}</div>

@@ -1,12 +1,7 @@
 name: Documentation
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "docs/**"
-      - "mkdocs.yml"
-      - "scholaraio/**"
+  workflow_dispatch:
 
 permissions:
   contents: read

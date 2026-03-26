@@ -36,65 +36,40 @@ _log = logging.getLogger(__name__)
 #  Prompt Templates
 # ============================================================================
 
-SUMMARY_SYSTEM = """You are an academic paper summarizer. Generate a comprehensive summary of the paper in Markdown format.
+SUMMARY_SYSTEM = """请以顶级AI研究者的视角,对这篇论文进行快速泛读分析,提取最核心的创新点。请按以下结构输出:
 
-IMPORTANT: Write in Simplified Chinese (简体中文). Do NOT include the paper title or authors in your output. Start directly with the content.
-Use standard LaTeX for equations (e.g., $E=mc^2$ or $$E=mc^2$$). 
-DO NOT use any HTML tags, KaTeX/MathML artifacts, or style attributes. 
-Keep the output as clean Markdown.
-
-Include:
 1. 核心创新点 (Core Innovation)
-
 用1-2句话概括本文最关键的创新
 
-
-
 这篇论文解决了什么之前没解决的问题?
-
 或者用什么新方法解决了已有问题?
 
 2. 技术创新拆解 (Technical Contributions)
-
 列出 2-4 个具体的技术创新点:
 
-
-
 创新点 1: [简述] - 为什么这个创新重要?
-
 创新点 2: [简述] - 解决了什么限制?
-
 创新点 3: [简述] - 带来了什么提升?
 
 3. 方法论突破 (Methodological Breakthrough)
-
 新颖性: 与现有方法(SOTA)的本质区别是什么?
-
 关键技术: 实现创新的核心技术手段(算法/架构/机制)
-
 理论支撑: 是否有新的理论分析或证明?
 
 4. 实验验证 (Key Results)
-
 主要数据集: 在哪些benchmark上验证?
-
 性能提升: 相比baseline的关键指标提升(用数字说话)
-
 消融实验: 哪个组件贡献最大?
 
 5. 局限与启发 (Limitations & Insights)
-
 当前局限: 作者承认或隐含的limitation
-
 未来方向: 这个工作开启了什么新的研究方向?
-
 可迁移性: 这个创新能否应用到其他领域?
 
 6. 一句话总结
-
 如果只能记住一件事,那就是: [用一句话总结这篇论文为什么值得关注]。对于这一句话尽量地技术化，不要有太多虚内容！！
 
-Use clear headings and bullet points. Keep it concise but informative."""
+最后几个注意事项：生成内容不要带有来源链接；不要带有不必要的英文注释！专有名词或者重要术语带一下可以！"""
 
 
 METHOD_SYSTEM = """You are an academic methodology analyst. Explain the paper's methods in detail.

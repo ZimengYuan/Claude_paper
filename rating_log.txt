@@ -1,0 +1,979 @@
+nohup: 忽略输入
+
+2ae4fa55-b1b9-4ec5-99c6-3237eb4b6882
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+35039b19-3e2b-410a-8757-2ef4b49053a7
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+5201da0b-6797-42f8-9dee-a87618e7b2e2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+59bda03b-b238-427f-9245-ba01c8e964bd
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+5ed9fa9c-5bf7-40ca-81fb-c58d97483124
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+6053f444-c50b-40ca-a064-5e2f6562115d
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+608f86a4-8d7a-4563-8d30-76fc6ec4f1b3
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+6716a708-7e3e-451c-98b8-dc991c19a143
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+75bb705f-7927-4fe2-9570-8f0d87dc4da3
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+8aadef1e-66cb-4668-ace6-f3ba8482db55
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+91a35c2e-a527-4ae9-ae81-85cf41e0b346
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Abe-2026-Cross-Embodiment-Offline-Reinforcement-Learning-for-Heterogeneous-Robot-Datasets
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.83
+
+Aberman-2020-Unpaired-motion-style-transfer-from-video-to-animation
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8
+
+Ai-2025-A-review-of-learning-based-dynamics-models-for-robotic-manipulation
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.23
+
+Anand-2025-Closing-the-Sim2Real-Performance-Gap-in-RL
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.35
+
+Anker-2025-Towards-Quadrupedal-Jumping-and-Walking-for-Dynamic-Locomotion-using-Reinforcement-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.8
+
+Ankile-2025-Residual-Off-Policy-RL-for-Finetuning-Behavior-Cloning-Policies
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.95
+
+Asai-2025-Variable-Impedance-Muscle-Coordination-under-Slow-Rate-Control-Frequencies-and-Limited-Observation-Conditions-Evaluated-through-Legged-Locomotion
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.9
+
+Aswin-Nahrendra-2023-DreamWaQ-Learning-Robust-Quadrupedal-Locomotion-With-Implicit-Terrain-Imagination-via-Deep-Reinforcement-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.15
+
+Atamuradov-2025-Learning-Adaptive-Neural-Teleoperation-for-Humanoid-Robots-From-Inverse-Kinematics-to-End-to-End-Control
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.6
+
+Azulay-2026-VIGOR-Visual-Goal-In-Context-Inference-for-Unified-Humanoid-Fall-Safety
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.15
+
+B-2025-Real-Time-Gait-Adaptation-for-Quadrupeds-using-Model-Predictive-Control-and-Reinforcement-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Bank-2026-A-Hybrid-Autoencoder-for-Robust-Heightmap-Generation-from-Fused-Lidar-and-Depth-Data-for-Humanoid-Robot-Locomotion
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.75
+
+Bao-2024-Deep-Reinforcement-Learning-for-Bipedal-Locomotion-A-Brief-Survey
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.8
+
+Bao-2025-Deep-reinforcement-learning-for-robotic-bipedal-locomotion-a-brief-survey
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Bao-2025-Sim-to-Real-Transfer-in-Deep-Reinforcement-Learning-for-Bipedal-Locomotion
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.0
+
+Bellegarda-2023-Robust-Quadruped-Jumping-via-Deep-Reinforcement-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.4
+
+Bellegarda-2024-Robust-quadruped-jumping-via-deep-reinforcement-learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Ben-2025-Gallant-Voxel-Grid-based-Humanoid-Locomotion-and-Local-navigation-across-3D-Constrained-Terrains
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.7
+
+Bjelonic-2025-Towards-bridging-the-gap-Systematic-sim-to-real-transfer-for-diverse-legged-robots
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.2
+
+Bohm-2023-Feature-Extraction-for-Effective-and-Efficient-Deep-Reinforcement-Learning-on-Real-Robotic-Platforms
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.6
+
+Booker-2023-Switching-Attention-in-Time-Varying-Environments-via-Bayesian-Inference-of-Abstractions
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.4
+
+Bu-2025-Learning-to-Act-Anywhere-with-Task-centric-Latent-Actions
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Bu-2025-UniVLA-Learning-to-Act-Anywhere-with-Task-centric-Latent-Actions
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.4
+
+Byrd-2026-AdaptManip-Learning-Adaptive-Whole-Body-Object-Lifting-and-Delivery-with-Online-Recurrent-State-Estimation
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.8
+
+Cao-2026-HiWET-Hierarchical-World-Frame-End-Effector-Tracking-for-Long-Horizon-Humanoid-Loco-Manipulation
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.15
+
+Capuano-2025-Robot-Learning-A-Tutorial
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 4.75
+
+Carroll-2023-Agile-and-Versatile-Robot-Locomotion-via-Kernel-based-Residual-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.4
+
+Carroll-2026-SCDP-Learning-Humanoid-Locomotion-from-Partial-Observations-via-Mixed-Observation-Distillation
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.35
+
+Cha-2025-Sim-to-Real-of-Humanoid-Locomotion-Policies-via-Joint-Torque-Space-Perturbation-Injection
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.95
+
+Chan-2024-Tutorial-on-Diffusion-Models-for-Imaging-and-Vision
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Chan-2025-Tutorial-on-Diffusion-Models-for-Imaging-and-Vision
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 5.0
+
+Changsheng-2025-AutoOdom-Learning-Auto-regressive-Proprioceptive-Odometry-for-Legged-Locomotion
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.55
+
+Chen-2021-Optimized-Method-for-Planning-and-Controlling-the-Somersault-Motion-of-Quadruped-Robot
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.85
+
+Chen-2022-TransDreamer-Reinforcement-Learning-with-Transformer-World-Models
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.55
+
+Chen-2023-Traffic-Prediction-Assisted-Federated-Deep-Reinforcement-Learning-for-Service-Migration-in-Digital-Twins-Enabled-MEC-Networks
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.85
+
+Chen-2025-CHIP-Adaptive-Compliance-for-Humanoid-Control-through-Hindsight-Perturbation
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.1
+
+Chen-2025-GMT-General-Motion-Tracking-for-Humanoid-Whole-Body-Control
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.95
+
+Chen-2025-HiFAR-Multi-Stage-Curriculum-Learning-for-High-Dynamics-Humanoid-Fall-Recovery
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Chen-2026-Learning-Human-Like-Badminton-Skills-for-Humanoid-Robots
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.9
+
+Chen-2026-Rhythm-Learning-Interactive-Whole-Body-Control-for-Dual-Humanoids
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.85
+
+Cheng-2023-Legs-as-Manipulator-Pushing-Quadrupedal-Agility-Beyond-Locomotion
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.65
+
+Cui-2024-AnySkill-Learning-Open-Vocabulary-Physical-Skill-for-Interactive-Agents
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.15
+
+Cui-2024-AnySkill-Learning-Open-Vocabulary-Physical-Skill-for-Interactive-Agents-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Cui-2025-GROVE-A-Generalized-Reward-for-Learning-Open-Vocabulary-Physical-Skill
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.1
+
+Cui-2025-GROVE-A-Generalized-Reward-for-Learning-Open-Vocabulary-Physical-Skill-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Cui-2026-Diverse-Skill-Discovery-for-Quadruped-Robots-via-Unsupervised-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.1
+
+Dai-2026-Walk-the-PLANC-Physics-Guided-RL-for-Agile-Humanoid-Locomotion-on-Constrained-Footholds
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.4
+
+Dhedin-2023-Visual-Inertial-and-Leg-Odometry-Fusion-for-Dynamic-Locomotion
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.0
+
+Dhedin-2026-DynaRetarget-Dynamically-Feasible-Retargeting-using-Sampling-Based-Trajectory-Optimization
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.15
+
+Dong-2025-HAFO-A-Force-Adaptive-Control-Framework-for-Humanoid-Robots-in-Intense-Interaction-Environments
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7
+
+Dong-2026-Co-jump-Cooperative-Jumping-with-Quadrupedal-Robots-via-Multi-Agent-Reinforcement-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.5
+
+Dong-2026-Learning-Smooth-Time-Varying-Linear-Policies-with-an-Action-Jacobian-Penalty
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.6
+
+Du-2025-Learning-Human-Humanoid-Coordination-for-Collaborative-Object-Carrying
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.35
+
+Duan-2024-Learning-Vision-Based-Bipedal-Locomotion-for-Challenging-Terrain
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.4
+
+Duan-2024-Learning-Vision-Based-Bipedal-Locomotion-for-Challenging-Terrain-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Dugar-2025-Learning-Multi-Modal-Whole-Body-Control-for-Real-World-Humanoid-Robots
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.5
+
+Dugar-2025-Learning-Multi-Modal-Whole-Body-Control-for-Real-World-Humanoid-Robots-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Elsayed-2024-Streaming-Deep-Reinforcement-Learning-Finally-Works
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.65
+
+Escontrela-2025-GaussGym-An-open-source-real-to-sim-framework-for-learning-locomotion-from-pixels
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8
+
+Exarchos-2021-Policy-Transfer-via-Kinematic-Domain-Randomization-and-Adaptation
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.85
+
+Fan-2025-Pretraining-in-Actor-Critic-Reinforcement-Learning-for-Robot-Motion-Control
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.15
+
+Farrahi-2025-Learning-Without-Time-Based-Embodiment-Resets-in-Soft-Actor-Critic
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.25
+
+Feng-2023-GPF-BG-A-Hierarchical-Vision-Based-Planning-Framework-for-Safe-Quadrupedal-Navigation
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.35
+
+Feng-2026-Biomechanical-Comparisons-Reveal-Divergence-of-Human-and-Humanoid-Gaits
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.8
+
+Freitag-2026-Decoupling-Task-and-Behavior-A-Two-Stage-Reward-Curriculum-in-Reinforcement-Learning-for-Robotics
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.95
+
+Fu-2026-DemoHLM-From-One-Demonstration-to-Generalizable-Humanoid-Loco-Manipulation
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Fuchioka-2023-OPT-Mimic-Imitation-of-Optimized-Trajectories-for-Dynamic-Quadruped-Behaviors
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.75
+
+Gangapurwala-2021-Real-Time-Trajectory-Adaptation-for-Quadrupedal-Locomotion-using-Deep-Reinforcement-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.35
+
+Gao-2025-Arcadia-Toward-a-Full-Lifecycle-Framework-for-Embodied-Lifelong-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.1
+
+Gong-2025-AnyTask-an-Automated-Task-and-Data-Generation-Framework-for-Advancing-Sim-to-Real-Policy-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.2
+
+Grandia-2024-Design-and-Control-of-a-Bipedal-Robotic-Character
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.9
+
+Gu-2024-Advancing-Humanoid-Locomotion-Mastering-Challenging-Terrains-with-Denoising-World-Model-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.15
+
+Gu-2024-Advancing-Humanoid-Locomotion-Mastering-Challenging-Terrains-with-Denoising-World-Model-Learning-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Gu-2024-Humanoid-Gym-Reinforcement-Learning-for-Humanoid-Robot-with-Zero-Shot-Sim2Real-Transfer
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.85
+
+Gu-2024-Mamba-Linear-Time-Sequence-Modeling-with-Selective-State-Spaces
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 9.05
+
+Gu-2026-REFINE-DP-Diffusion-Policy-Fine-tuning-for-Humanoid-Loco-manipulation-via-Reinforcement-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.9
+
+Gullich-2025-Recent-discoveries-on-the-acquisition-of-the-highest-levels-of-human-performance
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 5.55
+
+Ha-2024-Learning-based-legged-locomotion-state-of-the-art-and-future-perspectives
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6
+
+Ha-2025-Learning-based-legged-locomotion-State-of-the-art-and-future-perspectives
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Ham-2025-Dual-MPC-Footstep-Planning-for-Robust-Quadruped-Locomotion
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.55
+
+Han-2024-ReinDiffuse-Crafting-Physically-Plausible-Motions-with-Reinforced-Diffusion-Model
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.7
+
+Han-2025-ReinDiffuse-Crafting-Physically-Plausible-Motions-with-Reinforced-Diffusion-Model
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Han-2026-HUSKY-Humanoid-Skateboarding-System-via-Physics-Aware-Whole-Body-Control
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.25
+
+Han-2026-PMG-Parameterized-Motion-Generator-for-Human-like-Locomotion-Control
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.3
+
+Haolin-2025-Gait-Adaptive-Perceptive-Humanoid-Locomotion-with-Real-Time-Under-Base-Terrain-Reconstruction
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.9
+
+Hausdorfer-2025-Latent-Action-Priors-for-Locomotion-with-Deep-Reinforcement-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.95
+
+He-2025-FALCON-Actively-Decoupled-Visuomotor-Policies-for-Loco-Manipulation-with-Foundation-Model-Based-Coordination
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.65
+
+He-2025-Learning-Getting-Up-Policies-for-Real-World-Humanoid-Robots
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.6
+
+He-2025-Learning-Getting-Up-Policies-for-Real-World-Humanoid-Robots-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+He-2025-VIRAL-Visual-Sim-to-Real-at-Scale-for-Humanoid-Loco-Manipulation
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.73
+
+He-2026-CLASH-Collision-Learning-via-Augmented-Sim-to-real-Hybridization-to-Bridge-the-Reality-Gap
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.8
+
+Ho-2020-Denoising-Diffusion-Probabilistic-Models
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 9.45
+
+Hu-2024-Toward-General-Purpose-Robots-via-Foundation-Models-A-Survey-and-Meta-Analysis
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.1
+
+Huang-2024-DiffuseLoco-Real-Time-Legged-Locomotion-Control-with-Diffusion-from-Offline-Datasets
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.35
+
+Huang-2024-Diffusion-Reward-Learning-Rewards-via-Conditional-Video-Diffusion
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.05
+
+Huang-2025-Diffusion-Reward-Learning-Rewards-via-Conditional-Video-Diffusion
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Huang-2025-One-shot-Humanoid-Whole-body-Motion-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.25
+
+Huang-2025-Think-on-Your-Feet-Seamless-Transition-Between-Human-Like-Locomotion-in-Response-to-Changing-Commands
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Huang-2025-Think-on-your-feet-Seamless-Transition-between-Human-like-Locomotion-in-Response-to-Changing-Commands
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.45
+
+Huang-2025-Towards-Adaptable-Humanoid-Control-via-Adaptive-Motion-Tracking
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.3
+
+Huang-2026-ECO-Energy-Constrained-Optimization-with-Reinforcement-Learning-for-Humanoid-Walking
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.6
+
+Huang-2026-Learning-Whole-Body-Human-Humanoid-Interaction-from-Human-Human-Demonstrations
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.95
+
+Huang-2026-SteadyTray-Learning-Object-Balancing-Tasks-in-Humanoid-Tray-Transport-via-Residual-Reinforcement-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.205
+
+Hwan-2023-Benchmarking-Potential-Based-Rewards-for-Learning-Humanoid-Locomotion
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.05
+
+Hwangbo-2019-Learning-agile-and-dynamic-motor-skills-for-legged-robots
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.65
+
+Iscen-2021-Learning-Agile-Locomotion-Skills-with-a-Mentor
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.65
+
+Jenelten-2024-DTC-Deep-Tracking-Control
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.925
+
+Jeon-2023-Benchmarking-Potential-Based-Rewards-for-Learning-Humanoid-Locomotion
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.75
+
+Jeon-2025-Residual-MPC-Blending-Reinforcement-Learning-with-GPU-Parallelized-Model-Predictive-Control
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.85
+
+Ji-2024-StyleVR-Stylizing-Character-Animations-With-Normalizing-Flows
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.8
+
+Jia-2026-Action-to-Action-Flow-Matching
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.05
+
+Jiang-2025-WholeBodyVLA-Towards-Unified-Latent-VLA-for-Whole-Body-Loco-Manipulation-Control
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.85
+
+Juravsky-2022-PADL-Language-Directed-Physics-Based-Character-Control
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.1
+
+Karunratanakul-2024-Optimizing-Diffusion-Noise-Can-Serve-As-Universal-Motion-Priors
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.85
+
+Karunratanakul-2024-Optimizing-Diffusion-Noise-Can-Serve-As-Universal-Motion-Priors-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Kim-2024-Stage-Wise-Reward-Shaping-for-Acrobatic-Robots-A-Constrained-Multi-Objective-Reinforcement-Learning-Approach
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.35
+
+Kim-2025-FreeMusco-Motion-Free-Learning-of-Latent-Control-for-Morphology-Adaptive-Locomotion-in-Musculoskeletal-Characters
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.95
+
+Kim-2025-FreeMusco-Motion-Free-Learning-of-Latent-Control-for-Morphology-Adaptive-Locomotion-in-Musculoskeletal-Characters-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Kim-2025-PhysicsFC-Learning-User-Controlled-Skills-for-a-Physics-Based-Football-Player-Controller
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.2
+
+Kim-2025-Stage-Wise-Reward-Shaping-for-Acrobatic-Robots-A-Constrained-Multi-Objective-Reinforcement-Learning-Approach
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Kim-2025-Switch-JustDance-Benchmarking-Whole-Body-Motion-Tracking-Policies-Using-a-Commercial-Console-Game
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.0
+
+Kong-2026-Learning-Soccer-Skills-for-Humanoid-Robots-A-Progressive-Perception-Action-Framework
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.4
+
+Kulkarni-2025-Learning-Neural-Observer-Predictor-Models-for-Limb-level-Sampling-based-Locomotion-Planning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.15
+
+Learning-2026-1Introduction
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Lee-2024-Integrating-Model-Based-Footstep-Planning-with-Model-Free-Reinforcement-Learning-for-Dynamic-Legged-Locomotion
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.85
+
+Lee-2024-Integrating-Model-Based-Footstep-Planning-with-Model-Free-Reinforcement-Learning-for-Dynamic-Legged-Locomotion-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Lee-2025-PHUMA-Physically-Grounded-Humanoid-Locomotion-Dataset
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.35
+
+Lee-2025-SimBa-Simplicity-Bias-for-Scaling-Up-Parameters-in-Deep-Reinforcement-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.85
+
+Lee-2026-TOLEBI-Learning-Fault-Tolerant-Bipedal-Locomotion-via-Online-Status-Estimation-and-Fallibility-Rewards
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.05
+
+Lei-2026-Primary-Fine-Decoupling-for-Action-Generation-in-Robotic-Imitation
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.15
+
+Li-2023-Dynamic-Locomotion-of-a-Quadruped-Robot-with-Active-Spine-via-Model-Predictive-Control
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.1
+
+Li-2023-Versatile-Skill-Control-via-Self-supervised-Adversarial-Imitation-of-Unlabeled-Mixed-Motions
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.0
+
+Li-2024-Agile-and-versatile-bipedal-robot-tracking-control-through-reinforcement-learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.1
+
+Li-2024-COIN-Control-Inpainting-Diffusion-Prior-for-Human-and-Camera-Motion-Estimation
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.15
+
+Li-2025-BFM-Zero-A-Promptable-Behavioral-Foundation-Model-for-Humanoid-Control-Using-Unsupervised-Reinforcement-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.05
+
+Li-2025-COIN-Control-Inpainting-Diffusion-Prior-for-Human-and-Camera-Motion-Estimation
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Li-2025-From-Language-to-Locomotion-Retargeting-free-Humanoid-Control-via-Motion-Latent-Guidance
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.85
+
+Li-2025-Learning-to-Control-Physically-simulated-3D-Characters-via-Generating-and-Mimicking-2D-Motions
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.35
+
+Li-2025-Thor-Towards-Human-Level-Whole-Body-Reactions-for-Intense-Contact-Rich-Environments
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.4
+
+Li-2026-HAIC-Humanoid-Agile-Object-Interaction-Control-via-Dynamics-Aware-World-Model
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.15
+
+Li-2026-OmniClone-engineering-a-robust-all-rounder-whole-body-humanoid-teleoperation-system
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.05
+
+Li-2026-OmniTrack-General-Motion-Tracking-via-Physics-Consistent-Reference
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.85
+
+Li-2026-One-Step-Flow-Policy-Self-Distillation-for-Fast-Visuomotor-Policies
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.0
+
+Li-2026-TeleGate-Whole-Body-Humanoid-Teleoperation-via-Gated-Expert-Selection-with-Motion-Prior
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.15
+
+Liang-2025-Bootstrap-Dynamic-Aware-3D-Visual-Representation-for-Scalable-Robot-Learning
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.15
+
+Liang-2025-CLAM-Continuous-Latent-Action-Models-for-Robot-Learning-from-Unlabeled-Demonstrations
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.75
+
+Liang-2026-InterReal-A-Unified-Physics-Based-Imitation-Framework-for-Learning-Human-Object-Interaction-Skills
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.5
+
+Liao-2024-Berkeley-Humanoid-A-Research-Platform-for-Learning-based-Control
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.25
+
+Liao-2025-Berkeley-Humanoid-A-Research-Platform-for-Learning-Based-Control
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Liao-2025-BeyondMimic-From-Motion-Tracking-to-Versatile-Humanoid-Control-via-Guided-Diffusion
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 8.15
+
+Lim-2025-BRIC-Bridging-Kinematic-Plans-and-Physical-Control-at-Test-Time
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.95
+
+Lim-2026-BRIC-Bridging-Kinematic-Plans-and-Physical-Control-at-Test-Time
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Lin-2025-H-Zero-Cross-Humanoid-Locomotion-Pretraining-Enables-Few-shot-Novel-Embodiment-Transfer
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 6.65
+
+Lin-2025-Latent-Zoning-Network-A-Unified-Principle-for-Generative-Modeling-Representation-Learning-and-Classification
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.63
+
+Lin-2026-LessMimic-Long-Horizon-Humanoid-Interaction-with-Unified-Distance-Field-Representations
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.93
+
+Lin-2026-Pro-HOI-Perceptive-Root-guided-Humanoid-Object-Interaction
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.4
+
+Lionar-2026-TeamHOI-Learning-a-Unified-Policy-for-Cooperative-Human-Object-Interactions-with-Any-Team-Size
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.7
+
+Liu-2020-Riemannian-Denoising-Diffusion-Probabilistic-Models
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Liu-2024-Visual-Whole-Body-Control-for-Legged-Loco-Manipulation
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.3
+
+Liu-2025-Commanding-Humanoid-by-Free-form-Language-A-Large-Language-Action-Model-with-Unified-Motion-Vocabulary
+Rating already exists, skipping (use force=True to overwrite)
+Rating: 7.6
+
+Liu-2025-Ego-Vision-World-Model-for-Humanoid-Contact-Planning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Liu-2025-Humanoid-Whole-Body-Badminton-via-Multi-Stage-Reinforcement-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Liu-2026-Beyond-Motion-Imitation-Is-Human-Motion-Data-Alone-Sufficient-to-Explain-Gait-Control-and-Biomechanics
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Liu-2026-FastStair-Learning-to-Run-Up-Stairs-with-Humanoid-Robots
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Liu-2026-GeoLoco-Leveraging-3D-Geometric-Priors-from-Visual-Foundation-Model-for-Robust-RGB-Only-Humanoid-Locomotion
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Liu-2026-Scaling-Tasks-Not-Samples-Mastering-Humanoid-Control-through-Multi-Task-Model-Based-Reinforcement-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Liu-2026-Scaling_Tasks_Not_Samples
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Lowe-2020-Multi-Agent-Actor-Critic-for-Mixed-Cooperative-Competitive-Environments
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Lu-2025-GentleHumanoid-Learning-Upper-body-Compliance-for-Contact-rich-Human-and-Object-Interaction
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Lukas-2025-Whole-Body-Inverse-Dynamics-MPC-for-Legged-Loco-Manipulation
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Luo-2022-Understanding-Diffusion-Models-A-Unified-Perspective
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Luo-2023-Perpetual-Humanoid-Control-for-Real-time-Simulated-Avatars
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Luo-2023-Perpetual-Humanoid-Control-for-Real-time-Simulated-Avatars-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Luo-2023-Universal-Humanoid-Motion-Representations-for-Physics-Based-Control
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Luo-2024-PIE-Parkour-With-Implicit-Explicit-Learning-Framework-for-Legged-Robots
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Luo-2024-PIE-Parkour-with-Implicit-Explicit-Learning-Framework-for-Legged-Robots
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Luo-2025-AutoOdom-Learning-Auto-regressive-Proprioceptive-Odometry-for-Legged-Locomotion
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Luo-2025-SONIC-Supersizing-Motion-Tracking-for-Natural-Humanoid-Whole-Body-Control
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Luo-2026-Look-Forward-to-Walk-Backward-Efficient-Terrain-Memory-for-Backward-Locomotion-with-Forward-Vision
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Lyu-2026-LDA-1B-Scaling-Latent-Dynamics-Action-Model-via-Universal-Embodied-Data-Ingestion
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Ma-2026-CMoE-Contrastive-Mixture-of-Experts-for-Motion-Control-and-Terrain-Adaptation-of-Humanoid-Robots
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Malhotra-2025-Humanoid-Motion-Scripting-with-Postural-Synergies
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Malhotra-2025-Humanoid-Motion-Scripting-with-Postural-Synergies-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Mao-2025-Real-DRL-Teach-and-Learn-in-Reality
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Margolis-2022-Rapid-Locomotion-via-Reinforcement-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Margolis-2022-Rapid-Locomotion-via-Reinforcement-Learning-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Margolis-2025-SoftMimic-Learning-Compliant-Whole-body-Control-from-Examples
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Mei-2025-World-Models-That-Know-When-They-Dont-Know-Controllable-Video-Generation-with-Calibrated-Uncertainty
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Meng-2025-Benchmarking-Humanoid-Imitation-Learning-with-Motion-Difficulty
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Mentzer-2023-Finite-Scalar-Quantization-VQ-VAE-Made-Simple
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Messikommer-2025-Student-Informed-Teacher-Training
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Miller-2025-High-Performance-Reinforcement-Learning-on-Spot-Optimizing-Simulation-Parameters-with-Distributional-Measures
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Miller-2025-High-Performance-Reinforcement-Learning-on-Spot-Optimizing-Simulation-Parameters-with-Distributional-Measures-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Mishra-2026-MorFiC-fixing-value-miscalibration-for-zero-shot-quadruped-transfer
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Mitchell-2022-Next-Steps-Learning-a-Disentangled-Gait-Representation-for-Versatile-Quadruped-Locomotion
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Mittal-2025-Isaac-Lab-A-GPU-Accelerated-Simulation-Framework-for-Multi-Modal-Robot-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Molnar-2026-Whole-Body-Inverse-Dynamics-MPC-for-Legged-Loco-Manipulation
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Mu-2025-SMP-Reusable-Score-Matching-Motion-Priors-for-Physics-Based-Character-Control
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Mulgrew-1956-Student-Teacher-Training
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Munn-2026-RAPT-Model-Predictive-Out-of-Distribution-Detection-and-Failure-Diagnosis-for-Sim-to-Real-Humanoid-Robots
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Nahrendra-2026-DreamWaQ-Obstacle-Aware-Quadrupedal-Locomotion-With-Resilient-Multimodal-Reinforcement-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Nai-2026-Humanoid-Manipulation-Interface-Humanoid-Whole-Body-Manipulation-from-Robot-Free-Demonstrations
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Nakkiran-2024-Step-by-Step-Diffusion-An-Elementary-Tutorial
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Nakkiran-2025-Step-by-Step-Diffusion-An-Elementary-Tutorial
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Nan-2025-Efficient-Model-Based-Reinforcement-Learning-for-Robot-Control-via-Online-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Nguyen-2025-Physically-Grounded-Goal-Imagination-Physics-Informed-Variational-Autoencoder-for-Self-Supervised-Reinforcement-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Nguyen-2025-Whole-Body-Model-Predictive-Control-for-Spin-Aware-Quadrupedal-Table-Tennis
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Ntagkas-2025-PGTT-Phase-Guided-Terrain-Traversal-for-Perceptive-Legged-Locomotion
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Olsen-2026-Towards-Quadrupedal-Jumping-and-Walking-for-Dynamic-Locomotion-Using-Reinforcement-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Pan-2025-Agility-Meets-Stability-Versatile-Humanoid-Control-with-Heterogeneous-Data
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Pan-2025-Much-Ado-About-Noising-Dispelling-the-Myths-of-Generative-Robotic-Control
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Pan-2025-SPIDER-Scalable-Physics-Informed-Dexterous-Retargeting
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Park-2025-Periodic-Skill-Discovery
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Patrizi-2026-RL-Augmented-MPC-for-Non-Gaited-Legged-and-Hybrid-Locomotion
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Pearce-2023-Imitating-Human-Behaviour-with-Diffusion-Models
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Peebles-2023-Scalable-Diffusion-Models-with-Transformers
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Peebles-2023-Scalable-Diffusion-Models-with-Transformers-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Peng-2025-Gait-Conditioned-Reinforcement-Learning-with-Multi-Phase-Curriculum-for-Humanoid-Locomotion
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Peng-2025-Gait-Conditioned-Reinforcement-Learning-with-Multi-Phase-Curriculum-for-Humanoid-Locomotion-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Peng-2026-Embodiment-Aware-Generalist-Specialist-Distillation-for-Unified-Humanoid-Whole-Body-Control
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Penghui-2025-HiFAR-Multi-Stage-Curriculum-Learning-for-High-Dynamics-Humanoid-Fall-Recovery
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Prakrut-2025-Real-Time-Gait-Adaptation-for-Quadrupeds-using-Model-Predictive-Control-and-Reinforcement-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Ren-2025-Humanoid-Goalkeeper-Learning-from-Position-Conditioned-Task-Motion-Constraints
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Ren-2025-VB-Com-Learning-Vision-Blind-Composite-Humanoid-Locomotion-Against-Deficient-Perception
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Reske-2021-Imitation-Learning-from-MPC-for-Quadrupedal-Multi-Gait-Control
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Rho-2025-Reference-Grounded-Skill-Discovery
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Robine-2023-Transformer-based-World-Models-Are-Happy-With-100k-Interactions
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Rodriguez-2021-DeepWalk-Omnidirectional-Bipedal-Gait-by-Deep-Reinforcement-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Romualdi-2024-Online-DNN-driven-Nonlinear-MPC-for-Stylistic-Humanoid-Robot-Walking-with-Step-Adjustment
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Romualdi-2024-Online-DNN-driven-Nonlinear-MPC-for-Stylistic-Humanoid-Robot-Walking-with-Step-Adjustment-2
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Ross-2011-A-Reduction-of-Imitation-Learning-and-Structured-Prediction-to-No-Regret-Online-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Rudin-2022-Learning-to-Walk-in-Minutes-Using-Massively-Parallel-Deep-Reinforcement-Learning
+Rating generation failed: MCP call timed out after 30 seconds
+Failed: MCP call timed out after 30 seconds
+
+Santana-2025-An-Introduction-to-Deep-Reinforcement-and-Imitation-Learning

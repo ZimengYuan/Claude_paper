@@ -15,7 +15,7 @@ from scholaraio.services.common import ServiceError, resolve_paper_dir
 
 
 CLOSE_READ_TAG = '精读'
-CLOSE_READ_GENERATION_TYPES = ['summary', 'method', 'rating', 'sensemaking']
+CLOSE_READ_GENERATION_TYPES = ['sensemaking']
 
 
 def _normalize_read_status(status: str | None) -> str:
