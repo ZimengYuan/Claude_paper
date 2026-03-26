@@ -1,0 +1,20 @@
+{
+  "innovation": 8,
+  "technical_quality": 8,
+  "experimental_validation": 8,
+  "writing_quality": 8,
+  "relevance": 7,
+  "overall_score": 7.85,
+  "strengths": [
+    "Two-stage framework (Teacher-Student) effectively bridges history-conditioned RL and efficient deployment.",
+    "History-conditioned approach provides a robust solution for dynamics adaptation without per-domain retraining.",
+    "Strong experimental validation on Unitree H1 robot demonstrating zero-shot transfer under unseen conditions.",
+    "Online distillation enables a compact and efficient student policy for real-world deployment."
+  ],
+  "weaknesses": [
+    "Reliance on a specific robot morphology (Humanoid) might limit immediate generalization to other platforms.",
+    "The ablation study on history length could be more extensive to prove the sufficiency of the trajectory window.",
+    "The complexity of the two-stage training process might increase the computational cost and training instability."
+  ],
+  "notes": "HoRD presents a well-motivated and technically sound approach to robust humanoid control. The combination of history-conditioned RL and online distillation is innovative and addresses a critical challenge in sim-to-real transfer. The experimental results on a real-world humanoid robot are compelling, showing significant improvements in handling dynamics shifts and external perturbations. The paper is well-written and clearly structured, though some details in the distillation process could be further elaborated."
+}

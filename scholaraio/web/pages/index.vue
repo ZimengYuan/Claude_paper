@@ -111,6 +111,8 @@
 </template>
 
 <script setup>
+const LIBRARY_FILTERS_STORAGE_KEY = 'scholaraio:library-filters'
+
 const searchQuery = ref('')
 const projectFilter = ref('')
 const statusFilter = ref('')
@@ -152,6 +154,50 @@ const availableTags = computed(() => {
 watch(availableTags, (tags) => {
   if (tagFilter.value && !tags.includes(tagFilter.value)) {
     tagFilter.value = ''
+  }
+})
+
+const restoreSavedFilters = () => {
+  if (!import.meta.client) return
+
+  try {
+    const raw = window.localStorage.getItem(LIBRARY_FILTERS_STORAGE_KEY)
+    if (!raw) return
+
+    const saved = JSON.parse(raw)
+    searchQuery.value = typeof saved.searchQuery === 'string' ? saved.searchQuery : ''
+    projectFilter.value = typeof saved.projectFilter === 'string' ? saved.projectFilter : ''
+    statusFilter.value = typeof saved.statusFilter === 'string' ? saved.statusFilter : ''
+    tagFilter.value = typeof saved.tagFilter === 'string' ? saved.tagFilter : ''
+    sortBy.value = typeof saved.sortBy === 'string' ? saved.sortBy : ''
+  } catch (e) {
+    console.error('Failed to restore library filters:', e)
+  }
+}
+
+const persistFilters = () => {
+  if (!import.meta.client) return
+
+  try {
+    window.localStorage.setItem(LIBRARY_FILTERS_STORAGE_KEY, JSON.stringify({
+      searchQuery: searchQuery.value,
+      projectFilter: projectFilter.value,
+      statusFilter: statusFilter.value,
+      tagFilter: tagFilter.value,
+      sortBy: sortBy.value
+    }))
+  } catch (e) {
+    console.error('Failed to persist library filters:', e)
+  }
+}
+
+watch([searchQuery, projectFilter, statusFilter, tagFilter, sortBy], persistFilters)
+
+watch(availableProjects, (projects) => {
+  if (!projectFilter.value) return
+  const exists = projects.some(project => project.name === projectFilter.value)
+  if (!exists) {
+    projectFilter.value = ''
   }
 })
 
@@ -256,6 +302,7 @@ const goToPaper = (dirName) => {
 }
 
 onMounted(async () => {
+  restoreSavedFilters()
   await loadProjects()
   await loadPapers()
 })

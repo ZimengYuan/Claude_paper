@@ -1,4 +1,4 @@
 {
   "conclusion": "In this work, we presented our Perception-Action integrated Decision-making (PAiD) framework for learning robust humanoid soccer skills. By decoupling motion-skill acquisition, perception-action integration, and sim-to-real transfer, our approach overcomes the limitations of single-stage RL and imitation learning. Extensive experiments demonstrate that PAiD achieves superior tracking accuracy, shooting proficiency, and real-world robustness compared to state-of-the-art baselines.\n\nWhile PAiD shows strong generalization and transferability, its performance at extreme ball positions and under highly dynamic conditions can be further improved. Future work will explore multi-modal perception and adaptive policy architectures to enhance robustness in more complex environments.",
-  "reason": "The text contains a standard conclusion with a summary of contributions and future work directions."
+  "reason": "Contains a standard conclusion with a summary of contributions and future work."
 }

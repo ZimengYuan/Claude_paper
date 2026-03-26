@@ -596,7 +596,7 @@ def generate_sensemaking(paper_dir: Path, cfg: Config, force: bool = False) -> s
 Title: {content["l1"].get("title", "N/A")}
 Abstract: {content["l2"]}
 Conclusion: {content["l3"]}
-Full Text (snippet): {content["l4"][:5000]}
+Full Text: {content["l4"]}
 
 Generate the sensemaking JSON based on the system prompt and the user profile: {profile}"""
 
