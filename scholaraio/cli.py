@@ -29,7 +29,7 @@ cli.py — scholaraio 命令行入口
     scholaraio explore info [--name current-library] [--top N]
     scholaraio export bibtex [<paper-id> ...] [--all] [--year Y] [--journal J] [-o FILE]
     scholaraio import-endnote <file.xml|file.ris> [--no-api] [--dry-run] [--no-convert]
-    scholaraio import-zotero [--api-key KEY] [--library-id ID] [--local PATH] [--list-collections] ...
+    scholaraio import-zotero [--local PATH] [--list-collections] ...
     scholaraio attach-pdf <paper-id> <path/to/paper.pdf>
 """
 
@@ -122,6 +122,7 @@ _INSTALL_HINTS: dict[str, str] = {
     "bertopic": "pip install scholaraio[topics]",
     "pandas": "pip install scholaraio[topics]",
     "endnote_utils": "pip install scholaraio[import]",
+    "zotero_cli": "pip install scholaraio[import]",
     "pyzotero": "pip install scholaraio[import]",
 }
 
@@ -2261,11 +2262,6 @@ def _batch_convert_pdfs(cfg, *, enrich: bool = False) -> None:
 
 
 def cmd_import_zotero(args: argparse.Namespace, cfg) -> None:
-    import tempfile
-
-    # Resolve credentials
-    api_key = args.api_key or cfg.resolved_zotero_api_key()
-    library_id = args.library_id or cfg.resolved_zotero_library_id()
     library_type = args.library_type or cfg.zotero.library_type
 
     # Local SQLite mode
@@ -2294,44 +2290,33 @@ def cmd_import_zotero(args: argparse.Namespace, cfg) -> None:
             item_types=args.item_type,
         )
     else:
-        # Web API mode
-        if not api_key:
-            ui("错误：需要 Zotero API key（--api-key 或 config.local.yaml zotero.api_key 或 ZOTERO_API_KEY 环境变量）")
-            sys.exit(1)
-        if not library_id:
-            ui(
-                "错误：需要 Zotero library ID（--library-id 或 config.local.yaml zotero.library_id 或 ZOTERO_LIBRARY_ID 环境变量）"
-            )
-            sys.exit(1)
-
         try:
-            from scholaraio.sources.zotero import fetch_zotero_api, list_collections_api
+            from scholaraio.sources.zotero import fetch_zotero_zotcli, list_collections_zotcli
         except ImportError as e:
             _check_import_error(e)
 
-        if args.list_collections:
-            collections = list_collections_api(library_id, api_key, library_type=library_type)
-            if not collections:
-                ui("没有找到 collections")
+        try:
+            if args.list_collections:
+                collections = list_collections_zotcli(library_type=library_type)
+                if not collections:
+                    ui("没有找到 collections")
+                    return
+                ui(f"{'Key':<12} {'Items':>5}  Name")
+                ui("-" * 50)
+                for c in collections:
+                    ui(f"{c['key']:<12} {c['numItems']:>5}  {c['name']}")
                 return
-            ui(f"{'Key':<12} {'Items':>5}  Name")
-            ui("-" * 50)
-            for c in collections:
-                ui(f"{c['key']:<12} {c['numItems']:>5}  {c['name']}")
-            return
 
-        download_pdfs = not args.no_pdf
-        pdf_dir = Path(tempfile.mkdtemp(prefix="scholaraio_zotero_")) if download_pdfs else None
-
-        records, pdf_paths = fetch_zotero_api(
-            library_id,
-            api_key,
-            library_type=library_type,
-            collection_key=args.collection,
-            item_types=args.item_type,
-            download_pdfs=download_pdfs,
-            pdf_dir=pdf_dir,
-        )
+            records, pdf_paths = fetch_zotero_zotcli(
+                library_type=library_type,
+                collection_key=args.collection,
+                item_types=args.item_type,
+                download_pdfs=not args.no_pdf,
+            )
+        except ValueError as e:
+            ui(f"错误：{e}")
+            ui("请确认已安装 `zotero-cli`，然后执行 `zotcli configure` 完成初始化")
+            sys.exit(1)
 
     if not records:
         ui("未获取到任何记录")
@@ -2359,10 +2344,10 @@ def cmd_import_zotero(args: argparse.Namespace, cfg) -> None:
 
     # Import collections as workspaces
     if args.import_collections and not args.dry_run:
-        _import_zotero_collections_as_workspaces(args, cfg, api_key, library_id, library_type)
+        _import_zotero_collections_as_workspaces(args, cfg, library_type)
 
 
-def _import_zotero_collections_as_workspaces(args, cfg, api_key, library_id, library_type):
+def _import_zotero_collections_as_workspaces(args, cfg, library_type):
     """Create workspaces from Zotero collections after import."""
 
     from scholaraio import workspace
@@ -2373,9 +2358,9 @@ def _import_zotero_collections_as_workspaces(args, cfg, api_key, library_id, lib
 
         collections = list_collections_local(Path(args.local))
     else:
-        from scholaraio.sources.zotero import list_collections_api
+        from scholaraio.sources.zotero import list_collections_zotcli
 
-        collections = list_collections_api(library_id, api_key, library_type=library_type)
+        collections = list_collections_zotcli(library_type=library_type)
 
     # Build DOI → UUID map from existing papers
     from scholaraio.papers import read_meta
@@ -2401,11 +2386,9 @@ def _import_zotero_collections_as_workspaces(args, cfg, api_key, library_id, lib
                 collection_key=coll["key"],
             )
         else:
-            from scholaraio.sources.zotero import fetch_zotero_api
+            from scholaraio.sources.zotero import fetch_zotero_zotcli
 
-            coll_records, _ = fetch_zotero_api(
-                library_id,
-                api_key,
+            coll_records, _ = fetch_zotero_zotcli(
                 library_type=library_type,
                 collection_key=coll["key"],
                 download_pdfs=False,
@@ -2871,12 +2854,10 @@ def main() -> None:
     p_ie.add_argument("--no-convert", action="store_true", help="跳过 PDF → paper.md 转换（默认自动转换）")
 
     # --- import-zotero ---
-    p_iz = sub.add_parser("import-zotero", help="从 Zotero 导入论文元数据和 PDF")
+    p_iz = sub.add_parser("import-zotero", help="从 Zotero 导入论文元数据和 PDF（zotero-cli 或本地 SQLite）")
     p_iz.set_defaults(func=cmd_import_zotero)
     p_iz.add_argument("--local", metavar="SQLITE_PATH", help="使用本地 zotero.sqlite")
-    p_iz.add_argument("--api-key", help="Zotero API key")
-    p_iz.add_argument("--library-id", help="Zotero library ID")
-    p_iz.add_argument("--library-type", choices=["user", "group"], help="Library 类型（默认 user）")
+    p_iz.add_argument("--library-type", choices=["user", "group"], help="Library 类型（非本地模式，默认 user）")
     p_iz.add_argument("--collection", metavar="KEY", help="仅导入指定 collection")
     p_iz.add_argument("--item-type", nargs="+", help="限定 item 类型（如 journalArticle conferencePaper）")
     p_iz.add_argument("--list-collections", action="store_true", help="列出所有 collections 后退出")

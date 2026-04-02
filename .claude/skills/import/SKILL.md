@@ -1,6 +1,6 @@
 ---
 name: import
-description: Import papers from external reference managers (Endnote XML/RIS, Zotero Web API or local SQLite). Handles PDF matching, MinerU conversion, metadata enrichment, and index updates. Use when the user wants to import their existing library from Zotero, Endnote, or attach a PDF to an existing paper.
+description: Import papers from external reference managers (Endnote XML/RIS, Zotero via zotero-cli or local SQLite). Handles PDF matching, MinerU conversion, metadata enrichment, and index updates. Use when the user wants to import their existing library from Zotero, Endnote, or attach a PDF to an existing paper.
 version: 1.0.0
 author: ZimoLiao/scholaraio
 license: MIT
@@ -47,22 +47,29 @@ scholaraio import-endnote <file.xml> --no-api
 
 ## Zotero 导入
 
-支持 Web API 和本地 SQLite 两种模式。
+支持 `zotero-cli` 和本地 SQLite 两种模式。
 
-### Web API 模式
+### zotero-cli 模式
+
+先安装并初始化：
+
+```bash
+pip install zotero-cli
+zotcli configure
+```
 
 ```bash
 # 列出 collections
-scholaraio import-zotero --api-key KEY --library-id ID --list-collections
+scholaraio import-zotero --list-collections
 
 # 完整导入
-scholaraio import-zotero --api-key KEY --library-id ID
+scholaraio import-zotero
 
 # 仅导入指定 collection
-scholaraio import-zotero --api-key KEY --library-id ID --collection COLLECTION_KEY
+scholaraio import-zotero --collection COLLECTION_KEY
 
 # 导入后将 collections 创建为工作区
-scholaraio import-zotero --api-key KEY --library-id ID --import-collections
+scholaraio import-zotero --import-collections
 ```
 
 ### 本地 SQLite 模式
@@ -73,12 +80,11 @@ scholaraio import-zotero --local /path/to/zotero.sqlite
 
 ### 配置文件（可选）
 
-在 `config.local.yaml` 中配置 Zotero 凭据：
+可在 `config.local.yaml` 中补充 library 类型：
 
 ```yaml
 zotero:
-  api_key: "your-zotero-api-key"
-  library_id: "your-library-id"
+  library_type: "user"
 ```
 
 ## 补充 PDF（单篇）

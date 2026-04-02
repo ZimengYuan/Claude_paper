@@ -104,10 +104,12 @@ _S: dict[str, dict[Lang, str]] = {
     "import_hint": {
         "en": "\nTip: To import papers from Zotero or Endnote, use:\n"
         "  scholaraio import-endnote <xml-or-ris-file>\n"
-        "  scholaraio import-zotero --source web --collection <name>\n",
+        "  zotcli configure\n"
+        "  scholaraio import-zotero --collection <key>\n",
         "zh": "\nTip: 导入 Zotero 或 Endnote 文献，使用：\n"
         "  scholaraio import-endnote <xml 或 ris 文件>\n"
-        "  scholaraio import-zotero --source web --collection <name>\n",
+        "  zotcli configure\n"
+        "  scholaraio import-zotero --collection <key>\n",
     },
     "done": {
         "en": "\nSetup complete! Put papers in data/inbox/ and run:\n  scholaraio pipeline ingest\n",
@@ -130,7 +132,7 @@ _DEP_GROUPS: dict[str, list[tuple[str, str]]] = {
     "core": [("requests", "requests"), ("yaml", "pyyaml")],
     "embed": [("sentence_transformers", "sentence-transformers"), ("faiss", "faiss-cpu"), ("numpy", "numpy")],
     "topics": [("bertopic", "bertopic"), ("pandas", "pandas")],
-    "import": [("endnote_utils", "endnote-utils"), ("pyzotero", "pyzotero")],
+    "import": [("endnote_utils", "endnote-utils"), ("zotero_cli", "zotero-cli")],
 }
 
 

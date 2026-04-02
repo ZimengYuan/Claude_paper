@@ -43,5 +43,6 @@ Papers without DOI (that aren't theses) go to `data/pending/` for manual review.
 scholaraio import-endnote library.xml
 
 # From Zotero
-scholaraio import-zotero --api-key KEY --library-id ID
+zotcli configure
+scholaraio import-zotero
 ```

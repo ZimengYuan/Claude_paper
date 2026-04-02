@@ -93,7 +93,7 @@ The **MCP server** (`scholaraio-mcp`, 31 tools) works with any MCP-compatible cl
 # Skills available as /scholaraio:search, /scholaraio:show, etc.
 ```
 
-**Migrating from existing tools?** Import directly from Endnote (XML/RIS) and Zotero (Web API or local SQLite) — your PDFs, metadata, and references come along. More import sources are on the roadmap.
+**Migrating from existing tools?** Import directly from Endnote (XML/RIS) and Zotero (via `zotero-cli` or local SQLite) — your PDFs, metadata, and references come along. More import sources are on the roadmap.
 
 ## How It Works
 

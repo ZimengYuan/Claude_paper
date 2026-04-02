@@ -18,10 +18,9 @@ ingest:
   contact_email: "" # Crossref polite pool — your email 你的邮箱（加速 Crossref 查询）
 
 # Zotero integration (optional) Zotero 集成（可选）
-# API key: https://www.zotero.org/settings/keys
-# Library ID: visible in your Zotero web library URL
-# API 密钥：https://www.zotero.org/settings/keys
-# Library ID：在 Zotero 网页版 URL 中可见
+# ScholarAIO now uses zotero-cli for non-local imports.
+# Run `pip install zotero-cli` and then `zotcli configure` to finish setup.
+# ScholarAIO 现在通过 zotero-cli 读取非本地 Zotero 数据。
+# 先运行 `pip install zotero-cli`，再执行 `zotcli configure` 完成初始化。
 zotero:
-  api_key: ""
-  library_id: ""
+  library_type: "user"

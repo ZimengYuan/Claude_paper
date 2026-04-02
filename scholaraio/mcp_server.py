@@ -1004,8 +1004,6 @@ def import_endnote(
 
 @mcp.tool()
 def import_zotero(
-    api_key: str | None = None,
-    library_id: str | None = None,
     library_type: str = "user",
     local: str | None = None,
     collection: str | None = None,
@@ -1014,10 +1012,10 @@ def import_zotero(
     dry_run: bool = False,
     no_convert: bool = False,
 ) -> str:
-    """Import papers from Zotero (Web API or local SQLite database).
+    """Import papers from Zotero (zotero-cli or local SQLite database).
 
     Supports two modes:
-    - Web API: provide api_key and library_id (or configure in config.local.yaml)
+    - zotero-cli: run ``zotcli configure`` first, then import using zotero-cli's backend
     - Local: provide the path to zotero.sqlite
 
     Use list_collections=True to see available collections before importing.
@@ -1025,10 +1023,8 @@ def import_zotero(
     This is a long-running operation.
 
     Args:
-        api_key: Zotero Web API key (optional, uses config if not provided).
-        library_id: Zotero library ID (optional, uses config if not provided).
         library_type: Library type: "user" or "group" (default "user").
-        local: Path to local Zotero SQLite database (alternative to API mode).
+        local: Path to local Zotero SQLite database (alternative to zotero-cli mode).
         collection: Collection key to import (optional, imports all if not set).
         list_collections: If True, only list collections without importing.
         no_api: Skip external metadata enrichment APIs.
@@ -1037,10 +1033,6 @@ def import_zotero(
     """
     try:
         cfg = _get_cfg()
-
-        # Resolve credentials
-        _api_key = api_key or cfg.resolved_zotero_api_key()
-        _library_id = library_id or cfg.resolved_zotero_library_id()
         _library_type = library_type or cfg.zotero.library_type
 
         if local:
@@ -1059,19 +1051,8 @@ def import_zotero(
                 collection_key=collection,
             )
         else:
-            if not _api_key:
-                return _error(
-                    "missing_config",
-                    "Zotero API key required. Set --api-key, config.local.yaml, or ZOTERO_API_KEY env var.",
-                )
-            if not _library_id:
-                return _error(
-                    "missing_config",
-                    "Zotero library ID required. Set --library-id, config.local.yaml, or ZOTERO_LIBRARY_ID env var.",
-                )
-
             try:
-                from scholaraio.sources.zotero import fetch_zotero_api, list_collections_api
+                from scholaraio.sources.zotero import fetch_zotero_zotcli, list_collections_zotcli
             except ImportError:
                 return _error(
                     "missing_dependency",
@@ -1079,21 +1060,21 @@ def import_zotero(
                     install_hint="pip install scholaraio[import]",
                 )
 
-            if list_collections:
-                collections = list_collections_api(_library_id, _api_key, library_type=_library_type)
-                return json.dumps(collections, ensure_ascii=False)
+            try:
+                if list_collections:
+                    collections = list_collections_zotcli(library_type=_library_type)
+                    return json.dumps(collections, ensure_ascii=False)
 
-            import tempfile
-
-            pdf_dir = Path(tempfile.mkdtemp(prefix="scholaraio_zotero_"))
-            records, pdf_paths = fetch_zotero_api(
-                _library_id,
-                _api_key,
-                library_type=_library_type,
-                collection_key=collection,
-                download_pdfs=True,
-                pdf_dir=pdf_dir,
-            )
+                records, pdf_paths = fetch_zotero_zotcli(
+                    library_type=_library_type,
+                    collection_key=collection,
+                    download_pdfs=True,
+                )
+            except ValueError as exc:
+                return _error(
+                    "missing_config",
+                    f"{exc} Run `zotcli configure` first.",
+                )
 
         if not records:
             return json.dumps({"status": "empty", "message": "No records found"})

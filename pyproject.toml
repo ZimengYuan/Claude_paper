@@ -49,7 +49,7 @@ pdf = [
 ]
 import = [
     "endnote-utils>=1.0",
-    "pyzotero>=1.5",
+    "zotero-cli>=0.3.0",
 ]
 mcp = [
     "mcp>=1.0",

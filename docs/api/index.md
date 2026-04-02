@@ -33,7 +33,7 @@ This Jekyll site uses a static API overview instead of the old MkDocs `mkdocstri
 | `scholaraio.ingest.mineru` | PDF to Markdown conversion |
 | `scholaraio.ingest.extractor` | Metadata extraction pipeline |
 | `scholaraio.ingest.metadata._api` | Crossref / Semantic Scholar / OpenAlex enrichment |
-| `scholaraio.sources.zotero` | Zotero Web API / SQLite import |
+| `scholaraio.sources.zotero` | Zotero via zotero-cli / SQLite import |
 | `scholaraio.sources.endnote` | Endnote XML / RIS import |
 
 ## Services for Web / Bridge

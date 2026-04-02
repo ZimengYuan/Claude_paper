@@ -176,13 +176,9 @@ class ZoteroConfig:
     """Zotero 集成配置。
 
     Attributes:
-        api_key: Zotero Web API 密钥。
-        library_id: Zotero 用户/群组 library ID。
         library_type: Library 类型，``"user"`` 或 ``"group"``。
     """
 
-    api_key: str = ""
-    library_id: str = ""
     library_type: str = "user"
 
 
@@ -294,30 +290,6 @@ class Config:
             if val:
                 return val
         return ""
-
-    def resolved_zotero_api_key(self) -> str:
-        """按优先级查找 Zotero API key。
-
-        查找顺序: config ``zotero.api_key`` → 环境变量 ``ZOTERO_API_KEY``。
-
-        Returns:
-            API key 字符串，未找到则返回空字符串。
-        """
-        if self.zotero.api_key:
-            return self.zotero.api_key
-        return os.environ.get("ZOTERO_API_KEY", "")
-
-    def resolved_zotero_library_id(self) -> str:
-        """按优先级查找 Zotero library ID。
-
-        查找顺序: config ``zotero.library_id`` → 环境变量 ``ZOTERO_LIBRARY_ID``。
-
-        Returns:
-            Library ID 字符串，未找到则返回空字符串。
-        """
-        if self.zotero.library_id:
-            return self.zotero.library_id
-        return os.environ.get("ZOTERO_LIBRARY_ID", "")
 
     def resolved_mineru_api_key(self) -> str:
         """按优先级查找 MinerU 云 API key。
@@ -472,8 +444,6 @@ def _build_config(data: dict, root: Path) -> Config:
 
     zotero_data = data.get("zotero", {}) or {}
     zotero = ZoteroConfig(
-        api_key=zotero_data.get("api_key") or "",
-        library_id=str(zotero_data.get("library_id") or ""),
         library_type=zotero_data.get("library_type", "user"),
     )
 

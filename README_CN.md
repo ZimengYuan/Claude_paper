@@ -93,7 +93,7 @@ ScholarAIO 的设计目标是 **agent 无关**。目前已为多种 agent 和 ID
 # 以 /scholaraio:search、/scholaraio:show 等命名空间使用
 ```
 
-**从现有工具迁移？** 支持从 Endnote（XML/RIS）和 Zotero（Web API 或本地 SQLite）直接导入——PDF、元数据、引用关系一并迁入。更多导入源持续开发中。
+**从现有工具迁移？** 支持从 Endnote（XML/RIS）和 Zotero（通过 `zotero-cli` 或本地 SQLite）直接导入——PDF、元数据、引用关系一并迁入。更多导入源持续开发中。
 
 ## 工作流程
 

@@ -1,11 +1,16 @@
-"""sources/zotero.py — Zotero Web API / 本地 SQLite 导入，转换为 PaperMetadata"""
+"""sources/zotero.py — zotero-cli / 本地 SQLite 导入，转换为 PaperMetadata"""
 
 from __future__ import annotations
 
 import logging
 import re
 import sqlite3
+import tempfile
+import zipfile
+from io import BytesIO
 from pathlib import Path
+
+import requests
 
 from scholaraio.ingest.metadata._extract import _extract_lastname
 from scholaraio.ingest.metadata._models import PaperMetadata
@@ -109,108 +114,194 @@ def _zotero_item_to_meta(item_data: dict, source_label: str) -> PaperMetadata:
 
 
 # ============================================================================
-#  Web API mode (requires pyzotero)
+#  zotero-cli config mode
 # ============================================================================
 
 
-def fetch_zotero_api(
-    library_id: str,
-    api_key: str,
+def _load_zotcli_runtime_config() -> dict:
+    """Load zotero-cli configuration without using its FTS-based local index."""
+    from zotero_cli.common import load_config
+
+    try:
+        config = load_config()
+    except ValueError as exc:
+        raise ValueError("zotero-cli 尚未完成初始化，请先运行 `zotcli configure`。") from exc
+
+    api_key = config.get("zotcli.api_key", "").strip()
+    library_id = str(config.get("zotcli.library_id", "")).strip()
+    if not api_key or not library_id:
+        raise ValueError("zotero-cli 配置中缺少 API key 或 library ID，请先运行 `zotcli configure`。")
+    return config
+
+
+def _build_zotcli_client(*, library_type: str = "user"):
+    """Create a pyzotero client from zotero-cli's configuration."""
+    from pyzotero.zotero import Zotero
+
+    config = _load_zotcli_runtime_config()
+    zot = Zotero(library_id=config["zotcli.library_id"], library_type=library_type, api_key=config["zotcli.api_key"])
+    return config, zot
+
+
+def _fetch_zotcli_items(zot, *, collection_key: str | None = None, item_types: list[str] | None = None) -> list[dict]:
+    """Fetch full Zotero item payloads using zotero-cli-managed credentials."""
+    kwargs: dict = {}
+    if item_types:
+        kwargs["itemType"] = " || ".join(item_types)
+
+    if collection_key:
+        raw_items = zot.everything(zot.collection_items(collection_key, **kwargs))
+    else:
+        raw_items = zot.everything(zot.top(**kwargs))
+
+    return [
+        item
+        for item in raw_items
+        if item.get("data", {}).get("itemType") not in ("attachment", "note", "linkAttachment")
+    ]
+
+
+def _list_zotcli_attachments(zot, config: dict, item_key: str) -> list[dict]:
+    """List item attachments and resolve local storage paths from zotero-cli config when possible."""
+    attachments = zot.children(item_key, itemType="attachment")
+    storage_dir = config.get("zotcli.storage_dir", "").strip()
+    if storage_dir:
+        storage_root = Path(storage_dir)
+        for attachment in attachments:
+            data = attachment.get("data", {})
+            if not str(data.get("linkMode", "")).startswith("imported"):
+                continue
+            filename = data.get("filename")
+            key = attachment.get("key")
+            if not filename or not key:
+                continue
+            fpath = storage_root / key / filename
+            if fpath.exists():
+                data["path"] = str(fpath)
+    return attachments
+
+
+def _download_from_webdav(config: dict, attachment: dict, target_dir: Path) -> Path | None:
+    """Download an imported Zotero attachment via the WebDAV settings in zotcli."""
+    data = attachment.get("data", {})
+    filename = data.get("filename") or f"{attachment.get('key', 'attachment')}.pdf"
+    location = config.get("zotcli.webdav_path")
+    user = config.get("zotcli.webdav_user")
+    password = config.get("zotcli.webdav_pass")
+    if not location or not user or not password:
+        return None
+
+    target_dir.mkdir(parents=True, exist_ok=True)
+    out_path = target_dir / filename
+    if out_path.exists():
+        return out_path
+
+    zip_url = f"{location}/zotero/{attachment['key']}.zip"
+    resp = requests.get(zip_url, auth=(user, password), timeout=60)
+    resp.raise_for_status()
+    with zipfile.ZipFile(BytesIO(resp.content)) as zf:
+        zf.extractall(str(target_dir))
+
+    if out_path.exists():
+        return out_path
+    for candidate in target_dir.rglob("*.pdf"):
+        return candidate
+    return None
+
+
+def _resolve_zotcli_attachment_path(zot, config: dict, attachment: dict, *, download_root: Path | None = None) -> Path | None:
+    """Resolve a PDF attachment path using zotero-cli local/cloud/WebDAV settings."""
+    data = attachment.get("data", {})
+    existing_path = data.get("path")
+    if existing_path:
+        path = Path(existing_path)
+        if path.exists():
+            return path
+
+    sync_method = (config.get("zotcli.sync_method") or "").strip().lower()
+    filename = data.get("filename") or f"{attachment.get('key', 'attachment')}.pdf"
+
+    if download_root is None:
+        download_root = Path(tempfile.mkdtemp(prefix="scholaraio_zotcli_"))
+    target_dir = download_root / attachment.get("key", "attachment")
+    target_dir.mkdir(parents=True, exist_ok=True)
+    out_path = target_dir / filename
+
+    if sync_method in {"zotero", "zotcoud"}:
+        try:
+            zot.dump(attachment["key"], filename, str(target_dir))
+        except Exception as exc:
+            _log.warning("通过 Zotero file cloud 下载附件失败 (%s): %s", filename, exc)
+            return None
+        return out_path if out_path.exists() else None
+
+    if sync_method == "webdav":
+        try:
+            return _download_from_webdav(config, attachment, target_dir)
+        except Exception as exc:
+            _log.warning("通过 WebDAV 下载附件失败 (%s): %s", filename, exc)
+            return None
+
+    return None
+
+
+def fetch_zotero_zotcli(
     *,
     library_type: str = "user",
     collection_key: str | None = None,
     item_types: list[str] | None = None,
     download_pdfs: bool = True,
-    pdf_dir: Path | None = None,
 ) -> tuple[list[PaperMetadata], list[Path | None]]:
-    """从 Zotero Web API 获取文献元数据和 PDF。
+    """通过 zotero-cli backend 获取文献元数据和 PDF。
 
     Args:
-        library_id: Zotero library ID。
-        api_key: Zotero API key。
         library_type: ``"user"`` 或 ``"group"``。
         collection_key: 仅导入指定 collection（为 ``None`` 时导入全部）。
         item_types: 限定 item 类型列表（如 ``["journalArticle"]``）。
-        download_pdfs: 是否下载 PDF 附件。
-        pdf_dir: PDF 下载目录（为 ``None`` 时使用临时目录）。
+        download_pdfs: 是否解析/下载 PDF 附件。
 
     Returns:
         ``(records, pdf_paths)``，两个列表长度相同、索引对齐。
     """
-    from pyzotero import zotero as pyzotero
-
-    zot = pyzotero.Zotero(library_id, library_type, api_key)
-
-    # Build query parameters
-    kwargs: dict = {}
-    if item_types:
-        kwargs["itemType"] = " || ".join(item_types)
-
-    # Fetch items
-    if collection_key:
-        items = zot.everything(zot.collection_items(collection_key, **kwargs))
-    else:
-        items = zot.everything(zot.items(**kwargs))
-
-    # Filter out attachments and notes (keep only top-level items)
-    items = [it for it in items if it.get("data", {}).get("itemType") not in ("attachment", "note", "linkAttachment")]
+    config, zot = _build_zotcli_client(library_type=library_type)
+    items = _fetch_zotcli_items(zot, collection_key=collection_key, item_types=item_types)
+    download_root = Path(tempfile.mkdtemp(prefix="scholaraio_zotcli_")) if download_pdfs else None
 
     records: list[PaperMetadata] = []
     pdf_paths: list[Path | None] = []
 
     for idx, item in enumerate(items):
         data = item.get("data", {})
-        meta = _zotero_item_to_meta(data, "zotero-api")
+        meta = _zotero_item_to_meta(data, "zotero-cli")
         records.append(meta)
 
-        # PDF download
         pdf_path: Path | None = None
         if download_pdfs:
             try:
-                children = zot.children(item["key"])
-                for child in children:
-                    cd = child.get("data", {})
-                    if cd.get("contentType") == "application/pdf":
-                        title_short = meta.title[:50] if meta.title else f"item-{idx}"
-                        ui(f"[{idx + 1}/{len(items)}] 下载 PDF: {title_short}...")
-                        target = pdf_dir or Path(".")
-                        target.mkdir(parents=True, exist_ok=True)
-                        # Use dump() to download the file
-                        filename = cd.get("filename", f"{item['key']}.pdf")
-                        out_path = target / filename
-                        zot.dump(child["key"], filename, str(target))
-                        if out_path.exists():
-                            pdf_path = out_path
+                attachments = _list_zotcli_attachments(zot, config, item["key"])
+                for attachment in attachments:
+                    att_data = attachment.get("data", {})
+                    filename = str(att_data.get("filename", ""))
+                    if att_data.get("contentType") != "application/pdf" and not filename.lower().endswith(".pdf"):
+                        continue
+                    title_short = meta.title[:50] if meta.title else f"item-{idx}"
+                    ui(f"[{idx + 1}/{len(items)}] 获取 PDF: {title_short}...")
+                    pdf_path = _resolve_zotcli_attachment_path(zot, config, attachment, download_root=download_root)
+                    if pdf_path is not None:
                         break
             except Exception as exc:
-                _log.warning("下载 PDF 失败 (%s): %s", meta.title[:40], exc)
+                _log.warning("获取 PDF 失败 (%s): %s", meta.title[:40], exc)
 
         pdf_paths.append(pdf_path)
 
     n_pdfs = sum(1 for p in pdf_paths if p is not None)
-    _log.info("Zotero API: 获取 %d 条记录，%d 个 PDF", len(records), n_pdfs)
+    _log.info("zotero-cli: 获取 %d 条记录，%d 个 PDF", len(records), n_pdfs)
     return records, pdf_paths
 
 
-def list_collections_api(
-    library_id: str,
-    api_key: str,
-    *,
-    library_type: str = "user",
-) -> list[dict]:
-    """列出 Zotero library 中的所有 collections。
-
-    Args:
-        library_id: Zotero library ID。
-        api_key: Zotero API key。
-        library_type: ``"user"`` 或 ``"group"``。
-
-    Returns:
-        Collection 列表，每项包含 ``key``、``name``、``numItems``。
-    """
-    from pyzotero import zotero as pyzotero
-
-    zot = pyzotero.Zotero(library_id, library_type, api_key)
+def list_collections_zotcli(*, library_type: str = "user") -> list[dict]:
+    """列出 zotero-cli 当前配置对应 library 中的所有 collections."""
+    _, zot = _build_zotcli_client(library_type=library_type)
     collections = zot.collections()
     return [
         {
