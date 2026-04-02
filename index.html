@@ -1,0 +1,17 @@
+---
+layout: default
+title: 首页
+---
+
+<h1>ScholarAIO 静态站点</h1>
+<p>这个站点现在使用 Jekyll + GitHub Actions 部署到 GitHub Pages。</p>
+
+<h2>最新内容</h2>
+<ul>
+  {% assign latest = site.research | reverse %}
+  {% for doc in latest limit:5 %}
+    <li>
+      <a href="{{ doc.url | relative_url }}">{{ doc.title }}</a>
+    </li>
+  {% endfor %}
+</ul>

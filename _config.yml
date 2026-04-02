@@ -1,0 +1,51 @@
+title: ScholarAIO
+description: ScholarAIO static site published with Jekyll and GitHub Pages
+theme: minima
+repository: ZimengYuan/Claude_paper
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+collections:
+  research:
+    output: true
+
+exclude:
+  - .agents/
+  - .claude/
+  - .claude-plugin/
+  - .github/
+  - .vscode/
+  - data/
+  - delta-research/
+  - docs/
+  - hooks/
+  - memory/
+  - reports/
+  - scholaraio/
+  - scholaraio.egg-info/
+  - scripts/
+  - tests/
+  - workspace/
+  - AGENTS.md
+  - CHANGELOG.md
+  - CLAUDE.md
+  - CODE_OF_CONDUCT.md
+  - CONTRIBUTING.md
+  - LICENSE
+  - README.md
+  - README_CN.md
+  - SECURITY.md
+  - CITATION.cff
+  - clawhub.yaml
+  - config.yaml
+  - config.local.yaml
+  - config.local.example.yaml
+  - mkdocs.yml
+  - pyproject.toml
+  - web_service.log
+  - "*.json"
+  - "*.py"
+  - "*.txt"

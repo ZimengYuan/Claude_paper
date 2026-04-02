@@ -1,0 +1,15 @@
+---
+layout: default
+title: 归档
+---
+
+<h1>归档</h1>
+
+<ul>
+  {% assign docs = site.research | reverse %}
+  {% for doc in docs %}
+    <li>
+      <a href="{{ doc.url | relative_url }}">{{ doc.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
