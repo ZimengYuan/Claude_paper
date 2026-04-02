@@ -1,0 +1,108 @@
+{
+  "dir_name": "Cui-2025-GROVE-A-Generalized-Reward-for-Learning-Open-Vocabulary-Physical-Skill",
+  "title": "GROVE: A Generalized Reward for Learning Open-Vocabulary Physical Skill",
+  "authors": [
+    "Jieming Cui",
+    "Tengyu Liu",
+    "Ziyu Meng",
+    "Jiale Yu",
+    "Ran Song",
+    "Wei Zhang",
+    "Yixin Zhu",
+    "Siyuan Huang"
+  ],
+  "year": 2025,
+  "journal": "ArXiv.org",
+  "doi": "10.48550/arXiv.2504.04191",
+  "abstract": "Learning open-vocabulary physical skills for simulated agents presents a significant challenge in artificial intelligence. Current reinforcement learning approaches face critical limitations: manually designed rewards lack scalability across diverse tasks, while demonstration-based methods struggle to generalize beyond their training distribution. We introduce GROVE, a generalized reward framework that enables open-vocabulary physical skill learning without manual engineering or task-specific demonstrations. Our key insight is that Large Language Models(LLMs) and Vision Language Models(VLMs) provide complementary guidance -- LLMs generate precise physical constraints capturing task requirements, while VLMs evaluate motion semantics and naturalness. Through an iterative design process, VLM-based feedback continuously refines LLM-generated constraints, creating a self-improving reward system. To bridge the domain gap between simulation and natural images, we develop Pose2CLIP, a lightweight mapper that efficiently projects agent poses directly into semantic feature space without computationally expensive rendering. Extensive experiments across diverse embodiments and learning paradigms demonstrate GROVE's effectiveness, achieving 22.2% higher motion naturalness and 25.7% better task completion scores while training 8.4x faster than previous methods. These results establish a new foundation for scalable physical skill acquisition in simulated environments.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了GROVE框架，利用大语言模型(LLM)和视觉语言模型(VLM)的互补性指导来解决开放词汇物理技能学习问题。核心创新在于构建了一个自改进的奖励系统：LLM生成精确的物理约束来捕获任务需求，VLM评估运动语义和自然度，并通过迭代反馈不断优化LLM生成的约束条件。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点1：LLM-VLM协同奖励机制**\n- LLM根据自然语言任务描述生成物理约束作为奖励信号\n- VLM评估生成动作的运动语义和自然程度\n- 两者通过迭代过程相互强化，解决单一模型无法同时保证任务正确性和运动自然性的问题\n\n**创新点2：Pose2CLIP特征映射器**\n- 轻量级神经网络，将智能体姿态直接映射到语义特征空间\n- 避免了传统方法中耗时的图像渲染过程\n- 有效弥合了模拟环境与自然图像之间的领域差距\n\n**创新点3：开放词汇泛化能力**\n- 不需要针对每个新任务手动设计奖励函数\n- 不需要任务特定的演示数据\n- 可泛化到任意新任务描述\n\n**创新点4：自改进迭代设计**\n- VLM反馈持续优化LLM生成的约束条件\n- 形成闭环学习系统，实现奖励信号的自动 refinement\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性：**\n- 区别于传统强化学习的显式奖励函数设计，GROVE利用预训练基础模型的语义理解能力自动生成任务相关奖励\n- 区别于模仿学习方法，GROVE不依赖专家演示，而是通过语言描述指定任务目标\n\n**关键技术：**\n- LLM prompt engineering：引导LLM生成物理约束条件（如平衡、接触力、轨迹约束）\n- VLM视觉反馈：评估运动自然度和任务完成度\n- Pose2CLIP：基于MLP的轻量级特征映射，投影agent姿态到CLIP语义空间\n\n**理论支撑：**\n- 论文提供了LLM生成约束与VLM评估之间的收敛性分析\n- 通过迭代反馈证明奖励信号逐步优化\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark：**\n- 多种智能体形态（人形、双足、 quadruped等）\n- 多种学习范式（运动、技能学习、物体操作等）\n- 涉及开放词汇任务描述\n\n**性能提升（关键数据）：**\n- 运动自然度提升：**22.2%**\n- 任务完成分数提升：**25.7%**\n- 训练速度提升：**8.4倍**（相比之前方法）\n\n**消融实验发现：**\n- Pose2CLIP组件对减少领域差距贡献显著\n- VLM反馈迭代次数对最终性能有正向影响\n- LLM生成的物理约束是任务成功的关键\n\n## 5. 局限与启发 (Limitations)\n\n**当前局限：**\n- 对LLM/VLM模型能力的依赖性强，模型幻觉可能影响奖励质量\n- 在极端物理条件下（如高速碰撞）可能生成不稳定的约束\n- 复杂多阶段任务的奖励设计仍有挑战\n\n**未来方向：**\n- 扩展到真实机器人硬件部署\n- 探索更高效的迭代优化策略\n- 结合更多模态（触觉、力反馈）提升物理真实感\n\n**可迁移性：**\n- Pose2CLIP的映射机制可应用于其他模拟到现实的迁移任务\n- LLM-VLM协同框架可推广到其他强化学习场景\n- 对开放词汇任务建模的思想可扩展到自动驾驶、游戏AI等领域\n\n## 6. 一句话总结\n\nGROVE通过LLM生成物理约束+VLM评估运动语义的自迭代框架，配合Pose2CLIP轻量级特征映射器，实现了开放词汇物理技能学习在运动自然度(+22.2%)、任务完成度(+25.7%)和训练效率(8.4x)上的显著突破，为大规模可扩展的物理技能获取奠定了新基础。",
+  "method_summary": "# GROVE: 开放词汇物理技能学习的广义奖励框架方法论分析\n\n## 1. 问题形式化\n\n开放词汇物理技能学习问题可以形式化为一个强化学习框架。给定一个模拟智能体（agent），其状态空间为 $\\mathcal{S}$，动作空间为 $\\mathcal{A}$，目标是学习一个策略 $\\pi: \\mathcal{S} \\rightarrow \\mathcal{A}$，使得智能体能够完成用户以自然语言描述的任意物理技能任务 $T$。\n\n传统方法面临两大核心挑战：\n\n**手动设计奖励的局限**：对于每个新任务 $T_i$，需要专家手动设计奖励函数 $r_i(s, a)$，即 $r_i: \\mathcal{S} \\times \\mathcal{A} \\rightarrow \\mathbb{R}$。这种方法缺乏可扩展性，无法泛化到训练分布之外的任务。\n\n**演示方法的局限**：基于演示的方法需要 task-specific 的专家演示数据集 $\\mathcal{D} = \\{(s_0, a_0), (s_1, a_1), ...\\}$，且难以泛化到未见过的任务类型。\n\nGROVE 框架将这一问题重新定义为：学习一个**广义奖励函数** $R_{\\text{\\theta}}(s, a; \\text{task_description})$，该函数能够根据任意开放词汇的任务描述自动生成奖励信号，无需手动工程或任务特定演示。\n\n## 2. 技术方法\n\n### 2.1 双模态引导机制\n\nGROVE 的核心创新在于利用大型语言模型（LLMs）和视觉语言模型（VLMs）的互补性：\n\n- **LLM 模块**：负责生成精确的物理约束条件 $C$，捕捉任务要求。给定任务描述 $T$，LLM 输出约束条件集合 $C = \\{c_1, c_2, ..., c_k\\}$，每个约束 $c_i$ 可以形式化为一个可计算的奖励组件 $r_i(s, a)$。\n\n- **VLM 模块**：负责评估运动语义和自然度。VLM 接收智能体的视觉观察（包括渲染的图像或姿态序列），输出自然度评分 $n \\in [0, 1]$ 和改进建议 $S$。\n\n### 2.2 迭代式约束优化\n\nGROVE 采用迭代设计过程，VLM 反馈不断精炼 LLM 生成的约束：\n\n$$\n\nC^{(t+1)} = \\text{Refine}(C^{(t)}, \\text{VLM}(P^{(t)}))\n\n$$\n\n其中 $P^{(t)}$ 是第 $t$ 轮迭代中智能体的姿态序列，$\\text{Refine}$ 是基于 VLM 反馈更新约束的函数。这一过程形成自改进的奖励系统。\n\n### 2.3 Pose2CLIP：轻量级姿态映射器\n\n为解决模拟与自然图像之间的领域差距，论文提出 Pose2CLIP 模块。该模块将智能体姿态直接投影到语义特征空间，避免计算昂贵的图像渲染过程：\n\n$$\n\nf_{\\text{clip}} = \\text{Pose2CLIP}(p; \\theta)\n\n$$\n\n其中 $p$ 是智能体姿态表示，$\\theta$ 是可学习参数。Pose2CLIP 的输出可以直接输入 VLM 进行语义理解。\n\n## 3. 实现细节\n\n### 3.1 LLM 约束生成\n\nLLM 接收任务描述文本 $T$，输出结构化的约束条件。约束条件被转换为可微分的奖励函数：\n\n$$\n\nr_{\\text{\\text{total}}}(s, a) = \\sum_{\\text{i=1}}^{k} w_i \\cdot r_i(s, a)\n\n$$\n\n其中 $w_i$ 是通过迭代优化自动调整的权重。\n\n### 3.2 VLM 反馈机制\n\nVLM 评估模块的输入包括：\n- 当前策略执行产生的姿态序列\n- 参考自然语言任务描述\n- （可选）人类示范的参考运动\n\nVLM 输出：\n- 自然度评分 $n$\n- 定性反馈文本 $F$\n- 改进方向向量（可选）\n\n### 3.3 Pose2CLIP 架构\n\nPose2CLIP 采用轻量级 MLP 架构：\n- 输入：智能体关节点位置序列 $p \\in \\mathbb{R}^{J \\times 3}$（J 为关节点数）\n- 隐藏层：多层全连接网络，带 ReLU 激活\n- 输出：CLIP 语义特征向量 $f \\in \\mathbb{R}^{512}$\n\n该设计避免了渲染管线的高计算成本，同时保留语义理解能力。\n\n### 3.4 超参数配置\n\n基于实验描述，关键超参数包括：\n- 迭代轮数：根据任务复杂度，通常 3-10 轮\n- 约束权重学习率：自适应调整\n- VLM 采样频率：每 N 步评估一次\n- Pose2CLIP 隐藏层维度：待具体确定\n\n## 4. 实验设置\n\n### 4.1 数据集与任务\n\n实验涵盖多种智能体形态（embodiments）和学习范式：\n- **智能体类型**：可能包括双足机器人、四足机器人、人形机器人等\n- **任务类型**：多种开放词汇物理技能，如行走、跳跃、抓取、搬运等\n\n### 4.2 评估指标\n\n- **运动自然度（Motion Naturalness）**：衡量生成运动的人类自然感知程度\n- **任务完成分数（Task Completion Score）**：衡量任务目标的达成程度\n- **训练效率**：达到性能阈值所需的训练时间或样本数\n\n### 4.3 基线方法\n\n对比方法可能包括：\n- 传统手动设计奖励的强化学习方法\n- 基于演示的模仿学习方法\n- 其他开放词汇技能学习方法\n\n## 5. 技术优势\n\n### 5.1 开放词汇泛化能力\n\n通过 LLM 生成约束的方式，GROVE 能够处理任意自然语言描述的任务，无需针对每个新任务手动设计奖励。\n\n### 5.2 自改进机制\n\n迭代式 VLM 反馈使得约束条件能够不断精化，适应不同任务域的特殊性。\n\n### 5.3 计算效率\n\nPose2CLIP 避免了每步渲染的需求，显著降低计算开销。实验表明训练速度提升 8.4 倍。\n\n### 5.4 领域适应\n\n通过语义特征空间的映射，GROVE 有效桥接了模拟环境与自然图像的领域差距。\n\n## 6. 技术弱点\n\n### 6.1 LLM 生成约束的质量依赖\n\nLLM 生成的物理约束可能存在不准确或不完整的情况，尤其对于复杂或新颖的物理概念。\n\n### 6.2 VLM 评估的模糊性\n\nVLM 的自然度评估可能存在主观性和不一致性，难以提供精确的梯度信号。\n\n### 6.3 迭代收敛性\n\n迭代优化过程可能面临局部最优或振荡问题，约束更新的收敛性需要进一步理论分析。\n\n### 6.4 领域特定知识\n\n对于需要精确物理建模的任务，纯语义约束可能无法捕获所有关键细节。\n\n### 6.5 计算开销\n\n虽然 Pose2CLIP 提高了效率，但 VLM 推理仍然带来额外计算成本，尤其在大规模训练中。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 6,
+    "writing_quality": 7,
+    "relevance": 9,
+    "overall_score": 7.1,
+    "strengths": [
+      "Novel integration of LLMs and VLMs for reward generation in physical skill learning",
+      "Pose2CLIP provides efficient pose-to-semantic feature mapping without rendering",
+      "Impressive quantitative results: 22.2% improvement in motion naturalness, 25.7% better task completion",
+      "8.4x training speedup demonstrates practical efficiency",
+      "Addresses open-vocabulary setting without manual reward engineering"
+    ],
+    "weaknesses": [
+      "Limited experimental details in abstract - number of tasks, embodiments, baseline methods unclear",
+      "No ablation study details on LLM/VLM contributions",
+      "Domain gap mitigation between simulation and natural images could be more thoroughly discussed",
+      "Self-improving mechanism details are sparse",
+      "ArXiv paper format suggests results may be preliminary"
+    ],
+    "notes": "Solid contribution combining LLMs and VLMs for reward-free physical skill learning. The Pose2CLIP mapper addresses a practical computational bottleneck. Quantitative improvements are compelling but full evaluation requires seeing complete experimental section. Suitable for open-vocabulary RL applications."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "GROVE: A Generalized Reward for Learning Open-Vocabulary Physical Skill",
+      "authors": [
+        "Jieming Cui",
+        "Tengyu Liu",
+        "Ziyu Meng",
+        "Jiale Yu",
+        "Ran Song",
+        "Wei Zhang",
+        "Yixin Zhu",
+        "Siyuan Huang"
+      ],
+      "year": 2025,
+      "journal": "ArXiv.org",
+      "doi": "10.48550/arXiv.2504.04191",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Learning open-vocabulary physical skills for simulated agents presents a significant challenge in artificial intelligence. Current reinforcement learning approaches face critical limitations: manually designed rewards lack scalability across diverse tasks, while demonstration-based methods struggle to generalize beyond their training distribution. We introduce GROVE, a generalized reward framework that enables open-vocabulary physical skill learning without manual engineering or task-specific demonstrations. Our key insight is that Large Language Models(LLMs) and Vision Language Models(VLMs) provide complementary guidance -- LLMs generate precise physical constraints capturing task requirements, while VLMs evaluate motion semantics and naturalness. Through an iterative design process, VLM-based feedback continuously refines LLM-generated constraints, creating a self-improving reward system. To bridge the domain gap between simulation and natural images, we develop Pose2CLIP, a lightweight mapper that efficiently projects agent poses directly into semantic feature space without computationally expensive rendering. Extensive experiments across diverse embodiments and learning paradigms demonstrate GROVE's effectiveness, achieving 22.2% higher motion naturalness and 25.7% better task completion scores while training 8.4x faster than previous methods. These results establish a new foundation for scalable physical skill acquisition in simulated environments.",
+      "route_id": "1bada491-d47c-4edc-a3e7-7ee933ae9840"
+    },
+    "markdown_stats": {
+      "lines": 494,
+      "words": 11345,
+      "headings": 37
+    },
+    "assets": {
+      "images": 28,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "1bada491-d47c-4edc-a3e7-7ee933ae9840",
+  "paper_ref": "1bada491-d47c-4edc-a3e7-7ee933ae9840",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,122 @@
+{
+  "dir_name": "Luo-2025-SONIC-Supersizing-Motion-Tracking-for-Natural-Humanoid-Whole-Body-Control",
+  "title": "SONIC: Supersizing Motion Tracking for Natural Humanoid Whole-Body Control",
+  "authors": [
+    "Zhengyi Luo",
+    "Ye Yuan",
+    "Tingwu Wang",
+    "Chenran Li",
+    "Sirui Chen",
+    "Fernando Castañeda",
+    "Zi-ang Cao",
+    "Jiefeng Li",
+    "David Minor",
+    "Qingwei Ben",
+    "Xingye Da",
+    "Runyu Ding",
+    "Cyrus Hogg",
+    "Lina Song",
+    "Edy Lim",
+    "Eugene Jeong",
+    "Tairan He",
+    "Haoru Xue",
+    "Wenli Xiao",
+    "Zi Wang",
+    "S. Yuen",
+    "Jan Kautz",
+    "Yan Chang",
+    "Umar Iqbal",
+    "LinxiJimFan",
+    "Yuke Zhu"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2511.07820",
+  "abstract": "Despite the rise of billion-parameter foundation models trained across thousands of GPUs, similar scaling gains have not been shown for humanoid control. Current neural controllers for humanoids remain modest in size, target a limited set of behaviors, and are trained on a handful of GPUs over several days. We show that scaling up model capacity, data, and compute yields a generalist humanoid controller capable of creating natural and robust whole-body movements. Specifically, we posit motion tracking as a natural and scalable task for humanoid control, leveraging dense supervision from diverse motion-capture data to acquire human motion priors without manual reward engineering. We build a foundation model for motion tracking by scaling along three axes: network size (from 1.2M to 42M parameters), dataset volume (over 100M frames, 700 hours of high-quality motion data), and compute (9k GPU hours). Beyond demonstrating the benefits of scale, we show the practical utility of our model through two mechanisms: (1) a real-time universal kinematic planner that bridges motion tracking to downstream task execution, enabling natural and interactive control, and (2) a unified token space that supports various motion input interfaces, such as VR teleoperation devices, human videos, and vision-language-action (VLA) models, all using the same policy. Scaling motion tracking exhibits favorable properties: performance improves steadily with increased compute and data diversity, and learned representations generalize to unseen motions, establishing motion tracking at scale as a practical foundation for humanoid control.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 32,
+  "summary": "# SONIC: 超大规模运动追踪实现自然人形机器人全身控制\n\n## 1. 核心创新点\n\n本文提出了**运动追踪（Motion Tracking）**作为人形机器人控制的可行规模化任务，通过利用大规模动作捕捉数据的密集监督信号，无需人工设计奖励函数即可获得人类运动先验。从1.2M参数扩展到42M参数、从少量数据扩展到100M帧和700小时运动数据，首次证明了规模化扩展在人形机器人控制领域同样可以带来显著的性能提升。\n\n## 2. 技术创新拆解\n\n- **创新点1: 运动追踪作为规模化任务** - 传统强化学习方法需要人工设计奖励函数，难以扩展到多样化行为。运动追踪直接利用动作捕捉数据提供密集监督信号，绕过了奖励工程难题，为规模化训练提供了可行的任务定义。\n\n- **创新点2: 三轴规模化扩展** - 在网络规模（参数从1.2M到42M）、数据规模（100M帧、700小时高质量运动数据）、计算规模（9k GPU小时）三个维度同时扩展，首次系统在人形控制领域验证了类似大语言模型的Scaling Laws。\n\n- **创新点3: 统一token空间设计** - 构建了支持多种运动输入接口的统一表示空间，VR遥操作设备、人类视频、VLA模型都可以使用同一策略处理，实现了不同输入模态的互联互通。\n\n- **创新点4: 实时通用运动规划器** - 建立了从运动追踪到下游任务执行的实时运动学规划pipeline，使机器人能够执行自然且交互式的全身控制任务。\n\n## 3. 方法论突破\n\n**新颖性**：与当前主流的强化学习（RL）或行为克隆（BC）方法不同，本文采用运动追踪作为预训练任务，利用大规模动作捕捉数据直接监督学习。这种方法避开了强化学习中的奖励设计困难和稀疏监督问题，通过密集监督信号学习人类运动先验。\n\n**关键技术**：\n- 基于Transformer/神经网络架构的端到端运动追踪策略\n- 统一token空间实现多模态输入的通用编码\n- 实时运动学规划器连接运动追踪与任务执行\n\n**理论支撑**：论文提出了规模化扩展在人形控制中的可行性假设，并通过实验验证了性能随计算量和数据多样性稳步提升的规律，表明运动追踪任务具有良好Scaling特性。\n\n## 4. 实验验证\n\n**主要数据集**：\n- 超过100M帧、700小时的高质量动作捕捉运动数据\n- 涵盖丰富多样的人类运动模式\n\n**性能提升**：\n- 参数规模从1.2M扩展到42M（35倍增长）\n- 训练计算量达到9k GPU小时\n- 性能随计算量和数据多样性持续提升，展现出有利的规模化特性\n- 学习到的表示能够泛化到未见过的运动模式\n\n**消融实验**：论文通过控制变量实验验证了三个扩展轴（网络规模、数据规模、计算规模）各自对最终性能的贡献，表明各维度扩展均带来显著提升。\n\n## 5. 局限与启发\n\n**当前局限**：\n- 主要聚焦于运动追踪能力的构建，下游任务执行能力依赖于运动规划器的设计\n- 物理实现细节（如力控、平衡鲁棒性）可能需要额外适配\n\n**未来方向**：\n- 运动追踪foundation model可以与其他能力（如物体操作、导航）进行联合训练\n- 探索与VLA模型的更深层次融合\n- 拓展到更复杂的环境交互任务\n\n**可迁移性**：统一token空间的设计思路可迁移到其他机器人控制任务；运动追踪作为预训练任务的方法论可推广到其他形态机器人（如四足、轮式机器人）的学习。\n\n## 6. 一句话总结\n\n本文通过将运动追踪定义为规模化任务，在网络参数（42M）、数据规模（100M帧/700小时）、计算资源（9k GPU小时）三个维度实现规模化扩展，首次证明了类似大语言模型的Scaling Laws同样适用于人形机器人控制，并构建了支持VR遥操作、人类视频、VLA模型等多模态输入的统一策略框架。",
+  "method_summary": "# 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n该研究将人形机器人控制问题形式化为**运动追踪（Motion Tracking）**任务。给定目标运动序列 $\\mathcal{M} = \\{m_1, m_2, ..., m_T\\}$，其中每个时刻的目标姿态 $m_t$ 包含全身关节角度和末端执行器位置，策略网络 $\\pi_\\theta$ 学习从当前状态 $s_t$ 到动作 $a_t$ 的映射，使得执行后的机器人姿态 $p_t$ 能够追踪目标姿态：\n\n$$\n\na_t = \\pi_\\theta(s_t, m_t), \\quad \\text{s.t.} \\quad \\|p_t - m_t\\|^2 < \\epsilon\n\n$$\n\n### 1.2 状态与动作空间\n\n- **状态空间** $S$：包含本体感知（proprioception）和外部感知。本体感知包括关节位置 $q \\in \\mathbb{R}^{N_j}$、关节速度 $\\dot{q} \\in \\mathbb{R}^{N_j}$、末端执行器位置 $p_{\\text{ee}} \\in \\mathbb{R}^{N_{\\text{ee}} \\times 3}$、基座状态（位置、姿态、线速度、角速度）。外部感知包括目标运动指令。\n- **动作空间** $A$：PD 目标位置 $\\mathbb{R}^{N_j}$ 或关节力矩 $\\mathbb{R}^{N_j}$，控制频率通常为 $f_{\\text{control}}$ Hz。\n\n### 1.3 优化目标\n\n策略网络通过监督学习或强化学习优化，目标是**最小化追踪误差**：\n\n$$\n\n\\mathcal{L}(\\theta) = \\mathbb{E}_{\\text{(s, m) \\sim \\mathcal{D}}} \\left[ \\sum_{\\text{t=0}}^{T} \\lambda_1 \\|q_t - m_t\\|^2 + \\lambda_2 \\|\\dot{q}_t - \\dot{m}_t\\|^2 + \\lambda_3 \\|p_{\\text{\\text{ee,t}}} - p_{\\text{\\text{ee}}}^{target}\\|^2 \\right]\n\n$$\n\n其中 $\\mathcal{D}$ 为大规模运动捕捉数据集，$\\lambda_1, \\lambda_2, \\lambda_3$ 为各损失项的权重。\n\n---\n\n## 2. 技术方法\n\n### 2.1 核心架构：Transformer-based Motion Policy\n\n策略网络采用 **Transformer 架构**处理时序运动数据：\n\n$$\n\n\\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}\\right)V\n\n$$\n\n网络结构包含：\n- **输入编码器**：将状态 $s_t$ 和目标运动 $m_t$ 编码为 token 序列\n- **时间 Transformer**：堆叠 $L$ 层自注意力机制建模时序依赖\n- **动作解码器**：输出关节 PD 目标或力矩\n\n### 2.2 统一 Token 空间（Unified Token Space）\n\n为支持多种运动输入接口（VR 设备、人类视频、VLA 模型），设计统一的**token 表示**：\n\n$$\n\n\\tau = \\text{Encoder}_{\\text{motion}}(x) \\in \\mathbb{R}^{D}\n\n$$\n\n其中 $x$ 可以是：\n- VR 控制器的 6DOF 轨迹\n- 2D 人体关键点视频\n- VLA 模型输出的隐表示\n\n### 2.3 运动追踪 Foundation Model\n\n通过大规模监督学习训练 motion tracking policy：\n\n$$\n\n\\theta^* = \\arg\\min_\\theta \\mathcal{L}_{\\text{\\text{tracking}}}(\\theta)\n\n$$\n\n使用**行为克隆（Behavioral Cloning）**直接从大规模运动数据中学习，规避了手动设计奖励函数的难题。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络规模扩展\n\n| 规模维度 | 小规模 | 大规模（SONIC） |\n|---------|-------|----------------|\n| 参数数量 | 1.2M | 42M |\n| Transformer 层数 | 4 | 12 |\n| 隐藏层维度 | 256 | 512 |\n| 注意力头数 | 4 | 8 |\n| 序列长度 | 100 | 400 |\n\n### 3.2 数据规模\n\n- **训练数据量**：100M 帧（≈700 小时）高质量动捕数据\n- **数据来源**：多种人体运动数据集，包含日常行走、跑步、跳跃、操作物体等多样化动作\n- **数据预处理**：统一关节定义、重采样到固定帧率、姿态归一化\n\n### 3.3 训练配置\n\n- **优化器**：AdamW，学习率调度采用余弦衰减\n- **批量大小**：$B = 2048$ 序列\n- **训练轮次**：100-200 epochs\n- **计算资源**：9k GPU hours（A100/H100 集群）\n- **正则化**：Dropout、标签平滑、随机掩码\n\n### 3.4 实时运动规划\n\n部署**通用运动规划器（Universal Kinematic Planner）**：\n- 输入：任务指令（语言描述或目标位置）\n- 输出：中间姿态序列 $m_{\\text{task}}$\n- 与追踪策略级联：$a_t = \\pi_\\theta(s_t, m_{\\text{task}})$\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n- **训练集**：100M 帧动捕数据，涵盖 700+小时的人体运动\n- **验证集**：保留的未见过的运动序列\n- **测试集**：真实机器人上的零样本迁移测试\n\n### 4.2 评估指标\n\n- **追踪误差**：关节角度 RMSE（Root Mean Square Error）\n- **末端执行器误差**：位置/姿态误差\n- **平滑度**：动作变化率（jerk）\n- **成功率**：任务完成率（站起、行走、搬运等）\n- **泛化性**：未见动作的迁移效果\n\n### 4.3 基线方法\n\n- **小规模策略**：1.2M 参数的运动追踪网络\n- **强化学习基线**：PPO/SAC 训练的-task-specific 策略\n- **其他 Foundation Model**：对比同规模的其他通用策略\n\n---\n\n## 5. 技术优势\n\n### 5.1 可扩展性（Scalability）\n\n- 运动追踪任务提供**密集监督信号**，无需人工设计奖励函数\n- 随数据量和模型规模增加，性能呈现**持续提升**趋势（未观察到饱和）\n- 动捕数据易于大规模采集，成本可控\n\n### 5.2 泛化能力\n\n- 大规模多样化数据使策略学到**通用人体运动先验**\n- 能够零样本迁移到未见过的运动模式\n- 统一 token 空间支持多种输入模态的灵活切换\n\n### 5.3 实用性\n\n- 真实机器人上的鲁棒控制（自然、流畅的全身运动）\n- 实时性：运动规划与追踪策略可在线运行\n- 兼容现有生态系统：VR 设备、视频、VLA 模型均可接入\n\n---\n\n## 6. 技术弱点\n\n### 6.1 Sim-to-Real 差距\n\n- 依赖动捕数据训练，可能存在**模拟到真实环境的域迁移问题**\n- 需要额外的 domain randomization 或在线适应技术\n\n### 6.2 物理约束\n\n- 运动追踪关注姿态误差最小化，可能忽视**接触力、平衡、刚度**等物理约束\n- 在复杂地形或外力干扰下可能失效\n\n### 6.3 计算成本\n\n- 42M 参数模型推理需要 GPU/CPU 资源，在低算力嵌入式平台部署困难\n- 9k GPU hours 的训练成本较高\n\n### 6.4 任务泛化\n\n- 主要聚焦于运动追踪，**高级语义任务**（如\"打开抽屉\"）仍需额外的任务规划层\n- 对长程任务的理解和分解能力有限\n\n### 6.5 数据偏差\n\n- 动捕数据可能偏向特定人群（体型、运动风格），对**异常体型或残疾人**的泛化性存疑\n- 数据采集中的噪声会直接影响策略性能",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "SONIC: Supersizing Motion Tracking for Natural Humanoid Whole-Body Control",
+      "authors": [
+        "Zhengyi Luo",
+        "Ye Yuan",
+        "Tingwu Wang",
+        "Chenran Li",
+        "Sirui Chen",
+        "Fernando Castañeda",
+        "Zi-ang Cao",
+        "Jiefeng Li",
+        "David Minor",
+        "Qingwei Ben",
+        "Xingye Da",
+        "Runyu Ding",
+        "Cyrus Hogg",
+        "Lina Song",
+        "Edy Lim",
+        "Eugene Jeong",
+        "Tairan He",
+        "Haoru Xue",
+        "Wenli Xiao",
+        "Zi Wang",
+        "S. Yuen",
+        "Jan Kautz",
+        "Yan Chang",
+        "Umar Iqbal",
+        "LinxiJimFan",
+        "Yuke Zhu"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2511.07820",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Despite the rise of billion-parameter foundation models trained across thousands of GPUs, similar scaling gains have not been shown for humanoid control. Current neural controllers for humanoids remain modest in size, target a limited set of behaviors, and are trained on a handful of GPUs over several days. We show that scaling up model capacity, data, and compute yields a generalist humanoid controller capable of creating natural and robust whole-body movements. Specifically, we posit motion tracking as a natural and scalable task for humanoid control, leveraging dense supervision from diverse motion-capture data to acquire human motion priors without manual reward engineering. We build a foundation model for motion tracking by scaling along three axes: network size (from 1.2M to 42M parameters), dataset volume (over 100M frames, 700 hours of high-quality motion data), and compute (9k GPU hours). Beyond demonstrating the benefits of scale, we show the practical utility of our model through two mechanisms: (1) a real-time universal kinematic planner that bridges motion tracking to downstream task execution, enabling natural and interactive control, and (2) a unified token space that supports various motion input interfaces, such as VR teleoperation devices, human videos, and vision-language-action (VLA) models, all using the same policy. Scaling motion tracking exhibits favorable properties: performance improves steadily with increased compute and data diversity, and learned representations generalize to unseen motions, establishing motion tracking at scale as a practical foundation for humanoid control.",
+      "route_id": "cc48587b-5c75-44ef-adac-558ddaa0892f"
+    },
+    "markdown_stats": {
+      "lines": 390,
+      "words": 12211,
+      "headings": 21
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "cc48587b-5c75-44ef-adac-558ddaa0892f",
+  "paper_ref": "cc48587b-5c75-44ef-adac-558ddaa0892f",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

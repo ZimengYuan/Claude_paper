@@ -1,0 +1,77 @@
+{
+  "dir_name": "Zhang-2025-Motion-Priors-Reimagined-Adapting-Flat-Terrain-Skills-for-Complex-Quadruped-Mobility-2",
+  "title": "Motion Priors Reimagined: Adapting Flat-Terrain Skills for Complex Quadruped Mobility",
+  "authors": [
+    "Zewei Zhang",
+    "Chenhao Li",
+    "Takahiro Miki",
+    "Marco Hutter"
+  ],
+  "year": 2025,
+  "journal": "ETH Zürich Research Collection",
+  "doi": "10.3929/ethz-c-000794819",
+  "abstract": "Reinforcement learning (RL)-based legged locomotion controllers often require meticulous reward tuning to track velocities or goal positions while preserving smooth motion on various terrains. Motion imitation methods via RL using demonstration data reduce reward engineering but fail to generalize to novel environments. We address this by proposing a hierarchical RL framework in which a low-level policy is first pre-trained to imitate animal motions on flat ground, thereby establishing motion priors. A subsequent high-level, goal-conditioned policy then builds on these priors, learning residual corrections that enable perceptive locomotion, local obstacle avoidance, and goal-directed navigation across diverse and rugged terrains. Simulation experiments illustrate the effectiveness of learned residuals in adapting to progressively challenging uneven terrains while still preserving the locomotion characteristics provided by the motion priors. Furthermore, our results demonstrate improvements in motion regularization over baseline models trained without motion priors under similar reward setups. Real-world experiments with an ANYmal-D quadruped robot confirm our policy’s capability to generalize animal-like locomotion skills to complex terrains, demonstrating smooth and efficient locomotion and local navigation performance amidst challenging terrains with obstacles.",
+  "paper_type": "other",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Motion Priors Reimagined: Adapting Flat-Terrain Skills for Complex Quadruped Mobility",
+      "authors": [
+        "Zewei Zhang",
+        "Chenhao Li",
+        "Takahiro Miki",
+        "Marco Hutter"
+      ],
+      "year": 2025,
+      "journal": "ETH Zürich Research Collection",
+      "doi": "10.3929/ethz-c-000794819",
+      "paper_type": "other",
+      "abstract": "Reinforcement learning (RL)-based legged locomotion controllers often require meticulous reward tuning to track velocities or goal positions while preserving smooth motion on various terrains. Motion imitation methods via RL using demonstration data reduce reward engineering but fail to generalize to novel environments. We address this by proposing a hierarchical RL framework in which a low-level policy is first pre-trained to imitate animal motions on flat ground, thereby establishing motion priors. A subsequent high-level, goal-conditioned policy then builds on these priors, learning residual corrections that enable perceptive locomotion, local obstacle avoidance, and goal-directed navigation across diverse and rugged terrains. Simulation experiments illustrate the effectiveness of learned residuals in adapting to progressively challenging uneven terrains while still preserving the locomotion characteristics provided by the motion priors. Furthermore, our results demonstrate improvements in motion regularization over baseline models trained without motion priors under similar reward setups. Real-world experiments with an ANYmal-D quadruped robot confirm our policy’s capability to generalize animal-like locomotion skills to complex terrains, demonstrating smooth and efficient locomotion and local navigation performance amidst challenging terrains with obstacles.",
+      "route_id": "9e88c8c9-f59c-4bc2-9c0c-0b469f867888"
+    },
+    "markdown_stats": {
+      "lines": 325,
+      "words": 7217,
+      "headings": 34
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "9e88c8c9-f59c-4bc2-9c0c-0b469f867888",
+  "paper_ref": "9e88c8c9-f59c-4bc2-9c0c-0b469f867888",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

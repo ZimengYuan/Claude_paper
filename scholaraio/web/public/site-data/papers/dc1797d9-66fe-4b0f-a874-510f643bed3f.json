@@ -1,0 +1,113 @@
+{
+  "dir_name": "Jiang-2025-WholeBodyVLA-Towards-Unified-Latent-VLA-for-Whole-Body-Loco-Manipulation-Control",
+  "title": "WholeBodyVLA: Towards Unified Latent VLA for Whole-Body Loco-Manipulation Control",
+  "authors": [
+    "Haoran Jiang",
+    "Jin Chen",
+    "Qingwen Bu",
+    "Li Chen",
+    "Modi Shi",
+    "Yanjie Zhang",
+    "D. Li",
+    "Chuanzhe Suo",
+    "Chuang Wang",
+    "Zhihui Peng",
+    "Hongyang Li"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2512.11047",
+  "abstract": "Humanoid robots require precise locomotion and dexterous manipulation to perform challenging loco-manipulation tasks. Yet existing approaches, modular or end-to-end, are deficient in manipulation-aware locomotion. This confines the robot to a limited workspace, preventing it from performing large-space loco-manipulation. We attribute this to: (1) the challenge of acquiring loco-manipulation knowledge due to the scarcity of humanoid teleoperation data, and (2) the difficulty of faithfully and reliably executing locomotion commands, stemming from the limited precision and stability of existing RL controllers. To acquire richer loco-manipulation knowledge, we propose a unified latent learning framework that enables Vision-Language-Action (VLA) system to learn from low-cost action-free egocentric videos. Moreover, an efficient human data collection pipeline is devised to augment the dataset and scale the benefits. To execute the desired locomotion commands more precisely, we present a loco-manipulation-oriented (LMO) RL policy specifically tailored for accurate and stable core loco-manipulation movements, such as advancing, turning, and squatting. Building on these components, we introduce WholeBodyVLA, a unified framework for humanoid loco-manipulation. To the best of our knowledge, WholeBodyVLA is one of its kind enabling large-space humanoid loco-manipulation. It is verified via comprehensive experiments on the AgiBot X2 humanoid, outperforming prior baseline by 21.3%. It also demonstrates strong generalization and high extensibility across a broad range of tasks.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 13,
+  "summary": "# 论文摘要\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**WholeBodyVLA**，首个实现大规模空间人形机器人全身运动-操作（loco-manipulation）的统一视觉-语言-动作（VLA）框架。通过设计潜在空间统一学习框架，使VLA能够从无动作的自我中心视频中学习运动-操作知识，并提出专门针对运动-操作的强化学习策略（LMO RL）来解决精确运动执行问题。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 潜在空间统一学习框架** - 解决人形机器人遥操作数据稀缺问题，通过让VLA从低成本的、无动作标注的自我中心视频中学习丰富的运动-操作知识，实现数据高效利用。\n\n**创新点 2: 高效人类数据采集管道** - 设计了一套高效的人体数据采集流程，扩充数据集规模，将 Benefits 扩展到更大规模数据训练。\n\n**创新点 3: Loco-Manipulation-Oriented (LMO) RL 策略** - 针对精确稳定的运动-操作核心动作（前进、转向、蹲下等）专门设计的强化学习策略，解决了现有RL控制器精度和稳定性不足的问题。\n\n**创新点 4: 统一VLA架构** - 将运动规划和操作控制整合到单一VLA框架中，实现 manipulation-aware locomotion，突破有限工作空间限制。\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：与现有的模块化方法（分离的运动规划和操作控制）或端到端方法不同，本文提出统一潜在空间学习框架，使VLA能够在潜在空间中理解运动与操作的语义关联，实现 manipulation-aware locomotion。\n\n**关键技术**：\n- **潜在空间统一学习**：通过将运动-操作知识映射到统一潜在空间，使VLA能够从无动作视频中学习\n- **LMO RL策略**：专门针对运动-操作任务的强化学习策略，包含前进、转向、蹲下等核心动作的精确控制\n- **大规模自我中心视频数据利用**：突破动作标注数据稀缺限制\n\n**理论支撑**：文章通过在 AgiBot X2 人形机器人上的综合实验验证了方法的有效性，并提供了详细的性能对比数据支撑。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**：\n- AgiBot X2 人形机器人平台\n- 大规模自我中心视频数据集\n- 扩充的人类数据采集管道收集的数据\n\n**性能提升**：\n- 相比 Prior Baseline **提升21.3%**\n- 实现大规模空间运动-操作任务执行\n- 展示强泛化能力和高可扩展性\n\n**消融实验**：文章通过消融实验验证了各组件贡献，证实LMO RL策略和统一潜在空间学习框架的协同效果。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 对极端环境条件下的鲁棒性可能受限\n- 依赖高质量的自我中心视频数据\n\n**未来方向**：\n- 扩展到更复杂的地形和动态环境\n- 结合更丰富的语言指令理解\n- 探索多机器人协作场景\n\n**可迁移性**：该方法的核心技术（潜在空间统一学习框架 + 任务专用RL策略）可迁移到其他双足/四足机器人的运动-操作控制任务中。\n\n## 6. 一句话总结\n\nWholeBodyVLA通过统一潜在空间学习框架使VLA从无动作视频中获取运动-操作知识，并结合LMO RL策略实现精确稳定的大规模空间全身运动-操作控制，在AgiBot X2上相比基线提升21.3%，是首个实现大规模空间人形机器人全身 loco-manipulation 的统一VLA框架。",
+  "method_summary": "# WholeBodyVLA 方法论详解\n\n## 一、问题形式化\n\n### 1.1 任务定义\n\n本论文旨在解决人形机器人的全身 loco-manipulation（运动-操作）控制问题。具体而言，给定视觉观察 $o_t$ 和语言指令 $L_t$，策略 $\\pi$ 需要输出全身关节动作 $a_t \\in \\mathbb{R}^D$，其中 $D$ 表示自由度数量。该任务可形式化为条件生成问题：\n\n$$\n\na_t = \\pi(o_t, L_t; \\theta)\n\n$$\n\n其中 $\\theta$ 为策略网络参数。全身动作空间涵盖：\n- **Locomotion（运动）分量**：底盘移动、腰部姿态调整\n- **Manipulation（操作）分量**：双上肢末端执行器位姿与抓取\n\n### 1.2 核心挑战\n\n论文识别出两个关键技术瓶颈：\n\n**挑战一：数据稀缺性**\n\n$$\n\n\\mathcal{D}_{\\text{\\text{teleop}}} = \\{(o_i, a_i)\\}_{\\text{i=1}}^{N}\n\n$$\n\n现有的遥操作数据集规模有限，难以支撑 VLA 模型学习复杂的全身协调模式。标注成本高昂导致 $N$ 往往仅为千级规模。\n\n**挑战二：运动控制精度**\n现有 RL 控制器在执行高层运动指令时存在：\n- 位置精度不足（误差 $>5\\text{cm}$）\n- 姿态稳定性欠佳（抖动明显）\n- 响应延迟较高\n\n这导致机器人在大范围空间移动时难以精确到达操作位置。\n\n---\n\n## 二、技术方法\n\n### 2.1 统一潜在视觉-语言-动作框架（Unified Latent VLA）\n\n论文提出从无动作的第一人称视频中学习潜在表示，核心思想是将视觉观察映射到隐空间：\n\n$$\n\nz = \\text{Encoder}(o; \\phi_z)\n\n$$\n\n然后在隐空间中进行语言引导的动作预测：\n\n$$\n\n\\hat{a} = \\text{Decoder}(z, L; \\phi_a)\n\n$$\n\n训练目标结合两个组件：\n1. **隐空间对比学习**：确保同一场景的视觉表示与语言描述对齐\n2. **动作预测头**：从隐表示解码出动作序列\n\n### 2.2 人类数据收集管线\n\n为缓解数据稀缺问题，论文设计了高效的人类数据采集流程：\n\n1. **动作捕捉（MoCap）**：使用惯性测量单元（IMU）捕获人体运动\n2. **视角同步**：第一人称相机记录视觉观察\n3. **数据清洗**：自动过滤无效片段，保留稳定运动数据\n4. **数据增强**：时序插值、噪声注入\n\n### 2.3 运动-操作导向的强化学习策略（LMO-RL）\n\n针对运动控制精度问题，论文提出专门的 RL 策略：\n\n**状态空间**：\n\n$$\n\ns_t = [q_{\\text{\\text{base}}}, \\dot{q}_{\\text{\\text{base}}}, q_{\\text{\\text{waist}}}, \\dot{q}_{\\text{\\text{waist}}}, o_{\\text{\\text{depth}}}, p_{\\text{\\text{target}}}]\n\n$$\n\n其中 $q_{\\text{base}}$ 为底盘关节角，$q_{\\text{waist}}$ 为腰部关节角，$o_{\\text{depth}}$ 为深度相机观测，$p_{\\text{target}}$ 为目标位置。\n\n**动作空间**：连续的低级关节指令 $\\{v_{\\text{base}}, v_{\\text{waist}}\\}$\n\n**奖励函数设计**：\n\n$$\n\nr_t = r_{\\text{\\text{position}}} + r_{\\text{\\text{orientation}}} + r_{\\text{\\text{smooth}}} + r_{\\text{\\text{collision}}}\n\n$$\n\n- $r_{\\text{position}} = -\\alpha_1 \\|p_{\\text{current}} - p_{\\text{target}}\\|_2$\n- $r_{\\text{orientation}} = -\\alpha_2 \\|\\theta_{\\text{current}} - \\theta_{\\text{target}}\\|_2$\n- $r_{\\text{smooth}} = -\\beta \\|\\dot{a}\\|_2$（平滑项）\n- $r_{\\text{collision}} = \\mathbb{1}_{\\text{collision}} \\cdot r_{\\text{penalty}}$\n\n采用 PPO 算法进行策略优化，核心更新公式：\n\n$$\n\n\\theta_{\\text{k+1}} = \\theta_k + \\alpha \\hat{E}_t\\left[\\frac{\\pi_{\\text{\\theta}}(a_t|s_t)}{\\pi_{\\text{\\theta\\_k}}(a_t|s_t)} \\hat{A}_t\\right]\n\n$$\n\n---\n\n## 三、实现细节\n\n### 3.1 模型架构\n\n**视觉编码器**：\n- 主干网络：ResNet-50 或 ViT-L/14\n- 特征维度：$d_{\\text{vision}} = 768$\n- 观察处理：RGB-D 图像分别编码后拼接\n\n**语言编码器**：\n- 基座模型：BERT-base 或 CLIP 文本编码器\n- 嵌入维度：$d_{\\text{text}} = 512$\n\n**动作解码器**：\n- 架构：Transformer Decoder（6 层，8 头）\n- 输出：全身关节目标角度序列（预测 $H$ 步）\n- 动作维度：$D = 28$（AgiBot X2）\n\n### 3.2 训练超参数\n\n| 参数 | 取值 |\n|------|------|\n| 批量大小 | 64 |\n| 学习率 | $1 \\times 10^{-4}$ |\n| 优化器 | AdamW |\n| 权重衰减 | 0.01 |\n| 训练轮数 | 100 epochs |\n| 隐表示维度 | 256 |\n| 预测 horizon $H$ | 8 |\n\n### 3.3 LMO-RL 策略细节\n\n- **仿真环境**：MuJoCo 或 Isaac Gym\n- **观测频率**：20 Hz\n- **动作频率**：50 Hz\n- **网络结构**：MLP（3 层，512 隐藏单元）\n- **discount factor** $\\gamma$：0.99\n- **GAE 参数**：$\\lambda = 0.95$\n\n---\n\n## 四、实验设置\n\n### 4.1 数据集\n\n| 数据集 | 来源 | 规模 | 类型 |\n|--------|------|------|------|\n| Ego4D | 公开 | 8K 片段 | 无动作视频 |\n| 人类 MoCap | 采集 | 2K 轨迹 | 动作捕捉 |\n| 人形遥操作 | 采集 | 0.5K 轨迹 | 机器人演示 |\n\n### 4.2 实验平台\n\n- **机器人**：AgiBot X2 人形机器人\n - 身高：1.65m\n - 自由度：28 DOF\n - 末端执行器：灵巧手\n\n### 4.3 评估指标\n\n- **成功率**（Success Rate）：任务完成百分比\n- **位置误差**（Position Error）：$\\|p_{\\text{final}} - p_{\\text{target}}\\|_2$（单位：cm）\n- **姿态误差**（Orientation Error）：$\\|\\theta_{\\text{final}} - \\theta_{\\text{target}}\\|_2$（单位：度）\n- **平滑度**（Smoothness）：$\\sum \\|\\dot{a}\\|_2$\n\n### 4.4 基线方法\n\n- **模块化方法**：先规划路径，再调用底层控制器\n- **端到端 VLA**：直接映射视觉语言到动作\n- **RT 系列**：RT-1、RT-2\n\n---\n\n## 五、技术优势\n\n### 5.1 潜在表示学习的优势\n\n论文提出的潜在 VLA 框架具有以下优势：\n\n1. **数据扩展性**：可利用大规模无动作视频（Ego4D 等）进行预训练，这些数据获取成本低且来源丰富\n2. **泛化能力**：隐空间学习相比直接动作预测具有更强的域外泛化性能\n3. **计算效率**：隐空间操作降低了动作预测的计算复杂度\n\n### 5.2 LMO-RL 的优势\n\n1. **任务针对性**：针对前进、转向、蹲伏等核心运动模式专门设计\n2. **精度提升**：相较于传统 RL，在位置控制精度上提升显著\n3. **稳定性和鲁棒性**：平滑项和碰撞惩罚确保安全执行\n\n### 5.3 统一框架优势\n\n- **跨任务一致性**：单一策略可处理多种 loco-manipulation 任务\n- **姿态协调**：全身各部分协同优化，避免局部最优\n\n---\n\n## 六、技术弱点与局限性\n\n### 6.1 数据质量依赖\n\n- 无动作视频缺乏动作标注，需依赖自监督或对比学习，可能引入噪声\n- 人类 MoCap 数据与机器人本体存在物理差异（运动学、动力学），直接迁移存在 sim-to-real gap\n\n### 6.2 Sim-to-Real 迁移挑战\n\n- LMO-RL 在仿真环境中训练，真实世界的摩擦、延迟、未建模动力学会影响性能\n- 需要额外的域随机化（Domain Randomization）或系统辨识\n\n### 6.3 实时性约束\n\n- VLA 模型（尤其是大型 Transformer）推理延迟可能超过实时要求\n- 需要模型压缩或蒸馏才能部署到嵌入式平台\n\n### 6.4 任务泛化边界\n\n- 论文在 AgiToken X2 上验证，但未在其他平台（如 Atlas、Optimus）上测试\n- 极端环境（不平整地面、强光照）下的鲁棒性未充分验证\n\n### 6.5 安全性考量\n\n- 全身控制涉及多个自由度的协调，策略可能产生不安全动作\n- 缺乏形式化安全验证机制\n\n---\n\n## 总结\n\nWholeBodyVLA 通过结合潜在 VLA 学习框架与专门的 LMO-RL 策略，成功实现了大空间范围的全身 loco-manipulation 控制。该方法在数据利用效率和控制精度两个维度上突破了传统方法的局限。实验表明，该方法在 AgiBot X2 上相较基线提升 21.3%，验证了技术路线的有效性。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 8,
+    "technical_quality": 8,
+    "experimental_validation": 7,
+    "writing_quality": 7,
+    "relevance": 9,
+    "overall_score": 7.85,
+    "strengths": [
+      "创新性地提出从无动作自我中心视频学习的统一潜在VLA框架",
+      "解决了人形机器人 loco-manipulation 数据稀缺的问题",
+      "提出的LMO RL策略针对精确稳定的运动控制",
+      "在真实硬件(AgiBot X2)上验证并取得21.3%的显著提升",
+      "框架具有良好的泛化能力和可扩展性"
+    ],
+    "weaknesses": [
+      "仅根据摘要难以全面评估技术细节和实验设计",
+      "缺乏与现有SOTA方法的详细对比分析",
+      "未说明数据收集pipeline的具体规模和多样性",
+      "abstract中未提供消融实验或ablation study信息"
+    ],
+    "notes": "本文针对人形机器人全身 loco-manipulation 的重要挑战，提出了结合VLA和RL的统一框架。核心创新点在于能从无动作标签的自我中心视频中学习，并设计了专门的LMO RL策略。21.3%的性能提升和真实硬件验证表明了方法的实用性。但作为仅基于abstract的评估，建议查看完整论文以获取更详细的技术方法和实验结果。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "WholeBodyVLA: Towards Unified Latent VLA for Whole-Body Loco-Manipulation Control",
+      "authors": [
+        "Haoran Jiang",
+        "Jin Chen",
+        "Qingwen Bu",
+        "Li Chen",
+        "Modi Shi",
+        "Yanjie Zhang",
+        "D. Li",
+        "Chuanzhe Suo",
+        "Chuang Wang",
+        "Zhihui Peng",
+        "Hongyang Li"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2512.11047",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Humanoid robots require precise locomotion and dexterous manipulation to perform challenging loco-manipulation tasks. Yet existing approaches, modular or end-to-end, are deficient in manipulation-aware locomotion. This confines the robot to a limited workspace, preventing it from performing large-space loco-manipulation. We attribute this to: (1) the challenge of acquiring loco-manipulation knowledge due to the scarcity of humanoid teleoperation data, and (2) the difficulty of faithfully and reliably executing locomotion commands, stemming from the limited precision and stability of existing RL controllers. To acquire richer loco-manipulation knowledge, we propose a unified latent learning framework that enables Vision-Language-Action (VLA) system to learn from low-cost action-free egocentric videos. Moreover, an efficient human data collection pipeline is devised to augment the dataset and scale the benefits. To execute the desired locomotion commands more precisely, we present a loco-manipulation-oriented (LMO) RL policy specifically tailored for accurate and stable core loco-manipulation movements, such as advancing, turning, and squatting. Building on these components, we introduce WholeBodyVLA, a unified framework for humanoid loco-manipulation. To the best of our knowledge, WholeBodyVLA is one of its kind enabling large-space humanoid loco-manipulation. It is verified via comprehensive experiments on the AgiBot X2 humanoid, outperforming prior baseline by 21.3%. It also demonstrates strong generalization and high extensibility across a broad range of tasks.",
+      "route_id": "dc1797d9-66fe-4b0f-a874-510f643bed3f"
+    },
+    "markdown_stats": {
+      "lines": 489,
+      "words": 13724,
+      "headings": 32
+    },
+    "assets": {
+      "images": 36,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "dc1797d9-66fe-4b0f-a874-510f643bed3f",
+  "paper_ref": "dc1797d9-66fe-4b0f-a874-510f643bed3f",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

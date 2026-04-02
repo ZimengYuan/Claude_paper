@@ -1,0 +1,77 @@
+{
+  "dir_name": "Zhengjie-2025-Unified-Humanoid-Fall-Safety-Policy-from-a-Few-Dem",
+  "title": "Unified Humanoid Fall-Safety Policy from a Few Demonstrations",
+  "authors": [
+    "Xu, Zhengjie",
+    "Li, Ye",
+    "Lin, Kwan-yee",
+    "Yu, Stella X."
+  ],
+  "year": 2025,
+  "journal": "ArXiv.org",
+  "doi": "",
+  "abstract": "Falling is an inherent risk of humanoid mobility. Maintaining stability is thus a primary safety focus in robot control and learning, yet no existing approach fully averts loss of balance. When instability does occur, prior work addresses only isolated aspects of falling: avoiding falls, choreographing a controlled descent, or standing up afterward. Consequently, humanoid robots lack integrated strategies for impact mitigation and prompt recovery when real falls defy these scripts. We aim to go beyond keeping balance to make the entire fall-and-recovery process safe and autonomous: prevent falls when possible, reduce impact when unavoidable, and stand up when fallen. By fusing sparse human demonstrations with reinforcement learning and an adaptive diffusion-based memory of safe reactions, we learn adaptive whole-body behaviors that unify fall prevention, impact mitigation, and rapid recovery in one policy. Experiments in simulation and on a Unitree G1 demonstrate robust sim-to-real transfer, lower impact forces, and consistently fast recovery across diverse disturbances, pointing towards safer, more resilient humanoids in real environments. Videos are available at https://firm2025.github.io/.",
+  "paper_type": "article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Unified Humanoid Fall-Safety Policy from a Few Demonstrations",
+      "authors": [
+        "Xu, Zhengjie",
+        "Li, Ye",
+        "Lin, Kwan-yee",
+        "Yu, Stella X."
+      ],
+      "year": 2025,
+      "journal": "ArXiv.org",
+      "paper_type": "article",
+      "abstract": "Falling is an inherent risk of humanoid mobility. Maintaining stability is thus a primary safety focus in robot control and learning, yet no existing approach fully averts loss of balance. When instability does occur, prior work addresses only isolated aspects of falling: avoiding falls, choreographing a controlled descent, or standing up afterward. Consequently, humanoid robots lack integrated strategies for impact mitigation and prompt recovery when real falls defy these scripts. We aim to go beyond keeping balance to make the entire fall-and-recovery process safe and autonomous: prevent falls when possible, reduce impact when unavoidable, and stand up when fallen. By fusing sparse human demonstrations with reinforcement learning and an adaptive diffusion-based memory of safe reactions, we learn adaptive whole-body behaviors that unify fall prevention, impact mitigation, and rapid recovery in one policy. Experiments in simulation and on a Unitree G1 demonstrate robust sim-to-real transfer, lower impact forces, and consistently fast recovery across diverse disturbances, pointing towards safer, more resilient humanoids in real environments. Videos are available at https://firm2025.github.io/."
+    },
+    "markdown_stats": {
+      "lines": 305,
+      "words": 10031,
+      "headings": 26
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "33fcacac-709c-47fd-91ad-d24eccc735e1_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "10.1109-humanoids.2014.7041476",
+  "paper_ref": "10.1109-humanoids.2014.7041476",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

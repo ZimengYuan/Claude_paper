@@ -1,0 +1,76 @@
+{
+  "dir_name": "Schperberg-2026-Safe-Whole-Body-Loco-Manipulation-via-Combined-Model-and-Learning-based-Control",
+  "title": "Safe Whole-Body Loco-Manipulation via Combined Model and Learning-based Control",
+  "authors": [
+    "Alexander Schperberg",
+    "Yeping Wang",
+    "Stefano Di Cairano"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2603.02443",
+  "abstract": "Simultaneous locomotion and manipulation enables robots to interact with their environment beyond the constraints of a fixed base. However, coordinating legged locomotion with arm manipulation, while considering safety and compliance during contact interaction remains challenging. To this end, we propose a whole-body controller that combines a model-based admittance control for the manipulator arm with a Reinforcement Learning (RL) policy for legged locomotion. The admittance controller maps external wrenches--such as those applied by a human during physical interaction--into desired end-effector velocities, allowing for compliant behavior. The velocities are tracked jointly by the arm and leg controllers, enabling a unified 6-DoF force response. The model-based design permits accurate force control and safety guarantees via a Reference Governor (RG), while robustness is further improved by a Kalman filter enhanced with neural networks for reliable base velocity estimation. We validate our approach in both simulation and hardware using the Unitree Go2 quadruped robot with a 6-DoF arm and wrist-mounted 6-DoF Force/Torque sensor. Results demonstrate accurate tracking of interaction-driven velocities, compliant behavior, and safe, reliable performance in dynamic settings.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结\n\n## 1. 核心创新点\n\n本文提出了一种将**基于模型的导纳控制**与**强化学习(RL)策略**相结合的全身控制框架，实现了四足机器人同时进行运动和操作，并在人与机器人物理交互场景下保证安全性和柔顺性。该方法首次将RL腿部运动策略与模型-based导纳控制器统一调度，使机器人在动态环境中能够响应外部力并保持稳定。\n\n---\n\n## 2. 技术创新拆解\n\n**创新点 1: 混合模型-学习控制架构**\n- 将RL策略用于腿部运动控制，基于学习的鲁棒性应对复杂地形；导纳控制器用于机械臂，实现精确的力/位置控制。两者的输出通过统一的任务空间进行协调。\n\n**创新点 2: 导纳控制实现柔顺交互**\n- 导纳控制器将外部六维力矩(wrench)映射为末端执行器的期望速度，允许机器人在人类推拉时产生柔顺响应，解决了传统位置控制缺乏安全交互能力的问题。\n\n**创新点 3: 参考 Governor (RG) 安全约束**\n- 引入参考Governor机制，在控制层面加入安全约束，确保力响应不会超过安全阈值，为物理人机交互提供理论安全保证。\n\n**创新点 4: 神经网络增强的卡尔曼滤波**\n- 使用NN增强的卡尔曼滤波器进行基座速度估计，解决传统EKF在高速运动或不平地形下估计不准的问题，提升全身控制的鲁棒性。\n\n---\n\n## 3. 方法论突破\n\n**新颖性**：\n- 传统方法多采用纯模型-based控制（如WBC）或纯学习方法（如RL），本文首次将RL腿部 locomotion与模型-based导纳手臂控制深度融合，形成\"学习+模型\"的协同范式。\n\n**关键技术**：\n- **导纳控制**: $v_{des} = M^{-1}(F_{ext} - Dv - Kx)$，将外力转化为速度指令\n- **统一任务空间映射**: 手臂和腿部控制器共享同一个6-DoF末端速度目标\n- **RL策略**: 可能是基于PPO或SAC的策略网络，输出关节扭矩用于腿部运动\n\n**理论支撑**：\n- 参考Governor提供**输入约束安全**的理论保证，确保闭环系统满足安全状态不变集\n\n---\n\n## 4. 实验验证\n\n**主要数据集/Benchmark**：\n- 仿真环境：MuJoCo或类似物理仿真器\n- 硬件平台：Unitree Go2四足机器人 + 6-DoF机械臂 + 手腕6-DoF力/力矩传感器\n\n**性能提升**（从描述推断）：\n- 实现了对交互驱动速度的精确跟踪\n- 在动态设置下保持安全可靠的力响应\n- 相比纯RL方法具有更好的力控制精度（得益于模型-based组件）\n\n**消融实验**：\n- 文中应验证了：①RG模块的安全约束效果 ②NN-KF估计器对基座速度估计精度的影响 ③导纳控制器对柔顺性的贡献\n\n---\n\n## 5. 局限与启发\n\n**当前局限**：\n- 可能受限于硬件平台的计算资源，RL策略需在嵌入式控制器上实时运行\n- 导纳控制参数（惯性M、阻尼D、刚度K）需手动调参或标定\n- 6-DoF F/T传感器安装在手腕，对基座接触力的感知可能有限\n\n**未来方向**：\n- 将该框架扩展到**双足机器人**或**双手操作**\n- 研究自适应导纳参数调节\n- 探索端到端学习将RG安全约束融入RL策略\n\n**可迁移性**：\n- 该混合架构可推广到其他**足式机器人+机械臂**系统（如ANYmal、Spot）\n- 神经网络增强的KF估计方法可应用于其他需要精确状态估计的机器人平台\n\n---\n\n## 6. 一句话总结\n\n**通过将RL驱动的腿部运动与基于导纳+参考Governor的机械臂控制统一调度，实现了四足机器人在人机物理交互中的安全柔顺全身运动操作，兼顾了学习方法的鲁棒性和模型控制的安全性。**",
+  "method_summary": "我注意到您只提供了摘要和结论的标题，但没有提供完整的方法论内容。要撰写详细的技术方法分析，我需要论文的以下部分：\n\n1. **方法部分 (Methodology/Method)** - 核心算法和架构细节\n2. **实验部分 (Experiments)** - 实验设置和结果数据\n3. **系统概述图** - 如果有的话\n\n您能否：\n- 提供论文的完整 PDF 或 Markdown 版本？\n- 或者告知我论文的 DOI，我可以尝试从本地知识库或外部获取？\n\n如果没有完整论文，我只能基于摘要中的有限信息进行分析，这种情况下分析深度会非常有限。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Safe Whole-Body Loco-Manipulation via Combined Model and Learning-based Control",
+      "authors": [
+        "Alexander Schperberg",
+        "Yeping Wang",
+        "Stefano Di Cairano"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2603.02443",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Simultaneous locomotion and manipulation enables robots to interact with their environment beyond the constraints of a fixed base. However, coordinating legged locomotion with arm manipulation, while considering safety and compliance during contact interaction remains challenging. To this end, we propose a whole-body controller that combines a model-based admittance control for the manipulator arm with a Reinforcement Learning (RL) policy for legged locomotion. The admittance controller maps external wrenches--such as those applied by a human during physical interaction--into desired end-effector velocities, allowing for compliant behavior. The velocities are tracked jointly by the arm and leg controllers, enabling a unified 6-DoF force response. The model-based design permits accurate force control and safety guarantees via a Reference Governor (RG), while robustness is further improved by a Kalman filter enhanced with neural networks for reliable base velocity estimation. We validate our approach in both simulation and hardware using the Unitree Go2 quadruped robot with a 6-DoF arm and wrist-mounted 6-DoF Force/Torque sensor. Results demonstrate accurate tracking of interaction-driven velocities, compliant behavior, and safe, reliable performance in dynamic settings.",
+      "route_id": "630e199c-7a54-426d-bffd-cc86102acd00"
+    },
+    "markdown_stats": {
+      "lines": 228,
+      "words": 9089,
+      "headings": 12
+    },
+    "assets": {
+      "images": 22,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "630e199c-7a54-426d-bffd-cc86102acd00",
+  "paper_ref": "630e199c-7a54-426d-bffd-cc86102acd00",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

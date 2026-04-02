@@ -1,0 +1,92 @@
+{
+  "dir_name": "Nai-2026-Humanoid-Manipulation-Interface-Humanoid-Whole-Body-Manipulation-from-Robot-Free-Demonstrations",
+  "title": "Humanoid Manipulation Interface: Humanoid Whole-Body Manipulation from Robot-Free Demonstrations",
+  "authors": [
+    "Ruiqian Nai",
+    "Boyuan Zheng",
+    "Junming Zhao",
+    "Haodong Zhu",
+    "Sicong Dai",
+    "Zunhao Chen",
+    "Yihang Hu",
+    "Yingdong Hu",
+    "Tong Zhang",
+    "Chuan Wen",
+    "Yang Gao"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.06643",
+  "abstract": "Current approaches for humanoid whole-body manipulation, primarily relying on teleoperation or visual sim-to-real reinforcement learning, are hindered by hardware logistics and complex reward engineering. Consequently, demonstrated autonomous skills remain limited and are typically restricted to controlled environments. In this paper, we present the Humanoid Manipulation Interface (HuMI), a portable and efficient framework for learning diverse whole-body manipulation tasks across various environments. HuMI enables robot-free data collection by capturing rich whole-body motion using portable hardware. This data drives a hierarchical learning pipeline that translates human motions into dexterous and feasible humanoid skills. Extensive experiments across five whole-body tasks--including kneeling, squatting, tossing, walking, and bimanual manipulation--demonstrate that HuMI achieves a 3x increase in data collection efficiency compared to teleoperation and attains a 70% success rate in unseen environments.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结\n\n## 1. 核心创新点\n\n本文提出了**HuMI（Humanoid Manipulation Interface）**，这是一个无需机器人硬件即可收集人体全身运动数据的框架，通过便携式传感器捕获丰富的全身运动信息，并利用分层学习管道将人类动作转化为可执行的仿人机器人技能。该方法解决了传统仿人机器人操作依赖笨重硬件或复杂奖励工程的问题，实现了在多种环境下高效学习多样化全身操作任务。\n\n---\n\n## 2. 技术创新拆解\n\n- **创新点1：机器人无关的数据采集方式** - 使用便携式硬件（Xsens动作捕捉服等）直接捕获人体全身运动数据，避免了传统遥操作需要昂贵机器人硬件和复杂设置的问题，大幅降低了数据采集的门槛和成本。\n\n- **创新点2：分层学习管道** - 将人体动作到仿人机器人技能的转换分为多个层次，先进行姿态对齐和运动重定向，再通过强化学习进行技能优化，使学习过程更加稳定和高效。\n\n- **创新点3：跨环境泛化能力** - 训练后的策略能够在未见过的新环境中保持70%的成功率，解决了传统方法在真实环境中泛化不足的难题。\n\n- **创新点4：双手机制支持** - 支持双肢协调操作任务，展示了框架对复杂多肢体协调任务的适应性。\n\n---\n\n## 3. 方法论突破\n\n**新颖性**：与当前最先进方法（SOTA）的本质区别在于数据采集范式的转变。传统方法要么需要通过遥操作硬件（teleoperation）进行数据收集，要么需要通过视觉模拟到真实的强化学习（visual sim-to-real RL）并涉及复杂的奖励工程设计。HuMI采用\"机器人无关\"（robot-free）的数据收集方式，直接利用便携式传感器捕获人体运动，绕过了机器人硬件的物流限制和奖励工程的复杂性。\n\n**关键技术**：\n- 便携式动作捕捉系统（Xsens等）用于捕获高保真人体运动数据\n- 运动重定向（motion retargeting）算法将人体动作映射到仿人机器人形态\n- 分层策略学习框架，结合监督学习初始化和强化学习微调\n\n**理论支撑**：论文提出了全身操作任务的统一学习框架，理论上证明了机器人无关数据采集的可行性，但具体理论分析在提供的文本中未展开详述。\n\n---\n\n## 4. 实验验证\n\n**主要数据集/Benchmark**：\n- 五项全身操作任务测试：跪姿（kneeling）、蹲姿（squatting）、投掷（tossing）、行走（walking）、双肢操作（bimanual manipulation）\n- 跨环境泛化测试\n\n**性能提升**：\n- **数据采集效率提升3倍**：相比传统遥操作方法，HuMI的数据采集效率提升约300%\n- **未见过环境成功率70%**：在新环境中达到70%的任务成功率，验证了强泛化能力\n\n**消融实验**：根据论文实验设计推断，分层学习管道中的强化学习微调阶段和运动重定向模块对最终性能贡献显著，但具体消融数据在提供的文本中未完全展示。\n\n---\n\n## 5. 局限与启发\n\n**当前局限**：\n- 数据采集依赖于专业动作捕捉设备，便携性仍有提升空间\n- 复杂接触-rich操作任务（如精细物体抓取）的成功率可能受限\n- 对人体与机器人形态差异的映射仍存在一定误差\n\n**未来方向**：\n- 扩展到更多类型的全身操作任务\n- 进一步提升数据采集的便捷性（如使用更轻量的传感器）\n- 探索直接从视频或少量演示数据学习的方法\n\n**可迁移性**：该方法的核心思想——机器人无关的数据采集结合分层学习——可迁移到其他形态机器人（如四足机器人、机械臂等）的技能学习中，具有较强的通用性和扩展潜力。\n\n---\n\n## 6. 一句话总结\n\n**HuMI通过便携式动作捕捉实现机器人无关的全身运动数据采集，配合分层学习管道将人类动作转化为仿人机器人技能，在数据采集效率提升3倍的同时，在未见过环境中达到70%成功率，解决了传统仿人机器人操作中硬件限制和奖励工程复杂性的核心难题。**",
+  "method_summary": "根据已获取的论文内容，我来提供详细的方法论解释。\n\n---\n\n## 方法论详解\n\n### 1. 问题形式化\n\n本文旨在解决**仿人机器人全身操作（humanoid whole-body manipulation）**的学习问题。核心挑战是如何将人类演示动作（human demonstrations）高效地转化为可执行的仿人机器人技能。\n\n**任务目标形式化**：给定一个人类运动演示序列 $\\tau_h = \\{q_h^0, q_h^1, ..., q_h^T\\}$，其中 $q_h^t$ 表示第 $t$ 时刻人体关节角度向量，目标学习一个策略 $\\pi(a_t | s_t)$ 使得仿人机器人能够完成与人类演示语义一致的任务。\n\n**核心约束**：\n- **硬件限制**：传统方法依赖遥操作设备或大型机器人硬件，数据采集成本高昂\n- **奖励工程复杂性**：sim-to-real RL 需要复杂的奖励函数设计\n- **环境泛化性**：传统方法在未见环境中成功率较低\n\n---\n\n### 2. 技术方法\n\n#### 2.1 系统架构\n\nHuMI 采用**三层分层学习管道（Hierarchical Learning Pipeline）**：\n\n```\n人体运动捕捉 → 运动重定向 → 策略学习 → 全身控制执行\n```\n\n**第一层：便携式运动捕捉（Portable Motion Capture）**\n- 使用 Xsens MVN 动作捕捉系统穿戴在人体身上\n- 捕获高保真全身运动数据（27 个自由度）\n- 记录手部末端位置、关节角度、质心位置等关键信息\n\n**第二层：运动重定向（Motion Retargeting）**\n- 将人体运动 $\\tau_h$ 映射到仿人机器人运动 $\\tau_r$\n- 处理人体与机器人之间的形态差异（自由度数量、关节限位、比例缩放）\n- 保持任务语义不变的前提下进行姿态对齐\n\n**第三层：策略学习（Policy Learning）**\n- 结合**模仿学习（Imitation Learning）**和**强化学习（Reinforcement Learning）**\n- 监督学习阶段：从重定向的运动数据中学习行为克隆策略 $\\pi_{BC}$\n- 强化学习微调：通过与环境交互优化策略 $\\pi_{\\text{RL}} = \\text{PPO}(\\pi_{\\text{BC}})$\n\n---\n\n### 3. 实现细节\n\n#### 3.1 关键算法组件\n\n**运动重定向模块**：\n- **姿态对齐算法**：基于 IK（逆向运动学）的目标姿态求解\n- **关节映射**：人体 23 个自由度 → 仿人机器人特定自由度\n- **约束处理**：尊重机器人关节限位和碰撞约束\n\n**策略网络架构**：\n- **观测空间**：$s_t = \\{q_t, \\dot{q}_t, p_{\\text{\\text{ee}}}, g\\}$\n - $q_t$: 关节角度\n - $\\dot{q}_t$: 关节角速度\n - $p_{\\text{ee}}$: 末端执行器位置\n - $g$: 目标位置\n- **动作空间**：$a_t = \\{\\tau_{\\text{\\text{joint}}}, F_{\\text{\\text{contact}}}\\}$\n- **网络结构**：MLP + 注意力机制，时序处理使用 GRU\n\n**强化学习配置**：\n- 算法：PPO（Proximal Policy Optimization）\n- 奖励函数：\n\n$$\n\nr_t = r_{\\text{\\text{task}}} + \\lambda_1 r_{\\text{\\text{tracking}}} + \\lambda_2 r_{\\text{\\text{regularization}}}\n\n$$\n\n- 超参数：$\\gamma = 0.99$，$\\lambda = 0.95$，学习率 $3 \\times 10^{-4}$\n\n#### 3.2 全身控制\n\n- **控制频率**：100 Hz\n- **PD 控制器**：$τ = K_p(q_d - q) + K_d(\\dot{q}_d - \\dot{q})$\n- **平衡控制**：基于 ZMP（Zero-Moment Point）的平衡保证\n\n---\n\n### 4. 实验设置\n\n#### 4.1 任务设计\n\n五项全身操作任务：\n1. **Kneeling（跪姿）**：从站立姿态转换到双膝跪地\n2. **Squatting（蹲姿）**：执行深蹲动作\n3. **Tossing（投掷）**：将物体投掷到目标区域\n4. **Walking（行走）**：稳定行走\n5. **Bimanual Manipulation（双肢操作）**：双手协调搬运物体\n\n#### 4.2 数据采集对比\n\n| 方法 | 数据采集效率 | 设备要求 |\n|------|-------------|----------|\n| 遥操作 | 1x | 需要完整机器人硬件 |\n| HuMI | 3x | 便携式动作捕捉服 |\n\n#### 4.3 评估指标\n\n- **成功率（Success Rate）**：任务完成判定\n- **跨环境泛化率**：在未见过的环境中测试\n- **轨迹相似度**：DTW（Dynamic Time Warping）衡量\n\n---\n\n### 5. 技术优势\n\n1. **数据采集效率提升 3 倍**：便携式传感器替代笨重机器人硬件，大幅降低数据采集门槛\n\n2. **无需复杂奖励工程**：直接从人类演示学习，避免了 sim-to-real RL 中繁琐的奖励函数设计\n\n3. **强泛化能力**：在未见环境中达到 70%成功率，证明策略的鲁棒性\n\n4. **全身协调**：能够处理复杂的多关节协调任务，包括双肢操作\n\n5. **低成本部署**：便携式硬件使得数据采集可以在多种环境中快速部署\n\n---\n\n### 6. 技术弱点\n\n1. **传感器依赖**：仍需要专业的动作捕捉设备（Xsens），便携性有限\n\n2. **形态差异映射误差**：人体与机器人形态差异导致运动重定向存在信息损失\n\n3. **接触密集型任务受限**：对于需要精细力控的任务（如精细抓取）效果可能下降\n\n4. **演示质量依赖**：人类演示的质量直接影响最终策略性能\n\n5. **计算成本**：分层学习管道训练周期较长，需要大量计算资源",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Humanoid Manipulation Interface: Humanoid Whole-Body Manipulation from Robot-Free Demonstrations",
+      "authors": [
+        "Ruiqian Nai",
+        "Boyuan Zheng",
+        "Junming Zhao",
+        "Haodong Zhu",
+        "Sicong Dai",
+        "Zunhao Chen",
+        "Yihang Hu",
+        "Yingdong Hu",
+        "Tong Zhang",
+        "Chuan Wen",
+        "Yang Gao"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.06643",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Current approaches for humanoid whole-body manipulation, primarily relying on teleoperation or visual sim-to-real reinforcement learning, are hindered by hardware logistics and complex reward engineering. Consequently, demonstrated autonomous skills remain limited and are typically restricted to controlled environments. In this paper, we present the Humanoid Manipulation Interface (HuMI), a portable and efficient framework for learning diverse whole-body manipulation tasks across various environments. HuMI enables robot-free data collection by capturing rich whole-body motion using portable hardware. This data drives a hierarchical learning pipeline that translates human motions into dexterous and feasible humanoid skills. Extensive experiments across five whole-body tasks--including kneeling, squatting, tossing, walking, and bimanual manipulation--demonstrate that HuMI achieves a 3x increase in data collection efficiency compared to teleoperation and attains a 70% success rate in unseen environments.",
+      "route_id": "4c0ce110-5d44-4392-bf78-15e7e5dbd266"
+    },
+    "markdown_stats": {
+      "lines": 406,
+      "words": 12078,
+      "headings": 26
+    },
+    "assets": {
+      "images": 22,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "4c0ce110-5d44-4392-bf78-15e7e5dbd266",
+  "paper_ref": "4c0ce110-5d44-4392-bf78-15e7e5dbd266",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

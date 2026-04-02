@@ -21,14 +21,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install ScholarAIO
-        run: pip install -e ".[full]"
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -43,9 +35,6 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
-
-      - name: Export static snapshot data
-        run: scholaraio web --export-only --output-dir scholaraio/web/public/site-data
 
       - name: Generate static Nuxt site
         working-directory: scholaraio/web

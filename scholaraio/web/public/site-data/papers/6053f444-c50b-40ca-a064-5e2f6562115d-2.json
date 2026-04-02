@@ -1,0 +1,62 @@
+{
+  "dir_name": "6053f444-c50b-40ca-a064-5e2f6562115d",
+  "title": "A Universal Footstep Planning Methodology for Continuous Walking in Challenging Terrain",
+  "authors": [],
+  "year": 2022,
+  "journal": "",
+  "doi": "",
+  "abstract": "In recent years, the capabilities of legged locomotion controllers have been significantly advanced...",
+  "paper_type": "",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "A Universal Footstep Planning Methodology for Continuous Walking in Challenging Terrain",
+      "year": 2022,
+      "abstract": "In recent years, the capabilities of legged locomotion controllers have been significantly advanced..."
+    },
+    "markdown_stats": {
+      "lines": 4,
+      "words": 27,
+      "headings": 2
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "6053f444-c50b-40ca-a064-5e2f6562115d-2",
+  "paper_ref": "6053f444-c50b-40ca-a064-5e2f6562115d",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

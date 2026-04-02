@@ -1,0 +1,76 @@
+{
+  "dir_name": "Peng-2025-Gait-Conditioned-Reinforcement-Learning-with-Multi-Phase-Curriculum-for-Humanoid-Locomotion-2",
+  "title": "Gait-Conditioned Reinforcement Learning with Multi-Phase Curriculum for Humanoid Locomotion",
+  "authors": [
+    "Tianhu Peng",
+    "Lingfan Bao",
+    "Chengxu Zhou"
+  ],
+  "year": 2025,
+  "journal": "2025 IEEE-RAS 24th International Conference on Humanoid Robots (Humanoids)",
+  "doi": "10.1109/humanoids65713.2025.11203058",
+  "abstract": "We present a unified gait-conditioned reinforcement learning framework that enables humanoid robots to perform standing, walking, running, and smooth transitions within a single recurrent policy. A compact reward routing mechanism dynamically activates gait-specific objectives based on a one-hot gait ID, mitigating reward interference and supporting stable multi-gait learning. Human-inspired reward terms promote biomechanically natural motions, such as straight-knee stance and coordinated arm-leg swing, without requiring motion capture data. A structured curriculum progressively introduces gait complexity and expands command space over multiple phases. In simulation, the policy successfully achieves robust standing, walking, running, and gait transitions. On the real Unitree G1 humanoid, we validate standing, walking, and walk-to-stand transitions, demonstrating stable and coordinated locomotion. This work provides a scalable, reference-free solution toward versatile and naturalistic humanoid control across diverse modes and environments.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 6,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Gait-Conditioned Reinforcement Learning with Multi-Phase Curriculum for Humanoid Locomotion",
+      "authors": [
+        "Tianhu Peng",
+        "Lingfan Bao",
+        "Chengxu Zhou"
+      ],
+      "year": 2025,
+      "journal": "2025 IEEE-RAS 24th International Conference on Humanoid Robots (Humanoids)",
+      "doi": "10.1109/humanoids65713.2025.11203058",
+      "paper_type": "proceedings-article",
+      "issn": "2331-8422",
+      "abstract": "We present a unified gait-conditioned reinforcement learning framework that enables humanoid robots to perform standing, walking, running, and smooth transitions within a single recurrent policy. A compact reward routing mechanism dynamically activates gait-specific objectives based on a one-hot gait ID, mitigating reward interference and supporting stable multi-gait learning. Human-inspired reward terms promote biomechanically natural motions, such as straight-knee stance and coordinated arm-leg swing, without requiring motion capture data. A structured curriculum progressively introduces gait complexity and expands command space over multiple phases. In simulation, the policy successfully achieves robust standing, walking, running, and gait transitions. On the real Unitree G1 humanoid, we validate standing, walking, and walk-to-stand transitions, demonstrating stable and coordinated locomotion. This work provides a scalable, reference-free solution toward versatile and naturalistic humanoid control across diverse modes and environments.",
+      "route_id": "51cef694-1ffb-4d3a-bfd5-49bd19c7c8bd"
+    },
+    "markdown_stats": {
+      "lines": 249,
+      "words": 4905,
+      "headings": 22
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "51cef694-1ffb-4d3a-bfd5-49bd19c7c8bd",
+  "paper_ref": "51cef694-1ffb-4d3a-bfd5-49bd19c7c8bd",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

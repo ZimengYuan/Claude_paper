@@ -1,0 +1,78 @@
+{
+  "dir_name": "Nakkiran-2025-Step-by-Step-Diffusion-An-Elementary-Tutorial",
+  "title": "Step-by-Step Diffusion: An Elementary Tutorial",
+  "authors": [
+    "Preetum Nakkiran",
+    "Arwen Bradley",
+    "Hattie Zhou",
+    "Madhu Advani"
+  ],
+  "year": 2025,
+  "journal": "Foundations and Trends in Computer Graphics and Vision",
+  "doi": "10.1561/0600000114",
+  "abstract": "We present an accessible first course on the mathematics of diffusion models and flow matching for machine learning. We aim to teach diffusion as simply as possible, with minimal mathematical and machine learning prerequisites, but enough technical detail to reason about its correctness. Unlike most tutorials on this subject, we take neither a Variational Auto Encoder (VAE) nor a Stochastic Differential Equations (SDE) approach. In fact, for the core ideas we will not need any SDEs, Evidence-Based-Lower-Bounds (EL-BOs), Langevin dynamics, or even the notion of a score. The reader need only be familiar with basic probability, calculus, linear algebra, and multivariate Gaussians. This tutorial has five parts, each relatively self-contained. Section 1 presents the fundamentals of diffusion: the problem we are trying to solve and an overview of the basic approach. Sections 2 and 3 show how to construct a stochastic and deterministic diffusion sampler, respectively, and give intuitive derivations for why these samplers correctly reverse the forward diffusion process. Section 4 covers the closely-related topic of Flow Matching, which can be thought of as a generalization of diffusion that offers additional flexibility (including what are called rectified flows or linear flows). Finally, in Section 5 we return to diffusion and connect this tutorial to the broader literature while highlighting some of the design choices that matter most in practice, including samplers, noise schedules, and parametrizations.",
+  "paper_type": "journal-article",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 1,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Step-by-Step Diffusion: An Elementary Tutorial",
+      "authors": [
+        "Preetum Nakkiran",
+        "Arwen Bradley",
+        "Hattie Zhou",
+        "Madhu Advani"
+      ],
+      "year": 2025,
+      "journal": "Foundations and Trends in Computer Graphics and Vision",
+      "doi": "10.1561/0600000114",
+      "paper_type": "journal-article",
+      "publisher": "Cornell University",
+      "abstract": "We present an accessible first course on the mathematics of diffusion models and flow matching for machine learning. We aim to teach diffusion as simply as possible, with minimal mathematical and machine learning prerequisites, but enough technical detail to reason about its correctness. Unlike most tutorials on this subject, we take neither a Variational Auto Encoder (VAE) nor a Stochastic Differential Equations (SDE) approach. In fact, for the core ideas we will not need any SDEs, Evidence-Based-Lower-Bounds (EL-BOs), Langevin dynamics, or even the notion of a score. The reader need only be familiar with basic probability, calculus, linear algebra, and multivariate Gaussians. This tutorial has five parts, each relatively self-contained. Section 1 presents the fundamentals of diffusion: the problem we are trying to solve and an overview of the basic approach. Sections 2 and 3 show how to construct a stochastic and deterministic diffusion sampler, respectively, and give intuitive derivations for why these samplers correctly reverse the forward diffusion process. Section 4 covers the closely-related topic of Flow Matching, which can be thought of as a generalization of diffusion that offers additional flexibility (including what are called rectified flows or linear flows). Finally, in Section 5 we return to diffusion and connect this tutorial to the broader literature while highlighting some of the design choices that matter most in practice, including samplers, noise schedules, and parametrizations.",
+      "route_id": "b6a163cd-6f95-4190-85ba-aba61b575300"
+    },
+    "markdown_stats": {
+      "lines": 1538,
+      "words": 33530,
+      "headings": 50
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "b6a163cd-6f95-4190-85ba-aba61b575300",
+  "paper_ref": "b6a163cd-6f95-4190-85ba-aba61b575300",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

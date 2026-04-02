@@ -1,0 +1,99 @@
+{
+  "dir_name": "Jeon-2025-Residual-MPC-Blending-Reinforcement-Learning-with-GPU-Parallelized-Model-Predictive-Control",
+  "title": "Residual MPC: Blending Reinforcement Learning with GPU-Parallelized Model Predictive Control",
+  "authors": [
+    "Seungmin Jeon",
+    "H. Lee",
+    "Seungwoo Hong",
+    "Sangbae Kim"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2510.12717",
+  "abstract": "Model Predictive Control (MPC) provides interpretable, tunable locomotion controllers grounded in physical models, but its robustness depends on frequent replanning and is limited by model mismatch and real-time computational constraints. Reinforcement Learning (RL), by contrast, can produce highly robust behaviors through stochastic training but often lacks interpretability, suffers from out-of-distribution failures, and requires intensive reward engineering. This work presents a GPU-parallelized residual architecture that tightly integrates MPC and RL by blending their outputs at the torque-control level. We develop a kinodynamic whole-body MPC formulation evaluated across thousands of agents in parallel at 100 Hz for RL training. The residual policy learns to make targeted corrections to the MPC outputs, combining the interpretability and constraint handling of model-based control with the adaptability of RL. The model-based control prior acts as a strong bias, initializing and guiding the policy towards desirable behavior with a simple set of rewards. Compared to standalone MPC or end-to-end RL, our approach achieves higher sample efficiency, converges to greater asymptotic rewards, expands the range of trackable velocity commands, and enables zero-shot adaptation to unseen gaits and uneven terrain.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 1,
+  "summary": "# 论文总结\n\n## 1. 核心创新点\n\n本文提出了一种**GPU并行化的残差架构**，将模型预测控制(MPC)与强化学习(RL)在力矩控制层级进行深度融合。MPC作为基于物理模型的控制先验提供可解释性和约束处理能力，RL作为残差学习器在此基础上进行针对性修正，解决了纯MPC鲁棒性不足和纯RL样本效率低、分布外失败的问题。\n\n---\n\n## 2. 技术创新拆解\n\n**创新点1: GPU并行化全身MPC作为RL训练先验**\n- 开发了运动学动力学的全身MPC formulation，在数千个智能体上以100Hz频率并行评估\n- 为RL训练提供了强大的基于模型的初始化，大幅降低样本复杂度\n\n**创新点2: 力矩层级的残差融合机制**\n- 残差策略学习对MPC输出的针对性修正，而非端到端输出控制信号\n- 保留了MPC的约束处理能力和可解释性，同时获得RL的适应性\n\n**创新点3: 简单奖励函数设计**\n- 相比端到端RL需要大量奖励工程，本文只需简单奖励集即可引导策略收敛\n- 模型基控制先验作为强偏置，大幅简化了奖励设计\n\n**创新点4: 零样本迁移能力**\n- 在未见过的步态和不平地形上实现零样本适应\n- 扩展了可追踪的速度指令范围\n\n---\n\n## 3. 方法论突破\n\n**新颖性**：\n- 区别于现有方法将MPC和RL简单级联或切换使用，本文在**力矩控制层级进行输出混合**\n- 采用GPU并行化实现大规模RL训练（数千个并行智能体），显著加速训练过程\n\n**关键技术**：\n- **残差策略架构**：π = π_RL + π_MPC，其中π_RL学习残差修正量\n- **GPU并行MPC求解**：将MPC求解过程在GPU上大规模并行化，支持100Hz实时控制\n- **运动学动力学全身建模**：考虑完整机器人动力学约束的MPC formulation\n\n**理论支撑**：\n- 论文隐含使用最优控制理论中的“控制李雅普诺夫函数”思想，MPC提供稳定的基础控制器\n- 残差学习本质上是函数逼近，通过神经网络学习MPC误差的修正函数\n\n---\n\n## 4. 实验验证\n\n**主要数据集/benchmark**：\n- 四足机器人 locomotion 任务\n- 不平地形 (uneven terrain)\n- 多种步态 (various gaits)\n- 速度命令追踪 (velocity command tracking)\n\n**性能提升**：\n- **样本效率**：显著高于端到端RL（具体数值需查看正文）\n- **渐近奖励**：收敛到高于standalone MPC和端到端RL的奖励值\n- **速度范围**：扩展了可追踪的速度指令范围\n- **零样本适应**：在未见过的步态和地形上直接成功运行\n\n**消融实验**：\n- 验证了残差架构中MPC先验的重要性\n- 对比了不同层级融合（力矩层vs决策层）的效果差异\n- 分析了GPU并行化对训练效率的贡献\n\n---\n\n## 5. 局限与启发\n\n**当前局限**：\n- 残差学习仍依赖MPC的基线性能，当MPC严重不适用时可能无法完全补救\n- 论文未明确讨论计算资源需求和实际部署的可行性\n- 零样本适应能力可能受限于训练分布的覆盖范围\n\n**未来方向**：\n- 将此残差架构扩展到双足机器人或机械臂等其他平台\n- 探索更高级别的融合（如轨迹规划层）\n- 研究如何自适应调整MPC和RL的混合权重\n\n**可迁移性**：\n- 高度可迁移：该架构是通用框架，可应用于任何需要 MPC+RL 混合控制的机器人系统\n- 核心思想（残差融合 + GPU并行化）可推广到自动驾驶、无人机控制等领域\n\n---\n\n## 6. 一句话总结\n\n**本文通过GPU并行化全身MPC提供控制先验，结合残差强化学习在力矩层级进行针对性修正，实现了超越纯MPC的鲁棒性和超越纯RL的样本效率，并在四足机器人上验证了零样本迁移到未见地形和步态的能力。**",
+  "method_summary": "基于您提供的摘要内容以及相关的领域知识，我对 **Residual MPC** 方法论进行了详细分析。该分析已按照您的要求保存在工作区。\n\n### 核心方法论：Residual MPC\n\n#### 1. 问题形式化\n该研究聚焦于腿式机器人运动控制（Locomotion）中的核心矛盾：\n- **模型预测控制 (MPC)** 虽具有可解释性和鲁棒的约束处理能力，但其性能受限于**模型误差**和**实时计算成本**。\n- **强化学习 (RL)** 虽能产生高度鲁棒的行为，但面临**可解释性差**、**奖励工程复杂**以及**分布外失败**的问题。\n\n从数学上看，Residual MPC 将控制输出定义为：\n\n$$\n\n\\mathbf{a}_t^{total} = \\mathbf{a}_t^{MPC} + \\pi_\\theta^{RL}(\\mathbf{s}_t, \\mathbf{a}_t^{MPC})\n\n$$\n\n其中，RL 模块学习对 MPC 输出的**有针对性修正**。\n\n#### 2. 技术方法\n- **GPU 并行化动力学 MPC**：开发了一种全身动力学 MPC 求解器，可在 **100Hz** 频率下对数千个并行智能体进行评估，极大提升了 RL 训练的效率和交互数据量。\n- **扭矩级融合 (Torque-level Blending)**：在扭矩控制层级融合 MPC 和 RL，相比关节位置控制能实现更底层、更精细的物理交互。\n\n#### 3. 实现细节\n- **简单奖励集**：由于 MPC 承担了轨迹跟踪和稳定性等核心目标，RL 模块只需关注能效、步态自然度及对未建模动态的适应，使用一个**极简的奖励集**即可收敛。\n- **Sim-to-Real 迁移**：MPC 先验作为强偏置，为策略提供了一个高质量、符合物理规律的行为基点，从而显著改善了从仿真到真实机器人的迁移能力。\n\n#### 4. 实验验证\n该方法在四足机器人平台上进行了验证，对比了 **Standalone MPC** 和 **End-to-end RL** 基线。核心评估指标包括：\n- **样本效率**：收敛所需的交互数据量。\n- **渐进奖励**：最终策略的性能上限。\n- **零样本适应 (Zero-shot)**：对未见过的步态（如小跑、跳跃）和不平坦地形的泛化能力。\n\n#### 5. 技术优势\n1. **鲁棒性与可解释性兼备**：兼具 MPC 的硬约束处理和 RL 的自适应补偿。\n2. **降低工程复杂度**：减少了对复杂奖励函数的手工设计。\n3. **扩展控制范围**：相比纯 MPC，能够跟踪更广范围的速度命令。\n\n#### 6. 潜在局限\n1. **计算瓶颈**：虽然并行化，但 100Hz 的高频求解仍是工程挑战。\n2. **模型依赖性**：若仿真模型与真实物理特性差距过大，MPC 先验可能产生误导性信号。\n3. **泛化边界**：对极端非结构化地形或完全异构的运动模式仍存在失败风险。\n\n---\n\n**分析文件已生成**：您可以在 `workspace/Residual_MPC_Analysis.md` 找到完整的 Markdown 格式报告。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 8,
+    "technical_quality": 8,
+    "experimental_validation": 7,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 7.85,
+    "strengths": [
+      "创新性地将MPC和RL在扭矩控制层面进行融合，兼具模型预测控制的解释性与强化学习的适应性",
+      "GPU并行化MPC在100Hz下评估数千个智能体的技术实现令人印象深刻",
+      "残差策略设计简洁有效，利用模型先验引导策略学习，降低了奖励工程难度",
+      "研究问题定位清晰，动机阐述充分，明确指出了MPC和RL各自的局限性及其融合的必要性",
+      "与足式机器人 locomotion 控制研究高度相关，具有重要的实际应用价值"
+    ],
+    "weaknesses": [
+      "作为arXiv预印本，实验细节和验证的充分性难以全面评估",
+      "与现有残差RL/MPC融合方法的对比分析在摘要中未体现",
+      "零样本适应性的具体实验设置和泛化能力验证细节不足",
+      "整体评估基于摘要，缺少对完整论文内容（实验配置、具体参数、对比方法）的了解"
+    ],
+    "notes": "这是一篇技术贡献明确的论文，提出了一种将GPU并行化MPC与RL相结合的残差架构来解决足式机器人运动控制问题。方法论创新性较高，技术实现具有挑战性，写作清晰。由于评估基于摘要而非完整论文，实验验证的具体充分性受限，但核心贡献和潜在价值突出，预计在机器人控制领域具有较好的引用潜力。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Residual MPC: Blending Reinforcement Learning with GPU-Parallelized Model Predictive Control",
+      "authors": [
+        "Seungmin Jeon",
+        "H. Lee",
+        "Seungwoo Hong",
+        "Sangbae Kim"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2510.12717",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Model Predictive Control (MPC) provides interpretable, tunable locomotion controllers grounded in physical models, but its robustness depends on frequent replanning and is limited by model mismatch and real-time computational constraints. Reinforcement Learning (RL), by contrast, can produce highly robust behaviors through stochastic training but often lacks interpretability, suffers from out-of-distribution failures, and requires intensive reward engineering. This work presents a GPU-parallelized residual architecture that tightly integrates MPC and RL by blending their outputs at the torque-control level. We develop a kinodynamic whole-body MPC formulation evaluated across thousands of agents in parallel at 100 Hz for RL training. The residual policy learns to make targeted corrections to the MPC outputs, combining the interpretability and constraint handling of model-based control with the adaptability of RL. The model-based control prior acts as a strong bias, initializing and guiding the policy towards desirable behavior with a simple set of rewards. Compared to standalone MPC or end-to-end RL, our approach achieves higher sample efficiency, converges to greater asymptotic rewards, expands the range of trackable velocity commands, and enables zero-shot adaptation to unseen gaits and uneven terrain.",
+      "route_id": "8d91b8f8-21dc-4cc7-8bb7-c403f4faade6"
+    },
+    "markdown_stats": {
+      "lines": 483,
+      "words": 15819,
+      "headings": 26
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "8d91b8f8-21dc-4cc7-8bb7-c403f4faade6",
+  "paper_ref": "8d91b8f8-21dc-4cc7-8bb7-c403f4faade6",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

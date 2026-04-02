@@ -1,0 +1,74 @@
+{
+  "dir_name": "Yuduo-2025-Back-to-Basics-Motion-Representation-Matters-for-Human-Motion-Generation-Using-Diffusion-Model",
+  "title": "Back to Basics: Motion Representation Matters for Human Motion Generation Using Diffusion Model",
+  "authors": [
+    "Jin, Yuduo",
+    "Haworth, Brandon"
+  ],
+  "year": 2025,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2512.04499",
+  "abstract": "Diffusion models have emerged as a widely utilized and successful methodology in human motion synthesis. Task-oriented diffusion models have significantly advanced action-to-motion, text-to-motion, and audio-to-motion applications. In this paper, we investigate fundamental questions regarding motion representations and loss functions in a controlled study, and we enumerate the impacts of various decisions in the workflow of the generative motion diffusion model. To answer these questions, we conduct empirical studies based on a proxy motion diffusion model (MDM). We apply v loss as the prediction objective on MDM (vMDM), where v is the weighted sum of motion data and noise. We aim to enhance the understanding of latent data distributions and provide a foundation for improving the state of conditional motion diffusion models. First, we evaluate the six common motion representations in the literature and compare their performance in terms of quality and diversity metrics. Second, we compare the training time under various configurations to shed light on how to speed up the training process of motion diffusion models. Finally, we also conduct evaluation analysis on a large motion dataset. The results of our experiments indicate clear performance differences across motion representations in diverse datasets. Our results also demonstrate the impacts of distinct configurations on model training and suggest the importance and effectiveness of these decisions on the outcomes of motion diffusion models.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Back to Basics: Motion Representation Matters for Human Motion Generation Using Diffusion Model",
+      "authors": [
+        "Jin, Yuduo",
+        "Haworth, Brandon"
+      ],
+      "year": 2025,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2512.04499",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Diffusion models have emerged as a widely utilized and successful methodology in human motion synthesis. Task-oriented diffusion models have significantly advanced action-to-motion, text-to-motion, and audio-to-motion applications. In this paper, we investigate fundamental questions regarding motion representations and loss functions in a controlled study, and we enumerate the impacts of various decisions in the workflow of the generative motion diffusion model. To answer these questions, we conduct empirical studies based on a proxy motion diffusion model (MDM). We apply v loss as the prediction objective on MDM (vMDM), where v is the weighted sum of motion data and noise. We aim to enhance the understanding of latent data distributions and provide a foundation for improving the state of conditional motion diffusion models. First, we evaluate the six common motion representations in the literature and compare their performance in terms of quality and diversity metrics. Second, we compare the training time under various configurations to shed light on how to speed up the training process of motion diffusion models. Finally, we also conduct evaluation analysis on a large motion dataset. The results of our experiments indicate clear performance differences across motion representations in diverse datasets. Our results also demonstrate the impacts of distinct configurations on model training and suggest the importance and effectiveness of these decisions on the outcomes of motion diffusion models.",
+      "route_id": "f44c5ea5-b124-4e7e-9b6a-7c1d684e9f2d"
+    },
+    "markdown_stats": {
+      "lines": 400,
+      "words": 9879,
+      "headings": 31
+    },
+    "assets": {
+      "images": 29,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "f44c5ea5-b124-4e7e-9b6a-7c1d684e9f2d",
+  "paper_ref": "f44c5ea5-b124-4e7e-9b6a-7c1d684e9f2d",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

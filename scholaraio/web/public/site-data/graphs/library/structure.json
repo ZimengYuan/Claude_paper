@@ -1,0 +1,18 @@
+{
+  "mode": "structure",
+  "scope": "library",
+  "nodes": [],
+  "edges": [],
+  "stats": {
+    "nodes": 0,
+    "edges": 0,
+    "papers": 0,
+    "external": 0,
+    "topics": 0,
+    "concepts": 0,
+    "edge_types": {}
+  },
+  "truncated": false,
+  "hidden_nodes": 0,
+  "message": "invalid literal for int() with base 10: 'XXXX'"
+}

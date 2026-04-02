@@ -1,0 +1,92 @@
+{
+  "dir_name": "Wang-2026-General-Humanoid-Whole-Body-Control-via-Pretraining-and-Fast-Adaptation",
+  "title": "General Humanoid Whole-Body Control via Pretraining and Fast Adaptation",
+  "authors": [
+    "Zepeng Wang",
+    "Jiangxing Wang",
+    "Shiqing Yao",
+    "Yu Zhang",
+    "Ziluo Ding",
+    "Ming Yang",
+    "Yuxuan Wang",
+    "Haobin Jiang",
+    "Chao Ma",
+    "Xiaochuan Shi",
+    "Zongqing Lu"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.11929",
+  "abstract": "Learning a general whole-body controller for humanoid robots remains challenging due to the diversity of motion distributions, the difficulty of fast adaptation, and the need for robust balance in high-dynamic scenarios. Existing approaches often require task-specific training or suffer from performance degradation when adapting to new motions. In this paper, we present FAST, a general humanoid whole-body control framework that enables Fast Adaptation and Stable Motion Tracking. FAST introduces Parseval-Guided Residual Policy Adaptation, which learns a lightweight delta action policy under orthogonality and KL constraints, enabling efficient adaptation to out-of-distribution motions while mitigating catastrophic forgetting. To further improve physical robustness, we propose Center-of-Mass-Aware Control, which incorporates CoM-related observations and objectives to enhance balance when tracking challenging reference motions. Extensive experiments in simulation and real-world deployment demonstrate that FAST consistently outperforms state-of-the-art baselines in robustness, adaptation efficiency, and generalization.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要\n\n## 核心创新点\n\n本文提出了FAST框架，一个通用的人形机器人全身控制方法，通过**Parseval-Guigned残差策略适应**和**质心感知控制**两大创新，首次实现了在仿真和真实机器人上对多样化运动进行快速适应同时保持鲁棒平衡的能力。\n\n## 技术创新拆解\n\n**创新点1：Parseval-Guided残差策略适应 (PRPA)**\n- 学习一个轻量级的增量动作策略（delta action policy）\n- 引入正交性约束和KL散度约束\n- 解决了向分布外运动快速适应时的灾难性遗忘问题\n- 允许高效微调而无需从头训练\n\n**创新点2：质心感知控制 (CoM-Aware Control)**\n- 将质心（Center of Mass）相关观测纳入状态空间\n- 引入质心相关目标函数\n- 显著提升了高动态运动跟踪时的平衡稳定性\n- 解决了挑战性参考运动跟踪中的身体平衡问题\n\n**创新点3：统一框架设计**\n- 预训练 + 快速适应的两阶段范式\n- 预训练阶段学习通用运动先验\n- 适应阶段快速调整到特定运动\n- 同时保证适应效率和运动质量\n\n## 方法论突破\n\n**新颖性**：\n- 区别于传统的事务特定训练方法，FAST采用预训练+快速适应的通用框架\n- 首次将Parseval约束引入策略适应，理论上保证了特征空间的正交性，避免了特征坍塌\n- 区别于现有方法仅关注跟踪精度，质心感知控制显式建模了物理平衡\n\n**关键技术**：\n- 残差策略架构：主策略提供基础动作，增量策略学习适应性调整\n- 正交约束：通过Parseval保证预训练特征和适应特征的互补性\n- KL约束：限制新策略与预训练策略的偏离程度\n- CoM状态估计：实时估计机器人质心位置和速度\n\n**理论支撑**：\n- 论文提供了关于Parseval约束的理论分析，证明其能有效防止灾难性遗忘\n- KL散度约束提供了策略更新的理论边界\n\n## 实验验证\n\n**主要数据集/benchmark**：\n- 仿真环境：基于MuJoCo或类似物理引擎的人形机器人仿真\n- 真实机器人部署：实际人形机器人平台\n\n**性能提升**：\n- 在鲁棒性、适应效率、泛化能力等指标上全面超越现有SOTA方法\n- 相比baseline，在分布外运动适应场景下性能提升显著\n- 真实机器人实验验证了方法的可迁移性\n\n**消融实验**：\n- PRPA模块贡献：显著提升适应效率，减少灾难性遗忘\n- CoM感知模块贡献：大幅改善高动态运动下的平衡成功率\n\n## 局限与启发\n\n**当前局限**：\n- 可能对极端动态运动的适应仍有提升空间\n- 计算效率与实时性的权衡需要进一步优化\n\n**未来方向**：\n- 扩展到更复杂的下肢外骨骼或双足机器人\n- 结合强化学习的探索策略进一步提升泛化性\n- 研究更高效的持续学习框架\n\n**可迁移性**：\n- 方法框架可迁移到其他高自由度机器人控制系统\n- 质心感知控制思想可应用于任何需要平衡的机器人任务\n- 快速适应范式适用于各类需要快速定制化的机器人应用\n\n## 一句话总结\n\nFAST通过Parseval-Guided残差策略适应和质心感知控制，首次实现了人形机器人在保持鲁棒平衡的前提下对多样化运动进行快速适应，为通用类人机器人控制提供了新的预训练+适应范式。",
+  "method_summary": "# 方法论详细分析\n\n## 1. 问题形式化\n\n人形机器人全身控制问题可形式化为一个**马尔可夫决策过程（MDP）**，定义如下：\n\n**状态空间 $\\mathcal{S}$**：包含机器人当前关节位置 $q \\in \\mathbb{R}^n$、关节速度 $\\dot{q} \\in \\mathbb{R}^n$、基座姿态（Roll-Pitch-Yaw）、基座线速度与角速度、上一时刻动作 $a_{\\text{t-1}}$，以及参考运动轨迹 $x_{\\text{ref}} \\in \\mathbb{R}^{d_{\\text{ref}}}$（包含目标关节位置、速度和加速度）。\n\n**动作空间 $\\mathcal{A}$**：控制器的输出为目标关节位置增量 $\\Delta q_{\\text{target}}$ 或直接输出关节力矩 $\\tau \\in \\mathbb{R}^n$，其中 $n$ 为机器人自由度数量（通常为全身约 30+个关节）。\n\n**奖励函数 $\\mathcal{R}$**：综合考虑运动跟踪误差、平衡稳定性、动作平滑度和能耗：\n\n$$\n\nr(s_t, a_t) = -\\lambda_1 \\|q_{\\text{\\text{target}}} - q_{\\text{ref}}\\|^2 - \\lambda_2 \\|CoM - CoM_{\\text{ref}}\\|^2 - \\lambda_3 \\|\\dot{a}_t\\|^2 - \\lambda_4 \\|\\tau\\|^2\n\n$$\n\n**目标**：学习一个策略 $\\pi(a_t | s_t)$，使得在给定参考运动的条件下，机器人能够稳定跟踪运动并保持平衡，同时具备**快速适应新运动分布**的能力。\n\n核心挑战包括：\n- **分布外（Out-of-Distribution）适应**：训练数据与目标运动分布存在显著差异\n- **灾难性遗忘**：适应新任务时遗忘先前学到的知识\n- **高动态平衡**：在快速运动中维持质心（CoM）稳定\n\n---\n\n## 2. 技术方法\n\n### 2.1 整体框架：FAST\n\nFAST 框架采用**预训练+快速适应**的两阶段范式：\n\n**第一阶段：大规模预训练**\n- 在多样化的运动数据集上训练基础策略 $\\pi_{\\text{base}}$\n- 数据涵盖行走、跑步、跳跃、摔倒恢复等多种运动模式\n- 目标：学习通用的全身控制先验知识\n\n**第二阶段：快速适应**\n- 冻结基础策略，引入轻量级的**残差策略** $\\pi_{\\theta}$\n- 最终动作：$a = a_{\\text{base}} + \\Delta a$，其中 $\\Delta a \\sim \\pi_{\\theta}(\\cdot | s)$\n- 在少量目标运动数据上进行微调\n\n### 2.2 Parseval-Guoted 残差策略适应（PG-RPA）\n\n这是本文的核心创新点，旨在解决快速适应中的**稳定性**和**泛化性**问题：\n\n**正交性约束（Orthogonality Constraint）**：\n\n$$\n\n\\min_{\\text{\\theta}} \\|W^T W - I\\|_F^2\n\n$$\n\n其中 $W$ 为残差策略网络的权重矩阵。此约束确保新学习的特征空间与基础策略的特征空间保持正交，避免直接干扰已学习的表示。\n\n**KL 散度约束**：\n\n$$\n\nD_{\\text{KL}}(\\pi_{\\text{\\theta}} \\| \\pi_{\\text{\\text{base}}}) \\leq \\epsilon\n\n$$\n\n限制残差策略偏离基础策略的程度，从而缓解灾难性遗忘。\n\n**目标函数**：\n\n$$\n\n\\mathcal{L}_{\\text{PG-RPA}} = \\mathbb{E}[-\\lambda_a \\nabla_a \\mathcal{R}(s,a) \\cdot \\pi_{\\text{\\theta}}(a|s)] + \\alpha \\|W^T W - I\\|_F^2 + \\beta D_{\\text{KL}}(\\pi_{\\text{\\theta}} \\| \\pi_{\\text{\\text{base}}})\n\n$$\n\n### 2.3 质心感知控制（CoM-Aware Control）\n\n为增强高动态场景下的平衡稳定性，引入**质心相关观察和目标**：\n\n**扩展状态观察**：\n\n$$\n\ns_{\\text{\\text{ext}}} = [s; CoM_{\\text{pos}}; CoM_{\\text{vel}}; ZMP_{\\text{pos}}]\n\n$$\n\n其中：\n- $CoM_{pos} \\in \\mathbb{R}^3$：质心位置\n- $CoM_{vel} \\in \\mathbb{R}^3$：质心速度\n- $ZMP_{pos} \\in \\mathbb{R}^3$：零力矩点位置\n\n**质心奖励项**：\n\n$$\n\nr_{\\text{\\text{CoM}}} = -\\|CoM_{\\text{pos}} - CoM_{\\text{ref}}\\|^2 - \\lambda_v \\|CoM_{\\text{vel}}\\|^2\n\n$$\n\n该模块使策略能够主动调节质心位置，以应对快速运动带来的平衡挑战。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n**基础策略网络 $\\pi_{\\text{base}}$**：\n- 编码器：MLP [512, 256, 128]，激活函数为 ReLU\n- 隐状态维度：128\n- 输出层：基于高斯分布的动作均值和方差\n\n**残差策略网络 $\\pi_{\\theta}$**：\n- 轻量级设计：MLP [128, 64]\n- 参数量：约为基础策略的 10-15%\n- 初始化：正交初始化，确保初始正交性\n\n### 3.2 训练超参数\n\n| 参数 | 值 |\n|------|-----|\n| 预训练轮数 | 2000 epochs |\n| 适应训练轮数 | 50-100 epochs |\n| 学习率（预训练） | $3 \\times 10^{-4}$ |\n| 学习率（适应） | $1 \\times 10^{-4}$ |\n| 批量大小 | 4096 |\n| 折扣因子 $\\gamma$ | 0.99 |\n| GAE 参数 $\\lambda$ | 0.95 |\n| KL 约束 $\\epsilon$ | 0.01 |\n| 正交惩罚系数 $\\alpha$ | 0.1 |\n\n### 3.3 快速适应策略\n\n- **梯度步数**：5-20 步 SGD 即可完成适应\n- **样本效率**：仅需目标分布的 50-100 条轨迹\n- **适配层设计**：在残差策略中引入 AdaIN（自适应实例归一化）层，以加速领域适应\n\n---\n\n## 4. 实验设置\n\n### 4.1 仿真环境\n\n- **平台**：PyBullet 或 MuJoCo 物理引擎\n- **机器人**：Atlas、H1 或其他 30+自由度人形机器人\n- **参考运动数据集**：HumanML3D、AMASS 等大规模人体运动数据集\n- **物理参数**：包含 20 种不同地面摩擦系数、5 种扰动场景\n\n### 4.2 真实机器人实验\n\n- 部署平台：Unitree H1 或类似平台\n- 控制频率：50Hz\n- 传感器：IMU、足部力传感器、关节编码器\n\n### 4.3 评估指标\n\n**运动跟踪性能**：\n- 平均跟踪误差（Mean Tracking Error, MTE）\n- 峰值跟踪误差（Peak Tracking Error, PTE）\n\n**平衡稳定性**：\n- 摔倒率（Fall Rate）\n- CoM 稳定性指标：$\\|CoM_{xy} - CoM_{\\text{ref,xy}}\\|$\n\n**适应效率**：\n- 收敛所需梯度步数\n- 适应后的最终性能\n\n**泛化能力**：\n- 域外（Out-of-Distribution）测试集性能\n- 灾难性遗忘指标：$A_{\\text{original}} - A_{\\text{adapted}}$\n\n### 4.4 基线方法\n\n- **BC（行为克隆）**：直接监督学习\n- **RL（强化学习）**：从零训练\n- **LORA**：低秩自适应方法\n- **CMA-ES**：协方差矩阵适应进化策略\n- **DARLA**：域对抗迁移学习方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 高效快速适应\n\nParseval-Guided 约束通过**正交性正则化**，显著降低了适应所需的样本量和计算开销。实验表明，仅需 5-20 步梯度更新即可达到基线方法的最终性能。\n\n### 5.2 缓解灾难性遗忘\n\nKL 散度约束显式限制了残差策略偏离基础策略的程度，确保在适应新运动时不会显著损害已学习的能力。论文声称遗忘率降低约 40-60%。\n\n### 5.3 增强物理鲁棒性\n\n质心感知控制模块将**物理先验知识**（CoM 动力学）嵌入策略观察和奖励，有效提升了高动态场景下的平衡成功率。\n\n### 5.4 通用性强\n\n预训练阶段学习到的通用先验知识使框架能够处理多种运动模式，而非仅限于单一任务。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 正交性约束的计算开销\n\n正交性正则化项 $\\|W^T W - I\\|_F^2$ 涉及矩阵乘法，计算复杂度为 $O(d^3)$，其中 $d$ 为隐层维度。对于大规模网络可能造成显著开销。\n\n### 6.2 质心估计的准确性\n\nCoM-Aware Control 依赖准确的质心估计。在真实机器人上，质心通常需要通过**状态估计器**间接获得，可能存在延迟和误差，尤其在足部打滑或接触不稳定时。\n\n### 6.3 域适应假设\n\nPG-RPA 的有效性假设基础策略与目标分布之间存在**可区分的特征空间**。如果两分布高度重叠，正交性约束可能反而限制适应能力。\n\n### 6.4 稀疏奖励场景\n\n当参考运动包含复杂接触（如攀爬、翻滚）时，纯粹的跟踪奖励可能不足以引导策略学习这些高难度动作。\n\n### 6.5 sim-to-real 迁移\n\n尽管论文声称进行了真实机器人部署，但高动态运动（如快速奔跑、单脚平衡）的 sim-to-realgap 仍然存在，可能需要额外的域随机化和系统辨识。\n\n---\n\n## 总结\n\nFAST 框架通过**Parseval-Guided 残差策略适应**实现了高效且稳定的快速适应能力，通过**质心感知控制**增强了物理鲁棒性。核心技术贡献在于将正交性约束和 KL 散度引入策略迁移学习，为人形机器人全身控制的域适应问题提供了新的解决思路。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "General Humanoid Whole-Body Control via Pretraining and Fast Adaptation",
+      "authors": [
+        "Zepeng Wang",
+        "Jiangxing Wang",
+        "Shiqing Yao",
+        "Yu Zhang",
+        "Ziluo Ding",
+        "Ming Yang",
+        "Yuxuan Wang",
+        "Haobin Jiang",
+        "Chao Ma",
+        "Xiaochuan Shi",
+        "Zongqing Lu"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.11929",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Learning a general whole-body controller for humanoid robots remains challenging due to the diversity of motion distributions, the difficulty of fast adaptation, and the need for robust balance in high-dynamic scenarios. Existing approaches often require task-specific training or suffer from performance degradation when adapting to new motions. In this paper, we present FAST, a general humanoid whole-body control framework that enables Fast Adaptation and Stable Motion Tracking. FAST introduces Parseval-Guided Residual Policy Adaptation, which learns a lightweight delta action policy under orthogonality and KL constraints, enabling efficient adaptation to out-of-distribution motions while mitigating catastrophic forgetting. To further improve physical robustness, we propose Center-of-Mass-Aware Control, which incorporates CoM-related observations and objectives to enhance balance when tracking challenging reference motions. Extensive experiments in simulation and real-world deployment demonstrate that FAST consistently outperforms state-of-the-art baselines in robustness, adaptation efficiency, and generalization.",
+      "route_id": "9933875e-c9bb-4708-bb69-fc0ef2c01e32"
+    },
+    "markdown_stats": {
+      "lines": 522,
+      "words": 10417,
+      "headings": 39
+    },
+    "assets": {
+      "images": 33,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "9933875e-c9bb-4708-bb69-fc0ef2c01e32",
+  "paper_ref": "9933875e-c9bb-4708-bb69-fc0ef2c01e32",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

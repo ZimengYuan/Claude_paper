@@ -1,0 +1,83 @@
+{
+  "dir_name": "Gu-2024-Advancing-Humanoid-Locomotion-Mastering-Challenging-Terrains-with-Denoising-World-Model-Learning-2",
+  "title": "Advancing Humanoid Locomotion: Mastering Challenging Terrains with Denoising World Model Learning",
+  "authors": [
+    "Xinyang Gu",
+    "Yen-Jen Wang",
+    "Xiang Zhu",
+    "Chengming Shi",
+    "Yanjiang Guo",
+    "Yichen Liu",
+    "Jianyu Chen"
+  ],
+  "year": 2024,
+  "journal": "Robotics: Science and Systems XX",
+  "doi": "10.15607/rss.2024.xx.058",
+  "abstract": "Humanoid robots, with their human-like skeletal structure, are especially suited for tasks in human-centric environments. However, this structure is accompanied by additional challenges in locomotion controller design, especially in complex real-world environments. As a result, existing humanoid robots are limited to relatively simple terrains, either with model-based control or model-free reinforcement learning. In this work, we introduce Denoising World Model Learning (DWL), an end-to-end reinforcement learning framework for humanoid locomotion control, which demonstrates the world's first humanoid robot to master real-world challenging terrains such as snowy and inclined land in the wild, up and down stairs, and extremely uneven terrains. All scenarios run the same learned neural network with zero-shot sim-to-real transfer, indicating the superior robustness and generalization capability of the proposed method.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 111,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Advancing Humanoid Locomotion: Mastering Challenging Terrains with Denoising World Model Learning",
+      "authors": [
+        "Xinyang Gu",
+        "Yen-Jen Wang",
+        "Xiang Zhu",
+        "Chengming Shi",
+        "Yanjiang Guo",
+        "Yichen Liu",
+        "Jianyu Chen"
+      ],
+      "year": 2024,
+      "journal": "Robotics: Science and Systems XX",
+      "doi": "10.15607/rss.2024.xx.058",
+      "paper_type": "proceedings-article",
+      "abstract": "Humanoid robots, with their human-like skeletal structure, are especially suited for tasks in human-centric environments. However, this structure is accompanied by additional challenges in locomotion controller design, especially in complex real-world environments. As a result, existing humanoid robots are limited to relatively simple terrains, either with model-based control or model-free reinforcement learning. In this work, we introduce Denoising World Model Learning (DWL), an end-to-end reinforcement learning framework for humanoid locomotion control, which demonstrates the world's first humanoid robot to master real-world challenging terrains such as snowy and inclined land in the wild, up and down stairs, and extremely uneven terrains. All scenarios run the same learned neural network with zero-shot sim-to-real transfer, indicating the superior robustness and generalization capability of the proposed method.",
+      "route_id": "33e1e83c-5e55-4fb9-bbed-47e04a32dde1"
+    },
+    "markdown_stats": {
+      "lines": 392,
+      "words": 9221,
+      "headings": 26
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "33e1e83c-5e55-4fb9-bbed-47e04a32dde1",
+  "paper_ref": "33e1e83c-5e55-4fb9-bbed-47e04a32dde1",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

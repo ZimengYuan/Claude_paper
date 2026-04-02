@@ -1,0 +1,79 @@
+{
+  "dir_name": "Luo-2023-Perpetual-Humanoid-Control-for-Real-time-Simulated-Avatars-2",
+  "title": "Perpetual Humanoid Control for Real-time Simulated Avatars",
+  "authors": [
+    "Zhengyi Luo",
+    "Jinkun Cao",
+    "Alexander Winkler",
+    "Kris Kitani",
+    "Weipeng Xu"
+  ],
+  "year": 2023,
+  "journal": "2023 IEEE/CVF International Conference on Computer Vision (ICCV)",
+  "doi": "10.1109/iccv51070.2023.01000",
+  "abstract": "We present a physics-based humanoid controller that achieves high-fidelity motion imitation and fault-tolerant behavior in the presence of noisy input (e.g. pose estimates from video or generated from language) and unexpected falls. Our controller scales up to learning ten thousand motion clips without using any external stabilizing forces and learns to naturally recover from fail-state. Given reference motion, our controller can perpetually control simulated avatars without requiring resets. At its core, we propose the progressive multiplicative control policy (PMCP), which dynamically allocates new network capacity to learn harder and harder motion sequences. PMCP allows efficient scaling for learning from large-scale motion databases and adding new tasks, such as fail-state recovery, without catastrophic forgetting. We demonstrate the effectiveness of our controller by using it to imitate noisy poses from video-based pose estimators and language-based motion generators in a live and real-time multi-person avatar use case.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 239,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Perpetual Humanoid Control for Real-time Simulated Avatars",
+      "authors": [
+        "Zhengyi Luo",
+        "Jinkun Cao",
+        "Alexander Winkler",
+        "Kris Kitani",
+        "Weipeng Xu"
+      ],
+      "year": 2023,
+      "journal": "2023 IEEE/CVF International Conference on Computer Vision (ICCV)",
+      "doi": "10.1109/iccv51070.2023.01000",
+      "paper_type": "proceedings-article",
+      "abstract": "We present a physics-based humanoid controller that achieves high-fidelity motion imitation and fault-tolerant behavior in the presence of noisy input (e.g. pose estimates from video or generated from language) and unexpected falls. Our controller scales up to learning ten thousand motion clips without using any external stabilizing forces and learns to naturally recover from fail-state. Given reference motion, our controller can perpetually control simulated avatars without requiring resets. At its core, we propose the progressive multiplicative control policy (PMCP), which dynamically allocates new network capacity to learn harder and harder motion sequences. PMCP allows efficient scaling for learning from large-scale motion databases and adding new tasks, such as fail-state recovery, without catastrophic forgetting. We demonstrate the effectiveness of our controller by using it to imitate noisy poses from video-based pose estimators and language-based motion generators in a live and real-time multi-person avatar use case.",
+      "route_id": "437005a2-ac5f-4fc6-875d-935b8b407f69"
+    },
+    "markdown_stats": {
+      "lines": 343,
+      "words": 14948,
+      "headings": 26
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "437005a2-ac5f-4fc6-875d-935b8b407f69",
+  "paper_ref": "437005a2-ac5f-4fc6-875d-935b8b407f69",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

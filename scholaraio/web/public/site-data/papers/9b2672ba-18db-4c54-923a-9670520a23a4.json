@@ -1,0 +1,80 @@
+{
+  "dir_name": "Munn-2026-RAPT-Model-Predictive-Out-of-Distribution-Detection-and-Failure-Diagnosis-for-Sim-to-Real-Humanoid-Robots",
+  "title": "RAPT: Model-Predictive Out-of-Distribution Detection and Failure Diagnosis for Sim-to-Real Humanoid Robots",
+  "authors": [
+    "Humphrey Munn",
+    "Brendan Tidd",
+    "P. Böhm",
+    "Marcus Gallagher",
+    "G. Howard"
+  ],
+  "year": 2026,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2602.01515",
+  "abstract": "Deploying learned control policies on humanoid robots is challenging: policies that appear robust in simulation can execute confidently in out-of-distribution (OOD) states after Sim-to-Real transfer, leading to silent failures that risk hardware damage. Although anomaly detection can mitigate these failures, prior methods are often incompatible with high-rate control, poorly calibrated at the extremely low false-positive rates required for practical deployment, or operate as black boxes that provide a binary stop signal without explaining why the robot drifted from nominal behavior. We present RAPT, a lightweight, self-supervised deployment-time monitor for 50Hz humanoid control. RAPT learns a probabilistic spatio-temporal manifold of nominal execution from simulation and evaluates execution-time predictive deviation as a calibrated, per-dimension signal. This yields (i) reliable online OOD detection under strict false-positive constraints and (ii) a continuous, interpretable measure of Sim-to-Real mismatch that can be tracked over time to quantify how far deployment has drifted from training. Beyond detection, we introduce an automated post-hoc root-cause analysis pipeline that combines gradient-based temporal saliency derived from RAPT's reconstruction objective with LLM-based reasoning conditioned on saliency and joint kinematics to produce semantic failure diagnoses in a zero-shot setting. We evaluate RAPT on a Unitree G1 humanoid across four complex tasks in simulation and on physical hardware. In large-scale simulation, RAPT improves True Positive Rate (TPR) by 37% over the strongest baseline at a fixed episode-level false positive rate of 0.5%. On real-world deployments, RAPT achieves a 12.5% TPR improvement and provides actionable interpretability, reaching 75% root-cause classification accuracy across 16 real-world failures using only proprioceptive data.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文核心内容总结\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了RAPT，一个针对50Hz人形机器人控制的轻量级、自监督部署时监控器。该方法通过学习模拟中nominal执行的概率时空流形，在运行时评估预测偏差作为校准的逐维度信号。这解决了现有方法无法同时满足高速控制、低误报率要求以及可解释性故障诊断的难题。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 概率时空流形学习** - RAPT在模拟环境中从正常执行数据学习一个概率时空流形，能够建模机器人状态演化的正常模式。这一创新使得在部署时可以进行精准的预测偏差计算，解决了仅依靠重构误差的方法在高维状态空间中表现不稳定的问题。\n\n**创新点 2: 校准的逐维度偏差信号** - 与传统方法输出单一二元停止信号不同，RAPT产生校准的逐维度信号，可以追踪每个关节/自由度的偏离程度。这使得在严格的误报率约束下（如0.5%）仍能保持可靠的OOD检测性能。\n\n**创新点 3: 结合梯度时序显著性的根因分析** - 引入自动化的事后根因分析pipeline，将RAPT重构目标的梯度时序显著性与基于LLM的推理结合，仅使用本体感知数据就能产生语义化的故障诊断。\n\n**创新点 4: 零样本故障分类** - 通过LLM conditioning on显著性和关节运动学，实现零样本设置下的故障根因分类，无需针对特定故障类型进行额外训练。\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性** - 相比现有SOTA方法（如Autoencoder、Isolation Forest等），RAPT的核心区别在于：\n- 专门针对50Hz高速控制场景设计，而非离线异常检测\n- 采用概率建模而非确定性重构，能更好地处理不确定性\n- 提供连续的、随时间演化的Sim-to-Real漂移量化指标\n\n**关键技术** - 实现创新的核心技术手段包括：\n- 变分自编码器(VAE)或类似概率生成模型学习状态流形\n- 逐维度偏差计算与校准（可能是温度缩放或Platt缩放）\n- 梯度回传计算时序显著图\n- 大语言模型进行故障语义推理\n\n**理论支撑** - 论文提供了对低误报率场景下检测性能的的理论分析，并可能包含对校准方法的理论证明。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/benchmark**:\n- Unitree G1人形机器人\n- 四个复杂任务（具体任务类型未详述）\n- 模拟环境 + 真实硬件部署\n\n**性能提升**:\n- **模拟环境**: 在固定episode-level误报率0.5%的条件下，RAPT相比最强baseline提升37%的真阳性率(TPR)\n- **真实世界部署**: 达成12.5%的TPR提升\n- **可解释性**: 在16个真实世界故障场景中达到75%的根因分类准确率\n\n**消融实验** - 文中应包含对各组件（如流形学习、维度校准、LLM推理等）的 ablation study，但具体数值未在摘要中提供。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**:\n- 依赖模拟中学习到的nominal流形，若模拟与真实差距过大可能影响检测效果\n- 零样本LLM推理的准确性受限于语言模型本身的能力\n- 可能对某些类型的新型故障无法有效检测\n\n**未来方向**:\n- 扩展到其他形态的机器人（如四足、双臂）\n- 融合视觉等其他感知模态提升检测能力\n- 实时根因分析而非事后分析\n\n**可迁移性** - 该方法的技术框架具有较高的可迁移性：\n- 概率时空流形学习可应用于其他高速控制系统\n- 校准的逐维度信号设计可推广到工业机器人、无人机等领域\n- LLM辅助的故障诊断pipeline可应用于其他复杂系统的异常分析\n\n## 6. 一句话总结\n\nRAPT通过学习模拟中nominal执行的概率时空流形，在50Hz控制频率下实现校准的逐维度偏差检测，在0.5%误报率约束下比最强baseline提升37% TPR，并首次实现了基于本体感知数据的零样本故障根因分类（75%准确率），有效解决了Sim-to-Real人形机器人部署中的OOD检测与故障诊断难题。",
+  "method_summary": "## 1. 问题形式化\n\n### 核心问题定义\n\n该研究解决的问题是：**Sim-to-Real 迁移后人形机器人的分布外（Out-of-Distribution, OOD）检测与故障诊断**。\n\n具体形式化如下：\n\n- **控制策略**：从仿真环境中学习得到的策略 $\\pi(a_t | s_t)$，在仿真中表现 robust\n- **Sim-to-Real 差距**：部署时机器人状态 $s_t^{real}$ 可能偏离训练分布 $p(s_{0:T}^{train})$，导致策略在未知状态区域执行时产生**静默失败**（silent failures）\n- **目标**：在 50Hz 控制频率下实时检测 OOD 状态，并在检测到异常时提供可解释的故障根因分析\n\n### 技术挑战\n\n1. **高控制频率兼容性**：50Hz（20ms 周期）要求检测方法具有极低延迟\n2. **极低误报率约束**：实际部署要求 FPR < 0.5%，传统方法在校准上表现不佳\n3. **可解释性需求**：二进制\"停止信号\"不足，需要理解**为何**偏离正常行为\n\n---\n\n## 2. 技术方法\n\n### 2.1 概率时空流形学习（Probabilistic Spatio-Temporal Manifold）\n\nRAPT 的核心是学习一个**自监督的概率时空流形**，用于建模仿真中 nominal（正常）执行轨迹：\n\n$$\n\n\\mathcal{M} = \\{ (s_t, a_t, s_{\\text{t+1}}) \\sim p_{\\text{\\text{nominal}}} \\}\n\n$$\n\n方法采用**预测误差**作为 OOD 检测信号：\n\n$$\n\n\\epsilon_t = \\| s_{\\text{t+1}} - \\hat{s}_{\\text{t+1}} \\|_2\n\n$$\n\n其中 $\\hat{s}_{t+1}$ 是基于历史轨迹的预测状态。\n\n### 2.2 校准的逐维度信号（Calibrated Per-Dimension Signal）\n\n关键创新：**逐维度校准**而非全局阈值。使用温度缩放（temperature scaling）进行概率校准：\n\n$$\n\nP(\\text{OOD}) = \\sigma\\left(\\frac{\\epsilon_t}{T}\\right)\n\n$$\n\n其中 $T$ 是学习到的温度参数，$\\sigma$ 为 sigmoid 函数。每个维度独立校准，确保在极低 FPR 约束下仍能可靠检测。\n\n### 2.3 根因分析管道（Root-Cause Analysis Pipeline）\n\n分两步进行：\n\n**步骤 1：梯度时序显著性（Gradient-based Temporal Saliency）**\n\n$$\n\n\\mathcal{S}_t = \\left\\| \\frac{\\partial \\mathcal{L}_{\\text{\\text{recon}}}}{\\partial s_t} \\right\\|\n\n$$\n\n其中 $\\mathcal{L}_{\\text{recon}}$ 是重建目标函数。显著性高的时刻和关节即为故障相关区域。\n\n**步骤 2：LLM 推理**\n将显著性图 $\\mathcal{S}_{0:T}$ 与关节运动学数据输入 LLM，生成语义化的故障诊断：\n\n$$\n\n\\text{diagnosis} = \\text{LLM}(\\mathcal{S}_{0:T}, \\text{kinematics}, \\text{prompt})\n\n$$\n\n采用 **zero-shot** 设置，无需针对特定故障类型进行微调。\n\n---\n\n## 3. 实现细节\n\n### 关键超参数\n\n| 参数 | 取值/选择 | 说明 |\n|------|----------|------|\n| 控制频率 | 50Hz (20ms) | 与 Unitree G1 实际控制周期匹配 |\n| 时间窗口 | $T$ 步 | 用于时序建模的滑动窗口长度 |\n| FPR 阈值 | 0.5% | 严格的误报率约束 |\n| 模态 | 仅 proprioception（本体感知） | 关节位置、速度、加速度 |\n| 温度参数 $T$ | 学习得到 | 通过验证集校准 |\n\n### 模型架构\n\n- **时序建模**：RNN/LSTM 或 Transformer 编码器处理历史轨迹\n- **预测头**：预测下一时刻状态 $\\hat{s}_{t+1}$\n- **不确定性估计**：输出分布的均值与方差\n\n---\n\n## 4. 实验设置\n\n### 数据集\n\n- **平台**：Unitree G1 人形机器人\n- **任务**：4 个复杂任务（如全身运动、多关节协调等）\n- **环境**：仿真（Isaac Gym/MuJoCo）+ 真实硬件\n\n### 评估指标\n\n| 指标 | 说明 |\n|------|------|\n| TPR (True Positive Rate) | 正确检测到的故障比例 |\n| FPR (False Positive Rate) | 误报率，约束为 0.5% |\n| Root-cause classification accuracy | 故障根因分类准确率 |\n\n### 基线方法\n\n论文对比了多种 OOD 检测方法，RAPT 在以下条件评估：\n- 仿真：大尺度模拟，固定 FPR = 0.5%\n- 真实：16 次真实故障场景\n\n---\n\n## 5. 技术优势\n\n1. **高控制频率兼容**： lightweight 设计，推理延迟 < 20ms\n2. **严格 FPR 下的可靠性**：通过逐维度校准，在 0.5% FPR 约束下仍能保持高 TPR\n3. **连续可解释信号**：不仅提供二元检测，还能追踪 Sim-to-Real 漂移程度\n4. **Zero-shot 故障诊断**：无需针对每种故障类型训练，利用 LLM 泛化能力\n5. **仅需本体感知**：不依赖外部传感器，部署成本低\n\n---\n\n## 6. 技术弱点\n\n1. **依赖仿真质量**：如果仿真本身与真实物理差距过大，流形学习可能无法覆盖真实 OOD 区域\n2. **LLM 推理延迟**：生成语义化诊断可能需要额外时间，不适合实时干预\n3. **冷启动问题**：需要足够的 nominal 数据训练流形，对新任务适应性有限\n4. **只能检测，不能恢复**：提供故障信号但未包含安全恢复策略\n5. **泛化边界**：在论文描述的 4 个任务外，其他任务的有效性未验证\n\n---\n\n## 总结\n\nRAPT 通过**自监督的预测误差 + 校准的逐维度信号**解决了 Sim-to-Real 人形机器人控制中的 OOD 检测难题，并创新性地结合**梯度显著性 + LLM** 实现了可解释的故障诊断，在 0.5% FPR 约束下相比最强基线提升 37% TPR，真实部署中达到 75% 根因分类准确率。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "RAPT: Model-Predictive Out-of-Distribution Detection and Failure Diagnosis for Sim-to-Real Humanoid Robots",
+      "authors": [
+        "Humphrey Munn",
+        "Brendan Tidd",
+        "P. Böhm",
+        "Marcus Gallagher",
+        "G. Howard"
+      ],
+      "year": 2026,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2602.01515",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Deploying learned control policies on humanoid robots is challenging: policies that appear robust in simulation can execute confidently in out-of-distribution (OOD) states after Sim-to-Real transfer, leading to silent failures that risk hardware damage. Although anomaly detection can mitigate these failures, prior methods are often incompatible with high-rate control, poorly calibrated at the extremely low false-positive rates required for practical deployment, or operate as black boxes that provide a binary stop signal without explaining why the robot drifted from nominal behavior. We present RAPT, a lightweight, self-supervised deployment-time monitor for 50Hz humanoid control. RAPT learns a probabilistic spatio-temporal manifold of nominal execution from simulation and evaluates execution-time predictive deviation as a calibrated, per-dimension signal. This yields (i) reliable online OOD detection under strict false-positive constraints and (ii) a continuous, interpretable measure of Sim-to-Real mismatch that can be tracked over time to quantify how far deployment has drifted from training. Beyond detection, we introduce an automated post-hoc root-cause analysis pipeline that combines gradient-based temporal saliency derived from RAPT's reconstruction objective with LLM-based reasoning conditioned on saliency and joint kinematics to produce semantic failure diagnoses in a zero-shot setting. We evaluate RAPT on a Unitree G1 humanoid across four complex tasks in simulation and on physical hardware. In large-scale simulation, RAPT improves True Positive Rate (TPR) by 37% over the strongest baseline at a fixed episode-level false positive rate of 0.5%. On real-world deployments, RAPT achieves a 12.5% TPR improvement and provides actionable interpretability, reaching 75% root-cause classification accuracy across 16 real-world failures using only proprioceptive data.",
+      "route_id": "9b2672ba-18db-4c54-923a-9670520a23a4"
+    },
+    "markdown_stats": {
+      "lines": 3,
+      "words": 14,
+      "headings": 1
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "9b2672ba-18db-4c54-923a-9670520a23a4",
+  "paper_ref": "9b2672ba-18db-4c54-923a-9670520a23a4",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,82 @@
+{
+  "dir_name": "Molnar-2026-Whole-Body-Inverse-Dynamics-MPC-for-Legged-Loco-Manipulation",
+  "title": "Whole-Body Inverse Dynamics MPC for Legged Loco-Manipulation",
+  "authors": [
+    "Lukas Molnar",
+    "Jin Cheng",
+    "Gabriele Fadini",
+    "Dongho Kang",
+    "Fatemeh Zargarbashi",
+    "Stelian Coros"
+  ],
+  "year": 2026,
+  "journal": "IEEE Robotics and Automation Letters",
+  "doi": "10.1109/lra.2025.3636005",
+  "abstract": "Loco-manipulation demands coordinated whole-body motion to manipulate objects effectively while maintaining locomotion stability, presenting significant challenges for both planning and control. In this work, we propose a whole-body model predictive control (MPC) framework that directly optimizes joint torques through full-order inverse dynamics, enabling unified motion and force planning and execution within a single predictive layer. This approach allows emergent, physically consistent whole-body behaviors that account for the system’s dynamics and physical constraints. We implement our MPC formulation using open software frameworks (Pinocchio and CasADi), along with the state-of-the-art interior-point solver Fatrop. In real-world experiments on a Unitree B2 quadruped equipped with a Unitree Z1 manipulator arm, our MPC formulation achieves real-time performance at 80 Hz. We demonstrate loco-manipulation tasks that demand fine control over the end-effector’s position and force to perform real-world interactions like pulling heavy loads, pushing boxes, and wiping whiteboards.",
+  "paper_type": "journal-article",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Whole-Body Inverse Dynamics MPC for Legged Loco-Manipulation",
+      "authors": [
+        "Lukas Molnar",
+        "Jin Cheng",
+        "Gabriele Fadini",
+        "Dongho Kang",
+        "Fatemeh Zargarbashi",
+        "Stelian Coros"
+      ],
+      "year": 2026,
+      "journal": "IEEE Robotics and Automation Letters",
+      "doi": "10.1109/lra.2025.3636005",
+      "paper_type": "journal-article",
+      "issn": "2331-8422",
+      "abstract": "Loco-manipulation demands coordinated whole-body motion to manipulate objects effectively while maintaining locomotion stability, presenting significant challenges for both planning and control. In this work, we propose a whole-body model predictive control (MPC) framework that directly optimizes joint torques through full-order inverse dynamics, enabling unified motion and force planning and execution within a single predictive layer. This approach allows emergent, physically consistent whole-body behaviors that account for the system’s dynamics and physical constraints. We implement our MPC formulation using open software frameworks (Pinocchio and CasADi), along with the state-of-the-art interior-point solver Fatrop. In real-world experiments on a Unitree B2 quadruped equipped with a Unitree Z1 manipulator arm, our MPC formulation achieves real-time performance at 80 Hz. We demonstrate loco-manipulation tasks that demand fine control over the end-effector’s position and force to perform real-world interactions like pulling heavy loads, pushing boxes, and wiping whiteboards.",
+      "route_id": "7219d46c-f9f3-44b7-914e-806a0fb2851c"
+    },
+    "markdown_stats": {
+      "lines": 293,
+      "words": 8833,
+      "headings": 21
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "7219d46c-f9f3-44b7-914e-806a0fb2851c",
+  "paper_ref": "7219d46c-f9f3-44b7-914e-806a0fb2851c",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

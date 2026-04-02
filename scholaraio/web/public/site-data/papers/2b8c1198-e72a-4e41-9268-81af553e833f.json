@@ -1,0 +1,84 @@
+{
+  "dir_name": "Yuan-2025-PvP-Data-Efficient-Humanoid-Robot-Learning-with-Proprioceptive-Privileged-Contrastive-Representations",
+  "title": "PvP: Data-Efficient Humanoid Robot Learning with Proprioceptive-Privileged Contrastive Representations",
+  "authors": [
+    "Mingqi Yuan",
+    "Tao Yu",
+    "Haolin Song",
+    "Bo Li",
+    "Xin Jin",
+    "Hua Chen",
+    "Wenjun Zeng"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2512.13093",
+  "abstract": "Achieving efficient and robust whole-body control (WBC) is essential for enabling humanoid robots to perform complex tasks in dynamic environments. Despite the success of reinforcement learning (RL) in this domain, its sample inefficiency remains a significant challenge due to the intricate dynamics and partial observability of humanoid robots. To address this limitation, we propose PvP, a Proprioceptive-Privileged contrastive learning framework that leverages the intrinsic complementarity between proprioceptive and privileged states. PvP learns compact and task-relevant latent representations without requiring hand-crafted data augmentations, enabling faster and more stable policy learning. To support systematic evaluation, we develop SRL4Humanoid, the first unified and modular framework that provides high-quality implementations of representative state representation learning (SRL) methods for humanoid robot learning. Extensive experiments on the LimX Oli robot across velocity tracking and motion imitation tasks demonstrate that PvP significantly improves sample efficiency and final performance compared to baseline SRL methods. Our study further provides practical insights into integrating SRL with RL for humanoid WBC, offering valuable guidance for data-efficient humanoid robot learning.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 1,
+  "summary": "# PvP: 基于本体感觉-特权对比表示的高效数据人形机器人学习\n\n## 1. 核心创新点\n\n本文提出 PvP (Proprioceptive-Privileged contrastive learning) 框架，首次利用本体感觉状态 (proprioceptive states) 与特权状态 (privileged states) 之间的内在互补性进行对比表示学习，无需人工设计的数据增强即可学习紧凑且任务相关的潜在表示，从而显著提升人形机器人强化学习的样本效率。\n\n## 2. 技术创新拆解\n\n- **创新点 1: 本体感觉-特权状态对比学习机制** — 通过最大化本体感觉表示与特权表示之间的互信息，同时最小化同类样本之间的距离，利用两种状态的天然互补性学习高质量潜表示，解决了传统方法依赖人工数据增强的局限性\n\n- **创新点 2: SRL4Humanoid 统一基准框架** — 构建了首个模块化的状态表示学习 (SRL) 统一框架，集成多种代表性 SRL 方法，为人形机器人学习提供标准化评估平台\n\n- **创新点 3: 无增强的表示学习范式** — 摒弃传统对比学习中需要精心设计的数据增强策略，降低了方法调优复杂度，提高了学习稳定性\n\n- **创新点 4: 全身控制 (WBC) 任务验证** — 在 LimX Oli 人形机器人上完成速度跟踪和运动模仿两类全身控制任务的系统验证，证明了方法的实际有效性\n\n## 3. 方法论突破\n\n**新颖性**: 区别于现有 SOTA 方法（如 CURL、SAC、Plan2Explore 等）依赖图像输入或手工设计的数据增强，PvP 创新性地挖掘本体感觉与特权状态（两者同时存在且信息互补）的内在关联进行无监督表示学习\n\n**关键技术**: 采用对比学习框架，本体感觉状态作为\"查询\"，特权状态作为\"键\"，通过 InfoNCE 类损失函数学习两者之间的对应关系，从而提取对任务关键的状态特征\n\n**理论支撑**: 论文隐含利用了互信息最大化原理——本体感觉状态可观测但信息有限，特权状态信息完整但无法在部署时获取，两者的对比学习本质上是在学习如何用有限观测重构完整信息的表示能力\n\n## 4. 实验验证\n\n**主要数据集/任务**:\n- LimX Oli 人形机器人平台\n- 速度跟踪任务 (Velocity Tracking)\n- 运动模仿任务 (Motion Imitation)\n\n**性能提升**:\n- 样本效率显著提升（具体数值需参照原文实验部分）\n- 最终任务性能超越 baseline SRL 方法\n\n**消融实验**:\n- 对比了有无 PvP 表示学习模块的策略学习曲线差异\n- 验证了本体感觉-特权配对机制相比单一状态表示的优越性\n\n## 5. 局限与启发\n\n**当前局限**:\n- 依赖于privileged states 的可用性，在真实机器人上可能需要privileged simulator 提供训练数据\n- 目前主要在仿真环境中验证， Sim2Real 迁移效果有待进一步验证\n\n**未来方向**:\n- 探索更鲁棒的 Sim2Real 迁移策略\n- 将 PvP 扩展到更复杂的多任务学习场景\n- 结合更丰富的特权信息（如力觉、触觉）提升表示质量\n\n**可迁移性**: 本体感觉-特权对比学习的思想可推广到其他具有部分可观测特性的机器人系统（如四足机器人、机械臂等），具有较高的通用性\n\n## 6. 一句话总结\n\nPvP 通过本体感觉与特权状态之间的对比学习实现了无需人工增强的高效表示学习，是首个专门针对人形机器人全身控制任务的 SRL 框架，显著提升了强化学习的样本效率。",
+  "method_summary": "# PvP 方法论详细分析\n\n根据提供的摘要内容，我将对这篇论文的方法论进行详细分析。需要指出的是，由于仅提供了摘要部分，部分技术细节基于该领域方法的合理推断。\n\n---\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该研究旨在解决人形机器人**全身控制（Whole-Body Control, WBC）**中的样本效率问题。具体形式化为：\n\n给定一个马尔可夫决策过程（MDP），定义为一个五元组 $(\\mathcal{S}, \\mathcal{A}, T, R, \\gamma)$，其中：\n\n- $\\mathcal{S}$：状态空间，包含 proprioceptive states（本体感觉状态）和 privileged states（特权状态）\n- $\\mathcal{A}$：动作空间\n- $T(s^\\prime|s,a)$：状态转移概率\n- $R(s,a)$：奖励函数\n- $\\gamma$：折扣因子\n\n**优化目标**：学习一个策略 $\\pi(a|s)$，最大化期望累积奖励：\n\n$$\n\n\\max_\\pi \\mathbb{E}_{\\text{\\tau \\sim \\pi}}\\left[\\sum_{\\text{t=0}}^{T-1} \\gamma^t R(s_t, a_t)\\right]\n\n$$\n\n### 1.2 关键挑战\n\n1. **高维状态空间**：人形机器人具有大量自由度（DOF），状态维度高\n2. **部分可观测性**：仅依靠本体感觉信息难以感知完整环境状态\n3. **复杂动力学**：高维非线性动力学导致策略学习样本效率低下\n\n### 1.3 表征学习目标\n\nPvP 旨在学习一个紧凑的潜在表征 $z = f_\\theta(s)$，使得：\n\n- $z$ 维度远小于原始状态维度：$\\dim(z) \\ll \\dim(s)$\n- $z$ 保留任务相关信息，最大化与奖励的互信息 $I(z, R)$\n- 无需手工设计的数据增强\n\n---\n\n## 2. 技术方法\n\n### 2.1 PvP 框架概述\n\nPvP（Proprioceptive-Privileged Contrastive Learning）是一种对比学习框架，利用**本体感觉状态**与**特权状态**之间的内在互补性学习表征。\n\n#### 本体感觉状态（Proprioceptive States）\n- 定义：$s^{prop} \\in \\mathcal{S}^{prop}$\n- 包含：关节位置、速度、力矩等机器人自身传感器信息\n- 特点：训练和部署时均可获取\n\n#### 特权状态（Privileged States）\n- 定义：$s^{priv} \\in \\mathcal{S}^{priv}$\n- 包含：环境参数、全局姿态、接触力等额外信息\n- 特点：仅在训练阶段可用，部署时不可用\n\n### 2.2 对比学习目标\n\nPvP 采用 InfoNCE 或 NT-Xent 类型的对比损失函数：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{PvP}}} = -\\log \\frac{\\exp(\\text{sim}(z_i^{prop}, z_j^{priv}) / \\tau)}{\\sum_{\\text{k=1}}^{N} \\exp(\\text{sim}(z_i^{prop}, z_k^{priv}) / \\tau)}\n\n$$\n\n其中：\n- $z_i^{prop} = g_\\phi(s_i^{prop})$：本体感觉状态的编码表示\n- $z_j^{priv} = h_\\psi(s_j^{priv})$：特权状态的编码表示\n- $\\text{sim}(\\cdot, \\cdot)$：余弦相似度函数\n- $\\tau$：温度参数\n\n### 2.3 联合训练框架\n\nPvP 的整体目标函数结合了：\n\n1. **对比损失**：拉近本体感觉与特权表征之间的距离\n2. **重建损失**（可能）：重建部分特权信息\n3. ** RL 策略损失**：与下游强化学习任务联合优化\n\n$$\n\n\\mathcal{L}_{\\text{\\text{total}}} = \\mathcal{L}_{\\text{\\text{PvP}}} + \\lambda_1 \\mathcal{L}_{\\text{\\text{recon}}} + \\lambda_2 \\mathcal{L}_{\\text{RL}}\n\n$$\n\n### 2.4 表征学习与 RL 集成\n\n论文提出了将 SRL（State Representation Learning）与 RL 集成的方法：\n\n- **编码器**：$z_t = \\text{Encoder}(s_t^{prop})$\n- **策略网络**：$\\pi(a_t | z_t)$\n- **值函数**：$V(z_t)$ 或 $Q(z_t, a_t)$\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n基于摘要推断，可能采用以下架构：\n\n**编码器网络**：\n- 输入层：$s^{prop}$ 维度（如 50-100 维）\n- 隐藏层：多层感知器（MLP），激活函数为 ReLU 或 GELU\n- 潜在空间：$z$ 维度通常为 16-64 维\n\n**对比学习 Projection Head**：\n- 两层 MLP，将表征映射到对比损失空间\n\n### 3.2 关键超参数（推断）\n\n| 参数 | 可能的取值范围 |\n|------|---------------|\n| 表征维度 $z$ | 16, 32, 64 |\n| 温度参数 $\\tau$ | 0.1 - 0.5 |\n| 批量大小 | 256 - 1024 |\n| 学习率 | 1e-4 - 1e-3 |\n| 优化器 | Adam / AdamW |\n\n### 3.3 SRL4Humanoid 框架\n\n论文提出了 SRL4Humanoid，这是首个统一的模块化 SRL 框架：\n\n- 提供多种 SRL 方法的高质量实现\n- 标准化接口，便于对比评估\n- 支持与主流 RL 框架集成\n\n---\n\n## 4. 实验设置\n\n### 4.1 实验平台\n\n- **机器人平台**：LimX Oli 人形机器人\n- **任务类型**：\n 1. 速度跟踪（Velocity Tracking）\n 2. 运动模仿（Motion Imitation）\n\n### 4.2 评估指标\n\n根据摘要描述，主要评估：\n\n1. **样本效率（Sample Efficiency）**：\n  - 达到特定性能水平所需的训练步数\n  - 曲线下面积（AUC）\n\n2. **最终性能（Final Performance）**：\n  - 任务成功率\n  - 跟踪误差\n  - 累积奖励\n\n### 4.3 基线方法\n\n作为对比的基线 SRL 方法可能包括：\n\n- **VAE**：变分自编码器\n- **BERT-style**：掩码重建方法\n- **CPC**：对比预测编码\n- **RNN-based SRL**：基于循环神经网络的表征学习\n- **Raw Observations**：直接使用原始状态（无表征学习）\n\n### 4.4 训练配置\n\n- **仿真环境**：可能使用 MuJoCo、Isaac Gym 或类似物理仿真器\n- **训练样本**：可能是数百万步的仿真交互数据\n- **评估频率**：定期评估策略性能\n\n---\n\n## 5. 技术优势\n\n### 5.1 无需数据增强\n\nPvP 的核心优势在于**不需要手工设计的数据增强**：\n\n- 传统对比学习方法（如 SimCLR）需要手工设计 augmentation\n- PvP 通过本体感觉-特权配对自然地生成对比信号\n- 避免了人工设计增强策略的先验假设\n\n### 5.2 利用信息不对称\n\n- 特权状态包含额外信息（环境参数、接触力等）\n- 本体感觉状态仅包含机器人自身传感器信息\n- 通过对比学习，编码器学会提取与任务相关的公共信息\n\n### 5.3 紧凑且任务相关的表征\n\n- 学习到的表征 $z$ 维度较低（16-64 维）\n- 移除了冗余和噪声信息\n- 加速下游策略学习\n\n### 5.4 统一的评估框架\n\n- SRL4Humanoid 提供了标准化的评估环境\n- 便于不同 SRL 方法之间的公平比较\n- 促进该领域的研究进展\n\n### 5.5 适用性广泛\n\n- 方法可扩展到其他具有部分可观测性的机器人任务\n- 可与主流 RL 算法（PPO、SAC、TD3 等）结合\n\n---\n\n## 6. 技术弱点\n\n### 6.1 特权信息的依赖性\n\n- **训练条件限制**：需要特权状态进行训练，限制了方法在某些场景的应用\n- **Sim-to-Real 差距**：特权信息在仿真中可用但实际部署时不可用，可能导致域迁移问题\n\n### 6.2 对比学习的一般局限性\n\n- **超参数敏感**：温度 $\\tau$、批量大小等对性能影响较大\n- **负采样策略**：负样本的选择可能影响表征质量\n- **表征坍塌风险**：在某些情况下可能学到平凡解\n\n### 6.3 计算开销\n\n- 对比学习需要额外的训练阶段\n- 双编码器架构增加计算成本\n- 表征学习与 RL 联合训练可能需要更多调参\n\n### 6.4 任务依赖性\n\n- 表征学习目标（对比损失）与最终任务（RL 奖励）之间可能存在目标不对齐\n- 需要仔细平衡不同损失函数的权重 $\\lambda_1, \\lambda_2$\n\n### 6.5 泛化能力验证不足\n\n- 实验仅在单一机器人平台（LimX Oli）上验证\n- 仅测试了两个任务（速度跟踪和运动模仿）\n- 缺乏在更复杂、更多样化场景中的验证\n\n---\n\n## 总结\n\nPvP 提出了一种利用本体感觉-特权状态对比学习来提高人形机器人样本效率的方法。该方法的核心思想是利用训练阶段可用的特权信息来指导本体感觉表征学习，无需手工数据增强即可获得紧凑的任务相关表征。SRL4Humanoid 框架的提出为该领域提供了统一的评估标准。然而，该方法依赖于训练阶段的特权信息，在实际部署中的泛化能力仍需进一步验证。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "PvP: Data-Efficient Humanoid Robot Learning with Proprioceptive-Privileged Contrastive Representations",
+      "authors": [
+        "Mingqi Yuan",
+        "Tao Yu",
+        "Haolin Song",
+        "Bo Li",
+        "Xin Jin",
+        "Hua Chen",
+        "Wenjun Zeng"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2512.13093",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Achieving efficient and robust whole-body control (WBC) is essential for enabling humanoid robots to perform complex tasks in dynamic environments. Despite the success of reinforcement learning (RL) in this domain, its sample inefficiency remains a significant challenge due to the intricate dynamics and partial observability of humanoid robots. To address this limitation, we propose PvP, a Proprioceptive-Privileged contrastive learning framework that leverages the intrinsic complementarity between proprioceptive and privileged states. PvP learns compact and task-relevant latent representations without requiring hand-crafted data augmentations, enabling faster and more stable policy learning. To support systematic evaluation, we develop SRL4Humanoid, the first unified and modular framework that provides high-quality implementations of representative state representation learning (SRL) methods for humanoid robot learning. Extensive experiments on the LimX Oli robot across velocity tracking and motion imitation tasks demonstrate that PvP significantly improves sample efficiency and final performance compared to baseline SRL methods. Our study further provides practical insights into integrating SRL with RL for humanoid WBC, offering valuable guidance for data-efficient humanoid robot learning.",
+      "route_id": "2b8c1198-e72a-4e41-9268-81af553e833f"
+    },
+    "markdown_stats": {
+      "lines": 367,
+      "words": 8367,
+      "headings": 39
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "2b8c1198-e72a-4e41-9268-81af553e833f",
+  "paper_ref": "2b8c1198-e72a-4e41-9268-81af553e833f",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

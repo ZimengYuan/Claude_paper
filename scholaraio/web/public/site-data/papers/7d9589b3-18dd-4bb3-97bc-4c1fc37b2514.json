@@ -1,0 +1,86 @@
+{
+  "dir_name": "Tirinzoni-2024-Zero-Shot-Whole-Body-Humanoid-Control-via-Behavioral-Foundation-Models",
+  "title": "Zero-Shot Whole-Body Humanoid Control via Behavioral Foundation Models",
+  "authors": [
+    "Andrea Tirinzoni",
+    "Ahmed Touati",
+    "Jesse Farebrother",
+    "Mateusz Guzek",
+    "A. Kanervisto",
+    "Yingchen Xu",
+    "A. Lazaric",
+    "Matteo Pirotta"
+  ],
+  "year": 2024,
+  "journal": "International Conference on Learning Representations",
+  "doi": "10.48550/arXiv.2504.11054",
+  "abstract": "Unsupervised reinforcement learning (RL) aims at pre-training agents that can solve a wide range of downstream tasks in complex environments. Despite recent advancements, existing approaches suffer from several limitations: they may require running an RL process on each downstream task to achieve a satisfactory performance, they may need access to datasets with good coverage or well-curated task-specific samples, or they may pre-train policies with unsupervised losses that are poorly correlated with the downstream tasks of interest. In this paper, we introduce a novel algorithm regularizing unsupervised RL towards imitating trajectories from unlabeled behavior datasets. The key technical novelty of our method, called Forward-Backward Representations with Conditional-Policy Regularization, is to train forward-backward representations to embed the unlabeled trajectories to the same latent space used to represent states, rewards, and policies, and use a latent-conditional discriminator to encourage policies to ``cover'' the states in the unlabeled behavior dataset. As a result, we can learn policies that are well aligned with the behaviors in the dataset, while retaining zero-shot generalization capabilities for reward-based and imitation tasks. We demonstrate the effectiveness of this new approach in a challenging humanoid control problem: leveraging observation-only motion capture datasets, we train Meta Motivo, the first humanoid behavioral foundation model that can be prompted to solve a variety of whole-body tasks, including motion tracking, goal reaching, and reward optimization. The resulting model is capable of expressing human-like behaviors and it achieves competitive performance with task-specific methods while outperforming state-of-the-art unsupervised RL and model-based baselines.",
+  "paper_type": "conference-paper",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 42,
+  "summary": "# 核心创新点\n\n本文提出**FB-CPR (Forward-Backward Representations with Conditional-Policy Regularization)**算法，首次将无监督强化学习的零样本推理能力与无标签行为数据集的模仿学习相结合，训练出能够在零样本条件下解决运动跟踪、目标到达和奖励优化等多种任务的人形机器人行为基础模型。\n\n# 技术创新拆解\n\n**创新点1：潜在条件判别器进行分布匹配**\n- 利用FB表示将无标签轨迹映射到与策略相同的潜在空间\n- 通过潜在条件判别器估计策略诱导的状态分布与无标签行为数据集之间的差异\n- 将KL散度转化为可优化的RL目标，通过GAN式对抗训练实现\n\n**创新点2：经验奖励嵌入 (ER_FB) 进行轨迹编码**\n- 使用FB模型的backward embedding对轨迹进行编码：$z_{\\tau} = \\frac{1}{n}\\sum_{i=1}^{n}B(s_i)$\n- 无需额外学习轨迹编码器，简化学习过程并确保FB与策略训练的紧密绑定\n\n**创新点3：潜在空间分布设计**\n- 混合三种分布：轨迹编码($z=ER_{FB}(\\tau)$)、状态目标($z=B(s)$)、均匀分布\n- 增强判别器训练信号，聚焦有意义潜在任务同时保证泛化\n\n# 方法论突破\n\n**新颖性：**\n- 传统无监督RL（如ASE）仅依赖探索损失，缺乏对特定行为的 inductive bias\n- 传统模仿学习（如GAIL）依赖动作标签，泛化能力有限\n- FB-CPR将无监督RL的零样本特性与无标签行为数据的模仿正则化相结合\n\n**关键技术：**\n- **FB表示**：低秩分解的后继测度 $M^{\\pi}(X|s,a) \\approx F(s,a,z)^{\\top}B(s')\\rho(ds')$\n- **零样本推理**：给定奖励样本 $\\{ (s_i, r_i) \\}$，计算 $z_r = \\frac{1}{n}\\sum_i r(s_i)B(s_i)$\n- **策略更新**：结合FB价值函数与判别器奖励的演员损失\n\n**理论支撑：**\n- 理论基础来自FB表示的最优性条件（Touati & Ollivier, 2021）\n- 分布匹配目标的GAN等价性保证（Nowozin et al., 2016）\n\n# 实验验证\n\n**主要数据集：**\n- **环境**：SMPL人形机器人（24刚体，23驱动自由度）\n- **状态空间**：358维（姿态、旋转、速度）\n- **动作空间**：69维（PD控制器目标）\n- **行为数据集**：AMASS motion capture数据集（8902条训练动作，约29小时；990条测试动作）\n- **下游任务**：45个奖励任务、50个目标到达任务、运动跟踪任务\n\n**性能提升（关键指标）：**\n\n| 评估类别 | FB-CPR | 最佳baseline | 归一化得分 |\n|---------|--------|--------------|-----------|\n| 奖励优化 | 151.68 | TD3: 249.74 | 61% |\n| 目标到达- proximity | 0.68 | TD3: 0.98 | 69% |\n| 目标到达- success | 0.48 | TD3: 0.98 | 48% |\n| 跟踪-EMD | 1.37 | Goal-GAIL: 1.08 | 80% |\n| 跟踪-success | 0.83 | PHC: 0.94 | 88% |\n\n- **总体性能**：达到顶尖方法的73.4%\n- **相比ASE**：所有类别提升超过1.4倍\n- **计算效率**：推理仅需12秒 vs. ORACLE MPPI需30分钟\n\n**消融实验：**\n- **FB项贡献**：去掉 $F(z)^{\\top}z$ 项后，奖励和跟踪性能均显著下降，证明FB表示不仅提供轨迹编码\n- **判别器条件**：潜在条件判别器 vs. 状态边际判别器，前者在跟踪任务表现更好\n- **在线vs离线**：FB-AW离线训练性能远低于FB-CPR在线训练，强调在线交互的必要性\n- **规模效应**：2倍模型容量+完整数据集显著优于基础配置\n\n# 局限与启发\n\n**当前局限：**\n- 在远离motion capture分布的任务上表现不佳（如地面移动、跌倒/站立）\n- 仍产生不自然运动，尤其在复杂动作场景\n- 局限于本体感受观测，无法解决环境导航或物体交互任务\n- 依赖motion capture数据，获取成本高\n\n**未来方向：**\n- 扩展到视觉输入（头戴式相机）进行更复杂任务\n- 整合语言提示实现text-to-motion\n- 探索视频数据直接作为行为数据源\n- 结合测试时规划或快速在线适应提升性能\n\n**可迁移性：**\n- 方法论可推广到其他高维控制问题（机械臂、四足机器人）\n- 潜在条件判别器思想可应用于其他无监督RL+模仿学习场景\n\n# 一句话总结\n\nFB-CPR通过潜在条件判别器将无监督零样本RL的策略空间与AMASS运动捕捉数据集的潜在表示对齐，首次实现了人形机器人全身控制的零样本行为基础模型，在运动跟踪、目标到达和奖励优化任务上达到顶尖方法的73%性能，同时产生显著更人类化的运动模式。",
+  "method_summary": "# 方法论详解\n\n## 1 问题形式化\n\n### 1.1 基础框架：无奖励马尔可夫决策过程\n\n本文研究的问题建立在**无奖励折扣马尔可夫决策过程（reward-free discounted MDP）**框架之上：\n\n$$\n\n\\mathcal{M} = (S, A, P, \\mu, \\gamma)\n\n$$\n\n其中：\n- $S$ 和 $A$ 分别为状态空间和动作空间\n- $P(\\mathrm{d}s^\\prime|s,a)$ 表示在状态 $s$ 执行动作 $a$ 后转移到状态 $s^\\prime$ 的转移核\n- $\\mu$ 为初始状态分布\n- $\\gamma \\in [0,1)$ 为折扣因子\n\n策略 $\\pi$ 定义为从状态到动作分布的映射 $\\pi(\\mathrm{d}a|s)$。令 $\\operatorname{Pr}(\\cdot|s_0,a_0,\\pi)$ 和 $\\mathbb{E}[\\cdot|s_0,a_0,\\pi]$ 分别表示在初始状态动作对 $(s_0,a_0)$ 下遵循策略 $\\pi$ 产生的状态-动作序列的概率和期望算子。\n\n### 1.2 后继度量（Successor Measure）\n\n对于任意策略 $\\pi$，其后继度量定义为：\n\n$$\n\nM^\\pi(X|s,a) := \\sum_{\\text{t=0}}^{\\infty} \\gamma^t \\Pr(s_{\\text{t+1}} \\in X \\mid s,a,\\pi), \\quad \\forall X \\subset S\n\n$$\n\n该度量表示从状态 $s$ 执行动作 $a$ 后跟随策略 $\\pi$ 未来所能到达的状态分布折扣和。后继度量满足**测度值贝尔曼方程**：\n\n$$\n\nM^\\pi(X|s,a) = P(X \\mid s,a) + \\gamma \\mathbb{E}_{s^\\prime \\sim P(\\cdot \\vert s,a), a^\\prime \\sim \\pi(\\cdot \\vert s^\\prime)}[M^\\pi(X \\mid s', a^\\prime)], \\quad X \\subset S\n\n$$\n\n进一步定义 $\\rho^\\pi(X) := (1-\\gamma) \\mathbb{E}_{s \\sim \\mu, a \\sim \\pi(\\cdot \\vert s)}[M^\\pi(X \\mid s,a)]$ 为策略 $\\pi$ 的平稳折扣分布。\n\n### 1.3 零样本策略评估\n\n给定后继度量 $M^\\pi$，对于任意奖励函数 $r: S \\to \\mathbb{R}$，动作价值函数可表示为：\n\n$$\n\nQ_r^\\pi(s,a) := \\mathbb{E}\\bigg[\\sum_{\\text{t=0}}^{\\infty} \\gamma^t r(s_{\\text{t+1}}) \\mid s,a,\\pi\\bigg] = \\int_{\\text{s^\\prime \\in S}} M^\\pi(\\mathrm{d}s^\\prime \\mid s,a) r(s')\n\n$$\n\n这一分解将价值函数分离为两部分：1）建模策略环境演化的后继度量；2）捕获任务相关信息的奖励函数。这构成了**零样本策略评估**的理论基础——学习策略的后继度量后，无需进一步训练即可评估任意奖励函数下的价值。\n\n### 1.4 前向后向（FB）表示学习\n\nFB 表示学习旨在将后继度量近似为低秩分解：\n\n$$\n\nM^\\pi(X \\mid s,a) \\approx \\int_{s^\\prime \\in X} F^\\pi(s,a)^\\top B(s^\\prime) \\rho(\\mathrm{d}s')\n\n$$\n\n其中：\n- $F^\\pi: S \\times A \\to \\mathbb{R}^d$ 为**前向嵌入（forward embedding）**\n- $B: S \\to \\mathbb{R}^d$ 为**后向嵌入（backward embedding）**\n- $\\rho$ 为状态分布\n\n在多策略扩展中，$F$ 和 $\\pi$ 通过同一任务编码向量 $z$ 参数化，形成无监督预训练目标：\n\n$$\n\n\\begin{cases}\nM^{\\pi_z}(X \\mid s,a) \\approx \\int_{\\text{s^\\prime \\in X}} F(s,a,z)^\\top B(s^\\prime) \\rho(\\mathrm{d}s'), & \\forall s \\in S, a \\in A, X \\subset S, z \\in Z \\\\\n\\pi_z(s) = \\arg\\max_a F(s,a,z)^\\top z, & \\forall (s,a) \\in S \\times A, z \\in Z\n\\end{cases}\n\n$$\n\n其中 $Z \\subseteq \\mathbb{R}^d$（如半径为 $\\sqrt{d}$ 的超球面）。\n\n### 1.5 问题定义\n\n本文的核心目标是：给定一个**无标注行为数据集** $\\mathcal{M} = \\{\\tau\\}$（仅包含观测轨迹 $\\tau = (s_1, \\ldots, s_{\\ell(\\tau)})$），结合无奖励 MDP 的在线交互数据 $\\mathcal{D}_{\\text{online}}$，预训练一个**行为基础模型（Behavioral Foundation Model, BFM）**，该模型能够：\n\n1. **零样本奖励优化**：给定奖励函数样本 $\\{(s_i, r_i)\\}$，无需额外学习即可执行策略\n2. **零样本目标可达**：给定任意目标状态 $s_g$，无需学习即可到达\n3. **零样本运动追踪**：给定参考轨迹 $\\tau$，无需学习即可追踪\n\n---\n\n## 2 技术方法\n\n### 2.1 FB-CPR 算法总体架构\n\nFB-CPR（Forward-Backward with Conditional Policy Regularization）的核心思想是：**将无监督 RL 的策略学习正则化，使其模仿无标注行为数据集中的行为**。\n\n算法包含四个关键组件：\n1. **FB 表示模块**：前向嵌入 $F(s,a,z)$ 和后向嵌入 $B(s)$\n2. **潜在条件策略族** $\\{\\pi_z\\}$：由潜在编码 $z$ 参数化的策略族\n3. **潜在条件判别器** $D(s,z)$：区分策略诱导的分布与目标行为分布\n4. **评论家网络** $Q(s,a,z)$：估计分布匹配目标的行动价值\n\n### 2.2 分布匹配目标\n\n令 $p_\\pi(z,s) := \\nu(z)\\rho^{\\pi_z}(s)$ 为 FB 策略族诱导的联合分布，其中 $\\nu$ 为潜在编码 $z$ 的先验分布。类似地，对于无标注数据集 $\\mathcal{M}$，假设每条轨迹由某 FB 策略产生，通过 $\\mathrm{ER}_{\\mathrm{FB}}(\\tau) = \\frac{1}{n}\\sum_{i=1}^n B(s_i)$ 将轨迹映射到潜在空间，得到分布 $p_{\\mathcal{M}}(s,z)$。\n\n**KL 正则化目标**为：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{FB-CPR}}}(\\pi) = -\\mathbb{E}_{\\text{z \\sim \\nu, s \\sim \\mathcal{D}}_{\\text{\\text{online}}}, a \\sim \\pi_z(\\cdot \\mid s)}[F(s,a,z)^\\top z] + \\alpha \\text{KL}(p_\\pi, p_{\\text{\\mathcal{M}}})\n\n$$\n\n其中 $\\alpha$ 为正则化强度超参数。\n\n### 2.3 分布匹配的 GAN 形式化\n\n将 KL 散度转化为期望回报形式：\n\n$$\n\n\\text{KL}(p_\\pi, p_{\\text{\\mathcal{M}}}) = \\mathbb{E}_{\\text{z \\sim \\nu}}\\mathbb{E}\\Big[\\sum_{\\text{t=0}}^{\\infty} \\gamma^t \\log\\frac{p_{\\text{\\mathcal{M}}}(s_{\\text{t+1}},z)}{p_\\pi(s_{\\text{t+1}},z)} \\Big | s_0 \\sim \\mu, \\pi_z \\Big]\n\n$$\n\n使用**变分 GAN 目标**估计对数比率_reward_：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{discriminator}}}(D) = -\\mathbb{E}_{\\text{\\tau \\sim \\mathcal{M}}, s \\sim \\rho^\\tau}[\\log D(s, \\mathrm{ER}_{\\text{\\mathrm{FB}}}(\\tau))] - \\mathbb{E}_{\\text{z \\sim \\nu, s \\sim \\rho^{\\pi\\_z}}}[\\log(1-D(s,z))]\n\n$$\n\n最优判别器为 $D^\\star = \\frac{p_{\\mathcal{M}}}{p_\\pi + p_{\\mathcal{M}}}$，可近似对数比率：\n\n$$\n\n\\log\\frac{p_{\\text{\\mathcal{M}}}}{p_\\pi} \\approx \\log\\frac{D}{1-D}\n\n$$\n\n### 2.4 评论家网络训练\n\n通过 Off-Policy TD 学习训练评论家：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{critic}}}(Q) = \\mathbb{E}_{\\text{(s,a,s^\\prime)\\sim\\mathcal{D}}_{\\text{\\text{online}}}}\\bigg[\\bigg(Q(s,a,z) - \\log\\frac{D(s^\\prime,z)}{1-D(s',z)} - \\gamma \\overline{Q}(s',a^\\prime,z)\\bigg)^2\\bigg]\n\n$$\n\n### 2.5 最终 Actor 损失\n\n结合 FB 无监督价值和分布匹配价值：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{FB-CPR}}}(\\pi) = -\\mathbb{E}_{\\text{z \\sim \\nu, s \\sim \\mathcal{D}}_{\\text{\\text{online}}}, a \\sim \\pi_z(\\cdot \\mid s)}[F(s,a,z)^\\top z + \\alpha Q(s,a,z)]\n\n$$\n\n### 2.6 潜在空间分布设计\n\n潜在编码 $z$ 的分布 $\\nu$ 设计为三种成分的混合：\n\n1. **轨迹编码**：$z = \\mathrm{ER}_{\\mathrm{FB}}(\\tau), \\tau \\sim \\mathcal{M}$ — 鼓励 FB 准确复现数据集中的每条轨迹\n2. **状态目标**：$z = B(s), s \\in \\mathcal{D}_{\\text{online}}$ — 聚焦于训练过程中观察到的目标可达任务\n3. **均匀分布**：$z \\sim \\text{Unif}(\\mathbb{S}^{d-1})$ — 为更广泛任务分配容量\n\n---\n\n## 3 实现细节\n\n### 3.1 人形机器人环境\n\n**SMPL 人形骨架**：\n- 24 个刚体，23 个可驱动\n- 状态空间 $S \\subseteq \\mathbb{R}^{358}$：\n - 身体姿态：70 维\n - 身体旋转：144 维\n - 线性/角速度：144 维\n- 动作空间 $A \\subseteq [-1, 69]^{69}$：归一化 PD 控制器目标\n- 仿真频率：450Hz，控制频率：30Hz\n- 状态相对于当前朝向和根位置归一化\n\n### 3.2 运动数据集\n\n使用**AMASS 数据集**的子集：\n- 训练集：8902 个动作，总时长约 29 小时\n- 测试集：990 个动作，总时长约 3 小时\n- 包含：行走、跑步、跳舞、家务、静态姿势等\n- 预处理：去除物体交互动作，通过有限差分估计速度\n\n### 3.3 网络架构\n\n| 组件 | 架构 |\n|------|------|\n| 前向嵌入 $F(s,a,z)$ | 3 层 MLP (512-512-512)，ReLU 激活 |\n| 后向嵌入 $B(s)$ | 3 层 MLP (512-512-512)，ReLU 激活 |\n| 策略网络 $\\pi_z(s)$ | 对角高斯策略，均值网络 3 层 MLP |\n| 判别器 $D(s,z)$ | 3 层 MLP + Sigmoid 输出 |\n| 评论家 $Q(s,a,z)$ | 3 层 MLP |\n\n### 3.4 超参数\n\n| 参数 | 值 |\n|------|------|\n| 潜在维度 $d$ | 256 |\n| 折扣因子 $\\gamma$ | 0.99 |\n| 正则化系数 $\\alpha$ | 0.5 |\n| 经验回放缓冲区容量 | 1M |\n| 批量大小 | 256 |\n| 学习率 | 3e-4 |\n| 训练步数 | 3M 梯度步 (30M 交互步) |\n| 潜在采样 $N$ | 16 个策略并行 rollout |\n\n---\n\n## 4 实验设置\n\n### 4.1 评估任务类别\n\n#### 4.1.1 奖励优化任务（45 个）\n- 覆盖静态/慢速和动态/快速运动\n- 控制不同身体部位（手臂、腿部）\n- 不同高度（跳跃、蹲下、坐姿）\n- 评估指标：300 步 episode 的平均回报\n\n#### 4.1.2 目标可达任务（50 个）\n- 手动选择 50 个\"稳定\"姿态（关节速度为 0）\n- 评估指标：\n - 成功率：任意时刻到达目标位置\n - 接近度：到目标的归一化距离时间平均\n\n#### 4.1.3 运动追踪任务\n- 给定参考运动，评估追踪能力\n- 评估指标：\n - 成功率：在整个运动过程中保持在给定距离内\n - Earth Mover's Distance (EMD)：不要求时间对齐的度量\n\n### 4.2 基线方法\n\n**单任务基线**（每个任务单独训练）：\n- TD3：针对每个奖励函数和目标\n- Goal-GAIL、PHC：针对每个运动\n\n**多任务/无监督基线**：\n- Goal-TD3：目标条件 RL\n- Goal-GAIL：目标条件模仿学习\n- PHC：目标条件运动追踪\n- CALM：行为条件模仿学习\n- ASE：基于运动正则化的零样本学习\n- DIFFUSER：基于扩散模型的规划\n\n### 4.3 评估协议\n\n- 在线算法：3M 梯度步训练\n- 评估：奖励/目标任务 100 episodes 平均，运动追踪单个 episode（固定初始状态）\n- MPPI 和 DIFFUSER 由于计算成本，仅评估 20 episodes\n\n---\n\n## 5 技术优势\n\n### 5.1 零样本泛化能力\n\nFB-CPR 继承了 FB 表示的零样本特性：\n- 给定奖励样本 $\\{(s_i, r_i)\\}$，计算 $z_r = \\frac{1}{n}\\sum_i r(s_i)B(s_i)$，直接执行 $\\pi_{\\text{z\\_r}}$\n- 给定目标状态 $s_g$，计算 $z_{\\text{s\\_g}} = B(s_g)$，执行 $\\pi_{\\text{z\\_{s\\_g}}}$\n- 给定参考轨迹 $\\tau$，计算 $z_\\tau = \\mathrm{ER}_{\\mathrm{FB}}(\\tau)$，执行 $\\pi_{z_\\tau}$\n\n### 5.2 行为对齐与多样性平衡\n\n通过分布匹配正则化：\n- 策略被引导\"覆盖\"数据集中的状态分布\n- 同时保留无监督学习的多样性（通过 FB 的潜在空间均匀采样）\n- 避免无监督 RL 在复杂环境中性能退化的问题\n\n### 5.3 潜在条件判别器的优势\n\n实验表明（Figure 4 左上）：\n- 潜在条件判别器 > 边缘状态判别器（追踪任务）\n- 条件机制使策略能够区分不同运动类型\n- 更强的训练信号带来更好的性能\n\n### 5.4 在线交互的重要性\n\n消融实验（Figure 4 右下）：\n- 离线 FB + Advantage Weighted (FB-AW) 性能显著低于 FB-CPR\n- 说明：在高维复杂控制任务中，仅靠离线数据不足以学习有效的 BFM\n- 在线交互提供了更丰富的状态覆盖和策略改进信号\n\n---\n\n## 6 技术弱点\n\n### 6.1 分布外任务失败\n\nFB-CPR 在以下情况下表现不佳：\n- 与运动捕捉数据集差异较大的任务（如地面滑动）\n- 涉及跌倒或站立的精细控制\n- 需要环境导航或物体交互的任务\n\n### 6.2 运动质量限制\n\n尽管比纯奖励优化方法产生更自然的运动，但：\n- 仍会产生不完美和不自然的动作\n- 特定行为（如跌倒后重新站立）仍有瑕疵\n- 奖励函数\"欠规范\"问题无法完全解决\n\n### 6.3 观测模态限制\n\n当前 BFM 仅使用本体感受观测：\n- 无法解决需要环境导航的任务\n- 无法处理需要视觉输入的任务\n- 未来需要整合复杂感知（如头戴式摄像头）\n\n### 6.4 计算与数据成本\n\n- 训练需要大规模运动捕捉数据集（AMASS）\n- 数据集获取成本较高\n- 扩展到视频数据是未来方向\n\n### 6.5 理论保证缺失\n\n- FB-CPR 缺乏形式化的理论收敛保证\n- 分布匹配与无监督 RL 的相互作用机制尚未完全理解\n- 替代性公式化可能存在\n\n---\n\n## 7 总结\n\nFB-CPR 成功地将前向后向表示的零样本特性与基于无标注行为数据的策略正则化相结合。通过潜在条件判别器实现的分布匹配目标，该方法能够在保持无监督学习多样性的同时，引导策略学习与人类运动数据相似的行为。在具有挑战性的全人形控制任务中，FB-CPR 无需任何任务特定训练即可达到接近最优性能的 7.34%，同时产生更自然、更像人类的运动。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Zero-Shot Whole-Body Humanoid Control via Behavioral Foundation Models",
+      "authors": [
+        "Andrea Tirinzoni",
+        "Ahmed Touati",
+        "Jesse Farebrother",
+        "Mateusz Guzek",
+        "A. Kanervisto",
+        "Yingchen Xu",
+        "A. Lazaric",
+        "Matteo Pirotta"
+      ],
+      "year": 2024,
+      "journal": "International Conference on Learning Representations",
+      "doi": "10.48550/arXiv.2504.11054",
+      "paper_type": "conference-paper",
+      "issn": "2331-8422",
+      "abstract": "Unsupervised reinforcement learning (RL) aims at pre-training agents that can solve a wide range of downstream tasks in complex environments. Despite recent advancements, existing approaches suffer from several limitations: they may require running an RL process on each downstream task to achieve a satisfactory performance, they may need access to datasets with good coverage or well-curated task-specific samples, or they may pre-train policies with unsupervised losses that are poorly correlated with the downstream tasks of interest. In this paper, we introduce a novel algorithm regularizing unsupervised RL towards imitating trajectories from unlabeled behavior datasets. The key technical novelty of our method, called Forward-Backward Representations with Conditional-Policy Regularization, is to train forward-backward representations to embed the unlabeled trajectories to the same latent space used to represent states, rewards, and policies, and use a latent-conditional discriminator to encourage policies to ``cover'' the states in the unlabeled behavior dataset. As a result, we can learn policies that are well aligned with the behaviors in the dataset, while retaining zero-shot generalization capabilities for reward-based and imitation tasks. We demonstrate the effectiveness of this new approach in a challenging humanoid control problem: leveraging observation-only motion capture datasets, we train Meta Motivo, the first humanoid behavioral foundation model that can be prompted to solve a variety of whole-body tasks, including motion tracking, goal reaching, and reward optimization. The resulting model is capable of expressing human-like behaviors and it achieves competitive performance with task-specific methods while outperforming state-of-the-art unsupervised RL and model-based baselines.",
+      "route_id": "7d9589b3-18dd-4bb3-97bc-4c1fc37b2514"
+    },
+    "markdown_stats": {
+      "lines": 971,
+      "words": 36953,
+      "headings": 48
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "7d9589b3-18dd-4bb3-97bc-4c1fc37b2514",
+  "paper_ref": "7d9589b3-18dd-4bb3-97bc-4c1fc37b2514",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

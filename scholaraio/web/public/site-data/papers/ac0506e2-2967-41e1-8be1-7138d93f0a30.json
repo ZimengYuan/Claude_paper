@@ -1,0 +1,85 @@
+{
+  "dir_name": "Bu-2025-Learning-to-Act-Anywhere-with-Task-centric-Latent-Actions",
+  "title": "Learning to Act Anywhere with Task-centric Latent Actions",
+  "authors": [
+    "Qingwen Bu",
+    "Yanting Yang",
+    "Jisong Cai",
+    "Shenyuan Gao",
+    "Guanghui Ren",
+    "Maoqing Yao",
+    "Ping Luo",
+    "Hongyang Li"
+  ],
+  "year": 2025,
+  "journal": "Robotics: Science and Systems XXI",
+  "doi": "10.15607/rss.2025.xxi.014",
+  "abstract": "A generalist robot should perform effectively across various environments. However, most existing approaches heavily rely on scaling action-annotated data to enhance their capabilities. Consequently, they are often limited to single physical specification and struggle to learn transferable knowledge across different embodiments and environments. To confront these limitations, we propose UniVLA, a new framework for learning cross-embodiment vision-language-action (VLA) policies. Our key innovation is to derive task-centric action representations from videos with a latent action model. This enables us to exploit extensive data across a wide spectrum of embodiments and perspectives. To mitigate the effect of task-irrelevant dynamics, we incorporate language instructions and establish a latent action model within the DINO feature space. Learned from internetscale videos, the generalist policy can be deployed to various robots through efficient latent action decoding. We obtain stateof-the-art results across multiple manipulation and navigation benchmarks, as well as real-robot deployments. UniVLA achieves superior performance over OpenVLA with less than 1/20 of pretraining compute and 1/10 of downstream data. Continuous performance improvements are observed as heterogeneous data, even including human videos, are incorporated into the training pipeline. The results underscore UniVLA’s potential to facilitate scalable and efficient robot policy learning.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 6,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Learning to Act Anywhere with Task-centric Latent Actions",
+      "authors": [
+        "Qingwen Bu",
+        "Yanting Yang",
+        "Jisong Cai",
+        "Shenyuan Gao",
+        "Guanghui Ren",
+        "Maoqing Yao",
+        "Ping Luo",
+        "Hongyang Li"
+      ],
+      "year": 2025,
+      "journal": "Robotics: Science and Systems XXI",
+      "doi": "10.15607/rss.2025.xxi.014",
+      "paper_type": "proceedings-article",
+      "abstract": "A generalist robot should perform effectively across various environments. However, most existing approaches heavily rely on scaling action-annotated data to enhance their capabilities. Consequently, they are often limited to single physical specification and struggle to learn transferable knowledge across different embodiments and environments. To confront these limitations, we propose UniVLA, a new framework for learning cross-embodiment vision-language-action (VLA) policies. Our key innovation is to derive task-centric action representations from videos with a latent action model. This enables us to exploit extensive data across a wide spectrum of embodiments and perspectives. To mitigate the effect of task-irrelevant dynamics, we incorporate language instructions and establish a latent action model within the DINO feature space. Learned from internetscale videos, the generalist policy can be deployed to various robots through efficient latent action decoding. We obtain stateof-the-art results across multiple manipulation and navigation benchmarks, as well as real-robot deployments. UniVLA achieves superior performance over OpenVLA with less than 1/20 of pretraining compute and 1/10 of downstream data. Continuous performance improvements are observed as heterogeneous data, even including human videos, are incorporated into the training pipeline. The results underscore UniVLA’s potential to facilitate scalable and efficient robot policy learning.",
+      "route_id": "ac0506e2-2967-41e1-8be1-7138d93f0a30"
+    },
+    "markdown_stats": {
+      "lines": 425,
+      "words": 13093,
+      "headings": 31
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "ac0506e2-2967-41e1-8be1-7138d93f0a30",
+  "paper_ref": "ac0506e2-2967-41e1-8be1-7138d93f0a30",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

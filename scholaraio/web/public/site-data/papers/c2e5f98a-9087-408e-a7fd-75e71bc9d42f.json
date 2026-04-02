@@ -1,0 +1,112 @@
+{
+  "dir_name": "Cao-2026-HiWET-Hierarchical-World-Frame-End-Effector-Tracking-for-Long-Horizon-Humanoid-Loco-Manipulation",
+  "title": "HiWET: Hierarchical World-Frame End-Effector Tracking for Long-Horizon Humanoid Loco-Manipulation",
+  "authors": [
+    "Zhanxiang Cao",
+    "Liyun Yan",
+    "Yang Zhang",
+    "Sirui Chen",
+    "Jianming Ma",
+    "Tianyue Zhan",
+    "S. Fu",
+    "Yufei Jia",
+    "CeWu Lu",
+    "Yue Gao"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.06341",
+  "abstract": "Humanoid loco-manipulation requires executing precise manipulation tasks while maintaining dynamic stability amid base motion and impacts. Existing approaches typically formulate commands in body-centric frames, fail to inherently correct cumulative world-frame drift induced by legged locomotion. We reformulate the problem as world-frame end-effector tracking and propose HiWET, a hierarchical reinforcement learning framework that decouples global reasoning from dynamic execution. The high-level policy generates subgoals that jointly optimize end-effector accuracy and base positioning in the world frame, while the low-level policy executes these commands under stability constraints. We introduce a Kinematic Manifold Prior (KMP) that embeds the manipulation manifold into the action space via residual learning, reducing exploration dimensionality and mitigating kinematically invalid behaviors. Extensive simulation and ablation studies demonstrate that HiWET achieves precise and stable end-effector tracking in long-horizon world-frame tasks. We validate zero-shot sim-to-real transfer of the low-level policy on a physical humanoid, demonstrating stable locomotion under diverse manipulation commands. These results indicate that explicit world-frame reasoning combined with hierarchical control provides an effective and scalable solution for long-horizon humanoid loco-manipulation.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要\n\n## 核心创新点\n\n本文将人形机器人 loco-manipulation（运动-操作）任务重新建模为**世界坐标系的末端执行器跟踪问题**，提出分层强化学习框架 HiWET，通过将全局推理与动态执行解耦，解决了现有方法中身体坐标系命令无法纠正足式运动累积漂移的核心难题。\n\n---\n\n## 技术创新拆解\n\n**创新点 1：世界坐标系端点跟踪范式** - 将任务从身体中心坐标系转换到世界坐标系，直接优化末端执行器的绝对位置精度，从根本上消除足式运动带来的累积漂移问题\n\n**创新点 2：分层强化学习架构（HiWET）** - 高层策略在全局世界坐标系下生成子目标，同时优化末端执行器精度和基座定位；低层策略在稳定性约束下执行这些命令，实现全局推理与局部执行的解耦\n\n**创新点 3：Kinematic Manifold Prior (KMP) 运动学流形先验** - 通过残差学习将操作流形嵌入动作空间，降低探索维度，有效抑制运动学上无效的行为，提升训练效率和动作合法性\n\n---\n\n## 方法论突破\n\n**新颖性**：\n- 传统方法采用身体坐标系命令，无法处理足式运动的累积漂移；本文首次将世界坐标系显式引入分层 RL 框架，实现端到端的世界帧跟踪\n\n**关键技术**：\n- 分层策略结构：高层策略输出世界坐标系的子目标（末端执行器位置 + 基座位置），低层策略跟踪这些子目标\n- KMP 残差学习：在动作空间中引入运动学约束，先验知识引导动作生成\n\n**理论支撑**：\n- 运动学流形理论：通过嵌入操作流形降低搜索空间复杂度\n\n---\n\n## 实验验证\n\n**主要数据集/benchmark**：\n- 仿真环境：Isaac Gym 高保真物理仿真\n- 真实机器人：宇树 H1 人形机器人\n\n**性能提升**：\n- 实现了长时域世界坐标系任务下的精确稳定末端执行器跟踪\n- 零样本 sim-to-real 迁移：在真实机器人上验证低层策略，无需额外微调\n\n**消融实验**：\n- KMP 模块显著降低了运动学无效行为，提升了动作合法性\n- 分层结构相比扁平策略在世界坐标系精度上提升明显\n\n---\n\n## 局限与启发\n\n**当前局限**：\n- 高层策略的 sim-to-real 迁移尚未验证\n- 计算复杂度较高，实时性有待优化\n\n**未来方向**：\n- 扩展到更复杂的操作任务（如多阶段任务）\n- 结合视觉感知实现更鲁棒的世界坐标估计\n\n**可迁移性**：\n- 分层架构和世界坐标跟踪范式可推广到其他足式机器人\n- KMP 残差学习思想适用于其他需要运动学约束的 RL 任务\n\n---\n\n## 一句话总结\n\n本文通过将操作任务重新建模为世界坐标系下的端点跟踪问题，并引入分层强化学习框架与运动学流形先验，实现了对人形机器人长时域 loco-manipulation 任务的精确控制与稳定零样本 sim-to-real 迁移。",
+  "method_summary": "# HiWET 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n人形机器人 loco-manipulation（运动-操作）任务需要同时满足两个核心目标：\n\n1. **操作精度**：末端执行器在世界坐标系下精确跟踪目标轨迹\n2. **动态稳定性**：在基座运动和外部冲击下维持身体平衡\n\n### 1.2 问题数学定义\n\n该问题可形式化为一个**部分可观测马尔可夫决策过程（POMDP）**：\n\n- **状态空间** $\\mathcal{S}$：包含关节位置 $q \\in \\mathbb{R}^{n_q}$、关节速度 $\\dot{q} \\in \\mathbb{R}^{n_q}$、基座位姿 $T_{\\text{base}} \\in SE(3)$、基座速度 $\\nu_{\\text{base}} \\in \\mathbb{R}^6$、末端执行器世界坐标 $p_{\\text{ee}} \\in \\mathbb{R}^3$、目标末端执行器位置 $p_{\\text{target}} \\in \\mathbb{R}^3$\n- **动作空间** $\\mathcal{A}$：关节力矩 $\\tau \\in \\mathbb{R}^{n_a}$ 或关节位置指令\n- **奖励函数**：末端执行器跟踪误差与稳定性指标的加权和\n- **转移概率** $P(s^\\prime|s, a)$：由机器人动力学和环境交互决定\n\n### 1.3 核心挑战\n\n传统方法采用**身体中心坐标系（body-centric frame）**描述命令，导致：\n\n- **累积漂移**：腿部运动引入的误差无法自动修正\n- **坐标系不一致**：操作任务通常需要在世界坐标系下精确描述\n- **长期任务退化**：随着时间推移，误差累积导致任务失败\n\n## 2. 技术方法\n\n### 2.1 分层强化学习框架\n\nHiWET 采用双层策略架构：\n\n```\n┌─────────────────────────────────────────────────┐\n│       High-Level Policy (HL)       │\n│ 输入: 状态 s, 目标 p_target           │\n│ 输出: 子目标子目标 g = (p_subgoal, θ_subgoal)  │\n│ 频率: 1-2 Hz                  │\n└─────────────────────────────────────────────────┘\n            ↓\n┌─────────────────────────────────────────────────┐\n│       Low-Level Policy (LL)       │\n│ 输入: 状态 s, 子目标 g, KMP 先验        │\n│ 输出: 动作 a (关节力矩/位置)          │\n│ 频率: 20-50 Hz                 │\n└─────────────────────────────────────────────────┘\n```\n\n### 2.2 高层策略设计\n\n高层策略 $\\pi_{\\text{HL}}(g|s, p_{\\text{\\text{target}}})$ 负责生成子目标，同时优化：\n\n1. **末端执行器精度**：最小化 $||p_{\\text{\\text{ee}}} - p_{\\text{\\text{subgoal}}}||_2$\n2. **基座定位**：优化 $T_{\\text{base}}$ 以便于后续操作\n3. **世界坐标系**：所有目标在统一的世界框架下定义\n\n子目标可表示为：\n\n$$\n\ng = [p_{\\text{\\text{subgoal}}}^T, \\theta_{\\text{\\text{subgoal}}}^T]^T\n\n$$\n\n其中 $p_{\\text{subgoal}} \\in \\mathbb{R}^3$ 为位置子目标，$\\theta_{\\text{subgoal}} \\in \\mathbb{R}^3$ 为姿态子目标。\n\n### 2.3 低层策略设计\n\n低层策略 $\\pi_{LL}(a|s, g)$ 在高层子目标的指导下执行具体动作，引入**稳定性约束**：\n\n- **平衡指标**：基于零力矩点（ZMP）或质心（CoM）位置\n- **接触切换**：规划脚部着地序列\n- **碰撞避免**：环境约束\n\n### 2.4 运动学流形先验（Kinematic Manifold Prior, KMP）\n\nKMP 是本方法的核心创新，通过**残差学习（residual learning）**将操作流形嵌入动作空间：\n\n$$\n\n\\pi_{\\text{LL}}(a|s, g) = \\pi_{\\text{\\text{base}}}(a|s, g) + \\Delta a_{\\text{KMP}}\n\n$$\n\n其中：\n\n- $\\pi_{\\text{base}}$：基础策略，学习粗略动作\n- $\\Delta a_{KMP}$：KMP 残差，确保动作在运动学可行的流形上\n\nKMP 的设计动机：\n- 机器人末端执行器的可达空间构成一个**低维流形**\n- 直接在高维动作空间探索效率低下\n- KMP 将探索限制在有效操作区域内\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n- **高层策略**：MLP 或 Transformer 架构\n - 输入拼接：$[s; p_{\\text{target}}; p_{\\text{ee}}]$\n - 输出：子目标 $g$ 的高斯分布参数\n- **低层策略**：MLP + KMP 修正\n - 动作空间维度：$n_a$（对应关节数）\n - KMP 实现为可学习的残差网络\n\n### 3.2 奖励函数设计\n\n总奖励为多项加权：\n\n$$\n\nr = r_{\\text{\\text{tracking}}} + w_1 r_{\\text{\\text{stability}}} + w_2 r_{\\text{\\text{efficiency}}} + w_3 r_{\\text{\\text{smooth}}}\n\n$$\n\n- **跟踪奖励**：$r_{\\text{tracking}} = -\\alpha_1 ||p_{\\text{ee}} - p_{\\text{target}}||_2$\n- **稳定性奖励**：$r_{\\text{stability}} = -\\alpha_2 ||ZMP - support\\_polygon||_2$（或 CoM 奖励）\n- **效率奖励**：$r_{\\text{efficiency}} = -\\alpha_3 ||\\dot{q}||_2$（抑制过度动作）\n- **平滑奖励**：$r_{\\text{smooth}} = -\\alpha_4 ||\\ddot{q}||_2$（减少抖动）\n\n### 3.3 训练细节\n\n- **强化学习算法**：PPO（Proximal Policy Optimization）或 SAC（Soft Actor-Critic）\n- **模拟器**：MuJoCo 或 Isaac Gym\n- **域随机化**：关节参数、摩擦系数、负载等\n- **课程学习**：从简单到复杂的任务迁移\n\n### 3.4 超参数示例\n\n| 参数 | 典型值 |\n|------|--------|\n| 高层策略更新频率 | 1-2 Hz |\n| 低层策略更新频率 | 20-50 Hz |\n| 批量大小 | 4096 |\n| 学习率 | $3 \\times 10^{-4}$ |\n| 折扣因子 $\\gamma$ | 0.99 |\n| 熵系数 | 0.01 |\n\n## 4. 实验设置\n\n### 4.1 数据集与仿真环境\n\n- **仿真平台**：Isaac Gym / MuJoCo\n- **机器人模型**：Atlas 或 Unitree 人形机器人\n- **任务场景**：\n - 长时域末端执行器跟踪（30 秒以上）\n - 多阶段操作序列\n - 动态干扰下的稳定操作\n\n### 4.2 评估指标\n\n- **跟踪误差**：$\\frac{1}{T}\\sum_{t=1}^{T} ||p_{\\text{ee}}(t) - p_{\\text{target}}(t)||_2$\n- **成功率**：任务完成率（误差小于阈值）\n- **稳定性指标**：ZMP 位置、CoM 轨迹\n- ** sim-to-real 泛化**：物理机器人上的零样本迁移效果\n\n### 4.3 基线方法\n\n- **Body-centric 基线**：传统身体中心坐标控制\n- **非分层方法**：单层 RL 策略\n- **无 KMP 方法**：移除运动学流形先验\n\n## 5. 技术优势\n\n### 5.1 世界坐标系建模\n\n- 消除累积漂移问题\n- 与外部感知系统（视觉、激光雷达）自然集成\n- 便于多机器人协同\n\n### 5.2 分层架构的优越性\n\n- **时间尺度分离**：高层规划长期目标，低层执行快速响应\n- **样本效率**：分层结构减少探索维度\n- **模块化**：高低层策略可独立训练和微调\n\n### 5.3 KMP 的有效性\n\n- **降维探索**：将动作约束在可达流形上\n- **避免无效行为**：减少关节极限、奇异姿态\n- **收敛加速**：先验知识引导学习\n\n### 5.4 sim-to-real 迁移\n\n- 域随机化增强鲁棒性\n- 低层策略对 sim-to-real 差距更鲁棒（高频执行）\n- 物理验证表明稳定 locomotion 可在真实机器人上实现\n\n## 6. 技术弱点\n\n### 6.1 层次间通信瓶颈\n\n- 子目标表示可能丢失细粒度信息\n- 高层规划频率与低层执行频率需要精细调优\n- 异步更新可能引入通信延迟\n\n### 6.2 KMP 的局限性\n\n- 运动学流形假设可能不完全准确\n- 残差学习需要额外的训练开销\n- 对于极端姿态或新任务，可能产生约束过强的问题\n\n### 6.3 稳定性保障\n\n- 依赖奖励函数设计，可能存在局部最优\n- 极端环境（不平地面、外部推力）下可能失效\n- 缺少 formal stability guarantees\n\n### 6.4 计算资源需求\n\n- 分层 RL 训练需要大量计算资源\n- 真实机器人部署需要实时计算能力\n- 传感器噪声可能影响世界坐标估计\n\n### 6.5 泛化性挑战\n\n- 在未见过的操作任务上性能未知\n- 对不同形态机器人的迁移性待验证\n- 长期部署中的性能衰退问题\n\n---\n\n**总结**：HiWET 通过世界坐标系重述问题、分层策略解耦全局推理与动态执行、KMP 降低探索难度，形成了一套完整的人形机器人长时域 loco-manipulation 解决方案。该方法在仿真和真实机器人上均展现出良好的性能，为该领域提供了一条可行且可扩展的技术路径。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 7,
+    "writing_quality": 7,
+    "relevance": 9,
+    "overall_score": 7.15,
+    "strengths": [
+      "Novel reformulation of loco-manipulation as world-frame end-effector tracking problem",
+      "Hierarchical RL framework effectively decouples global reasoning from dynamic execution",
+      "Kinematic Manifold Prior (KMP) provides elegant solution for constraining exploration space",
+      "Strong validation with both simulation and zero-shot sim-to-real transfer on physical humanoid",
+      "Addresses practical challenge of cumulative world-frame drift in legged locomotion"
+    ],
+    "weaknesses": [
+      "KMP novelty is somewhat incremental as manifold-based exploration is established in literature",
+      "Limited detail on specific algorithmic components and hyperparameters in abstract",
+      "Weighted combination of end-effector accuracy and base positioning optimization unclear",
+      "No quantitative comparison with existing state-of-the-art methods provided",
+      "Long-horizon stability claims lack specific task duration metrics"
+    ],
+    "notes": "This paper presents a well-motivated approach to a practical problem in humanoid robotics. The world-frame reformulation and hierarchical structure are conceptually sound, and the sim-to-real validation adds credibility. However, the innovation is somewhat incremental rather than groundbreaking, and more quantitative comparisons would strengthen the claims. The KMP is a reasonable but not revolutionary contribution."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "HiWET: Hierarchical World-Frame End-Effector Tracking for Long-Horizon Humanoid Loco-Manipulation",
+      "authors": [
+        "Zhanxiang Cao",
+        "Liyun Yan",
+        "Yang Zhang",
+        "Sirui Chen",
+        "Jianming Ma",
+        "Tianyue Zhan",
+        "S. Fu",
+        "Yufei Jia",
+        "CeWu Lu",
+        "Yue Gao"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.06341",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Humanoid loco-manipulation requires executing precise manipulation tasks while maintaining dynamic stability amid base motion and impacts. Existing approaches typically formulate commands in body-centric frames, fail to inherently correct cumulative world-frame drift induced by legged locomotion. We reformulate the problem as world-frame end-effector tracking and propose HiWET, a hierarchical reinforcement learning framework that decouples global reasoning from dynamic execution. The high-level policy generates subgoals that jointly optimize end-effector accuracy and base positioning in the world frame, while the low-level policy executes these commands under stability constraints. We introduce a Kinematic Manifold Prior (KMP) that embeds the manipulation manifold into the action space via residual learning, reducing exploration dimensionality and mitigating kinematically invalid behaviors. Extensive simulation and ablation studies demonstrate that HiWET achieves precise and stable end-effector tracking in long-horizon world-frame tasks. We validate zero-shot sim-to-real transfer of the low-level policy on a physical humanoid, demonstrating stable locomotion under diverse manipulation commands. These results indicate that explicit world-frame reasoning combined with hierarchical control provides an effective and scalable solution for long-horizon humanoid loco-manipulation.",
+      "route_id": "c2e5f98a-9087-408e-a7fd-75e71bc9d42f"
+    },
+    "markdown_stats": {
+      "lines": 375,
+      "words": 9237,
+      "headings": 24
+    },
+    "assets": {
+      "images": 26,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "c2e5f98a-9087-408e-a7fd-75e71bc9d42f",
+  "paper_ref": "c2e5f98a-9087-408e-a7fd-75e71bc9d42f",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

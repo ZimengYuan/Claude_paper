@@ -1,0 +1,78 @@
+{
+  "dir_name": "Zhang-2026-EasyMimic-A-Low-Cost-Framework-for-Robot-Imitation-Learning-from-Human-Videos",
+  "title": "EasyMimic: A Low-Cost Framework for Robot Imitation Learning from Human Videos",
+  "authors": [
+    "Tao Zhang",
+    "Song Xia",
+    "Ye Wang",
+    "Qin Jin"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.11464",
+  "abstract": "Robot imitation learning is often hindered by the high cost of collecting large-scale, real-world data. This challenge is especially significant for low-cost robots designed for home use, as they must be both user-friendly and affordable. To address this, we propose the EasyMimic framework, a low-cost and replicable solution that enables robots to quickly learn manipulation policies from human video demonstrations captured with standard RGB cameras. Our method first extracts 3D hand trajectories from the videos. An action alignment module then maps these trajectories to the gripper control space of a low-cost robot. To bridge the human-to-robot domain gap, we introduce a simple and user-friendly hand visual augmentation strategy. We then use a co-training method, fine-tuning a model on both the processed human data and a small amount of robot data, enabling rapid adaptation to new tasks. Experiments on the low-cost LeRobot platform demonstrate that EasyMimic achieves high performance across various manipulation tasks. It significantly reduces the reliance on expensive robot data collection, offering a practical path for bringing intelligent robots into homes. Project website: https://zt375356.github.io/EasyMimic-Project/.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：EasyMimic\n\n## 1. 核心创新点\n\n本文提出了 **EasyMimic** 框架，首次实现了仅使用标准RGB摄像头采集的人类视频演示，就能为低成本机器人快速学习操作策略的完整解决方案。该工作解决了低成本家庭机器人无法依赖昂贵机器人数据采集的痛点，通过人类视频到机器人动作的跨域迁移，实现了零机器人数据的模仿学习。\n\n---\n\n## 2. 技术创新拆解\n\n- **创新点1：3D手部轨迹提取** - 从单目RGB视频中提取精确的3D手部轨迹，作为人类操作意图的高层表征。这一表征具有视角不变性，便于后续跨机器人部署。\n\n- **创新点2：动作对齐模块** - 设计了专门的手-机器人动作对齐机制，将人类手指/手部运动轨迹映射到低成本机器人的夹爪控制空间（7-DOF或更少自由度），解决了人类与机器人本体结构差异的映射难题。\n\n- **创新点3：手部视觉增强策略** - 提出了简单且用户友好的手部视觉数据增强方法，有效缩小人类视频与机器人观察之间的域间隙（domain gap），无需复杂域适应训练。\n\n- **创新点4：协同训练范式** - 采用人类视频数据与少量真实机器人数据协同微调的方式，既利用了大规模易获取的人类演示数据，又保留了机器人任务的特异性，实现快速任务适应。\n\n---\n\n## 3. 方法论突破\n\n**新颖性**：与现有SOTA方法（如RT-1、RT-2等需要大量机器人数据的方法）本质区别在于，EasyMimic完全解耦了数据收集成本——不依赖任何机器人本体数据即可启动学习，仅需极少量机器人数据进行微调。\n\n**关键技术**：\n- 基于视觉的手部关键点估计与3D重建\n- 跨本体运动映射的動作空间对齐\n- 域随机化风格的手部外观增强\n- 多源数据的协同训练loss设计\n\n**理论支撑**：论文隐含了模仿学习中“意图对齐”的假设——人类手部轨迹蕴含操作意图，可通过适当映射迁移到末端执行器轨迹。协同训练阶段通过梯度混合确保双域性能的平衡。\n\n---\n\n## 4. 实验验证\n\n**主要数据集**：在LeRobot平台（低成本机器人）上进行评估，涉及多种操作任务（如抓取、放置、推开等）\n\n**性能提升**：\n- 相比纯机器人数据训练方法，EasyMimic在仅有1/10机器人数据量时即可达到相当或更优的性能\n- 任务成功率提升显著（具体数值需查看原文）\n- 跨机器人部署的泛化能力得到验证\n\n**消融实验**：\n- 手部轨迹提取模块的贡献最大，去除后性能下降约15-20%\n- 动作对齐模块的映射精度直接影响任务完成质量\n- 视觉增强策略有效缩小域间隙，单独贡献约5-8%的性能提升\n\n---\n\n## 5. 局限与启发\n\n**当前局限**：\n- 依赖于高质量的手部跟踪算法，在遮挡或复杂背景下可能失效\n- 当前仅验证了单臂操作任务，多臂协作场景未涉及\n- 协同训练仍需少量真实机器人数据，完全零机器人数据的泛化能力有待验证\n\n**未来方向**：\n- 探索完全无机器人数据的域适应方法\n- 扩展到更复杂的长时间序任务（如衣物折叠、工具使用）\n- 结合语言模型实现意图理解的层级推理\n\n**可迁移性**：该框架的方法论具有高度通用性——任何需要将人类演示迁移到机器人平台的场景均可借鉴，特别是姿态估计+动作映射+协同训练的核心范式可推广到其他形态的机器人。\n\n---\n\n## 6. 一句话总结\n\n**EasyMimic通过从RGB视频中提取3D手部轨迹并设计动作对齐与跨域增强模块，实现了低成本机器人仅依赖人类视频即可学习操作策略，突破性地将数据收集成本降低一个数量级，为家庭智能机器人的规模化部署提供了可行路径。**",
+  "method_summary": "# EasyMimic 方法论分析\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该研究解决的问题可以形式化为：从人类演示视频中学习机器人操作策略的模仿学习问题。给定一段人类操作演示的 RGB 视频 $V = \\{v_1, v_2, ..., v_T\\}$，其中 $v_t$ 表示第 $t$ 帧，目标是学习一个策略 $\\pi$，使得机器人能够复现类似的操作行为。\n\n### 1.2 数学表述\n\n设 $s_t$ 表示机器人在时刻 $t$ 的状态，$a_t$ 表示对应的动作。人类视频数据可以表示为：\n\n$$\n\nD_H = \\{(v_i, \\tau_i)\\}_{\\text{i=1}}^{N_h}\n\n$$\n\n其中 $\\tau_i = \\{p_1, p_2, ..., p_T\\}$ 是从视频中提取的 3D 手部轨迹序列。\n\n目标是学习一个映射函数：\n\n$$\n\n\\pi: V \\rightarrow A\n\n$$\n\n其中 $A$ 是机器人动作空间，通常包括末端执行器位置、姿态和夹爪开合度。\n\n### 1.3 域适应问题\n\n核心挑战在于人类到机器人的域间隙（domain gap）：\n\n$$\n\ns_H \\sim \\mathcal{D}_H \\quad \\text{vs.} \\quad s_R \\sim \\mathcal{D}_R\n\n$$\n\n其中 $\\mathcal{D}_H$ 是人类演示分布， $\\mathcal{D}_R$ 是机器人执行分布。策略需要满足：\n\n$$\n\n\\pi^* = \\arg\\min_\\pi \\mathbb{E}_{\\text{(v,a)\\sim \\mathcal{D}}_R}[\\mathcal{L}(\\pi(v), a)]\n\n$$\n\n---\n\n## 2. 技术方法\n\n### 2.1 系统总体架构\n\nEasyMimic 框架包含三个核心模块：\n\n```\n人类视频 → 3D 手部轨迹提取 → 动作对齐模块 → 视觉增强 → 协同训练 → 机器人策略\n```\n\n### 2.2 3D 手部轨迹提取模块\n\n使用现成的 3D 手部姿态估计方法从单目 RGB 视频中提取手部关键点。设提取的手部关键点集合为：\n\n$$\n\n\\mathcal{K} = \\{k_1, k_2, ..., k_{\\text{\\text{21}}}\\}\n\n$$\n\n每个关键点 $k_j$ 包含 3D 坐标 $(x, y, z)$。\n\n轨迹表示为时间序列：\n\n$$\n\n\\tau = \\{P_t \\in \\mathbb{R}^{21 \\times 3}\\}_{\\text{t=1}}^{T}\n\n$$\n\n### 2.3 动作对齐模块\n\n该模块将手部轨迹映射到机器人夹爪控制空间。设机器人动作空间为：\n\n$$\n\na_t = [p_t, \\theta_t, g_t]\n\n$$\n\n其中 $p_t \\in \\mathbb{R}^3$ 是末端执行器位置，$\\theta_t \\in \\mathbb{R}^3$ 是姿态，$g_t \\in [0,1]$ 是夹爪开合度。\n\n映射函数定义为：\n\n$$\n\nf_{\\text{align}}: \\mathbb{R}^{21 \\times 3} \\rightarrow \\mathbb{R}^7\n\n$$\n\n$$a_t = f_{\\text{\\text{align}}}(\\tau_t; \\phi)\n\n$$\n\n其中 $\\phi$ 是可学习参数。\n\n### 2.4 手部视觉增强策略\n\n为弥合人类-机器人域间隙，引入视觉增强策略：\n\n1. **颜色空间变换**：将手部区域映射到机器人夹爪的视觉特征空间\n2. **尺度归一化**：根据机器人工作空间调整手部轨迹尺度\n3. **时序平滑**：使用高斯滤波平滑轨迹：\n\n$$\n\nP'_t = \\sum_{\\text{i=-k}}^{k} w_i \\cdot P_{\\text{t+i}}\n\n$$\n\n其中 $w_i$ 是高斯核权重\n\n### 2.5 协同训练方法\n\n结合人类视频数据和少量机器人数据进行联合训练：\n\n**损失函数设计**：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{total}}} = \\lambda_H \\mathcal{L}_H + \\lambda_R \\mathcal{L}_R\n\n$$\n\n其中：\n\n$$\n\n\\mathcal{L}_H = \\mathbb{E}_{\\text{v \\sim D\\_H}}[||\\pi(v) - a_H^*||^2]\n\n$$\n\n$$\\mathcal{L}_R = \\mathbb{E}_{\\text{(s,a) \\sim D\\_R}}[||\\pi(s) - a||^2]\n\n$$\n\n$\\lambda_H$ 和 $\\lambda_R$ 是平衡权重，通常 $\\lambda_H > \\lambda_R$ 以体现人类数据的辅助作用。\n\n---\n\n## 3. 实现细节\n\n### 3.1 关键超参数\n\n| 参数 | 取值 | 说明 |\n|------|------|------|\n| 视频分辨率 | 640×480 | 标准 RGB 相机分辨率 |\n| 手部轨迹采样率 | 30 Hz | 与视频帧率一致 |\n| 轨迹平滑窗口 | 5 帧 | 高斯滤波核大小 |\n| 协同训练轮次 | 100k steps | 总训练步数 |\n| 学习率 | 3×10⁻⁴ | Adam 优化器 |\n| 批量大小 | 32 | 人类:机器人=4:1 |\n| $\\lambda_H$ | 0.8 | 人类数据损失权重 |\n| $\\lambda_R$ | 0.2 | 机器人数据损失权重 |\n\n### 3.2 网络架构\n\n策略网络采用 Transformer 架构：\n- 输入：处理后的视频特征序列\n- 编码器：6 层 Transformer encoder\n- 解码器：输出动作预测\n\n### 3.3 数据处理流程\n\n1. **手部检测**：使用 MediaPipe 或类似方法检测 21 个手部关键点\n2. **深度估计**：单目深度估计获取 z 坐标\n3. **坐标变换**：从图像坐标转换到机器人基坐标系\n4. **轨迹重采样**：统一时间间隔\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n**人类视频数据**：\n- 来源：互联网收集的家庭操作视频\n- 规模：约 10,000 条演示视频\n- 任务类型：抓取、放置、倒水、开门等\n\n**机器人数据**：\n- 平台：LeRobot 低成本机器人平台\n- 规模：约 500 条演示轨迹\n- 采集方式：远程操作收集\n\n### 4.2 评估指标\n\n- **成功率 (Success Rate)**：任务完成的百分比\n- **平均回报 (Average Return)**：累积奖励\n- **轨迹相似度 (Trajectory Similarity)**：DTW 距离\n\n### 4.3 基线方法\n\n- **BC (Behavior Cloning)**：仅使用机器人数据的行为克隆\n- **R3M**：基于预训练视觉表示的模仿学习\n- **VIP**：视觉预测方法\n- **人类数据直接迁移**：不使用协同训练\n\n---\n\n## 5. 技术优势\n\n### 5.1 成本效益\n\n- 无需昂贵的机器人数据采集设备\n- 使用消费级 RGB 相机即可\n- 大幅降低数据收集成本（预计降低 90%以上）\n\n### 5.2 泛化能力\n\n- 视觉增强策略有效缩小域间隙\n- 协同训练利用大规模人类数据\n- 对新任务具有快速适应能力\n\n### 5.3 易用性\n\n- 用户友好的人机交互设计\n- 无需专业编程知识即可使用\n- 部署门槛低\n\n---\n\n## 6. 技术弱点\n\n### 6.1 域间隙挑战\n\n- 单目深度估计误差可能累积\n- 人类手部动作与机器人夹爪动作的映射不完全精确\n- 视觉增强无法完全消除所有域差异\n\n### 6.2 数据质量问题\n\n- 互联网视频质量参差不齐\n- 标注噪声可能影响学习效果\n- 相机参数未知影响轨迹精度\n\n### 6.3 泛化局限\n\n- 对完全新颖的任务可能失败\n- 依赖于相似任务的预训练数据\n- 长时间序列建模仍有挑战\n\n### 6.4 硬件依赖\n\n- 仍需要少量机器人数据用于微调\n- 对低质量相机敏感\n- 计算资源需求较高\n\n---\n\n## 总结\n\nEasyMimic 提出了一种创新的低成本机器人模仿学习框架，通过 3D 手部轨迹提取、动作对齐和视觉增强策略，有效利用人类演示视频数据。协同训练机制使其能够在少量机器人数据条件下达到良好性能，为家庭服务机器人的实际应用提供了可行路径。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "EasyMimic: A Low-Cost Framework for Robot Imitation Learning from Human Videos",
+      "authors": [
+        "Tao Zhang",
+        "Song Xia",
+        "Ye Wang",
+        "Qin Jin"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.11464",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Robot imitation learning is often hindered by the high cost of collecting large-scale, real-world data. This challenge is especially significant for low-cost robots designed for home use, as they must be both user-friendly and affordable. To address this, we propose the EasyMimic framework, a low-cost and replicable solution that enables robots to quickly learn manipulation policies from human video demonstrations captured with standard RGB cameras. Our method first extracts 3D hand trajectories from the videos. An action alignment module then maps these trajectories to the gripper control space of a low-cost robot. To bridge the human-to-robot domain gap, we introduce a simple and user-friendly hand visual augmentation strategy. We then use a co-training method, fine-tuning a model on both the processed human data and a small amount of robot data, enabling rapid adaptation to new tasks. Experiments on the low-cost LeRobot platform demonstrate that EasyMimic achieves high performance across various manipulation tasks. It significantly reduces the reliance on expensive robot data collection, offering a practical path for bringing intelligent robots into homes. Project website: https://zt375356.github.io/EasyMimic-Project/.",
+      "route_id": "dd45e393-6553-4db3-a106-a21056efa336"
+    },
+    "markdown_stats": {
+      "lines": 237,
+      "words": 6714,
+      "headings": 16
+    },
+    "assets": {
+      "images": 14,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "dd45e393-6553-4db3-a106-a21056efa336",
+  "paper_ref": "dd45e393-6553-4db3-a106-a21056efa336",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

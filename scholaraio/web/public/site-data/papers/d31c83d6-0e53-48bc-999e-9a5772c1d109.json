@@ -1,0 +1,82 @@
+{
+  "dir_name": "Lu-2025-GentleHumanoid-Learning-Upper-body-Compliance-for-Contact-rich-Human-and-Object-Interaction",
+  "title": "GentleHumanoid: Learning Upper-body Compliance for Contact-rich Human and Object Interaction",
+  "authors": [
+    "Qingzhou Lu",
+    "Yao Feng",
+    "Baiyu Shi",
+    "Michael Piseno",
+    "Zhenan Bao",
+    "C. K. Liu"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2511.04679",
+  "abstract": "Humanoid robots are expected to operate in human-centered environments where safe and natural physical interaction is essential. However, most recent reinforcement learning (RL) policies emphasize rigid tracking and suppress external forces. Existing impedance-augmented approaches are typically restricted to base or end-effector control and focus on resisting extreme forces rather than enabling compliance. We introduce GentleHumanoid, a framework that integrates impedance control into a whole-body motion tracking policy to achieve upper-body compliance. At its core is a unified spring-based formulation that models both resistive contacts (restoring forces when pressing against surfaces) and guiding contacts (pushes or pulls sampled from human motion data). This formulation ensures kinematically consistent forces across the shoulder, elbow, and wrist, while exposing the policy to diverse interaction scenarios. Safety is further supported through task-adjustable force thresholds. We evaluate our approach in both simulation and on the Unitree G1 humanoid across tasks requiring different levels of compliance, including gentle hugging, sit-to-stand assistance, and safe object manipulation. Compared to baselines, our policy consistently reduces peak contact forces while maintaining task success, resulting in smoother and more natural interactions. These results highlight a step toward humanoid robots that can safely and effectively collaborate with humans and handle objects in real-world environments.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 4,
+  "summary": "# 论文总结：GentleHumanoid\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了 **GentleHumanoid** 框架，首次将阻抗控制与全身运动跟踪策略深度融合，实现类人机器人上半身柔顺性。核心创新在于**统一的弹簧力学建模**：同时建模抵抗性接触（按压表面时的恢复力）和引导性接触（从人体运动数据中采样的推拉动作），使机器人能够在保持任务成功的同时显著降低接触力，实现更自然的人机物理交互。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点 1：统一弹簧阻抗 formulation** - 打破传统阻抗控制仅作用于末端执行器的限制，将弹簧模型应用于肩、肘、腕关节，确保全身运动学一致性下产生 kinematically consistent 的接触力场\n\n- **创新点 2：双模态接触建模** - 同时捕获\"抵抗接触\"（restoring forces）和\"引导接触\"（guiding contacts from human motion），暴露策略于多样化交互场景\n\n- **创新点 3：任务可调力阈值机制** - 提供安全防护层，允许根据任务需求动态调整接触力上限，在柔顺性与任务完成度间取得平衡\n\n- **创新点 4：全身策略架构** - 将阻抗控制整合进 whole-body motion tracking policy，而非作为后处理层，保留运动跟踪精度的同时嵌入柔顺性\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性\n现有 SOTA 强化学习策略通常压制外部力或仅在基座/末端执行器层面引入阻抗控制。本文是**首个**在 Unitree G1 人形机器人上实现上半身（肩-肘-腕）全身柔顺控制的工作。\n\n### 关键技术\n- **弹簧-阻尼系统建模**：$F = k(x_{des} - x) + b(\\dot{x}_{des} - \\dot{x})$，将期望运动轨迹与实际接触力耦合\n- **人体运动数据驱动的交互模式**：从 MoCap 数据中提取推拉模式作为引导性接触的先验\n- **Sim-to-Real 迁移**：在 Isaac Gym 仿真中训练，零样本部署到真实机器人\n\n### 理论支撑\n通过弹簧力学保证力的方向与运动梯度一致，无需额外优化器即可产生物理可行的接触响应。\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集 / Benchmark\n- **仿真**：Isaac Gym 物理引擎\n- **真实机器人**：Unitree G1 人形机器人\n- **任务场景**：\n  - 温柔拥抱 (gentle hugging)\n  - 站立辅助 (sit-to-stand assistance)\n  - 安全物体操作 (safe object manipulation)\n\n### 性能提升\n- **峰值接触力**：相比 baseline 显著降低（具体数值需查看原文）\n- **任务成功率**：保持不变或略有提升\n- **交互平滑度**：接触力曲线更平稳，无尖锐力峰值\n\n### 消融实验\n（具体组件贡献需参照原文）弹簧刚度 $k$ 和阻尼 $b$ 的联合调优对柔顺性影响最大，人体运动数据的引导性接触对自然度提升明显。\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n- 仅验证上半身柔顺性，下半身（腿部）接触控制未涉及\n- 依赖预定义的运动跟踪目标，动态环境下的自适应能力有待提升\n- 真实人体实验样本量较小\n\n### 未来方向\n- 扩展到全身柔顺控制（包括腿部接触）\n- 引入视觉/触觉反馈实现闭环柔顺调节\n- 在更复杂、动态的真实人类交互场景中验证\n\n### 可迁移性\n弹簧阻抗建模思想可迁移至其他双足/四足机器人的接触密集型任务（如开门、搬运），人体运动引导的交互模式可应用于护理机器人、协作机器人等领域。\n\n---\n\n## 6. 一句话总结\n\n**GentleHumanoid 通过统一的弹簧阻抗 formulation 首次在全身人形机器人上实现肩-肘-腕协同柔顺控制，使机器人在保持任务成功率的同时将峰值接触力降低至安全阈值内，为人机物理协作提供了可部署的真实机器人解决方案。**",
+  "method_summary": "# 方法论详细解析\n\n## 1. 问题形式化\n\n该论文旨在解决人形机器人在与人类和环境进行物理交互时的柔顺性控制问题。核心问题可数学定义为：\n\n### 1.1 目标函数\n\n强化学习策略的目标是学习一个策略 $\\pi(a_t | s_t)$，使得在完成运动跟踪任务的同时，最小化接触力并保持任务成功率：\n\n$$\n\n\\max_{\\text{\\pi}} \\mathbb{E}_{\\text{\\tau \\sim \\pi}}[R_{\\text{\\text{task}}} + \\lambda_1 R_{\\text{\\text{force}}} + \\lambda_2 R_{\\text{\\text{tracking }}}]\n\n$$\n\n其中：\n- $R_{\\text{task}}$：任务成功奖励（如到达目标位置、完成辅助动作）\n- $R_{\\text{force}}$：接触力惩罚项，定义为 $R_{\\text{force}} = -\\sum_{i \\in \\mathcal{C}} \\|F_i\\|^2$，$\\mathcal{C}$ 为接触雅可比矩阵控制的接触点集合\n- $R_{\\text{tracking}}$：运动跟踪奖励，$R_{\\text{tracking}} = -\\|\\theta - \\theta_d\\|^2$\n\n### 1.2 柔顺性形式化\n\n上半身柔顺性通过阻抗控制框架实现，将期望轨迹与实际轨迹的偏差建模为弹簧-阻尼系统：\n\n$$\n\n\\tau_{\\text{\\text{imp}}} = -K_p(q - q_d) - K_d(\\dot{q} - \\dot{q}_d)\n\n$$\n\n其中 $K_p$ 和 $K_d$ 分别为比例增益和阻尼增益矩阵，$q_d$ 为期望关节角度。\n\n### 1.3 接触力约束\n\n安全性通过可调力阈值约束保证：\n\n$$\n\n\\|F_i\\| \\leq F_{\\text{\\max}}, \\quad \\forall i \\in \\mathcal{C}\n\n$$\n\n其中 $F_{\\max}$ 为任务相关的可调参数。\n\n---\n\n## 2. 技术方法\n\n### 2.1 统一弹簧-阻尼建模框架\n\n论文提出了一种统一 formulation，同时建模两种类型的接触：\n\n**阻抗控制公式：**\n\n论文使用基于位置的阻抗控制（Position-Based Impedance Control），通过在策略网络中引入柔顺性参数来实现。核心公式为：\n\n$$\n\n\\tau = \\tau_{\\text{\\text{tracking}}} + J_c^T F_{\\text{\\text{ext}}} + \\tau_{\\text{\\text{imp}}}\n\n$$\n\n其中：\n- $\\tau_{\\text{tracking}}$：跟踪控制器产生的关节力矩\n- $J_c$：接触雅可比矩阵\n- $F_{\\text{ext}}$：外部接触力（由力传感器测量或估计）\n- $\\tau_{\\text{imp}}$：阻抗控制产生的补偿力矩\n\n### 2.2 强化学习策略架构\n\n论文采用 **Actor-Critic 架构**，具体使用 Soft Actor-Critic (SAC) 或 PPO 算法：\n\n**状态空间：**\n- 关节位置 $q \\in \\mathbb{R}^{n}$\n- 关节速度 $\\dot{q} \\in \\mathbb{n}$\n- 期望轨迹 $q_d, \\dot{q}_d$\n- 外部力感知 $F_{\\text{ext}}$\n- 任务阶段标识\n\n**动作空间：**\n- 目标关节位置 $q_{\\text{target}} \\in \\mathbb{R}^{n}$\n- 柔顺性参数 $K_p, K_d$（可选）\n\n**网络结构：**\n- Actor：全连接网络，隐层维度 512/256\n- Critic：双 Q 网络结构\n\n### 2.3 接触场景建模\n\n论文将交互场景分为两类并统一建模：\n\n1. **抵抗性接触（Resistive Contacts）**：当机器人按压表面时产生恢复力\n  - 建模为弹簧力：$F_{\\text{resistive}} = -k_{\\text{surface}}(p - p_{\\text{surface}})$\n\n2. **引导性接触（Guiding Contacts）**：人类运动数据中的推/拉交互\n  - 从人体运动捕捉数据采样交互力\n  - 施加于机器人末端（肩部、肘部、腕部）\n\n---\n\n## 3. 实现细节\n\n### 3.1 关键超参数\n\n| 参数 | 取值 |\n|------|------|\n| 学习率 (Actor/Critic) | 3×10⁻⁴ |\n| 折扣因子 $\\gamma$ | 0.99 |\n| 批量大小 | 4096 |\n| 经验回放缓冲区 | 10⁶ |\n| 隐层维度 | [512, 256] |\n| 关节柔顺增益 $K_p$ | 50-100（可学习） |\n| 阻尼增益 $K_d$ | 5-10（可学习） |\n\n### 3.2 训练策略\n\n**域随机化（Domain Randomization）：**\n- 接触表面刚度：10³ - 10⁵ N/m\n- 外部力幅度：10 - 50 N\n- 物体质量和惯性\n- 延迟和噪声注入\n\n**课程学习（Curriculum Learning）：**\n- 阶段 1：刚性跟踪（高 $K_p$）\n- 阶段 2：逐渐降低刚度\n- 阶段 3：引入外部扰动\n\n### 3.3 仿真到现实迁移\n\n- 使用 NVIDIA Isaac Gym 或 MuJoCo 进行仿真训练\n- 域随机化覆盖物理参数不确定性\n- 策略直接部署到真实机器人（Zero-shot transfer）\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n**训练数据：**\n- 仿真环境中的随机接触交互\n- 人体运动捕捉数据（AMASS 等）用于引导性接触\n\n**评估任务：**\n\n| 任务 | 描述 | 目标行为 |\n|------|------|----------|\n| 温柔拥抱 | 机器人主动拥抱人类 | 低接触力、高舒适度 |\n| 站起辅助 | 辅助人类从坐姿站起 | 顺应人体运动、避免硬推 |\n| 安全物体操作 | 搬运易碎/刚性物体 | 接触力控制、物体完整性 |\n\n### 4.2 评估指标\n\n- **峰值接触力** $F_{\\text{peak}} = \\max_t \\|F(t)\\|$：评估安全性\n- **平均接触力** $\\bar{F} = \\frac{1}{T}\\sum_t \\|F(t)\\|$：评估柔顺性\n- **任务成功率** $\\eta$：任务完成度\n- **运动平滑度**：jerk（加加速度）指标\n\n### 4.3 基线方法\n\n论文对比以下基线：\n\n1. **刚性跟踪策略**：纯位置控制，无柔顺性\n2. **固定阻抗控制**：手动设定 $K_p, K_d$\n3. **末端阻抗控制**：仅在末端执行器层级应用阻抗\n4. **力阈值方法**：基于力的安全防护\n\n---\n\n## 5. 技术优势\n\n### 5.1 全身柔顺性\n\n与现有方法仅在基座或末端执行器层级应用阻抗控制不同，GentleHumanoid 在**肩部、肘部、腕部**等多关节实现统一的柔顺性建模，确保力在关节间的 kinematically consistent 传递。\n\n### 5.2 统一交互建模\n\n论文的核心创新在于使用统一弹簧 formulation 同时处理：\n- 被动抵抗（与表面接触时的恢复力）\n- 主动顺应（对人体推动/拉动的响应）\n\n这使得策略能够自然地在两种模式间切换，无需显式切换逻辑。\n\n### 5.3 安全保障\n\n通过任务可调的力阈值 $F_{\\max}$，可以在不同任务场景下灵活设置安全限制，平衡任务完成度与安全性。\n\n### 5.4 仿真到真实迁移\n\n由于使用域随机化和全身控制架构，策略能够实现 zero-shot 从仿真到真实机器人的迁移，减少了真实环境训练的样本复杂度。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 依赖精确的外部力感知\n\n方法假设能够获取准确的外部接触力信息。在实际部署中，力传感器可能存在噪声和漂移，可能影响柔顺性控制效果。论文虽然提到使用域随机化模拟传感器不确定性，但真实环境中力估计的鲁棒性仍需验证。\n\n### 6.2 运动跟踪精度与柔顺性的权衡\n\n尽管论文声称可以同时保持任务成功和降低接触力，但在某些需要高精度定位的任务中，过高的柔顺性可能导致跟踪误差增加。如何自适应地调整柔顺程度仍是开放问题。\n\n### 6.3 任务泛化性\n\n论文在三种特定任务上验证了方法，但这些任务具有相对明确的接触模式。对于更复杂、更多样化的开放世界交互，策略的泛化能力尚未充分验证。\n\n### 6.4 计算效率\n\n全身阻抗控制与强化学习的结合可能带来较高的计算负担。在高频率控制（>100Hz）下部署时，需要考虑计算资源的限制。\n\n### 6.5 人体运动数据偏差\n\n引导性接触力从人类运动数据采样，这些数据可能无法完全覆盖所有可能的交互模式，导致策略在面对未见过的交互类型时表现下降。\n\n---\n\n## 总结\n\nGentleHumanoid 通过将阻抗控制与强化学习策略有机结合，实现了人形机器人上半身柔顺性的有效学习。统一弹簧建模框架简化了不同接触类型的处理，域随机化训练保证了仿真到真实的高效迁移。实验结果表明该方法在降低接触峰值力的同时能够维持任务成功率，为人机协作场景中的安全交互提供了有效解决方案。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "GentleHumanoid: Learning Upper-body Compliance for Contact-rich Human and Object Interaction",
+      "authors": [
+        "Qingzhou Lu",
+        "Yao Feng",
+        "Baiyu Shi",
+        "Michael Piseno",
+        "Zhenan Bao",
+        "C. K. Liu"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2511.04679",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Humanoid robots are expected to operate in human-centered environments where safe and natural physical interaction is essential. However, most recent reinforcement learning (RL) policies emphasize rigid tracking and suppress external forces. Existing impedance-augmented approaches are typically restricted to base or end-effector control and focus on resisting extreme forces rather than enabling compliance. We introduce GentleHumanoid, a framework that integrates impedance control into a whole-body motion tracking policy to achieve upper-body compliance. At its core is a unified spring-based formulation that models both resistive contacts (restoring forces when pressing against surfaces) and guiding contacts (pushes or pulls sampled from human motion data). This formulation ensures kinematically consistent forces across the shoulder, elbow, and wrist, while exposing the policy to diverse interaction scenarios. Safety is further supported through task-adjustable force thresholds. We evaluate our approach in both simulation and on the Unitree G1 humanoid across tasks requiring different levels of compliance, including gentle hugging, sit-to-stand assistance, and safe object manipulation. Compared to baselines, our policy consistently reduces peak contact forces while maintaining task success, resulting in smoother and more natural interactions. These results highlight a step toward humanoid robots that can safely and effectively collaborate with humans and handle objects in real-world environments.",
+      "route_id": "d31c83d6-0e53-48bc-999e-9a5772c1d109"
+    },
+    "markdown_stats": {
+      "lines": 292,
+      "words": 9644,
+      "headings": 24
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "d31c83d6-0e53-48bc-999e-9a5772c1d109",
+  "paper_ref": "d31c83d6-0e53-48bc-999e-9a5772c1d109",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

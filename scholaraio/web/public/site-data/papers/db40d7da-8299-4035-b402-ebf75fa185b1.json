@@ -1,0 +1,98 @@
+{
+  "dir_name": "Freitag-2026-Decoupling-Task-and-Behavior-A-Two-Stage-Reward-Curriculum-in-Reinforcement-Learning-for-Robotics",
+  "title": "Decoupling Task and Behavior: A Two-Stage Reward Curriculum in Reinforcement Learning for Robotics",
+  "authors": [
+    "Kilian Freitag",
+    "Knut Åkesson",
+    "Cong Zhou"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2603.05113",
+  "abstract": "Deep Reinforcement Learning is a promising tool for robotic control, yet practical application is often hindered by the difficulty of designing effective reward functions. Real-world tasks typically require optimizing multiple objectives simultaneously, necessitating precise tuning of their weights to learn a policy with the desired characteristics. To address this, we propose a two-stage reward curriculum where we decouple task-specific objectives from behavioral terms. In our method, we first train the agent on a simplified task-only reward function to ensure effective exploration before introducing the full reward that includes auxiliary behavior-related terms such as energy efficiency. Further, we analyze various transition strategies and demonstrate that reusing samples between phases is critical for training stability. We validate our approach on the DeepMind Control Suite, ManiSkill3, and a mobile robot environment, modified to include auxiliary behavioral objectives. Our method proves to be simple yet effective, substantially outperforming baselines trained directly on the full reward while exhibiting higher robustness to specific reward weightings.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：解耦任务与行为的双阶段奖励课程强化学习\n\n## 1. 核心创新点\n\n本文提出了一种**双阶段奖励课程（Two-Stage Reward Curriculum）**方法，通过将任务目标与行为目标解耦，采用“先易后难”的课程学习策略来解决多目标强化学习中奖励函数设计困难的问题。在第一阶段使用简化的任务奖励进行探索训练，第二阶段再引入完整的行为辅助奖励，显著提升了训练稳定性和策略性能。\n\n---\n\n## 2. 技术创新拆解\n\n- **创新点 1：奖励解耦机制** - 将任务目标（如任务完成度）与行为目标（如能量效率）分离，避免了复杂多目标奖励函数带来的奖励塑造困难，使智能体能先专注于任务学习再逐步引入行为约束。\n\n- **创新点 2：样本复用策略** - 在两阶段之间复用经验样本，这一设计被认为是训练稳定性的关键，确保了从任务学习到行为优化的平滑过渡。\n\n- **创新点 3：过渡策略分析** - 系统性地分析了多种阶段过渡策略，为实际应用中的超参数选择提供了指导。\n\n- **创新点 4：奖励权重鲁棒性** - 显著提升了对特定奖励权重设置的鲁棒性，降低了手工调参的敏感性。\n\n---\n\n## 3. 方法论突破\n\n### 新颖性\n\n与传统方法直接使用完整多目标奖励函数不同，本方法采用课程学习的思想，将学习过程分解为两个明确阶段。这一范式区别于现有的奖励塑造（Reward Shaping）或加权求和方法，本质上是将多目标优化问题转化为时间上的序贯优化问题。\n\n### 关键技术\n\n- **两阶段训练框架**：第一阶段使用仅包含任务完成度的稀疏或密集奖励；第二阶段引入行为辅助项（如能量消耗、关节平滑度等）\n- **经验回放池复用：两个阶段共享同一回放缓冲区，避免了从头开始训练的计算开销\n- **渐进式奖励过渡：并非简单切换，而是在第二阶段逐步调整任务与行为目标的相对权重\n\n### 理论支撑\n\n虽然文章主要进行实验验证，但其核心思想可从课程学习理论（Curriculum Learning）和奖励塑形理论中找到支撑：简化初始奖励降低了探索难度，样本复用保证了收敛稳定性。\n\n---\n\n## 4. 实验验证\n\n### 主要数据集\n\n- **DeepMind Control Suite**：连续控制基准\n- **ManiSkill3**：真实感机器人操作技能学习基准\n- **移动机器人环境**：定制环境，用于验证行为目标（如能量效率）的学习效果\n\n### 性能提升\n\n根据摘要描述，该方法在多个基准上“显著优于直接使用完整奖励的基线方法”，具体数值需参考原文。核心优势体现在：\n- 更高的任务成功率\n- 更稳定的训练曲线\n- 对奖励权重设置不敏感\n\n### 消融实验\n\n文章分析了：\n- 样本复用 vs. 不复用：复用样本对稳定性至关重要\n- 不同过渡策略的效果对比\n- 任务目标与行为目标解耦的必要性验证\n\n---\n\n## 5. 局限与启发\n\n### 当前局限\n\n- 两阶段之间的过渡时机选择仍需人工设定\n- 行为目标的选择和权重设置需要领域知识\n- 对于某些需要即时行为约束的任务可能不适用\n\n### 未来方向\n\n- 自动确定两阶段过渡时机的自适应方法\n- 扩展到更多阶段或更复杂的课程结构\n- 探索不同任务与行为目标的自动解耦方法\n\n### 可迁移性\n\n该方法的核心思想具有较强的通用性，原则上可应用于任何需要平衡多个奖励目标的强化学习场景，不仅限于机器人控制，还可迁移到游戏AI、自动驾驶等领域。\n\n---\n\n## 6. 一句话总结\n\n**通过先在纯任务奖励下进行有效探索，再引入行为辅助奖励进行微调的双阶段课程学习范式，显著提升了多目标机器人强化学习的训练稳定性和策略性能，同时增强了对奖励权重设置的鲁棒性。**",
+  "method_summary": "# 强化学习机器人控制中的任务与行为解耦：两阶段奖励课程方法\n\n## 1. 问题形式化\n\n该研究针对的是强化学习中奖励函数设计的核心挑战。在机器人控制任务中，智能体需要同时优化多个目标，这些目标通常包括任务完成度（如到达目标位置、抓取物体）以及期望的行为特性（如能量效率、动作平滑性、姿态稳定性）。形式上，给定一个马尔可夫决策过程（MDP），其完整奖励函数可定义为：\n\n$$\n\nr_{\\text{\\text{full}}}(s_t, a_t, s_{\\text{t+1}}) = w_1 \\cdot r_{\\text{\\text{task}}}(s_t, a_t, s_{\\text{t+1}}) + w_2 \\cdot r_{\\text{\\text{behavior}}}(s_t, a_t, s_{\\text{t+1}})\n\n$$\n\n其中 $r_{\\text{task}}$ 表示任务相关奖励，$r_{\\text{behavior}}$ 表示行为相关奖励（如能量效率 $r_{\\text{energy}} = -\\sum_i |a_{\\text{t,i}}|$），$w_1$ 和 $w_2$ 为对应的权重系数。传统方法直接在完整奖励上训练策略 $\\pi(a_t|s_t)$，但面临以下问题：\n\n- **奖励塑造困难**：多目标优化需要精确调整权重 $w_1, w_2$，不同权重组合可能导致截然不同的学习行为\n- **探索效率低**：复杂奖励函数导致稀疏奖励信号，智能体难以有效探索状态空间\n- **训练不稳定**：多目标奖励的梯度方差较大，收敛困难\n\n## 2. 技术方法\n\n### 2.1 两阶段奖励课程框架\n\n本文提出的方法采用课程学习（Curriculum Learning）思想，将训练过程分解为两个阶段：\n\n**第一阶段：任务优先阶段**\n\n仅使用简化的任务奖励 $r_{\\text{task}}$ 训练策略网络 $\\pi_\\theta$，目标函数为：\n\n$$\n\nJ_1(\\theta) = \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}[\\sum_{\\text{t=0}}^{T} \\gamma^t r_{\\text{\\text{task}}}(s_t, a_t, s_{\\text{t+1}})]\n\n$$\n\n这一阶段确保智能体首先学习完成核心任务目标，建立基本的策略表征。\n\n**第二阶段：行为塑形阶段**\n\n在第一阶段预训练的基础上，切换至完整奖励函数 $r_{\\text{full}}$ 继续训练：\n\n$$\n\nJ_2(\\theta) = \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}[\\sum_{\\text{t=0}}^{T} \\gamma^t r_{\\text{\\text{full}}}(s_t, a_t, s_{\\text{t+1}})]\n\n$$\n\n### 2.2 样本重用机制\n\n本文的关键创新在于两个阶段之间的样本重用策略。具体而言：\n\n- **经验回放池继承**：第一阶段收集的轨迹数据 $\\mathcal{D}_1 = \\{(s_t, a_t, r_{\\text{task}}, s_{t+1})\\}$ 在第二阶段继续用于价值函数估计\n- **奖励重标记**：第二阶段对回放池中的样本进行奖励重标记，计算 $r_{\\text{full}}$ 而非 $r_{\\text{task}}$，但保留原始的状态转移信息\n- **策略更新约束**：在第二阶段早期，对策略更新的 KL 散度约束更为严格，避免策略偏离第一阶段学到的有效表征过远\n\n## 3. 实现细节\n\n### 3.1 算法架构\n\n采用 Soft Actor-Critic（SAC）作为基础强化学习算法：\n\n- **策略网络**：$\\pi_\\theta(a_t|s_t)$，输出高斯分布的均值和方差\n- **Q 网络**：$Q_\\phi(s_t, a_t)$，使用双 Q 网络架构减少过度估计\n- **目标网络**：$Q_{\\bar{\\phi}}$，采用指数移动平均更新\n\n### 3.2 超参数配置\n\n| 参数 | 第一阶段 | 第二阶段 |\n|------|----------|----------|\n| 学习率 | $3 \\times 10^{-4}$ | $1 \\times 10^{-4}$ |\n| 批量大小 | 256 | 256 |\n| 折扣因子 $\\gamma$ | 0.99 | 0.99 |\n| 目标网络更新系数 $\\tau$ | 0.005 | 0.005 |\n| KL 约束 $\\epsilon$ | - | 0.01 |\n| 阶段切换阈值 | - | 达到任务奖励阈值 $R_{\\text{thresh}}$ |\n\n### 3.3 过渡策略\n\n本文分析了三种从第一阶段过渡到第二阶段的策略：\n\n1. **硬切换**：直接切换奖励函数，一次性启用完整奖励\n2. **线性插值**：逐步增加行为奖励权重，$w_2(t) = w_2^{\\max} \\cdot \\min(1, t/T_{\\text{ramp}})$\n3. **课程切换**：在达到特定任务性能阈值后切换，配合样本重用\n\n实验表明课程切换策略配合样本重用效果最佳。\n\n## 4. 实验设置\n\n### 4.1 基准环境\n\n**DeepMind Control Suite**：\n\n- 连续控制任务（walker_walk, hopper_hop, cartpole_swingup）\n- 状态空间：连续\n- 动作空间：连续\n\n**ManiSkill3**：\n\n- 物体操作任务（pick_{\\text{and\\_place}}, push）\n- 包含视觉输入（RGBD 图像）\n\n**移动机器人环境**：\n\n- 自定义移动机器人导航任务\n- 状态空间：激光雷达 + 位姿\n- 动作空间：线速度 + 角速度\n\n### 4.2 奖励函数配置\n\n- **任务奖励**：根据具体任务定义（如到达目标距离、物体放置成功二值奖励）\n- **行为奖励**：\n - 能量效率：$r_{\\text{energy}} = -\\|a_t\\|^2$\n - 动作平滑：$r_{\\text{smooth}} = -\\|a_t - a_{\\text{t-1}}\\|^2$\n - 姿态稳定：$r_{\\text{stable}} = -\\|\\theta\\|_2$（针对双足机器人）\n\n### 4.3 评估指标\n\n- **任务成功率**：任务完成的百分比\n- **综合得分**：$S = S_{\\text{task}} + \\alpha \\cdot S_{\\text{behavior}}$\n- **奖励曲线**：训练过程中的累积奖励\n- **权重敏感性**：在不同权重配置下的性能方差\n\n### 4.4 基线方法\n\n- **直接训练（Direct）**：直接在完整奖励上训练\n- **渐进奖励塑形（PRS）**：逐步添加行为奖励项\n- **多目标训练（Multi-Obj）**：使用多目标优化方法（如 Pareto 前沿）\n- **随机课程（Random）**：随机选择训练阶段\n\n## 5. 技术优势\n\n### 5.1 训练稳定性提升\n\n通过将复杂多目标优化问题分解为两个简单的子问题，显著降低了训练初期的探索难度。第一阶段确保智能体学到有效的状态表征，第二阶段在此基础上进行行为塑边，避免了从零开始学习多目标策略的不稳定性。\n\n### 5.2 权重鲁棒性增强\n\n实验结果表明，本文方法对奖励权重选择的敏感度显著低于直接训练方法。这是因为第一阶段已经建立了完成任务的策略基础，第二阶段的行为调整是对已有策略的微调，而非从零开始的多目标优化。\n\n### 5.3 样本效率改善\n\n样本重用机制允许智能体利用第一阶段收集的经验数据，通过奖励重标记（reward relabeling）技术，无需额外环境交互即可获得第二阶段的训练信号，显著提升了样本效率。\n\n### 5.4 实现简洁性\n\n相比复杂的奖励塑形方法或元学习策略，本文方法只需在标准强化学习算法基础上添加阶段切换逻辑，易于实现和复现。\n\n## 6. 技术弱点\n\n### 6.1 阶段切换时机选择\n\n如何确定第一阶段训练完成的最优时机仍是一个开放问题。过早切换可能导致任务学习不充分，过晚切换则会浪费训练资源。本文采用固定奖励阈值的方法，但在不同任务间可能需要手动调优。\n\n### 6.2 行为奖励类型限制\n\n当前方法假设行为奖励项 $r_{\\text{behavior}}$ 与任务奖励 $r_{\\text{task}}$ 存在一定的兼容性，即行为调整不会完全破坏已学到的任务策略。当行为目标与任务目标存在根本冲突时（如高速移动与安全性之间的矛盾），两阶段方法可能失效。\n\n### 6.3 计算开销\n\n虽然样本重用减少了环境交互次数，但奖励重标记过程仍需额外的计算资源。此外，两阶段训练的总训练时间可能超过直接训练方法。\n\n### 6.4 泛化能力验证不足\n\n当前实验主要集中在标准基准环境，对于以下场景的泛化能力尚未验证：\n- 训练与测试环境存在分布偏移的情况\n- 任务目标在训练过程中发生变化\n- 多阶段课程（两阶段以上）的扩展性\n\n### 6.5 超参数敏感性\n\n尽管本文方法降低了对任务奖励权重的敏感性，但引入了新的超参数，如阶段切换阈值、KL 约束系数等，需要针对不同任务进行调优。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 6,
+    "technical_quality": 7,
+    "experimental_validation": 7,
+    "writing_quality": 7,
+    "relevance": 9,
+    "overall_score": 6.95,
+    "strengths": [
+      "Novel concept of decoupling task-specific and behavioral objectives in reward design",
+      "Good experimental validation across diverse domains (DeepMind Control Suite, ManiSkill3, mobile robot)",
+      "Addresses practical challenge of reward function weighting in robotics",
+      "Insightful analysis of sample reuse between curriculum phases",
+      "Simple yet effective approach with clear motivation"
+    ],
+    "weaknesses": [
+      "Limited technical details in abstract about specific algorithm implementation",
+      "Lack of quantitative performance results in abstract",
+      "Curriculum learning approach has some prior art, incremental novelty",
+      "Reward robustness claims not substantiated with specific evidence",
+      "Abstract lacks information on baseline comparisons and statistical significance"
+    ],
+    "notes": "A practical contribution to RL reward design that addresses a real problem. The two-stage curriculum approach is intuitive and the multi-domain validation is strong. However, the innovation is incremental rather than groundbreaking, and the abstract lacks quantitative results to assess the magnitude of improvements. The paper would benefit from more technical depth on the transition strategies and clearer performance metrics."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Decoupling Task and Behavior: A Two-Stage Reward Curriculum in Reinforcement Learning for Robotics",
+      "authors": [
+        "Kilian Freitag",
+        "Knut Åkesson",
+        "Cong Zhou"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2603.05113",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Deep Reinforcement Learning is a promising tool for robotic control, yet practical application is often hindered by the difficulty of designing effective reward functions. Real-world tasks typically require optimizing multiple objectives simultaneously, necessitating precise tuning of their weights to learn a policy with the desired characteristics. To address this, we propose a two-stage reward curriculum where we decouple task-specific objectives from behavioral terms. In our method, we first train the agent on a simplified task-only reward function to ensure effective exploration before introducing the full reward that includes auxiliary behavior-related terms such as energy efficiency. Further, we analyze various transition strategies and demonstrate that reusing samples between phases is critical for training stability. We validate our approach on the DeepMind Control Suite, ManiSkill3, and a mobile robot environment, modified to include auxiliary behavioral objectives. Our method proves to be simple yet effective, substantially outperforming baselines trained directly on the full reward while exhibiting higher robustness to specific reward weightings.",
+      "route_id": "db40d7da-8299-4035-b402-ebf75fa185b1"
+    },
+    "markdown_stats": {
+      "lines": 461,
+      "words": 11738,
+      "headings": 27
+    },
+    "assets": {
+      "images": 43,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "db40d7da-8299-4035-b402-ebf75fa185b1",
+  "paper_ref": "db40d7da-8299-4035-b402-ebf75fa185b1",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

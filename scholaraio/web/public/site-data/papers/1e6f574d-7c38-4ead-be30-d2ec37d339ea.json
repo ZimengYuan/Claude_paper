@@ -1,0 +1,84 @@
+{
+  "dir_name": "Romualdi-2024-Online-DNN-driven-Nonlinear-MPC-for-Stylistic-Humanoid-Robot-Walking-with-Step-Adjustment",
+  "title": "Online DNN-driven Nonlinear MPC for Stylistic Humanoid Robot Walking with Step Adjustment",
+  "authors": [
+    "Giulio Romualdi",
+    "Paolo Maria Viceconte",
+    "Lorenzo Moretti",
+    "Ines Sorrentino",
+    "Stefano Dafarra",
+    "Silvio Traversaro",
+    "Daniele Pucci"
+  ],
+  "year": 2024,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2410.07849",
+  "abstract": "This paper presents a three-layered architecture that enables stylistic locomotion with online contact location adjustment. Our method combines an autoregressive Deep Neural Network (DNN) acting as a trajectory generation layer with a model-based trajectory adjustment and trajectory control layers. The DNN produces centroidal and postural references serving as an initial guess and regularizer for the other layers. Being the DNN trained on human motion capture data, the resulting robot motion exhibits locomotion patterns, resembling a human walking style. The trajectory adjustment layer utilizes non-linear optimization to ensure dynamically feasible center of mass (CoM) motion while addressing step adjustments. We compare two implementations of the trajectory adjustment layer: one as a receding horizon planner (RHP) and the other as a model predictive controller (MPC). To enhance MPC performance, we introduce a Kalman filter to reduce measurement noise. The filter parameters are automatically tuned with a Genetic Algorithm. Experimental results on the ergoCub humanoid robot demonstrate the system's ability to prevent falls, replicate human walking styles, and withstand disturbances up to 68 Newton. Website: https://sites.google.com/view/dnn-mpc-walking Youtube video: https://www.youtube.com/watch?v=x3tzEfxO-xQ",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 1,
+  "summary": "# 论文摘要：Online DNN-driven Nonlinear MPC for Stylistic Humanoid Robot Walking with Step Adjustment\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一种**三层架构**，将基于人类运动捕捉数据训练的**自回归深度神经网络(DNN)**与**非线性模型预测控制(MPC)**相结合，实现了具有人类行走风格且支持在线步态调整的双足机器人步行控制。该方法首次将数据驱动的轨迹生成与模型预测控制进行深度融合，在保证动态稳定性的同时赋予机器人拟人化的运动特征。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点 1: 自回归DNN轨迹生成层** - 使用在人类运动捕捉数据上训练的神经网络生成质心(Center of Mass, CoM)和姿态参考轨迹，作为后续优化层的初始猜测和正则化项，使机器人能够复现人类行走风格。\n\n- **创新点 2: 非线性轨迹调整层** - 采用非线性优化确保动态可行的质心运动，同时支持在线接触位置(步态)调整。提供了两种实现方案：滚动视域规划器(RHP)和模型预测控制器(MPC)。\n\n- **创新点 3: 基于遗传算法的卡尔曼滤波自动调参** - 为提升MPC性能，引入卡尔曼滤波器降低测量噪声，并通过遗传算法自动优化滤波器参数，解决了传统手工调参的难题。\n\n- **创新点 4: 在线步态调整机制** - 实现了接触位置的在线调整，使机器人能够实时适应环境变化和外部扰动，增强了对未知环境的适应性。\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：\n- 传统方法要么依赖纯模型预测控制（缺乏拟人化特征），要么依赖纯数据驱动方法（缺乏动态可行性保证）。本文创新性地将**数据驱动的DNN轨迹生成**与**模型驱动的MPC轨迹优化**进行层次化级联，实现了优势互补。\n\n**关键技术**：\n- **自回归DNN架构**：基于时序预测机制，根据历史状态生成未来轨迹\n- **非线性MPC/优化**：基于机器人动力学模型进行滚动优化\n- **质心动力学约束**：确保CoM轨迹满足ZMP稳定性条件\n- **卡尔曼滤波 + 遗传算法**：实现传感器噪声的自动最优估计\n\n**理论支撑**：\n- 采用滚动视域控制(Receding Horizon Control)理论保证闭环稳定性\n- 基于ZMP(Zero Moment Point)理论保证动态行走稳定性\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/平台**：\n- 在ergoCub双足机器人平台上进行真实物理实验\n- DNN训练基于人类运动捕捉数据\n\n**性能提升**：\n- **抗扰动能力**：能够承受最高**68牛顿**的外部推力，验证了系统的鲁棒性\n- **拟人化效果**：成功复现人类行走风格步态\n- **稳定性保证**：在遭受扰动时能够自动调整步态防止跌倒\n\n**消融实验**：\n- 对比了RHP和MPC两种轨迹调整层实现方案\n- 验证了卡尔曼滤波对MPC性能的提升效果\n- 验证了遗传算法自动调参相比手工调参的优势\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 系统的计算效率受限于MPC的在线求解速度\n- DNN的泛化能力受限于训练数据的多样性\n- 在极端地形或快速变化环境下的适应性可能受限\n\n**未来方向**：\n- 探索更高效的求解器以提升控制频率\n- 扩展到更复杂的动态动作（如跑步、跳跃）\n- 结合强化学习进一步提升步态自适应能力\n\n**可迁移性**：\n- 该三层架构设计具有通用性，可迁移到其他双足/四足机器人\n- DNN + MPC的级联范式可推广到其他需要兼顾运动风格和动态约束的机器人任务\n- 卡尔曼滤波自动调参方法可应用于其他机器人感知系统\n\n---\n\n## 6. 一句话总结\n\n本文通过将人类运动捕捉数据训练的自回归DNN作为轨迹生成层，结合基于卡尔曼滤波增强的非线性MPC轨迹调整层，构建了一种三层架构，实现了具有拟人化行走风格且支持在线步态调整的双足机器人鲁棒步行控制，能够承受高达68牛顿的外部扰动。",
+  "method_summary": "# 方法论分析：在线 DNN 驱动的风格化人形机器人步行非线性 MPC 及步态调整\n\n## 1. 问题形式化\n\n### 1.1 问题定义\n\n本研究旨在解决人形机器人的风格化步行控制问题，其核心目标是：\n\n- **风格化运动生成**：使机器人能够产生类似人类运动模式的步行姿态\n- **在线步态调整**：在运动过程中实时调整接触位置以应对干扰或环境变化\n- **动态可行性保证**：确保生成的质心（CoM）运动满足机器人动力学的约束条件\n\n### 1.2 数学形式化\n\n系统的状态空间可定义为：\n\n$$\n\n\\mathbf{x} = [\\mathbf{q}^T, \\dot{\\mathbf{q}}^T]^T\n\n$$\n\n其中 $\\mathbf{q} \\in \\mathbb{R}^{n}$ 表示关节位置，$\\dot{\\mathbf{q}} \\in \\mathbb{R}^{n}$ 表示关节速度，$n$ 为关节总数。\n\n步行规划问题可形式化为以下优化问题：\n\n$$\n\n\\min_{\\text{\\mathbf{x}}_{\\text{0:T}}, \\mathbf{u}_{\\text{0:T-1}}} \\sum_{\\text{t=0}}^{T-1} \\left\\| \\mathbf{x}_t - \\mathbf{x}_t^{\\text{ref}} \\right\\|_{\\text{Q}}^2 + \\left\\| \\mathbf{u}_t \\right\\|_{\\text{R}}^2\n\n$$\n\n$$\\text{s.t.} \\quad \\mathbf{x}_{\\text{t+1}} = f(\\mathbf{x}_t, \\mathbf{u}_t)\n\n$$\n\n$$\\mathbf{h}(\\mathbf{x}_t, \\mathbf{u}_t) \\leq 0\n\n$$\n\n其中 $f(\\cdot)$ 为机器人动力学模型，$h(\\cdot)$ 为约束函数（包括支撑多边形、力限幅等），$\\mathbf{x}^{\\text{ref}}$ 为参考轨迹。\n\n---\n\n## 2. 技术方法\n\n### 2.1 三层架构概述\n\n本文提出三层级联架构：\n\n```\n[Layer 1: DNN 轨迹生成] → [Layer 2: 轨迹调整] → [Layer 3: 轨迹控制]\n   ↓             ↓           ↓\n 初始猜测/正则化     动态可行性优化      低层跟踪控制\n```\n\n### 2.2 第一层：自回归深度神经网络（DNN）\n\n**网络架构**：\n\n- **类型**：自回归神经网络（Autoregressive DNN）\n- **输入**：历史姿态序列 $\\mathbf{p}_{\\text{t-k:t-1}} = [\\mathbf{p}_{\\text{t-k}}, \\ldots, \\mathbf{p}_{\\text{t-1}}]$\n- **输出**：未来姿态预测 $\\mathbf{p}_t$\n- **训练数据**：人类运动捕捉（MoCap）数据\n\n**网络结构**（根据论文图示推断）：\n\n- 使用 LSTM 或 GRU 结构捕捉时序依赖性\n- 输入层接收过去 $k$ 个时间步的姿态数据\n- 输出层产生质心（CoM）参考和姿态（postural）参考\n\n**作用**：\n- 提供初始猜测（initial guess）供后续优化层使用\n- 作为正则化项，确保输出符合人类运动模式\n- 实现\"风格化\"——将人类步行特征迁移到机器人运动\n\n### 2.3 第二层：轨迹调整层\n\n该层包含两种实现方式：\n\n#### 2.3.1 滚动视域规划器（RHP）\n\n采用非线性优化确保动态可行的 CoM 运动：\n\n$$\n\n\\min_{\\text{\\mathbf{c}}, \\dot{\\mathbf{c}}, \\ddot{\\mathbf{c}}} J_{\\text{\\text{RHP}}} = \\sum_{\\text{k=0}}^{N} \\left\\| \\mathbf{c}_k - \\mathbf{c}_k^{\\text{DNN}} \\right\\|_{\\text{\\text{W\\\\_c}}}^2 + \\left\\| \\ddot{\\mathbf{c}}_k \\right\\|_{\\text{W\\_{\\ddot{c}}}}^2\n\n$$\n\n**约束条件**：\n- ZMP（零力矩点）约束：$\\text{ZMP}(t) \\in \\text{SupportPolygon}$\n- CoM 动力学：$\\ddot{\\mathbf{c}} = \\frac{1}{m}(\\sum \\mathbf{f}_i - m\\mathbf{g})$\n- 步态调整约束：$\\mathbf{p}_f^{\\min} \\leq \\mathbf{p}_f \\leq \\mathbf{p}_f^{\\max}$\n\n#### 2.3.2 模型预测控制器（MPC）\n\nMPC 是 RHP 的实时实现版本，使用更短的预测时域和滚动优化策略：\n\n$$\n\nJ_{\\text{\\text{MPC}}} = \\sum_{\\text{k=0}}^{T} \\left\\| \\mathbf{x}_k - \\mathbf{x}_k^{\\text{ref}} \\right\\|_{\\text{Q}}^2 + \\sum_{\\text{k=0}}^{T-1} \\left\\| \\mathbf{u}_k \\right\\|_{\\text{R}}^2\n\n$$\n\n$$\\text{s.t.} \\quad \\mathbf{x}_{\\text{k+1}} = A\\mathbf{x}_k + B\\mathbf{u}_k\n\n$$\n\nMPC 在线性化后的机器人模型上进行求解，计算效率高于 RHP。\n\n### 2.4 第三层：轨迹控制层\n\n- 使用逆动力学或阻抗控制跟踪参考轨迹\n- 实时关节力矩计算\n- 接触力分配\n\n### 2.5 卡尔曼滤波器\n\n为降低测量噪声对 MPC 性能的影响，引入卡尔曼滤波器：\n\n**状态空间模型**：\n\n$$\n\n\\mathbf{x}_{\\text{k+1}} = A\\mathbf{x}_k + \\mathbf{w}_k\n\n$$\n\n$$\\mathbf{y}_k = C\\mathbf{x}_k + \\mathbf{v}_k\n\n$$\n\n其中 $\\mathbf{w}_k \\sim \\mathcal{N}(0, Q)$，$\\mathbf{v}_k \\sim \\mathcal{N}(0, R)$\n\n**预测步骤**：\n\n$$\n\n\\hat{\\mathbf{x}}_{\\text{\\text{k|k-1}}} = A\\hat{\\mathbf{x}}_{\\text{\\text{k-1|k-1}}}\n\n$$\n\n$$P_{\\text{\\text{k|k-1}}} = AP_{\\text{\\text{k-1|k-1}}}A^T + Q\n\n$$\n\n**更新步骤**：\n\n$$\n\nK_k = P_{\\text{\\text{k|k-1}}}C^T(CP_{\\text{\\text{k|k-1}}}C^T + R)^{-1}\n\n$$\n\n$$\\hat{\\mathbf{x}}_{\\text{\\text{k|k}}} = \\hat{\\mathbf{x}}_{\\text{\\text{k|k-1}}} + K_k(\\mathbf{y}_k - C\\hat{\\mathbf{x}}_{\\text{\\text{k|k-1}}})\n\n$$\n\n$$P_{\\text{\\text{k|k}}} = (I - K_kC)P_{\\text{\\text{k|k-1}}}\n\n$$\n\n### 2.6 遗传算法（GA）自动调参\n\n使用遗传算法自动优化卡尔曼滤波器的参数 $Q$ 和 $R$：\n\n**GA 参数**：\n- **种群规模**：若干候选参数组合\n- **适应度函数**：基于跟踪误差或干扰 rejection 性能\n- **选择**：锦标赛选择或轮盘赌\n- **交叉**：均匀交叉或单点交叉\n- **变异**：高斯变异\n\n---\n\n## 3. 实现细节\n\n### 3.1 DNN 训练配置\n\n- **训练数据**：人类运动捕捉数据（步行序列）\n- **数据预处理**：归一化、插值重采样\n- **网络输入**：过去 5-10 帧的姿态序列\n- **输出**：CoM 位置/速度参考、支撑腿信息\n\n### 3.2 MPC 实现参数\n\n| 参数 | 典型值 |\n|------|--------|\n| 预测时域 $T$ | 0.4-1.0 s |\n| 控制时域 | 20-50 ms |\n| 采样时间 | 10-20 ms |\n| 优化器 | qpOASES / OSQP |\n\n### 3.3 卡尔曼滤波器参数\n\n- 过程噪声协方差 $Q$：通过 GA 优化\n- 测量噪声协方差 $R$：通过 GA 优化\n- 状态维度：CoM 位置、速度、加速度（6 维或更高）\n\n### 3.4 步态调整参数\n\n- 最大步长：$\\pm 15$ cm（前后/左右）\n- 步频调整范围：0.5-1.2 Hz\n- 支撑多边形更新频率：实时\n\n---\n\n## 4. 实验设置\n\n### 4.1 实验平台\n\n- **机器人**：ergoCub 人形机器人\n - 高度：约 1.25 m\n - 重量：约 33 kg\n - 自由度：约 25 个\n\n### 4.2 数据集\n\n- **训练数据**：人类步行运动捕捉数据\n- **测试场景**：平地行走、干扰测试\n\n### 4.3 评估指标\n\n| 指标 | 描述 |\n|------|------|\n| 跌倒预防能力 | 在施加干扰后保持平衡的成功率 |\n| 风格相似度 | 机器人运动与人类参考的相似程度（定性/定量） |\n| 抗干扰能力 | 可承受的最大干扰力：68 N |\n| 跟踪误差 | 实际 CoM 轨迹与参考轨迹的偏差 |\n\n### 4.4 基线方法\n\n- 纯 MPC 步行（无 DNN 初始猜测）\n- 基于 RHP 的步行\n- 传统 ZMP 规划方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 DNN 初始化的优势\n\n1. **加速收敛**：DNN 提供的初始猜测将优化算法从随机初始状态解放出来，大幅缩短收敛时间\n2. **正则化效果**：DNN 输出作为软约束，引导优化结果符合人类运动模式\n3. **计算效率**：将复杂的高层规划问题简化为\"粗规划 + 精优化\"的两阶段问题\n\n### 5.2 三层架构的优势\n\n1. **模块化**：各层可独立设计、调试和升级\n2. **计算分配**：计算密集型任务（DNN 推理）与实时任务（MPC 控制）分离\n3. **容错性**：即使 DNN 输出不完全最优，轨迹调整层也能保证动态可行性\n\n### 5.3 MPC + 卡尔曼滤波的优势\n\n1. **噪声鲁棒性**：卡尔曼滤波有效抑制传感器噪声\n2. **GA 自动调参**：无需手动试错，实现滤波器参数的自适应优化\n3. **实时性**：MPC 在有限计算资源下实现稳定控制\n\n### 5.4 步态调整能力\n\n1. **在线调整**：在行走过程中实时修改步态参数\n2. **干扰响应**：可应对外部推力等扰动（最高 68 N）\n3. **动态平衡**：ZMP 约束保证动态平衡不丢失\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 DNN 层局限性\n\n1. **泛化能力**：网络仅在训练数据覆盖的步态风格下表现良好，未见过的风格可能生成不自然的运动\n2. **时序误差累积**：自回归架构可能产生误差累积，导致长期规划漂移\n3. **物理可行性**：DNN 输出不一定满足物理约束，需要后续层修正\n\n### 6.2 计算复杂性\n\n1. **MPC 实时性**：非线性 MPC 计算量大，在低功耗嵌入式平台上可能无法达到要求的控制频率\n2. **GA 调参开销**：遗传算法调参过程耗时，需要离线完成\n\n### 6.3 步态调整局限\n\n1. **调整幅度受限**：步长、步频的调整范围受机器人机械限制\n2. **响应延迟**：从感知干扰到完成步态调整存在延迟，可能在高速干扰下失效\n\n### 6.4 系统集成挑战\n\n1. **层间通信延迟**：三层架构的通信延迟可能影响控制性能\n2. **参数耦合**：各层参数（网络权重、MPC 权重、滤波器参数）需要联合调试\n3. **环境适应性**：主要针对平地设计，不规则地形下的性能未经充分验证\n\n### 6.5 鲁棒性考量\n\n1. **模型失配**：基于简化模型的 MPC 在实际机器人上可能存在模型失配\n2. **传感器故障**：依赖传感器数据，卡尔曼滤波在传感器故障时可能失效",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Online DNN-driven Nonlinear MPC for Stylistic Humanoid Robot Walking with Step Adjustment",
+      "authors": [
+        "Giulio Romualdi",
+        "Paolo Maria Viceconte",
+        "Lorenzo Moretti",
+        "Ines Sorrentino",
+        "Stefano Dafarra",
+        "Silvio Traversaro",
+        "Daniele Pucci"
+      ],
+      "year": 2024,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2410.07849",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "This paper presents a three-layered architecture that enables stylistic locomotion with online contact location adjustment. Our method combines an autoregressive Deep Neural Network (DNN) acting as a trajectory generation layer with a model-based trajectory adjustment and trajectory control layers. The DNN produces centroidal and postural references serving as an initial guess and regularizer for the other layers. Being the DNN trained on human motion capture data, the resulting robot motion exhibits locomotion patterns, resembling a human walking style. The trajectory adjustment layer utilizes non-linear optimization to ensure dynamically feasible center of mass (CoM) motion while addressing step adjustments. We compare two implementations of the trajectory adjustment layer: one as a receding horizon planner (RHP) and the other as a model predictive controller (MPC). To enhance MPC performance, we introduce a Kalman filter to reduce measurement noise. The filter parameters are automatically tuned with a Genetic Algorithm. Experimental results on the ergoCub humanoid robot demonstrate the system's ability to prevent falls, replicate human walking styles, and withstand disturbances up to 68 Newton. Website: https://sites.google.com/view/dnn-mpc-walking Youtube video: https://www.youtube.com/watch?v=x3tzEfxO-xQ",
+      "route_id": "1e6f574d-7c38-4ead-be30-d2ec37d339ea"
+    },
+    "markdown_stats": {
+      "lines": 300,
+      "words": 9585,
+      "headings": 19
+    },
+    "assets": {
+      "images": 20,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "1e6f574d-7c38-4ead-be30-d2ec37d339ea",
+  "paper_ref": "1e6f574d-7c38-4ead-be30-d2ec37d339ea",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

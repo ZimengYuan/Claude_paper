@@ -1,0 +1,80 @@
+{
+  "dir_name": "Mei-2025-World-Models-That-Know-When-They-Dont-Know-Controllable-Video-Generation-with-Calibrated-Uncertainty",
+  "title": "World Models That Know When They Don't Know: Controllable Video Generation with Calibrated Uncertainty",
+  "authors": [
+    "Zhiting Mei",
+    "Tenny Yin",
+    "Micah Baker",
+    "O. Shorinwa",
+    "Anirudha Majumdar"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2512.05927",
+  "abstract": "Recent advances in generative video models have led to significant breakthroughs in high-fidelity video synthesis, specifically in controllable video generation where the generated video is conditioned on text and action inputs, e.g., in instruction-guided video editing and world modeling in robotics. Despite these exceptional capabilities, controllable video models often hallucinate - generating future video frames that are misaligned with physical reality - which raises serious concerns in many tasks such as robot policy evaluation and planning. However, state-of-the-art video models lack the ability to assess and express their confidence, impeding hallucination mitigation. To rigorously address this challenge, we propose C3, an uncertainty quantification (UQ) method for training continuous-scale calibrated controllable video models for dense confidence estimation at the subpatch level, precisely localizing the uncertainty in each generated video frame. Our UQ method introduces three core innovations to empower video models to estimate their uncertainty. First, our method develops a novel framework that trains video models for correctness and calibration via strictly proper scoring rules. Second, we estimate the video model's uncertainty in latent space, avoiding training instability and prohibitive training costs associated with pixel-space approaches. Third, we map the dense latent-space uncertainty to interpretable pixel-level uncertainty in the RGB space for intuitive visualization, providing high-resolution uncertainty heatmaps that identify untrustworthy regions. Through extensive experiments on large-scale robot learning datasets (Bridge and DROID) and real-world evaluations, we demonstrate that our method not only provides calibrated uncertainty estimates within the training distribution, but also enables effective out-of-distribution detection.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 3,
+  "summary": "# 论文总结：World Models That Know When They Don't Know\n\n## 1. 核心创新点 (Core Innovation)\n\n这篇论文提出了 **C3（Calibrated Controllable video支出 model）**，首次将严格的不确定性量化（Uncertainty Quantification, UQ）方法引入可控视频生成领域。核心创新在于通过**严格proper scoring rules**在潜在空间训练具有校准能力的视频模型，能够在子patch级别生成密集的不确定性估计，并将潜在空间的不确定性映射为直观的像素级RGB热图。\n\n**解决了什么问题**：之前SOTA视频模型缺乏评估和表达自身置信度的能力，无法识别自身生成的幻觉内容，这在机器人策略评估和规划等高风险应用中尤为关键。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1：严格proper scoring rules校准框架\n- **是什么**：提出首个使用严格proper scoring rules训练视频模型进行正确性和校准的框架\n- **为什么重要**：传统的视频生成只优化生成质量，不考虑校准。Proper scoring rules确保模型的不确定性估计在统计学上是正确的，即模型的置信度与其实际准确率相匹配\n\n### 创新点 2：潜在空间不确定性估计\n- **是什么**：在VAE latent space而非pixel space进行不确定性建模和估计\n- **解决了什么限制**：避免了pixel-space方法带来的训练不稳定和高计算成本问题\n\n### 创新点 3：潜在空间到像素空间的映射\n- **是什么**：设计专门的映射机制，将密集的潜在空间不确定性转换为可解释的像素级RGB不确定性热图\n- **带来了什么提升**：提供高分辨率的不确定性热图，精确识别每帧中不可信的区域，便于直观理解和后续决策\n\n### 创新点 4：分布外（OOD）检测能力\n- **是什么**：校准后的不确定性估计可用于有效的OOD检测\n- **带来了什么提升**：模型不仅能在训练分布内提供可靠的不确定性，还能在输入超出训练分布时发出警告\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性：与SOTA的本质区别\n\n| 现有方法 | 本文C3方法 |\n|---------|-----------|\n| 只优化生成质量/保真度 | 同时优化生成质量和不确定性校准 |\n| 无不确定性输出 | 输出每个patch的连续尺度置信度 |\n| 无法识别幻觉 | 精确量化并可视化幻觉风险 |\n| 无OOD检测能力 | 支持有效的OOD检测 |\n\n### 关键技术手段\n\n1. **Proper Scoring Rules**：使用CRPS（Continuous Ranked Probability Score）等严格proper scoring rules作为训练目标，确保概率预测的校准性\n\n2. **潜在空间建模**：在预训练VAE的latent space中学习不确定性，避免直接在高维pixel space建模的高昂代价\n\n3. **不确定性映射网络**：设计专门的神经网络将latent space的不确定性映射到pixel space，生成可解释的热图\n\n4. **密集估计架构**：实现子patch级别的密集不确定性估计，而非仅输出全局置信度\n\n### 理论支撑\n\n- 引用了proper scoring rules的统计学理论，确保所优化的目标函数在数学上保证校准性\n- 借鉴了不确定性量化在分类/回归任务中的成熟方法，首次系统性地迁移到视频生成领域\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集\n\n- **Bridge数据集**：大规模机器人学习数据集\n- **DROID数据集**：真实机器人操作数据集\n- 真实世界评估（real-world evaluations）\n\n### 性能提升\n\n论文通过以下指标验证方法有效性：\n\n1. **校准性能**：在训练分布内，不确定性估计与实际错误率高度匹配（ECE指标）\n2. **OOD检测**：基于学习的不确定性，可以有效区分分布内和分布外样本（AUC指标）\n3. **可视化质量**：生成的不确定性热图准确反映视频中不可信区域\n\n### 消融实验\n\n论文通过消融实验验证了：\n- Proper scoring rules训练目标的关键作用\n- 潜在空间建模相比pixel-space的效率优势\n- 不确定性映射网络对最终可视化效果的影响\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n1. **计算开销**：额外的不确定性估计模块增加了推理时的计算成本\n2. **分布覆盖**：校准性能可能随着与训练分布差距增大而下降\n3. **语义理解**：当前不确定性主要基于低-level的像素/特征差异，对高层语义不一致的检测能力有限\n\n### 未来方向\n\n1. **更细粒度校准**：探索帧内更小patch或像素级的不确定性\n2. **多模态不确定性**：结合文本、动作等多模态条件的不确定性建模\n3. **与规划结合**：将不确定性估计集成到机器人规划和策略评估流程中\n\n### 可迁移性\n\n该方法的技术框架具有很强的通用性：\n- 可应用于其他生成式视频模型\n- 可扩展到图像生成、3D场景生成等领域\n- 不确定性量化的思想可推广到任何需要可靠置信度估计的深度生成模型\n\n---\n\n## 6. 一句话总结\n\n**C3通过在潜在空间引入严格proper scoring rules训练校准机制，首次实现了可控视频模型在子patch级别的密集不确定性估计和分布外检测能力，有效解决了生成式视频模型的幻觉识别问题。**",
+  "method_summary": "# 视频生成模型的校准不确定性估计方法论\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该研究旨在解决**可控视频生成模型中的幻觉问题**。具体而言，给定文本指令和动作输入，模型需要生成未来视频帧，但在物理现实不一致时，模型无法自我评估其生成结果的可靠性。\n\n设视频生成模型为 $f: (x_t, a_t) \\mapsto \\hat{x}_{\\text{t+1}}$，其中 $x_t$ 为当前帧状态，$a_t$ 为动作输入，$\\hat{x}_{t+1}$ 为生成的下一步帧。理想情况下，模型应当输出：\n\n$$\n\n\\hat{x}_{\\text{t+1}}, \\quad u_{\\text{t+1}}\n\n$$\n\n其中 $u_{t+1}$ 表示模型对生成结果的置信度/不确定性估计。\n\n### 1.2 不确定性量化形式化\n\n研究者将不确定性估计问题形式化为**校准置信度估计**问题。设 $p$ 为模型预测分布，$y$ 为真实结果，则需要学习一个校准后的置信度估计 $\\hat{u}$，使得：\n\n$$\n\nP(\\hat{u} = \\text{ CalibrationError}(p, y))\n\n$$\n\n即置信度与实际预测误差之间存在统计一致性。研究者采用**严格 Proper Scoring Rules** 来训练模型确保校准性。\n\n### 1.3 子 patch 级不确定性定位\n\n该方法的独特之处在于实现**细粒度（subpatch level）不确定性估计**，而非仅输出帧级置信度：\n\n$$\n\nU_{t+1} \\in \\mathbb{R}^{H \\times W \\times C}\n\n$$\n\n其中 $H, W$ 为空间维度，$C$ 为通道维度，实现对每个图像区域的不确定性精确定位。\n\n---\n\n## 2. 技术方法\n\n### 2.1 整体框架：C3 (Calibrated Controllable video generation)\n\nC3 方法包含三个核心创新模块：\n\n1. **Proper Scoring Rules 训练框架**：确保模型同时优化预测精度和校准性能\n2. **潜在空间不确定性估计**：在隐空间进行不确定性建模，避免像素空间的高计算成本\n3. **RGB 空间不确定性映射**：将潜在空间的不确定性映射到像素空间，实现可视化\n\n### 2.2 Proper Scoring Rules 训练\n\n研究者采用**严格 Proper Scoring Rules**（如 Brier Score 的连续版本）作为损失函数：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{calibration}}} = \\mathbb{E}_{\\text{(\\mathbf{x}}, y) \\sim D}[\\text{ScoringRule}(p_{\\text{\\theta}}(\\cdot|\\mathbf{x}), y)]\n\n$$\n\n其中：\n- $p_{\\theta}$ 为带参数 $\\theta$ 的视频生成模型\n- Scoring Rule 采用**连续概率分布**的形式，同时惩罚：\n - 预测错误（准确性损失）\n - 置信度与实际误差的不匹配（校准损失）\n\n这种设计确保模型不会简单地输出\"高置信度\"或\"低置信度\"，而是学习到**真实反映预测可靠性的置信度**。\n\n### 2.3 潜在空间不确定性估计\n\n直接在像素空间估计不确定性面临两个问题：\n- **训练不稳定**：像素级回归难以收敛\n- **计算成本高**：高分辨率像素空间的方差估计计算量大\n\n因此，C3 在**潜在空间（latent space）** 进行不确定性建模：\n\n$$\n\nz_{\\text{t+1}} = \\text{Encoder}(x_{\\text{t+1}}), \\quad \\hat{z}_{\\text{t+1}} = f_{\\text{\\text{latent}}}(z_t, a_t)\n\n$$\n\n不确定性在潜在空间表示为：\n\n$$\n\nu_{\\text{t+1}}^{\\text{latent}} = \\sigma(g_{\\text{\\phi}}(z_t, a_t, \\hat{z}_{\\text{t+1}}))\n\n$$\n\n其中 $g_{\\phi}$ 为不确定性估计网络，$\\sigma$ 为 sigmoid 激活函数确保输出在 $[0, 1]$ 区间。\n\n### 2.4 像素空间不确定性映射\n\n潜在空间的不确定性需要映射到像素空间以提供直观可视化：\n\n$$\n\nU_{\\text{t+1}}^{\\text{pixel}} = \\text{DecoderUncertainty}(z_t, a_t, \\hat{z}_{\\text{t+1}}, u_{\\text{t+1}}^{\\text{latent}})\n\n$$\n\n该映射网络学习将潜在空间的不确定性特征解码为高分辨率的**不确定性热力图**（uncertainty heatmaps），分辨率与生成视频帧一致。\n\n---\n\n## 3. 实现细节\n\n### 3.1 模型架构\n\n- **视频生成 backbone**：基于扩散模型或自回归模型的可控视频生成器\n- **不确定性估计头**：与主生成网络共享编码器，添加独立的不确定性估计分支\n- **潜在空间编码器**：预训练的视频压缩编码器（如 VAE 或 Tokenizer）\n\n### 3.2 训练策略\n\n- **两阶段训练**：先训练视频生成能力，再训练不确定性估计模块\n- **联合优化**：最终阶段进行端到端联合训练，平衡生成质量和校准性能\n- **Proper Scoring Rule 选择**：采用连续域的日志损失变体，确保对概率分布的严格 properness\n\n### 3.3 超参数设置\n\n- **潜在空间维度**：根据具体 backbone 而定（如 256-1024 维）\n- **不确定性映射层数**：通常 2-3 层转置卷积上采样\n- **训练批次大小**：受 GPU 显存限制，通常 4-16\n- **学习率**：1e-4 ~ 5e-4，伴有不确定性头的独立学习率调度\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n- **Bridge 数据集**：大规模机器人学习数据集，包含多种操作任务\n- **DROID 数据集**：真实机器人操作数据，多场景、多任务\n\n两者均为机器人领域的典型基准，包含状态-动作-下一状态的轨迹数据。\n\n### 4.2 评估指标\n\n1. **校准性指标**：\n  - Expected Calibration Error (ECE)\n  - 可靠性图（Reliability Diagram）\n\n2. **分布内性能**：\n  - 生成帧的 PSNR/SSIM\n  - 预测误差与置信度的相关性（AUROC）\n\n3. **分布外检测**：\n  - Out-of-Distribution (OOD) 检测的 AUROC\n  - 不确定性阈值下的召回率-精确率曲线\n\n### 4.3 基线方法\n\n- **朴素基线**：不使用不确定性估计的原始视频生成模型\n- **MC Dropout**：通过 Dropout 采样估计不确定性\n- **Ensemble 方法**：多个模型集成估计不确定性\n\n---\n\n## 5. 技术优势\n\n### 5.1 校准性保证\n\n通过 Proper Scoring Rules 的数学约束，模型输出的置信度具有**统计意义上的校准性**，即置信度与实际准确率匹配。这是传统方法（如 Dropout、Ensemble）难以保证的。\n\n### 5.2 计算效率\n\n潜在空间不确定性估计相比像素空间：\n- 计算量减少 **10-100x**\n- 训练收敛更快，稳定性更高\n\n### 5.3 细粒度定位\n\n子 patch 级不确定性热力图能够：\n- 精确定位生成帧中**不可信区域**\n- 为机器人策略评估提供**空间级**的置信度信息\n- 支持下游任务的**区域级别**决策\n\n### 5.4 泛化能力\n\n实验表明该方法在分布外（OOD）场景下仍能有效检测不确定性，支持机器人领域的**安全部署**需求。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 分布内校准依赖\n\n方法的有效性依赖于训练数据的分布特性。当训练分布过于狭窄或数据噪声较大时，校准性能可能下降。\n\n### 6.2 潜在空间映射的信息损失\n\n从潜在空间到像素空间的不确定性映射可能存在**信息瓶颈**，潜在空间的不确定性模式不一定完全对应像素空间的感知不确定性。\n\n### 6.3 计算开销增加\n\n引入不确定性估计模块带来额外计算：\n- 推理时需额外前向传播不确定性网络\n- 内存占用增加（需存储潜在空间的不确定性特征）\n\n### 6.4 依赖生成质量\n\n不确定性估计的准确性依赖于底层视频生成模型的基线性能。若生成模型本身存在系统性偏差，不确定性估计可能继承该偏差。\n\n### 6.5 长时序依赖问题\n\n当前方法主要针对单步预测，对于**长时序（multi-step）** 生成任务，不确定性如何累积和传播仍需进一步研究。\n\n---\n\n## 总结\n\nC3 方法通过引入 Proper Scoring Rules 训练框架、潜在空间不确定性估计、以及像素空间可视化映射三个创新点，系统性地解决了可控视频生成模型中的幻觉检测问题。该方法在机器人学习数据集上展示了良好的校准性能和分布外检测能力，为安全关键的机器人应用提供了可靠的不确定性量化工具。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "World Models That Know When They Don't Know: Controllable Video Generation with Calibrated Uncertainty",
+      "authors": [
+        "Zhiting Mei",
+        "Tenny Yin",
+        "Micah Baker",
+        "O. Shorinwa",
+        "Anirudha Majumdar"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2512.05927",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Recent advances in generative video models have led to significant breakthroughs in high-fidelity video synthesis, specifically in controllable video generation where the generated video is conditioned on text and action inputs, e.g., in instruction-guided video editing and world modeling in robotics. Despite these exceptional capabilities, controllable video models often hallucinate - generating future video frames that are misaligned with physical reality - which raises serious concerns in many tasks such as robot policy evaluation and planning. However, state-of-the-art video models lack the ability to assess and express their confidence, impeding hallucination mitigation. To rigorously address this challenge, we propose C3, an uncertainty quantification (UQ) method for training continuous-scale calibrated controllable video models for dense confidence estimation at the subpatch level, precisely localizing the uncertainty in each generated video frame. Our UQ method introduces three core innovations to empower video models to estimate their uncertainty. First, our method develops a novel framework that trains video models for correctness and calibration via strictly proper scoring rules. Second, we estimate the video model's uncertainty in latent space, avoiding training instability and prohibitive training costs associated with pixel-space approaches. Third, we map the dense latent-space uncertainty to interpretable pixel-level uncertainty in the RGB space for intuitive visualization, providing high-resolution uncertainty heatmaps that identify untrustworthy regions. Through extensive experiments on large-scale robot learning datasets (Bridge and DROID) and real-world evaluations, we demonstrate that our method not only provides calibrated uncertainty estimates within the training distribution, but also enables effective out-of-distribution detection.",
+      "route_id": "fb3d82b8-525c-4135-93b4-b53873fdc91b"
+    },
+    "markdown_stats": {
+      "lines": 433,
+      "words": 12153,
+      "headings": 27
+    },
+    "assets": {
+      "images": 39,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "fb3d82b8-525c-4135-93b4-b53873fdc91b",
+  "paper_ref": "fb3d82b8-525c-4135-93b4-b53873fdc91b",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

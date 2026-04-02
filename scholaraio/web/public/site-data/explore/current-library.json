@@ -1,0 +1,604 @@
+{
+  "name": "current-library",
+  "title": "Current Library",
+  "count": 468,
+  "query": {
+    "scope": "main library",
+    "papers_dir": "data/papers",
+    "topic_model": "data/topic_model"
+  },
+  "source": "local-library",
+  "fetched_at": "2026-03-27T01:42:36",
+  "has_search_index": true,
+  "has_semantic_index": true,
+  "has_topics": true,
+  "topic_info": {},
+  "papers_sample": [
+    {
+      "paper_ref": "b7ed1450-4f2b-487e-a9a9-87775a4d7c15",
+      "paper_id": "b7ed1450-4f2b-487e-a9a9-87775a4d7c15",
+      "dir_name": "Vaswani-2025-Attention-Is-All-You-Need",
+      "doi": "10.65215/nxvz2v36",
+      "title": "Attention Is All You Need",
+      "authors": [
+        "Ashish Vaswani",
+        "Noam Shazeer",
+        "Niki Parmar",
+        "Jakob Uszkoreit",
+        "Llion Jones",
+        "Aidan N.Gomez",
+        "Lukasz Kaiser",
+        "Illia Polosukhin"
+      ],
+      "year": 2025,
+      "journal": "",
+      "type": "posted-content",
+      "cited_by_count": 6507,
+      "abstract": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+      "route_id": "b7ed1450-4f2b-487e-a9a9-87775a4d7c15"
+    },
+    {
+      "paper_ref": "8c28a166-612a-4321-8466-f53fd1af40ed",
+      "paper_id": "8c28a166-612a-4321-8466-f53fd1af40ed",
+      "dir_name": "Vaswani-2023-Attention-Is-All-You-Need",
+      "doi": "10.48550/arXiv.1706.03762",
+      "title": "Attention Is All You Need",
+      "authors": [
+        "Ashish Vaswani",
+        "Noam Shazeer",
+        "Niki Parmar",
+        "Jakob Uszkoreit",
+        "Llion Jones",
+        "Aidan N. Gomez",
+        "Łukasz Kaiser",
+        "Illia Polosukhin"
+      ],
+      "year": 2023,
+      "journal": "",
+      "type": "preprint",
+      "cited_by_count": 6504,
+      "abstract": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+      "route_id": "8c28a166-612a-4321-8466-f53fd1af40ed"
+    },
+    {
+      "paper_ref": "b90c74e4-0277-4a1a-a474-5be10d516721",
+      "paper_id": "b90c74e4-0277-4a1a-a474-5be10d516721",
+      "dir_name": "Liu-2020-Riemannian-Denoising-Diffusion-Probabilistic-Models",
+      "doi": "10.2139/ssrn.5358689",
+      "title": "Riemannian Denoising Diffusion Probabilistic Models",
+      "authors": [
+        "Zichen Liu",
+        "Wei Zhang",
+        "Christof Schütte",
+        "Tiejun Li"
+      ],
+      "year": 2020,
+      "journal": "arXiv (Cornell University)",
+      "type": "posted-content",
+      "cited_by_count": 5574,
+      "abstract": "DiffuCpG 1. Introduction In this study, we used a generative AI diffusion model to address missing methylation data. We trained the model with Whole-Genome Bisulfite Sequencing data from 26 acute myeloid leukemia samples and validated it with Reduced Representation Bisulfite Sequencing data from 93 myelodysplastic syndrome and 13 normal samples. Additional testing included data from the Illumina 450k methylation array and Single-Cell Reduced Representation Bisulfite Sequencing on HepG2 cells. Our model, DiffuCpG, outperformed previous methods by integrating a broader range of genomic features, utilizing both short- and long-range interactions without increasing input complexity. It demonstrated superior accuracy, scalability, and versatility across various tissues, diseases, and technologies, providing predictions in both binary and continuous methylation states. In this repository, we deposit the code used to build the diffusion models along with necessary example datasets to train and test a diffusion model for methylation imputation purposes. Docker Usage Install Docker Install Docker using the following link:https://docs.docker.com/engine/install/Recommended system specs: Debian 12 bookworm with 16GB RAM or more.Make sure you have the latest Nvidia GPU driver installed and docker can access your Nvidia GPU. Run Docker images with Tissue-specific Models docker pull yay135/diffucpg_tssUse our example to generate input samples with Hi-C matrix and CIS (Confidence Interval Cross Sample) data.docker run -it yay135/diffucpg_tssthenpython generate_train_test_samples.py The tissue-specific models (pytorch) are for CD34+ cells, GBM and BRCA, they are stored in folders named \"model*\" in the image. Run the Tissue specific modelsdocker run -it yay135/diffucpg_tssthenpython batch_run.py Run Docker images Example Models docker pull yay135/diffucpgIf you do not have a GPU enabled system, pull a CPU-only imagedocker pull yay135/diffucpg_cpuprepare your input data directory, use the following command to print a example input data directorydocker run --rm yay135/diffucpg -e trueassume your data directory name is \"input_data\"in windowsdocker run --gpus all -v .\\input_data\\:/data --rm yay135/diffucpgin unix or linuxdocker run --gpus all -v ./input_data:/data --rm yay135/diffucpg Other docker options -d or --device : select which cuda device to run with, default is 0-m or --mingcpg : scan your methyl array, limit only imputing windows with at least m non-missing methyl values, default is m=10-o or --overlap : set number of impute epochs, shift window locations between epochs, get mean imputed values for each CpG location, default is 2example:docker run --gpus all -v ./input_data:/data --rm yay135/diffucpg -d 1 -m 5 -o 3use cuda device 1, min number of non-missing methyl values in a window is 5, overlap epochs 3 The following tutorials are for non-docker usages. 2. Data and Models Example datasets are available for download using \"gdown.sh\". The example datasets only contain WGBS methylation data. The model is the DDPM diffusion model, the repository contains a complete implementation for 1-dimensional input. Please refer to https://arxiv.org/abs/2006.11239 and https://huggingface.co/blog/annotated-diffusion for more details. 3. How to use 3.1 System Requirements The number of steps in the diffusion process is set to 2000. Imputing a sample requires 2000 steps. Gpu acceleration is preferred. 16GB of RAM is required. The code is fully tested and operational on the following platform: Distributor ID: DebianDescription: Debian GNU/Linux 12 (bookworm)Release: 12Codename: bookworm 3.2 Clone the Current Project Run the following command to clone the project.git clone https://github.com/yay135/DiffuCpG.git 3.4 Configure Environment Make sure you have the following software installed in your system:Python 3.9+Pytorch 2.0.1+ 3.4 Run Training and Testing python run.pyThe script will download necessary data and install dependencies automatically. 4 Data and Script Details 4.1 RAW Data The methylation arrays downloaded are in the folder \"raw\", each file is a methylation array. The first 2 columns are \"chromosome\" and \"location\". The assembly used for mapping in our project is the \"GRCH37 primary assembly\". It is also downloaded automatically. The rest of the columns in each file are methylation levels(required) and other biological data (optional) you wish to incorporate to enhance the model. These files in the raw folder are the initial inputs for pipeline,if you wish to use your own data, it must be configured as such before running the pipeline. 4.2 Generate Sample Use script \"generate_samples.py\" to generate samples for training and testing.The model can not directly read and impute a methylation array file. Instead, each methylation array is divided into windows, each window is 1kb (1000 base pairs) in length, and each training testing sample is generated from a window. Each sample contains at least 5 channels. the first 4 is the sequence one-hot encoding, the 5th is the methylation data. If a base pair location is not a CpG location, the methylation data value for it is \"-1\". If a CpG's methylation data is missing or waiting for imputaion, its value is also \"-1\". Other biological data can be added as extra channels. Check out example raw files in the folder \"raw\" to form your own datasets for training and testing sample generation.For each raw file in the \"raw\" folder, the first 3 columns are chr, loc, and methylation.The rest of the columns are treated as additional channels and will be added to each sample during generation. '-d' or '--folder': specify raw data folder'-i' or '--index' : which column in a raw file is the methylation array'-t' or '--tol' : how many missing methylation value is tolerated(we recommend 0 for generating training samples and -1 for generating testing samples, 0 will force the script to only select from windows with no missings, -1 will tolerate missing as much as possible.)'-c' or '--chr' : limit which chromosome to use, default is \"chr#\" to use all chromosomes'-w' or '--winsize' : what window size to use, default is 1000 '-m' or '--mincpg': force generate from window to have a minimum number of CpGs, default is 10 '-n' or '--nsample': number of samples to generate per chromosome '-p' or '--output': samples output folder, default is \"out\" Use script \"generate_samples_concat.py\" to generate samples from long-range interacting windows such as Hi-C interactions or computed correlation.Check out the example long range file in the folder \"data\" to form your own long-range interacting windows for sample generation and concatenation. 4.3 Training Script Use diffusion.py to train and test a DDPM model using the generated samples'-t' or '--train_folder' : the folder containing the training samples'-f' or '--model_folder' : the model folder, will be created if it does not exist'-w' or '--win_size' : window size of each sample, default is 1000'-c' or '--channel': channel size of each sample'-d' or '--cuda_device' : if you have multiple cuda gpus, select which gpu to use, default is 0\"-e\" or \"--epoch\" : how many epochs for training, default is 2000\"-s\" or \"--earlystop\" : whether to use \"early stopping\" during training, default is False\"-p\" or \"--patience\" : patience for early stopping, default is 10 4.4 Imputation Use diffusion_inpainting.py to perform imputation on generated samples.'-t' or '--test_folder' : the folder containing samples for imputation'-o' or '--out_folder': imputed output folder name, default=\"inpainting_out\"'-w' or '--win_size' : window size of each sample, default is 1000'-c' or '--channel': channel size of each sample'-d' or '--cuda_device' : if you have multiple cuda gpus, select which gpu to use, default is 0 Team If you have any questions or concerns about the project, please contact the following team member: Fengyao Yan fxy134@miami.edu",
+      "route_id": "b90c74e4-0277-4a1a-a474-5be10d516721"
+    },
+    {
+      "paper_ref": "70d0223c-332d-4b83-88f5-3f5489ca120e",
+      "paper_id": "70d0223c-332d-4b83-88f5-3f5489ca120e",
+      "dir_name": "Ho-2020-Denoising-Diffusion-Probabilistic-Models",
+      "doi": "10.48550/arXiv.2006.11239",
+      "title": "Denoising Diffusion Probabilistic Models",
+      "authors": [
+        "Jonathan Ho"
+      ],
+      "year": 2020,
+      "journal": "arXiv (Cornell University)",
+      "type": "preprint",
+      "cited_by_count": 5569,
+      "abstract": "We present high quality image synthesis results using diffusion probabilistic models, a class of latent variable models inspired by considerations from nonequilibrium thermodynamics. Our best results are obtained by training on a weighted variational bound designed according to a novel connection between diffusion probabilistic models and denoising score matching with Langevin dynamics, and our models naturally admit a progressive lossy decompression scheme that can be interpreted as a generalization of autoregressive decoding. On the unconditional CIFAR10 dataset, we obtain an Inception score of 9.46 and a state-of-the-art FID score of 3.17. On 256x256 LSUN, we obtain sample quality similar to ProgressiveGAN. Our implementation is available at https://github.com/hojonathanho/diffusion",
+      "route_id": "70d0223c-332d-4b83-88f5-3f5489ca120e"
+    },
+    {
+      "paper_ref": "bae01627-c3c8-4896-b03f-1bf707304102",
+      "paper_id": "bae01627-c3c8-4896-b03f-1bf707304102",
+      "dir_name": "Peebles-2023-Scalable-Diffusion-Models-with-Transformers-2",
+      "doi": "10.1109/iccv51070.2023.00387",
+      "title": "Scalable Diffusion Models with Transformers",
+      "authors": [
+        "William Peebles",
+        "Saining Xie"
+      ],
+      "year": 2023,
+      "journal": "2023 IEEE/CVF International Conference on Computer Vision (ICCV)",
+      "type": "proceedings-article",
+      "cited_by_count": 5097,
+      "abstract": "We explore a new class of diffusion models based on the transformer architecture. We train latent diffusion models of images, replacing the commonly-used U-Net backbone with a transformer that operates on latent patches. We analyze the scalability of our Diffusion Transformers (DiTs) through the lens of forward pass complexity as measured by Gflops. We find that DiTs with higher Gflops—through increased transformer depth/width or increased number of input tokens—consistently have lower FID. In addition to possessing good scalability properties, our largest DiT-XL/2 models outperform all prior diffusion models on the class-conditional ImageNet 512×512 and 256×256 benchmarks, achieving a state-of-the-art FID of 2.27 on the latter.",
+      "route_id": "bae01627-c3c8-4896-b03f-1bf707304102"
+    },
+    {
+      "paper_ref": "3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999",
+      "paper_id": "3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999",
+      "dir_name": "Hwangbo-2019-Learning-agile-and-dynamic-motor-skills-for-legged-robots",
+      "doi": "10.1126/scirobotics.aau5872",
+      "title": "Learning agile and dynamic motor skills for legged robots",
+      "authors": [
+        "Jemin Hwangbo",
+        "Joonho Lee",
+        "Alexey Dosovitskiy",
+        "Dario Bellicoso",
+        "Vassilios Tsounis",
+        "Vladlen Koltun",
+        "Marco Hutter"
+      ],
+      "year": 2019,
+      "journal": "Science Robotics",
+      "type": "journal-article",
+      "cited_by_count": 1617,
+      "abstract": "A method for learning agile control policies uses simulated data to enable precise, efficient movements in a complex physical robot. Legged robots pose one of the greatest challenges in robotics. Dynamic and agile maneuvers of animals cannot be imitated by existing methods that are crafted by humans. A compelling alternative is reinforcement learning, which requires minimal craftsmanship and promotes the natural evolution of a control policy. However, so far, reinforcement learning research for legged robots is mainly limited to simulation, and only few and comparably simple examples have been deployed on real systems. The primary reason is that training with real robots, particularly with dynamically balancing systems, is complicated and expensive. In the present work, we introduce a method for training a neural network policy in simulation and transferring it to a state-of-the-art legged system, thereby leveraging fast, automated, and cost-effective data generation schemes. The approach is applied to the ANYmal robot, a sophisticated medium-dog–sized quadrupedal system. Using policies trained in simulation, the quadrupedal machine achieves locomotion skills that go beyond what had been achieved with prior methods: ANYmal is capable of precisely and energy-efficiently following high-level body velocity commands, running faster than before, and recovering from falling even in complex configurations.",
+      "route_id": "3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999-2"
+    },
+    {
+      "paper_ref": "9b3bcc83-38fd-461f-9eb4-a5be5e16e444",
+      "paper_id": "9b3bcc83-38fd-461f-9eb4-a5be5e16e444",
+      "dir_name": "Ross-2011-A-Reduction-of-Imitation-Learning-and-Structured-Prediction-to-No-Regret-Online-Learning",
+      "doi": "10.48550/arXiv.1011.0686",
+      "title": "A Reduction of Imitation Learning and Structured Prediction to No-Regret\\n Online Learning",
+      "authors": [
+        "Stéphane Ross",
+        "Geoffrey J. Gordon",
+        "J. Andrew Bagnell"
+      ],
+      "year": 2011,
+      "journal": "arXiv (Cornell University)",
+      "type": "preprint",
+      "cited_by_count": 1309,
+      "abstract": "Sequential prediction problems such as imitation learning, where future observations depend on previous predictions (actions), violate the common i.i.d. assumptions made in statistical learning. This leads to poor performance in theory and often in practice. Some recent approaches provide stronger guarantees in this setting, but remain somewhat unsatisfactory as they train either non-stationary or stochastic policies and require a large number of iterations. In this paper, we propose a new iterative algorithm, which trains a stationary deterministic policy, that can be seen as a no regret algorithm in an online learning setting. We show that any such no regret algorithm, combined with additional reduction assumptions, must find a policy with good performance under the distribution of observations it induces in such sequential settings. We demonstrate that this new approach outperforms previous approaches on two challenging imitation learning problems and a benchmark sequence labeling problem.",
+      "route_id": "9b3bcc83-38fd-461f-9eb4-a5be5e16e444"
+    },
+    {
+      "paper_ref": "3d3a7041-8e82-4e15-b6b1-13019b0d2571",
+      "paper_id": "3d3a7041-8e82-4e15-b6b1-13019b0d2571",
+      "dir_name": "Tevet-2022-Human-Motion-Diffusion-Model",
+      "doi": "10.48550/arXiv.2209.14916",
+      "title": "Human Motion Diffusion Model",
+      "authors": [
+        "Guy Tevet",
+        "Sigal Raab",
+        "Brian Gordon",
+        "Yonatan Shafir",
+        "Daniel Cohen-Or",
+        "Amit H. Bermano"
+      ],
+      "year": 2022,
+      "journal": "International Conference on Learning Representations",
+      "type": "preprint",
+      "cited_by_count": 1125,
+      "abstract": "Natural and expressive human motion generation is the holy grail of computer animation. It is a challenging task, due to the diversity of possible motion, human perceptual sensitivity to it, and the difficulty of accurately describing it. Therefore, current generative solutions are either low-quality or limited in expressiveness. Diffusion models, which have already shown remarkable generative capabilities in other domains, are promising candidates for human motion due to their many-to-many nature, but they tend to be resource hungry and hard to control. In this paper, we introduce Motion Diffusion Model (MDM), a carefully adapted classifier-free diffusion-based generative model for the human motion domain. MDM is transformer-based, combining insights from motion generation literature. A notable design-choice is the prediction of the sample, rather than the noise, in each diffusion step. This facilitates the use of established geometric losses on the locations and velocities of the motion, such as the foot contact loss. As we demonstrate, MDM is a generic approach, enabling different modes of conditioning, and different generation tasks. We show that our model is trained with lightweight resources and yet achieves state-of-the-art results on leading benchmarks for text-to-motion and action-to-motion. https://guytevet.github.io/mdm-page/ .",
+      "route_id": "3d3a7041-8e82-4e15-b6b1-13019b0d2571"
+    },
+    {
+      "paper_ref": "34764023-68ec-409c-b428-1313f16e6bb0",
+      "paper_id": "34764023-68ec-409c-b428-1313f16e6bb0",
+      "dir_name": "Lowe-2020-Multi-Agent-Actor-Critic-for-Mixed-Cooperative-Competitive-Environments",
+      "doi": "10.48550/arXiv.1706.02275",
+      "title": "Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments",
+      "authors": [
+        "Ryan Lowe"
+      ],
+      "year": 2020,
+      "journal": "arXiv (Cornell University)",
+      "type": "preprint",
+      "cited_by_count": 1014,
+      "abstract": "We explore deep reinforcement learning methods for multi-agent domains. We begin by analyzing the difficulty of traditional algorithms in the multi-agent case: Q-learning is challenged by an inherent non-stationarity of the environment, while policy gradient suffers from a variance that increases as the number of agents grows. We then present an adaptation of actor-critic methods that considers action policies of other agents and is able to successfully learn policies that require complex multi-agent coordination. Additionally, we introduce a training regimen utilizing an ensemble of policies for each agent that leads to more robust multi-agent policies. We show the strength of our approach compared to existing methods in cooperative as well as competitive scenarios, where agent populations are able to discover various physical and informational coordination strategies.",
+      "route_id": "34764023-68ec-409c-b428-1313f16e6bb0"
+    },
+    {
+      "paper_ref": "d1fc92d9-4f81-4249-9865-0b0976c37343",
+      "paper_id": "d1fc92d9-4f81-4249-9865-0b0976c37343",
+      "dir_name": "Gu-2024-Mamba-Linear-Time-Sequence-Modeling-with-Selective-State-Spaces",
+      "doi": "10.48550/arXiv.2312.00752",
+      "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+      "authors": [
+        "Albert Gu",
+        "Tri Dao"
+      ],
+      "year": 2024,
+      "journal": "arXiv (Cornell University)",
+      "type": "preprint",
+      "cited_by_count": 961,
+      "abstract": "Foundation models, now powering most of the exciting applications in deep learning, are almost universally based on the Transformer architecture and its core attention module. Many subquadratic-time architectures such as linear attention, gated convolution and recurrent models, and structured state space models (SSMs) have been developed to address Transformers' computational inefficiency on long sequences, but they have not performed as well as attention on important modalities such as language. We identify that a key weakness of such models is their inability to perform content-based reasoning, and make several improvements. First, simply letting the SSM parameters be functions of the input addresses their weakness with discrete modalities, allowing the model to selectively propagate or forget information along the sequence length dimension depending on the current token. Second, even though this change prevents the use of efficient convolutions, we design a hardware-aware parallel algorithm in recurrent mode. We integrate these selective SSMs into a simplified end-to-end neural network architecture without attention or even MLP blocks (Mamba). Mamba enjoys fast inference (5$\\times$ higher throughput than Transformers) and linear scaling in sequence length, and its performance improves on real data up to million-length sequences. As a general sequence model backbone, Mamba achieves state-of-the-art performance across several modalities such as language, audio, and genomics. On language modeling, our Mamba-3B model outperforms Transformers of the same size and matches Transformers twice its size, both in pretraining and downstream evaluation.",
+      "route_id": "d1fc92d9-4f81-4249-9865-0b0976c37343"
+    },
+    {
+      "paper_ref": "95488d6e-88ed-4877-afb2-459b61ad92c1",
+      "paper_id": "95488d6e-88ed-4877-afb2-459b61ad92c1",
+      "dir_name": "Wang-2023-Diffusion-Policies-as-an-Expressive-Policy-Class-for-Offline-Reinforcement-Learning",
+      "doi": "10.48550/arXiv.2208.06193",
+      "title": "Diffusion Policies as an Expressive Policy Class for Offline Reinforcement Learning",
+      "authors": [
+        "Zhendong Wang",
+        "Jonathan J. Hunt",
+        "Mingyuan Zhou"
+      ],
+      "year": 2023,
+      "journal": "International Conference on Learning Representations",
+      "type": "preprint",
+      "cited_by_count": 555,
+      "abstract": "Offline reinforcement learning (RL), which aims to learn an optimal policy using a previously collected static dataset, is an important paradigm of RL. Standard RL methods often perform poorly in this regime due to the function approximation errors on out-of-distribution actions. While a variety of regularization methods have been proposed to mitigate this issue, they are often constrained by policy classes with limited expressiveness that can lead to highly suboptimal solutions. In this paper, we propose representing the policy as a diffusion model, a recent class of highly-expressive deep generative models. We introduce Diffusion Q-learning (Diffusion-QL) that utilizes a conditional diffusion model to represent the policy. In our approach, we learn an action-value function and we add a term maximizing action-values into the training loss of the conditional diffusion model, which results in a loss that seeks optimal actions that are near the behavior policy. We show the expressiveness of the diffusion model-based policy, and the coupling of the behavior cloning and policy improvement under the diffusion model both contribute to the outstanding performance of Diffusion-QL. We illustrate the superiority of our method compared to prior works in a simple 2D bandit example with a multimodal behavior policy. We then show that our method can achieve state-of-the-art performance on the majority of the D4RL benchmark tasks.",
+      "route_id": "95488d6e-88ed-4877-afb2-459b61ad92c1"
+    },
+    {
+      "paper_ref": "861c993b-2eb1-4da7-9d25-847a3ebda1dc",
+      "paper_id": "861c993b-2eb1-4da7-9d25-847a3ebda1dc",
+      "dir_name": "Luo-2022-Understanding-Diffusion-Models-A-Unified-Perspective",
+      "doi": "10.48550/arXiv.2208.11970",
+      "title": "Understanding Diffusion Models: A Unified Perspective",
+      "authors": [
+        "Calvin Luo"
+      ],
+      "year": 2022,
+      "journal": "arXiv.org",
+      "type": "preprint",
+      "cited_by_count": 479,
+      "abstract": "Diffusion models have shown incredible capabilities as generative models; indeed, they power the current state-of-the-art models on text-conditioned image generation such as Imagen and DALL-E 2. In this work we review, demystify, and unify the understanding of diffusion models across both variational and score-based perspectives. We first derive Variational Diffusion Models (VDM) as a special case of a Markovian Hierarchical Variational Autoencoder, where three key assumptions enable tractable computation and scalable optimization of the ELBO. We then prove that optimizing a VDM boils down to learning a neural network to predict one of three potential objectives: the original source input from any arbitrary noisification of it, the original source noise from any arbitrarily noisified input, or the score function of a noisified input at any arbitrary noise level. We then dive deeper into what it means to learn the score function, and connect the variational perspective of a diffusion model explicitly with the Score-based Generative Modeling perspective through Tweedie's Formula. Lastly, we cover how to learn a conditional distribution using diffusion models via guidance.",
+      "route_id": "861c993b-2eb1-4da7-9d25-847a3ebda1dc"
+    }
+  ],
+  "topic_overview": [],
+  "trend_overview": {
+    "year_summary": {
+      "earliest": 1956,
+      "latest": 2026,
+      "active_years": 13,
+      "recent_window_start": 2024,
+      "recent_count": 351,
+      "recent_share": 0.75
+    },
+    "citation_summary": {
+      "average": 93.5,
+      "median": 0.0,
+      "max": 6507,
+      "with_citations": 225,
+      "with_citations_share": 0.4807692307692308
+    },
+    "year_distribution": [
+      {
+        "year": 1980,
+        "count": 1
+      },
+      {
+        "year": 2011,
+        "count": 1
+      },
+      {
+        "year": 2017,
+        "count": 1
+      },
+      {
+        "year": 2018,
+        "count": 1
+      },
+      {
+        "year": 2019,
+        "count": 3
+      },
+      {
+        "year": 2020,
+        "count": 5
+      },
+      {
+        "year": 2021,
+        "count": 9
+      },
+      {
+        "year": 2022,
+        "count": 21
+      },
+      {
+        "year": 2023,
+        "count": 47
+      },
+      {
+        "year": 2024,
+        "count": 51
+      },
+      {
+        "year": 2025,
+        "count": 181
+      },
+      {
+        "year": 2026,
+        "count": 119
+      }
+    ],
+    "type_breakdown": [
+      {
+        "name": "preprint",
+        "count": 269,
+        "share": 0.5747863247863247
+      },
+      {
+        "name": "unknown",
+        "count": 61,
+        "share": 0.13034188034188035
+      },
+      {
+        "name": "proceedings-article",
+        "count": 59,
+        "share": 0.12606837606837606
+      },
+      {
+        "name": "journal-article",
+        "count": 33,
+        "share": 0.07051282051282051
+      },
+      {
+        "name": "article",
+        "count": 16,
+        "share": 0.03418803418803419
+      },
+      {
+        "name": "webpage",
+        "count": 14,
+        "share": 0.029914529914529916
+      }
+    ],
+    "top_authors": [
+      {
+        "name": "Jiangmiao Pang",
+        "count": 16,
+        "share": 0.03418803418803419
+      },
+      {
+        "name": "Marco Hutter",
+        "count": 14,
+        "share": 0.029914529914529916
+      },
+      {
+        "name": "Guanya Shi",
+        "count": 13,
+        "share": 0.027777777777777776
+      },
+      {
+        "name": "Jingbo Wang",
+        "count": 13,
+        "share": 0.027777777777777776
+      },
+      {
+        "name": "Renjing Xu",
+        "count": 10,
+        "share": 0.021367521367521368
+      },
+      {
+        "name": "Zhengyi Luo",
+        "count": 9,
+        "share": 0.019230769230769232
+      },
+      {
+        "name": "Xue Bin Peng",
+        "count": 9,
+        "share": 0.019230769230769232
+      },
+      {
+        "name": "Siyuan Huang",
+        "count": 9,
+        "share": 0.019230769230769232
+      }
+    ],
+    "top_journals": [
+      {
+        "name": "arXiv.org",
+        "count": 130,
+        "share": 0.2777777777777778
+      },
+      {
+        "name": "arXiv (Cornell University)",
+        "count": 105,
+        "share": 0.22435897435897437
+      },
+      {
+        "name": "Unknown venue",
+        "count": 74,
+        "share": 0.1581196581196581
+      },
+      {
+        "name": "ArXiv.org",
+        "count": 26,
+        "share": 0.05555555555555555
+      },
+      {
+        "name": "2023 IEEE International Conference on Robotics and Automation (ICRA)",
+        "count": 16,
+        "share": 0.03418803418803419
+      },
+      {
+        "name": "International Conference on Learning Representations",
+        "count": 14,
+        "share": 0.029914529914529916
+      }
+    ],
+    "recent_papers_sample": [
+      {
+        "paper_ref": "93f55381-4905-44fa-bd23-c16970cc1a4e",
+        "paper_id": "93f55381-4905-44fa-bd23-c16970cc1a4e",
+        "dir_name": "Nahrendra-2026-DreamWaQ-Obstacle-Aware-Quadrupedal-Locomotion-With-Resilient-Multimodal-Reinforcement-Learning",
+        "doi": "10.1109/tro.2026.3653774",
+        "title": "DreamWaQ++: Obstacle-Aware Quadrupedal Locomotion With Resilient Multimodal Reinforcement Learning",
+        "authors": [
+          "I Made Aswin Nahrendra",
+          "Byeongho Yu",
+          "Minho Oh",
+          "Dongkyu Lee",
+          "Seunghyun Lee",
+          "Hyeonwoo Lee",
+          "Hyungtae Lim",
+          "Hyun Myung"
+        ],
+        "year": 2026,
+        "journal": "IEEE Transactions on Robotics",
+        "type": "journal-article",
+        "cited_by_count": 11,
+        "abstract": "Quadrupedal robots hold promising potential for applications in navigating cluttered environments with resilience akin to their animal counterparts. However, their floating-base configuration makes them susceptible to real-world uncertainties, presenting substantial challenges in locomotion control. Deep reinforcement learning has emerged as a viable alternative for developing robust locomotion controllers. However, approaches relying solely on proprioception often sacrifice collision-free locomotion, as they require front-foot contact to detect stairs and adapt the gait. Meanwhile, incorporating exteroception necessitates a precisely modeled map observed by exteroceptive sensors over time. This work proposes a novel method for fusing proprioception and exteroception through a resilient multimodal reinforcement learning framework. The proposed method yields a controller demonstrating agile locomotion on a quadrupedal robot across diverse real-world courses, including rough terrains, steep slopes, and high-rise stairs, while maintaining robustness in out-of-distribution situations.",
+        "route_id": "93f55381-4905-44fa-bd23-c16970cc1a4e"
+      },
+      {
+        "paper_ref": "0d565194-493d-429e-b235-fdb1635fdfc8",
+        "paper_id": "0d565194-493d-429e-b235-fdb1635fdfc8",
+        "dir_name": "Song-2026-Gait-Adaptive-Perceptive-Humanoid-Locomotion-With-Real-Time-Under-Base-Terrain-Reconstruction",
+        "doi": "10.1109/lra.2026.3664167",
+        "title": "Gait-Adaptive Perceptive Humanoid Locomotion With Real-Time Under-Base Terrain Reconstruction",
+        "authors": [
+          "Haolin Song",
+          "Hongbo Zhu",
+          "Tao Yu",
+          "Yan Liu",
+          "Mingqi Yuan",
+          "Wengang Zhou",
+          "Hua Chen",
+          "Houqiang Li"
+        ],
+        "year": 2026,
+        "journal": "IEEE Robotics and Automation Letters",
+        "type": "journal-article",
+        "cited_by_count": 8,
+        "abstract": "For full-size humanoid robots, reliable locomotion on complex terrains—such as long staircases—remains challenging, even with recent advances in reinforcement-learning-based control. In such settings, limited perception, ambiguous terrain cues, and insufficient adaptation of gait timing can cause even a single misplaced or mistimed step to result in rapid loss of balance. We introduce a perceptive locomotion framework that merges terrain sensing, gait regulation, and whole-body control into a single reinforcement learning policy. A downward-facing depth camera mounted under the base observes the support region around the feet, and a compact U-Net reconstructs a dense egocentric height map from each frame in real time, operating at the same frequency as the control loop. The perceptual height map, together with proprioceptive observations, is processed by a unified policy that produces joint commands and a global stepping-phase signal, allowing gait timing and whole-body posture to be adapted jointly to the commanded motion and local terrain geometry. We further adopt a single-stage successive teacher–student training scheme for efficient policy learning and knowledge transfer. Experiments conducted on a 31-DoF, 1.65 m humanoid robot demonstrate robust locomotion in both simulation and real-world settings, including forward and backward stair ascent and descent, as well as crossing a 46 cm gap.",
+        "route_id": "0d565194-493d-429e-b235-fdb1635fdfc8"
+      },
+      {
+        "paper_ref": "200153e8-5780-4713-a0e8-b77f270d9f52",
+        "paper_id": "200153e8-5780-4713-a0e8-b77f270d9f52",
+        "dir_name": "Fu-2026-DemoHLM-From-One-Demonstration-to-Generalizable-Humanoid-Loco-Manipulation",
+        "doi": "10.1109/lra.2026.3666395",
+        "title": "DemoHLM: From One Demonstration to Generalizable Humanoid Loco-Manipulation",
+        "authors": [
+          "Yuhui Fu",
+          "Feiyang Xie",
+          "Chaoyi Xu",
+          "Jing Xiong",
+          "Haoqi Yuan",
+          "Zongqing Lu"
+        ],
+        "year": 2026,
+        "journal": "IEEE Robotics and Automation Letters",
+        "type": "journal-article",
+        "cited_by_count": 7,
+        "abstract": "Loco-manipulation is a fundamental challenge for humanoid robots to achieve versatile interactions in human environments. Although recent studies have made significant progress in humanoid whole-body control, loco-manipulation remains underexplored and often relies on hard-coded task definitions or costly real-world data collection, which limits autonomy and generalization. We present DemoHLM, a framework for humanoid loco-manipulation that achieves generalization to different robot and object poses from just a single demonstration in simulation. DemoHLM adopts a hierarchy that integrates a low-level universal whole-body controller with high-level manipulation policies for multiple tasks. The whole-body controller maps whole-body motion commands to joint positions and provides omnidirectional mobility for the humanoid robot. The manipulation policies, learned in simulation via our data generation and imitation learning pipeline, command the whole-body controller with closed-loop visual feedback to execute challenging loco-manipulation tasks. Experiments show a positive correlation between the amount of synthetic data and policy performance, underscoring the effectiveness of our data generation pipeline and the data efficiency of our approach. Real-world experiments on a Unitree G1 robot equipped with an RGB-D camera validate the sim-to-real transferability of DemoHLM, demonstrating robust performance under spatial variations across ten loco-manipulation tasks.",
+        "route_id": "200153e8-5780-4713-a0e8-b77f270d9f52"
+      },
+      {
+        "paper_ref": "f8bf1043-050e-494b-80af-fca460396267",
+        "paper_id": "f8bf1043-050e-494b-80af-fca460396267",
+        "dir_name": "Sharma-2026-World-Gymnast-Training-Robots-with-Reinforcement-Learning-in-a-World-Model",
+        "doi": "10.48550/arXiv.2602.02454",
+        "title": "World-Gymnast: Training Robots with Reinforcement Learning in a World Model",
+        "authors": [
+          "A. Sharma",
+          "Yixiang Sun",
+          "Ning Lu",
+          "Yunzhe Zhang",
+          "Jiarao Liu",
+          "Sherry Yang"
+        ],
+        "year": 2026,
+        "journal": "arXiv.org",
+        "type": "preprint",
+        "cited_by_count": 3,
+        "abstract": "Robot learning from interacting with the physical world is fundamentally bottlenecked by the cost of physical interaction. The two alternatives, supervised finetuning (SFT) from expert demonstrations and reinforcement learning (RL) in a software-based simulator, are limited by the amount of expert data available and the sim-to-real gap for manipulation. With the recent emergence of world models learned from real-world video-action data, we ask the question of whether training a policy in a world model can be more effective than supervised learning or software simulation in achieving better real-robot performance. We propose World-Gymnast, which performs RL finetuning of a vision-language-action (VLA) policy by rolling out the policy in an action-conditioned video world model and rewarding the rollouts with a vision-language model (VLM). On the Bridge robot setup, World-Gymnast outperforms SFT by as much as 18x and outperforms software simulator by as much as 2x. More importantly, World-Gymnast demonstrates intriguing capabilities of RL with a world model, including training on diverse language instructions and novel scenes from the world model, test-time training in a novel scene, and online iterative world model and policy improvement. Our results suggest learning a world model and training robot policies in the cloud could be the key to bridging the gap between robots that work in demonstrations and robots that can work in anyone's household.",
+        "route_id": "f8bf1043-050e-494b-80af-fca460396267"
+      },
+      {
+        "paper_ref": "4e650289-b615-44a7-b8e4-3cbf6d1d9d43",
+        "paper_id": "4e650289-b615-44a7-b8e4-3cbf6d1d9d43",
+        "dir_name": "Zhang-2026-AME-2-Agile-and-Generalized-Legged-Locomotion-via-Attention-Based-Neural-Map-Encoding",
+        "doi": "10.48550/arXiv.2601.08485",
+        "title": "AME-2: Agile and Generalized Legged Locomotion via Attention-Based Neural Map Encoding",
+        "authors": [
+          "Chong Zhang",
+          "Victor Klemm",
+          "Fan Yang",
+          "Marco Hutter"
+        ],
+        "year": 2026,
+        "journal": "arXiv.org",
+        "type": "preprint",
+        "cited_by_count": 2,
+        "abstract": "Achieving agile and generalized legged locomotion across terrains requires tight integration of perception and control, especially under occlusions and sparse footholds. Existing methods have demonstrated agility on parkour courses but often rely on end-to-end sensorimotor models with limited generalization and interpretability. By contrast, methods targeting generalized locomotion typically exhibit limited agility and struggle with visual occlusions. We introduce AME-2, a unified reinforcement learning (RL) framework for agile and generalized locomotion that incorporates a novel attention-based map encoder in the control policy. This encoder extracts local and global mapping features and uses attention mechanisms to focus on salient regions, producing an interpretable and generalized embedding for RL-based control. We further propose a learning-based mapping pipeline that provides fast, uncertainty-aware terrain representations robust to noise and occlusions, serving as policy inputs. It uses neural networks to convert depth observations into local elevations with uncertainties, and fuses them with odometry. The pipeline also integrates with parallel simulation so that we can train controllers with online mapping, aiding sim-to-real transfer. We validate AME-2 with the proposed mapping pipeline on a quadruped and a biped robot, and the resulting controllers demonstrate strong agility and generalization to unseen terrains in simulation and in real-world experiments.",
+        "route_id": "4e650289-b615-44a7-b8e4-3cbf6d1d9d43"
+      },
+      {
+        "paper_ref": "b5472ccf-2f10-4487-9cf9-f965425b3747",
+        "paper_id": "b5472ccf-2f10-4487-9cf9-f965425b3747",
+        "dir_name": "Yi-2026-Flow-Policy-Gradients-for-Robot-Control",
+        "doi": "10.48550/arXiv.2602.02481",
+        "title": "Flow Policy Gradients for Robot Control",
+        "authors": [
+          "Brent Yi",
+          "Hongsuk Choi",
+          "Himanshu Gaurav Singh",
+          "Xiaoyu Huang",
+          "Takara Truong",
+          "Carmelo Sferrazza",
+          "Yi Ma",
+          "Rocky Duan",
+          "Pieter Abbeel",
+          "Guanya Shi",
+          "Karen Liu",
+          "Angjoo Kanazawa"
+        ],
+        "year": 2026,
+        "journal": "arXiv.org",
+        "type": "preprint",
+        "cited_by_count": 2,
+        "abstract": "Likelihood-based policy gradient methods are the dominant approach for training robot control policies from rewards. These methods rely on differentiable action likelihoods, which constrain policy outputs to simple distributions like Gaussians. In this work, we show how flow matching policy gradients -- a recent framework that bypasses likelihood computation -- can be made effective for training and fine-tuning more expressive policies in challenging robot control settings. We introduce an improved objective that enables success in legged locomotion, humanoid motion tracking, and manipulation tasks, as well as robust sim-to-real transfer on two humanoid robots. We then present ablations and analysis on training dynamics. Results show how policies can exploit the flow representation for exploration when training from scratch, as well as improved fine-tuning robustness over baselines.",
+        "route_id": "b5472ccf-2f10-4487-9cf9-f965425b3747"
+      },
+      {
+        "paper_ref": "49512214-064c-4276-84dd-8975a173c479",
+        "paper_id": "49512214-064c-4276-84dd-8975a173c479",
+        "dir_name": "Zhou-2026-Adaptive-Legged-Locomotion-via-Online-Learning-for-Model-Predictive-Control",
+        "doi": "10.1109/lra.2025.3644161",
+        "title": "Adaptive Legged Locomotion via Online Learning for Model Predictive Control",
+        "authors": [
+          "Hongyu Zhou",
+          "Xiaoyu Zhang",
+          "Vasileios Tzoumas"
+        ],
+        "year": 2026,
+        "journal": "IEEE Robotics and Automation Letters",
+        "type": "journal-article",
+        "cited_by_count": 1,
+        "abstract": "We provide an algorithm for adaptive legged locomotion via online learning and model predictive control. The algorithm is composed of two interacting modules: model predictive control (MPC) and online learning of residual dynamics. The residual dynamics can represent modeling errors and external disturbances. We are motivated by the future of autonomy where quadrupeds will autonomously perform complex tasks despite real-world unknown uncertainty, such as unknown payload and uneven terrains. The algorithm uses random Fourier features to approximate the residual dynamics in reproducing kernel Hilbert spaces. Then, it employs MPC based on the current learned model of the residual dynamics. The model is updated online in a self-supervised manner using least squares based on the data collected while controlling the quadruped. The algorithm enjoys sublinear <italic>dynamic regret</italic>, defined as the suboptimality against an optimal clairvoyant controller that knows how the residual dynamics. We validate our algorithm in Gazebo and MuJoCo simulations, where the quadruped aims to track reference trajectories. The Gazebo simulations include constant unknown external forces up to <inline-formula><tex-math notation=\"LaTeX\">$12\\boldsymbol{g}$</tex-math></inline-formula>, where <inline-formula><tex-math notation=\"LaTeX\">$\\boldsymbol{g}$</tex-math></inline-formula> is the gravity vector, in flat terrain, slope terrain with <inline-formula><tex-math notation=\"LaTeX\">$20^{\\circ }$</tex-math></inline-formula> inclination, and rough terrain with <inline-formula><tex-math notation=\"LaTeX\">$0.25\\,\\text{m}$</tex-math></inline-formula> height variation. The MuJoCo simulations include time-varying unknown disturbances with payload up to <inline-formula><tex-math notation=\"LaTeX\">$\\text{8}\\,\\text{kg}$</tex-math></inline-formula> and time-varying ground friction coefficients in flat terrain.",
+        "route_id": "49512214-064c-4276-84dd-8975a173c479"
+      },
+      {
+        "paper_ref": "0d533bae-5657-4777-b9df-0961e93f2377",
+        "paper_id": "0d533bae-5657-4777-b9df-0961e93f2377",
+        "dir_name": "Han-2026-HUSKY-Humanoid-Skateboarding-System-via-Physics-Aware-Whole-Body-Control",
+        "doi": "10.48550/arXiv.2602.03205",
+        "title": "HUSKY: Humanoid Skateboarding System via Physics-Aware Whole-Body Control",
+        "authors": [
+          "Jinrui Han",
+          "Dewei Wang",
+          "Chenyun Zhang",
+          "Xinzhe Liu",
+          "Ping Luo",
+          "Chenjia Bai",
+          "Xuelong Li"
+        ],
+        "year": 2026,
+        "journal": "arXiv.org",
+        "type": "preprint",
+        "cited_by_count": 1,
+        "abstract": "While current humanoid whole-body control frameworks predominantly rely on the static environment assumptions, addressing tasks characterized by high dynamism and complex interactions presents a formidable challenge. In this paper, we address humanoid skateboarding, a highly challenging task requiring stable dynamic maneuvering on an underactuated wheeled platform. This integrated system is governed by non-holonomic constraints and tightly coupled human-object interactions. Successfully executing this task requires simultaneous mastery of hybrid contact dynamics and robust balance control on a mechanically coupled, dynamically unstable skateboard. To overcome the aforementioned challenges, we propose HUSKY, a learning-based framework that integrates humanoid-skateboard system modeling and physics-aware whole-body control. We first model the coupling relationship between board tilt and truck steering angles, enabling a principled analysis of system dynamics. Building upon this, HUSKY leverages Adversarial Motion Priors (AMP) to learn human-like pushing motions and employs a physics-guided, heading-oriented strategy for lean-to-steer behaviors. Moreover, a trajectory-guided mechanism ensures smooth and stable transitions between pushing and steering. Experimental results on the Unitree G1 humanoid platform demonstrate that our framework enables stable and agile maneuvering on skateboards in real-world scenarios. The project page is available on https://husky-humanoid.github.io/.",
+        "route_id": "0d533bae-5657-4777-b9df-0961e93f2377"
+      }
+    ],
+    "trend_highlights": [
+      "当前主库覆盖 1956-2026，最近 3 年论文占 351/468（75%）。",
+      "收录最集中的期刊/来源是 arXiv.org，占当前主库的 28%。",
+      "当前主库中出现最频繁的作者是 Jiangmiao Pang，共出现 16 次。",
+      "引用分布存在明显头部论文，最高引用 6507，平均引用 93.5，有引用记录的论文占 48%。"
+    ]
+  },
+  "roadmap_exists": true,
+  "roadmap": "# 当前文献库领域进化图谱与技术预测\n\n当前主库已被自动划分为 8 个核心研究方向。\n\n## 0_legged locomotion_legged robots_locomotion skills_agile locomotion\n\n### 研究脉络概览\n\n四足机器人强化学习运动控制的发展，经历了从“模拟困境”到“敏捷极限”再到“领域泛化”的演进。早期研究受限于真实机器人采样的高成本和维度灾难，主要停留在仿真环境。随着并行计算资源的溢出和域随机化技术的成熟，策略训练开始实现分钟级部署，并突破了对专家轨迹的依赖。然而，稀疏奖励环境下的精准足部放置和跨技能泛化仍是核心瓶颈。当前趋势正从单一技能策略向多技能融合（如腿足 Manipulation）以及基于扩散模型的离线策略学习范式迁移，旨在构建通用、稳健且具备实时推理能力的腿足智能体。\n\n### 阶段一：仿真到真实的艰难跨越（2019-2021）\n\n#### 核心挑战\n训练腿足机器人策略的核心痛点在于真实世界交互的高昂成本和动态平衡系统的脆弱性。传统的强化学习在真实机器人上训练不仅耗时巨大，且容易因试错过程中的高频坠落导致硬件损耗。如何在仿真中高效合成可迁移的策略是此阶段的首要障碍。\n\n#### 关键技术突破\n此阶段的关键在于**域随机化（Domain Randomization）与自适应课程学习**的结合。通过在仿真中大量并行实验，策略被迫学习对物理参数不确定性（如摩擦系数、质量分布）的鲁棒性，从而实现无需精确建模的 sim-to-real 迁移。同时，研究者开始引入**导师引导（Mentor）机制**和**分层运动生成**，通过分解复杂任务（如跨越障碍）来缓解稀疏奖励问题。\n\n#### 代表论文\n- [Learning agile and dynamic motor skills for legged robots](paper_id:3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999)：奠基性工作，验证了基于 PPO 算法结合大规模域随机化在 ANYmal 机器人上实现敏捷运动和跌倒恢复的可行性。\n- [DeepWalk: Omnidirectional Bipedal Gait by Deep Reinforcement Learning](paper_id:91a35c2e-a527-4ae9-ae81-85cf41e0b346)：针对双足机器人，通过课程式目标速度调度解决了高维动作空间的探索难题，实现了无需参考运动的 omni-directional 步态。\n- [Learning Agile Locomotion Skills with a Mentor](paper_id:6716a708-7e3e-451c-98b8-dc991c19a143)：通过多阶段师生学习框架，利用导师优化检查点引导重心运动，显著提升了机器人在复杂障碍地形（随机间隙与障碍物）中的敏捷奔跑与跳跃能力。\n\n### 阶段二：极速训练与敏捷极限（2022）\n\n#### 核心挑战\n尽管策略可以实现 sim-to-real 迁移，但**训练效率低下**（通常需要数天乃至数周）和**敏捷性不足**（速度、转向响应迟缓）成为制约其实用化的主要矛盾。如何在保持鲁棒性的同时突破速度与机动性的上限是这一阶段的核心目标。\n\n#### 关键技术突破\n为解决效率问题，研究者转向**大规模并行强化学习**（利用单个工作站 GPU 上千个并行模拟环境），将训练时间压缩至分钟级。在敏捷性方面，引入**在线系统辨识（Online System Identification）**和**自适应速度课程**，使策略能够根据当前状态动态调整行为，从而在 wild 环境下实现高达 3.9 m/s 的持续奔跑与高速急转。此外，**步态解耦表示学习**的提出，使得机器人能在运动中实时融合连续可变的步态参数。\n\n#### 代表论文\n- [Learning to Walk in Minutes Using Massively Parallel Deep Reinforcement Learning](paper_id:59bda03b-b238-427f-9245-ba01c8e964bd)：通过大规模并行训练框架，将 ANYmal 在平坦地形的策略训练时间缩短至 4 分钟，在崎岖地形缩短至 20 分钟，较以往方法提升数个数量级。\n- [Rapid Locomotion via Reinforcement Learning](paper_id:ff9c67e9-56cc-42ee-850a-9273c7dda6f5)：在 MIT Mini Cheetah 上实现 3.9 m/s 的记录敏捷性，通过自适应速度课程和在线系统辨识策略，解决了 sim-to-real 间的物理参数不匹配问题。\n- [Next Steps: Learning a Disentangled Gait Representation for Versatile Quadruped Locomotion](paper_id:35039b19-3e2b-410a-8757-2ef4b49053a7)：提出基于生成模型的步态潜在空间，将节律高度、足部高度和支撑时长等关键步态参数解耦，支持实时的动态步态融合与外部扰动抑制。\n\n### 阶段三：感知融合与跨域泛化（2023-2024）\n\n#### 核心挑战\n基于纯本体感知（proprioception）的策略在面对**长距离非结构化地形**和**未见过的动态障碍**时泛化能力有限。此外，将运动智能与**感知决策**分离仍是实现复杂任务（如自主导航）的关键障碍。如何让机器人在没有视觉先验的情况下理解并适应复杂环境，同时保持高速运动，是此阶段的核心挑战。\n\n#### 关键技术突破\n研究重心转向**隐式地形感知与对抗性运动先验（Adversarial Motion Priors, AMP）**。通过在训练中加入噪声和扰动分布，策略无需显式建图即可隐式“想象”地形轮廓。同时，**核函数残差学习（Kernel-based Residual Learning）**与 **DTC（Deep Tracking Control）** 等工作探索了将基于模型的轨迹优化（提供可解释性规划）与无模型强化学习（提供鲁棒性）的混合架构。此外，**离线扩散策略（Diffusion-based Policy）**的引入，通过从大规模离线数据集中学习多模态运动分布，解决了传统策略在稀疏奖励环境下的足部放置精度问题。\n\n#### 代表论文\n- [DreamWaQ: Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination](paper_id:8aadef1e-66cb-4668-ace6-f3ba8482db55)：通过隐式地形想象力，使机器人在仅依靠有限感知模态的情况下，完成单次长距离户外行走。\n- [Learning Robust and Agile Legged Locomotion Using Adversarial Motion Priors](paper_id:2ae4fa55-b1b9-4ec5-99c6-3237eb4b6882)：首次实现“盲行”系统在挑战性地形稳健行走的同时，在自然地形上高速敏捷运动，利用 AMP 从运动数据集中迁移自然步态。\n- [DTC: Deep Tracking Control](paper_id:bd480aa8-bbbd-491f-9bf7-b24918266b76)：结合模型预测规划（MPC）的可解释性与强化学习的鲁棒性，在稀疏地形（如独木桥）上实现精准足部放置。\n- [DiffuseLoco: Real-Time Legged Locomotion Control with Diffusion from Offline Datasets](paper_id:b67913f6-d222-4ba4-ac58-950468724724)：利用扩散模型从离线多模态数据集中学习，实现了零样本迁移到真实机器人，支持多技能自由切换。\n\n### 未来趋势预测\n\n**1. 多技能统一智能体与大模型融合**\n当前系统多针对特定技能（跑、跳、跨）进行优化。未来趋势是构建**统一的大参数策略网络**，使其具备通过自然语言或高层指令（如“去那个房间并把箱子推过来”）动态组合技能的能力，而非逐个训练。这将依赖大规模语言模型与运动策略的端到端对齐。\n\n**2. 具身化推理与长期任务规划**\n现有 RL 策略主要处理短视距反馈。下一阶段需要整合**层级化认知架构**，使机器人能够进行多步推理（如识别不可通行区域、制定迂回路径）。[GPF-BG: A Hierarchical Vision-Based Planning Framework for Safe Quadrupedal Navigation](paper_id:a5c886e5-5ac7-427d-8a4f-79a7640a39a0) 的层次化视觉规划框架是这一方向的早期探索。\n\n**3. 能耗与计算效率的极致优化**\n随着机器人进入工业与民用场景，**能量效率**成为与鲁棒性同等重要的指标。如何通过策略架构的精简（如将扩散模型蒸馏为单步残差网络）和硬件感知训练（考虑电机扭矩-转速特性），在边缘计算设备上实现高效推理，将是落地应用的关键瓶颈。\n\n---\n\n## 2_humanoid control_humanoid teleoperation_humanoid body control_humanoid motion\n\n### 研究脉络概览\n\n人形机器人控制技术近年来经历了从专用运动追踪向通用运动智能的范式转变。早期研究受限于动作空间的高维性和强化学习的样本复杂度，主要聚焦于单一技能的模仿学习。2023至2024年间，“Universal Motion”概念出现，通过大规模动作库和变分自编码器（VAE）提升策略的泛化能力。2025年，技术焦点转向 Scaling Laws 在机器人控制领域的应用，核心突破在于通过超大规模 Motion Capture 数据集（>100M帧）和参数量的提升，构建可泛化的基础运动模型（Foundation Model）。同时，为了摆脱繁琐的多阶段级联系统，“Language to Action” 的端到端控制方案迅速崛起，将语义理解与物理执行紧密耦合。\n\n### 阶段一：通用动作表示的奠基 (2023)\n\n#### 核心挑战\n人形机器人的高维自由度（DoF）与强化学习固有的不稳定性导致策略难以覆盖复杂运动空间。早期的端到端策略仅能处理行走或特定动作，且对噪声输入（如视觉姿态估计）缺乏容错性。\n\n#### 关键技术突破\n该阶段聚焦于构建具有强泛化能力的通用动作表示。核心思路是解耦动作表示学习与下游任务执行。通过 Variational Information Bottleneck 在大量非结构化动作数据上蒸馏技能隐空间，并结合基于本体感知的先验分布提升采样效率。这解决了动作空间覆盖率低的问题。\n\n#### 代表论文\n- **Universal Humanoid Motion Representations** [d9653bb7](paper_id:d9653bb7-a643-4418-b61d-4a2b98bdada8)：提出从非结构化动作库蒸馏通用动作表示。\n- **Perpetual Humanoid Control** [535d5b6d](paper_id:535d5b6d-9ac9-457b-90d5-bfc23b8f59eb)：通过 PMCP 动态扩展网络容量，实现长达万条动作序列的无重置追踪，并具备跌倒恢复的容错能力。\n\n### 阶段二：敏捷动作追踪与统一策略 (2025)\n\n#### 核心挑战\n第一阶段的表示虽具通用性，但在追踪高度动态动作（如空翻、旋踢）时精度不足，且动作表示与下游任务的执行粒度存在断层。此外，多专家（MoE）架构虽被提出，但如何高效协同上下半身的运动仍不清晰。\n\n#### 关键技术突破\n通过 **Guided Diffusion** 策略革新动作追踪范式，实现了对极限敏捷动作的精确追踪。同时，引入 **Motion Mixture-of-Experts (MoE)** 与 **自适应采样**，解决了策略在运动流形不同区域的专精化问题，显著提升了训练效率和对未见动作的泛化能力。\n\n#### 代表论文\n- **BeyondMimic** [1d1d3a69](paper_id:1d1d3a69-33f1-42c7-8903-1990ef8e6300)：利用引导扩散实现极限动作追踪。\n- **GMT** [647d1f90](paper_id:647d1f90-fb96-463c-ae85-8e12561bbc77)：通过自适应采样与 MoE 构建统一策略框架。\n- **UniTracker** [1227f449](paper_id:1227f449-6927-4e21-8352-cddeedee0b26)：提出 CVAE 隐空间建模，解决部分观测下的漂移问题，并引入快速适应模块。\n- **EGM** [ecf9e4c3](paper_id:ecf9e4c3-1798-40de-a4b1-6bafb15532bb)：引入“数据质量与多样性至上”理念，通过复合解耦 MoE 架构高效处理动态运动。\n\n### 阶段三：基础运动模型的 Scaling (2025)\n\n#### 核心挑战\n此前方法依赖小规模网络与私有数据集，策略容量受限，无法在真实硬件上实现自然、鲁棒的大规模运动生成。缺乏统一的接口来整合如 VR 设备、视频或 VLA 模型等多样化输入源。\n\n#### 关键技术突破\n将大模型领域的 **Scaling Laws** 引入人形控制。通过将模型参数量从 1.2M 扩展至 42M，并利用超过 700 小时（100M 帧）的高质量动作数据进行预训练，构建了运动追踪的基础模型。关键是设计了统一的 Token 空间，支持多种运动输入接口（VR、视频、VLA）共用同一策略，实现了动作追踪的“预训练-微调”范式。\n\n#### 代表论文\n- **SONIC** [cc48587b](paper_id:cc48587b-5c75-44ef-adac-558ddaa0892f)：实现运动追踪的规模效应，构建参数量达 42M 的通用人形控制器。\n\n### 阶段四：语言驱动的端到端控制 (2025)\n\n#### 核心挑战\n传统的“语言->姿态估计->重定向->追踪”多阶段流程存在累计误差、高延迟及语义与控制弱耦合的问题。此外，现有的语言控制方案难以处理开放域的自由指令，且往往牺牲运动多样性。\n\n#### 关键技术突破\n为消除级联系统的脆弱性，提出 **Retargeting-Free** 的直接映射框架。利用扩散策略（Denosing Diffusion）或流匹配（Flow Matching）在动作空间直接去噪，保持语义意图并支持快速反应控制。此外，通过构建 **统一运动词汇表（Unified Motion Vocabulary）**，对齐人与机器人的运动基元，并结合 LLM 的语义理解能力，实现自由形式语言指令的物理执行。\n\n#### 代表论文\n- **RoboGhost** [f216b5bc](paper_id:f216b5bc-a696-4c61-9fba-5c2fdbe6bb85)：无重定向框架，基于语言-动作隐空间直接生成可执行动作。\n- **Humanoid-LLA** [6613d9da](paper_id:6613d9da-63f5-49c5-af0b-1df8e4114592)：引入统一运动词汇表，通过 RL 物理可行性强化的 LLM Action Model。\n- **SENTINEL** [6d842662](paper_id:6d842662-7717-439d-ad6f-1e60183e8ef9)：采用流匹配的动作生成，实现完全端到端的 Language-Action 模型。\n\n### 未来趋势预测\n\n**1. 多模态具身推理的深化**\n当前的语言模型虽具备语义理解，但缺乏对物理空间和交互动力学的深层直觉预测能力（如力学反馈、重心偏移）。未来将出现融合物理先验的神经符号系统，在语言指令中嵌入对物理约束的显式建模，提升在非结构化环境中的成功率。\n\n**2. 长期任务规划与即时反应的解耦/融合**\n现有端到端模型在短期避障上表现优异，但在需要长期战略规划（如复杂家务、多步骤任务）的场景下表现欠佳。预测下一个关键演化方向是构建 **双系统控制架构**：由慢速的层级规划器（基于 VLA）负责任务分解，快速的条件反射策略（基于 scaled Motion Tracking）负责毫秒级的平衡与避障。\n\n**3. 硬件协同设计与轻量级泛化策略**\n当前算法严重依赖密集的动作捕捉数据和计算资源（千卡时训练）。随着人形本体向高集成度进化，未来将更加注重 **高效微调策略（Parameter-Efficient Transfer）** 和 **自监督动作获取**，减少对物理硬件的试错成本，实现从仿真到现实的无缝迁移。\n\n---\n\n---\n\n## 1_loco manipulation tasks_humanoid loco manipulation_body loco manipulation_manipulation tasks\n\n### 研究脉络概览\n\n人形机器人 loco-manipulation（运动-操作）领域在 2024 至 2026 年间经历了从“固定思维”到“统一身体智能”的范式跃迁。早期的研究将 locomotion 和 manipulation 视为独立的控制层级，通过手工设计的接口连接，导致响应迟滞和任务空间受限。随后，领域焦点转向构建大规模数据管道（TWIST2, Humanoid Everyday），以解决数据稀缺问题。在此基础上，Sim-to-Real 迁移（VIRAL, VisualMimic）成为验证真实世界泛化性的核心路径。最终，数据驱动的 Vision-Language-Action (VLA) 模型（WholeBodyVLA, REFINE-DP）开始突破模块间耦合的瓶颈，推动实现大一统的全身控制框架。\n\n### 阶段一：视觉全身控制的基础架设\n\n**核心挑战**\n早期 loco-manipulation 系统受限于离散化的任务定义和缺乏实时视觉反馈的能力。如何让机器人在移动的同时利用视觉信息精准控制末端执行器，是实现自主交互的首要障碍。\n\n**关键技术突破**\n该阶段的核心是构建层级化的视觉-运动策略。[Visual Whole-Body Control for Legged Loco-Manipulation](paper_id:03d28772-a041-484a-9817-ae27d7dd9445) 首次提出了 VBC 框架，通过低层策略追踪机体速度与末端位置，高层策略基于视觉输入生成指令。这一设计首次在仿真中实现了纯视觉驱动的四足 loco-manipulation，证明了层级策略在处理多自由度耦合时的有效性。\n\n**代表论文**\n- [Visual Whole-Body Control for Legged Loco-Manipulation](paper_id:03d28772-a041-484a-9817-ae27d7dd9445)\n\n### 阶段二：大规模数据基础设施与数据稀缺破解\n\n**核心挑战**\n尽管策略学习框架已建立，但人形机器人的 loco-manipulation 数据极度匮乏。传统 MoCap 系统价格高昂且部署复杂，严重制约了模仿学习策略的泛化能力。此外，数据的多样性（跨任务、跨环境）不足，导致策略难以应对开放世界的长尾场景。\n\n**关键技术突破**\n为解决数据瓶颈，领域转向构建高效且可扩展的数据采集系统。[TWIST2: Scalable, Portable, and Holistic Humanoid Data Collection System](paper_id:62bfad00-4b49-47aa-8990-082fa6ae31f1) 利用消费级 VR 设备替代传统 MoCap，实现了几乎 100% 成功率的 15 分钟百条演示采集。同时，[Humanoid Everyday: A Comprehensive Robotic Dataset for Open-World Humanoid Manipulation](paper_id:969f4c56-0604-41d8-89ce-31a09fd09222) 通过多模态感知数据（RGB, Depth, LiDAR, Tactile）聚合，构建了包含 260 项任务、超过 300 万帧的大规模基准数据集，为后续策略学习提供了“燃料”。\n\n**代表论文**\n- [TWIST2: Scalable, Portable, and Holistic Humanoid Data Collection System](paper_id:62bfad00-4b49-47aa-8990-082fa6ae31f1)\n- [Humanoid Everyday: A Comprehensive Robotic Dataset for Open-World Humanoid Manipulation](paper_id:969f4c56-0604-41d8-89ce-31a09fd09222)\n\n### 阶段三：Sim-to-Real 迁移与感知-控制解耦\n\n**核心挑战**\n仿真-现实迁移（Sim-to-Real）是验证策略真实性的关键。然而，人形机器人的高自由度和动态不稳定性使得视觉策略在现实环境中极易失效。如何在保持全身稳定性的同时实现精确的末端控制，以及如何处理 Locomotion 带来的视野抖动和物体遮挡，是本阶段的核心工程难题。\n\n**关键技术突破**\n该阶段催生了以 Teacher-Student 蒸馏和大规模视觉域随机化为核心的技术方案。[VIRAL: Visual Sim-to-Real at Scale for Humanoid Loco-Manipulation](paper_id:906cfeec-e13b-4706-b2a8-23b8ce391d89) 通过大规模仿真（64 GPU 并行）训练特权教师策略，并将其知识蒸馏到仅依赖 RGB 的学生策略中，结合丰富的域随机化，实现了 54 个周期的连续零样本迁移。与此同时，[VisualMimic: Visual Humanoid Loco-Manipulation via Motion Tracking and Generation](paper_id:c1f383d4-b9dd-4898-89c3-a640fd6fca46) 通过任务无关的低层关键点追踪器，将人类运动模式与视觉策略解耦，确保了策略在室外环境下的鲁棒性。\n\n**代表论文**\n- [VIRAL: Visual Sim-to-Real at Scale for Humanoid Loco-Manipulation](paper_id:906cfeec-e13b-4706-b2a8-23b8ce391d89)\n- [VisualMimic: Visual Humanoid Loco-Manipulation via Motion Tracking and Generation](paper_id:c1f383d4-b9dd-4898-89c3-a640fd6fca46)\n\n### 阶段四：大一统 VLA 框架与运动操作深度融合\n\n**核心挑战**\n模块化策略虽降低了训练难度，但层级间的指令传递引入了累积误差和响应延迟。如何让 Vision-Language-Action (VLA) 模型直接理解复杂的全身操作意图，并在大幅度运动中保持操作精度，是实现通用智能的关键。\n\n**关键技术突破**\n[WholeBodyVLA: Towards Unified Latent VLA for Whole-Body Loco-Manipulation Control](paper_id:dc1797d9-66fe-4b0f-a874-510f643bed3f) 提出了统一潜空间学习框架，使 VLA 能从低成本的无动作视角视频中学习，同时引入 LMO (Loco-Manipulation Oriented) RL 策略精准执行复杂的运动命令，实现了 21.3% 的性能提升。为解决长周期任务中的策略退化问题，[REFINE-DP: Diffusion Policy Fine-tuning for Humanoid Loco-manipulation via Reinforcement Learning](paper_id:0f1b97eb-bdf8-4b99-bc6b-608f3a6b8d99) 通过分层强化学习微调扩散规划器，在保持末端精细控制的同时显著增强了全身机动的任务成功率。\n\n**代表论文**\n- [WholeBodyVLA: Towards Unified Latent VLA for Whole-Body Loco-Manipulation Control](paper_id:dc1797d9-66fe-4b0f-a874-510f643bed3f)\n- [REFINE-DP: Diffusion Policy Fine-tuning for Humanoid Loco-manipulation via Reinforcement Learning](paper_id:0f1b97eb-bdf8-4b99-bc6b-608f3a6b8d99)\n\n### 未来趋势预测\n\n1. **无参考运动泛化与几何感知交互**：现有策略仍依赖参考动作或任务奖励，这在面对新几何体时泛化性差。[LessMimic: Long-Horizon Humanoid Interaction with Unified Distance Field Representations](paper_id:ccdb9cb7-35f7-4a36-aff7-6b5fe342c527) 已展示统一距离场（DF）表示在无参考运动推理中的潜力。下一步将探索如何将 SDF/NeRF 等几何先验更深入地嵌入策略的动作空间，实现对任意物体形状的本能级交互反应。\n\n2. **主动力控制与异构控制策略的统一**：当前的 loco-manipulation 在处理高负载交互（如工业装配）时缺乏主动力调节能力。[HMC: Learning Heterogeneous Meta-Control for Contact-Rich Loco-Manipulation](paper_id:20632a09-ec1d-4692-9798-de6df5d39bb1) 已证明融合位置/阻抗控制的 Meta-Control 策略的有效性。未来将出现更多基于阻抗/力控的层级策略，实现“刚柔并济”的运动-操作切换，以适配从精细操作到重载搬运的复杂任务谱系。\n\n3. **具身数据飞轮与跨实体迁移**：随着 [EgoHumanoid: Unlocking In-the-Wild Loco-Manipulation with Robot-Free Egocentric Demonstration](paper_id:f2cc6e98-732b-4ee5-8a9f-35c48648d683) 等工作证明无机器人数据的潜力，跨实体迁移（从人类到人形机器人）将成为主流数据来源。结合世界模型预测，机器人将能主动在仿真中生成跨形态的交互数据，构建自我驱动的具身智能飞轮。\n\n---\n\n## 3_quadrupedal locomotion_quadruped locomotion_model predictive control_quadruped robot\n\n### 研究脉络概览\n\n四足机器人动态运动控制正从基于优化planner的模型预测控制（MPC）向数据驱动的强化学习（RL）策略演进。近期研究聚焦于MPC与RL的深度融合，以解决MPC的计算瓶颈和纯RL的样本效率与可解释性问题。其核心矛盾在于如何在保持对多接触力物理约束可解释性的同时，使策略具备应对非结构化环境的鲁棒性与泛化能力。\n\n### 阶段一：运动基元模仿与多模态规划\n\n此阶段主要解决MPC在线计算成本过高以及单一行为策略泛化性差的问题。研究者利用离线MPC生成高质量参考轨迹，并通过模仿学习（IL）将其蒸馏到神经网络策略中。\n\n#### 核心挑战\n- **计算瓶颈**：在线求解MPC（尤其在力空间）计算量大，难以在嵌入式平台上达到100Hz以上的控制频率。\n- **行为多样性**：单一策略难以覆盖多种步态（trot, gallop等）且在动态行为间平滑切换。\n\n#### 关键技术突破\n- **模仿MPC策略**：通过混合专家网络（MoE）或行为克隆技术，使单一策略模仿多个MPC teacher，实现多模态控制。\n- **参考轨迹库**：将步态视为预定义的运动基元集合，降低在线计算复杂度。\n\n#### 代表论文\n- [Imitation Learning from MPC for Quadrupedal Multi-Gait Control](paper_id:54566454-bf21-4fae-ad7c-e6dd33436a2d)：提出MPC-Net，利用混合专家网络学习多个步态的控制策略。\n- [OPT-Mimic: Imitation of Optimized Trajectories for Dynamic Quadruped Behaviors](paper_id:b22c88c2-a610-4592-9b62-0e9d39193672)：探索将轨迹优化器的前馈设计作为模仿先验，提升了sim-to-real的迁移效率。\n\n### 阶段二：地形感知与自适应RL控制\n\n随着深度RL的成熟，焦点转向使机器人无需精确地形模型即可实现实时轨迹自适应。此阶段将地形高程图或本体感受信息引入策略观测空间，实现了MPC无法达到的实时鲁棒性。\n\n#### 核心挑战\n- **感知-控制耦合**：如何将2D/3D地形信息有效编码进高维策略网络。\n- **长视域稳定性**：纯RL策略在处理非凸地形和动态扰动时易陷入局部最优。\n\n#### 关键技术突破\n- **隐式地形表征**：通过自编码器或高度图切片，将地形信息压缩为低维潜在向量。\n- **层次化控制**：使用MPC提供参考轨迹或接触计划，RL负责微调与跟踪误差补偿。\n\n#### 代表论文\n- [Real-Time Trajectory Adaptation for Quadrupedal Locomotion using Deep Reinforcement Learning](paper_id:70845f4d-906f-4f48-9b4f-ad2056618ada)：通过地形感知轨迹优化与DRL的结合，显著提升了复杂地形的通过率（成功率从47.5%提升至80.3%）。\n- [Learning a Centroidal Motion Planner for Legged Locomotion](paper_id:4f41cb46-c655-4052-8bc7-9470bfe37f1a)：利用神经网络学习质心运动规划器，实现实时计算全动态运动。\n- [Puppeteer and Marionette: Learning Anticipatory Quadrupedal Locomotion Based on Interactions of a Central Pattern Generator](paper_id:2d2f0f41-2d4b-40eb-9198-fa2f065ec63d)：引入CPG概念结合DRL，在无MPC的条件下实现了自主避障与步态平滑。\n\n### 阶段三：物理约束融合与末端力控制\n\n本阶段重新审视物理先验在深度学习框架中的地位。通过将MPC的约束优化逻辑（如摩擦锥、关节力矩限制）嵌入RL训练或QP求解器，实现了高精度力控制与鲁棒性。\n\n#### 核心挑战\n- **约束处理**：纯RL策略对物理约束（摩擦锥、关节限位）的遵循不可靠。\n- **动态敏捷性**：实现高速运动及高速干扰恢复（Push Recovery）。\n\n#### 关键技术突破\n- **线性策略 + QP求解**：将复杂非线性策略简化为线性策略，通过二次规划（QP）实时分配地面反作用力。\n- **质心动力学MPC**：在MPC层产生参考力轨迹，在执行层通过QP实现力分配，降低了在线计算维度。\n\n#### 代表论文\n- [Force control for Robust Quadruped Locomotion: A Linear Policy Approach](paper_id:eb46c7c6-9c1e-4a66-8d1c-6cba3efadc6b)：提出线性策略直接生成末端轨迹和质心力/力矩，通过QP分配受力，极大简化了控制架构。\n- [Dynamic Locomotion of a Quadruped Robot with Active Spine via Model Predictive Control](paper_id:24a2754c-caa6-420a-be3e-4f91341d30c5)：针对主动脊柱的高维耦合问题，提出改进的SRB-MPC，实现了高速trot（3.8 m/s）。\n\n### 阶段四：融合范式与高速灵巧控制\n\n当前前沿转向构建MPC与RL的深度共生系统，利用GPU并行化提升MPC求解速度，并将其作为RL训练和推理的强大先验，实现零样本泛化与极端敏捷动作。\n\n#### 核心挑战\n- **实时性 vs. 精确性**：全阶动力学MPC计算代价过高，无法实时运行。\n- **GPU并行化**：如何将MPC嵌入神经网络的GPU训练循环中。\n\n#### 关键技术突破\n- **GPU并行MPC**：在数千个并行环境中以100Hz频率评估MPC动力学，实现高效策略探索。\n- **残差策略（Residual Policy）**：将MPC输出作为确定性前馈，RL学习针对模型误差和扰动的残差补偿。\n\n#### 代表论文\n- [Residual MPC: Blending Reinforcement Learning with GPU-Parallelized Model Predictive Control](paper_id:8d91b8f8-21dc-4cc7-8bb7-c403f4faade6)：核心突破在于将MPC嵌入RL训练循环，通过残差策略融合可解释性与鲁棒性。\n- [Whole Body Model Predictive Control for Spin-Aware Quadrupedal Table Tennis](paper_id:852e1fab-71d3-41bb-bd64-82f184efbd2e)：将MPC拓展到全身高速灵巧任务，融合了spin预测与敏捷控制。\n\n### 未来趋势预测\n\n1. **感知嵌入式MPC**：未来MPC将直接内嵌视觉或触觉感知模块，而非作为独立的外环。强化学习将用于学习MPC的预测模型（Residual Dynamics），从而在保持解析约束的同时处理传感器噪声和非结构化地形。\n\n2. **多目标驱动的连续策略涌现**：基于多目标MPC框架（如包含Spin、Height、Force等目标的优化），结合大规模GPU并行训练，将自动涌现出超越传统人为设计步态的复合运动技能（如跳高+转体+落地）。\n\n3. **轻量化端到端策略的物理约束化**：基于Transformer或Diffusion的策略网络将直接输出关节力矩或末端力，其训练过程将深度绑定物理引擎（如Mujoco的GPU加速物理计算），实现对关节摩擦锥和接触力约束的原生学习。\n\n---\n\n---\n\n## 4_motion imitation_humanoid locomotion_human motion_imitation learning\n\n### 研究脉络概览\n\n人形机器人运动模仿学习旨在使机器人能够从人类运动捕获（MoCap）数据或视频中获取类人运动技能。该领域的发展轨迹并非简单的技术迭代，而是对“人类运动本质”认知的不断深化：从追求表象的关节角度复制，到解决身体构型差异（Embodiment Gap），再到整合物理动力学约束以确保运动的可执行性，最终走向融合多种数据源与自适应控制策略的通用化阶段。\n\n### 阶段一：强化学习驱动的运动生成与形态适配\n\n#### 核心挑战\n\n这一阶段的核心痛点在于传统控制理论（如轨迹优化）在高维人形机器人上的应用瓶颈，以及强化学习（RL）训练所需奖励函数的巨大人工设计成本。研究者开始探索利用 RL 直接在物理仿真中训练运动策略，但如何有效地将人类运动意图嵌入奖励函数仍是一个难题。此外，人形机器人的物理结构（如自由度数量、力矩限制）与人类存在根本差异，直接复制人类运动数据往往导致物理不可行的行为。\n\n#### 关键技术突破\n\n1. **模仿学习框架**：以 [Whole-body Humanoid Robot Locomotion with Human Reference](paper_id:eb055dbf-4f7f-4182-ae46-6c2f0493ce24) 为代表，提出基于对抗运动先验的模仿学习框架，使全尺寸人形机器人“Adam”能够将人类运动数据转化为可执行的 locomotion 策略，标志着人类 locomotion 数据首次成功应用于全尺寸人形机器人。\n2. **双层优化范式**：[Bi-Level Motion Imitation for Humanoid Robots](paper_id:1e3e4ac4-8eed-4102-9ea8-fac569c7220e) 提出了在机器人策略与目标 MoCap 数据之间交替优化的双层优化框架，通过自洽自编码器学习稀疏结构化的运动表示，生成物理一致的参考运动，有效缓解了形态差异带来的负面影响。\n\n#### 代表论文\n\n- [Whole-body Humanoid Robot Locomotion with Human Reference](paper_id:eb055dbf-4f7f-4182-ae46-6c2f0493ce24)\n- [Bi-Level Motion Imitation for Humanoid Robots](paper_id:1e3e4ac4-8eed-4102-9ea8-fac569c7220e)\n\n### 阶段二：形态差异弥合与数据质量工程\n\n#### 核心挑战\n\n随着研究的深入，研究者意识到即使优化了策略，运动数据本身的质量仍是一个关键瓶颈。主流方法依赖昂贵的专业 MoCap 数据集（如 AMASS），数据稀缺且可扩展性差。同时，从互联网视频中大规模提取运动数据（如 Humanoid-X 尝试）虽然扩展了数据量，但引入了大量物理伪影：脚部滑行、地面穿透、浮空等，严重影响了模仿策略的稳定性和物理可信度。\n\n#### 关键技术突破\n\n1. **大规模视频驱动生成**：[PHUMA: Physically-Grounded Humanoid Locomotion Dataset](paper_id:6cd94c52-a716-43c9-bfc2-7b971e5000e0) 通过物理约束重定向技术解决了视频驱动数据的物理伪影问题，在保证数据大规模性的同时，强制执行关节限幅、地面接触约束并消除脚部滑行。\n2. **交互保持重定向**：[OmniRetarget: Interaction-Preserving Data Generation for Humanoid Whole-Body Loco-Manipulation and Scene Interaction](paper_id:aea6cbaa-82fc-46ff-806a-4552f1283b09) 提出基于交互网格（Interaction Mesh）的重定向引擎，不仅解决了形态差异，还保留了丰富的物体操作和环境交互信息，这对于学习灵巧的 loco-manipulation 技能至关重要。\n\n#### 代表论文\n\n- [PHUMA: Physically-Grounded Humanoid Locomotion Dataset](paper_id:6cd94c52-a716-43c9-bfc2-7b971e5000e0)\n- [OmniRetarget: Interaction-Preserving Data Generation for Humanoid Whole-Body Loco-Manipulation and Scene Interaction](paper_id:aea6cbaa-82fc-46ff-806a-4552f1283b09)\n\n### 阶段三：动力学融合与物理一致性深耕\n\n#### 核心挑战\n\n仅依靠运动学（Kinematics）匹配的方法存在根本局限：仅复制关节角度轨迹并不能保证机器人在物理世界的可执行性。研究者开始认识到，真实的类人运动需要理解隐藏在运动模式背后的动力学特性，如地面反作用力（GRF）、质心（CoM）变化和接触序列。这一阶段需要解决如何从有限的 MoCap 数据中推断缺失的动力学信息，并在控制器中显式建模。\n\n#### 关键技术突破\n\n1. **接触感知的轨迹优化**：[KinoDynamic Motion Retargeting for Humanoid Locomotion via Multi-Contact Whole-Body Trajectory Optimization](paper_id:3383a6ae-6ebf-4751-85b9-28862af34d59) 将运动重定向建模为多接触、全身轨迹优化问题，通过整合 GRF 测量与 MoCap 数据，自动检测足跟-足尖接触事件，生成动态可行且能精确复现类人接触模式的参考轨迹。\n2. **混合 RL-动力学控制**：[HybridMimic: Hybrid RL-Centroidal Control for Humanoid Motion Mimicking](paper_id:6657506a-06d9-4a33-89e8-c1e61c607f59) 创新性地将基于质心动力学的控制器与 RL 策略融合，通过学习预测连续接触状态和期望质心速度，生成即使在分布外环境中也能保持物理可行性的前馈力矩，显著降低了真实机器人上的跟踪误差。\n3. **动力学认知的全面评估**：[Benchmarking Humanoid Imitation Learning with Motion Difficulty](paper_id:d4b8c1db-ee58-4898-92f6-14d7e9bc3a0f) 提出了运动难度分数（MDS），基于刚体动力学量化模仿难度，揭示了模仿学习策略性能与运动内在难度之间的关系，为后续研究提供了更科学的评估基准。\n\n#### 代表论文\n\n- [KinoDynamic Motion Retargeting for Humanoid Locomotion via Multi-Contact Whole-Body Trajectory Optimization](paper_id:3383a6ae-6ebf-4751-85b9-28862af34d59)\n- [HybridMimic: Hybrid RL-Centroidal Control for Humanoid Motion Mimicking](paper_id:6657506a-06d9-4a33-89e8-c1e61c607f59)\n- [Benchmarking Humanoid Imitation Learning with Motion Difficulty](paper_id:d4b8c1db-ee58-4898-92f6-14d7e9bc3a0f)\n\n### 阶段四：通用化、敏捷性与极限运动\n\n#### 核心挑战\n\n前几个阶段的方法往往受限于单一数据源或特定任务，机器人难以在保持动态稳定性的同时展现类人的敏捷性（如舞蹈、跑酷），也难以在形态差异巨大的不同机器人平台上实现快速部署和零样本泛化。\n\n#### 关键技术突破\n\n1. **异构数据融合**：以 [Agility Meets Stability: Versatile Humanoid Control with Heterogeneous Data](paper_id:176546f6-4ead-47c7-bc6c-bd8fa33ca9b1) 为代表，将包含丰富敏捷行为的 MoCap 数据集与捕获稳定性配置的物理约束合成数据融合，通过混合奖励方案统一动态运动跟踪与极限平衡维护，使单一策略能同时执行舞蹈、跑步和咏春拳蹲桩等多样化动作。\n2. **快速适应与鲁棒部署**：[General Humanoid Whole-Body Control via Pretraining and Fast Adaptation](paper_id:9933875e-c9bb-4708-bb69-fc0ef2c01e32) 提出的 FAST 框架，通过引入 Parseval 引导的残差策略适应模块，在正交性和 KL 约束下学习轻量级策略，实现了高效的分布外运动适应，同时结合质心感知控制增强了跟踪挑战性参考运动时的平衡鲁棒性。\n3. **极限控制与低延迟遥操作**：[ExtremControl: Low-Latency Humanoid Teleoperation with Direct Extremity Control](paper_id:78db424b-8c9e-4cca-ac24-de15ec903a69) 跳出离线策略范式，直接在 SE(3) 空间操作选定刚体链接（主要是肢体末端），通过笛卡尔空间映射实现端到端延迟低至 50ms 的控制，支持乒乓球平衡、杂耍等需要快速反馈的极限行为。\n\n#### 代表论文\n\n- [Agility Meets Stability: Versatile Humanoid Control with Heterogeneous Data](paper_id:176546f6-4ead-47c7-bc6c-bd8fa33ca9b1)\n- [General Humanoid Whole-Body Control via Pretraining and Fast Adaptation](paper_id:9933875e-c9bb-4708-bb69-fc0ef2c01e32)\n- [ExtremControl: Low-Latency Humanoid Teleoperation with Direct Extremity Control](paper_id:78db424b-8c9e-4cca-ac24-de15ec903a69)\n\n### 未来趋势预测\n\n**1. 从“模仿轨迹”到“理解意图”的认知跃迁**\n\n当前方法虽然在物理可信度上取得进展，但本质上仍在模仿“how”（如何运动），而非理解“why”（为何如此运动）。[Beyond Motion Imitation: Is Human Motion Data Alone Sufficient to Explain Gait Control and Biomechanics?](paper_id:bd81d104-c736-4afc-98ff-6708094f2554) 的研究表明，精确复制运动学并不能确保生物力学上的合理内功（如关节力矩）。未来的进化方向在于整合神经生理学模型，将肌肉骨骼动力学约束更深度地嵌入策略学习，使机器人不仅能“复制”运动，还能“理解”类人运动的底层生物力学原理。\n\n**2. 开放词汇表运动控制（Open-Vocabulary Motion Control）**\n\n现有框架在处理预定义运动库时表现出色，但面对开放环境中未知的交互任务时泛化能力不足。未来的研究将倾向于结合大型语言模型（LLM）或视觉语言模型（VLM），实现从自然语言指令或开放词汇表视觉目标直接生成动态可行的全身运动序列，而不仅仅是对预定义的 MoCap 片段进行重定向。\n\n**3. 能效与类人机械效率的对齐**\n\n[Gait Divergence Analysis Framework (GDAF)](paper_id:36d208f0-68ac-4c04-90e9-b87b2ee831d2) 的定量分析表明，尽管现代人形控制器能产生视觉类人的运动，但在步态对称性、能量分布和关节协调性上仍存在系统性偏差。下一阶段的方法将不再仅仅追求轨迹误差的最小化，而是将热力学效率（Energy Consumption）和代谢成本（Metabolic Cost）等生物力学指标作为核心优化目标，通过模仿学习生成更接近生物有机体能量优化策略的运动模式。\n\n---\n\n---\n\n## 8_humanoid control_humanoid interaction_human object interaction_humanoid robots\n\n### 研究脉络概览\n\n人形机器人研究正从“刚性的轨迹追踪”向“自适应的全身协同交互”演进。核心技术瓶颈在于如何处理物理接触的复杂性（如力控、安全性、多接触协调）以及如何利用人类数据实现高效技能迁移。早期研究依赖运动先验和模型预测控制（P... [内容已截断，原长度约 2000 字符]\n\n---\n\n---\n\n## 7_perceptive locomotion_terrains humanoid_humanoid locomotion_robust humanoid\n\n### 研究脉络概览\n\n人形机器人感知运动控制的发展，本质上是一个从“精确建模”到“数据驱动”、从“被动避障”到“主动感知”、从“单一策略”到“混合智能”的演进过程。早期研究通过强化学习（RL）和领域随机化（Domain Randomization）解决了 Sim-to-Real 的基础迁移问题，赋予机器人基础的高机动性。2024 年以后，随着去噪世界模型（Denoising World Model）和 Voxel-Grid 等 3D 表征的引入，机器人开始具备在复杂非结构化地形（楼梯、泥雪地、崎岖地面）稳定行走的能力。近年来，为了应对真实世界的感知不确定性（如动态障碍、传感器噪声），以混合专家系统（MoE）和视觉-前庭觉组合策略（VB-Com）为代表的复合智能架构逐渐成为主流。更进一步，视觉基础模型（VFM）和对比学习驱动的 CMoE 正在打破传统端到端策略的样本效率瓶颈，并向“超越腿长”的极限机动能力发起挑战。\n\n---\n\n### 阶段一：基础高机动性与 Sim-to-Real 迁移\n\n#### 核心挑战\n\n在人形机器人领域，精确物理模型的构建成本极高，且模型与现实之间存在不可避免的误差。如何绕过精确建模，直接训练出具有高鲁棒性、高速动态响应能力的运动策略，并将其零样本（Zero-shot）部署到现实世界，是首要难题。\n\n#### 关键技术突破\n\n- **自适应课程学习（Adaptive Curriculum）**：动态调整训练任务难度（如速度指令的分布），引导策略从易到难学习，有效提升了极端动作的稳定性。\n- **在线系统辨识（Online System Identification）**：在运行过程中实时估计物理参数（摩擦、负载），使控制策略能自适应环境变化。\n\n#### 代表论文\n\n- [Rapid Locomotion via Reinforcement Learning](margolis-2022-rapid-locomotion-via-reinforcement-learning) (2022): 提出了基于 PPO 和自适应课程学习的经典框架，揭示了领域随机化结合在线系统辨识是实现高速、鲁棒人形运动的关键路径。\n\n---\n\n### 阶段二：复杂地形感知与去噪世界模型\n\n#### 核心挑战\n\n将人形机器人的运动能力从平坦地面拓展到野外环境（如积雪、斜坡、不锈钢楼梯）是迈向实际应用的关键一步。此时，策略必须理解局部地形的几何特征并进行实时反应，同时处理仿真到现实的迁移挑战。\n\n#### 关键技术突破\n\n- **去噪世界模型学习（Denoising World Model Learning, DWL）**：通过预测和修正未来状态来生成平滑且鲁棒的运动轨迹，有效抑制了传感器噪声和模型误差的累积。\n- **端到端零样本迁移**：同一个神经网络策略可以在仿真中完成训练，并直接部署到真实机器人上。\n\n#### 代表论文\n\n- [Advancing Humanoid Locomotion: Mastering Challenging Terrains with Denoising World Model Learning](c5d5b46d-56aa-4c37-9640-6fb7eeba1953) (2024): 首次实现了人形机器人在野外积雪、斜坡、楼梯等挑战性地形上的稳定运动。\n\n---\n\n### 阶段三：3D 几何感知与 Voxel-Grid 表征\n\n#### 核心挑战\n\n前期基于深度图像（Depth Image）或高程图（Elevation Map）的感知方案存在视野狭窄、局部平坦化的问题。它们难以捕捉垂直障碍物、头顶约束和三维空间中的多层级结构。\n\n#### 关键技术突破\n\n- **Voxel-Grid 表示与 LiDAR 融合**：将稀疏的 3D 点云直接转化为体素网格（Voxel Grid）作为输入，保留了完整的环境拓扑信息。\n- **Z-Grouped 2D CNN 策略**：针对体素网格的特点设计了专门的卷积架构，在保持 3D 一致性的同时降低了计算复杂度。\n\n#### 代表论文\n\n- [Gallant: Voxel Grid-based Humanoid Locomotion and Local-navigation across 3D Constrained Terrains](dedd36e7-8081-4a56-bc53-cf9cbe13be9b) (2025): 通过 Voxel-Grid 和 LiDAR 融合，突破了传统 2D 表征的局限，首次在楼梯攀爬任务上实现了接近 100% 的成功率。\n\n---\n\n### 阶段四：混合架构与多策略动态编排\n\n#### 核心挑战\n\n现实世界的感知系统并非完美无缺：动态地形变化和传感器噪声会严重干扰视觉策略。此外，单一策略难以在高度多样化的地形环境中保持高效。如何在“视觉引导的前瞻性”与“前庭觉的可靠性”之间取得平衡？\n\n#### 关键技术突破\n\n- **视觉-前庭觉组合策略（Vision-Blind Composite, VB-Com）**：将视觉策略和盲策略进行解耦与组合，根据实时感知置信度动态切换。\n- **多专家混合系统（Mixture of Residual Experts, MoRE）**：通过多个专家网络分别处理不同地形特征，再由门控网络动态调度。\n\n#### 代表论文\n\n- [VB-Com: Learning Vision-Blind Composite Humanoid Locomotion Against Deficient Perception](594bbec9-78a3-4803-84ea-f055993b26a4) (2025): 针对感知失效场景，通过主动降级机制确保机器人在视觉退化时仍能依靠前庭觉维持稳定。\n- [MoRE: Mixture of Residual Experts for Humanoid Lifelike Gaits Learning on Complex Terrains](c6874636-9a0a-46fe-bbab-0429a3365750) (2025): 通过多专家系统细分处理复杂地形，并结合步态奖励函数，显著增强了机器人在非结构化地形中的类人步态表现。\n\n---\n\n### 阶段五：视觉基础模型引导与极限机动能力\n\n#### 核心挑战\n\n端到端纯像素级学习存在样本效率极低和 sim-to-real 迁移脆弱的问题。如何让人形机器人完成“超越腿长”的高台攀爬（0.8m+）等极限任务，也是当前 RL 训练范式的巨大挑战。\n\n#### 关键技术突破\n\n- **视觉基础模型（Visual Foundation Model, VFM）先验**：利用冻结的 VFM 将单目 RGB 图像映射到高维 3D 隐空间，有效规避了深度估计的尺度模糊性问题。\n- **对比式专家混合（CMoE）**：通过对比学习约束专家激活向量，解决了传统 MoE 门控网络均匀激活导致的专家特化性丧失问题。\n- **攀爬式任务组合与广义棘轮奖励**：学习 climb-up、climb-down 等接触丰富的动作组合，通过跟踪最佳历史进度提供稠密监督信号。\n\n#### 代表论文\n\n- [GeoLoco: Leveraging 3D Geometric Priors from Visual Foundation Model for Robust RGB-Only Humanoid Locomotion](47de8671-2802-4d7e-800f-df10aa32aaa8) (2026): 利用 VFM 的几何先验实现了仅靠 RGB 相机的零样本 sim-to-real 迁移。\n- [CMoE: Contrastive Mixture of Experts for Motion Control and Terrain Adaptation of Humanoid Robots](9ced0ae6-8ae0-487e-9e7e-c713f88b0d23) (2026): 通过对比学习革新了 MoE 的专家激活机制，使模型能够平滑穿越 20cm 高的台阶和 80cm 宽的缺口。\n- [APEX: Learning Adaptive High-Platform Traversal for Humanoid Robots](164e7e11-a590-49d8-bad3-94629f011f42) (2026): 通过任务组合和广义棘轮奖励，实现了约 114% 腿长高度的 0.8m 平台的零样本攀爬。\n\n---\n\n### 未来趋势预测\n\n1. **具身智能与世界模型的深度融合**：\n   当前方法虽能解决感知和局部控制问题，但对全局任务理解能力不足。下一步将出现结合大规模世界模型的感知运动策略，使机器人能够理解“这扇门通向哪里”并做出最优路径规划。\n\n2. **面向持续学习的通用人形运动基础模型**：\n   类似于大语言模型（LLM）在文本领域的地位，预计将出现基于海量异构数据训练的“人形运动基础模型”。该模型具备对不同地形、步态和任务结构的通用理解能力，只需通过少量样本的微调即可适应全新的运动技能。\n\n3. **主动感知（Active Perception）与多模态传感器的协同编排**：\n   未来，机器人将具备根据任务需求主动调整传感器姿态（如主动转头、主动扫描地形）的感知策略。这需要将注意力机制（Attention）与运动控制进行更深度的耦合。\n\n---\n\n## 10_learning robot_robot learning_action model_robot\n\n### 研究脉络概览\n\n机器人学习（Robot Learning）旨在赋予机器人在复杂环境中执行动作的能力，其核心在于弥合人类先验知识与物理世界不确定性之间的鸿沟。从基于模仿学习的策略优化，到多智能体协同的任务扩展，再到基于基础模型（Foundation Models）的泛化策略，研究重心经历了从“精确复现动作”到“理解任务意图”再到“跨实体泛化”的范式转移。\n\n### 阶段一：模仿学习的理论奠基与单实体策略优化（2011-2022）\n\n#### 核心挑战\n\n模仿学习在序贯决策场景中面临因果混淆（Causal Confusion）问题：当前动作会影响未来观测，导致传统机器学习中的独立同分布（i.i.d.）假设失效，引发性能崩溃。此外，单任务策略的泛化能力极弱，缺乏跨任务共享参数的有效机制。\n\n#### 关键技术突破\n\n1. **No-Regret 在线学习框架**：通过将模仿学习重新定义为在线学习问题，证明了在序贯环境中任何无遗憾（No-Regret）算法在特定条件下都能收敛到高性能策略。\n2. **确定性策略梯度（Deterministic Policy Gradient）**：针对随机策略的高方差问题，引入确定性策略结合注意力机制，在多智能体环境中提升协调效率。\n3. **参数组合式多任务学习（PaCo）**：为解决多任务强化学习中任务间内容与难度差异导致的梯度冲突，提出在参数子空间中进行策略插值，实现灵活的参数共享与高效训练。\n\n#### 代表论文\n\n- [9b3bcc83-38fd-461f-9eb4-a5be5e16e444](A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning)：奠定了模仿学习在序贯决策中的理论基础。\n- [34764023-68ec-409c-b428-1313f16e6bb0](Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments)：提出 MADDPG 算法，解决了多智能体环境下的非平稳性与协调难题。\n- [fcecb3c7-5748-4b44-bf3e-98ce2d09ef1e](PaCo: Parameter-Compositional Multi-Task Reinforcement Learning)：提出参数组合策略，在 Meta-World 基准上验证了多任务学习的有效性。\n\n### 阶段二：注意力机制与动态环境建模（2023-2024）\n\n#### 核心挑战\n\n机器人在真实场景中需要处理不断变化的上下文（Context），如任务切换或环境动力学特性改变。如何在噪声干扰下实时推断这些变化，并相应切换注意力策略，是实现鲁棒运行的关键。\n\n#### 关键技术突破\n\n基于贝叶斯推断的上下文切换检测：利用 Bisimulation 状态抽象理论合成注意力机制，在线检测 MDP 参数变化，触发基于抽象的注意力切换，使系统能忽略任务无关干扰，聚焦关键信息。\n\n#### 代表论文\n\n- [5ed54da3-27bd-4b74-a24d-11b7b0a8c760](Switching Attention in Time-Varying Environments via Bayesian Inference of Abstractions)：首次将贝叶斯推断与状态抽象结合，实现了对动态环境的实时自适应。\n\n### 阶段三：基础模型赋能与通用策略崛起（2024-2025）\n\n#### 核心挑战\n\n传统方法受限于特定任务设计、数据标注成本和分布偏移下的脆弱性。缺乏可泛化到新物体、新环境和新实体的通用表示，是实现通用机器人（General-Purpose Robot）的核心瓶颈。\n\n#### 关键技术突破\n\n1. **视觉-语言-动作模型（VLA）**：将大型视觉-语言模型的泛化能力迁移到机器人动作空间，通过大规模跨实体数据训练实现 zero-shot 泛化。\n2. **隐动作模型（Latent Action Model）**：从无标签视频中学习任务中心的动作表示（Latent Actions），打破了动作标注数据的稀缺性限制。\n3. **无标签模仿学习（CLAM）**：证明连续隐动作空间结合动作解码器能显著提升从无标签数据中学习精细操作的能力。\n\n#### 代表论文\n\n- [8a18e845-e47c-4fe8-a86d-f224f8d45230](Toward General-Purpose Robots via Foundation Models: A Survey and Meta-Analysis)：系统性梳理了基础模型在机器人领域的应用路径。\n- [5dd2ec9b-0436-47d3-bcad-420aabc1c907](CLAM: Continuous Latent Action Models for Robot Learning from Unlabeled Demonstrations)：解决了无标签数据下精细动作学习的难题。\n- [fd9e75d5-0714-46bf-94af-7caf8bd94a52](UniVLA: Learning to Act Anywhere with Task-centric Latent Actions)：通过隐动作模型实现了跨实体的 VLA 策略迁移。\n\n### 阶段四：数据-效率平衡与自改进世界模型（2025-2026）\n\n#### 核心挑战\n\n尽管 VLA 模型能力强大，但在接触丰富、动态精细的操作任务中仍显脆弱。在线强化学习（On-Policy RL）因安全与成本问题难以大规模部署。核心矛盾在于如何利用海量的异构数据（含低质量数据）并保持策略的精细控制能力。\n\n#### 关键技术突破\n\n1. **隐动作扩散 transformer**：处理异步视觉-动作流，实现大规模稳定训练，区分不同质量数据在学习中的角色（如利用低质量轨迹提升鲁棒性）。\n2. **Bootstrap 动态感知 3D 表示（AFRO）**：通过扩散式状态预测联合建模前向与逆向动力学，学习对动作学习友好的 3D 特征表示，解决预训练中的特征泄露问题。\n3. **组合世界模型（RISE）**：将策略改进解耦为可控的动力学预测与状态值评估，在想象空间（Imaginary Space）中进行无梯度冲突的策略自改进。\n4. **任务扩展的 MBRL**：证明模型化强化学习（MBRL）在多任务场景下具有结构优势，通过共享世界模型聚合跨任务经验，规避模型-free 方法的梯度干扰。\n\n#### 代表论文\n\n- [85a1f14a-01cd-4b47-b651-881ac2ed82af](LDA-1B: Scaling Latent Dynamics Action Model via Universal Embodied Data Ingestion)：通过统一隐空间建模实现了 1B 参数的机器人基础模型。\n- [1f37a3b3-1a71-4b00-93af-b2dda7096634](Bootstrap Dynamic-Aware 3D Visual Representation for Scalable Robot Learning)：提出 AFRO 框架，显著提升了 3D 视觉表示在机器人操作中的下游任务性能。\n- [96f552fb-5ce0-4ecc-8042-2fdd8ff12d10](RISE: Self-Improving Robot Policy with Compositional World Model)：通过想象空间的组合式世界模型实现了物理世界中的安全策略精炼。\n- [placeholder-id-123](Scaling Tasks, Not Samples: Mastering Humanoid Control through Multi-Task Model-Based Reinforcement Learning)：通过 EfficientZero-Multitask 验证了任务扩展（而非样本扩展）是具身智能高效学习的关键轴。\n\n### 未来趋势预测\n\n1. **异构数据融合与终身学习**：基于 [85a1f14a-01cd-4b47-b651-881ac2ed82af](LDA-1B) 的成功启示，未来将更深入探索如何融合互联网视频、模拟数据和真实机器人交互数据，实现机器人的终身学习（Life-long Learning），使其在部署后仍能不断适应新技能。\n2. **世界模型驱动的具身推理**：结合大型语言模型的推理能力与 [96f552fb-5ce0-4ecc-8042-2fdd8ff12d10](RISE) 的组合世界模型，机器人将不仅执行动作，而是能进行“心理模拟”预测长程后果，实现任务规划与执行的闭环自验证。\n3. **跨尺度动态统一**：当前 3D 表示（如 [1f37a3b3-1a71-4b00-93af-b2dda7096634](AFRO)）与宏观任务规划存在语义鸿沟。未来研究将探索如何将精细的物理交互动态模型（Deformable Object, Granular Material）与高层次的语义任务目标统一在同一个表示空间下。\n\n---\n",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

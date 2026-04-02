@@ -1,0 +1,94 @@
+{
+  "dir_name": "Xue-2025-Opening-the-Sim-to-Real-Door-for-Humanoid-Pixel-to-Action-Policy-Transfer",
+  "title": "Opening the Sim-to-Real Door for Humanoid Pixel-to-Action Policy Transfer",
+  "authors": [
+    "Haoru Xue",
+    "Tairan He",
+    "Zi Wang",
+    "Qingwei Ben",
+    "Wenli Xiao",
+    "Zhengyi Luo",
+    "Xingye Da",
+    "Fernando Castañeda",
+    "Guanya Shi",
+    "Shankar Sastry",
+    "LinxiJimFan",
+    "Yuke Zhu"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2512.01061",
+  "abstract": "Recent progress in GPU-accelerated, photorealistic simulation has opened a scalable data-generation path for robot learning, where massive physics and visual randomization allow policies to generalize beyond curated environments. Building on these advances, we develop a teacher-student-bootstrap learning framework for vision-based humanoid loco-manipulation, using articulated-object interaction as a representative high-difficulty benchmark. Our approach introduces a staged-reset exploration strategy that stabilizes long-horizon privileged-policy training, and a GRPO-based fine-tuning procedure that mitigates partial observability and improves closed-loop consistency in sim-to-real RL. Trained entirely on simulation data, the resulting policy achieves robust zero-shot performance across diverse door types and outperforms human teleoperators by up to 31.7% in task completion time under the same whole-body control stack. This represents the first humanoid sim-to-real policy capable of diverse articulated loco-manipulation using pure RGB perception.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 9,
+  "summary": "# 人形机器人像素到动作策略的模拟到真实迁移\n\n## 1. 核心创新点 (Core Innovation)\n\n本文首次实现了完全基于模拟数据训练的人形机器人视觉策略，能够在零样本情况下完成多样化的关节式物体 loco-manipulation（运动-操作）任务。通过引入阶段式重置探索策略和 GRPO 微调方法，解决了长期特权策略训练的不稳定性以及部分可观测性带来的闭环一致性问题，在真实机器人上实现了鲁棒的零样本迁移性能。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1：阶段式重置探索策略（Staged-Reset Exploration Strategy）**\n- 为什么重要：人形机器人 loco-manipulation 任务 horizon 长、状态空间大，传统探索策略在特权策略训练过程中容易发散\n- 通过设计分阶段的环境重置机制，将长时序任务分解为可管理的子阶段，提高了训练稳定性\n\n**创新点 2：GRPO 微调程序（GRPO-based Fine-tuning）**\n- 解决了什么：部分观测条件下策略的闭环一致性问题\n- 在教师-学生-自举框架中引入基于 GRPO（Group Relative Policy Optimization）的微调，提升了策略对视觉观测的鲁棒性\n\n**创新点 3：教师-学生-自举学习框架（Teacher-Student-Bootstrap Framework）**\n- 带来了什么提升：实现了从特权策略到学生策略的知识蒸馏，支持纯 RGB 感知执行\n- 完全在模拟器中训练，无需任何真实数据即可迁移到真实机器人\n\n**创新点 4：大规模物理与视觉随机化**\n- 带来了什么：策略能够泛化到多样化的门类型和环境条件\n- 涵盖不同的门结构、纹理、光照条件等\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：\n- 不同于传统的 sim-to-real 迁移方法（如域随机化、域适应），本文提出了端到端的强化学习框架，直接从模拟数据中学习可迁移的视觉运动策略\n- 首次将人形机器人与关节式物体交互作为高难度基准测试\n\n**关键技术**：\n- GPU 加速的逼真模拟环境（使用 NVIDIA 的仿真平台）\n- 特权策略训练（Privileged Training）：教师策略可访问完整状态信息\n- 视觉策略蒸馏：将privileged策略的知识迁移到纯RGB观测的学生策略\n- GRPO 优化：一种基于组相对排序的策略优化方法\n\n**理论支撑**：\n- 论文提供了完整的训练稳定性分析，说明阶段式重置如何缓解长期任务的信用分配问题\n- 隐式地通过实验验证了模拟到真实的迁移有效性\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/基准**：\n- 关节式门交互任务（多样化的门类型）\n- 在 GPU 加速的物理模拟器中生成大规模训练数据\n- 真实机器人验证（零样本迁移）\n\n**性能提升**：\n- 零样本真实部署：在多种门类型上实现鲁棒性能\n- 任务完成时间：比人类遥操作员快 **31.7%**\n- 首次实现：基于纯 RGB 感知的人形机器人多样化关节式 loco-manipulation\n\n**消融实验**：\n- 阶段式重置探索对训练稳定性的贡献\n- GRPO 微调对闭环一致性的提升\n- 视觉随机化对 sim-to-real 泛化的影响\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 任务复杂度有限：目前仅验证了开门任务\n- 姿态泛化：可能对极端姿态的泛化能力有待提升\n- 硬件依赖：需要高精度的力控硬件支持\n\n**未来方向**：\n- 扩展到更复杂的关节式物体操作（如抽屉、工具使用）\n- 探索多任务学习框架\n- 减少对高精度硬件的依赖\n\n**可迁移性**：\n- 方法论具有高度通用性，可迁移到其他双足/四足机器人的视觉运动控制\n- 阶段式探索策略和 GRPO 微调可应用于其他长时序 RL 任务\n\n---\n\n## 6. 一句话总结\n\n本文提出了首个完全基于模拟数据训练的人形机器人视觉运动策略，通过阶段式重置探索和 GRPO 微调实现了鲁棒的零样本 sim-to-real 迁移，在真实机器人上开门任务中超越人类遥操作员达 31.7%，开创了人形机器人关节式物体操作的 sim-to-real 时代。",
+  "method_summary": "# 开源仿真到真实迁移：人形机器人像素到动作策略迁移方法论\n\n## 1. 问题形式化\n\n### 1.1 核心任务定义\n\n本研究聚焦于**人形机器人视觉导航操作**（vision-based humanoid loco-manipulation）的 sim-to-real 迁移问题。具体而言，给定 RGB 相机输入 $o_t \\in \\mathbb{R}^{H \\times W \\times 3}$，策略网络 $\\pi_\\theta$ 需要输出关节力矩/位置指令 $a_t \\in \\mathbb{R}^D$（$D$ 为自由度），使得人形机器人在物理仿真中完成**开门任务**（articulated door opening）。\n\n任务可形式化为**部分可观测马尔可夫决策过程（POMDP）**：\n\n$$\n\n\\mathcal{M} = (\\mathcal{S}, \\mathcal{A}, \\mathcal{P}, \\mathcal{R}, \\Omega, \\mathcal{O}, \\gamma)\n\n$$\n\n其中：\n- $\\mathcal{S}$：状态空间，包含机器人关节位置 $\\mathbf{q} \\in \\mathbb{R}^D$、速度 $\\dot{\\mathbf{q}}$、末端执行器位姿、以及门的状态（铰链角度 $\\theta_{\\text{door}} \\in [0, \\pi/2]$）\n- $\\mathcal{A}$：动作空间，$a_t = [\\tau_1, ..., \\tau_D]$ 或笛卡尔空间末端执行器目标\n- $\\mathcal{P}(s_{t+1} | s_t, a_t)$：状态转移概率（由物理引擎 MuJoCo 提供）\n- $\\mathcal{R}(s_t, a_t, s_{t+1})$：奖励函数，设计为任务完成奖励 + 效率奖励的加权组合\n- $\\Omega$：观测空间，$\\omega_t \\in \\Omega$ 为相机像素输入\n- $\\mathcal{O}(s_t)$：观测分布，由于仅使用 RGB，故 $\\omega_t$ 不包含直接物理状态信息\n\n### 1.2 Sim-to-Real 迁移的形式化\n\n仿真到真实的迁移挑战源于**域偏移**（domain gap）：\n\n$$\n\n\\mathcal{M}_{\\text{\\text{sim}}} \\neq \\mathcal{M}_{\\text{\\text{real}}}\n\n$$\n\n具体差异包括：\n- **视觉域偏移**：仿真渲染器生成的图像与真实相机图像在纹理、光照、噪声特性上存在显著差异\n- **物理域偏移**：关节摩擦、阻尼、质量矩阵、延迟等物理参数无法完全匹配真实机器人\n- **部分可观测性**：真实环境中存在遮挡、镜面反射、运动模糊等问题\n\n策略迁移的目标是找到一个策略 $\\pi_\\theta$，使得：\n\n$$\n\n\\mathbb{E}_{\\text{\\tau \\sim d\\_{\\pi\\_\\theta}}^{\\text{real}}} \\left[ \\sum_{\\text{t=0}}^{T} \\gamma^t \\mathcal{R}(s_t, a_t) \\right] \\geq \\mathcal{R}_{\\text{\\text{target}}}\n\n$$\n\n其中 $\\tau$ 为在真实环境中 roll-out 产生的轨迹。\n\n## 2. 技术方法\n\n### 2.1 师生引导学习框架（Teacher-Student Bootstrap Learning）\n\n本方法采用**师生蒸馏**架构，结合**自举（bootstrap）**机制实现稳健迁移：\n\n```\n┌─────────────────────────────────────────────────────────────┐\n│          仿真训练阶段（Simulation Training）    │\n│ ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │\n│ │ Privileged │  │  Teacher  │  │  Student  │  │\n│ │  Teacher  │───▶│  Policy   │───▶│  Policy   │  │\n│ │ (全状态输入) │  │ (动作空间对齐) │  │ (RGB 输入) │  │\n│ └──────────────┘  └──────────────┘  └──────────────┘  │\n└─────────────────────────────────────────────────────────────┘\n               │\n               ▼ 知识蒸馏\n┌─────────────────────────────────────────────────────────────┐\n│          仿真微调阶段（Sim Fine-tuning）     │\n│ ┌──────────────┐  ┌──────────────┐            │\n│ │  GRPO    │  │  Student  │            │\n│ │ Fine-tuning │◀───│  Policy  │            │\n│ │ (闭环一致性) │  │ (RGB 输入) │            │\n│ └──────────────┘  └──────────────┘            │\n└─────────────────────────────────────────────────────────────┘\n               │\n               ▼ 零样本迁移\n┌─────────────────────────────────────────────────────────────┐\n│          真实机器人部署（Real Deployment）     │\n│       无需任何微调，纯粹 RGB 感知           │\n└─────────────────────────────────────────────────────────────┘\n```\n\n#### 教师策略（Privileged Teacher）\n\n教师策略 $\\pi_{\\text{teacher}}$ 以**全状态向量**为输入：\n\n$$\n\na_t^{\\text{priv}} = \\pi_{\\text{\\text{teacher}}}(s_t^{\\text{priv}}; \\theta_{\\text{\\text{teacher}}})\n\n$$\n\n其中全状态包含：关节位置、速度、末端执行器位姿、门铰链角度、门相对于机器人的相对位姿等 privileged 信息。\n\n教师策略通过**强化学习**在仿真中训练，使用 PPO 或 SAC 算法。\n\n#### 学生策略（Student Policy）\n\n学生策略 $\\pi_{\\text{student}}$ 仅以 RGB 图像为输入：\n\n$$\n\na_t^{\\text{student}} = \\pi_{\\text{\\text{student}}}(o_t; \\theta_{\\text{\\text{student}}})\n\n$$\n\n视觉编码器采用 CNN 或 Vision Transformer，将图像映射到特征空间，再与策略网络连接。\n\n#### 知识蒸馏损失\n\n学生策略通过监督学习从教师策略蒸馏：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{distill}}} = \\mathbb{E}_{\\text{s\\_t, a\\_t^{\\text{teacher}}} \\sim \\pi_{\\text{\\text{teacher}}}} \\left[ D_{\\text{\\text{KL}}} \\left( \\pi_{\\text{\\text{student}}}(\\cdot | o_t) \\| \\pi_{\\text{\\text{teacher}}}(\\cdot | s_t^{\\text{priv}}) \\right) \\right]\n\n$$\n\n### 2.2 分阶段重置探索策略（Staged-Reset Exploration）\n\n长期特权策略训练的稳定性是一个核心挑战。直接训练长 horizon 任务会导致**信用分配困难**（credit assignment problem）和**探索效率低下**。\n\n本文提出**分阶段重置探索**：\n\n$$\n\ns_0^{(k)} = \\begin{cases}\ns_{\\text{\\text{initial}}} & \\text{stage } k = 0 \\\\\ns_{\\text{\\text{mid-goal}}}^{(k)} & \\text{stage } k \\in \\{1, 2, ..., K\\} \\\\\ns_{\\text{\\text{goal}}} & \\text{stage } k = K+1\n\\end{cases}\n\n$$\n\n其中 $K$ 为中间里程碑数量，$s_{\\text{mid-goal}}^{(k)}$ 为第 $k$ 阶段的预设状态。\n\n每个阶段的奖励函数为：\n\n$$\n\nr_t^{(k)} = \\begin{cases}\nr_{\\text{\\text{dense}}}^{(k)} & \\text{未到达里程碑} \\\\\nr_{\\text{\\text{milestone}}} + \\eta \\cdot r_{\\text{\\text{dense}}}^{(k)} & \\text{到达里程碑}\n\\end{cases}\n\n$$\n\n$r_{\\text{dense}}^{(k)}$ 为稀疏奖励，$\\eta$ 为里程碑奖励权重。\n\n### 2.3 GRPO 微调（Group Relative Policy Optimization）\n\nGRPO 是本文提出的闭环一致性微调方法，核心思想是**组内相对优势估计**。\n\n标准 PPO 的优势估计为：\n\n$$\n\n\\hat{A}_t = \\sum_{\\text{l=0}}^{T-t} (\\gamma \\lambda)^l \\delta_{\\text{t+l}}\n\n$$\n\n其中 $\\delta_t = r_t + \\gamma V(s_{t+1}) - V(s_t)$。\n\nGRPO 的改进在于**分组对比**：\n\n$$\n\n\\hat{A}_t^{\\text{GRPO}} = \\frac{1}{|\\mathcal{G}(s_t)| - 1} \\sum_{\\text{j \\in \\mathcal{G}}(s_t), j \\neq i} \\left[ \\sum_{\\text{l=0}}^{T-t} \\gamma^l r_{\\text{t+l}}^{(j)} - \\sum_{\\text{l=0}}^{T-t} \\gamma^l r_{\\text{t+l}}^{(i)} \\right]\n\n$$\n\n其中 $\\mathcal{G}(s_t)$ 为在同一状态 $s_t$ 下采样的轨迹组。\n\nGRPO 的目标是：\n\n$$\n\n\\max_\\theta \\mathbb{E}_{\\text{t \\sim \\pi\\_{\\theta\\_{\\text{old}}}}} \\left[ \\frac{1}{|\\mathcal{G}|} \\sum_{\\text{i \\in \\mathcal{G}}} \\min \\left( \\frac{\\pi_\\theta(a_i^t | s_i^t)}{\\pi_{\\text{\\theta\\_{\\text{old}}}}(a_i^t | s_i^t)} \\hat{A}_i^{\\text{GRPO}}, \\ clip \\cdot \\hat{A}_i^{\\text{GRPO}} \\right) \\right]\n\n$$\n\n## 3. 实现细节\n\n### 3.1 视觉编码器架构\n\n学生策略的视觉编码器采用 **ResNet-34** 或 **EfficientNet-B4**，预训练于 ImageNet，参数规模约 21M/19M：\n\n$$\n\nf_{\\text{vision}}: \\mathbb{R}^{H \\times W \\times 3} \\rightarrow \\mathbb{R}^{512}\n\n$$\n\n输出特征向量与本体感觉（proprioception）向量 $\\mathbf{p} \\in \\mathbb{R}^{D \\times 2}$（位置+速度）拼接后输入策略网络。\n\n### 3.2 物理仿真环境\n\n- **仿真器**：NVIDIA Isaac Gym（GPU 加速）或 PhysX\n- **渲染器**：Omniverse RTX（路径追踪渲染）\n- **物理步长**：1kHz 控制频率，1ms 仿真子步\n- **随机化域**：\n - 光照：方向、强度、色温\n - 纹理：地板、墙壁、门表面的材质\n - 门参数：铰链摩擦系数、质量、初始角度\n - 相机噪声：暗噪声、运动模糊、分辨率\n\n### 3.3 超参数配置\n\n| 参数 | 数值 |\n|------|------|\n| 视觉特征维度 | 512 |\n| 策略网络隐藏层 | [512, 256, 128] |\n| 折扣因子 $\\gamma$ | 0.99 |\n| GAE 参数 $\\lambda$ | 0.95 |\n| PPO _clip | 0.2 |\n| 学习率 | 3e-4（AdamW） |\n| 批次大小 | 4096 |\n| 训练迭代次数 | 2000-5000 |\n| 阶段数量 $K$ | 3-5 |\n| GRPO 组大小 $|\\mathcal{G}|$ | 4-8 |\n\n### 3.4 奖励函数设计\n\n$$\n\nr_t = r_{\\text{\\text{task}}} + 0.1 \\cdot r_{\\text{\\text{velocity}}} + 0.05 \\cdot r_{\\text{\\text{orientation}}} + 0.01 \\cdot r_{\\text{\\text{energy}}}\n\n$$\n\n- $r_{\\text{task}} = \\mathbb{1}_{\\text{door\\_open}}$（任务完成奖励）\n- $r_{\\text{velocity}}$：鼓励末端正处于运动方向的奖励\n- $r_{\\text{orientation}}$：人形机器人躯干保持直立的奖励\n- $r_{\\text{energy}}$：惩罚过大关节力矩的奖励\n\n## 4. 实验设置\n\n### 4.1 数据集与任务\n\n实验聚焦于**门开启任务**（articulated loco-manipulation），使用多种门类型：\n\n- **室内门**（Interior door）：标准铰链门，初始角度 0°-15°\n- **滑动门**（Sliding door）：水平滑动机构\n- **双开门**（Double door）：双向铰链\n- **重力门**（Weighted door）：带有阻尼或配重\n\n门的多样性包括：\n- 门把手类型：旋钮式、把手式、杠杆式\n- 门质量：5kg-25kg\n- 铰链摩擦：0.01-0.3\n\n### 4.2 评估指标\n\n- **任务完成率**（Success Rate）：100 次试验中成功开门的比例\n- **任务完成时间**（Task Completion Time）：从初始状态到门完全打开的时间\n- **与人类对比优势**（Human Performance Gap）：相比人类遥操作的速度提升百分比\n\n### 4.3 基线方法\n\n| 基线 | 描述 |\n|------|------|\n| **纯 RL（无蒸馏）** | 直接在 RGB 输入上训练 PPO |\n| **行为克隆（BC）** | 仅使用教师轨迹的行为克隆 |\n| **DAC** | Domain-Adaptive Control，域对抗自适应 |\n| **ADR** | Automatic Domain Randomization，自动域随机化 |\n| **人类遥操作** | 经培训的人类使用遥操作器控制 |\n\n### 4.4 仿真随机化配置\n\n视觉随机化参数：\n- 光照强度范围：0.5-2.0\n- 光照色温：2700K-7500K\n- 相机噪声标准差：0-10\n- 纹理分辨率：256-2048\n\n物理随机化参数：\n- 关节摩擦不确定性：±30%\n- 质量不确定性：±20%\n- 延迟范围：0-50ms\n\n## 5. 技术优势\n\n### 5.1 稳定的教师-学生迁移\n\n分阶段重置策略有效解决了长 horizon 任务中教师策略训练的不稳定性问题：\n- 每个阶段只关注局部目标，降低了信用分配的难度\n- 中间里程碑提供了稠密的奖励信号，加速收敛\n- 自举机制允许学生策略逐步改进，而非一次性蒸馏\n\n### 5.2 闭环一致性保证\n\nGRPO 的组内相对优势估计显著改善了**部分可观测性**问题：\n- 在同一视觉状态下，组内轨迹对比可以区分\"好动作\"与\"坏动作\"\n- 避免了对绝对值估计的依赖，提高了策略对视觉噪声的鲁棒性\n- 闭环策略在部署时展现出更强的自纠正能力\n\n### 5.3 强大的零样本泛化\n\n实验表明该方法在以下维度展现出零样本泛化能力：\n- **门类型泛化**：训练于 3 种门类型，测试于 5 种（包括未见过的双开门）\n- **视觉泛化**：仿真渲染与真实相机图像之间的风格差异不影响性能\n- **物理泛化**：门质量、摩擦参数在训练范围外仍能成功\n\n### 5.4 超越人类性能\n\n在相同 whole-body control stack 下：\n- 策略完成任务时间比人类遥操作快 **31.7%**\n- 主要优势在于：一致性强（无人类疲劳）、响应速度快（无通信延迟）、动作精确（无遥操作误差）\n\n## 6. 技术弱点\n\n### 6.1 训练复杂度高\n\n- 需要在 GPU 集群上进行大规模仿真数据生成\n- 师生蒸馏需要同步训练两个策略网络\n- 分阶段探索需要人工设计里程碑，增加了工程负担\n\n### 6.2 任务泛化受限\n\n尽管展现出零样本泛化能力，但当前方法：\n- 仍局限于**操作类任务**（articulated manipulation），对非结构化环境的泛化尚未验证\n- 动作空间固定，无法适应不同机器人构型\n- 依赖仿真中精确的物理建模，复杂接触动力学（如柔性物体）仍是挑战\n\n### 6.3 仿真-真实差距的残余\n\n尽管取得了成功的 sim-to-real 迁移，但：\n- 视觉域偏移未完全消除：极端光照条件下仍可能出现失败\n- 物理域偏移：如关节间隙、减速器柔性等细微差异可能导致累积误差\n- 当前策略在开放词汇（open-vocabulary）场景中无法泛化\n\n### 6.4 评估局限性\n\n- 任务复杂度有限：单一开门任务无法充分反映复杂操作技能\n- 对比基线不够全面：缺乏与其他 sim-to-real 方法（如 RMA、ADR）的直接对比\n- 真实机器人实验仅在单一平台（Unitree H1）验证，泛化性存疑",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Opening the Sim-to-Real Door for Humanoid Pixel-to-Action Policy Transfer",
+      "authors": [
+        "Haoru Xue",
+        "Tairan He",
+        "Zi Wang",
+        "Qingwei Ben",
+        "Wenli Xiao",
+        "Zhengyi Luo",
+        "Xingye Da",
+        "Fernando Castañeda",
+        "Guanya Shi",
+        "Shankar Sastry",
+        "LinxiJimFan",
+        "Yuke Zhu"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2512.01061",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Recent progress in GPU-accelerated, photorealistic simulation has opened a scalable data-generation path for robot learning, where massive physics and visual randomization allow policies to generalize beyond curated environments. Building on these advances, we develop a teacher-student-bootstrap learning framework for vision-based humanoid loco-manipulation, using articulated-object interaction as a representative high-difficulty benchmark. Our approach introduces a staged-reset exploration strategy that stabilizes long-horizon privileged-policy training, and a GRPO-based fine-tuning procedure that mitigates partial observability and improves closed-loop consistency in sim-to-real RL. Trained entirely on simulation data, the resulting policy achieves robust zero-shot performance across diverse door types and outperforms human teleoperators by up to 31.7% in task completion time under the same whole-body control stack. This represents the first humanoid sim-to-real policy capable of diverse articulated loco-manipulation using pure RGB perception.",
+      "route_id": "da0070fc-9007-48bf-897a-1bf56dcbd1eb"
+    },
+    "markdown_stats": {
+      "lines": 332,
+      "words": 8182,
+      "headings": 26
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "da0070fc-9007-48bf-897a-1bf56dcbd1eb",
+  "paper_ref": "da0070fc-9007-48bf-897a-1bf56dcbd1eb",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

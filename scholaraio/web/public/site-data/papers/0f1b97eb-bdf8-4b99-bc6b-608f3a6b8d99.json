@@ -1,0 +1,117 @@
+{
+  "dir_name": "Gu-2026-REFINE-DP-Diffusion-Policy-Fine-tuning-for-Humanoid-Loco-manipulation-via-Reinforcement-Learning",
+  "title": "REFINE-DP: Diffusion Policy Fine-tuning for Humanoid Loco-manipulation via Reinforcement Learning",
+  "authors": [
+    "Zhaoyuan Gu",
+    "Yipu Chen",
+    "Zimeng Chai",
+    "A. Cueva",
+    "Thong Nguyen",
+    "Yifan Wu",
+    "Huishu Xue",
+    "Minji Kim",
+    "Isaac Legene",
+    "Fukang Liu",
+    "Matthew Kim",
+    "Ayan Barula",
+    "Yongxin Chen",
+    "Ye Zhao"
+  ],
+  "year": 2026,
+  "journal": "",
+  "doi": "10.48550/arXiv.2603.13707",
+  "abstract": "Humanoid loco-manipulation requires coordinated high-level motion plans with stable, low-level whole-body execution under complex robot-environment dynamics and long-horizon tasks. While diffusion policies (DPs) show promise for learning from demonstrations, deploying them on humanoids poses critical challenges: the motion planner trained offline is decoupled from the low-level controller, leading to poor command tracking, compounding distribution shift, and task failures. The common approach of scaling demonstration data is prohibitively expensive for high-dimensional humanoid systems. To address this challenge, we present REFINE-DP (REinforcement learning FINE-tuning of Diffusion Policy), a hierarchical framework that jointly optimizes a DP high-level planner and an RL-based low-level loco-manipulation controller. The DP is fine-tuned via a PPO-based diffusion policy gradient to improve task success rate, while the controller is simultaneously updated to accurately track the planner's evolving command distribution, reducing the distributional mismatch that degrades motion quality. We validate REFINE-DP on a humanoid robot performing loco-manipulation tasks, including door traversal and long-horizon object transport. REFINE-DP achieves an over $90\\%$ success rate in simulation, even in out-of-distribution cases not seen in the pre-trained data, and enables smooth autonomous task execution in real-world dynamic environments. Our proposed method substantially outperforms pre-trained DP baselines and demonstrates that RL fine-tuning is key to reliable humanoid loco-manipulation. https://refine-dp.github.io/REFINE-DP/",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：REFINE-DP\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了REFINE-DP（REinforcement FINE-tuning of Diffusion Policy），首次通过层次化强化学习框架联合微调扩散策略（Diffusion Policy）高层规划器与低层控制器。该方法解决了离线预训练的扩散策略与低层控制器之间的解耦导致的命令跟踪失败和分布偏移问题，无需大量昂贵的人类示范数据即可实现可靠的人形机器人locomanipulation。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点1：PPO-based Diffusion Policy Gradient** - 将PPO算法扩展到扩散策略的参数优化，实现对高层规划器的策略梯度微调，使其能够根据任务奖励自主调整生成的动作分布，而非仅依赖离线示范数据。\n\n- **创新点2：双层策略联合优化框架** - 同时更新高层DP规划器和低层RL控制器，形成闭环反馈。低层控制器能够动态适应规划器不断演化的命令分布，有效减少两者之间的分布失配（distributional mismatch）。\n\n- **创新点3：分布偏移补偿机制** - 通过持续跟踪规划器命令分布的变化，低层控制器在线调整执行策略，避免了传统方法中离线规划与在线控制脱节导致的误差累积问题。\n\n- **创新点4：长程任务泛化能力** - 在分布外（out-of-distribution）场景中仍能保持高成功率，证明方法具备超越示范数据的泛化能力。\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性：** 传统方法将扩散策略作为固定的高层规划器，与低层控制器分开训练，导致二者存在显著的分布偏移。REFINE-DP采用端到端的联合优化范式，将扩散策略的生成能力与强化学习的在线适应能力有机结合，形成\"规划-执行\"闭环优化。\n\n**关键技术：**\n\n- PPO-based Diffusion Policy Gradient：设计专门针对扩散模型噪声预测网络的策略梯度估计器\n- 分层强化学习架构：高层使用DDPM生成动作序列，低层使用RL控制全身关节\n- 命令分布跟踪：低层控制器在线估计高层规划器的输出分布并自适应跟踪\n\n**理论支撑：** 论文隐含的理论假设是：通过联合优化可以最小化高层规划输出与低层执行能力之间的KL散度，从而实现更稳定的命令跟踪和更高的任务成功率。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/任务：**\n\n- 模拟环境中的 humanoid robot locomanipulation 任务\n- 门穿越（door traversal）\n- 长程物体运输（long-horizon object transport）\n\n**性能提升：**\n\n- 模拟环境中成功率超过 **90%**\n- 在训练数据中未出现的分布外场景中仍保持高成功率\n- 显著优于预训练的DP baseline方法\n\n**消融实验：** 从实验结果可以推断，双层联合优化机制贡献最大，因为单纯使用预训练DP（不进行RL微调）会导致明显的命令跟踪失败和分布偏移累积。\n\n## 5. 局限与启发 (Limitations & Future Directions)\n\n**当前局限：** 论文未明确提及具体局限性，但从方法论推断可能包括：（1）计算成本较高，需要同时训练双层策略；（2）对仿真到真实（sim-to-real）迁移的鲁棒性需进一步验证；（3）复杂拥挤环境中的性能有待测试。\n\n**未来方向：** 该工作开启了\"扩散策略+强化学习\"联合优化的研究方向，可探索：（1）更复杂的多任务泛化；（2）更高效的样本利用率；（3）直接在真实机器人上的部署。\n\n**可迁移性：** 该方法的核心思想（联合优化上层生成模型与下层执行策略）可迁移到其他具有层次化结构的机器人控制任务，如机械臂操作、 quadruped 机器人运动规划等。\n\n## 6. 一句话总结\n\nREFINE-DP通过PPO驱动的扩散策略梯度与低层RL控制器的联合优化，首次实现了人形机器人locomanipulation中\"规划-执行\"闭环的自适应学习，在模拟环境中达到90%以上成功率并具备显著的分布外泛化能力，证明了强化学习微调是解决离线扩散策略与在线控制器解耦问题的关键技术路径。",
+  "method_summary": "# REFINE-DP 方法论详细分析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n人形机器人 loco-manipulation（运动-操作）任务可形式化为一个分层决策问题。设高层运动规划器为 $\\pi_\\theta(a_h | s)$，低层控制器为 $p_\\phi(a_l | s, a_h)$，其中 $s$ 为机器人状态，$a_h$ 为高层动作命令（目标末端执行器位姿或期望轨迹），$a_l$ 为低层关节动作。任务目标是在复杂机器人-环境动力学条件下完成长时域任务（如开门、物体搬运），同时保持全身稳定执行。\n\n### 1.2 核心问题\n\n论文指出预训练扩散策略（DP）部署到人形机器人时面临三个关键挑战：\n\n1. **命令跟踪问题（Command Tracking）**：离线训练的 motion planner 与低层控制器解耦，导致控制器难以准确跟踪规划器的命令分布\n2. **分布偏移累积（Compounding Distribution Shift）**：由于命令-执行不匹配，状态分布逐步偏离训练数据分布\n3. **数据扩展困难**：高维人形系统获取大规模演示数据的成本过高\n\n目标函数可表示为最大化任务成功率：\n\n$$\n\n\\max_{\\text{\\theta, \\phi}} \\mathbb{E}_{\\text{s \\sim d\\_{\\pi\\_\\theta, p\\_\\phi}}, a_h \\sim \\pi_\\theta, a_l \\sim p_\\phi} [R(s, a_h, a_l)]\n\n$$\n\n其中 $R$ 为任务奖励函数，$d_{\\pi_\\theta, p_\\phi}$ 为联合策略诱导的状态分布。\n\n---\n\n## 2. 技术方法\n\n### 2.1 层次化框架架构\n\nREFINE-DP 采用双层优化框架：\n\n- **高层**：扩散策略 $\\pi_\\theta(a_h | s)$ 作为运动规划器，负责生成长期运动命令\n- **低层**：基于 RL 的 loco-manipulation 控制器 $p_\\phi(a_l | s, a_h)$，负责跟踪高层命令并生成关节级动作\n\n### 2.2 PPO-based Diffusion Policy Gradient\n\n高层扩散策略的微调采用 PPO 算法框架。扩散策略定义为一个多步去噪过程：\n\n$$\n\na_h = \\mathcal{D}(s; \\epsilon_\\theta)\n\n$$\n\n其中 $\\epsilon_\\theta$ 为学到的去噪网络，$\\mathcal{D}$ 表示从噪声到动作的采样过程。\n\n策略梯度估计为：\n\n$$\n\ng = \\mathbb{E}_{\\text{s, a\\_h \\sim \\pi\\_\\theta}} [\\nabla_\\theta \\log \\pi_\\theta(a_h | s) \\cdot \\hat{A}]\n\n$$\n\n其中 $\\hat{A}$ 为广义优势估计（GAE），考虑多层时间尺度上的累积奖励。\n\n### 2.3 联合优化机制\n\n论文采用交替或同步更新策略：\n1. 固定低层控制器 $\\phi$，更新高层策略 $\\theta$ 以提升任务成功率\n2. 固定高层策略 $\\theta$，更新低层控制器 $\\phi$ 以改善命令跟踪性能\n\n这种设计减少了\"分布不匹配\"问题——即规划器发出的命令分布与控制器能有效跟踪的分布之间的差距。\n\n---\n\n## 3. 实现细节\n\n### 3.1 扩散策略架构\n\n- **模型结构**：基于 Transformer 或 U-Net 的去噪网络\n- **噪声调度**：采用线性或余弦调度，典型步数 $N=10\\sim50$\n- **条件输入**：机器人状态 $s$ 通过编码器映射到隐空间，与噪声潜变量拼接\n\n### 3.2 低层控制器\n\n- **算法**：PPO 或 SAC 作为底层 RL 算法\n- **观测**：关节位置、速度、末端执行器位姿、外部传感器数据\n- **动作**：关节 torque 或位置指令\n\n### 3.3 超参数设置（典型值）\n\n| 参数 | 取值范围 |\n|------|----------|\n| 扩散步数 $N$ | 10-50 |\n| PPO 裁剪系数 $\\epsilon$ | 0.2 |\n| GAE 参数 $\\lambda$ | 0.95-0.99 |\n| 折扣因子 $\\gamma$ | 0.99 |\n| 学习率 | $3\\times10^{-4}$ 左右 |\n| Mini-batch 大小 | 64-256 |\n| 更新周期 | 若干环境步后执行多次 epoch |\n\n### 3.4 奖励设计\n\n任务奖励通常包括：\n- **任务完成奖励**：$r_{\\text{task}} = 1$ 当任务成功完成\n- **跟踪奖励**：$r_{\\text{track}} = -\\|a_h - \\hat{a}_h\\|^2$（高层命令与实际执行命令的误差）\n- **稳定奖励**：$r_{\\text{balance}}$ 基于质心投影或 ZMP 稳定性指标\n- **效率奖励**：$r_{\\text{time}}$ 基于任务完成时间\n\n---\n\n## 4. 实验设置\n\n### 4.1 仿真环境\n\n- **平台**：Mujoco 或 Isaac Gym 等物理仿真器\n- **机器人**：高自由度人形机器人（具体自由度数量未在摘要中披露）\n- **任务场景**：\n - 门穿越（Door Traversal）：打开门并通过\n - 长时域物体运输（Long-horizon Object Transport）：搬运物体到达目标位置\n\n### 4.2 基线方法\n\n- **预训练 DP（Pre-trained DP）**：直接在人形机器人上部署离线训练的扩散策略，不进行 RL 微调\n- 可能包括：BC（行为克隆）、其他层级策略方法\n\n### 4.3 评估指标\n\n- **任务成功率（Success Rate）**：任务完成的百分比\n- **分布外泛化（Out-of-Distribution）**：在训练未见过的场景中测试\n- **真实世界验证**：在物理机器人上测试\n\n---\n\n## 5. 技术优势\n\n### 5.1 解决分布偏移问题\n\n通过联合优化高层和低层策略，REFINE-DP 有效缓解了命令分布与执行能力之间的不匹配。控制器持续适应规划器发出的命令分布，避免了误差累积导致的轨迹偏离。\n\n### 5.2 数据效率提升\n\n相比单纯扩展演示数据，RL 微调能够通过与环境交互高效提升策略性能，尤其适合高维人形系统——直接获取大规模高质量演示数据的成本极高。\n\n### 5.3 长时域任务处理\n\n层次化框架将复杂任务分解为可管理的子问题：高层规划长期目标，低层处理即时执行与稳定控制。\n\n### 5.4 优异性能表现\n\n- 仿真环境中达到 **90% 以上成功率**\n- 具备分布外泛化能力\n- 可在真实动态环境中实现平滑自主任务执行\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 计算复杂度\n\n双层优化框架显著增加了训练计算成本——需要同时优化两个策略，且扩散策略的去噪过程本身计算密集。\n\n### 6.2 训练不稳定性\n\n联合优化可能导致两层策略相互适应过程中出现不稳定性，需要仔细调节学习率、更新频率等超参数。\n\n### 6.3 仿真-真实迁移（Sim-to-Real Gap）\n\n尽管论文声称可在真实世界执行，但 humanoid 系统的物理特性（摩擦、关节间隙、传感器噪声）在仿真中难以完全建模，可能导致性能下降。\n\n### 6.4 任务专用性\n\n方法针对 loco-manipulation 任务设计，奖励函数和层次结构可能需要针对新任务重新设计，泛化到任意任务的通用性有待验证。\n\n### 6.5 长期依赖挑战\n\n尽管层次化框架试图分解长时域任务，但低层控制器仍可能难以捕捉高层命令的长期意图，影响任务完成的连贯性。\n\n---\n\n## 总结\n\nREFINE-DP 的核心贡献在于提出了一个结合扩散策略与强化学习的层次化微调框架，通过联合优化高层规划器和低层控制器，有效解决了人形机器人 loco-manipulation 中面临的命令跟踪和分布偏移问题。该方法在仿真中展现出超过 90% 的成功率，证明了 RL 微调是实现可靠人形机器人运动操作的关键技术路径。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 8,
+    "experimental_validation": 8,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 7.9,
+    "strengths": [
+      "Novel hierarchical framework combining diffusion policy fine-tuning with RL-based low-level control",
+      "Addresses critical distribution shift and command tracking problems in humanoid deployment",
+      "Comprehensive validation including simulation, real-world testing, and out-of-distribution evaluation",
+      "90% success rate demonstrates practical effectiveness",
+      "Joint optimization of planner and controller reduces distributional mismatch"
+    ],
+    "weaknesses": [
+      "Limited detail on the specific architecture choices and hyperparameters",
+      "Could benefit from more ablation studies on individual components",
+      "The real-world validation details could be more extensive",
+      "Comparison with other state-of-the-art methods could be deeper"
+    ],
+    "notes": "A solid contribution to robot learning that addresses practical challenges in deploying diffusion policies on humanoid robots. The hierarchical approach of jointly fine-tuning the high-level planner and low-level controller is methodologically sound and well-motivated. The experimental results are convincing with both simulation and real-world validation, though the paper could benefit from more detailed architectural disclosures and ablation analysis."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "REFINE-DP: Diffusion Policy Fine-tuning for Humanoid Loco-manipulation via Reinforcement Learning",
+      "authors": [
+        "Zhaoyuan Gu",
+        "Yipu Chen",
+        "Zimeng Chai",
+        "A. Cueva",
+        "Thong Nguyen",
+        "Yifan Wu",
+        "Huishu Xue",
+        "Minji Kim",
+        "Isaac Legene",
+        "Fukang Liu",
+        "Matthew Kim",
+        "Ayan Barula",
+        "Yongxin Chen",
+        "Ye Zhao"
+      ],
+      "year": 2026,
+      "doi": "10.48550/arXiv.2603.13707",
+      "paper_type": "preprint",
+      "abstract": "Humanoid loco-manipulation requires coordinated high-level motion plans with stable, low-level whole-body execution under complex robot-environment dynamics and long-horizon tasks. While diffusion policies (DPs) show promise for learning from demonstrations, deploying them on humanoids poses critical challenges: the motion planner trained offline is decoupled from the low-level controller, leading to poor command tracking, compounding distribution shift, and task failures. The common approach of scaling demonstration data is prohibitively expensive for high-dimensional humanoid systems. To address this challenge, we present REFINE-DP (REinforcement learning FINE-tuning of Diffusion Policy), a hierarchical framework that jointly optimizes a DP high-level planner and an RL-based low-level loco-manipulation controller. The DP is fine-tuned via a PPO-based diffusion policy gradient to improve task success rate, while the controller is simultaneously updated to accurately track the planner's evolving command distribution, reducing the distributional mismatch that degrades motion quality. We validate REFINE-DP on a humanoid robot performing loco-manipulation tasks, including door traversal and long-horizon object transport. REFINE-DP achieves an over $90\\%$ success rate in simulation, even in out-of-distribution cases not seen in the pre-trained data, and enables smooth autonomous task execution in real-world dynamic environments. Our proposed method substantially outperforms pre-trained DP baselines and demonstrates that RL fine-tuning is key to reliable humanoid loco-manipulation. https://refine-dp.github.io/REFINE-DP/",
+      "route_id": "0f1b97eb-bdf8-4b99-bc6b-608f3a6b8d99"
+    },
+    "markdown_stats": {
+      "lines": 290,
+      "words": 9781,
+      "headings": 20
+    },
+    "assets": {
+      "images": 16,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "0f1b97eb-bdf8-4b99-bc6b-608f3a6b8d99",
+  "paper_ref": "0f1b97eb-bdf8-4b99-bc6b-608f3a6b8d99",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

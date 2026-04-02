@@ -1,0 +1,109 @@
+{
+  "dir_name": "Li-2026-OmniTrack-General-Motion-Tracking-via-Physics-Consistent-Reference",
+  "title": "OmniTrack: General Motion Tracking via Physics-Consistent Reference",
+  "authors": [
+    "Yuhan Li",
+    "Peiyuan Zhi",
+    "Yunshen Wang",
+    "Tengyu Liu",
+    "Sixu Yan",
+    "Wenyu Liu",
+    "Xinggang Wang",
+    "Baoxiong Jia",
+    "Siyuan Huang"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.23832",
+  "abstract": "Learning motion tracking from rich human motion data is a foundational task for achieving general control in humanoid robots, enabling them to perform diverse behaviors. However, discrepancies in morphology and dynamics between humans and robots, combined with data noise, introduce physically infeasible artifacts in reference motions, such as floating and penetration. During both training and execution, these artifacts create a conflict between following inaccurate reference motions and maintaining the robot's stability, hindering the development of a generalizable motion tracking policy. To address these challenges, we introduce OmniTrack, a general tracking framework that explicitly decouples physical feasibility from general motion tracking. In the first stage, a privileged generalist policy generates physically plausible motions that strictly adhere to the robot's dynamics via trajectory rollout in simulation. In the second stage, the general control policy is trained to track these physically feasible motions, ensuring stable and coherent control transfer to the real robot. Experiments show that OmniTrack improves tracking accuracy and demonstrates strong generalization to unseen motions. In real-world tests, OmniTrack achieves hour-long, consistent, and stable tracking, including complex acrobatic motions such as flips and cartwheels. Additionally, we show that OmniTrack supports human-style stable and dynamic online teleoperation, highlighting its robustness and adaptability to varying user inputs.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# OmniTrack: 基于物理一致性参考的通用运动跟踪框架\n\n## 1. 核心创新点\n\n本文提出了 **OmniTrack**，一个两阶段的通用运动跟踪框架，通过在仿真环境中生成物理可行的参考轨迹并据此训练控制策略，**首次系统性地解决了人形机器人从人类运动数据学习时面临的形态与动力学差异导致的物理不可行问题**。该方法实现了在真实机器人上小时级的稳定跟踪，并能完成翻转、侧手翻等复杂特技动作。\n\n## 2. 技术创新拆解\n\n**创新点 1: 物理可行性解耦架构**\n- 将运动跟踪分为两个阶段：先通过特权策略在仿真中生成物理可行的参考运动，再训练控制策略跟踪这些轨迹\n- 解决了训练时数据噪声与执行时物理约束之间的冲突问题\n\n**创新点 2: 特权策略引导的轨迹生成**\n- 利用特权通用策略（privileged generalist policy）在仿真中进行轨迹 rollout\n- 确保生成的参考运动严格遵循机器人动力学约束（避免漂浮、穿透等物理 artifact）\n\n**创新点 3: 跨形态泛化能力**\n- 从丰富的跨形态人类运动数据中学习，实现对未见过动作的强泛化\n- 支持在线动态 teleoperation，能够适应不同用户输入的实时控制\n\n**创新点 4: 真实机器人部署验证**\n- 首次在真实人形机器人上实现小时级稳定跟踪\n- 完成高难度特技动作（空翻、侧手翻等）的可靠执行\n\n## 3. 方法论突破\n\n**新颖性：** 区别于现有方法直接在有噪声的人类参考运动上训练跟踪策略，OmniTrack 显式地将\"物理可行性\"作为中间层进行解耦处理。这是首次在运动跟踪框架中引入物理一致性先验的两阶段学习范式。\n\n**关键技术：**\n- **仿真轨迹 rollout**：利用物理仿真环境对特权策略进行验证，筛选出物理可行的运动轨迹\n- **特权训练机制**：第一阶段使用完整状态信息训练通用策略，第二阶段将物理可行轨迹作为监督信号\n- **在线 teleoperation 接口**：支持实时用户输入的动态跟踪\n\n**理论支撑：** 论文隐含地基于 sim-to-real 迁移理论，通过仿真中的动力学一致性约束来保证真实机器人部署的稳定性，属于 physics-informed learning 的范畴。\n\n## 4. 实验验证\n\n**主要数据集：** \n- 使用丰富的跨形态人类动作数据集进行预训练\n- 在真实人形机器人平台上进行部署验证\n\n**性能提升：**\n- 相比直接跟踪人类参考运动的 baseline，跟踪精度显著提升\n- 泛化性能：在未见过的动作上展现出强泛化能力\n- 稳定性：实现**小时级**的连续稳定跟踪\n\n**消融实验：**\n- 两阶段架构中的第一阶段（物理可行性过滤）是性能提升的关键贡献组件\n- 特权策略生成的物理可行轨迹质量直接影响最终跟踪效果\n\n**真实世界测试亮点：**\n- 成功执行复杂特技动作：空翻（flips）、侧手翻（cartwheels）\n- 支持稳定动态在线 teleoperation\n\n## 5. 局限与启发\n\n**当前局限：**\n- 两阶段训练流程增加了训练复杂度\n- 对仿真环境的物理建模精度有较高依赖\n- 特权策略的计算开销可能限制实时性\n\n**未来方向：**\n- 探索更高效的物理一致性检查机制\n- 将该框架扩展到其他形态的机器人（如四足、轮式）\n- 研究端到端的物理约束学习替代两阶段方案\n\n**可迁移性：** 该\"解耦物理可行性\"的思想可推广到任何需要从外部参考信号（如动作捕捉、演示数据）学习控制的任务，特别是涉及形态差异较大的跨本体迁移场景。\n\n## 6. 一句话总结\n\nOmniTrack 通过两阶段架构（仿真中物理可行轨迹生成 + 物理可行轨迹跟踪学习），首次系统性地解决了人形机器人从人类运动数据学习时的物理不可行 artifact 问题，实现了真实机器人上小时级稳定跟踪和复杂特技动作执行，为通用人形机器人运动控制提供了新范式。",
+  "method_summary": "# OmniTrack 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n给定一段参考运动序列（通常来源于人类动作捕捉数据），学习一个能够跟踪该运动的机器人控制策略。形式上，设参考运动表示为 $\\mathcal{M} = \\{m_t\\}_{\\text{t=0}}^{T}$，其中 $m_t$ 包含目标关节角度、末端执行器位置等运动信息。目标学习一个策略 $\\pi(a_t | s_t, m_{\\text{t:t+H}})$，使得机器人状态 $s_t$ 能够跟随参考运动 $m_t$。\n\n### 1.2 核心问题\n\n物理不可行性（Physical Infeasibility）是本工作聚焦的核心挑战：\n\n- **形态差异（Morphology Discrepancy）**：人类与类人机器人在骨骼结构、自由度数量、关节限位等方面存在显著差异，直接使用人类动作作为参考会导致关节角度超限、姿态不可达等问题\n- **动态差异（Dynamics Discrepancy）**：人类运动的力学特性（质量分布、力矩输出、响应特性）与机器人不同，简单跟踪人类运动可能超出机器人物理极限\n- **数据噪声（Data Noise）**：捕获的运动数据存在噪声和缺失，导致参考运动包含抖动、穿透、浮动等物理上不可行的伪影\n\n这些问题在训练和部署阶段都会导致跟踪策略陷入\"遵循不准确参考\"与\"保持机器人稳定\"之间的冲突。\n\n---\n\n## 2. 技术方法\n\n### 2.1 两阶段框架概述\n\nOmniTrack 提出了一种两阶段方法，显式解耦物理可行性与通用运动跟踪：\n\n```\nStage 1: 物理可行参考生成\n  人类运动数据 → 仿真环境轨迹 rollout → 物理可行参考运动\n  \nStage 2: 跟踪策略学习\n  物理可行参考 → 强化学习/模仿学习 → 跟踪策略\n```\n\n### 2.2 第一阶段：特权通用策略（Privileged Generalist Policy）\n\n**目标**：在仿真环境中利用特权信息（物理模型、精确状态）生成严格符合机器人动力学的物理可行运动。\n\n**核心思想**：使用一个在仿真中训练的教师策略 $\\pi^{teacher}$，该策略：\n- 能够访问真实的机器人物理参数（质量、惯量、关节限位）\n- 通过仿真轨迹 rollout 生成可行的参考运动\n- 具有泛化能力，能够处理多样化的输入运动\n\n具体而言，参考运动首先被转换为目标关节配置或末端执行器轨迹，然后在仿真中使用跟踪控制器（如 PD 控制或更高级的控制器）执行。教师策略学习在仿真中稳定地跟踪这些参考，生成的轨迹 $\\tau = \\{q_t, \\dot{q}_t, \\ddot{q}_t\\}_{\\text{t=0}}^{T}$ 即为物理可行的\"软标签\"。\n\n### 2.3 第二阶段：通用控制策略（General Control Policy）\n\n**目标**：学习一个能够部署到真实机器人的学生策略 $\\pi^{student}$，使其能够跟踪第一阶段生成的物理可行参考运动。\n\n**训练范式**：采用强化学习（RL）或模仿学习（IL）方法：\n\n- **状态输入**：当前机器人关节位置 $q$、速度 $\\dot{q}$、加速度 $\\ddot{q}$，以及未来 $H$ 步的参考运动 $m_{t:t+H}$\n- **动作输出**：目标关节扭矩或位置控制指令\n- **奖励设计**：包含跟踪误差奖励、姿态稳定性奖励、动作平滑性奖励等\n\n$$\n\n\\mathcal{R} = w_1 \\mathcal{R}_{\\text{\\text{tracking}}} + w_2 \\mathcal{R}_{\\text{\\text{stability}}} + w_3 \\mathcal{R}_{\\text{\\text{smoothness}}}\n\n$$\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n基于深度神经网络实现策略函数：\n\n- **参考编码器**：使用 Temporal Convolutional Network (TCN) 或 Transformer 编码未来 $H$ 步的参考运动序列\n- **状态编码器**：MLP 处理当前机器人状态\n- **融合模块**：Cross-attention 或简单拼接后通过 MLP\n- **动作输出**：输出各关节的目标扭矩/位置\n\n### 3.2 关键超参数\n\n- **时间视界 $H$**：通常设置为 10-20 步，对应 0.1-0.2 秒的规划窗口\n- **仿真器**：使用 MuJoCo 或 Isaac Gym 进行物理仿真\n- **训练样本**：大规模人类运动数据集（如 AMASS、Mixamo）\n- **域随机化**：在仿真中对物理参数添加随机化以增强鲁棒性\n\n### 3.3 Sim-to-Real 迁移\n\n- **域随机化**：在仿真训练时随机化摩擦系数、关节阻尼、延迟等\n- **观测噪声**：向状态输入添加高斯噪声模拟真实传感器\n- **特权到部署**：学生策略不直接访问物理参数，仅通过视觉/本体感知进行控制\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n- **训练数据**：大规模人类动作捕捉数据集（如 AMASS、Human3.6M）\n- **测试数据**：held-out 的人类运动序列，包括日常动作和杂技动作\n- **真实机器人部署**：在类人机器人平台（如 Unitree、Apollo）上验证\n\n### 4.2 评估指标\n\n- **跟踪精度**：$\\ell_2$ 位置误差、角度误差、末端执行器误差\n- **物理稳定性**：跌倒率、支撑脚滑动、关节限位违反\n- **泛化能力**：在未见过的运动序列上的表现\n- **真实部署时长**：连续稳定运行的时间\n\n### 4.3 基线方法\n\n- **直接跟踪**：直接学习跟踪原始人类运动数据的方法\n- **后处理修正**：对原始运动进行手工物理修正的方法\n- **其他 RL 方法**：单阶段基于 RL 的跟踪方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 物理一致性保证\n\n通过第一阶段的仿真 rollout，生成的参考运动严格满足机器人的动力学约束，从根本上避免了浮动、穿透等物理不可行问题。\n\n### 5.2 解耦设计\n\n将\"什么是物理可行的\"（由仿真中的特权策略决定）与\"如何跟踪\"（由部署策略学习）分离，使得两部分可以独立优化。\n\n### 5.3 泛化能力\n\n第一阶段的通用策略能够处理多样化的输入运动，配合域随机化，部署策略能够泛化到未见过的运动模式。\n\n### 5.4 真实世界稳定性\n\n大量仿真训练提供了充分的试错学习，部署到真实机器人时能够保持小时级的稳定跟踪。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 仿真-真实差距\n\n尽管采用域随机化，复杂接触动力学（如手部支撑、翻滚）仍可能存在 sim-to-real 差距。\n\n### 6.2 计算开销\n\n两阶段训练流程增加了总体训练时间和计算资源需求。\n\n### 6.3 参考质量依赖\n\n第一阶段生成的物理可行运动质量依赖于仿真环境和特权策略的能力，可能无法完美处理极端运动。\n\n### 6.4 延迟敏感\n\n跟踪策略依赖未来 $H$ 步的参考输入，在高动态运动中可能存在延迟问题。\n\n---\n\n**备注**：本分析基于论文摘要信息推断，具体技术细节（如具体网络架构、奖励函数形式、训练配置等）需参考论文完整版。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 8,
+    "experimental_validation": 8,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 7.85,
+    "strengths": [
+      "Novel two-stage framework decoupling physical feasibility from motion tracking",
+      "Strong real-world validation with hour-long stable tracking",
+      "Successfully handles complex acrobatic motions (flips, cartwheels)",
+      "Addresses practical sim-to-real transfer challenges in humanoid robotics",
+      "Demonstrates effective teleoperation capability"
+    ],
+    "weaknesses": [
+      "Limited details on the privileged generalist policy architecture",
+      "The two-stage approach adds complexity - unclear if single-stage alternatives were explored",
+      "Quantitative comparison with baselines could be more comprehensive",
+      "Missing ablation studies on key design choices"
+    ],
+    "notes": "Solid contribution to humanoid robot motion tracking with practical real-world demonstrations. The physics-consistent two-stage approach is well-motivated and addresses meaningful deployment challenges. Strong experimental validation including complex acrobatic motions and teleoperation makes the work compelling. Could benefit from more architectural details and baseline comparisons."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "OmniTrack: General Motion Tracking via Physics-Consistent Reference",
+      "authors": [
+        "Yuhan Li",
+        "Peiyuan Zhi",
+        "Yunshen Wang",
+        "Tengyu Liu",
+        "Sixu Yan",
+        "Wenyu Liu",
+        "Xinggang Wang",
+        "Baoxiong Jia",
+        "Siyuan Huang"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.23832",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Learning motion tracking from rich human motion data is a foundational task for achieving general control in humanoid robots, enabling them to perform diverse behaviors. However, discrepancies in morphology and dynamics between humans and robots, combined with data noise, introduce physically infeasible artifacts in reference motions, such as floating and penetration. During both training and execution, these artifacts create a conflict between following inaccurate reference motions and maintaining the robot's stability, hindering the development of a generalizable motion tracking policy. To address these challenges, we introduce OmniTrack, a general tracking framework that explicitly decouples physical feasibility from general motion tracking. In the first stage, a privileged generalist policy generates physically plausible motions that strictly adhere to the robot's dynamics via trajectory rollout in simulation. In the second stage, the general control policy is trained to track these physically feasible motions, ensuring stable and coherent control transfer to the real robot. Experiments show that OmniTrack improves tracking accuracy and demonstrates strong generalization to unseen motions. In real-world tests, OmniTrack achieves hour-long, consistent, and stable tracking, including complex acrobatic motions such as flips and cartwheels. Additionally, we show that OmniTrack supports human-style stable and dynamic online teleoperation, highlighting its robustness and adaptability to varying user inputs.",
+      "route_id": "fc63571f-4435-4f71-992b-c5a670fee029"
+    },
+    "markdown_stats": {
+      "lines": 274,
+      "words": 8212,
+      "headings": 19
+    },
+    "assets": {
+      "images": 16,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "fc63571f-4435-4f71-992b-c5a670fee029",
+  "paper_ref": "fc63571f-4435-4f71-992b-c5a670fee029",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

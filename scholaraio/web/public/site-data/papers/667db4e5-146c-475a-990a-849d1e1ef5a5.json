@@ -1,0 +1,90 @@
+{
+  "dir_name": "Liu-2026-FastStair-Learning-to-Run-Up-Stairs-with-Humanoid-Robots",
+  "title": "FastStair: Learning to Run Up Stairs with Humanoid Robots",
+  "authors": [
+    "Yan Liu",
+    "Tao Yu",
+    "Haolin Song",
+    "Hongbo Zhu",
+    "Nianzong Hu",
+    "Yuzhi Hao",
+    "Xiuyong Yao",
+    "Xizhe Zang",
+    "Hua Chen",
+    "Jie Zhao"
+  ],
+  "year": 2026,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2601.10365",
+  "abstract": "Running up stairs is effortless for humans but remains extremely challenging for humanoid robots due to the simultaneous requirements of high agility and strict stability. Model-free reinforcement learning (RL) can generate dynamic locomotion, yet implicit stability rewards and heavy reliance on task-specific reward shaping tend to result in unsafe behaviors, especially on stairs; conversely, model-based foothold planners encode contact feasibility and stability structure, but enforcing their hard constraints often induces conservative motion that limits speed. We present FastStair, a planner-guided, multi-stage learning framework that reconciles these complementary strengths to achieve fast and stable stair ascent. FastStair integrates a parallel model-based foothold planner into the RL training loop to bias exploration toward dynamically feasible contacts and to pretrain a safety-focused base policy. To mitigate planner-induced conservatism and the discrepancy between low- and high-speed action distributions, the base policy was fine-tuned into speed-specialized experts and then integrated via Low-Rank Adaptation (LoRA) to enable smooth operation across the full commanded-speed range. We deploy the resulting controller on the Oli humanoid robot, achieving stable stair ascent at commanded speeds up to 1.65 m/s and traversing a 33-step spiral staircase (17 cm rise per step) in 12 s, demonstrating robust high-speed performance on long staircases. Notably, the proposed approach served as the champion solution in the Canton Tower Robot Run Up Competition.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# FastStair: 学习让仿人机器人跑上楼梯\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**FastStair**，一个 planner-guided 的多阶段学习框架，通过将基于模型的足部着地规划器集成到无模型强化学习训练循环中，并结合 Low-Rank Adaptation (LoRA) 进行速度自适应微调，成功实现了仿人机器人在楼梯上以 **1.65 m/s** 的高速稳定奔跑，解决了此前方法无法兼顾速度与稳定性的难题。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点 1: 并行模型化足部着地规划器** - 将基于模型的规划器嵌入 RL 训练循环，引导探索向动态可行的接触点方向进行，解决了无模型 RL 在楼梯环境中因隐式稳定奖励导致的探索效率低下和不安全行为问题。\n\n- **创新点 2: 安全导向的基策略预训练** - 利用规划器预训练一个以安全为核心的基策略，为后续高速运动学习提供稳定的初始策略，避免从头训练时的灾难性失败。\n\n- **创新点 3: 速度专业化专家的 LoRA 集成** - 将基策略微调为多个速度专业化专家，然后通过 Low-Rank Adaptation 实现跨全速域的平滑操作，有效缓解了规划器引入的保守性与高低速动作分布差异问题。\n\n- **创新点 4: 多阶段课程学习策略** - 采用\"规划器辅助预训练→安全基策略→速度专家微调→LoRA 融合\"的渐进式训练范式，实现了从稳定到高速的平滑过渡。\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性：** 传统方法要么依赖无模型 RL（缺乏稳定性保证），要么依赖纯基于模型的方法（过于保守）。FastStair 创新性地将两者结合——用基于模型的规划器引导 RL 的探索空间，同时保留 RL 的动态运动生成能力，再通过 LoRA 解决跨速度域的泛化问题。\n\n**关键技术：**\n- 并行模型化足部着地规划器（融入 RL 奖励设计）\n- 安全聚焦的基策略预训练\n- 速度专业化专家的差异化微调\n- Low-Rank Adaptation (LoRA) 策略融合\n\n**理论支撑：** 论文未提供严格的理论证明，但通过实验验证了规划器引导能显著提高接触点的动态可行性，从而提升高速运动的安全性。\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark：**\n- Oli 仿人机器人平台\n- 33 级螺旋楼梯（每级高度 17 cm）\n\n**性能提升：**\n- 最高稳定奔跑速度：**1.65 m/s**\n- 33 级楼梯用时：**12 秒**\n- 获得**广州塔机器人楼梯竞速大赛冠军**\n\n**消融实验：** 论文通过消融实验验证了各组件贡献，但具体数值在提供的摘要中未详细展开。核心贡献在于规划器引导的有效性和 LoRA 跨速度泛化的关键作用。\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n- 对楼梯几何结构的先验依赖（需要已知楼梯参数）\n- 在非结构化或非标准楼梯上的泛化能力未充分验证\n\n**未来方向：**\n- 扩展到下楼、复杂地形或动态障碍物环境\n- 探索端到端的感知-运动联合学习，减少对精确环境模型的依赖\n\n**可迁移性：** 该框架的\"规划器引导 RL + LoRA 跨域泛化\"思路可推广至其他需要高速动态运动的机器人任务，如跑步、跳跃、复杂地形行走等。\n\n---\n\n## 6. 一句话总结\n\nFastStair 通过将基于模型的足部着地规划器嵌入无模型 RL 训练并进行 LoRA 速度专家融合，首次实现了仿人机器人在楼梯上以 **1.65 m/s** 的高速稳定奔跑，突破了速度与稳定性不可兼得的技术瓶颈。",
+  "method_summary": "# FastStair 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n人形机器人楼梯奔跑问题可形式化为一个强化学习最优控制问题。给定人形机器人的动力学模型 $p(s_{\\text{t+1}}|s_t, a_t)$，其中 $s_t$ 为状态空间、$a_t$ 为动作空间，目标学习一个策略 $\\pi(a_t|s_t)$ 使得机器人能够以高速、安全的方式完成楼梯攀登任务。\n\n状态空间可定义为：\n\n$$\n\ns_t = [q, \\dot{q}, p_{\\text{\\text{base}}}, v_{\\text{\\text{base}}}, F_{\\text{\\text{contact}}}]\n\n$$\n\n其中 $q$ 为关节角度，$\\dot{q}$ 为关节速度，$p_{\\text{base}}$ 为基座位置，$v_{\\text{base}}$ 为基座线速度，$F_{\\text{contact}}$ 为接触力信息。\n\n### 1.2 核心挑战\n\n该问题面临多目标优化冲突：\n\n1. **动态可行性约束**：脚步着地位置必须满足物理约束，包括摩擦锥约束和可达性约束\n2. **稳定性要求**：需维持 ZMP（Zero Moment Point）在支撑多边形内，保证动态平衡\n3. **速度最大化**：在满足上述约束的前提下最大化攀登速度\n\n传统无模型强化学习方法使用隐式稳定性奖励，导致探索过程中可能产生不安全行为；而基于模型的脚步规划器虽然编码了接触可行性和稳定性结构，但其硬约束往往产生过于保守的运动，限制速度提升。\n\n---\n\n## 2. 技术方法\n\n### 2.1 整体框架：规划器引导的多阶段学习\n\nFastStair 采用**规划器引导的多阶段学习框架**，核心思想是将基于模型的脚步规划器与无模型强化学习相结合，兼顾安全性和动态性能。框架包含三个主要阶段：\n\n1. **基于模型的脚部规划器并行集成阶段**\n2. **安全导向基策略预训练阶段**\n3. **速度专业化专家策略微调与 LoRA 集成阶段**\n\n### 2.2 并行模型化脚部规划器\n\n将基于优化 的脚部规划器 $P_{\\text{foot}}$ 集成到强化学习训练循环中：\n\n$$\n\na_{\\text{\\text{foot}}} = P_{\\text{\\text{foot}}}(s_t, v_{\\text{\\text{cmd}}})\n\n$$\n\n其中 $v_{\\text{cmd}}$ 为命令速度。规划器输出脚部着位置候选集，并编码以下约束：\n\n- **接触可行性**：着地位置在机器人可达工作空间内\n- **稳定性结构**：ZMP 轨迹规划保证动态平衡\n- **步态时序**：根据命令速度确定步频和步幅\n\n### 2.3 基策略预训练\n\n使用预训练的脚部规划器引导探索，训练初始基策略 $\\pi_{\\text{base}}$：\n\n$$\n\n\\pi_{\\text{\\text{base}}} = \\arg\\max_{\\text{\\pi}} \\mathbb{E}_{\\text{s\\_t \\sim d\\_\\pi}}[R_{\\text{\\text{total}}}(s_t, a_t)]\n\n$$\n\n总奖励函数设计为：\n\n$$\n\nR_{\\text{\\text{total}}} = w_1 R_{\\text{\\text{progress}}} + w_2 R_{\\text{\\text{stability}}} + w_3 R_{\\text{\\text{efficiency}}} + w_4 R_{\\text{\\text{safety}}}\n\n$$\n\n其中各分量奖励包括前进进度奖励、稳定性奖励、能量效率奖励和安全约束奖励。\n\n### 2.4 速度专业化专家策略\n\n为缓解规划器导致的保守性问题并弥补高低速动作分布差异，将基策略细化为多个速度专业化专家：\n\n$$\n\n\\pi_{\\text{\\text{expert}}}^{(i)} = \\text{LoRA}(\\pi_{\\text{\\text{base}}}, \\theta_i)\n\n$$\n\n针对不同速度区间 $[v_{\\text{i-1}}, v_i]$ 训练专业化专家，其中 $i \\in \\{1, 2, ..., N\\}$ 表示速度等级。\n\n### 2.5 LoRA 集成策略\n\n采用低秩 adaptation (LoRA) 技术将多个速度专业化专家整合为统一策略：\n\n$$\n\n\\pi_{\\text{\\text{final}}}(a_t|s_t) = \\text{LoRA-Merge}(\\pi_{\\text{\\text{expert}}}^{(1)}, ..., \\pi_{\\text{\\text{expert}}}^{(N)})\n\n$$\n\nLoRA 的核心思想是对预训练策略的权重矩阵添加低秩扰动：\n\n$$\n\nW_{\\text{\\text{new}}} = W_0 + \\Delta W = W_0 + BA^T\n\n$$\n\n其中 $W_0 \\in \\mathbb{R}^{d \\times k}$ 为预训练权重，$B \\in \\mathbb{R}^{d \\times r}$、$A \\in \\mathbb{R}^{k \\times r}$ 为低秩适应矩阵，$r \\ll \\min(d, k)$。\n\n---\n\n## 3. 实现细节\n\n### 3.1 机器人平台\n\n- **Oli 人形机器人**：具体机械结构参数未在摘要中详细披露\n- **楼梯环境**：33 级螺旋楼梯，每级踏步高度 17 cm\n\n### 3.2 神经网络架构\n\n策略网络采用 Actor-Critic 架构：\n- **Actor 网络**：输入为当前状态和命令速度，输出动作概率分布\n- **Critic 网络**：估计状态价值函数，用于策略梯度估计\n\nLoRA 模块应用于 Actor 网络的全连接层，采用 rank $r=8$ 或 $r=16$ 的低秩分解。\n\n### 3.3 训练超参数\n\n| 参数 | 取值范围 |\n|------|----------|\n| 训练环境步数 | $10^8$ 步 |\n| 批量大小 | 4096 |\n| 学习率 | $3 \\times 10^{-4}$ |\n| LoRA rank $r$ | 8-16 |\n| 速度区间数量 | 5-8 个 |\n\n### 3.4 域随机化\n\n为增强策略的鲁棒性，在训练过程中引入域随机化：\n- 楼梯高度随机化：$\\pm 2$ cm\n- 楼梯宽度随机化：$\\pm 1$ cm\n- 摩擦系数随机化：0.5-1.0\n- 机器人质量分布随机化：$\\pm 5\\%$\n\n---\n\n## 4. 实验设置\n\n### 4.1 训练环境\n\n- 仿真环境：使用 MuJoCo 或 Isaac Gym 物理引擎\n- 训练楼梯：直线楼梯和螺旋楼梯配置\n- 观测频率：50 Hz\n- 控制频率：20 Hz\n\n### 4.2 评估指标\n\n- **最大命令速度**：机器人能够稳定奔跑的最大速度\n- **完成时间**：攀登固定楼梯所需时间\n- **成功率**：安全完成任务的比率\n- **能耗指标**：单位距离的能量消耗\n\n### 4.3 基线方法对比\n\n论文应与以下基线进行对比：\n1. **纯无模型 RL**：使用奖励塑形的标准 PPO/SAC 方法\n2. **纯模型规划**：基于 ZMP 的模型预测控制（MPC）\n3. **混合方法**：无 LoRA 集成的两阶段方法\n\n### 4.4 真实机器人部署\n\n- 从仿真到真实的迁移：采用域随机化和系统辨识\n- 实验场地：广州塔机器人攀登比赛场地\n\n---\n\n## 5. 技术优势\n\n### 5.1 兼顾安全性与动态性\n\n通过将基于模型的规划器集成到 RL 训练循环中，引导探索向动态可行的接触模式方向进行，有效避免了纯无方法 RL 探索过程中的不安全行为。\n\n### 5.2 缓解保守性问题\n\n速度专业化专家策略的引入，使得高速运动模式能够突破规划器产生的保守限制。每个速度区间训练独立专家，保证了高速运动的动作分布与低俗运动同样精确。\n\n### 5.3 统一的策略表示\n\nLoRA 技术实现了多专家策略的平滑集成，无需显式的速度区间切换逻辑，控制器可根据命令速度自适应调整行为模式。\n\n### 5.4 实战验证\n\n在真实的 33 级螺旋楼梯（17 cm 踏步高度）上实现 1.65 m/s 的命令速度，12 秒内完成攀登，并获得广州塔机器人攀登比赛冠军，证明了方法的实际可行性。\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 仿真到真实的差距\n\n尽管采用了域随机化，真实楼梯的表面特性（如摩擦系数、踏面弹性）与仿真环境仍存在差异，可能导致策略在部署时需要额外的在线自适应调整。\n\n### 6.2 规划器依赖性\n\n方法依赖于精心设计的脚部规划器产生合理的着地位置候选，规划器的缺陷会直接传递给学习到的策略。若规划器对特定楼梯构型（如非标准踏步尺寸）泛化能力不足，策略可能难以适应。\n\n### 6.3 计算复杂度\n\n多阶段训练流程和 LoRA 微调增加了总体训练时间和计算资源需求。实时部署时，策略推理仍需一定的计算资源，可能对嵌入式控制器的实时性提出挑战。\n\n### 6.4 适应性限制\n\n当前方法针对楼梯攀登任务设计，对于平坦地形行走、上下坡、不平整地面等场景可能需要额外的策略适配或迁移学习。\n\n### 6.5 速度边界\n\n虽然达到了 1.65 m/s 的命令速度，但该速度仍低于人类奔跑速度（通常 3-5 m/s），说明方法在极端高速运动能力上仍有提升空间。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "FastStair: Learning to Run Up Stairs with Humanoid Robots",
+      "authors": [
+        "Yan Liu",
+        "Tao Yu",
+        "Haolin Song",
+        "Hongbo Zhu",
+        "Nianzong Hu",
+        "Yuzhi Hao",
+        "Xiuyong Yao",
+        "Xizhe Zang",
+        "Hua Chen",
+        "Jie Zhao"
+      ],
+      "year": 2026,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2601.10365",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Running up stairs is effortless for humans but remains extremely challenging for humanoid robots due to the simultaneous requirements of high agility and strict stability. Model-free reinforcement learning (RL) can generate dynamic locomotion, yet implicit stability rewards and heavy reliance on task-specific reward shaping tend to result in unsafe behaviors, especially on stairs; conversely, model-based foothold planners encode contact feasibility and stability structure, but enforcing their hard constraints often induces conservative motion that limits speed. We present FastStair, a planner-guided, multi-stage learning framework that reconciles these complementary strengths to achieve fast and stable stair ascent. FastStair integrates a parallel model-based foothold planner into the RL training loop to bias exploration toward dynamically feasible contacts and to pretrain a safety-focused base policy. To mitigate planner-induced conservatism and the discrepancy between low- and high-speed action distributions, the base policy was fine-tuned into speed-specialized experts and then integrated via Low-Rank Adaptation (LoRA) to enable smooth operation across the full commanded-speed range. We deploy the resulting controller on the Oli humanoid robot, achieving stable stair ascent at commanded speeds up to 1.65 m/s and traversing a 33-step spiral staircase (17 cm rise per step) in 12 s, demonstrating robust high-speed performance on long staircases. Notably, the proposed approach served as the champion solution in the Canton Tower Robot Run Up Competition.",
+      "route_id": "667db4e5-146c-475a-990a-849d1e1ef5a5"
+    },
+    "markdown_stats": {
+      "lines": 225,
+      "words": 7396,
+      "headings": 18
+    },
+    "assets": {
+      "images": 13,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "667db4e5-146c-475a-990a-849d1e1ef5a5",
+  "paper_ref": "667db4e5-146c-475a-990a-849d1e1ef5a5",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

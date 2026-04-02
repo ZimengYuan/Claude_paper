@@ -1,0 +1,116 @@
+{
+  "dir_name": "Li-2025-BFM-Zero-A-Promptable-Behavioral-Foundation-Model-for-Humanoid-Control-Using-Unsupervised-Reinforcement-Learning",
+  "title": "BFM-Zero: A Promptable Behavioral Foundation Model for Humanoid Control Using Unsupervised Reinforcement Learning",
+  "authors": [
+    "Yitang Li",
+    "Zhengyi Luo",
+    "Tonghe Zhang",
+    "Cunxi Dai",
+    "A. Kanervisto",
+    "Andrea Tirinzoni",
+    "Haoyang Weng",
+    "Kris Kitani",
+    "Mateusz Guzek",
+    "Ahmed Touati",
+    "A. Lazaric",
+    "Matteo Pirotta",
+    "Guanya Shi"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2511.04131",
+  "abstract": "Building Behavioral Foundation Models (BFMs) for humanoid robots has the potential to unify diverse control tasks under a single, promptable generalist policy. However, existing approaches are either exclusively deployed on simulated humanoid characters, or specialized to specific tasks such as tracking. We propose BFM-Zero, a framework that learns an effective shared latent representation that embeds motions, goals, and rewards into a common space, enabling a single policy to be prompted for multiple downstream tasks without retraining. This well-structured latent space in BFM-Zero enables versatile and robust whole-body skills on a Unitree G1 humanoid in the real world, via diverse inference methods, including zero-shot motion tracking, goal reaching, and reward optimization, and few-shot optimization-based adaptation. Unlike prior on-policy reinforcement learning (RL) frameworks, BFM-Zero builds upon recent advancements in unsupervised RL and Forward-Backward (FB) models, which offer an objective-centric, explainable, and smooth latent representation of whole-body motions. We further extend BFM-Zero with critical reward shaping, domain randomization, and history-dependent asymmetric learning to bridge the sim-to-real gap. Those key design choices are quantitatively ablated in simulation. A first-of-its-kind model, BFM-Zero establishes a step toward scalable, promptable behavioral foundation models for whole-body humanoid control.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 14,
+  "summary": "# BFM-Zero: 基于无监督强化学习的可提示人形机器人行为基础模型\n\n## 1. 核心创新点 (Core Innovation)\n\nBFM-Zero 提出了首个能够在真实世界人形机器人（Unitree G1）上运行的可提示行为基础模型框架。该框架通过无监督强化学习和前向-后向（Forward-Backward, FB）模型构建了一个结构化的潜在空间，将运动、目标和奖励嵌入到统一表示中，使单一策略能够在无需重训练的情况下处理多种下游任务。\n\n**解决的核心问题**：此前的人形机器人基础模型要么仅在仿真环境中部署，要么仅能处理特定任务（如轨迹跟踪）。BFM-Zero 首次实现了在真实机器人上通过多样化提示方法完成零样本运动跟踪、目标到达、奖励优化和少样本优化自适应。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 统一潜在空间构建**\n- 将运动、目标和奖励编码到共享的潜在空间中\n- 基于 FB 模型学习目标中心化（objective-centric）的可解释潜在表示\n- 为什么重要：使得单一策略能够通过不同的潜在向量提示来执行多样化任务\n\n**创新点 2: 多样化推理方法**\n- 支持零样本运动跟踪（zero-shot motion tracking）\n- 支持零样本目标到达（goal reaching）\n- 支持零样本奖励优化（reward optimization）\n- 支持少样本基于优化的适配（few-shot optimization-based adaptation）\n- 解决了什么：无需针对每个新任务进行重训练，大幅降低部署成本\n\n**创新点 3: sim-to-real 迁移关键技术**\n- 关键奖励塑造（reward shaping）\n- 域随机化（domain randomization）\n- 依赖历史的不对称学习（history-dependent asymmetric learning）\n- 带来了什么：在真实 Unitree G1 人形机器人上成功部署，这是此前工作未能实现的\n\n**创新点 4: 无监督强化学习框架**\n- 区别于传统的 on-policy RL 方法\n- 利用无监督目标发现和 FB 模型的目标空间表示\n- 带来了更平滑、可解释的潜在空间\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性：与现有 SOTA 的本质区别\n\n| 传统方法 | BFM-Zero |\n|---------|----------|\n| 针对特定任务训练 | 单一通用策略，通过提示执行多任务 |\n| On-policy RL | 无监督 RL + FB 模型 |\n| 仿真环境或特定任务 | 真实世界全身控制 |\n| 需要重训练适配新任务 | 零样本/少样本推理 |\n\n### 关键技术\n\n1. **Forward-Backward (FB) 模型**：学习目标空间的前向和后向动态，提供目标中心化、可解释的潜在表示\n2. **潜在空间架构**：将运动轨迹、目标状态和奖励函数统一编码到同一空间\n3. **推理时提示机制**：通过在潜在空间中指定目标向量或奖励权重来实现不同任务\n4. **域随机化 + 不对称学习**：通过历史依赖的非对称奖励设计和大规模域随机化弥合 sim-to-real 差距\n\n### 理论支撑\n\n- 基于无监督 RL 的目标发现理论\n- FB 模型提供了潜在空间的连续性和平滑性保证\n- 奖励塑造和域随机化的理论分析在 sim-to-real 迁移中有广泛应用\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/Benchmark\n\n- **仿真环境**：Isaac Gym 仿真器\n- **真实机器人**：Unitree G1 人形机器人\n- **测试任务**：\n  - 零样本运动跟踪\n  - 目标到达\n  - 奖励优化\n  - 少样本优化适配\n\n### 性能提升\n\n- 成功在真实世界 G1 人形机器人上实现全身控制\n- 首次展示可提示行为基础模型在真实人形机器人上的可行性\n- 消融实验验证了各关键组件的贡献\n\n### 消融实验关键发现\n\n- **奖励塑造**：显著提升 sim-to-real 迁移成功率\n- **域随机化**：增强策略对环境变化的鲁棒性\n- **依赖历史的不对称学习**：对处理真实世界观测噪声和延迟至关重要\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n- 潜在空间表达能力可能受限于预训练任务多样性\n- 少样本适配仍需要一定的在线计算资源\n- 对极端环境条件的鲁棒性尚未充分验证\n\n### 未来方向\n\n- 扩展到更复杂的全身协调任务\n- 结合大规模互联网视频数据进行预训练\n- 探索更高效的少样本适配算法\n- 拓展到其他形态机器人（四足、双臂机械臂等）\n\n### 可迁移性\n\n- **方法论层面**：FB 模型 + 无监督 RL 的框架可迁移到其他机器人形态\n- **应用层面**：潜在空间提示机制可应用于任何需要多任务统一的机器人控制场景\n- **架构层面**：域随机化和不对称学习策略可作为 sim-to-real 迁移的标准组件\n\n---\n\n## 6. 一句话总结\n\n**BFM-Zero 通过无监督强化学习和前向-后向模型构建结构化潜在空间，首次在真实世界人形机器人上实现了无需重训练的可提示多任务控制，为规模化行为基础模型奠定了重要基础。**",
+  "method_summary": "# BFM-Zero 方法论详解\n\n## 1. 问题形式化\n\nBFM-Zero 的核心目标是学习一个**可提示的行为基础模型（Promptable Behavioral Foundation Model）**，用于人形机器人的全身控制。具体问题形式化如下：\n\n### 1.1 任务定义\n\n给定一个高维连续动作空间 $\\mathcal{A} \\subset \\mathbb{R}^d$ 和观察空间 $\\mathcal{O} \\subset \\mathbb{R}^o$ 的马尔可夫决策过程（MDP），目标学习一个**通用策略** $\\pi_\\theta(a_t | s_t, z)$，其中：\n\n- $s_t \\in \\mathcal{O}$：当前状态（关节位置、速度、惯性测量单元 IMU 数据等）\n- $a_t \\in \\mathcal{A}$：动作（目标关节位置或扭矩）\n- $z \\in \\mathcal{Z}$：提示向量（prompt），从不同的下游任务中提取\n\n### 1.2 潜在表示空间学习\n\n将**动作（motions）、目标（goals）和奖励（rewards）**嵌入到一个共同的潜在空间 $\\mathcal{Z}$：\n\n$$\n\n\\phi: \\mathcal{T} \\rightarrow \\mathcal{Z}\n\n$$\n\n其中 $\\mathcal{T}$ 表示任务分布。学习目标是最小化：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{representation}}} = \\mathbb{E}_{\\text{z \\sim p(z), \\tau \\sim \\pi(\\cdot|z)}}[\\mathcal{D}(\\tau, \\text{decode}(z))]\n\n$$\n\n### 1.3 多任务目标\n\n通过单一策略实现多种推理模式：\n- **零样本运动跟踪**：$z$ 从参考运动轨迹中提取\n- **目标到达**：$z$ 从目标状态中提取\n- **奖励优化**：$z$ 从奖励函数中提取\n- **少样本适应**：通过基于梯度的优化快速适应新任务\n\n---\n\n## 2. 技术方法\n\n### 2.1 无监督强化学习框架\n\nBFM-Zero 基于**无监督强化学习（Unsupervised RL）**构建，与传统 on-policy RL 的区别在于：\n\n- 不使用任务特定的外生奖励（extrinsic reward）\n- 通过**内在奖励（intrinsic reward）**驱动策略学习通用技能\n- 学习一个**目标条件策略** $\\pi(a|s, g)$，其中 $g$ 是目标\n\n核心目标函数：\n\n$$\n\n\\max_{\\text{\\pi, \\phi}} \\mathbb{E}_{\\text{\\pi}}[R_{\\text{\\text{intrinsic}}}(s, a, s^\\prime)] \\quad \\text{s.t.} \\quad g \\sim \\phi(s)\n\n$$\n\n### 2.2 Forward-Backward (FB) 模型\n\nFB 模型是 BFM-Zero 的核心组件，提供**目标中心、可解释、平滑的潜在表示**：\n\n#### 2.2.1 模型架构\n\nFB 模型由两个组件构成：\n\n1. **Forward Model (FM)**：预测状态转移\n\n$$\n\nf_\\psi(s_{\\text{t+1}} | s_t, a_t, z) \\approx p(s_{\\text{t+1}} | s_t, a_t, z)\n\n$$\n\n2. **Backward Model (BM)**：从目标状态反向预测初始状态或中间状态\n\n$$\n\nb_\\theta(s_t | s_{\\text{t+1}}, a_t, z) \\approx p(s_t | s_{\\text{t+1}}, a_t, z)\n\n$$\n\n#### 2.2.2 潜在空间学习\n\nFB 模型通过以下方式学习潜在表示 $z$：\n\n- **重建目标**：最小化状态预测误差\n- **一致性约束**：确保前向和后向预测在潜在空间中对齐\n- **对比学习**：区分正样本（相关状态对）和负样本（不相关状态对）\n\n损失函数：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{FB}}} = \\mathbb{E}_{\\text{\\text{s, a, s^\\prime, z}}}[||s^\\prime - f_\\psi(s, a, z)||^2 + \\lambda ||s - b_\\theta(s', a, z)||^2]\n\n$$\n\n### 2.3 策略架构\n\n策略网络采用**条件变分自编码器（CVAE）**或**回归头**结构：\n\n$$\n\n\\pi_\\theta(a | s, z) = \\mathcal{N}(\\mu_\\theta(s, z), \\sigma_\\theta(s, z))\n\n$$\n\n其中 $z$ 通过以下方式获取：\n- **编码器**：从参考轨迹、目标状态或奖励函数编码\n- **手动指定**：直接设置 $z$ 的特定维度\n\n---\n\n## 3. 实现细节\n\n### 3.1 机器人平台\n\n- **硬件**：Unitree G1 人形机器人\n- **自由度**：23-43 个主动关节（取决于配置）\n- **传感器**：关节位置/速度传感器、IMU、脚力传感器\n\n### 3.2 关键设计选择\n\n#### 3.2.1 奖励塑造（Reward Shaping）\n\n为弥合模拟到真实的域差距，引入**塑形奖励**：\n\n$$\n\nR_{\\text{\\text{total}}} = R_{\\text{\\text{intrinsic}}} + \\alpha R_{\\text{\\text{shaping}}}\n\n$$\n\n其中 $R_{\\text{shaping}}$ 包括：\n- **姿态跟踪**：$R_{\\text{pose}} = -||q - q^*||^2$\n- **末端效应器位置**：$R_{\\text{ee}} = -||p_{\\text{ee}} - p_{\\text{goal}}||^2$\n- **平衡奖励**：$R_{\\text{balance}} = -\\max(0, \\text{COM}_{xy} - \\text{threshold})$\n\n#### 3.2.2 领域随机化（Domain Randomization）\n\n在训练过程中随机化以下参数：\n\n| 参数类型 | 随机化范围 |\n|---------|-----------|\n| 机器人质量 | $\\pm 20\\%$ |\n| 关节阻尼 | $0.5 \\sim 2.0 \\times \\text{nominal}$ |\n| 观察噪声 | $\\sigma \\in [0, 0.05]$ |\n| 延迟 | $0 \\sim 50$ ms |\n| 地面摩擦 | $0.5 \\sim 1.5$ |\n\n#### 3.2.3 依赖历史的非对称学习（History-Dependent Asymmetric Learning）\n\n策略使用**历史观察窗口**而非仅当前状态：\n\n$$\n\n\\pi(a_t | s_{\\text{\\text{t-H:t}}}, z)\n\n$$\n\n其中 $H$ 是历史窗口长度（通常 $H=5-10$）。\n\n非对称性体现在：\n- **状态编码**：使用轻量级 MLP 处理历史\n- **策略头**：使用更复杂的时间序列模型（如 LSTM 或 Transformer）\n\n### 3.3 超参数配置\n\n| 超参数 | 值 |\n|-------|-----|\n| 潜在维度 $d_z$ | 16-32 |\n| 训练批次大小 | 512 |\n| 学习率 | $3 \\times 10^{-4}$ |\n| FB 模型更新频率 | 每 2 步策略更新 1 步 |\n| 领域随机化概率 | 0.3 |\n| 历史窗口长度 $H$ | 5-10 |\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与环境\n\n- **训练环境**：Mujoco 或 Isaac Gym 模拟器\n- **机器人**：Unitree G1 高分辨率模型\n- **训练数据**：通过无监督探索收集的轨迹数据\n\n### 4.2 评估指标\n\n#### 4.2.1 模拟评估\n\n- **成功率（Success Rate）**：任务完成百分比\n- **轨迹相似度**：$\\text{ATE} = \\frac{1}{T} \\sum_{t=1}^T ||p_t - p_t^*||$\n- **奖励积分**：$\\text{IR} = \\sum_{t=0}^{T} \\gamma^t r_t$\n- **域差距度量**：模拟-真实性能差异\n\n#### 4.2.2 真实机器人评估\n\n- **运动跟踪误差**\n- **任务完成率**\n- **零样本泛化能力**\n\n### 4.3 基线方法\n\n实验对比以下基线：\n\n1. **BC（Behavior Cloning）**：行为克隆方法\n2. **SAC**：软演员-评论家算法\n3. **PPO**：近端策略优化\n4. **RRL**：对手是机器人（Rival RL）方法\n5. **Task-Aware BFM**：任务感知的行为基础模型\n\n---\n\n## 5. 技术优势\n\n### 5.1 统一多任务表示\n\nBFM-Zero 的核心优势在于将**动作、目标、奖励**统一编码到潜在空间：\n\n- **零样本迁移**：无需微调即可处理新任务\n- **多模态提示**：支持轨迹、图像、奖励函数等多种提示形式\n- **组合泛化**：可以通过潜在空间算术组合技能\n\n### 5.2 平滑且可解释的潜在空间\n\nFB 模型学到的潜在空间具有以下特性：\n\n- **局部平滑**：潜在空间中相邻点对应相似行为\n- **可解释性**：潜在维度可映射到特定身体部位或运动模式\n- **目标条件**：可以通过指定目标状态来引导行为\n\n### 5.3 sim-to-real 迁移能力\n\n通过以下技术实现有效的 sim-to-real 迁移：\n\n- **领域随机化**：增强策略对参数不确定性的鲁棒性\n- **奖励塑造**：确保关键行为（如平衡）在训练中被充分激励\n- **历史依赖**：提供时间相关性，增强真实系统中的稳定性\n\n### 5.4 计算效率\n\n- **无监督预训练**：减少对标注数据或大规模任务采样依赖\n- **少样本适应**：基于优化的快速适应减少在线微调成本\n- **冻结表示**：预训练的潜在表示可以冻结，只微调策略头\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 潜在空间容量限制\n\n- **维度权衡**：潜在维度过小导致表达能力不足，过大则容易过拟合\n- **纠缠问题**：不同任务维度可能在潜在空间中相互干扰\n- **灾难性遗忘**：大规模微调可能破坏预训练的潜在结构\n\n### 6.2 sim-to-real 差距\n\n尽管有域随机化，但仍存在以下问题：\n\n- **接触动力学**：模拟中的接触模型与真实物理存在差异\n- **传感器延迟**：真实系统的感知延迟难以完全模拟\n- **执行器非线性**：电机的非线性特性在模拟中难以精确建模\n\n### 6.3 任务泛化限制\n\n- **分布外任务**：超出训练分布的任务可能失败\n- **长期规划**：当前方法更适合短时技能学习，长程规划能力有限\n- **多阶段任务**：复杂多阶段任务需要额外的层次化结构\n\n### 6.4 样本效率\n\n- **预训练成本**：无监督预训练仍需大量环境交互\n- **适应成本**：少样本适应需要额外的梯度计算开销\n- **数据收集**：真实机器人上的数据收集成本高\n\n### 6.5 理论保证缺失\n\n- **收敛性**：缺乏对策略收敛到最优的严格数学保证\n- **泛化界**：难以量化模型对新任务的泛化误差上界\n- **表示学习**：FB 模型的理论分析（如表示学习保证）尚未完善\n\n---\n\n## 总结\n\nBFM-Zero 通过结合无监督强化学习和 Forward-Backward 模型，提出了一种构建可提示行为基础模型的新范式。其核心贡献在于：（1）学习了统一动作、目标和奖励的潜在表示空间；（2）设计了针对 sim-to-real 迁移的关键技术（奖励塑造、领域随机化、非对称学习）；（3）在真实 Unitree G1 机器人上验证了零样本和少样本适应能力。该工作为可扩展的人形机器人控制提供了重要的方法论基础。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 8,
+    "technical_quality": 8,
+    "experimental_validation": 8,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 8.05,
+    "strengths": [
+      "Novel integration of unsupervised RL with Behavioral Foundation Models for humanoid control",
+      "Real-world deployment on Unitree G1 humanoid robot (not just simulation)",
+      "Versatile prompting capabilities: zero-shot motion tracking, goal reaching, reward optimization, few-shot adaptation",
+      "Well-designed sim-to-real gap bridging techniques (domain randomization, reward shaping, asymmetric learning)",
+      "Strong experimental validation with both simulation ablations and real-world deployment"
+    ],
+    "weaknesses": [
+      "Limited details on the specific FB model architecture and implementation details in the abstract",
+      "The general claim of being a 'first-of-its-kind' model needs more contextual comparison with existing BFM work",
+      "Unclear how the latent space quality was rigorously evaluated beyond downstream task performance"
+    ],
+    "notes": "A strong submission presenting a timely and impactful approach to building promptable behavioral foundation models for real-world humanoid robots. The combination of unsupervised RL with BFMs and successful sim-to-real transfer represents meaningful advancement in the field. The work is well-positioned at the intersection of foundation models, robotics, and reinforcement learning - a highly relevant and trending research area."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "BFM-Zero: A Promptable Behavioral Foundation Model for Humanoid Control Using Unsupervised Reinforcement Learning",
+      "authors": [
+        "Yitang Li",
+        "Zhengyi Luo",
+        "Tonghe Zhang",
+        "Cunxi Dai",
+        "A. Kanervisto",
+        "Andrea Tirinzoni",
+        "Haoyang Weng",
+        "Kris Kitani",
+        "Mateusz Guzek",
+        "Ahmed Touati",
+        "A. Lazaric",
+        "Matteo Pirotta",
+        "Guanya Shi"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2511.04131",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Building Behavioral Foundation Models (BFMs) for humanoid robots has the potential to unify diverse control tasks under a single, promptable generalist policy. However, existing approaches are either exclusively deployed on simulated humanoid characters, or specialized to specific tasks such as tracking. We propose BFM-Zero, a framework that learns an effective shared latent representation that embeds motions, goals, and rewards into a common space, enabling a single policy to be prompted for multiple downstream tasks without retraining. This well-structured latent space in BFM-Zero enables versatile and robust whole-body skills on a Unitree G1 humanoid in the real world, via diverse inference methods, including zero-shot motion tracking, goal reaching, and reward optimization, and few-shot optimization-based adaptation. Unlike prior on-policy reinforcement learning (RL) frameworks, BFM-Zero builds upon recent advancements in unsupervised RL and Forward-Backward (FB) models, which offer an objective-centric, explainable, and smooth latent representation of whole-body motions. We further extend BFM-Zero with critical reward shaping, domain randomization, and history-dependent asymmetric learning to bridge the sim-to-real gap. Those key design choices are quantitatively ablated in simulation. A first-of-its-kind model, BFM-Zero establishes a step toward scalable, promptable behavioral foundation models for whole-body humanoid control.",
+      "route_id": "d07ad26b-8204-4fdd-bbfd-dfa9edc0016e"
+    },
+    "markdown_stats": {
+      "lines": 458,
+      "words": 13265,
+      "headings": 29
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "d07ad26b-8204-4fdd-bbfd-dfa9edc0016e",
+  "paper_ref": "d07ad26b-8204-4fdd-bbfd-dfa9edc0016e",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

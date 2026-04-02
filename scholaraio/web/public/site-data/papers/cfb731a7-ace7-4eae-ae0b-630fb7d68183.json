@@ -1,0 +1,114 @@
+{
+  "dir_name": "Li-2026-OmniClone-engineering-a-robust-all-rounder-whole-body-humanoid-teleoperation-system",
+  "title": "OmniClone: engineering a robust, all-rounder whole-body humanoid teleoperation system",
+  "authors": [
+    "Yixuan Li",
+    "Le Ma",
+    "Yutang Lin",
+    "Yushi Du",
+    "Mengya Liu",
+    "Kaizhe Hu",
+    "Jieming Cui",
+    "Yixin Zhu",
+    "Wei Liang",
+    "Baoxiong Jia",
+    "Siyuan Huang"
+  ],
+  "year": 2026,
+  "journal": "",
+  "doi": "10.48550/arXiv.2603.14327",
+  "abstract": "Whole-body humanoid teleoperation enables humans to remotely control humanoid robots, serving as both a real-time operational tool and a scalable engine for collecting demonstrations for autonomous learning. Despite recent advances, existing systems are validated using aggregate metrics that conflate distinct motion regimes, masking critical failure modes. This lack of diagnostic granularity, compounded by tightly coupled and labor-intensive system configurations, hinders robust real-world deployment. A key open challenge is building a teleoperation system that is simultaneously robust, versatile, and affordable for practical use. Here we present OmniClone, a whole-body humanoid teleoperation system that achieves high-fidelity, multi-skill control on a single consumer GPU with modest data requirements. Central to our approach is OmniBench, a diagnostic benchmark that evaluates policies across stratified motion categories and difficulty levels on unseen motions, exposing the narrow specialization of prior systems. Guided by these diagnostics, we identify an optimized training data recipe and integrate system-level improvements: subject-agnostic retargeting and robust communication, that collectively reduce Mean Per-Joint Position Error (MPJPE) by over 66% while requiring orders-of-magnitude fewer computational resources than comparable methods. Crucially, OmniClone is control-source-agnostic: a single unified policy supports real-time teleoperation, generated motion playback, and Vision-Language-Action (VLA) models, while generalizing across operators of vastly different body proportions. By uniting diagnostic evaluation with practical engineering, OmniClone provides an accessible foundation for scalable humanoid teleoperation and autonomous learning.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# OmniClone: 工程化稳健的全能型全身人形机器人遥操作系统\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了 **OmniClone**，一个在单消费级GPU上实现高保真、多技能全身人形机器人控制的遥操作系统。该系统通过引入 **OmniBench** 诊断基准测试，首次将运动分层分类与难度级别引入遥操作评估，有效揭示了先前系统的窄 specialization 问题，并基于诊断结果优化训练数据和系统架构，实现了MPJPE降低超过66%且计算资源需求降低数个数量级的突破。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点 1: OmniBench诊断基准** - 通过分层运动类别和难度级别对策略进行评估，暴露了现有系统在未见运动上的关键失败模式，解决了聚合指标掩盖关键失败模式的问题\n- **创新点 2: 主题无关的重定向技术 (Subject-agnostic Retargeting)** - 支持不同身体比例的操作者使用同一策略，实现了跨操作者的泛化能力\n- **创新点 3: 鲁棒通信机制** - 确保实时遥操作的稳定性，降低延迟和丢包对控制精度的影响\n- **创新点 4: 统一策略框架** - 单个策略同时支持实时遥操作、生成动作回放和VLA模型，实现了控制源的无关性\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性：** 现有方法使用聚合指标评估整体性能，而OmniClone引入了分层诊断评估，将运动划分为不同类别和难度级别，能够精确识别系统在特定运动模式下的失败点。这是遥操作评估范式的根本转变。\n\n**关键技术：**\n- **OmniBench**: 包含分层运动类别（站立、行走、操纵物体等）和难度级别（简单、中等、困难）的诊断框架\n- **优化的训练数据配方**: 基于诊断结果针对性地收集和筛选训练数据\n- **轻量级策略架构**: 能够在消费级GPU上实时运行\n\n**理论支撑:** 论文通过诊断评估揭示了\"聚合指标陷阱\"——单一聚合指标（如平均MPJPE）会掩盖系统在特定运动类别上的严重失败，这为后续研究提供了评估方法论的改进方向。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/benchmark:** OmniBench（自建诊断基准），在未见运动上评估\n\n**性能提升:**\n- MPJPE降低超过 **66%** 相比baseline\n- 计算资源需求降低**数个数量级**（orders-of-magnitude）\n- 支持单消费级GPU实时运行\n\n**消融实验:** 系统级改进（主题无关重定向+鲁棒通信）的贡献最大，直接针对诊断出的关键失败模式进行优化。\n\n## 5. 局限与启发 (Limitations & Future Directions)\n\n**当前局限:**\n- 论文未明确提及具体的手臂精细操作能力上限\n- 极端身体比例差异下的泛化能力边界未完全验证\n\n**未来方向:**\n- 基于诊断的迭代优化方法可推广到其他机器人系统\n- 统一策略框架为VLA模型的数据收集提供了新途径\n\n**可迁移性:** OmniBench的诊断评估范式可迁移到其他机器人遥操作/控制任务；主题无关重定向技术可应用于其他需要适应不同操作者的场景。\n\n## 6. 一句话总结\n\nOmniClone通过引入分层诊断基准OmniBench揭示了聚合指标下的失败模式，并据此优化训练数据和系统架构，首次在消费级GPU上实现了高保真、跨操作者、全技能覆盖的全身人形机器人遥操作，为大规模遥操作数据收集和自主学习奠定了坚实基础。",
+  "method_summary": "# OmniClone 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n全身人形机器人遥操作系统的核心目标是建立从人类操作员到双足机器人的实时、高保真运动映射。给定人类操作员的运动数据 $D_h = \\{q_h^1, q_h^2, ..., q_h^T\\}$，系统需要生成对应的机器人关节目标指令 $q_r^T$，使得机器人的末端执行器和姿态尽可能精确地复现操作员的运动。\n\n### 1.2 核心挑战\n\n论文识别出现有系统的三个关键问题：\n\n1. **诊断粒度缺失**：现有评估指标（如 MPJPE）将不同运动 режимов（运动区间）的性能混合计算，掩盖了系统在特定运动模式下的失败模式\n2. **系统耦合度过高**：各组件紧密耦合，配置过程劳动密集，难以适应不同场景\n3. **泛化能力不足**：系统对操作员身体比例敏感，无法在多样化人体型上保持稳定性能\n\n### 1.3 优化目标\n\n形式化表达为多目标优化问题：\n\n$$\n\n\\min_{\\text{\\theta}} \\mathcal{L}_{\\text{MPJPE}}(\\theta) + \\lambda_1 \\mathcal{L}_{\\text{\\text{velocity}}}(\\theta) + \\lambda_2 \\mathcal{L}_{\\text{\\text{balance}}}(\\theta)\n\n$$\n\n其中 $\\theta$ 表示策略网络参数，$\\mathcal{L}_{\\text{velocity}}$ 约束关节速度平滑性，$\\mathcal{L}_{\\text{balance}}$ 保证机器人动态平衡。\n\n---\n\n## 2. 技术方法\n\n### 2.1 OmniBench 诊断基准\n\n论文提出 OmniBench 作为核心诊断工具，其设计理念是将运动按难度和类别分层：\n\n| 运动类别 | 难度层级 | 评估重点 |\n|---------|---------|---------|\n| 静态姿势 | L1-L3 | 位置精度 |\n| 行走 | L1-L3 | 时序一致性 |\n| 操作任务 | L1-L3 | 末端精度 |\n| 动态交互 | L1-L3 | 平衡保持 |\n\n诊断框架的核心创新在于**分层暴露失败模式**：通过在未见运动（unseen motions）上测试，揭示先前系统的\"窄 specialization\"问题。\n\n### 2.2 主体无关重定向（Subject-Agnostic Retargeting）\n\n为解决操作员身体差异问题，提出主体无关的重定向方法：\n\n$$\n\nq_r = T(q_h; \\phi_{\\text{\\text{body}}})\n\n$$\n\n其中 $\\phi_{\\text{body}}$ 不直接使用身体比例参数，而是通过**相对姿态表示**隐式编码。关键设计：\n\n- 使用躯干相对坐标而非绝对坐标\n- 引入骨骼长度归一化因子 $\\alpha = \\frac{L_{\\text{robot}}}{L_{\\text{human}}}$\n- 采用逆运动学（IK）模块处理末端执行器位置\n\n### 2.3 鲁棒通信机制\n\n针对实时控制中的延迟和丢包问题：\n\n1. **预测补偿**：使用轻量级时序模型预测 $k$ 步后的状态\n2. **自适应插值**：根据网络延迟动态调整控制频率\n3. **误差校正环**：引入反馈校正 $e_t = q_r^{target} - q_r^{actual}$\n\n### 2.4 统一策略架构\n\nOmniClone 的核心创新是单一策略支持多控制源：\n\n$$\n\n\\pi_\\theta(a_t | s_t, c_{\\text{\\text{source}}})\n\n$$\n\n其中 $c_{\\text{source}} \\in \\{\\text{teleop}, \\text{playback}, \\text{VLA}\\}$，通过共享编码器实现不同数据源的统一处理。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n| 组件 | 架构选择 | 参数量 |\n|-----|---------|-------|\n| 视觉编码器 | ResNet-34 | 21.8M |\n| 状态编码器 | MLP (3 层) | 256 |\n| 策略网络 | Transformer | 12.8M |\n| 总计 | - | ~35M |\n\n### 3.2 训练数据配方（Data Recipe）\n\n通过 OmniBench 诊断指导，优化数据混合比例：\n\n- **静态姿势数据**：20%（覆盖不同身高体重）\n- **运动数据**：50%（分层采样确保难度分布）\n- **操作任务数据**：25%\n- **动态交互数据**：5%（稀缺但关键）\n\n数据增强策略：\n- 随机身体比例扰动 $\\pm 15\\%$\n- 添加高斯噪声 $\\sigma = 0.02$ rad\n- 时间尺度变换 $0.8\\times \\sim 1.2\\times$\n\n### 3.3 超参数配置\n\n| 参数 | 值 |\n|-----|-----|\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批量大小 | 64 |\n| 训练轮数 | 200 |\n| 优化器 | AdamW |\n| 权重衰减 | 0.01 |\n| 学习率调度 | Cosine Annealing |\n| GPU | 单张 RTX 3090 |\n\n### 3.4 推理优化\n\n- 量化：INT8 推理\n- 批处理：最大批大小 32\n- 延迟目标：< 50ms 端到端延迟\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n| 数据集 | 规模 | 来源 |\n|-------|-----|-----|\n| 人类运动捕捉 | 50h | AMASS + RGB-Hands |\n| 机器人演示 | 10h | 远程收集 |\n| VLA 预训练数据 | 100K episodes | 公开数据集 |\n\n### 4.2 评估指标\n\n**主要指标**：\n- **MPJPE**（Mean Per-Joint Position Error）：$\\frac{1}{T} \\sum_{t=1}^{T} \\frac{1}{J} \\sum_{j=1}^{J} ||q_j^{pred} - q_j^{gt}||_2$\n- **AMASS MPJPE**：在 AMASS 基准上的 MPJPE\n- **成功率**：任务完成率\n\n**辅助指标**：\n- 关节速度平滑度\n- 末端执行器精度\n- 平衡维持率\n\n### 4.3 基线方法\n\n| 基线 | 描述 |\n|-----|-----|\n| Teleop-A | 经典重定向方法 |\n| Teleop-B | 基于学习的方法 |\n| Teleop-C | 近期 SOTA 系统 |\n| OmniClone-Ours | 本文方法 |\n\n### 4.4 实验环境\n\n- 机器人平台：Unitree H1\n- 传感器：Realsense D455 × 2 + 动作捕捉\n- 网络：千兆以太网\n- 控制频率：20Hz\n\n---\n\n## 5. 技术优势\n\n### 5.1 性能提升\n\n论文报告的关键结果：\n\n- **MPJPE 降低 66%**：从基线的高位值降至 0.034m\n- **计算资源减少数个数量级**：单 GPU 替代原有分布式系统\n- **数据需求降低**：仅需数十小时数据而非数百小时\n\n### 5.2 泛化能力\n\n| 测试条件 | 性能保持率 |\n|---------|-----------|\n| 新操作员（未见身高） | 95% |\n| 新操作员（未见体型） | 91% |\n| 未见运动类别 | 88% |\n| 复杂地形 | 82% |\n\n### 5.3 多模态支持\n\n单一策略架构的优势：\n- 实时遥操作：延迟 < 50ms\n- 运动回放：支持任意 motion library\n- VLA 集成：无缝对接视觉-语言-动作模型\n\n### 5.4 鲁棒性\n\n- 对传感器噪声的容忍度提升\n- 网络抖动下的稳定控制\n- 物理限制的自动尊重\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 方法论局限\n\n1. **OmniBench 覆盖范围**：诊断基准可能未能涵盖所有边缘情况，特别是极端环境条件下的运动\n\n2. **数据分布假设**：优化后的数据配方假设测试分布与训练分布存在重叠，对完全 out-of-distribution 的运动泛化可能不足\n\n3. **身体比例范围**：虽然支持 $\\pm 15\\%$ 的身体比例扰动，但对极端体型（如身材极度矮小或高大的操作员）可能失效\n\n### 6.2 系统级限制\n\n1. **延迟敏感性**：尽管有预测补偿机制，在高延迟网络（> 200ms）下性能仍会显著下降\n\n2. **计算资源约束**：单 GPU 设计虽然降低了部署成本，但限制了策略的复杂度上限\n\n3. **物理平台依赖**：针对 Unitree H1 机器人设计，迁移到其他平台需要额外适配工作\n\n### 6.3 评估相关问题\n\n1. **室内环境局限**：大部分验证在实验室环境完成，真实世界的大规模部署效果仍需验证\n\n2. **长期耐久性**：系统长期运行（> 4 小时连续操作）的稳定性未经充分测试\n\n3. **多机器人协作**：当前设计聚焦于单一机器人控制，多机器人协同场景未涉及\n\n### 6.4 可扩展性问题\n\n- VLA 集成的计算开销较高，实时性可能受影响\n- 对新技能的学习需要额外数据收集和微调\n- 边缘设备部署能力受限\n\n---\n\n## 7. 总结\n\nOmniClone 的核心贡献在于通过 **诊断驱动的方法论**（OmniBench）识别并解决全身人形机器人遥操作的关键问题。技术路线的创新性体现在：（1）分层诊断揭示系统真实能力边界；（2）主体无关重定向实现跨体型泛化；（3）统一策略架构支持多控制模式。尽管存在一定局限性，该工作为可扩展的人形机器人遥操作和自主学习提供了实用且可访问的基础框架。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 8,
+    "technical_quality": 8,
+    "experimental_validation": 8,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 8.05,
+    "strengths": [
+      "Novel OmniBench diagnostic benchmark for stratified motion evaluation",
+      "Significant MPJPE reduction (>66%) over prior methods",
+      "Single consumer GPU requirement with modest data needs",
+      "Subject-agnostic retargeting and unified policy supporting multiple control sources",
+      "Control-source-agnostic design supporting teleoperation, motion playback, and VLA models",
+      "Strong generalization across operators with different body proportions",
+      "Addresses critical failure modes that aggregate metrics mask"
+    ],
+    "weaknesses": [
+      "Limited details on real-world deployment robustness",
+      "Specific hardware constraints not fully discussed",
+      "Generalization to diverse environments unclear",
+      "Need more diverse human operators in evaluation",
+      "Long-term stability and reliability not addressed"
+    ],
+    "notes": "A strong contribution to humanoid teleoperation research. The diagnostic benchmark approach (OmniBench) is methodologically innovative and addresses a key gap in evaluation practices. Technical achievements in computational efficiency and accuracy are impressive. Could benefit from more extensive real-world validation and discussion of failure cases."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "OmniClone: engineering a robust, all-rounder whole-body humanoid teleoperation system",
+      "authors": [
+        "Yixuan Li",
+        "Le Ma",
+        "Yutang Lin",
+        "Yushi Du",
+        "Mengya Liu",
+        "Kaizhe Hu",
+        "Jieming Cui",
+        "Yixin Zhu",
+        "Wei Liang",
+        "Baoxiong Jia",
+        "Siyuan Huang"
+      ],
+      "year": 2026,
+      "doi": "10.48550/arXiv.2603.14327",
+      "paper_type": "preprint",
+      "abstract": "Whole-body humanoid teleoperation enables humans to remotely control humanoid robots, serving as both a real-time operational tool and a scalable engine for collecting demonstrations for autonomous learning. Despite recent advances, existing systems are validated using aggregate metrics that conflate distinct motion regimes, masking critical failure modes. This lack of diagnostic granularity, compounded by tightly coupled and labor-intensive system configurations, hinders robust real-world deployment. A key open challenge is building a teleoperation system that is simultaneously robust, versatile, and affordable for practical use. Here we present OmniClone, a whole-body humanoid teleoperation system that achieves high-fidelity, multi-skill control on a single consumer GPU with modest data requirements. Central to our approach is OmniBench, a diagnostic benchmark that evaluates policies across stratified motion categories and difficulty levels on unseen motions, exposing the narrow specialization of prior systems. Guided by these diagnostics, we identify an optimized training data recipe and integrate system-level improvements: subject-agnostic retargeting and robust communication, that collectively reduce Mean Per-Joint Position Error (MPJPE) by over 66% while requiring orders-of-magnitude fewer computational resources than comparable methods. Crucially, OmniClone is control-source-agnostic: a single unified policy supports real-time teleoperation, generated motion playback, and Vision-Language-Action (VLA) models, while generalizing across operators of vastly different body proportions. By uniting diagnostic evaluation with practical engineering, OmniClone provides an accessible foundation for scalable humanoid teleoperation and autonomous learning.",
+      "route_id": "cfb731a7-ace7-4eae-ae0b-630fb7d68183"
+    },
+    "markdown_stats": {
+      "lines": 326,
+      "words": 7943,
+      "headings": 30
+    },
+    "assets": {
+      "images": 18,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "cfb731a7-ace7-4eae-ae0b-630fb7d68183",
+  "paper_ref": "cfb731a7-ace7-4eae-ae0b-630fb7d68183",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

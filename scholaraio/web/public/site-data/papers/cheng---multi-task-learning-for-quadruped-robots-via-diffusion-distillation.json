@@ -1,0 +1,71 @@
+{
+  "dir_name": "Cheng-None-Multi-task-Learning-for-Quadruped-Robots-via-Diffu",
+  "title": "Multi-task Learning for Quadruped Robots via Diffusion Distillation",
+  "authors": [
+    "Yi Cheng\\",
+    "Kai Qin",
+    "Houde Liu"
+  ],
+  "year": null,
+  "journal": "",
+  "doi": "",
+  "abstract": "",
+  "paper_type": "",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Multi-task Learning for Quadruped Robots via Diffusion Distillation",
+      "authors": [
+        "Yi Cheng\\",
+        "Kai Qin",
+        "Houde Liu"
+      ]
+    },
+    "markdown_stats": {
+      "lines": 255,
+      "words": 7913,
+      "headings": 19
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "feb460e0-d7e4-436b-9998-2ab04f0284dc_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "cheng---multi-task-learning-for-quadruped-robots-via-diffusion-distillation",
+  "paper_ref": "Cheng 等 - Multi-task learning for quadruped robots via diffusion distillation",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

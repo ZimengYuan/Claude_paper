@@ -1,0 +1,78 @@
+{
+  "dir_name": "Kang-2025-Learning-Steerable-Imitation-Controllers-from-Unst",
+  "title": "Learning Steerable Imitation Controllers from Unstructured Animal Motions",
+  "authors": [
+    "Dongho Kang",
+    "Jin Cheng",
+    "Fatemeh Zargarbashi",
+    "Taerim Yoon",
+    "Sungjoon Choi",
+    "Stelian Coros"
+  ],
+  "year": 2025,
+  "journal": "",
+  "doi": "",
+  "abstract": "This paper presents a control framework for legged robots that leverages unstructured real-world animal motion data to generate animal-like and user-steerable behaviors. Our framework learns to follow velocity commands while reproducing the diverse gait patterns in the original dataset. To begin with, animal motion data is transformed into a robot-compatible database using constrained inverse kinematics and model predictive control, bridging the morphological and physical gap between the animal and the robot. Subsequently, a variational autoencoder-based motion synthesis module captures the diverse locomotion patterns in the motion database and generates smooth transitions between them in response to velocity commands. The resulting kinematic motions serve as references for a reinforcement learning-based feedback controller deployed on physical robots. We show that this approach enables a quadruped robot to adaptively switch gaits and accurately track user velocity commands while maintaining the stylistic coherence of the motion data. Additionally, we provide component-wise evaluations to analyze the system's behavior in depth and demonstrate the efficacy of our method for more accurate and reliable motion imitation.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Learning Steerable Imitation Controllers from Unstructured Animal Motions",
+      "authors": [
+        "Dongho Kang",
+        "Jin Cheng",
+        "Fatemeh Zargarbashi",
+        "Taerim Yoon",
+        "Sungjoon Choi",
+        "Stelian Coros"
+      ],
+      "year": 2025,
+      "paper_type": "preprint",
+      "abstract": "This paper presents a control framework for legged robots that leverages unstructured real-world animal motion data to generate animal-like and user-steerable behaviors. Our framework learns to follow velocity commands while reproducing the diverse gait patterns in the original dataset. To begin with, animal motion data is transformed into a robot-compatible database using constrained inverse kinematics and model predictive control, bridging the morphological and physical gap between the animal and the robot. Subsequently, a variational autoencoder-based motion synthesis module captures the diverse locomotion patterns in the motion database and generates smooth transitions between them in response to velocity commands. The resulting kinematic motions serve as references for a reinforcement learning-based feedback controller deployed on physical robots. We show that this approach enables a quadruped robot to adaptively switch gaits and accurately track user velocity commands while maintaining the stylistic coherence of the motion data. Additionally, we provide component-wise evaluations to analyze the system's behavior in depth and demonstrate the efficacy of our method for more accurate and reliable motion imitation."
+    },
+    "markdown_stats": {
+      "lines": 3,
+      "words": 11,
+      "headings": 1
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "kang-2025-learning-steerable-imitation-controllers-from-unstructured-animal-motions-4",
+  "paper_ref": "Kang-2025-Learning-Steerable-Imitation-Controllers-from-Unstructured-Animal-Motions-4",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

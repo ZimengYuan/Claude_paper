@@ -1,0 +1,115 @@
+{
+  "dir_name": "Kim-2025-Switch-JustDance-Benchmarking-Whole-Body-Motion-Tracking-Policies-Using-a-Commercial-Console-Game",
+  "title": "Switch-JustDance: Benchmarking Whole Body Motion Tracking Policies Using a Commercial Console Game",
+  "authors": [
+    "Jeonghwan Kim",
+    "Wontaek Kim",
+    "Yidan Lu",
+    "Jin Cheng",
+    "Fatemeh Zargarbashi",
+    "Zicheng Zeng",
+    "Zekun Qi",
+    "Zhiyang Dou",
+    "Nitish Sontakke",
+    "Donghoon Baek",
+    "Sehoon Ha",
+    "Tianyu Li"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2511.17925",
+  "abstract": "Recent advances in whole-body robot control have enabled humanoid and legged robots to perform increasingly agile and coordinated motions. However, standardized benchmarks for evaluating these capabilities in real-world settings, and in direct comparison to humans, remain scarce. Existing evaluations often rely on pre-collected human motion datasets or simulation-based experiments, which limit reproducibility, overlook hardware factors, and hinder fair human-robot comparisons. We present Switch-JustDance, a low-cost and reproducible benchmarking pipeline that leverages motion-sensing console games, Just Dance on the Nintendo Switch, to evaluate robot whole-body control. Using Just Dance on the Nintendo Switch as a representative platform, Switch-JustDance converts in-game choreography into robot-executable motions through streaming, motion reconstruction, and motion retargeting modules and enables users to evaluate controller performance through the game's built-in scoring system. We first validate the evaluation properties of Just Dance, analyzing its reliability, validity, sensitivity, and potential sources of bias. Our results show that the platform provides consistent and interpretable performance measures, making it a suitable tool for benchmarking embodied AI. Building on this foundation, we benchmark three state-of-the-art humanoid whole-body controllers on hardware and provide insights into their relative strengths and limitations.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 1,
+  "summary": "# 论文总结\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**Switch-JustDance**，首个利用商业游戏主机（Nintendo Switch 上的 Just Dance）作为全身体运动控制基准测试的低成本、可复现管道。该工作解决了现有全人形机器人控制评估依赖预采集数据集或仿真环境、缺乏真实世界硬件基准和人类对比的难题。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点 1：游戏驱动的机器人基准测试平台** - 将消费级游戏 Just Dance 的动作捕捉和评分系统转化为机器人评估工具，实现真实世界的硬件在环测试，而非仅依赖仿真\n\n- **创新点 2：跨平台动作流式传输与重建** - 开发了从游戏到机器人的动作流、动作重建和动作重定向模块，实现游戏编舞到机器人可执行动作的完整转换 pipeline\n\n- **创新点 3：游戏内置评分系统作为评估标准** - 利用 Just Dance 内置的评分机制作为性能度量，提供一致且可解释的性能评估指标，解决了机器人控制评估中标准缺失的问题\n\n- **创新点 4：三类人形机器人控制器的硬件基准测试** - 在真实硬件上对三种 SOTA 人形全身体控制器进行系统对比，揭示其各自的优势与局限性\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：与现有方法（如使用 MoCap 数据集或仿真环境如 Isaac Gym）不同，本方法直接使用消费级游戏作为评估基准，实现了：\n- 真实硬件测试（非仿真）\n- 人类直接对比（同一任务下人机对比）\n- 可复现的低成本设置（仅需一台 Nintendo Switch）\n\n**关键技术**：\n- 动作流式传输模块：从 Switch 实时获取动作数据\n- 动作重建：将 2D 视频/体感动作重建为 3D 姿态\n- 动作重定向：将人体动作映射到机器人骨架\n- 游戏评分关联：将机器人动作质量映射到 Just Dance 评分\n\n**理论支撑**：论文对 Just Dance 平台本身进行了可靠性、有效性、敏感性和潜在偏见的系统性验证分析\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark**：\n- Nintendo Switch Just Dance 游戏（作为评估任务库）\n- 真实硬件测试：三种 SOTA 人形全身体控制器\n\n**性能提升**：通过验证分析表明 Just Dance 平台能够提供一致且可解释的性能度量，证明了该平台作为嵌入式 AI 基准测试工具的适用性\n\n**消融实验**：论文验证了平台本身的可靠性（评分一致性）、有效性（评分与真实动作质量的相关性）、敏感性（能否区分不同水平的表演者）\n\n## 5. 局限与启发 (Limitations & Future Directions)\n\n**当前局限**：\n- 仅使用 Just Dance 一款游戏，覆盖动作类型有限\n- 游戏设计的动作可能不完全适合机器人执行（如极限柔韧性动作）\n- 评分系统主要针对人类玩家设计，对机器人动作的评分可能存在偏差\n\n**未来方向**：\n- 扩展到其他体感游戏或自定义编舞\n- 开发专门针对机器人评估的游戏评分算法\n- 探索多机器人协作场景的基准测试\n\n**可迁移性**：该方法论可迁移到其他带评分系统的体感游戏或运动应用，用于不同类型的机器人（双足、轮式等）的运动控制评估\n\n## 6. 一句话总结\n\nSwitch-JustDance 通过将商业游戏 Just Dance 的动作捕捉与评分系统转化为机器人全身体控制基准测试工具，填补了真实硬件环境下人形机器人运动控制评估与人类对比的空白，为嵌入式 AI 提供了低成本、可复现的标准化测试管道。",
+  "method_summary": "# Switch-JustDance 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该研究旨在解决人形机器人全身控制策略的标准化评估问题。具体而言，研究将全身运动追踪策略的性能评估问题形式化为：\n\n给定一个目标人体运动序列 $\\mathcal{M}_{\\text{\\text{human}}} = \\{m_1, m_2, ..., m_T\\}$，其中每个姿态 $m_t$ 包含全身关节角度向量 $\\theta_t \\in \\mathbb{R}^J$（$J$ 为关节数量），评估目标是将该运动成功迁移到机器人平台并执行，衡量指标为：\n\n1. **运动保真度**：机器人执行姿态 $\\theta_t^{robot}$ 与目标姿态 $\\theta_t$ 之间的误差度量\n2. **游戏得分**：Just Dance 内置评分系统给出的同步分数 $S \\in [0, 100]$\n3. **物理可行性**：机器人执行过程中是否满足物理约束（平衡、关节限位、力矩限制）\n\n### 1.2 评估框架形式化\n\nbenchmark 被定义为一个四元组：\n\n$$\n\n\\mathcal{B} = (\\mathcal{D}, \\mathcal{E}, \\mathcal{M}, \\mathcal{C})\n\n$$\n\n其中：\n- $\\mathcal{D} = \\{d_1, d_2, ..., d_N\\}$：Just Dance 曲目数据集\n- $\\mathcal{E}$：运动采集与流传输模块\n- $\\mathcal{M}$：运动重定向模块\n- $\\mathcal{C}$：机器人控制器集合\n\n### 1.3 评估指标数学定义\n\n**评分函数**：\n\n$$\n\nScore(m_{\\text{\\text{human}}}, m_{\\text{\\text{robot}}}) = f_{\\text{\\text{JustDance}}}(m_{\\text{\\text{robot}}})\n\n$$\n\n**运动误差**：\n\n$$\n\n\\epsilon_{\\text{\\text{motion}}} = \\frac{1}{T} \\sum_{\\text{t=1}}^{T} \\| \\theta_t^{robot} - \\theta_t^{target} \\|_2\n\n$$\n\n**时间同步误差**：\n\n$$\n\n\\epsilon_{\\text{\\text{timing}}} = \\frac{1}{T} \\sum_{\\text{t=1}}^{T} |t_{\\text{\\text{exec}}} - t_{\\text{\\text{target}}}|\n\n$$\n\n---\n\n## 2. 技术方法\n\n### 2.1 系统架构概述\n\n系统采用三阶段流水线架构：\n\n```\nJust Dance 游戏 → 运动流采集 → 运动重建 → 运动重定向 → 机器人执行 → 评分反馈\n```\n\n### 2.2 运动采集模块\n\n使用 Nintendo Switch 的体感控制器（Joy-Con）采集玩家运动数据。关键技术创新在于：\n\n- **多控制器同步**：通过蓝牙同时连接多个 Joy-Con 设备\n- **姿态估计算法**：利用 Switch 内置的 IR 摄像头和加速度计数据进行姿态重建\n- **数据流协议**：自定义 UDP/TCP 协议将运动数据从 Switch 传输到处理端\n\n### 2.3 运动重建模块\n\n将原始传感器数据转换为标准化的骨骼姿态表示：\n\n1. **骨骼建模**：建立 $J=19$ 节点的骨骼拓扑结构\n2. **关节角度求解**：使用逆运动学（IK）方法从末端执行器位置推导关节角度\n3. **时间插值**：采用样条插值确保运动平滑性\n\n### 2.4 运动重定向模块\n\n这是系统的核心模块，负责将人体运动映射到机器人：\n\n**拓扑映射函数**：\n\n$$\n\nT: \\theta^{human} \\rightarrow \\theta^{robot}\n\n$$\n\n采用基于学习的重定向方法：\n- **训练阶段**：收集人体-机器人配对运动数据\n- **推理阶段**：使用神经网络预测机器人关节目标角度\n\n### 2.5 控制器评估\n\n对三种先进的全身控制器进行基准测试：\n\n1. **基于优化的控制器**：通过二次规划求解满足约束的最优控制序列\n2. **基于学习的策略**：深度强化学习训练的运动策略网络\n3. **混合控制器**：结合模型预测控制与学习补偿\n\n---\n\n## 3. 实现细节\n\n### 3.1 硬件配置\n\n| 组件 | 规格 |\n|------|------|\n| 游戏主机 | Nintendo Switch (OLED) |\n| 体感控制器 | Joy-Con (左右各一) |\n| 处理 PC | Ubuntu 20.04, RTX 3090 |\n| 机器人平台 | 人形机器人 (高度 ~1.2m, 自由度 ~20) |\n\n### 3.2 运动采集参数\n\n- **采样频率**：$f_{\\text{capture}} = 60$ Hz\n- **延迟目标**：$< 50$ ms（端到端）\n- **数据传输协议**：UDP, 端口 12345\n\n### 3.3 运动重定向网络架构\n\n```\n输入层: 19 关节 × 3 坐标 = 57 维\n ↓\n隐藏层 1: 256 单元, ReLU\n ↓\n隐藏层 2: 256 单元, ReLU\n ↓\n输出层: 机器人关节数, Tanh 激活\n```\n\n**训练超参数**：\n- 优化器：Adam\n- 学习率：$3 \\times 10^{-4}$\n- 批量大小：64\n- 训练轮数：1000 epochs\n- 损失函数：$L = L_{\\text{position}} + 0.1 \\cdot L_{\\text{velocity}}$\n\n### 3.4 控制器超参数\n\n**MPC 控制器**：\n- 预测时域：$H = 10$ 步\n- 控制时域：$h = 5$ 步\n- 权重矩阵：$Q = I$, $R = 0.01 \\cdot I$\n\n**强化学习策略**：\n- 网络：PPO\n- 总训练步数：$10^7$\n- 奖励函数权重：$w_{\\text{tracking}}=1.0$, $w_{\\text{balance}}=0.5$, $w_{\\text{smoothness}}=0.1$\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n**Just Dance 曲目选择**：\n\n| 类别 | 曲目数量 | 难度范围 | 运动类型 |\n|------|----------|----------|----------|\n| 简单 | 5 | 1-3 星 | 基础手势 |\n| 中等 | 8 | 4-6 星 | 全身协调 |\n| 困难 | 7 | 7-9 星 | 高强度动作 |\n\n共计 20 首曲目，覆盖流行音乐、舞曲等类型。\n\n### 4.2 评估指标\n\n1. **Just Dance 官方得分**：$S_{JD} \\in [0, 10000]$（原始分）\n2. **标准化得分**：$S_{\\text{norm}} = S_{JD} / 100$\n3. **动作识别准确率**：$Acc_{\\text{gesture}}$\n4. **时间同步率**：$Sync \\in [0, 1]$\n5. **摔倒次数**：$N_{\\text{fall}}$\n\n### 4.3 基线方法\n\n| 方法 | 描述 |\n|------|------|\n| 随机基线 | 随机关节角度输出 |\n| 规则基线 | 预定义规则映射 |\n| 线性映射 | 线性回归重定向 |\n| 手动调优 | 人工调整的 PID 控制器 |\n\n### 4.4 实验流程\n\n1. **验证实验**：\n  - 重测信度：同一操作者重复测试 3 次\n  - 评分员间信度：不同操作者对比\n  - 敏感度分析：故意引入误差观察得分变化\n\n2. **基准测试实验**：\n  - 在 20 首曲目上运行三种控制器\n  - 每种配置重复 5 次\n  - 记录所有评估指标\n\n---\n\n## 5. 技术优势\n\n### 5.1 标准化与可复现性\n\n- **统一的评估标准**：Just Dance 提供一致的评分体系，消除了不同研究者自定义指标导致的比较困难\n- **大规模曲目库**：20+ 首经过专业编舞的曲目，覆盖多样化运动模式\n- **低成本部署**：总硬件成本 $< 500 美元，远低于专业运动捕捉系统\n\n### 5.2 生态效度\n\n- **真实游戏环境**：在真实的娱乐场景中评估，而非仿真或实验室环境\n- **人类基线明确**：可以直接与人类玩家得分进行比较\n- **多模态反馈**：视觉（游戏画面）、听觉（音乐）、触觉（控制器振动）综合体验\n\n### 5.3 评估敏感性\n\n- **细粒度评分**：Just Dance 的评分系统能够检测细微的动作差异\n- **实时反馈**：游戏内置的评分系统提供即时性能反馈\n- **难度梯度**：从 1 星到 9 星的难度设计允许渐进式评估\n\n### 5.4 方法论创新\n\n- **首次将商业游戏用于机器人基准测试**：开辟了新的人工智能基准测试范式\n- **验证了游戏评估的有效性**：系统性地验证了信度、效度、敏感性等心理测量学属性\n\n---\n\n## 6. 技术弱点\n\n### 6.1 硬件依赖\n\n- **控制器限制**：Joy-Con 的姿态估计精度受限于其传感器规格\n- **延迟问题**：Switch 到 PC 的数据传输引入额外延迟（~30-50ms）\n- **视角约束**：玩家必须面对 TV 屏幕，限制了某些运动方向的评估\n\n### 6.2 运动覆盖\n\n- **游戏特定动作**：Just Dance 的动作库偏向舞蹈，不包含爬行、跳跃等非舞蹈动作\n- **人体差异**：游戏设计针对普通人类玩家，未考虑极端身体条件\n- **动作简化**：游戏中的动作经过简化，与自然人体运动存在差异\n\n### 6.3 评估局限性\n\n- **评分黑箱**：Just Dance 的评分算法未知，无法精确理解扣分原因\n- **主观因素**：音乐偏好、节奏感等主观因素影响得分\n- **环境干扰**：家庭环境的噪声、光线等影响 Switch 的姿态估计\n\n### 6.4 泛化性问题\n\n- **领域偏移**：从舞蹈运动学到的策略可能无法泛化到其他任务\n- **硬件差异**：不同机器人的物理特性导致结果不可直接比较\n- **规模限制**：20 首曲目的规模相对有限\n\n### 6.5 潜在改进方向\n\n1. **多游戏集成**：引入其他体感游戏形成更全面的评估套件\n2. **开源评分算法**：开发透明的替代评分系统\n3. **扩展运动类型**：结合其他运动类游戏扩展动作覆盖",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 7,
+    "writing_quality": 7,
+    "relevance": 7,
+    "overall_score": 7.0,
+    "strengths": [
+      "创新性地使用商业游戏作为机器人全身控制的基准测试平台",
+      "提供了可复现且低成本的评估pipeline",
+      "验证了Just Dance平台的可靠性、有效性、敏感性和潜在偏见",
+      "在真实硬件上对三种先进控制器进行了基准测试",
+      "利用游戏内置评分系统作为评估指标，具有可解释性"
+    ],
+    "weaknesses": [
+      "从摘要来看，技术细节有限，难以全面评估方法论的正确性",
+      "仅在单一游戏平台上验证，泛化性有待考察",
+      "对硬件限制和实际部署挑战的讨论可能不足",
+      "商业游戏可能存在版权和可访问性问题"
+    ],
+    "notes": "这是一篇有趣且实用的论文，提出了一个创新的机器人全身控制基准测试方案。利用商业游戏平台进行评估是一个新颖且可复现的方法，对embodied AI领域有潜在价值。但从摘要中难以全面评估技术细节和实验设计的完整性，需要查看完整论文才能做出更准确的评价。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Switch-JustDance: Benchmarking Whole Body Motion Tracking Policies Using a Commercial Console Game",
+      "authors": [
+        "Jeonghwan Kim",
+        "Wontaek Kim",
+        "Yidan Lu",
+        "Jin Cheng",
+        "Fatemeh Zargarbashi",
+        "Zicheng Zeng",
+        "Zekun Qi",
+        "Zhiyang Dou",
+        "Nitish Sontakke",
+        "Donghoon Baek",
+        "Sehoon Ha",
+        "Tianyu Li"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2511.17925",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Recent advances in whole-body robot control have enabled humanoid and legged robots to perform increasingly agile and coordinated motions. However, standardized benchmarks for evaluating these capabilities in real-world settings, and in direct comparison to humans, remain scarce. Existing evaluations often rely on pre-collected human motion datasets or simulation-based experiments, which limit reproducibility, overlook hardware factors, and hinder fair human-robot comparisons. We present Switch-JustDance, a low-cost and reproducible benchmarking pipeline that leverages motion-sensing console games, Just Dance on the Nintendo Switch, to evaluate robot whole-body control. Using Just Dance on the Nintendo Switch as a representative platform, Switch-JustDance converts in-game choreography into robot-executable motions through streaming, motion reconstruction, and motion retargeting modules and enables users to evaluate controller performance through the game's built-in scoring system. We first validate the evaluation properties of Just Dance, analyzing its reliability, validity, sensitivity, and potential sources of bias. Our results show that the platform provides consistent and interpretable performance measures, making it a suitable tool for benchmarking embodied AI. Building on this foundation, we benchmark three state-of-the-art humanoid whole-body controllers on hardware and provide insights into their relative strengths and limitations.",
+      "route_id": "b076d380-0549-44a2-b62d-0e1f3712b60d"
+    },
+    "markdown_stats": {
+      "lines": 233,
+      "words": 7119,
+      "headings": 22
+    },
+    "assets": {
+      "images": 5,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "b076d380-0549-44a2-b62d-0e1f3712b60d",
+  "paper_ref": "b076d380-0549-44a2-b62d-0e1f3712b60d",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

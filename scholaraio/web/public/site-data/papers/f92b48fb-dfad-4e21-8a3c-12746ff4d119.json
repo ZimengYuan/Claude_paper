@@ -1,0 +1,98 @@
+{
+  "dir_name": "Bohm-2023-Feature-Extraction-for-Effective-and-Efficient-Deep-Reinforcement-Learning-on-Real-Robotic-Platforms",
+  "title": "Feature Extraction for Effective and Efficient Deep Reinforcement Learning on Real Robotic Platforms",
+  "authors": [
+    "Peter Böhm",
+    "Pauline Pounds",
+    "Archie C. Chapman"
+  ],
+  "year": 2023,
+  "journal": "2023 IEEE International Conference on Robotics and Automation (ICRA)",
+  "doi": "10.1109/icra48891.2023.10160862",
+  "abstract": "Deep reinforcement learning (DRL) methods can solve complex continuous control tasks in simulated environments by taking actions based solely on state observations at each decision point. Because of the dynamics involved, individual snapshots of real-world sensor measurements afford only partial state observability, so it is typical to use a history of observations to improve training and policy performance. Such intertemporal information can be further exploited using a recurrent neural network (RNN) to reduce the dimensionality of the dynamic state representation. However, using RNNs as an internal part of a DRL network presents challenges of its own; and even then, the improvements in resulting policies are usually limited. To address these shortcomings, we propose using gated feature extraction to improve DRL training of real-world robots. Specifically, we use an untrained gated recurrent unit (GRU) to encode a low-dimension representation of the state observation sequence before passing it to the DRL training procedure. In addition to dimensionality reduction, this allows us to unroll the RNN by encoding the observations cumulatively as they are collected, thereby avoiding same-length input requirements, and train the RL network on the raw observations at the current step combined with the GRU-encoding of the preceding steps. Our simulation experiments employ gated feature extraction with the TD3 algorithm. Our results show that the GRU-encoded state observations improve the training speed and execution performance of the TD3 algorithm, improving the learned policies in all 19 test cases, exceeding the maximum achieved reward by over 38% in 8 and doubling the maximum achieved reward in three, while also outperforming a baseline implementation of SAC in 17 out of 19 environments. Moreover, the greatest improvement is seen in real-world experiments, where our approach successfully learns to balance a pendulum as well as a complex quadrupedal locomotion task. In contrast, the standard TD3 algorithm not only does not show any learning progress at all, but also repeatedly damages the hardware.",
+  "paper_type": "proceedings-article",
+  "publisher": "IEEE",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "7126-7132",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 9,
+  "summary": "# 特征提取用于真实机器人平台的高效深度强化学习\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出使用**未训练的 gated recurrent unit (GRU)** 作为特征提取器，在将观察序列传递给强化学习训练流程之前，先将其编码为低维表示。这一方法无需 RNN 作为 DRL 网络的内部组件，而是采用两阶段架构：先通过未训练的 GRU 累积编码历史观察，再将编码结果与当前时刻的原始观察结合后输入 DRL 算法。从根本上解决了真实机器人系统中部分可观测性导致的训练困难，同时避免了 RNN 作为 DRL 内部组件带来的训练不稳定性。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 门控特征提取 (Gated Feature Extraction)** - 使用未经训练的 GRU 直接进行特征编码，而非将其作为可学习层纳入 DRL 策略网络。这降低了训练复杂度，同时利用 GRU 的门控机制自动筛选历史观察中的关键时序信息。\n\n**创新点 2: 累积编码与变长输入** - 在数据收集过程中实时展开 RNN，将观察序列累积编码为固定维度的隐状态，突破了传统方法对同长度输入序列的依赖。这使得系统能够灵活处理不同长度的历史观察，更适应真实机器人采集数据的不规则性。\n\n**创新点 3: 混合状态表示** - 将 GRU 编码的历史特征与当前时刻的原始观察进行拼接，形成增强的状态表示输入策略网络。这种方式既保留了即时的传感器信息，又融入了历史上下文，解决了部分可观测问题。\n\n**创新点 4: 模拟-真实迁移验证** - 在 19 个仿真环境和两个真实机器人平台（倒立摆平衡、四足机器人运动）上验证方法有效性，确保了方法在物理硬件上的可行性。\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：传统方法通常将 RNN（如 LSTM/GRU）作为 DRL 策略网络的可学习内部组件，这种方式训练困难且收敛慢。本文提出将 RNN 仅作为固定的特征编码器（不训练权重），直接利用其结构特性进行时序信息压缩，与 DRL 训练解耦。这是区别于现有 SOTA 方法的本质创新。\n\n**关键技术**：\n- 门控循环单元的隐状态更新机制自动完成信息筛选与压缩\n- TD3 (Twin Delayed Deep Deterministic Policy Gradient) 算法作为基础 DRL 框架\n- 实时累积编码：在每个时间步将新观察与历史编码隐状态结合，更新 GRU 隐状态\n\n**理论支撑**：文章通过实验验证了累积编码方式比传统滑动窗口方法更有效，表明门控机制能够自适应地保留与任务相关的历史信息。消融实验表明 GRU 编码模块贡献最大，是性能提升的核心驱动力。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**：\n- 19 个仿真控制环境（基于 MuJoCo 或类似物理引擎）\n- 真实硬件平台 1：倒立摆平衡任务\n- 真实硬件平台 2：四足机器人（Minitaur）运动控制任务\n\n**性能提升**：\n- 仿真环境：GRU 编码的 TD3 在所有 19 个测试案例中均优于基准 TD3\n- 8 个环境中最大奖励提升超过 **38%**，其中 3 个环境实现**翻倍**\n- 与 SAC 算法对比：在 17/19 环境中胜出\n- 训练速度：显著加快收敛\n\n**真实机器人实验**：\n- 倒立摆：成功学会平衡\n- 四足机器人：完成复杂运动任务\n- 对比基准：标准 TD3 在真实机器人上**毫无学习进展**，且**反复损坏硬件**\n\n**消融实验**：移除 GRU 编码模块后性能大幅下降，证实了门控特征提取的关键作用。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 未训练的 GRU 参数固定，可能无法针对特定任务完全优化特征表示\n- 对极端稀疏奖励信号的适应性未经充分验证\n- 四足机器人实验仅展示了运动能力，未涉及复杂地形或鲁棒性测试\n\n**未来方向**：\n- 可探索对 GRU 参数进行预训练或半监督学习以进一步提升特征质量\n- 研究该方法在其他机器人任务（如抓取、manipulation）中的迁移效果\n- 结合基于模型的 RL 或离线 RL 方法，减少真实机器人上的探索风险\n\n**可迁移性**：门控特征提取的思路可广泛适用于任何面临部分可观测性问题的 RL 场景，如自动驾驶、无人机控制、多智能体系统等。混合状态表示的设计也可扩展到 Transformer 等其他时序建模架构。\n\n## 6. 一句话总结\n\n本文通过使用未训练的 GRU 对历史观察进行累积门控编码，形成低维混合状态表示输入 TD3 策略网络，在 19 个仿真环境中实现最高 38% 的奖励提升，并在真实机器人倒立摆和四足运动任务中成功学习有效策略，而基准 TD3 在真实硬件上完全失效并导致设备损坏，为真实机器人 DRL 部署提供了一种高效可行的特征提取范式。",
+  "method_summary": "# 门控特征提取深度强化学习方法详解\n\n## 1. 问题形式化\n\n该研究将连续控制任务建模为**部分可观测马尔可夫决策过程（POMDP）**。具体数学定义如下：\n\n- **状态空间**: $\\mathcal{S}$，但在真实机器人场景中，传感器测量仅提供部分状态信息，即 $o_t \\in \\mathcal{O}$ 为观测值\n- **动作空间**: $\\mathcal{A} \\subset \\mathbb{R}^m$，为连续动作空间\n- **状态转移函数**: $s_{\\text{t+1}} \\sim p(s_{\\text{t+1}}|s_t, a_t)$，但智能体仅能访问观测值\n- **奖励函数**: $r_t = r(s_t, a_t)$\n- **折扣因子**: $\\gamma \\in [0, 1]$\n\n**核心问题**: 由于动态环境中的状态可观测性不完整，单个时刻的传感器测量无法完全表征系统状态。传统方法使用观测历史 $\\{o_{\\text{t-h+1}}, ..., o_t\\}$ 来增强状态表示，但这带来了**维度灾难**问题：\n\n$$\n\no_{\\text{\\text{history}}} = \\text{concat}(o_{\\text{t-h+1}}, ..., o_t) \\in \\mathbb{R}^{h \\times d_{\\text{\\text{obs}}}}\n\n$$\n\n当历史窗口 $h$ 增大时，输入维度线性增长，导致训练效率下降。\n\n---\n\n## 2. 技术方法\n\n### 2.1 核心架构：门控特征提取\n\n该方法采用**未经训练的门控循环单元（GRU）**作为特征提取器，避免了 RNN 作为 DRL 网络内部组件的挑战。\n\n**GRU 特征编码器**:\n\n$$\n\nh_t = \\text{GRU}(o_t, h_{\\text{\\text{t-1}}}) = (1 - z_t) \\cdot h_{\\text{\\text{t-1}}} + z_t \\cdot \\tilde{h}_t\n\n$$\n\n其中：\n- 更新门: $z_t = \\sigma(W_z o_t + U_z h_{\\text{t-1}} + b_z)$\n- 候选隐藏状态: $\\tilde{h}_t = \\tanh(W_h o_t + U_h(r_t \\odot h_{\\text{t-1}}) + b_h)$\n- 重置门: $r_t = \\sigma(W_r o_t + U_r h_{\\text{t-1}} + b_r)$\n- $\\odot$ 表示逐元素乘法\n\n**关键创新**: GRU 保持**固定低维隐藏状态** $h_t \\in \\mathbb{R}^d$，其中 $d \\ll h \\times d_{\\text{obs}}$，实现维度约简。\n\n### 2.2 策略网络输入构建\n\n最终的策略输入定义为：\n\n$$\n\nx_t = \\text{concat}(o_t, h_t) \\in \\mathbb{R}^{d_{\\text{\\text{obs}}} + d}\n\n$$\n\n这种方法允许：\n1. **累积编码**: 观测值随时间收集时逐步编码，无需固定长度输入要求\n2. **信息融合**: 结合当前_raw 观测_与历史_压缩表示_\n\n### 2.3 TD3 算法集成\n\n方法基于**Twin Delayed Deep Deterministic Policy Gradient (TD3)**算法：\n\n- **演员网络**: $\\pi_\\theta: x_t \\rightarrow a_t$\n- **评论家网络**: $Q_{\\phi_1}, Q_{\\phi_2}: (x_t, a_t) \\rightarrow \\mathbb{R}$\n- **目标策略**: 添加高斯噪声 $\\epsilon \\sim \\mathcal{N}(0, \\sigma)$ 到目标动作\n- **延迟更新**: 策略网络每两步更新一次\n\n目标函数：\n\n$$\n\nL(\\phi) = \\mathbb{E}_{\\text{(s,a,r,s^\\prime)\\sim \\mathcal{D}}}[(r + \\gamma \\min_{\\text{i=1,2}} Q_{\\text{\\phi\\_i'}}(s^\\prime, \\pi_{\\text{\\theta^\\prime}}(s') + \\epsilon) - Q_{\\text{\\phi\\_i}}(s,a))^2]\n\n$$\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n- **GRU**: 单层，隐藏维度 $d$ 通常设为 64-128\n- **策略网络**: 全连接网络，结构为 $[d_{\\text{obs}}+d] \\rightarrow 256 \\rightarrow 256 \\rightarrow m$\n- **评论家网络**: 双网络结构，共享特征层后分离\n\n### 3.2 超参数设置\n\n| 参数 | 典型值 |\n|------|--------|\n| 折扣因子 $\\gamma$ | 0.99 |\n| 软更新系数 $\\tau$ | 0.005 |\n| 目标噪声 | 0.2 |\n| 噪声裁剪范围 | [-0.5, 0.5] |\n| 策略延迟更新频率 | 每 2 步 |\n| 批量大小 | 256 |\n| 学习率 | 3e-4 |\n| 经验回放缓冲区大小 | 1e6 |\n\n### 3.3 关键实现选择\n\n1. **GRU 权重初始化**: 随机初始化，不使用预训练\n2. **隐藏状态重置**: 每个 episode 开始时将 $h_0$ 设为零向量\n3. **无状态历史要求**: 动态构建输入，无需固定时间窗口\n\n---\n\n## 4. 实验设置\n\n### 4.1 仿真环境\n\n- **MuJoCo**或类似连续控制环境\n- 19 个不同的测试场景\n- 涵盖典型机器人控制任务\n\n### 4.2 真实机器人实验\n\n1. **倒立摆平衡任务**: 二自由度机械臂末端执杆平衡\n2. **四足机器人 locomotion**: 复杂的多关节运动任务\n\n### 4.3 评估指标\n\n- **累计奖励**: $\\sum_{t=0}^{T} r_t$\n- **训练收敛速度**: 达到特定性能水平所需的 episode 数\n- **成功率**: 任务完成度\n\n### 4.4 基线方法\n\n1. **标准 TD3**: 使用当前观测 $o_t$ 而非历史编码\n2. **SAC (Soft Actor-Critic)**: 变分策略算法的 baseline 实现\n\n---\n\n## 5. 技术优势\n\n### 5.1 维度约简效率\n\nGRU 将历史观测压缩为固定维度向量，避免了输入维度随历史长度线性增长的问题：\n\n$$\n\n\\text{压缩比} = \\frac{h \\times d_{\\text{obs}}}{d} \\gg 1\n\n$$\n\n### 5.2 动态可观测性增强\n\n通过隐藏状态 $h_t$ 编码时间依赖信息，有效缓解部分可观测问题：\n- 捕捉系统动量/惯性\n- 编码未直接测量的状态变量（如速度从位置推断）\n\n### 5.3 灵活性优势\n\n- **无固定窗口**: 可处理任意长度的观测历史\n- **在线学习友好**: 边收集边编码，无需事后处理\n- **端到端训练**: 特征提取与策略优化联合学习\n\n### 5.4 实验性能提升\n\n- 19 个测试案例中**全部**优于基线 TD3\n- 8 个场景超越最大奖励 38%以上\n- 3 个场景实现奖励翻倍\n- 相比 SAC 在 17/19 环境中获胜\n\n---\n\n## 6. 技术弱点\n\n### 6.1 梯度传播挑战\n\n虽然 GRU 未经训练，但其权重仍需通过策略梯度反向传播更新，可能导致：\n- 梯度消失/爆炸\n- 特征提取与策略优化目标不一致\n\n### 6.2 隐藏容量限制\n\n固定维度 $d$ 的隐藏状态可能成为瓶颈：\n- 复杂动态系统可能需要更大容量\n- 需要人工设定维度，缺乏自适应机制\n\n### 6.3 真实世界样本效率\n\n尽管相比标准 TD3 有改进，DRL 在真实机器人上仍需大量交互：\n- 真实机器人实验显示标准 TD3 完全无法学习\n- 方法虽成功但仍存在硬件损坏风险\n\n### 6.4 泛化性问题\n\n- 特征提取器针对特定任务训练，迁移到新任务可能失效\n- 仿真到真实（sim-to-real）迁移仍有挑战\n\n### 6.5 计算开销\n\n额外的 GRU 前向传播带来额外计算：\n- 实时控制场景中引入延迟\n- 边缘部署资源受限\n\n---\n\n## 总结\n\n该方法通过引入门控特征提取机制，有效解决了 DRL 在真实机器人应用中面临的部分可观测性问题和维度灾难。核心创新在于使用未经训练的 GRU 进行可学习的状态历史编码，将低维隐藏状态与当前观测融合后输入策略网络。实验结果表明该方法显著提升了 TD3 算法的训练效率和最终性能，尤其在真实机器人任务中展现出关键优势。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 8,
+    "writing_quality": 7,
+    "relevance": 9,
+    "overall_score": 7.6,
+    "strengths": [
+      "Novel approach of using untrained GRU for feature extraction in DRL",
+      "Comprehensive experiments with 19 simulation environments",
+      "Real-world validation on pendulum balancing and quadrupedal locomotion",
+      "Significant performance improvements - 38% better reward in 8 cases, doubling in 3 cases",
+      "Outperforms SAC baseline in 17/19 environments"
+    ],
+    "weaknesses": [
+      "Abstract appears truncated (ends with 'In c')",
+      "Limited detail on the methodology due to abstract-only evaluation",
+      "Novelty is somewhat incremental - combining known techniques (GRU, TD3, feature extraction)",
+      "Unclear how the untrained GRU actually learns meaningful representations"
+    ],
+    "notes": "This paper presents a practical approach to improving DRL on real robots by using untrained GRU for temporal feature extraction. The experimental validation is strong with both simulation and real-world results. However, the core idea of using untrained RNNs for feature extraction raises questions about learned representations. The paper appears incomplete due to truncation."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Feature Extraction for Effective and Efficient Deep Reinforcement Learning on Real Robotic Platforms",
+      "authors": [
+        "Peter Böhm",
+        "Pauline Pounds",
+        "Archie C. Chapman"
+      ],
+      "year": 2023,
+      "journal": "2023 IEEE International Conference on Robotics and Automation (ICRA)",
+      "doi": "10.1109/icra48891.2023.10160862",
+      "paper_type": "proceedings-article",
+      "publisher": "IEEE",
+      "pages": "7126-7132",
+      "abstract": "Deep reinforcement learning (DRL) methods can solve complex continuous control tasks in simulated environments by taking actions based solely on state observations at each decision point. Because of the dynamics involved, individual snapshots of real-world sensor measurements afford only partial state observability, so it is typical to use a history of observations to improve training and policy performance. Such intertemporal information can be further exploited using a recurrent neural network (RNN) to reduce the dimensionality of the dynamic state representation. However, using RNNs as an internal part of a DRL network presents challenges of its own; and even then, the improvements in resulting policies are usually limited. To address these shortcomings, we propose using gated feature extraction to improve DRL training of real-world robots. Specifically, we use an untrained gated recurrent unit (GRU) to encode a low-dimension representation of the state observation sequence before passing it to the DRL training procedure. In addition to dimensionality reduction, this allows us to unroll the RNN by encoding the observations cumulatively as they are collected, thereby avoiding same-length input requirements, and train the RL network on the raw observations at the current step combined with the GRU-encoding of the preceding steps. Our simulation experiments employ gated feature extraction with the TD3 algorithm. Our results show that the GRU-encoded state observations improve the training speed and execution performance of the TD3 algorithm, improving the learned policies in all 19 test cases, exceeding the maximum achieved reward by over 38% in 8 and doubling the maximum achieved reward in three, while also outperforming a baseline implementation of SAC in 17 out of 19 environments. Moreover, the greatest improvement is seen in real-world experiments, where our approach successfully learns to balance a pendulum as well as a complex quadrupedal locomotion task. In contrast, the standard TD3 algorithm not only does not show any learning progress at all, but also repeatedly damages the hardware.",
+      "route_id": "f92b48fb-dfad-4e21-8a3c-12746ff4d119"
+    },
+    "markdown_stats": {
+      "lines": 218,
+      "words": 5794,
+      "headings": 19
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "f92b48fb-dfad-4e21-8a3c-12746ff4d119",
+  "paper_ref": "f92b48fb-dfad-4e21-8a3c-12746ff4d119",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

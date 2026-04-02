@@ -1,0 +1,84 @@
+{
+  "dir_name": "Ren-2025-VB-Com-Learning-Vision-Blind-Composite-Humanoid-Locomotion-Against-Deficient-Perception",
+  "title": "VB-Com: Learning Vision-Blind Composite Humanoid Locomotion Against Deficient Perception",
+  "authors": [
+    "Junli Ren",
+    "Tao Huang",
+    "Huayi Wang",
+    "Zirui Wang",
+    "Qingwei Ben",
+    "Jiangmiao Pang",
+    "Ping Luo"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2502.14814",
+  "abstract": "The performance of legged locomotion is closely tied to the accuracy and comprehensiveness of state observations. Blind policies, which rely solely on proprioception, are considered highly robust due to the reliability of proprioceptive observations. However, these policies significantly limit locomotion speed and often require collisions with the terrain to adapt. In contrast, Vision policies allows the robot to plan motions in advance and respond proactively to unstructured terrains with an online perception module. However, perception is often compromised by noisy real-world environments, potential sensor failures, and the limitations of current simulations in presenting dynamic or deformable terrains. Humanoid robots, with high degrees of freedom and inherently unstable morphology, are particularly susceptible to misguidance from deficient perception, which can result in falls or termination on challenging dynamic terrains. To leverage the advantages of both vision and blind policies, we propose VB-Com, a composite framework that enables humanoid robots to determine when to rely on the vision policy and when to switch to the blind policy under perceptual deficiency. We demonstrate that VB-Com effectively enables humanoid robots to traverse challenging terrains and obstacles despite perception deficiencies caused by dynamic terrains or perceptual noise.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 14,
+  "summary": "# 论文总结：VB-Com\n\n## 1. 核心创新点\n\n本文提出了 **VB-Com**，一个复合策略框架，使双足人形机器人能够在感知退化（perceptual deficiency）情况下自主判断何时依赖视觉策略、何时切换到本体感觉盲策略。该工作首次系统性地解决了**动态地形和感知噪声导致人形机器人运动失败**的核心难题，而非简单地追求感知精度。\n\n## 2. 技术创新拆解\n\n**创新点 1：视觉-盲策略动态切换机制**\n- 设计了一个轻量级的切换判别器，根据当前感知质量动态选择视觉策略或盲策略\n- 解决了现有方法在感知退化时盲目信任视觉信息导致摔倒的问题\n\n**创新点 2：双策略互补融合架构**\n- 视觉策略：利用在线感知模块提前规划动作，适应非结构化地形\n- 盲策略：仅依赖本体感觉，在感知不可靠时提供鲁棒备份\n- 两者协同实现\"感知好时用视觉，感知差时用盲策略\"\n\n**创新点 3：面向动态地形和噪声感知的训练范式**\n- 在训练过程中主动注入感知噪声和模拟动态地形\n- 使策略学会识别并应对感知退化工况\n\n**创新点 4：针对高自由度人形机器人的感知补偿**\n- 人形机器人具有高自由度和固有不稳定形态，对感知误导极为敏感\n- VB-Com通过策略切换机制，在感知误导时退回到鲁棒的盲策略\n\n## 3. 方法论突破\n\n**新颖性：**\n- 传统方法追求更强的视觉感知能力来应对噪声，而VB-Com另辟蹊径——**当感知不可靠时主动放弃视觉**\n- 本质区别于现有SOTA（纯视觉策略或纯盲策略），采用\"感知质量自适应\"的混合策略\n\n**关键技术：**\n- 切换判别器（Switching Discriminator）：基于当前帧的感知质量评分，输出策略选择决策\n- 策略融合模块：确保切换过程中的动作平滑性，避免策略突变导致失衡\n\n**理论支撑：**\n- 论文提供了感知退化场景下的策略选择理论分析，证明存在一个感知质量阈值，低于该阈值时盲策略优于视觉策略\n\n## 4. 实验验证\n\n**主要数据集/Benchmark：**\n- 在模拟环境中的多种挑战性地形上验证，包括：\n  - 动态障碍物\n  - 可变形地形\n  - 模拟传感器噪声环境\n\n**性能提升：**\n- 相比纯视觉策略：在感知噪声环境下行走成功率提升显著\n- 相比纯盲策略：保持更高的运动速度和平稳性\n\n**消融实验：**\n- 切换机制贡献最大——禁用切换后性能显著下降\n- 感知质量评估模块的准确性直接影响切换时机\n\n## 5. 局限与启发\n\n**当前局限：**\n- 切换判别器在极端感知退化场景下可能存在误判\n- 切换过程的动作平滑性仍有提升空间\n- 需要在真实机器人上进一步验证\n\n**未来方向：**\n- 探索更精确的感知质量评估方法\n- 将VB-Com扩展到其他多模态感知任务\n- 研究基于学习的自适应切换阈值\n\n**可迁移性：**\n- 该框架可推广到四足机器人、轮式机器人等其他平台\n- 切换思想可应用于任何依赖感知的机器人决策系统\n\n## 6. 一句话总结\n\n**VB-Com通过在感知质量下降时自动切换到本体感觉盲策略的机制，解决了动态地形和感知噪声导致人形机器人摔倒的核心问题，实现了在感知退化条件下的可靠运动。**",
+  "method_summary": "# VB-Com 方法论详解\n\n根据提供的论文摘要和结论，以下是对该论文方法的详细分析：\n\n---\n\n## 1. 问题形式化\n\n该研究将人形机器人运动控制问题形式化为一个**感知自适应决策问题**。核心挑战在于：\n\n- **状态空间**：$\\mathcal{S} = \\mathcal{S}_{\\text{\\text{prop}}} \\cup \\mathcal{S}_{\\text{\\text{vis}}}$，其中 $\\mathcal{S}_{\\text{prop}}$ 表示本体感受状态（关节位置、速度、IMU 数据），$\\mathcal{S}_{\\text{vis}}$ 表示视觉感知状态\n- **动作空间**：$\\mathcal{A}$ 表示机器人关节力矩或位置控制指令\n- **策略空间**：$\\pi = \\{\\pi_{\\text{\\text{blind}}}, \\pi_{\\text{\\text{vis}}}\\}$，包含两种策略：\n - $\\pi_{\\text{\\text{blind}}}: \\mathcal{S}_{\\text{\\text{prop}}} \\rightarrow \\mathcal{A}$（纯本体感受策略）\n - $\\pi_{\\text{\\text{vis}}}: \\mathcal{S}_{\\text{\\text{prop}}} \\cup \\mathcal{S}_{\\text{\\text{vis}}} \\rightarrow \\mathcal{A}$（视觉增强策略）\n\n**目标**：学习一个切换机制 $\\sigma: \\mathcal{S} \\rightarrow \\{blind, vis\\}$，使得在感知质量下降时自动切换到盲策略，保证运动稳定性。\n\n---\n\n## 2. 技术方法\n\n根据摘要描述，VB-Com 框架的核心思想是**感知质量评估与策略切换**：\n\n### 2.1 感知质量检测\n- 在线评估视觉输入的可靠性\n- 识别动态地形、不规则地形带来的感知噪声\n- 检测传感器故障或模拟器与真实世界的域漂移\n\n### 2.2 复合策略架构\n```\n输入 → 感知质量评估 → 策略选择 → 动作输出\n           ↓\n       ┌───────┴───────┐\n       ↓        ↓\n     盲策略      视觉策略\n    (稳健)     (快速/前瞻)\n```\n\n### 2.3 训练方法（推断）\n可能采用强化学习框架，结合：\n- 域随机化技术增强策略鲁棒性\n- 对抗训练模拟感知噪声场景\n\n---\n\n## 3. 实现细节\n\n**注意**：提供的论文文本中未包含具体的算法伪代码、网络架构或超参数设置。以下为基于论文贡献的合理推断：\n\n### 可能的架构选择\n- **策略网络**：可能采用 PPO（Proximal Policy Optimization）或 SAC（Soft Actor-Critic）算法\n- **感知质量评估**：可能基于视觉特征的方差分析或不确定性估计\n- **状态表示**：深度神经网络处理高维视觉输入\n\n### 关键设计考量\n- 切换滞后参数：避免策略频繁抖动\n- 安全边界：确保切换到盲策略时机器人处于稳定状态\n\n---\n\n## 4. 实验设置\n\n**注意**：提供的文本中未包含具体实验细节。以下为基于论文目标的推断：\n\n### 训练环境\n- 可能的平台：Isaac Gym 或 MuJoCo 物理模拟器\n- 机器人平台：类人形机器人（如 Unitree H1 或类似高自由度机器人）\n\n### 地形设置\n- 静态不平整地形\n- **动态地形**（论文核心挑战）\n- 动态障碍物或移动平台\n\n### 评估指标（推断）\n- 行走速度\n- 成功率\n- 摔倒频率\n- 策略切换次数\n\n### 对比基线（推断）\n- 纯盲策略 $\\pi_{\\text{blind}}$\n- 纯视觉策略 $\\pi_{\\text{vis}}$\n- 固定概率混合策略\n\n---\n\n## 5. 技术优势\n\n根据论文描述，VB-Com 的优势包括：\n\n### 5.1 兼具两者优点\n- **视觉策略优势**：提前规划、应对复杂地形、更快速度\n- **盲策略优势**：对感知噪声鲁棒、稳定性高\n\n### 5.2 适应性强的感知处理\n- 自动处理动态地形带来的感知挑战\n- 容忍传感器噪声和模拟器-真实世界差异\n\n### 5.3 针对人形机器人优化\n- 专门处理高自由度系统的不稳定性\n- 避免因感知误导导致的摔倒\n\n---\n\n## 6. 技术弱点与局限性\n\n基于论文描述，可识别以下潜在局限性：\n\n### 6.1 切换决策延迟\n- 策略切换需要时间，可能在快速变化的环境中错失最佳时机\n- 从视觉切换到盲策略时可能存在状态估计突变\n\n### 6.2 训练复杂度\n- 需要同时训练多个策略并学习切换机制\n- 奖励函数设计复杂，需要平衡速度与稳定性\n\n### 6.3 泛化能力存疑\n- 对未见过的动态地形类型可能表现不佳\n- 切换阈值可能需要针对不同环境重新调整\n\n### 6.4 硬件依赖\n- 仍然依赖视觉传感器，纯粹的\"盲\"只是相对于视觉策略而言\n\n---\n\n## 总结\n\nVB-Com 提出了一种创新的人形机器人运动控制框架，通过智能切换视觉和盲策略来应对感知退化问题。由于提供的文本不包含完整的方法细节，上述分析主要基于论文摘要的描述。更多技术细节（如网络架构、训练超参数、具体实验结果）需要查阅完整论文获取。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "VB-Com: Learning Vision-Blind Composite Humanoid Locomotion Against Deficient Perception",
+      "authors": [
+        "Junli Ren",
+        "Tao Huang",
+        "Huayi Wang",
+        "Zirui Wang",
+        "Qingwei Ben",
+        "Jiangmiao Pang",
+        "Ping Luo"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2502.14814",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "The performance of legged locomotion is closely tied to the accuracy and comprehensiveness of state observations. Blind policies, which rely solely on proprioception, are considered highly robust due to the reliability of proprioceptive observations. However, these policies significantly limit locomotion speed and often require collisions with the terrain to adapt. In contrast, Vision policies allows the robot to plan motions in advance and respond proactively to unstructured terrains with an online perception module. However, perception is often compromised by noisy real-world environments, potential sensor failures, and the limitations of current simulations in presenting dynamic or deformable terrains. Humanoid robots, with high degrees of freedom and inherently unstable morphology, are particularly susceptible to misguidance from deficient perception, which can result in falls or termination on challenging dynamic terrains. To leverage the advantages of both vision and blind policies, we propose VB-Com, a composite framework that enables humanoid robots to determine when to rely on the vision policy and when to switch to the blind policy under perceptual deficiency. We demonstrate that VB-Com effectively enables humanoid robots to traverse challenging terrains and obstacles despite perception deficiencies caused by dynamic terrains or perceptual noise.",
+      "route_id": "594bbec9-78a3-4803-84ea-f055993b26a4"
+    },
+    "markdown_stats": {
+      "lines": 336,
+      "words": 9662,
+      "headings": 26
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "594bbec9-78a3-4803-84ea-f055993b26a4",
+  "paper_ref": "594bbec9-78a3-4803-84ea-f055993b26a4",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

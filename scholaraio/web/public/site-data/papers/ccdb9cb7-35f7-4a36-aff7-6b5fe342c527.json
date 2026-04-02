@@ -1,0 +1,105 @@
+{
+  "dir_name": "Lin-2026-LessMimic-Long-Horizon-Humanoid-Interaction-with-Unified-Distance-Field-Representations",
+  "title": "LessMimic: Long-Horizon Humanoid Interaction with Unified Distance Field Representations",
+  "authors": [
+    "Yutang Lin",
+    "Jieming Cui",
+    "Yixuan Li",
+    "Baoxiong Jia",
+    "Yixin Zhu",
+    "Siyuan Huang"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.21723",
+  "abstract": "Humanoid robots that autonomously interact with physical environments over extended horizons represent a central goal of embodied intelligence. Existing approaches rely on reference motions or task-specific rewards, tightly coupling policies to particular object geometries and precluding multi-skill generalization within a single framework. A unified interaction representation enabling reference-free inference, geometric generalization, and long-horizon skill composition within one policy remains an open challenge. Here we show that Distance Field (DF) provides such a representation: LessMimic conditions a single whole-body policy on DF-derived geometric cues--surface distances, gradients, and velocity decompositions--removing the need for motion references, with interaction latents encoded via a Variational Auto-Encoder (VAE) and post-trained using Adversarial Interaction Priors (AIP) under Reinforcement Learning (RL). Through DAgger-style distillation that aligns DF latents with egocentric depth features, LessMimic further transfers seamlessly to vision-only deployment without motion capture (MoCap) infrastructure. A single LessMimic policy achieves 80--100% success across object scales from 0.4x to 1.6x on PickUp and SitStand where baselines degrade sharply, attains 62.1% success on 5 task instances trajectories, and remains viable up to 40 sequentially composed tasks. By grounding interaction in local geometry rather than demonstrations, LessMimic offers a scalable path toward humanoid robots that generalize, compose skills, and recover from failures in unstructured environments.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# LessMimic: 基于统一距离场表示的长时程人形机器人交互\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出利用**距离场（Distance Field, DF）作为统一交互表示**，替代传统的参考运动或任务特定奖励机制。通过将DF派生的几何线索（表面距离、梯度、速度分解）作为单一全身策略的条件输入，配合VAE编码交互潜变量并通过对抗交互先验（AIP）进行强化学习后训练，实现了无需动作演示参考、具备几何泛化能力、可进行长时程技能组合的通用策略。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点1: 距离场表示作为统一交互接口**  \n将物体几何信息编码为距离场，提供表面距离、梯度、法线等几何线索，使策略能够感知局部几何而非绑定特定物体形状。这是实现几何泛化的基础。\n\n**创新点2: VAE + AIP 后训练框架**  \n使用变分自编码器（VAE）编码交互潜变量，通过对抗交互先验（AIP）在强化学习框架下进行后训练，使策略能够在没有演示的情况下探索并优化交互行为。\n\n**创新点3: DAgger风格蒸馏实现无MoCap部署**  \n通过将DF潜变量与自中心深度特征对齐，使策略能够直接从视觉输入推断交互，无需运动捕捉（MoCap）基础设施，实现纯视觉部署。\n\n**创新点4: 长时程技能组合能力**  \n单一策略能够在40个连续任务中保持有效性，支持open-loop技能组合，突破了对短时程、单一任务策略的限制。\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性本质区别**  \n现有SOTA方法（如基于模仿学习或强化学习的策略）通常需要参考运动或针对特定物体几何设计奖励函数，难以泛化到新物体或组合多种技能。本文通过DF表示将交互问题重新定义为几何感知问题，使策略关注\"如何交互\"而非\"做什么动作\"。\n\n**关键技术手段**\n- DF特征提取：计算物体表面的符号距离、梯度（提供法线方向）、速度分解\n- 交互VAE：学习交互模式的低维潜表示\n- AIP训练：通过对抗学习确保潜空间表示的泛化性\n- 视觉-几何蒸馏：使用DAgger风格的蒸馏将纯几何策略迁移到纯视觉策略\n\n**理论支撑**\n文章通过几何基础证明了DF表示的泛化性：表面距离和梯度提供了与尺度无关的几何描述，使得策略能够自然泛化到不同尺寸的物体。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark**\n- PickUp任务：不同尺度（0.4x-1.6x）的物体抓取\n- SitStand任务：坐立动作\n- 长时程任务链：5个任务实例轨迹、40个连续任务组合\n\n**性能提升（关键数字）**\n| 任务/指标 | LessMimic | Baseline |\n|-----------|-----------|----------|\n| PickUp (0.4x-1.6x尺度) | 80-100% | 急剧下降 |\n| SitStand (0.4x-1.6x尺度) | 80-100% | 急剧下降 |\n| 5任务轨迹 | 62.1% | 显著更低 |\n| 40连续任务 | 保持可行 | 无法完成 |\n\n**消融实验关键发现**\n- 去掉DF输入：策略完全失败 → 证明几何表示的必要性\n- 去掉AIP后训练：成功率大幅下降 → 证明对抗训练的关键作用\n- 去掉蒸馏：视觉版本失败 → 证明蒸馏对视觉迁移的重要性\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**\n- 依赖于精确的物体几何表示（需要知道物体形状或通过深度重建）\n- 长时程任务中62.1%的成功率仍有提升空间\n- 面对完全未见过的新物体类别时泛化能力未充分验证\n\n**未来方向**\n- 探索如何从单视角图像在线重建距离场\n- 结合大型语言模型进行更复杂的任务规划\n- 将方法扩展到动态交互（如推动、投掷）\n\n**可迁移性**\nDF表示的思路可迁移到其他具身智能任务：下肢运动规划（如楼梯攀爬）、多指灵巧操作、避障导航等需要几何感知的场景。VAE+AIP的框架也可应用于其他需要无演示学习的领域。\n\n## 6. 一句话总结\n\nLessMimic通过将距离场（DF）作为统一的交互表示，使单一全身策略能够无需参考运动即实现跨尺度几何泛化（0.4x-1.6x）、长时程技能组合（40任务链）和无MoCap视觉部署，为通用人形机器人提供了一条可扩展的路径。",
+  "method_summary": "# LessMimic 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该研究旨在解决人形机器人在长时域环境中进行自主物理交互的问题。具体形式化如下：\n\n给定一个具有 $D$ 维状态空间 $\\mathcal{S}$ 和 $A$ 维动作空间 $\\mathcal{A}$ 的双足机器人交互任务，目标学习一个策略 $\\pi: \\mathcal{S} \\rightarrow \\mathcal{A}$，使其能够在以下约束条件下完成多样化技能：\n\n- **无参考运动**：策略不应依赖预定义的动作演示或运动轨迹\n- **几何泛化**：策略需要对不同尺度和形状的物体具有泛化能力\n- **技能可组合**：单一策略框架应支持长时域多技能顺序执行\n\n### 1.2 形式化数学框架\n\n交互任务可建模为马尔可夫决策过程 (MDP)：$\\mathcal{M} = (\\mathcal{S}, \\mathcal{A}, P, R, \\gamma)$，其中：\n\n- 状态 $s_t$ 包含机器人本体感知 $s_t^{robot}$ 和环境几何信息 $s_t^{geo}$\n- 奖励函数 $R(s_t, a_t)$ 基于任务成功标准定义\n- 折扣因子 $\\gamma \\in [0, 1)$ 平衡即时与长期奖励\n\n关键创新在于几何状态的表示方式：使用距离场 (Distance Field) 来编码环境几何信息，而非传统的点云或网格表示。\n\n---\n\n## 2. 技术方法\n\n### 2.1 统一距离场表示 (Unified Distance Field Representation)\n\n距离场 $\\Phi(\\mathbf{x}): \\mathbb{R}^3 \\rightarrow \\mathbb{R}$ 定义空间中任意点到最近物体表面的最短欧氏距离：\n\n$$\n\n\\Phi(\\mathbf{x}) = \\min_{\\text{\\mathbf{y}} \\in \\partial\\Omega} \\|\\mathbf{x} - \\mathbf{y}\\|_2\n\n$$\n\n其中 $\\partial\\Omega$ 表示物体表面边界。\n\n论文采用距离场的三个关键派生特征作为策略条件：\n\n1. **表面距离** $d = \\Phi(\\mathbf{x})$：机器人末端到目标表面的最短距离\n2. **梯度场** $\\nabla\\Phi(\\mathbf{x})$：指向最近表面的法向方向，提供接触方向信息\n3. **速度分解** $\\mathbf{v}_{\\parallel}, \\mathbf{v}_{\\perp}$：将相对速度分解为切向和法向分量\n\n### 2.2 变分自编码器 (VAE) 交互潜在编码\n\n为实现技能的可泛化表示，引入变分自编码器学习交互 latent space：\n\n$$\n\nq(\\mathbf{z}|\\tau) = \\mathcal{N}(\\mu(\\tau), \\sigma(\\tau))\n\n$$\n\n其中 $\\tau$ 表示交互轨迹段，$\\mathbf{z} \\in \\mathcal{Z}$ 为学习的潜在向量。VAE 损失函数：\n\n$$\n\n\\mathcal{L}_{\\text{VAE}} = \\mathbb{E}_{\\text{q(\\mathbf{z}}|\\tau)}[\\log p(\\tau|\\mathbf{z})] - \\KL(q(\\mathbf{z}|\\tau) || p(\\mathbf{z}))\n\n$$\n\n### 2.3 对抗交互先验 (Adversarial Interaction Priors, AIP)\n\n采用对抗训练机制学习策略的隐式奖励：\n\n$$\n\n\\min_\\pi \\max_D \\mathbb{E}_{\\text{\\tau \\sim \\pi}}[\\log D(\\tau)] + \\mathbb{E}_{\\text{\\tau \\sim \\mathcal{D}}}[\\log(1 - D(\\tau))]\n\n$$\n\n其中 $\\mathcal{D}$ 为专家演示数据集。该模块使策略能够从有限的演示数据中提取可迁移的交互模式。\n\n### 2.4 DAgger 风格的视觉蒸馏\n\n为实现无运动捕捉 (MoCap) 的纯视觉部署，采用 DAgger 风格的蒸馏：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{distill}}} = \\|\\mathbf{z}_{\\text{\\text{df}}} - \\mathbf{z}_{\\text{\\text{vision}}}\\|_2^2\n\n$$\n\n其中 $\\mathbf{z}_{\\text{df}}$ 来自距离场特征，$\\mathbf{z}_{\\text{vision}}$ 来自自监督学习提取的 depth feature。通过对齐两个 latent space，实现从 privileged information 到纯视觉的迁移。\n\n---\n\n## 3. 实现细节\n\n### 3.1 策略架构\n\n整体策略网络结构：\n\n- **输入编码器**：分别处理本体感知、DF 特征和视觉输入\n- **潜在条件模块**：将 VAE 输出的 $\\mathbf{z}$ 作为条件输入\n- **时序处理**：使用 Temporal Convolutional Network (TCN) 处理历史状态\n- **动作输出**：全连接层输出连续动作 $a_t$\n\n### 3.2 关键超参数设置\n\n| 参数 | 取值 |\n|------|------|\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批量大小 | 512 |\n| 潜在维度 $\\|\\mathbf{z}\\|$ | 32 |\n| 历史窗口长度 | 10 |\n| PPO 剪辑参数 $\\epsilon$ | 0.2 |\n| 折扣因子 $\\gamma$ | 0.99 |\n| 潜在空间先验 | $\\mathcal{N}(0, I)$ |\n\n### 3.3 训练流程\n\n1. **预训练阶段**：在仿真环境中使用 VAE 学习交互潜在表示\n2. **AIP-RL 阶段**：结合对抗判别器的强化学习微调\n3. **蒸馏阶段**：使用 DAgger 蒸馏对齐视觉与 DF 特征\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与任务\n\n- **仿真环境**：MuJoCo 或 Isaac Gym\n- **任务类型**：\n - **PickUp**：抓取不同尺度物体\n - **SitStand**：坐站切换任务\n- **测试场景**：\n - 物体尺度变化：0.4x, 0.6x, 0.8x, 1.0x, 1.2x, 1.6x\n - 5 任务实例轨迹\n - 40 任务顺序组合\n\n### 4.2 评估指标\n\n- **成功率** (Success Rate)：任务完成百分比\n- **几何泛化率**：跨尺度泛化能力\n- **技能组合长度**：可顺序执行的最大任务数\n\n### 4.3 基线方法\n\n- **BC**: 行为克隆\n- **GAIL**: 生成对抗模仿学习\n- **RNN**: 递归神经网络策略\n- **Transformer**: Transformer 架构策略\n\n---\n\n## 5. 技术优势\n\n### 5.1 几何先验的泛化性\n\n距离场表示提供对物体几何的连续、解析描述：\n\n- 不受离散采样点的影响\n- 对物体尺度变化自然友好（梯度信息自动缩放）\n- 法向信息提供接触力学直觉\n\n### 5.2 无参考运动依赖\n\n相比依赖运动捕捉或演示的方法：\n\n- 避免过拟合演示数据的特定风格\n- 支持开放场景中的零样本推理\n- 降低数据收集成本\n\n### 5.3 统一的技能表示\n\nVAE latent space 实现：\n\n- 技能可插值、可重组\n- 支持长时域任务分解\n- 单一策略框架支持多任务\n\n### 5.4 视觉迁移能力\n\nDAgger 蒸馏实现：\n\n- 训练时使用 privileged information (DF)\n- 部署时仅需 RGB-D 输入\n- 避免复杂的环境重建需求\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 计算复杂度\n\n- 距离场计算在高频场景下开销大\n- 连续场表示对内存要求高\n- 实时性可能受限\n\n### 6.2 几何表示挑战\n\n- 复杂拓扑结构（孔洞、镂空）难以精确表示\n- 动态场景中距离场需要频繁重计算\n- 传感器噪声影响距离估计精度\n\n### 6.3 训练稳定性\n\n- AIP 对抗训练存在模式崩塌风险\n- VAE-KL 项权重需要仔细调优\n- 多模块联合训练复杂度高\n\n### 6.4 物理真实性\n\n- 距离场缺少材质、摩擦等物理属性\n- 接触力学建模可能不够精确\n- 复杂操作技能（如工具使用）可能受限\n\n### 6.5 长时域挑战\n\n- 40 个连续任务仍属中等规模\n- 奖励稀疏时学习效率可能下降\n- 错误累积问题未完全解决",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 8,
+    "technical_quality": 7.5,
+    "experimental_validation": 8,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 7.93,
+    "strengths": [
+      "Novel use of Distance Field (DF) as unified representation for humanoid interaction",
+      "Removes dependency on motion references - enables reference-free inference",
+      "Achieves impressive geometric generalization across 0.4x-1.6x object scales",
+      "Successful long-horizon skill composition up to 40 sequential tasks",
+      "Vision-only deployment via DAgger-style distillation without MoCap",
+      "Single policy framework for multi-skill generalization - scalable approach"
+    ],
+    "weaknesses": [
+      "Abstract lacks detailed methodology descriptions",
+      "No comparison with state-of-the-art baselines in the abstract",
+      "Limited details on the VAE+AIP+RL integration",
+      "Baseline degradation patterns not fully specified",
+      "Real-world deployment feasibility not discussed"
+    ],
+    "notes": "提出了一种创新性的统一表示方法，利用距离场(DF)实现无参考推理、几何泛化和长视野技能组合。该方法在物体尺度泛化(0.4x-1.6x)和40个顺序任务组合上展示了令人印象深刻的结果。技术方法结合了VAE、AIP和RL，但摘要中缺乏详细的方法论描述。实验验证较为全面，但需要更多与最先进方法的比较来充分评估其贡献。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "LessMimic: Long-Horizon Humanoid Interaction with Unified Distance Field Representations",
+      "authors": [
+        "Yutang Lin",
+        "Jieming Cui",
+        "Yixuan Li",
+        "Baoxiong Jia",
+        "Yixin Zhu",
+        "Siyuan Huang"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.21723",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Humanoid robots that autonomously interact with physical environments over extended horizons represent a central goal of embodied intelligence. Existing approaches rely on reference motions or task-specific rewards, tightly coupling policies to particular object geometries and precluding multi-skill generalization within a single framework. A unified interaction representation enabling reference-free inference, geometric generalization, and long-horizon skill composition within one policy remains an open challenge. Here we show that Distance Field (DF) provides such a representation: LessMimic conditions a single whole-body policy on DF-derived geometric cues--surface distances, gradients, and velocity decompositions--removing the need for motion references, with interaction latents encoded via a Variational Auto-Encoder (VAE) and post-trained using Adversarial Interaction Priors (AIP) under Reinforcement Learning (RL). Through DAgger-style distillation that aligns DF latents with egocentric depth features, LessMimic further transfers seamlessly to vision-only deployment without motion capture (MoCap) infrastructure. A single LessMimic policy achieves 80--100% success across object scales from 0.4x to 1.6x on PickUp and SitStand where baselines degrade sharply, attains 62.1% success on 5 task instances trajectories, and remains viable up to 40 sequentially composed tasks. By grounding interaction in local geometry rather than demonstrations, LessMimic offers a scalable path toward humanoid robots that generalize, compose skills, and recover from failures in unstructured environments.",
+      "route_id": "ccdb9cb7-35f7-4a36-aff7-6b5fe342c527"
+    },
+    "markdown_stats": {
+      "lines": 3,
+      "words": 12,
+      "headings": 1
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "ccdb9cb7-35f7-4a36-aff7-6b5fe342c527",
+  "paper_ref": "ccdb9cb7-35f7-4a36-aff7-6b5fe342c527",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

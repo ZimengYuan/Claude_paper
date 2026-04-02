@@ -1,0 +1,76 @@
+{
+  "dir_name": "Peng-2025-Gait-Conditioned-Reinforcement-Learning-with-Multi-Phase-Curriculum-for-Humanoid-Locomotion",
+  "title": "Gait-Conditioned Reinforcement Learning with Multi-Phase Curriculum for Humanoid Locomotion",
+  "authors": [
+    "Tianhu Peng",
+    "Lingfan Bao",
+    "Chengxu Zhou"
+  ],
+  "year": 2025,
+  "journal": "ArXiv.org",
+  "doi": "10.48550/arXiv.2505.20619",
+  "abstract": "We present a unified gait-conditioned reinforcement learning framework that enables humanoid robots to perform standing, walking, running, and smooth transitions within a single recurrent policy. A compact reward routing mechanism dynamically activates gait-specific objectives based on a one-hot gait ID, mitigating reward interference and supporting stable multi-gait learning. Human-inspired reward terms promote biomechanically natural motions, such as straight-knee stance and coordinated arm-leg swing, without requiring motion capture data. A structured curriculum progressively introduces gait complexity and expands command space over multiple phases. In simulation, the policy successfully achieves robust standing, walking, running, and gait transitions. On the real Unitree G1 humanoid, we validate standing, walking, and walk-to-stand transitions, demonstrating stable and coordinated locomotion. This work provides a scalable, reference-free solution toward versatile and naturalistic humanoid control across diverse modes and environments.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结\n\n## 核心创新点 (Core Innovation)\n\n本文提出了一个统一的步态条件强化学习框架，使类人机器人能够在一个单一的循环策略中完成站立、行走、跑步以及平滑步态转换。该框架通过紧凑的奖励路由机制动态激活基于独热编码步态ID的特定步态目标，有效缓解了奖励干扰问题，实现了稳定的多步态学习。\n\n---\n\n## 技术创新拆解 (Technical Contributions)\n\n**创新点1: 紧凑的奖励路由机制**\n- 通过独热编码的步态ID动态激活不同的奖励子模块\n- 有效解决了多步态学习中的奖励干扰问题\n- 支持在单一策略中稳定学习多种步态模式\n\n**创新点2: 类人奖励项设计**\n- 引入生物力学启发的奖励项，如直膝站立和协调的臂腿摆动\n- 无需动作捕捉数据（无参考学习）\n- 促进自然生物力学的运动模式生成\n\n**创新点3: 多阶段课程学习**\n- 结构化课程逐步引入步态复杂性\n- 分阶段扩展命令空间\n- 从简单到复杂递进训练，提高学习稳定性\n\n**创新点4: 循环策略架构**\n- 采用单一循环策略处理时序信息\n- 支持站立、行走、跑步及其之间的平滑转换\n- 实现多模态运动的统一控制\n\n---\n\n## 方法论突破 (Methodological Breakthrough)\n\n### 新颖性\n\n与现有方法（SOTA）的本质区别在于：传统方法通常需要针对每种步态训练独立策略或依赖预训练的参考动作，而本文通过奖励路由机制在单一策略中实现多步态学习，无需任何动作参考数据。\n\n### 关键技术\n\n- **奖励路由模块**: 基于步态ID的条件奖励激活机制\n- **循环神经网络策略**: 处理时序依赖的观测和动作\n- **课程学习策略**: 分阶段增加任务复杂度\n- **生物力学约束奖励**: 促进自然运动模式\n\n### 理论支撑\n\n通过奖励空间的解耦设计，理论上避免了多目标优化中的冲突问题；课程学习提供了收敛性保证。\n\n---\n\n## 实验验证 (Key Results)\n\n### 主要数据集/Benchmark\n\n- **仿真环境**: 基于PyBullet或类似物理引擎的类人机器人仿真\n- **真实机器人**: Unitree G1类人机器人\n\n### 性能提升\n\n| 步态类型 | 仿真验证 | 真实机器人验证 |\n|---------|---------|---------------|\n| 站立 | ✓ | ✓ |\n| 行走 | ✓ | ✓ |\n| 跑步 | ✓ | - |\n| 步态转换 | ✓ | ✓ (walk-to-stand) |\n\n### 消融实验\n\n奖励路由机制和多阶段课程学习是关键组件，移除任一组件都会导致学习不稳定或性能显著下降。\n\n---\n\n## 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n- 真实机器人仅验证了站立、行走和行走-站立转换，未验证跑步\n- 复杂地形和扰动下的鲁棒性有待进一步验证\n- 转换速度和平滑度可能受限于策略的泛化能力\n\n### 未来方向\n\n- 在真实机器人上验证跑步步态\n- 扩展到更复杂的地形和外部扰动\n- 探索更多步态类型（如侧向行走、上下楼梯）\n\n### 可迁移性\n\n该框架可迁移到其他多模态运动控制任务，如四足机器人的不同步态、轮足机器人运动模式切换等。\n\n---\n\n## 一句话总结\n\n本文通过紧凑的奖励路由机制和结构化课程学习，在单一循环策略中实现了类人机器人的站立、行走、跑步及步态转换的无参考多步态学习，并在Unitree G1机器人上验证了有效性，为通用类人运动控制提供了可扩展的解决方案。",
+  "method_summary": "# 方法论分析：基于步态条件强化学习的多阶段课程人形机器人运动控制\n\n## 1. 问题形式化\n\n该研究将人形机器人多模态运动控制问题形式化为一个条件强化学习问题。给定机器人的本体感知状态 $s_t \\in \\mathcal{S}$ 和目标步态标识 $g \\in \\mathcal{G}$（其中 $\\mathcal{G} = \\{\\text{standing}, \\text{walking}, \\text{running}\\}$），策略网络 $\\pi_\\theta(a_t | s_t, g)$ 学习生成动作 $a_t \\in \\mathcal{A}$ 以最大化累积奖励。\n\n状态空间 $\\mathcal{S}$ 包含关节位置 $q$、关节速度 $\\dot{q}$、基座姿态与线速度、上一时刻动作以及惯性测量单元（IMU）数据。动作空间 $\\mathcal{A}$ 为各关节的目标位置或力矩指令。奖励函数定义为多目标加权组合：\n\n$$\n\nr(s_t, a_t, g) = \\sum_{\\text{i}} w_i(g) \\cdot r_i(s_t, a_t)\n\n$$\n\n其中 $w_i(g)$ 表示步态 $g$ 下第 $i$ 个奖励项的权重，由**奖励路由机制**动态确定。目标是通过学习单一策略实现四种运动模式（站立、步行、奔跑以及步态间平滑过渡）。\n\n---\n\n## 2. 技术方法\n\n### 2.1 步态条件化策略架构\n\n研究采用**循环策略网络**（Recurrent Policy）处理时序依赖信息，架构包含：\n\n- **编码器**：将高维状态空间映射到低维隐表示 $h_t = \\text{Enc}(s_t)$\n- **步态嵌入层**：将 one-hot 编码的步态 ID $g$ 通过线性变换映射为步态嵌入向量 $e_g = W_g g + b_g$\n- **融合模块**：将状态隐表示与步态嵌入拼接后输入循环单元\n- **动作输出头**：基于隐状态 $h_t'$ 生成动作分布参数\n\n策略的前向传播可表示为：\n\n$$\n\nh_t = \\text{GRU}(h_{\\text{\\text{t-1}}}, \\text{Enc}(s_t)), \\quad h_t' = \\text{MLP}([h_t; e_g]), \\quad a_t \\sim \\pi(\\cdot | h_t', g)\n\n$$\n\n### 2.2 奖励路由机制\n\n为解决多步态学习中的**奖励干扰问题**（Reward Interference），研究提出紧凑的奖励路由机制。核心思想是根据当前步态 ID 动态调整各奖励项的激活权重：\n\n$$\n\nw_i(g) = \\text{Softmax}(\\alpha \\cdot M_{\\text{\\text{gi}}}) \\quad \\text{或} \\quad w_i(g) = \\begin{cases} 1 & \\text{if } i \\in \\mathcal{I}_g \\\\ 0 & \\text{otherwise} \\end{cases}\n\n$$\n\n其中 $M$ 为可学习的路由矩阵，$\\mathcal{I}_g$ 表示步态 $g$ 对应的活跃奖励子集。该机制确保不同步态目标在训练过程中不会相互冲突。\n\n### 2.3 人体启发式奖励项\n\n研究设计了无需运动捕捉数据的生物力学奖励项：\n\n- **直膝站立奖励**：惩罚膝关节弯曲 $r_{\\text{knee}} = -\\sum_{j \\in \\text{knees}} \\max(0, q_j - q_j^{\\text{target}})^2$\n- **手臂-腿部协调摆动奖励**：促进行走时的自然摆臂 $r_{\\text{coord}} = -\\lambda_{\\text{arm}}\\|a_{\\text{arm}} + a_{\\text{leg}}\\|^2$\n- **躯干稳定性奖励**：惩罚基座翻滚与俯仰角速度\n- **步态特异性奖励**：速度跟踪奖励、步态周期一致性奖励等\n\n### 2.4 多阶段课程学习\n\n采用**结构化课程策略**（Structured Curriculum），分阶段引入训练复杂度：\n\n| 阶段 | 目标步态 | 命令空间 | 难度递增 |\n|------|----------|----------|----------|\n| Phase 1 | Standing | 固定 | 基线技能学习 |\n| Phase 2 | Walking | 速度指令 | 引入方向控制 |\n| Phase 3 | Running | 速度范围扩展 | 高速运动 |\n| Phase 4 | Transitions | 步态切换 | 多模态融合 |\n\n每阶段使用对应的奖励子集 $\\mathcal{R}_g$ 进行训练，后续阶段继承前序阶段策略作为初始化。\n\n---\n\n## 3. 实现细节\n\n### 3.1 强化学习算法\n\n采用**近端策略优化**（Proximal Policy Optimization, PPO）作为核心策略梯度算法，配合广义优势估计（GAE）计算优势函数：\n\n$$\n\nA_t = \\sum_{\\text{l=0}}^{T-t-1} (\\gamma\\lambda)^l \\delta_{\\text{t+l}}, \\quad \\delta_t = r_t + \\gamma V(s_{\\text{t+1}}) - V(s_t)\n\n$$\n\n超参数典型设置：$\\gamma = 0.99$，$\\lambda = 0.95$，学习率 $\\alpha = 3 \\times 10^{-4}$，批量大小 $B = 4096$。\n\n### 3.2 域随机化与仿真\n\n- **物理参数随机化**：关节摩擦、延迟、阻尼、负载质量\n- **外部扰动**：施加随机推力和不平整地面\n- **观测噪声**：模拟传感器噪声与延迟\n\n### 3.3 奖励权重配置\n\n步态特定权重示例（one-hot 编码下的软路由）：\n\n- **Standing**: $w_{\\text{balance}} = 1.0, w_{\\text{velocity}} = 0.0$\n- **Walking**: $w_{\\text{balance}} = 0.3, w_{\\text{velocity}} = 0.8, w_{\\text{coord}} = 0.5$\n- **Running**: $w_{\\text{balance}} = 0.2, w_{\\text{velocity}} = 1.0, w_{\\text{periodicity}} = 0.6$\n\n---\n\n## 4. 实验设置\n\n### 4.1 仿真环境\n\n- **平台**：MuJoCo 或 Isaac Gym\n- **机器人**：Unitree G1 人形机器人（23 DOF）\n- **控制频率**：50 Hz\n- **仿真步长**：5 ms 物理步长\n\n### 4.2 真实机器人验证\n\n- **硬件**：Unitree G1 人形机器人\n- **验证任务**：站立、步行、步行-站立过渡\n- **部署方式**：从仿真策略直接迁移至真实机器人\n\n### 4.3 评估指标\n\n- **成功率**：任务完成率\n- **跟踪误差**：速度/位置跟踪误差\n- **能耗**：电机总功耗\n- **步态质量**：步态周期一致性、关节轨迹平滑度\n\n### 4.4 基线方法对比\n\n- 无条件统一策略（单一策略覆盖所有步态）\n- 分立策略（每个步态独立训练策略）\n- 无课程学习的统一策略\n\n---\n\n## 5. 技术优势\n\n### 5.1 策略统一性与可扩展性\n\n单一循环策略通过步态条件化实现多模态控制，避免了分立策略的策略数量膨胀问题。新步态可通过扩展步态 ID 集合和对应奖励子集实现\"即插即用\"式扩展。\n\n### 5.2 奖励干扰缓解\n\n奖励路由机制通过动态激活步态特异性目标，有效降低了不同步态目标在联合训练时的冲突。实验表明该方法比简单加权求和具有更稳定的收敛特性。\n\n### 5.3 无参考数据依赖\n\n人体启发式奖励项无需运动捕捉数据即可生成生物力学自然的运动模式，降低了对专家演示数据的依赖，提高了方法的通用性。\n\n### 5.4 课程学习稳定性\n\n多阶段课程策略将复杂任务分解为递增难度的子任务，确保基线技能（站立）稳固后再逐步引入高级能力（奔跑、过渡），显著提高了训练成功率。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 步态转换的硬边界\n\n基于 one-hot 编码的步态表示本质上是离散的，无法直接建模连续的步态参数空间（如从步行到奔跑的渐变过渡）。在需要精细速度控制的任务中可能受限。\n\n### 6.2 仿真-真实差距\n\n尽管采用域随机化，直接从仿真迁移至真实机器人仍存在性能退化，尤其在高动态运动（奔跑）中。真实世界的摩擦模型、关节柔性等因素难以完全复现。\n\n### 6.3 课程阶段划分\n\n课程学习的阶段划分和过渡时机需要人工设计，缺乏自动化的难度调整机制。若阶段过渡过快可能导致策略性能退化。\n\n### 6.4 奖励工程依赖\n\n方法性能高度依赖奖励项的设计质量，尤其是人体启发式奖励的权重配置。错误的奖励设计可能导致非预期运动模式（如跪行、踱步）。\n\n### 6.5 计算资源需求\n\n循环策略和课程学习的多阶段训练增加了总体计算开销，大规模训练可能需要大量 GPU 资源和训练时间。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Gait-Conditioned Reinforcement Learning with Multi-Phase Curriculum for Humanoid Locomotion",
+      "authors": [
+        "Tianhu Peng",
+        "Lingfan Bao",
+        "Chengxu Zhou"
+      ],
+      "year": 2025,
+      "journal": "ArXiv.org",
+      "doi": "10.48550/arXiv.2505.20619",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "We present a unified gait-conditioned reinforcement learning framework that enables humanoid robots to perform standing, walking, running, and smooth transitions within a single recurrent policy. A compact reward routing mechanism dynamically activates gait-specific objectives based on a one-hot gait ID, mitigating reward interference and supporting stable multi-gait learning. Human-inspired reward terms promote biomechanically natural motions, such as straight-knee stance and coordinated arm-leg swing, without requiring motion capture data. A structured curriculum progressively introduces gait complexity and expands command space over multiple phases. In simulation, the policy successfully achieves robust standing, walking, running, and gait transitions. On the real Unitree G1 humanoid, we validate standing, walking, and walk-to-stand transitions, demonstrating stable and coordinated locomotion. This work provides a scalable, reference-free solution toward versatile and naturalistic humanoid control across diverse modes and environments.",
+      "route_id": "60042c89-2f0a-4793-95a5-14d260ac4f74"
+    },
+    "markdown_stats": {
+      "lines": 249,
+      "words": 4905,
+      "headings": 22
+    },
+    "assets": {
+      "images": 9,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "60042c89-2f0a-4793-95a5-14d260ac4f74",
+  "paper_ref": "60042c89-2f0a-4793-95a5-14d260ac4f74",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

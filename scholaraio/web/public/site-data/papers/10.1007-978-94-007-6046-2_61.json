@@ -1,0 +1,87 @@
+{
+  "dir_name": "Qingwei-2025-Gallant-Voxel-Grid-based-Humanoid-Locomotion-and-",
+  "title": "Gallant: Voxel Grid-based Humanoid Locomotion and Local-navigation across 3D Constrained Terrains",
+  "authors": [
+    "Ben, Qingwei",
+    "Xu, Botian",
+    "Li, Kailin",
+    "Jia, Feiyu",
+    "Zhang, Wentao",
+    "Wang, Jingping",
+    "Wang, Jingbo",
+    "Lin, Dahua",
+    "Pang, Jiangmiao"
+  ],
+  "year": 2025,
+  "journal": "ArXiv.org",
+  "doi": "",
+  "abstract": "Robust humanoid locomotion requires accurate and globally consistent perception of the surrounding 3D environment. However, existing perception modules, mainly based on depth images or elevation maps, offer only partial and locally flattened views of the environment, failing to capture the full 3D structure. This paper presents Gallant, a voxel-grid-based framework for humanoid locomotion and local navigation in 3D constrained terrains. It leverages voxelized LiDAR data as a lightweight and structured perceptual representation, and employs a z-grouped 2D CNN to map this representation to the control policy, enabling fully end-to-end optimization. A high-fidelity LiDAR simulation that dynamically generates realistic observations is developed to support scalable, LiDAR-based training and ensure sim-to-real consistency. Experimental results show that Gallant's broader perceptual coverage facilitates the use of a single policy that goes beyond the limitations of previous methods confined to ground-level obstacles, extending to lateral clutter, overhead constraints, multi-level structures, and narrow passages. Gallant also firstly achieves near 100% success rates in challenging scenarios such as stair climbing and stepping onto elevated platforms through improved end-to-end optimization.",
+  "paper_type": "article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Gallant: Voxel Grid-based Humanoid Locomotion and Local-navigation across 3D Constrained Terrains",
+      "authors": [
+        "Ben, Qingwei",
+        "Xu, Botian",
+        "Li, Kailin",
+        "Jia, Feiyu",
+        "Zhang, Wentao",
+        "Wang, Jingping",
+        "Wang, Jingbo",
+        "Lin, Dahua",
+        "Pang, Jiangmiao"
+      ],
+      "year": 2025,
+      "journal": "ArXiv.org",
+      "paper_type": "article",
+      "abstract": "Robust humanoid locomotion requires accurate and globally consistent perception of the surrounding 3D environment. However, existing perception modules, mainly based on depth images or elevation maps, offer only partial and locally flattened views of the environment, failing to capture the full 3D structure. This paper presents Gallant, a voxel-grid-based framework for humanoid locomotion and local navigation in 3D constrained terrains. It leverages voxelized LiDAR data as a lightweight and structured perceptual representation, and employs a z-grouped 2D CNN to map this representation to the control policy, enabling fully end-to-end optimization. A high-fidelity LiDAR simulation that dynamically generates realistic observations is developed to support scalable, LiDAR-based training and ensure sim-to-real consistency. Experimental results show that Gallant's broader perceptual coverage facilitates the use of a single policy that goes beyond the limitations of previous methods confined to ground-level obstacles, extending to lateral clutter, overhead constraints, multi-level structures, and narrow passages. Gallant also firstly achieves near 100% success rates in challenging scenarios such as stair climbing and stepping onto elevated platforms through improved end-to-end optimization."
+    },
+    "markdown_stats": {
+      "lines": 353,
+      "words": 10790,
+      "headings": 25
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "a68156f1-fce6-4355-9277-9bec76dfc812_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "10.1007-978-94-007-6046-2_61",
+  "paper_ref": "10.1007-978-94-007-6046-2_61",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

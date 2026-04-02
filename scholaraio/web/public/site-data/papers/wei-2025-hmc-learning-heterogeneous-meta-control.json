@@ -1,0 +1,66 @@
+{
+  "dir_name": "Wei-2025-HMC-Learning-Heterogeneous-Meta-Control",
+  "title": "HMC Learning Heterogeneous Meta Control",
+  "authors": [
+    "Wei"
+  ],
+  "year": 2025,
+  "journal": "",
+  "doi": "",
+  "abstract": "",
+  "paper_type": "",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "HMC Learning Heterogeneous Meta Control",
+      "authors": [
+        "Wei"
+      ],
+      "year": 2025
+    },
+    "markdown_stats": {
+      "lines": 3,
+      "words": 8,
+      "headings": 1
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "wei-2025-hmc-learning-heterogeneous-meta-control",
+  "paper_ref": "Wei-2025-HMC-Learning-Heterogeneous-Meta-Control",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

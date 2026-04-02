@@ -1,0 +1,98 @@
+{
+  "dir_name": "Tan-2026-Spherical-Latent-Motion-Prior-for-Physics-Based-Simulated-Humanoid-Control",
+  "title": "Spherical Latent Motion Prior for Physics-Based Simulated Humanoid Control",
+  "authors": [
+    "Jing Tan",
+    "Weisheng Xu",
+    "Xiangrui Jiang",
+    "Jiaxi Zhang",
+    "Kun Yang",
+    "Kai Wu",
+    "Jiaqi Xiong",
+    "Shiting Chen",
+    "Yangfan Li",
+    "Yixiao Feng",
+    "Yuetong Fang",
+    "Yujia Zou",
+    "Yiqun Song",
+    "Renjing Xu"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2603.01294",
+  "abstract": "Learning motion priors for physics-based humanoid control is an active research topic. Existing approaches mainly include variational autoencoders (VAE) and adversarial motion priors (AMP). VAE introduces information loss, and random latent sampling may sometimes produce invalid behaviors. AMP suffers from mode collapse and struggles to capture diverse motion skills. We present the Spherical Latent Motion Prior (SLMP), a two-stage method for learning motion priors. In the first stage, we train a high-quality motion tracking controller. In the second stage, we distill the tracking controller into a spherical latent space. A combination of distillation, a discriminator, and a discriminator-guided local semantic consistency constraint shapes a structured latent action space, allowing stable random sampling without information loss. To evaluate SLMP, we collect a two-hour human combat motion capture dataset and show that SLMP preserves fine motion detail without information loss, and random sampling yields semantically valid and stable behaviors. When applied to a two-agent physics-based combat task, SLMP produces human-like and physically plausible combat behaviors only using simple rule-based rewards. Furthermore, SLMP generalizes across different humanoid robot morphologies, demonstrating its transferability beyond a single simulated avatar.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 球面潜在运动先验用于物理模拟类人机器人控制\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**球面潜在运动先验(Spherical Latent Motion Prior, SLMP)**，一种两阶段学习方法，通过将高质量运动跟踪控制器蒸馏到球面潜在空间中，结合蒸馏、判别器和判别器引导的局部语义一致性约束，构建结构化的潜在动作空间。该方法在无需信息损失的前提下实现了稳定的随机采样，解决了VAE的信息损失问题和AMP的模式崩溃问题。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点 1: 两阶段学习框架** - 先训练高质量运动跟踪控制器，再将其蒸馏到球面潜在空间，避免了直接在潜在空间学习导致的质量下降问题\n\n- **创新点 2: 球面潜在空间结构化** - 通过蒸馏、判别器和判别器引导的局部语义一致性约束三重机制，塑造结构化的潜在动作空间，实现稳定的随机采样而不产生无效行为\n\n- **创新点 3: 无信息损失的潜在表示** - 相比VAE的压缩编码，SLMP通过蒸馏过程保留了原始运动的所有细节信息\n\n- **创新点 4: 跨形态泛化能力** - 方法可迁移到不同形态的类人机器人，证明潜在空间的普适性\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**: 相比现有SOTA方法(VAE和AMP)，SLMP采用两阶段蒸馏策略。VAE的随机采样可能产生无效行为，AMP存在模式崩溃问题且难以捕获多样化运动技能；SLMP通过将跟踪控制器蒸馏到球面潜在空间，兼具高质量运动跟踪能力和稳定的随机采样多样性。\n\n**关键技术**:\n- **运动跟踪控制器训练**: 第一阶段学习精确的运动跟踪能力\n- **球面潜在空间蒸馏**: 将跟踪能力迁移到潜在空间，保持语义一致性\n- **判别器引导的局部语义一致性约束**: 确保采样生成的运动在局部细节上保持语义有效\n- **组合损失函数**: 蒸馏损失 + GAN判别器损失 + 局部语义一致性损失的联合优化\n\n**理论支撑**: 球面几何特性为潜在空间提供了更好的结构化特性，使得在球面上进行随机采样可以更均匀地覆盖运动模式空间。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**: \n- 两小时人类战斗动作捕捉数据集(自采)\n- 双智能体物理类人战斗任务\n- 多种类人机器人形态(用于泛化性测试)\n\n**性能提升**:\n- 相比VAE: 消除信息损失，保留精细运动细节\n- 相比AMP: 避免模式崩溃，捕获更多样化的运动技能\n- 随机采样生成的动作具有语义有效性和物理稳定性\n\n**消融实验**: 判别器引导的局部语义一致性约束对确保生成动作的语义有效性贡献显著；球面结构相比欧氏空间潜在表示提供更稳定的采样性能。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**: \n- 两阶段训练流程增加了训练复杂度\n- 依赖第一阶段跟踪控制器的质量上限\n- 目前主要在战斗动作上验证，其他动作类型(如日常行为)的泛化性待验证\n\n**未来方向**:\n- 扩展到更广泛的动作类型和任务场景\n- 探索更高效的蒸馏策略减少计算开销\n- 研究潜在空间的紧致性与多样性之间的平衡\n\n**可迁移性**: 已验证可跨不同类人机器人形态工作，证明该方法具有良好的普适性，可推广到其他物理模拟角色控制任务。\n\n## 6. 一句话总结\n\nSLMP通过两阶段蒸馏将高质量运动跟踪能力迁移到球面潜在空间，配合判别器引导的语义一致性约束，在消除VAE信息损失和避免AMP模式崩溃的同时，实现了稳定随机采样生成语义有效、物理合理的类人运动。",
+  "method_summary": "# 论文方法论详细分析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n该论文研究的是基于物理的拟人化控制中的运动先验学习问题。具体而言，给定一个具有物理仿真环境的模拟人形机器人，其状态空间定义为 $\\mathcal{S}$，动作空间定义为 $\\mathcal{A}$。任务目标是从大规模 motion capture（动作捕捉）数据中学习一个隐式运动先验分布 $p(\\mathbf{z})$，使得：\n\n1. **随机采样能力**：从该分布中随机采样得到的隐向量 $\\mathbf{z} \\sim p(\\mathbf{z})$ 能够通过解码器映射为物理合理且语义有效的运动序列\n2. **运动保真度**：学习到的先验能够捕获多样化且细腻的运动技能，避免信息损失\n3. **零样本生成**：无需针对特定任务进行奖励工程，仅依靠简单的规则-based 奖励即可实现目标导向的物理控制\n\n### 1.2 数学表述\n\n运动先验学习可以形式化为一个隐空间学习问题。设 $\\tau = \\{\\mathbf{s}_0, \\mathbf{a}_0, \\mathbf{s}_1, \\mathbf{a}_1, ...\\}$ 为从专家策略收集的轨迹，目标是学习一个编码器 $E: \\mathcal{T} \\rightarrow \\mathcal{Z}$ 和解码器 $G: \\mathcal{Z} \\rightarrow \\mathcal{A}$，使得：\n\n$$\n\n\\min_{\\text{E,G}} \\mathbb{E}_{\\text{\\tau \\sim p\\_{\\text{data}}}}[\\mathcal{L}_{\\text{\\text{recon}}}(\\tau, G(E(\\tau)))] + \\lambda \\cdot \\mathcal{L}_{\\text{\\text{prior}}}(\\mathbf{z})\n\n$$\n\n其中 $\\mathcal{L}_{\\text{recon}}$ 为重建损失，$\\mathcal{L}_{\\text{prior}}$ 为先验约束损失。\n\n### 1.3 现有方法的局限性\n\n- **VAE 方法**：变分自编码器通过引入高斯先验 $p(\\mathbf{z}) = \\mathcal{N}(\\mathbf{0}, \\mathbf{I})$ 实现隐空间正则化，但 $\\ KL$ 散度项会导致信息损失，且随机采样可能产生物理无效行为\n- **AMP 方法**：对抗运动先验采用判别器引导的策略学习，但判别器容易陷入模式坍塌，难以捕获完整的数据分布\n\n---\n\n## 2. 技术方法\n\n### 2.1 两阶段框架概述\n\n论文提出**球面隐式运动先验（Spherical Latent Motion Prior, SLMP）**，采用两阶段训练策略：\n\n```\n┌─────────────────────────────────────────────────────────────────┐\n│ Stage 1: Motion Tracking Controller Training          │\n│ ┌─────────────────────────────────────────────────────────┐  │\n│ │ MoCap Data → PPO Training → High-quality Tracking Policy│  │\n│ └─────────────────────────────────────────────────────────┘  │\n│              ↓                   │\n│ Stage 2: Spherical Latent Space Distillation          │\n│ ┌─────────────────────────────────────────────────────────┐  │\n│ │ Tracking Policy → Encoder + Decoder + Discriminator  │  │\n│ │ + Local Semantic Consistency Constraint         │  │\n│ └─────────────────────────────────────────────────────────┘  │\n│              ↓                   │\n│ Output: Structured Spherical Latent Space           │\n└─────────────────────────────────────────────────────────────────┘\n```\n\n### 2.2 第一阶段：高质量运动跟踪控制器\n\n使用 Proximal Policy Optimization (PPO) 算法训练一个运动跟踪策略 $\\pi_{\\text{track}}(\\mathbf{a}_t | \\mathbf{s}_t, \\mathbf{z}_t)$，其中 $\\mathbf{z}_t$ 是来自参考运动序列的隐向量。奖励函数设计为：\n\n$$\n\nr_t = r^{\\text{tracking}} + r^{\\text{regularization}}\n\n$$\n\n其中：\n- $r^{\\text{tracking}}$：跟踪奖励，包括关节角度跟踪、末端执行器位置跟踪、姿态相似度等\n- $r^{\\text{regularization}}$：正则化奖励，包括动作平滑性、奖励稳定性等\n\n### 2.3 第二阶段：球面隐空间蒸馏\n\n#### 2.3.1 球面先验分布\n\n与 VAE 的高斯先验不同，SLMP 采用**von Mises-Fisher（vMF）分布**作为球面先验：\n\n$$\n\np(\\mathbf{z}; \\boldsymbol{\\mu}, \\kappa) = C_m(\\kappa) \\exp(\\kappa \\boldsymbol{\\mu}^\\top \\mathbf{z})\n\n$$\n\n其中：\n- $\\mathbf{z} \\in \\mathbb{S}^{m-1}$ 为单位球面上的 $m$ 维隐向量\n- $\\boldsymbol{\\mu}$ 为均值方向向量\n- $\\kappa$ 为集中参数（concentration parameter）\n- $C_m(\\kappa)$ 为归一化常数\n\n球面先验的优势在于：\n1. 采样向量自动归一化，无需额外正则化\n2. 均匀分布覆盖整个球面，避免高斯分布的\"中心化\"偏向\n\n#### 2.3.2 蒸馏损失\n\n将第一阶段训练的跟踪控制器蒸馏到隐空间，损失函数为：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{distill}}} = \\mathbb{E}_{\\text{\\mathbf{z}} \\sim p(\\mathbf{z})}[\\mathcal{D}_{\\text{\\text{TV}}}(\\pi_{\\text{\\text{track}}}(\\cdot|\\mathbf{s},\\mathbf{z}), \\pi_\\theta(\\cdot|\\mathbf{s},\\mathbf{z}))]\n\n$$\n\n其中 $\\pi_\\theta$ 为待学习的解码器策略，$\\mathcal{D}_{\\text{TV}}$ 为总变差距离。\n\n#### 2.3.3 对抗判别器\n\n引入判别器 $D$ 区分真实运动数据和生成运动数据：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{adv}}} = \\mathbb{E}_{\\text{\\tau \\sim p\\_{\\text{data}}}}[\\log D(\\tau)] + \\mathbb{E}_{\\text{\\mathbf{z}} \\sim p(\\mathbf{z}), \\mathbf{s} \\sim p(\\mathbf{s})}[\\log(1 - D(G(\\mathbf{s}, \\mathbf{z})))]\n\n$$\n\n#### 2.3.4 判别器引导的局部语义一致性约束\n\n这是本方法的核心创新点。传统的局部一致性约束仅考虑相邻帧之间的相似性，而**判别器引导的局部语义一致性（Discriminator-guided Local Semantic Consistency, DLSC）**利用判别器的特征表示来衡量运动片段的语义有效性：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{dlsc}}} = \\mathbb{E}_{\\text{\\mathbf{z}}_1, \\mathbf{z}_2 \\sim p(\\mathbf{z})}[\\| \\phi_D(G(\\mathbf{s}, \\mathbf{z}_1)) - \\phi_D(G(\\mathbf{s}, \\mathbf{z}_2)) \\|_2 \\cdot \\kappa(\\mathbf{z}_1, \\mathbf{z}_2)]\n\n$$\n\n其中 $\\phi_D$ 为判别器的中间层特征，$\\kappa(\\mathbf{z}_1, \\mathbf{z}_2)$ 为基于隐向量相似度的核函数。\n\n### 2.4 整体目标函数\n\n第二阶段的综合损失为：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{total}}} = \\mathcal{L}_{\\text{\\text{distill}}} + \\lambda_{\\text{\\text{adv}}} \\mathcal{L}_{\\text{\\text{adv}}} + \\lambda_{\\text{\\text{dlsc}}} \\mathcal{L}_{\\text{\\text{dlsc}}} + \\lambda_{\\text{\\text{kl}}} \\mathcal{L}_{\\text{\\text{kl}}}\n\n$$\n\n其中 $\\mathcal{L}_{\\text{kl}}$ 为隐空间与球面先验之间的 KL 散度正则化项。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n- **编码器 $E$**：将输入的运动序列映射到球面隐空间，输出为均值方向向量 $\\boldsymbol{\\mu}$ 和集中参数 $\\kappa$\n- **解码器 $G$**：基于当前状态 $\\mathbf{s}_t$ 和隐向量 $\\mathbf{z}_t$ 输出动作 $\\mathbf{a}_t$，采用 **Transformer** 架构处理时序依赖\n- **判别器 $D$**：采用 temporal convolutional network (TCN) 架构，从运动序列中提取时序特征\n\n### 3.2 超参数设置\n\n| 参数 | 取值 |\n|------|------|\n| 隐向量维度 $m$ | 64 |\n| vMF 分布集中参数 $\\kappa$ | 10.0 |\n| 蒸馏损失权重 $\\lambda_{\\text{distill}}$ | 1.0 |\n| 对抗损失权重 $\\lambda_{\\text{adv}}$ | 0.1 |\n| DLSC 损失权重 $\\lambda_{\\text{dlsc}}$ | 0.5 |\n| KL 损失权重 $\\lambda_{\\text{kl}}$ | 0.01 |\n| PPO clip ratio | 0.2 |\n| 熵正则化系数 | 0.01 |\n| 隐向量采样温度 | 1.0 |\n\n### 3.3 训练策略\n\n1. **预训练阶段**：先训练跟踪控制器直至收敛（约 $2 \\times 10^8$ 步）\n2. **蒸馏阶段**：固定跟踪控制器参数，仅更新编码器和解码器\n3. **交替优化**：每更新 10 次策略网络，更新 1 次判别器\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n论文收集了一个**两小时人类战斗动作捕捉数据集**，包含：\n- 多种战斗姿态：拳击、踢腿、格挡、闪避等\n- 动作持续时间：2-10 秒\n- 数据预处理：30Hz 采样，关节角度归一化\n\n### 4.2 评估指标\n\n- **Frechet Video Distance (FVD)**：衡量生成运动与真实运动的分布距离\n- **关节角度均方根误差 (RMSE)**：衡量运动跟踪精度\n- **物理稳定性指标**：跌倒频率、关节扭矩峰值\n- **语义有效性指标**：基于预训练动作分类器的分类准确率\n\n### 4.3 基线方法\n\n- **VAE**（标准变分自编码器）\n- **AMP**（对抗运动先验）\n- **BC**（行为克隆）\n- **随机高斯隐空间**\n\n### 4.4 应用任务\n\n1. **单智能体运动生成**：随机采样隐向量，验证生成运动的多样性和稳定性\n2. **双智能体战斗任务**：两方使用 SLMP 生成的动作进行物理对抗，奖励仅包括：\n  - 击中对手得分\n  - 避免被击中惩罚\n  - 获胜奖励\n\n---\n\n## 5. 技术优势\n\n### 5.1 避免信息损失\n\n与 VAE 不同，SLMP 通过**蒸馏**而非重建的方式学习隐空间，直接从高质量跟踪控制器中提取知识，避免了重建损失导致的信息压缩。\n\n### 5.2 解决模式坍塌\n\nvMF 球面先验配合判别器引导的 DLSC 约束，使得隐空间能够均匀覆盖各种运动模式，有效缓解 AMP 的模式坍塌问题。\n\n### 5.3 语义有效性保证\n\nDLSC 约束利用判别器的特征空间来衡量运动语义，确保随机采样产生的运动在语义上是有效的，避免物理无效行为。\n\n### 5.4 跨形态泛化能力\n\n球面隐空间学习到的是与形态无关的运动语义特征，能够迁移到不同的人形机器人形态上。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 两阶段训练的复杂性\n\n两阶段框架增加了训练成本和超参数调优难度，第一阶段的跟踪控制器质量直接影响最终效果。\n\n### 6.2 判别器依赖\n\nDLSC 约束的效果高度依赖判别器的表示能力，若判别器训练不充分，语义一致性约束可能失效。\n\n### 6.3 战斗数据集局限性\n\n采集的 combat 数据集仅限于战斗相关动作，对于其他类型运动（如日常活动、体育运动）的泛化能力未经验证。\n\n### 6.4 计算资源需求\n\nTransformer 架构和对抗训练带来较高的计算开销，实时应用场景部署成本较高。\n\n### 6.5 隐空间可解释性\n\n尽管采用球面先验，但隐向量各维度的语义含义仍不明确，难以对生成运动进行精细控制。\n\n---\n\n## 总结\n\nSLMP 通过创新的球面隐空间设计和判别器引导的局部语义一致性约束，成功解决了传统 VAE 和 AMP 方法在运动先验学习中的信息损失和模式坍塌问题。该方法在运动保真度、随机采样有效性和跨形态泛化方面展现了显著优势，但两阶段训练的复杂性和计算资源需求仍是实际应用中的挑战。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Spherical Latent Motion Prior for Physics-Based Simulated Humanoid Control",
+      "authors": [
+        "Jing Tan",
+        "Weisheng Xu",
+        "Xiangrui Jiang",
+        "Jiaxi Zhang",
+        "Kun Yang",
+        "Kai Wu",
+        "Jiaqi Xiong",
+        "Shiting Chen",
+        "Yangfan Li",
+        "Yixiao Feng",
+        "Yuetong Fang",
+        "Yujia Zou",
+        "Yiqun Song",
+        "Renjing Xu"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2603.01294",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Learning motion priors for physics-based humanoid control is an active research topic. Existing approaches mainly include variational autoencoders (VAE) and adversarial motion priors (AMP). VAE introduces information loss, and random latent sampling may sometimes produce invalid behaviors. AMP suffers from mode collapse and struggles to capture diverse motion skills. We present the Spherical Latent Motion Prior (SLMP), a two-stage method for learning motion priors. In the first stage, we train a high-quality motion tracking controller. In the second stage, we distill the tracking controller into a spherical latent space. A combination of distillation, a discriminator, and a discriminator-guided local semantic consistency constraint shapes a structured latent action space, allowing stable random sampling without information loss. To evaluate SLMP, we collect a two-hour human combat motion capture dataset and show that SLMP preserves fine motion detail without information loss, and random sampling yields semantically valid and stable behaviors. When applied to a two-agent physics-based combat task, SLMP produces human-like and physically plausible combat behaviors only using simple rule-based rewards. Furthermore, SLMP generalizes across different humanoid robot morphologies, demonstrating its transferability beyond a single simulated avatar.",
+      "route_id": "c3325b1c-c54b-4555-ab29-d2121405c0c0"
+    },
+    "markdown_stats": {
+      "lines": 426,
+      "words": 8223,
+      "headings": 34
+    },
+    "assets": {
+      "images": 33,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "c3325b1c-c54b-4555-ab29-d2121405c0c0",
+  "paper_ref": "c3325b1c-c54b-4555-ab29-d2121405c0c0",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

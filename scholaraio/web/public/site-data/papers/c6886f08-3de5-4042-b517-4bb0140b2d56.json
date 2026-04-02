@@ -1,0 +1,78 @@
+{
+  "dir_name": "Nakkiran-2024-Step-by-Step-Diffusion-An-Elementary-Tutorial",
+  "title": "Step-by-Step Diffusion: An Elementary Tutorial",
+  "authors": [
+    "Preetum Nakkiran",
+    "Arwen Bradley",
+    "Hattie Zhou",
+    "Madhu Advani"
+  ],
+  "year": 2024,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2406.08929",
+  "abstract": "We present an accessible first course on diffusion models and flow matching for machine learning, aimed at a technical audience with no diffusion experience. We try to simplify the mathematical details as much as possible (sometimes heuristically), while retaining enough precision to derive correct algorithms.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 13,
+  "summary": "# 需要更多论文内容\n\n您提供了论文的基本信息（标题、作者、摘要），但没有提供论文的**实际正文内容**。\n\n为了按照要求生成详细的技术摘要，我需要了解：\n\n- 论文的具体技术内容\n- 提出的方法或算法细节\n- 实验部分（如果有）\n- 关键的分析或证明\n\n**特别说明**：\n\n从摘要来看，这篇论文（\"Step-by-Step Diffusion: An Elementary Tutorial\"）似乎是一篇**教程/教育类论文**，而非传统的研究论文。这类论文的特点是：\n\n- 核心贡献在于**教学方法的创新**（简化数学细节，降低学习门槛）\n- 通常不包含novel的算法或性能提升\n- 目标是让读者理解扩散模型的核心概念\n\n如果您能提供：\n\n1. 论文的**第一部分或介绍部分**（通常包含问题定义和核心方法）\n2. 或者您希望我基于这篇论文是\"扩散模型入门教程\"的定位，生成一个**关于如何撰写这类教程的分析性总结**\n\n请选择您的需求，我会为您提供相应的详细摘要。",
+  "method_summary": "# 需要更多文本内容\n\n我注意到您提供的论文信息中，\"Full Text:\"（全文）部分是空的。根据您给出的摘要，这篇论文似乎是一篇**教育性教程文档**（\"an accessible first course on diffusion models\"），而非包含原创研究方法的学术论文。\n\n为了按照您要求的格式提供详细的方法论分析，我需要您提供：\n\n1. **论文的完整正文内容**（包括数学公式、算法描述、实验部分等）\n2. **具体的定理、定义或技术框架**\n3. **任何实验设置或评估方法**（如果涉及实证研究）\n\n### 根据摘要的初步分析\n\n从摘要可以推断这是一篇**教程性质的文章**，其特点可能是：\n\n- **问题形式化**：可能涉及扩散模型（diffusion models）和流匹配（flow matching）的数学基础\n- **技术方法**：可能以渐进式教学为主，简化复杂的数学推导\n- **目标受众**：无扩散模型背景的技术人员\n\n---\n\n**请提供完整的论文文本**，这样我才能按照您要求的六个维度（问题形式化、技术方法、实现细节、实验设置、技术优势、技术弱点）进行详细的方法论分析。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Step-by-Step Diffusion: An Elementary Tutorial",
+      "authors": [
+        "Preetum Nakkiran",
+        "Arwen Bradley",
+        "Hattie Zhou",
+        "Madhu Advani"
+      ],
+      "year": 2024,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2406.08929",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "We present an accessible first course on diffusion models and flow matching for machine learning, aimed at a technical audience with no diffusion experience. We try to simplify the mathematical details as much as possible (sometimes heuristically), while retaining enough precision to derive correct algorithms.",
+      "route_id": "c6886f08-3de5-4042-b517-4bb0140b2d56"
+    },
+    "markdown_stats": {
+      "lines": 1538,
+      "words": 33530,
+      "headings": 50
+    },
+    "assets": {
+      "images": 137,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "c6886f08-3de5-4042-b517-4bb0140b2d56",
+  "paper_ref": "c6886f08-3de5-4042-b517-4bb0140b2d56",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,77 @@
+{
+  "dir_name": "Fan-2025-Pretraining-in-Actor-Critic-Reinforcement-Learning",
+  "title": "Pretraining in Actor-Critic Reinforcement Learning for Robot Locomotion",
+  "authors": [
+    "Jiale Fan",
+    "Andrei Cramariuc",
+    "Tifanny Portela",
+    "Marco Hutter"
+  ],
+  "year": 2025,
+  "journal": "Open MIND",
+  "doi": "",
+  "abstract": "The pretraining-finetuning paradigm has facilitated numerous transformative advancements in artificial intelligence research in recent years. However, in the domain of reinforcement learning (RL) for robot locomotion, individual skills are often learned from scratch despite the high likelihood that some generalizable knowledge is shared across all task-specific policies belonging to the same robot embodiment. This work aims to define a paradigm for pretraining neural network models that encapsulate such knowledge and can subsequently serve as a basis for warm-starting the RL process in classic actor-critic algorithms, such as Proximal Policy Optimization (PPO). We begin with a task-agnostic exploration-based data collection algorithm to gather diverse, dynamic transition data, which is then used to train a Proprioceptive Inverse Dynamics Model (PIDM) through supervised learning. The pretrained weights are then loaded into both the actor and critic networks to warm-start the policy optimization of actual tasks. We systematically validated our proposed method with 9 distinct robot locomotion RL environments comprising 3 different robot embodiments, showing significant benefits of this initialization strategy. Our proposed approach on average improves sample efficiency by 36.9% and task performance by 7.3% compared to random initialization. We further present key ablation studies and empirical analyses that shed light on the mechanisms behind the effectiveness of this method.",
+  "paper_type": "article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Pretraining in Actor-Critic Reinforcement Learning for Robot Locomotion",
+      "authors": [
+        "Jiale Fan",
+        "Andrei Cramariuc",
+        "Tifanny Portela",
+        "Marco Hutter"
+      ],
+      "year": 2025,
+      "journal": "Open MIND",
+      "paper_type": "article",
+      "abstract": "The pretraining-finetuning paradigm has facilitated numerous transformative advancements in artificial intelligence research in recent years. However, in the domain of reinforcement learning (RL) for robot locomotion, individual skills are often learned from scratch despite the high likelihood that some generalizable knowledge is shared across all task-specific policies belonging to the same robot embodiment. This work aims to define a paradigm for pretraining neural network models that encapsulate such knowledge and can subsequently serve as a basis for warm-starting the RL process in classic actor-critic algorithms, such as Proximal Policy Optimization (PPO). We begin with a task-agnostic exploration-based data collection algorithm to gather diverse, dynamic transition data, which is then used to train a Proprioceptive Inverse Dynamics Model (PIDM) through supervised learning. The pretrained weights are then loaded into both the actor and critic networks to warm-start the policy optimization of actual tasks. We systematically validated our proposed method with 9 distinct robot locomotion RL environments comprising 3 different robot embodiments, showing significant benefits of this initialization strategy. Our proposed approach on average improves sample efficiency by 36.9% and task performance by 7.3% compared to random initialization. We further present key ablation studies and empirical analyses that shed light on the mechanisms behind the effectiveness of this method."
+    },
+    "markdown_stats": {
+      "lines": 190,
+      "words": 6811,
+      "headings": 18
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "617ffef1-e881-4749-8751-6bac1a8eb0fd_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "fan---2026---pretraining-in-actor-critic-reinforcement-learning-for-robot-locomotion",
+  "paper_ref": "Fan 等 - 2026 - Pretraining in Actor-Critic Reinforcement Learning for Robot Locomotion",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

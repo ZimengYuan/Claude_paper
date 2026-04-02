@@ -1,0 +1,81 @@
+{
+  "dir_name": "de-Lima-2024-Humanoid-Robot-Motion-Planning-Approaches-a-Survey",
+  "title": "Humanoid Robot Motion Planning Approaches: a Survey",
+  "authors": [
+    "Carolina Rutili de Lima",
+    "Said G. Khan",
+    "Muhammad Tufail",
+    "Syed H. Shah",
+    "Marcos R. O. A. Maximo"
+  ],
+  "year": 2024,
+  "journal": "Journal of Intelligent &amp; Robotic Systems",
+  "doi": "10.1007/s10846-024-02117-z",
+  "abstract": "Humanoid robots are complex, dynamic systems. Any humanoid robotic application starts with determining a sequence of optimal paths to perform a given task in a known or unknown environment. This paper critically reviews and rates available literature on the three key areas of multi-level motion and task planning for humanoid robots. First is efficiency while navigating and manipulating objects in environments designed for humans. Here, the research has broadly been summarized as behavior cloning approaches. Second is robustness to perturbations and collisions caused by operation in dynamic and unpredictable environments. Here, the modeling approaches integrated into motion planning algorithms have been the focus of many researchers studying humanoid motion’s balance and dynamic stability aspects. Last is real-time performance, wherein the robot must adjust its motion based on the most recent sensory data to achieve the required degree of interaction and responsiveness. Here, the focus has been on the kinematic constraints imposed by the robot’s mechanical structure and joint movements. The iterative nature of solving constrained optimization problems, the computational complexity of forward and inverse kinematics, and the requirement to adjust to a rapidly changing environment all pose challenges to real-time performance. The study has identified current trends and, more importantly, research gaps while pointing to areas needing further investigation.",
+  "paper_type": "journal-article",
+  "publisher": "Springer Science+Business Media",
+  "issn": "0921-0296",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 12,
+  "summary": "# 人形机器人运动规划方法综述\n\n## 1. 核心创新点 (Core Innovation)\n\n本文是一篇**综述性论文**，首次系统性地从三个关键维度——效率、鲁棒性和实时性能——对人形机器人多层次运动与任务规划进行了全面的批判性回顾与评级。文章不仅总结了现有方法的技术演进脉络，更重要的是识别了当前研究中的关键gap，为后续研究指明了方向。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n本文作为综述论文，其\"创新\"体现在对现有技术的系统化梳理与批判性分析：\n\n- **创新点 1: 三维分析框架** - 首次从效率、鲁棒性、实时性能三个独立且相互关联的维度构建人形机器人运动规划的分类体系，解决了此前研究缺乏统一分析视角的问题\n\n- **创新点 2: 行为克隆方法的系统性归类** - 将效率维度下的导航与操作方法归类为行为克隆(behavior cloning)方法族，分析了其从模仿学习到强化学习的演进路径\n\n- **创新点 3: 鲁棒性建模方法的深度剖析** - 聚焦动态环境中扰动与碰撞的平衡与动态稳定性建模，梳理了ZMP(零力矩点)、CoM(质心)等核心建模理论的优劣\n\n- **创新点 4: 实时性瓶颈的精准识别** - 明确指出约束优化问题的迭代求解、前后向运动学计算复杂度、环境自适应是实时性能的三大技术瓶颈\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性:** 作为综述论文，本文不提出新算法，而是建立了一套系统性的技术归类与比较框架：\n\n| 维度 | 核心挑战 | 主要方法流派 |\n|------|----------|--------------|\n| 效率 | 人类环境导航与操作 | 行为克隆、模仿学习、强化学习 |\n| 鲁棒性 | 动态环境扰动与碰撞 | ZMP建模、CoM控制、容错规划 |\n| 实时性 | 感官数据响应 | 运动学约束简化、实时优化算法 |\n\n**关键技术:** 论文识别出运动规划领域的核心技术包括：约束优化求解、运动学建模(正/逆运动学)、环境感知与建模、平衡控制理论\n\n**理论支撑:** 综述引用了大量ZMP理论、CoM动力学、双足步行理论等基础性研究成果\n\n## 4. 实验验证 (Key Results)\n\n作为综述论文，本文不涉及具体实验，但总结了当前技术在不同benchmark上的表现特征：\n\n- **主要数据集/Benchmark**: 综述涵盖的方法通常在标准人形机器人平台(如Atlas、ASIMO、HRP系列)及仿真环境(MuJoCo、Bullet等)上验证\n\n- **性能提升趋势**: 综述指出近年基于深度强化学习的方法在特定任务上相比传统规划方法有显著提升，但代价是计算开销增大\n\n- **消融/组件贡献**: 综述认为平衡控制模块和实时轨迹优化模块是决定整体方案可行性的关键组件\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限:**\n- 综述指出当前人形机器人运动规划仍面临的核心问题：约束优化迭代求解的计算开销过大；前后向运动学计算复杂度难以满足实时性要求；对动态环境的自适应能力不足\n\n**未来方向:**\n- 研究需要重点关注：轻量级实时规划算法、鲁棒性增强方法、迁移学习与域适应技术、人-机器人协作场景下的安全规划\n\n**可迁移性:**\n- 本文建立的三维分析框架(效率-鲁棒性-实时性)可迁移至其他类型移动机器人(如四足机器人、轮式机器人)的运动规划研究中\n\n## 6. 一句话总结\n\n本文构建了人形机器人运动规划\"效率-鲁棒性-实时性能\"三维分析框架，系统性识别出约束优化迭代计算、前后向运动学复杂度、环境自适应能力是阻碍人形机器人运动规划实际部署的三大核心瓶颈，并指出了基于深度强化学习的端到端方法与经典基于模型方法融合是未来重要研究方向。",
+  "method_summary": "# 人形机器人运动规划方法综述：方法论分析\n\n## 1. 问题形式化\n\n本综述论文将人形机器人运动规划问题形式化为三个层次的研究挑战：\n\n**第一层：效率问题**\n\n$$\n\n\\text{Efficiency} = \\arg\\min_{p \\in \\mathcal{P}} \\left( \\text{Cost}(p) + \\lambda \\cdot \\text{Time}(p) \\right)\n\n$$\n\n其中 $\\mathcal{P}$ 表示可行路径空间，行为克隆（Behavior Cloning）方法通过从专家演示中学习映射函数 $\\pi: \\mathcal{O} \\rightarrow \\mathcal{A}$ 来实现高效规划，其中 $\\mathcal{O}$ 为观察空间，$\\mathcal{A}$ 为动作空间。\n\n**第二层：鲁棒性问题**\n\n$$\n\nP(\\text{stable} \\mid \\text{perturbation}) \\geq \\theta\n\n$$\n\n要求系统在已知或未知的动态扰动下维持平衡与稳定。综述聚焦于将建模方法集成到运动规划算法中，特别关注零力矩点（ZMP）准则和重心（CoM）轨迹优化。\n\n**第三层：实时性问题**\n\n$$\n\n\\text{Real-time constraint: } t_{\\text{\\text{plan}}} \\leq t_{\\text{\\text{control}}} + \\delta\n\n$$\n\n其中 $t_{\\text{plan}}$ 为规划时间，$t_{\\text{control}}$ 为控制周期，$\\delta$ 为容许延迟。运动学约束可表示为：\n\n$$\n\n\\mathbf{q}_{\\text{\\min}} \\leq \\mathbf{q}(t) \\leq \\mathbf{q}_{\\text{\\max}}, \\quad \\dot{\\mathbf{q}}_{\\text{\\min}} \\leq \\dot{\\mathbf{q}}(t) \\leq \\dot{\\mathbf{q}}_{\\text{\\max}}\n\n$$\n\n## 2. 技术方法\n\n### 2.1 综述方法论框架\n\n本文采用**系统化文献综述（Systematic Literature Review, SLR）**方法论，具体分为三个阶段：\n\n**文献检索阶段**：作者检索了涵盖 IEEE Xplore、ScienceDirect、Springer 等主流数据库的文献，时间跨度延伸至 2024 年。检索关键词包括：\"humanoid robot\"、\"motion planning\"、\"task planning\"、\"behavior cloning\"、\"balance control\"等组合。\n\n**分类与评级阶段**：将收集的文献按三个核心研究领域进行分类：\n- 行为克隆方法（效率维度）\n- 建模与稳定性方法（鲁棒性维度）\n- 运动学约束与实时方法（实时性维度）\n\n**批判性评估阶段**：对各类方法进行定性评级，分析其优缺点并识别研究空白。\n\n### 2.2 核心方法分类体系\n\n综述建立了三级分类体系：\n\n| 维度 | 一级分类 | 二级分类示例 |\n|------|----------|--------------|\n| 效率 | 行为克隆 | 模仿学习、强化学习、演示学习 |\n| 鲁棒性 | 建模方法 | ZMP 模型、CoM 控制、扰动估计 |\n| 实时性 | 运动学约束 | 关节限位、奇异位姿回避、轨迹优化 |\n\n## 3. 实现细节\n\n### 3.1 文献筛选标准\n\n**纳入标准**：\n- 发表于同行评审期刊或会议的论文\n- 聚焦于人形机器人运动/任务规划\n- 涉及以下任一主题：导航、操作、平衡控制、实时规划\n\n**排除标准**：\n- 非人形机器人（如轮式机器人、工业机械臂）\n- 纯硬件设计或机械结构研究\n- 发表于非学术渠道的短文\n\n### 3.2 方法论评估维度\n\n针对每类方法，综述从以下角度进行评估：\n\n- **计算效率**：算法时间复杂度 $O(n)$ 的实际表现\n- **稳定性保证**：是否具有理论稳定性证明\n- **环境适应性**：对静态/动态环境的适用性\n- **可扩展性**：从仿真到实际机器人的迁移能力\n\n### 3.3 超参数与基准\n\n综述虽不涉及算法超参数，但建立了方法对比的基准框架：\n\n- 运动规划文献中常用的测试环境：室内平坦地面、楼梯、不平整地形\n- 典型任务：行走、抓取、开门、上下楼梯\n- 评估指标：规划时间、成功率、ZMP 稳定性余量、能耗\n\n## 4. 实验设置\n\n### 4.1 文献数据库\n\n综述覆盖的主要数据集/平台包括：\n\n- **仿真平台**：Gazebo、MuJoCo、Webots、MATLAB/Simulink\n- **实体机器人**：Boston Dynamics Atlas、ASIMO、HRP 系列、NAO、Pepper\n- **标准测试任务**：DARPA 机器人挑战赛任务、RoboCup 任务\n\n### 4.2 对比基准方法\n\n综述将各类方法与以下基准进行对比分析：\n\n- 传统运动规划方法（RRT、RRT*、PRM）\n- 基于优化的方法（CHOMP、STOMP）\n- 经典控制方法（PID、LQR）\n- 学习型方法（深度强化学习、模仿学习）\n\n### 4.3 评估指标体系\n\n综述建立的评估指标包括：\n\n| 指标类型 | 具体指标 |\n|----------|----------|\n| 性能指标 | 规划时间、计算资源消耗、路径长度 |\n| 稳定性指标 | ZMP 位置、CoM 加速度、支撑多边形 |\n| 鲁棒性指标 | 扰动恢复时间、最大抗扰动能力 |\n| 实用性指标 | 仿真到实机迁移率、传感器依赖度 |\n\n## 5. 技术优势\n\n### 5.1 综述方法的优越性\n\n**全面性**：本文是截至 2024 年对人形机器人运动规划最全面的综述之一，覆盖了从传统方法到深度学习方法的完整技术谱系。\n\n**多维度分析框架**：将运动规划问题分解为效率、鲁棒性、实时性三个相互关联的维度，这种形式化有助于理解各方法之间的权衡关系。\n\n**批判性视角**：不仅综述现有方法，还对各类方法进行评级，识别出三个主要研究空白：\n1. 行为克隆在复杂环境中的泛化能力\n2. 动态环境下实时稳定性控制\n3. 运动学约束与任务规划的协同优化\n\n### 5.2 识别的方法论趋势\n\n综述识别出以下发展趋势：\n- 从模块化规划向端到端学习转变\n- 从单步规划向模型预测控制（MPC）转变\n- 从固定环境向动态人机交互环境转变\n\n## 6. 技术弱点\n\n### 6.1 综述范围的局限\n\n**时间滞后性**：作为 2024 年发表的综述，无法涵盖最新进展，特别是近期的多模态大模型与机器人结合的研究。\n\n**文献偏向**：综述主要基于英文文献，可能存在语言偏差，对中文、日语等其他语言的文献覆盖不足。\n\n**方法深度限制**：作为综述论文，对各类方法的数学描述深度有限，主要提供概念性总结和技术概览。\n\n### 6.2 潜在的研究空白\n\n综述虽指出了研究空白，但未提供具体的解决路径或系统的量化分析。此外，对于以下方面缺乏深入讨论：\n\n- 不同方法之间的定量对比实验\n- 硬件约束对算法选择的影响分析\n- 安全性与合规性问题的系统讨论\n\n### 6.3 方法论反思\n\n本综述采用定性分析方法，缺乏系统性的元分析（Meta-analysis）来量化各类方法在不同任务上的表现差异。此外，综述未提供可复现的代码或基准测试框架，限制了后续研究者在此基础上的验证与对比工作。\n\n---\n\n**总结**：本文作为一篇综述论文，其方法论价值在于建立了分析人形机器人运动规划问题的三维框架（效率-鲁棒性-实时性），并系统梳理了各类方法的技术特点与发展脉络。该综述为后续研究者提供了有价值的技术地图，但具体的算法实现与定量评估仍需读者根据实际应用场景进行深入探索。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Humanoid Robot Motion Planning Approaches: a Survey",
+      "authors": [
+        "Carolina Rutili de Lima",
+        "Said G. Khan",
+        "Muhammad Tufail",
+        "Syed H. Shah",
+        "Marcos R. O. A. Maximo"
+      ],
+      "year": 2024,
+      "journal": "Journal of Intelligent &amp; Robotic Systems",
+      "doi": "10.1007/s10846-024-02117-z",
+      "paper_type": "journal-article",
+      "publisher": "Springer Science+Business Media",
+      "issn": "0921-0296",
+      "abstract": "Humanoid robots are complex, dynamic systems. Any humanoid robotic application starts with determining a sequence of optimal paths to perform a given task in a known or unknown environment. This paper critically reviews and rates available literature on the three key areas of multi-level motion and task planning for humanoid robots. First is efficiency while navigating and manipulating objects in environments designed for humans. Here, the research has broadly been summarized as behavior cloning approaches. Second is robustness to perturbations and collisions caused by operation in dynamic and unpredictable environments. Here, the modeling approaches integrated into motion planning algorithms have been the focus of many researchers studying humanoid motion’s balance and dynamic stability aspects. Last is real-time performance, wherein the robot must adjust its motion based on the most recent sensory data to achieve the required degree of interaction and responsiveness. Here, the focus has been on the kinematic constraints imposed by the robot’s mechanical structure and joint movements. The iterative nature of solving constrained optimization problems, the computational complexity of forward and inverse kinematics, and the requirement to adjust to a rapidly changing environment all pose challenges to real-time performance. The study has identified current trends and, more importantly, research gaps while pointing to areas needing further investigation.",
+      "route_id": "b7cfa715-e774-4567-8009-a4781cebdc58"
+    },
+    "markdown_stats": {
+      "lines": 450,
+      "words": 14184,
+      "headings": 13
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "b7cfa715-e774-4567-8009-a4781cebdc58",
+  "paper_ref": "b7cfa715-e774-4567-8009-a4781cebdc58",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

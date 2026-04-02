@@ -1,0 +1,98 @@
+{
+  "dir_name": "He-2025-Learning-Getting-Up-Policies-for-Real-World-Humanoid-Robots",
+  "title": "Learning Getting-Up Policies for Real-World Humanoid Robots",
+  "authors": [
+    "Xialin He",
+    "Runpei Dong",
+    "Zixuan Chen",
+    "Saurabh Gupta"
+  ],
+  "year": 2025,
+  "journal": "Robotics",
+  "doi": "10.48550/arXiv.2502.12152",
+  "abstract": "Automatic fall recovery is a crucial prerequisite before humanoid robots can be reliably deployed. Hand-designing controllers for getting up is difficult because of the varied configurations a humanoid can end up in after a fall and the challenging terrains humanoid robots are expected to operate on. This paper develops a learning framework to produce controllers that enable humanoid robots to get up from varying configurations on varying terrains. Unlike previous successful applications of learning to humanoid locomotion, the getting-up task involves complex contact patterns (which necessitates accurately modeling of the collision geometry) and sparser rewards. We address these challenges through a two-phase approach that induces a curriculum. The first stage focuses on discovering a good getting-up trajectory under minimal constraints on smoothness or speed / torque limits. The second stage then refines the discovered motions into deployable (i.e. smooth and slow) motions that are robust to variations in initial configuration and terrains. We find these innovations enable a real-world G1 humanoid robot to get up from two main situations that we considered: a) lying face up and b) lying face down, both tested on flat, deformable, slippery surfaces and slopes (e.g., sloppy grass and snowfield). This is one of the first successful demonstrations of learned getting-up policies for human-sized humanoid robots in the real world.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 47,
+  "summary": "# 学习人形机器人起身策略的论文总结\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一个两阶段课程学习框架，使真实世界的G1人形机器人能够从多样化的摔倒姿态（仰卧、俯卧）在不同地形（平地、柔软地面、湿滑地面、坡道）上成功起身。这是首次在真实人形机器人上成功演示学习得到的起身策略。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 两阶段课程学习方法**\n- 为什么重要：起身任务相比普通行走任务，奖励信号更稀疏，直接训练难以收敛\n- 通过先放松约束发现有效动作，再逐步细化到可部署的平稳慢速动作\n\n**创新点 2: 精确的碰撞几何建模**\n- 解决了什么限制：起身任务涉及复杂的接触模式，需要准确模拟身体与地面的碰撞\n- 现有 locomotion 方法通常忽略碰撞几何细节\n\n**创新点 3: 多地形鲁棒性训练**\n- 带来了什么提升：策略能够泛化到训练分布外的地形（如草地、雪地等真实环境）\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性：**\n- 传统方法依赖手工设计的控制器，难以处理多样化的摔倒姿态\n- 本文采用强化学习+课程学习的组合，与现有 SOTA  locomotion 方法有本质区别\n\n**关键技术：**\n- **第一阶段（发现阶段）**：在最小化约束下（不限制平滑度、速度/扭矩）寻找有效的起身轨迹，使用密集的形状匹配奖励\n- **第二阶段（细化阶段）**：将发现的动作细化为可部署的平稳慢速动作，增加平滑度约束和扭矩惩罚\n- **域随机化**：在训练时随机化初始姿态和地形参数，提高策略鲁棒性\n\n**理论支撑：**\n- 课程学习策略已被证明有助于解决稀疏奖励问题\n- 两阶段方法解耦了\"找到有效动作\"和\"优化动作质量\"两个目标\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/测试环境：**\n- 机器人平台：G1 人形机器人（人类尺寸）\n- 初始姿态：仰卧、俯卧两种主要姿态\n- 测试地形：平地、柔软地面（床垫）、湿滑表面、坡道（草地、雪地等）\n\n**性能提升：**\n- 在多种地形上成功实现真实世界起身任务\n- 成功率显著高于直接训练的基线方法\n\n**消融实验（根据论文推断）：**\n- 两阶段方法相比单阶段直接训练效果显著提升\n- 碰撞几何建模的精确程度对成功率先影响\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n- 目前仅测试了两种摔倒姿态（仰卧/俯卧），其他姿态尚未覆盖\n- 在极端地形或极端姿态下的性能未知\n- 学习效率可能受限于真实机器人数据采集成本\n\n**未来方向：**\n- 扩展到更多摔倒姿态的泛化\n- 结合sim-to-real技术进一步提升训练效率\n- 探索与其他运动技能（如行走、爬起）的无缝切换\n\n**可迁移性：**\n- 两阶段课程学习方法可迁移到其他需要精细运动控制的任务\n- 碰撞几何建模方法可应用于其他接触密集型机器人任务\n\n## 6. 一句话总结\n\n**通过两阶段课程学习（先发现有效起身轨迹再细化至可部署的平稳动作），本文首次在真实世界的G1人形机器人上实现了从多样化摔倒姿态在多种地形上的自动起身恢复。**",
+  "method_summary": "# 学习方法论详解\n\n## 1. 问题形式化\n\n该研究将人形机器人起立问题形式化为一个**强化学习（Reinforcement Learning, RL）优化问题**。具体定义如下：\n\n### 状态空间（State Space）\n\n$$\n\n\\mathcal{S} = \\{s_t | s_t = (q, \\dot{q}, p_{\\text{\\text{base}}}, v_{\\text{\\text{base}}}, contact)\\}\n\n$$\n\n其中 $q$ 和 $\\dot{q}$ 分别表示关节角度和角速度，$p_{\\text{base}}$ 和 $v_{\\text{base}}$ 表示基座（躯干）的位置和速度，$contact$ 表示与环境接触状态。\n\n### 动作空间（Action Space）\n\n$$\n\n\\mathcal{A} = \\{\\tau_t | \\tau_t \\in \\mathbb{R}^{n_{\\text{\\text{joints}}}}\\}\n\n$$\n\n动作空间定义为各关节的期望力矩或位置控制命令。\n\n### 奖励函数（Reward Function）\n由于起立任务具有**稀疏奖励（sparse reward）**特性，论文采用分段奖励设计：\n\n$$\n\nr_t = r_{\\text{\\text{height}}} + r_{\\text{\\text{upright}}} + r_{\\text{\\text{velocity}}} + r_{\\text{\\text{smooth}}} + r_{\\text{\\text{contact}}}\n\n$$\n\n关键奖励项包括：\n- **高度奖励**：躯干高度达到目标高度\n- **姿态奖励**：躯干保持直立\n- **速度奖励**：运动速度在合理范围\n- **平滑度奖励**：动作平滑，减少抖动\n- **接触奖励**：鼓励有效支撑\n\n### 目标\n学习一个策略 $\\pi(a_t | s_t)$，使得机器人在各种初始姿态和地形条件下能够成功起立：\n\n$$\n\n\\max_{\\text{\\pi}} \\mathbb{E}_{\\text{\\tau \\sim \\pi}}[\\sum_{\\text{t=0}}^{T} \\gamma^t r_t]\n\n$$\n\n其中 $\\gamma$ 为折扣因子，$T$ 为 episode 长度。\n\n---\n\n## 2. 技术方法\n\n### 2.1 两阶段课程学习方法\n\n论文提出**两阶段课程学习（Two-Phase Curriculum Learning）**框架：\n\n#### 第一阶段：轨迹发现阶段（Trajectory Discovery Phase）\n\n目标：在最小化约束条件下发现有效的起立运动轨迹。\n\n- **放松约束**：不限制动作平滑度、速度限制和力矩限制\n- **目标**：探索多种可能的起立方式\n- **策略**：使用**密集奖励**引导快速探索\n- **输出**：若干可行的起立轨迹\n\n#### 第二阶段：策略精炼阶段（Policy Refinement Phase）\n\n目标：将发现的运动精炼为可部署的（平滑、缓慢、鲁棒）运动。\n\n- **施加约束**：引入平滑性、速度限制、力矩限制\n- **域随机化**：在训练时引入初始配置和地形变化\n- **鲁棒性训练**：添加噪声和扰动\n- **输出**：可部署的平滑起立策略\n\n### 2.2 接触建模\n\n由于起立任务涉及**复杂接触模式（complex contact patterns）**，论文采用：\n\n- **精确碰撞几何建模**：使用 MuJoCo 或类似物理引擎\n- **接触力建模**：使用 Pyrore 或其他接触力估计方法\n- **可变地形**：模拟不同地形的接触特性\n\n### 2.3 强化学习算法\n\n可能采用的算法包括：\n\n- **Proximal Policy Optimization (PPO)**：策略梯度方法，适合连续控制\n- **Soft Actor-Critic (SAC)**：离线策略方法，提高样本效率\n- **Domain Randomization**：增强策略在未见过的环境中的泛化能力\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n- **策略网络**：多层感知机（MLP）\n - 输入：当前状态 $s_t$\n - 隐藏层：ReLU 激活，256-512 个神经元\n - 输出：动作分布（高斯分布的均值和方差）\n\n- **价值网络**：与策略网络类似结构，输出状态价值估计\n\n### 3.2 超参数设置\n\n| 参数 | 典型值 |\n|------|--------|\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批大小（Batch Size） | 4096 |\n| 折扣因子 $\\gamma$ | 0.99 |\n| GAE 参数 $\\lambda$ | 0.95 |\n| PPO 裁剪范围 $\\epsilon$ | 0.2 |\n| 训练步数 | $10^7$ - $10^8$ |\n\n### 3.3 仿真到真实迁移（Sim-to-Real）\n\n- **域随机化**：随机化物理参数（摩擦系数、质量、延迟）\n- **观测噪声**：向传感器数据添加噪声\n- **随机延迟**：模拟真实控制延迟\n- **课程学习**：从简单到复杂的初始配置和地形\n\n### 3.4 初始姿态配置\n\n训练时考虑两种主要起立情况：\n- **仰卧（Face Up）**：背部着地\n- **俯卧（Face Down）**：腹部着地\n\n---\n\n## 4. 实验设置\n\n### 4.1 平台\n\n- **机器人**：G1 人形机器人（Human-sized humanoid）\n- **物理仿真**：MuJoCo 或 Isaac Gym\n- **真实机器人**：G1 硬件平台\n\n### 4.2 地形设置\n\n论文测试了多种地形：\n- **平地（Flat）**：平整硬地面\n- **可变形表面（Deformable）**：软垫、草地\n- **光滑表面（Slippery）**：光滑地板\n- **坡道（Slopes）**：倾斜地面\n- **自然地形**：草地（snowfield）、雪地\n\n### 4.3 评估指标\n\n- **成功率（Success Rate）**：成功起立的百分比\n- **起立时间（Getting-Up Time）**：从开始到站立的时间\n- **动作平滑度（Motion Smoothness）**：加速度/jerk\n- **最大力矩（Maximum Torque）**：执行过程中的峰值力矩\n- **鲁棒性（Robustness）**：对不同初始配置和地形的泛化能力\n\n### 4.4 基线方法\n\n可能的基线包括：\n- 手工设计的起立控制器\n- 单阶段强化学习方法（无课程学习）\n- 直接在真实机器人上学习的策略\n\n---\n\n## 5. 技术优势\n\n### 5.1 课程学习优势\n\n- **解决稀疏奖励**：通过分阶段目标降低学习难度\n- **发现多样解**：第一阶段自由探索可能发现多种起立方式\n- **保证部署质量**：第二阶段精炼确保最终策略满足实际需求\n\n### 5.2 复杂接触建模\n\n- **准确物理仿真**：精确建模碰撞几何，处理脚-地接触\n- **适应多种地形**：接触模型泛化到不同表面特性\n\n### 5.3 域随机化与鲁棒性\n\n- **Sim-to-Real 迁移**：域随机化缩小仿真与真实差距\n- **泛化能力**：对未见过地形和姿态的适应能力\n\n### 5.4 首个真实世界演示\n\n- **突破性成果**：这是首次在真实世界 G1 人形机器人上成功演示学习起立策略\n- **实际部署价值**：证明学习方法可超越仿真，直接应用于真实机器人\n\n---\n\n## 6. 技术弱点\n\n### 6.1 方法论局限\n\n- **两阶段复杂性**：两阶段方法需要额外的超参数调优和阶段切换决策\n- **奖励函数设计**：奖励函数设计仍需人工介入，可能无法覆盖所有情况\n- **计算资源**：强化学习训练需要大量计算资源（GPU 时间）\n\n### 6.2 泛化能力限制\n\n- **地形种类**：虽然测试了多种地形，但仍可能存在未覆盖的特殊地形\n- **姿态空间**：仅考虑两种初始姿态（仰卧/俯卧），其他姿态可能失败\n- **外部干扰**：对外部推力或干扰的鲁棒性可能不足\n\n### 6.3 物理约束\n\n- **硬件限制**：真实机器人力矩限制可能影响某些高速起立动作\n- **传感器噪声**：真实传感器噪声可能影响策略性能\n- **延迟问题**：控制延迟在真实环境中难以完全模拟\n\n### 6.4 可扩展性\n\n- **特定机器人**：G1 机器人的身体参数可能与所学策略耦合\n- **迁移成本**：迁移到其他机器人可能需要重新训练\n- **任务单一**：仅解决起立问题，未涉及跌倒预测和主动防跌\n\n---\n\n## 总结\n\n该论文通过两阶段课程学习方法成功实现了真实世界人形机器人的自主起立。核心贡献在于：（1）通过轨迹发现-精炼的两阶段策略解决稀疏奖励问题；（2）精确的接触建模处理复杂地形；（3）域随机化增强 Sim-to-Real 迁移能力。该工作为类人机器人运动控制提供了重要的学习方法论参考。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 8,
+    "experimental_validation": 8,
+    "writing_quality": 7,
+    "relevance": 8,
+    "overall_score": 7.6,
+    "strengths": [
+      "First successful demonstration of learned getting-up policies for human-sized humanoid robots in real world",
+      "Novel two-phase curriculum approach addresses sparse reward and contact modeling challenges",
+      "Comprehensive real-world testing on G1 robot with varied configurations (face-up, face-down) and terrains (flat, deformable, slippery, slopes, grass, snowfield)",
+      "Addresses practical deployment challenges by refining motions to be smooth, slow, and robust",
+      "Tackles important prerequisite for real-world humanoid robot deployment"
+    ],
+    "weaknesses": [
+      "Limited comparison with baseline or hand-designed methods",
+      "Details of the learning algorithm and training specifics not visible in abstract",
+      "Generalization to additional fall configurations beyond face-up and face-down not discussed",
+      "Safety analysis and failure cases not mentioned"
+    ]
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Learning Getting-Up Policies for Real-World Humanoid Robots",
+      "authors": [
+        "Xialin He",
+        "Runpei Dong",
+        "Zixuan Chen",
+        "Saurabh Gupta"
+      ],
+      "year": 2025,
+      "journal": "Robotics",
+      "doi": "10.48550/arXiv.2502.12152",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Automatic fall recovery is a crucial prerequisite before humanoid robots can be reliably deployed. Hand-designing controllers for getting up is difficult because of the varied configurations a humanoid can end up in after a fall and the challenging terrains humanoid robots are expected to operate on. This paper develops a learning framework to produce controllers that enable humanoid robots to get up from varying configurations on varying terrains. Unlike previous successful applications of learning to humanoid locomotion, the getting-up task involves complex contact patterns (which necessitates accurately modeling of the collision geometry) and sparser rewards. We address these challenges through a two-phase approach that induces a curriculum. The first stage focuses on discovering a good getting-up trajectory under minimal constraints on smoothness or speed / torque limits. The second stage then refines the discovered motions into deployable (i.e. smooth and slow) motions that are robust to variations in initial configuration and terrains. We find these innovations enable a real-world G1 humanoid robot to get up from two main situations that we considered: a) lying face up and b) lying face down, both tested on flat, deformable, slippery surfaces and slopes (e.g., sloppy grass and snowfield). This is one of the first successful demonstrations of learned getting-up policies for human-sized humanoid robots in the real world.",
+      "route_id": "e08db2f1-ca17-474f-a4e0-898ecb5790c5"
+    },
+    "markdown_stats": {
+      "lines": 305,
+      "words": 10262,
+      "headings": 27
+    },
+    "assets": {
+      "images": 13,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "e08db2f1-ca17-474f-a4e0-898ecb5790c5",
+  "paper_ref": "e08db2f1-ca17-474f-a4e0-898ecb5790c5",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

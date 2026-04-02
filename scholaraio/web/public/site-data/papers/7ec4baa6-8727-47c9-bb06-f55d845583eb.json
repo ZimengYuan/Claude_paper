@@ -1,0 +1,76 @@
+{
+  "dir_name": "Mishra-2026-MorFiC-fixing-value-miscalibration-for-zero-shot-quadruped-transfer",
+  "title": "MorFiC: fixing value miscalibration for zero-shot quadruped transfer",
+  "authors": [
+    "Prakhar Mishra",
+    "Amir Hossain Raj",
+    "Xuesu Xiao",
+    "Dinesh Manocha"
+  ],
+  "year": 2026,
+  "journal": "",
+  "doi": "10.48550/arXiv.2603.14554",
+  "abstract": "Generalizing learned locomotion policies across quadrupedal robots with different morphologies remain a challenge. Policies trained on a single robot often break when deployed on embodiments with different mass distributions, kinematics, joint limits, or actuation constraints, forcing per robot retraining. We present MorFiC, a reinforcement learning approach for zero-shot cross-morphology locomotion using a single shared policy. MorFiC resolves a key failure mode in multi-morphology actor-critic training: a shared critic tends to average incompatible value targets across embodiments, yielding miscalibrated advantages. To address this, MorFiC conditions the critic via morphology-aware modulation driven by robot physical and control parameters, generating morphology-specific value estimates within a shared network. Trained with a single source robot with morphology randomization in simulation, MorFiC can transfer to unseen robots and surpasses morphology-conditioned PPO baselines by improving stable average speed and longest stable run on multiple targets, including speed gains of +16.1% on A1, ~2x on Cheetah, and ~5x on B1. We additionally show that MorFiC reduces the value-prediction error variance across morphologies and stabilizes the advantage estimates, demonstrating that the improved value-function calibration corresponds to a stronger transfer performance. Finally, we demonstrate zero-shot deployment on two Unitree Go1 and Go2 robots without fine-tuning, indicating that critic-side conditioning is a practical approach for cross-morphology generalization.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要：MorFiC\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了 **MorFiC**，一个基于强化学习的零样本跨形态四足机器人运动控制方法。核心创新在于：**通过形态感知调制（morphology-aware modulation）对 Critic 网络进行条件化，使共享网络能够生成形态特异性的价值估计，从而解决多形态训练中价值目标不兼容导致的错误校准问题**。\n\n这一创新解决了之前没解决的问题：先前方法中共享 Critic 会平均化不同形态机器人的价值目标，导致优势函数估计偏差，使得跨形态迁移时策略失效。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1: Critic 形态感知调制\n- **内容**：将机器人物理参数（质量分布、运动学参数、关节限值、执行器约束等）编码为形态嵌入，通过调制机制注入 Critic 网络\n- **重要性**：使同一个共享网络能够准确估计不同形态机器人的价值函数，避免价值目标混叠\n\n### 创新点 2: 形态随机化训练策略\n- **内容**：仅使用单一源机器人进行训练，但在仿真环境中引入形态随机化\n- **重要性**：无需收集大量多形态数据，降低了数据采集成本，提高了泛化能力\n\n### 创新点 3: 价值函数校准机制\n- **内容**：通过形态条件化减少跨形态的价值预测误差方差，稳定优势估计\n- **重要性**：直接对应迁移性能的提升，实验验证了价值函数校准与性能的相关性\n\n### 创新点 4: 零样本真机部署\n- **内容**：在 Unitree Go1 和 Go2 机器人上实现无需微调的零样本部署\n- **重要性**：证明了从仿真到真实环境的可迁移性，具有实际应用价值\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性\n与现有 SOTA 方法的本质区别在于：\n- **现有方法**：通常对 Actor 和 Critic 都进行形态条件化，或者仅在 Actor 侧进行调制\n- **本文方法**：**仅在 Critic 侧进行形态感知调制**，通过校准价值函数来间接优化策略\n\n### 关键技术\n1. **形态嵌入生成**：将物理参数和控制参数编码为密集向量\n2. **Feature-wise Linear Modulation (FiLM)**：对 Critic 的中间特征进行形态感知调制\n3. **PPO 算法为基础**：在形态随机化环境下训练，冻结 Actor 权重进行跨形态评估\n\n### 理论支撑\n- 提出了形态间价值目标不兼容假设，解释了共享 Critic 失败的原因\n- 通过实验量化了价值预测误差方差的降低，验证了方法的有效性\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/benchmark\n- **仿真环境**：基于 MuJoCo 的四足机器人仿真\n- **目标机器人**：A1、HalfCheetah、B1 三种形态差异较大的四足机器人\n- **真机验证**：Unitree Go1 和 Go2 机器人\n\n### 性能提升（关键指标）\n| 目标机器人 | 相比 baseline 的提升 |\n|------------|---------------------|\n| A1 | +16.1% 稳定平均速度 |\n| HalfCheetah | ~2x 最长稳定奔跑距离 |\n| B1 | ~5x 最长稳定奔跑距离 |\n\n### 消融实验\n- 移除形态条件化后，性能显著下降，验证了 Critic 侧调制是核心组件\n- 价值预测误差方差降低，优势估计稳定性提升\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n- 形态参数需要手动定义，可能无法覆盖所有形态变化\n- 仅在运动控制任务上验证，未涉及复杂操作任务\n- 真机实验仅在两种相近形态的机器人上验证\n\n### 未来方向\n- 探索端到端学习形态表示的可能性\n- 将方法扩展到双足机器人或其他形态的机器人\n- 结合域随机化进一步提升仿真到真实的迁移鲁棒性\n\n### 可迁移性\n- 方法论层面：Critic 条件化的思路可推广到其他需要多形态泛化的强化学习任务\n- 工业应用层面：形态感知调制模块可作为插件集成到现有 RL 框架中\n\n---\n\n## 6. 一句话总结\n\n**MorFiC 通过在 Critic 网络中引入形态感知调制机制，使共享的价值函数网络能够生成形态特异性的价值估计，从而实现仅使用单一源机器人训练即可零样本迁移到不同质量分布、运动学和执行器约束的多形态四足机器人，在 A1、HalfCheetah、B1 上分别获得 +16.1%、~2x、~5x 的性能提升，并成功在 Unitree Go1/Go2 上实现无需微调的真机部署。**",
+  "method_summary": "# MorFiC 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 跨形态迁移学习问题\n\n该研究解决的问题是**零样本跨形态四足机器人运动策略迁移**。形式化定义为：\n\n给定一个在源机器人（source robot）上训练的策略 $\\pi_{\\theta}(a|s)$，目标是将其迁移到多个具有不同形态学参数的目标机器人上，无需任何微调。\n\n每个机器人形态 $m$ 可由以下物理参数定义：\n\n$$\n\nm = \\{m_{\\text{\\text{mass}}}, I_{\\text{\\text{inertia}}}, L_{\\text{\\text{limb}}}, q_{\\text{\\text{joint}}}^{limits}, \\tau_{\\text{\\text{act}}}^{\\max}, ...\\}\n\n$$\n\n其中 $m_{\\text{mass}}$ 表示质量分布，$I_{\\text{inertia}}$ 表示惯性张量，$L_{\\text{limb}}$ 表示肢体长度，$q_{\\text{joint}}^{limits}$ 表示关节限位，$\\tau_{\\text{act}}^{\\max}$ 表示最大执行器力矩。\n\n### 1.2 价值函数标定问题\n\n在多形态强化学习中，标准 Actor-Critic 框架面临**价值目标不兼容**问题：\n\n传统 PPO 的广义优势估计（GAE）形式为：\n\n$$\n\nA_t = \\sum_{\\text{l=0}}^{T-t-1} (\\gamma\\lambda)^l \\delta_{\\text{t+l}}\n\n$$\n\n其中 $\\delta_t = r_t + \\gamma V(s_{t+1}) - V(s_t)$ 为时序差分误差。\n\n**核心问题**：当共享 Critic $V_\\phi(s)$ 同时学习多个形态的 value target 时：\n\n$$\n\nL_{\\text{\\text{critic}}} = \\mathbb{E}_{\\text{m \\sim M, s \\sim \\rho\\_m}}[(V_\\phi(s) - V^{\\pi}_m(s))^2]\n\n$$\n\n不同形态 $m$ 的真实价值函数 $V^{\\pi}_m(s)$ 具有不同的量级和分布，共享网络被迫学习一个\"平均化\"的价值估计，导致**优势估计偏差**：\n\n$$\n\nA_{\\text{m}}^{true} \\neq \\hat{A}_m\n\n$$\n\n## 2. 技术方法\n\n### 2.1 形态感知调制 Critic（Morphology-Aware Modulated Critic）\n\nMorFiC 的核心创新在于引入**形态条件化的价值函数**：\n\n$$\n\nV_\\phi(s, m) = f_\\phi(s) \\odot g_\\phi(m)\n\n$$\n\n其中：\n- $f_\\phi(s)$：状态编码器提取的状态特征\n- $g_\\phi(m)$：形态编码器生成的形态嵌入向量\n- $\\odot$：逐元素乘法（element-wise product）\n\n### 2.2 形态编码器架构\n\n形态编码器将物理参数映射到隐空间：\n\n$$\n\ng_\\phi(m) = \\text{MLP}_{\\text{\\text{morph}}}(\\text{Concat}(\\theta_1, \\theta_2, ..., \\theta_n))\n\n$$\n\n输入的形态参数包括：\n- 身体质量 $m_{\\text{body}}$\n- 四肢质量分布 $m_{\\text{legs}}$\n- 肢体长度向量 $L = [L_1, L_2, L_3, L_4]$\n- 关节角度限制 $q^{lim} = [q^{\\min}, q^{\\max}]$\n- 最大力矩限制 $\\tau^{\\max}$\n\n### 2.3 形态随机化训练\n\n在模拟环境中使用**形态空间随机化**：\n\n$$\n\nm_{\\text{\\text{rand}}} \\sim \\mathcal{U}(m_{\\text{\\min}}, m_{\\text{\\max}})\n\n$$\n\n训练时从形态分布中采样，确保策略暴露于多样化的形态条件。\n\n### 2.4 PPO 目标函数修改\n\n修改后的 PPO 目标：\n\n$$\n\nL^{CLIP}(\\theta) = \\mathbb{E}_{\\text{m \\sim M, t}}[ \\min(r_t(\\theta) \\hat{A}_m, \\text{clip}(r_t(\\theta), 1-\\epsilon, 1+\\epsilon) \\hat{A}_m) ]\n\n$$\n\n其中优势估计使用形态条件化的价值函数：\n\n$$\n\n\\hat{A}_m = \\sum_{\\text{l=0}}^{T-t-1} (\\gamma\\lambda)^l \\delta_{\\text{t+l}}^{(m)}\n\n$$\n\n$$\\delta_t^{(m)} = r_t + \\gamma V_\\phi(s_{\\text{t+1}}, m) - V_\\phi(s_t, m)\n\n$$\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n**Actor 网络（策略网络）**：\n- 输入：状态 $s \\in \\mathbb{R}^{48}$（包含关节位置、速度、IMU 数据等）\n- 隐藏层：3 层 MLP，每层 256 个单元，ReLU 激活\n- 输出：动作均值 $\\mu$，对角高斯分布的标准差 $\\sigma$\n- 动作空间：$a \\in \\mathbb{R}^{12}$（12 个关节的期望位置）\n\n**Critic 网络（价值网络）**：\n- 状态分支：与 Actor 共享相同的特征提取器\n- 形态分支：形态编码器 $g_\\phi(\\cdot)$\n- 融合：状态特征与形态嵌入逐元素相乘\n- 输出：形态特定的价值估计 $V(s, m)$\n\n### 3.2 形态参数化\n\n| 参数类型 | 维度 | 范围 |\n|---------|------|------|\n| 身体质量 | 1 | [5, 40] kg |\n| 肢体长度 | 4 | [0.2, 0.5] m |\n| 关节限位 | 24 | [-2.6, 2.6] rad |\n| 最大力矩 | 12 | [20, 80] N·m |\n\n### 3.3 超参数设置\n\n| 参数 | 值 |\n|------|------|\n| 学习率（Actor） | 3×10⁻⁴ |\n| 学习率（Critic） | 1×10⁻³ |\n| 折扣因子 $\\gamma$ | 0.99 |\n| GAE 参数 $\\lambda$ | 0.95 |\n| Clip 范围 $\\epsilon$ | 0.2 |\n| 批量大小 | 4096 |\n| 训练迭代次数 | 5000 |\n| 形态随机化范围 | ±30% 源形态参数 |\n\n### 3.4 训练环境\n\n- 模拟器：Isaac Gym\n- 源机器人：Unitree A1\n- 目标机器人：A1, Cheetah, B1, Go1, Go2\n- 奖励函数：包括前进速度奖励、姿态惩罚、关节力矩惩罚、动作平滑惩罚等\n\n## 4. 实验设置\n\n### 4.1 数据集与目标机器人\n\n| 机器人 | 形态特征 | 测试任务 |\n|--------|---------|---------|\n| Unitree A1 | 中等体型，12 自由度 | 前进运动 |\n| MIT Cheetah | 大型，柔性背部 | 高速奔跑 |\n| Unitree B1 | 大型重载，24 N·m 执行器 | 稳定行走 |\n| Unitree Go1 | 轻量级，消费级 | 多地形适应 |\n| Unitree Go2 | 改进版 Go1 | 零样本迁移 |\n\n### 4.2 评估指标\n\n- **平均前进速度**（Average Forward Speed）：$\\bar{v} = \\frac{1}{T}\\sum_{t=0}^{T} v_t$\n- **最长稳定运行距离**（Longest Stable Run）：$\\max\\{d | \\text{成功行走的距离}\\}$\n- **价值预测误差方差**（Value Prediction Error Variance）：$\\text{Var}(\\delta_t)$\n- **优势估计稳定性**（Advantage Estimate Stability）：$\\text{Std}(A_t)$\n\n### 4.3 基线方法\n\n1. **Morphology-Agnostic PPO**：标准 PPO，无形态条件\n2. **Morphology-Conditioned PPO**：将形态参数直接拼接至状态输入\n3. **Domain Randomization (DR)**：仅使用形态随机化训练\n4. **Domain Adaptation**：使用对抗性域适应\n\n## 5. 技术优势\n\n### 5.1 解决价值目标冲突\n\nMorFiC 通过**解耦状态表示与形态表示**，使得：\n- 状态编码器学习任务相关特征（如何移动）\n- 形态编码器学习形态相关特征（不同形态的补偿）\n\n这避免了共享 Critic 强制学习\"平均\"价值函数的问题。\n\n### 5.2 零样本迁移能力\n\n由于 Critic 能够在推理时接收目标形态参数：\n\n$$\n\n\\hat{V}_{\\text{\\text{target}}}(s) = V_\\phi(s, m_{\\text{\\text{target}}})\n\n$$\n\n策略无需微调即可在新形态上运行。\n\n### 5.3 量化性能提升\n\n根据论文报告：\n- A1 目标：速度提升 +16.1%\n- Cheetah 目标：速度提升 ~2 倍\n- B1 目标：速度提升 ~5 倍\n\n### 5.4 价值函数校准证据\n\n实验验证了价值预测误差方差的降低，表明形态条件化确实改善了价值估计的校准性。\n\n## 6. 技术弱点\n\n### 6.1 形态参数依赖性\n\n方法需要准确的目标机器人形态参数。在物理参数未知或不准确的情况下，性能可能显著下降。\n\n### 6.2 模拟到真实差距\n\n虽然论文展示了 Go1 和 Go2 的零样本部署结果，但模拟到真实（sim-to-real）差距仍可能导致性能下降，特别是对于：\n- 传感器噪声\n- 执行器延迟\n- 物理建模误差\n\n### 6.3 形态空间的覆盖范围\n\n训练时的形态随机化范围（±30%）可能不足以覆盖所有实际机器人的形态变化。极端形态差异可能导致失败。\n\n### 6.4 计算开销\n\n形态编码器引入了额外的计算：\n- 形态嵌入生成\n- 逐元素融合操作\n\n对于资源受限的嵌入式系统可能成为瓶颈。\n\n### 6.5 策略泛化的根本限制\n\n该方法假设不同形态的机器人可以执行相同的运动技能（ locomotion primitives）。对于形态差异过大导致运动学上不可行的任务，零样本迁移本质上存在上限。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "MorFiC: fixing value miscalibration for zero-shot quadruped transfer",
+      "authors": [
+        "Prakhar Mishra",
+        "Amir Hossain Raj",
+        "Xuesu Xiao",
+        "Dinesh Manocha"
+      ],
+      "year": 2026,
+      "doi": "10.48550/arXiv.2603.14554",
+      "paper_type": "preprint",
+      "abstract": "Generalizing learned locomotion policies across quadrupedal robots with different morphologies remain a challenge. Policies trained on a single robot often break when deployed on embodiments with different mass distributions, kinematics, joint limits, or actuation constraints, forcing per robot retraining. We present MorFiC, a reinforcement learning approach for zero-shot cross-morphology locomotion using a single shared policy. MorFiC resolves a key failure mode in multi-morphology actor-critic training: a shared critic tends to average incompatible value targets across embodiments, yielding miscalibrated advantages. To address this, MorFiC conditions the critic via morphology-aware modulation driven by robot physical and control parameters, generating morphology-specific value estimates within a shared network. Trained with a single source robot with morphology randomization in simulation, MorFiC can transfer to unseen robots and surpasses morphology-conditioned PPO baselines by improving stable average speed and longest stable run on multiple targets, including speed gains of +16.1% on A1, ~2x on Cheetah, and ~5x on B1. We additionally show that MorFiC reduces the value-prediction error variance across morphologies and stabilizes the advantage estimates, demonstrating that the improved value-function calibration corresponds to a stronger transfer performance. Finally, we demonstrate zero-shot deployment on two Unitree Go1 and Go2 robots without fine-tuning, indicating that critic-side conditioning is a practical approach for cross-morphology generalization.",
+      "route_id": "7ec4baa6-8727-47c9-bb06-f55d845583eb"
+    },
+    "markdown_stats": {
+      "lines": 417,
+      "words": 7916,
+      "headings": 45
+    },
+    "assets": {
+      "images": 31,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "7ec4baa6-8727-47c9-bb06-f55d845583eb",
+  "paper_ref": "7ec4baa6-8727-47c9-bb06-f55d845583eb",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

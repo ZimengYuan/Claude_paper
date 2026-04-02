@@ -28,7 +28,6 @@ scholaraio/web/.nuxt/
 scholaraio/web/.output/
 scholaraio/web/dist
 scholaraio/web/dist/
-scholaraio/web/public/site-data/
 
 # SQLite temp files
 *.db-journal

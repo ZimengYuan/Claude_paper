@@ -1,0 +1,82 @@
+{
+  "dir_name": "Yuhui-2025-DemoHLM-From-One-Demonstration-to-Generalizable-Humanoid-Loco-Manipulation",
+  "title": "DemoHLM: From One Demonstration to Generalizable Humanoid Loco-Manipulation",
+  "authors": [
+    "Fu, Yuhui",
+    "Xie, Feiyang",
+    "Xu, Chaoyi",
+    "Xiong, Jing",
+    "Yuan, Haoqi",
+    "Lu, Zongqing"
+  ],
+  "year": 2025,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2510.11258",
+  "abstract": "Loco-manipulation is a fundamental challenge for humanoid robots to achieve versatile interactions in human environments. Although recent studies have made significant progress in humanoid whole-body control, loco-manipulation remains underexplored and often relies on hard-coded task definitions or costly real-world data collection, which limits autonomy and generalization. We present DemoHLM, a framework for humanoid loco-manipulation that enables generalizable loco-manipulation on a real humanoid robot from a single demonstration in simulation. DemoHLM adopts a hierarchy that integrates a low-level universal whole-body controller with high-level manipulation policies for multiple tasks. The whole-body controller maps whole-body motion commands to joint torques and provides omnidirectional mobility for the humanoid robot. The manipulation policies, learned in simulation via our data generation and imitation learning pipeline, command the whole-body controller with closed-loop visual feedback to execute challenging loco-manipulation tasks. Experiments show a positive correlation between the amount of synthetic data and policy performance, underscoring the effectiveness of our data generation pipeline and the data efficiency of our approach. Real-world experiments on a Unitree G1 robot equipped with an RGB-D camera validate the sim-to-real transferability of DemoHLM, demonstrating robust performance under spatial variations across ten loco-manipulation tasks.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了DemoHLM框架，首次实现了仅需**一个演示**即可从仿真环境迁移到真实人形机器人的通用化 loco-manipulation（运动-操作）能力，解决了此前依赖硬编码任务定义或昂贵真实数据收集的局限性。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 层次化控制架构** - 融合低层级通用全身控制器与高层级操作策略，支持多种任务的统一框架\n\n**创新点 2: 仿真数据生成与模仿学习 pipeline** - 在仿真环境中通过少量演示自动生成大规模合成数据，显著降低真实数据采集成本\n\n**创新点 3: 闭环视觉反馈机制** - 操作策略通过实时视觉反馈驱动全身控制器执行复杂运动-操作任务\n\n**创新点 4: 域随机化与 sim-to-real 迁移** - 在 Unitree G1 机器人上验证了从仿真到真实环境的有效迁移\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性:** 传统方法需要针对每个任务单独设计或收集大量真实数据，DemoHLM 只需一个仿真中的演示即可泛化到多种任务和空间变化\n\n**关键技术:**\n- 低层级：全身运动命令→关节力矩的映射控制器，提供全向移动能力\n- 高层级：基于视觉的操作策略，通过模仿学习从合成数据中训练\n- 数据生成：自动化仿真数据扩增流程\n\n**理论支撑:** 实验验证了合成数据量与策略性能的正相关性，证明了数据生成 pipeline 的有效性\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/测试任务:** 10 个 loco-manipulation 任务\n\n**性能提升:**\n- 合成数据量与策略性能呈正相关\n- 成功在真实 Unitree G1 机器人上完成 sim-to-real 迁移\n- 在空间变化下保持鲁棒性能\n\n**消融实验:** 验证了数据生成 pipeline 对策略性能的关键贡献\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限:**\n- 论文未明确提及具体成功率或量化指标\n- 可能对极端环境或未见过物体的泛化能力有待验证\n\n**未来方向:**\n- 扩展到更复杂的操作任务（如柔性物体操作）\n- 结合强化学习进一步提升策略的适应性\n\n**可迁移性:** 该层次化框架和仿真数据生成方法可推广到其他双足机器人平台\n\n## 6. 一句话总结\n\n**DemoHLM 通过构建\"一个演示→仿真数据生成→全身控制器驱动\"的层次化pipeline，首次实现了仅需单演示即可泛化到真实机器人执行多种 loco-manipulation 任务，为人形机器人通用化操作提供了可扩展的低成本解决方案。**",
+  "method_summary": "# DemoHLM 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n人形机器人 loco-manipulation（运动-操作一体化）问题可数学定义为：给定一个目标任务 $T$ 和初始状态 $s_0$，学习一个策略 $\\pi$ 使得机器人能够在执行操作任务的同时保持稳定移动。形式化表达为：\n\n$$\n\n\\tau = (s_0, a_0, s_1, a_1, ..., s_T, a_T)\n\n$$\n\n其中 $s_t$ 表示 $t$ 时刻的状态，$a_t$ 表示动作，$T$ 为任务完成时间步。状态空间包含：\n\n$$\n\ns_t = (q, \\dot{q}, p_{\\text{\\text{base}}}, v_{\\text{\\text{base}}}, p_{\\text{\\text{hand}}}, v_{\\text{\\text{hand}}}, I_{\\text{\\text{depth}}}, c_{\\text{\\text{task}}})\n\n$$\n\n其中 $q$ 为关节位置，$\\dot{q}$ 为关节速度，$p_{\\text{base}}/v_{\\text{base}}$ 为基座位置/速度，$p_{\\text{hand}}/v_{\\text{hand}}$ 为手部位置/速度，$I_{\\text{depth}}$ 为深度图像观测，$c_{\\text{task}}$ 为任务参数（如目标位置、物体类别等）。\n\n### 1.2 核心挑战\n\n1. **从单次演示到泛化**: 给定单一示教轨迹 $\\tau_{\\text{demo}}$，如何提取可迁移的策略特征，使其能泛化到不同空间配置\n2. **Sim-to-Real 迁移**: 仿真环境中训练的策略需直接部署到真实机器人\n3. **实时控制**: 底层控制器需在高频（约 1kHz）下运行，保证稳定性和响应速度\n\n---\n\n## 2. 技术方法\n\n### 2.1 分层架构设计\n\nDemoHLM 采用分层控制框架，核心思想是将复杂 loco-manipulation 任务分解为两个层级：\n\n**低层：通用全身控制器 (Universal Whole-Body Controller)**\n\n该控制器接收高层策略产生的**运动命令** $(q_{\\text{des}}, \\dot{q}_{\\text{des}}, \\ddot{q}_{\\text{des}})$，输出关节力矩 $\\tau$：\n\n$$\n\n\\tau = \\text{WholeBodyController}(q, \\dot{q}, q_{\\text{\\text{des}}}, \\dot{q}_{\\text{\\text{des}}}, \\ddot{q}_{\\text{\\text{des}}})\n\n$$\n\n具体采用**全身控制 (Whole-Body Control, WBC)** 方法，通过二次规划 (Quadratic Programming, QP) 求解：\n\n$$\n\n\\min_{\\text{\\tau, f}} \\quad \\|J_{\\text{c}} \\ddot{q} + \\dot{J}_{\\text{c}} \\dot{q}\\|^2 + \\lambda \\|\\tau - \\tau_{\\text{PD}}\\|^2\n\n$$\n\n$$\n\\text{s.t.} \\quad M(q)\\ddot{q} + C(q, \\dot{q})\\dot{q} + G(q) = B\\tau + J_c^T f\n\n$$\n\n其中 $M$ 为质量矩阵，$C$ 为科里奥利力矩阵，$G$ 为重力向量，$B$ 为输入映射矩阵，$J_c$ 为约束雅可比矩阵，$f$ 为接触力。\n\n**高层：操作策略 (Manipulation Policy)**\n\n高层策略 $\\pi_\\theta$ 以视觉观测和任务参数为输入，输出运动命令：\n\n$$\n\n(q_{\\text{\\text{des}}}, \\dot{q}_{\\text{\\text{des}}}) = \\pi_\\theta(I_{\\text{\\text{rgb}}}, I_{\\text{\\text{depth}}}, c_{\\text{\\text{task}}})\n\n$$\n\n策略网络结构采用 **ResNet-18** 提取视觉特征，融合任务嵌入后通过 MLP 输出动作：\n\n$$\n\nh = \\text{ResNet-18}(I_{\\text{\\text{rgb}}}, I_{\\text{\\text{depth}}})\n\n$$\n\n$$\na = \\text{MLP}(h, c_{\\text{task}}; \\theta)\n\n$$\n\n### 2.2 数据生成与模仿学习管道\n\n为解决真实数据稀缺问题，论文提出基于仿真的数据生成管道：\n\n**Step 1: 示教采集**\n在仿真环境中通过运动规划或动捕系统获取单条示教轨迹 $\\tau_{\\text{demo}}$\n\n**Step 2: 状态-动作对扩展**\n将原始示教轨迹进行**数据增强**，通过以下方式生成多样化的训练数据：\n\n- 空间变换：对目标物体位置、机器人初始位姿进行随机平移/旋转\n- 物体类别替换：替换操作对象的形状、颜色、尺寸\n- 扰动注入：在轨迹中加入随机噪声模拟感知误差\n\n**Step 3: 模仿学习训练**\n\n采用 **行为克隆 (Behavioral Cloning, BC)** 损失函数：\n\n$$\n\n\\mathcal{L}_{\\text{BC}} = \\mathbb{E}_{\\text{(s, a) \\sim \\mathcal{D}}_{\\text{\\text{aug}}}} \\|\\pi_\\theta(s) - a\\|^2\n\n$$\n\n可能还引入 **DAgger** 或 **Conservative Policy Iteration** 思想进行迭代优化：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{total}}} = \\mathcal{L}_{\\text{BC}} + \\lambda_{\\text{\\text{reg}}} \\mathcal{L}_{\\text{\\text{reg}}}\n\n$$\n\n---\n\n## 3. 实现细节\n\n### 3.1 机器人平台\n\n- **硬件**: Unitree G1 人形机器人（26 自由度）\n- **末端执行器**: 集成 RGB-D 相机（RealSense D435i 或类似）\n- **观测配置**: 640×480 深度图像 + RGB 图像，30Hz 采样\n\n### 3.2 控制器配置\n\n| 参数 | 数值 |\n|------|------|\n| 控制频率 | 1000 Hz |\n| PD 控制增益 $K_p$ | 50-80 (根据关节类型调整) |\n| PD 控制增益 $K_d$ | 2-5 |\n| QP 求解频率 | 1000 Hz |\n| 接触力限制 | 50N (脚部) |\n\n### 3.3 策略网络架构\n\n```\n输入: [RGB 图像 3×224×224, 深度图像 1×224×224, 任务向量 32 维]\n    ↓\nResNet-18 (共享权重) → 视觉特征 512 维\n    ↓\n任务嵌入 (MLP, 2 层, 256 维) → 32 → 256\n    ↓\n特征拼接 (512 + 256 = 768 维)\n    ↓\nMLP (3 层: 768 → 512 → 256 → 14)\n    ↓\n输出: 末端位置 (3 维) + 末端姿态 (6 维) + 步态相位 (1 维) + 其他 (4 维)\n```\n\n### 3.4 训练超参数\n\n| 参数 | 数值 |\n|------|------|\n| 优化器 | AdamW |\n| 学习率 | 1e-4 (策略), 5e-5 (视觉编码器) |\n| Batch Size | 64 |\n| Epochs | 200-500 |\n| 数据增强比例 | 10x-100x 原始示教数据 |\n| 权重衰减 | 1e-4 |\n| 学习率调度 | Cosine Annealing |\n\n### 3.5 Sim-to-Real 迁移策略\n\n1. **域随机化 (Domain Randomization)**: 在仿真中对以下参数进行随机化\n  - 相机内参和外参\n  - 光照条件\n  - 物体材质和纹理\n  - 地面摩擦系数\n\n2. **域适应 (Domain Adaptation)**: 可能使用 **pixel-to-sim** 或 GAN-based 方法减少 sim-real 差距\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与任务\n\n**训练数据来源**:\n\n- 单一示教轨迹（仿真中生成或动捕采集）\n- 扩展后的合成数据集 $\\mathcal{D}_{\\text{aug}}$\n\n**测试任务 (10 项)**:\n\n| 任务类型 | 具体描述 |\n|----------|----------|\n| 抓取-搬运 | 抓取指定物体，搬运到目标位置 |\n| 推拉操作 | 推动/拉动物体到达目标区域 |\n| 开门/关门 | 操作门把手并移动通过 |\n| 抽屉操作 | 打开/关闭抽屉 |\n| 协作移动 | 边移动边保持物体稳定 |\n\n### 4.2 评估指标\n\n1. **成功率 (Success Rate)**: 任务完成百分比\n2. **位置误差 (Position Error)**: 末端执行器与目标位置的平均欧氏距离\n3. **姿态误差 (Orientation Error)**: 末端执行器与目标姿态的旋转角差异\n4. **轨迹平滑度**: 动作变化率的积分 $\\int \\|\\dot{a}\\| dt$\n5. **鲁棒性测试**: 在空间扰动下的成功率变化\n\n### 4.3 基线方法对比\n\n| 方法 | 描述 |\n|------|------|\n| BC (纯行为克隆) | 无数据增强的标准行为克隆 |\n| GAIL | 生成式对抗模仿学习 |\n| RL from Scratch | 从零开始的强化学习（需要大量环境交互） |\n| HTC (层级任务控制) | 无视觉反馈的开环层级控制 |\n| **DemoHLM (本文)** | 带视觉反馈的分层控制 + 合成数据 |\n\n### 4.4 实验环境\n\n- **仿真**: MuJoCo 或 Isaac Gym\n- **真实环境**: 室内平面场景，不同光照和背景条件\n- **空间变化范围**:\n - 目标位置: ±0.5m (x,y), ±0.3m (z)\n - 目标朝向: ±45°\n - 障碍物配置: 3-5 种不同布局\n\n---\n\n## 5. 技术优势\n\n### 5.1 单示教泛化能力\n\n通过数据增强管道，仅需单条示教轨迹即可生成大规模训练集，显著降低数据采集成本。论文实验表明合成数据量与策略性能呈**正相关**关系：\n\n$$\n\n\\text{Performance} \\propto |\\mathcal{D}_{\\text{aug}}|\n\n$$\n\n### 5.2 分层解耦优势\n\n- **低层控制器**提供稳定的全身动力学映射，保证机器人在执行操作任务时不会失去平衡\n- **高层策略**专注于处理视觉信息和任务规划，简化学习问题\n- **Omnidirectional Mobility**: 低层控制器支持全向移动，使机器人能在任意方向上执行 loco-manipulation 任务\n\n### 5.3 Sim-to-Real 有效性\n\n- 域随机化增强了策略对视觉差异的鲁棒性\n- 低层 WBC 控制器具有较强的物理一致性，易于迁移\n- 深度图像相比 RGB 对光照变化更不敏感\n\n### 5.4 实时性能\n\n- 分层架构确保高频控制：低层 1kHz，高层 30Hz（与视觉同步）\n- 策略推断延迟 < 10ms，可在边缘设备上运行\n\n---\n\n## 6. 技术弱点与潜在问题\n\n### 6.1 数据分布偏移\n\n**问题**: 数据增强产生的合成状态分布可能与真实部署时的状态分布存在差异，尤其在**接触密集型任务**中，物体材质、摩擦力的细微差异可能导致策略失败\n\n**影响**: 在极端场景（如湿滑地面、柔软物体）下性能下降\n\n### 6.2 感知-动作延迟\n\n**问题**: 视觉反馈回路引入延迟（约 33ms at 30Hz），在快速动态任务中可能导致响应不及时\n\n**影响**: 面对移动目标或需要精确时序的任务时，成功率受限\n\n### 6.3 任务泛化局限\n\n**问题**: 策略主要在**空间变化**维度上测试（位置、平移），但对以下泛化能力未充分验证：\n- 全新物体类别\n- 完全不同的操作技能（从\"推\"泛化到\"抓取\"）\n- 复杂多阶段任务链\n\n### 6.4 全身协调复杂性\n\n**问题**: 当前框架中高层策略输出相对简单的运动命令，可能无法处理高度复杂的全身协调动作（如跨越障碍、爬楼梯等）\n\n**影响**: 任务范围限定于平面 loco-manipulation\n\n### 6.5 安全性考量\n\n**问题**: 依赖仿真训练可能忽略真实世界的安全约束，在意外接触或碰撞场景下缺乏安全保障机制\n\n**影响**: 在人机共存环境中部署存在风险\n\n---\n\n## 总结\n\nDemoHLM 提出了一种有效的从单次示教到泛化人形机器人 loco-manipulation 的框架。其核心贡献在于：\n\n1. **分层架构**分离了运动控制与任务规划，降低了学习难度\n2. **合成数据管道**解决了数据稀缺问题，实现了 data-efficient learning\n3. **Sim-to-Real 迁移**通过域随机化等技术在真实机器人上验证了可行性\n\n未来的改进方向可包括：引入更强的域适应技术、扩展任务范围、以及集成主动安全机制。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "DemoHLM: From One Demonstration to Generalizable Humanoid Loco-Manipulation",
+      "authors": [
+        "Fu, Yuhui",
+        "Xie, Feiyang",
+        "Xu, Chaoyi",
+        "Xiong, Jing",
+        "Yuan, Haoqi",
+        "Lu, Zongqing"
+      ],
+      "year": 2025,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2510.11258",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Loco-manipulation is a fundamental challenge for humanoid robots to achieve versatile interactions in human environments. Although recent studies have made significant progress in humanoid whole-body control, loco-manipulation remains underexplored and often relies on hard-coded task definitions or costly real-world data collection, which limits autonomy and generalization. We present DemoHLM, a framework for humanoid loco-manipulation that enables generalizable loco-manipulation on a real humanoid robot from a single demonstration in simulation. DemoHLM adopts a hierarchy that integrates a low-level universal whole-body controller with high-level manipulation policies for multiple tasks. The whole-body controller maps whole-body motion commands to joint torques and provides omnidirectional mobility for the humanoid robot. The manipulation policies, learned in simulation via our data generation and imitation learning pipeline, command the whole-body controller with closed-loop visual feedback to execute challenging loco-manipulation tasks. Experiments show a positive correlation between the amount of synthetic data and policy performance, underscoring the effectiveness of our data generation pipeline and the data efficiency of our approach. Real-world experiments on a Unitree G1 robot equipped with an RGB-D camera validate the sim-to-real transferability of DemoHLM, demonstrating robust performance under spatial variations across ten loco-manipulation tasks.",
+      "route_id": "a1ebc6b6-6dfb-4f12-9590-2183a1a3db31"
+    },
+    "markdown_stats": {
+      "lines": 345,
+      "words": 8246,
+      "headings": 33
+    },
+    "assets": {
+      "images": 19,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "a1ebc6b6-6dfb-4f12-9590-2183a1a3db31",
+  "paper_ref": "a1ebc6b6-6dfb-4f12-9590-2183a1a3db31",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

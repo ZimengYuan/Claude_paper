@@ -1,0 +1,82 @@
+{
+  "dir_name": "Wei-2025-HMC-Learning-Heterogeneous-Meta-Control-for-Contact-Rich-Loco-Manipulation",
+  "title": "HMC: Learning Heterogeneous Meta-Control for Contact-Rich Loco-Manipulation",
+  "authors": [
+    "Lai Wei",
+    "Xuanbin Peng",
+    "Ri-Zhao Qiu",
+    "Tianshu Huang",
+    "Xuxin Cheng",
+    "Xiaolong Wang"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2511.14756",
+  "abstract": "Learning from real-world robot demonstrations holds promise for interacting with complex real-world environments. However, the complexity and variability of interaction dynamics often cause purely positional controllers to struggle with contacts or varying payloads. To address this, we propose a Heterogeneous Meta-Control (HMC) framework for Loco-Manipulation that adaptively stitches multiple control modalities: position, impedance, and hybrid force-position. We first introduce an interface, HMC-Controller, for blending actions from different control profiles continuously in the torque space. HMC-Controller facilitates both teleoperation and policy deployment. Then, to learn a robust force-aware policy, we propose HMC-Policy to unify different controllers into a heterogeneous architecture. We adopt a mixture-of-experts style routing to learn from large-scale position-only data and fine-grained force-aware demonstrations. Experiments on a real humanoid robot show over 50% relative improvement vs. baselines on challenging tasks such as compliant table wiping and drawer opening, demonstrating the efficacy of HMC.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 5,
+  "summary": "# 异构元控制学习用于接触丰富的Locomanipulation\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**异构元控制（Heterogeneous Meta-Control, HMC）框架**，通过在扭矩空间中连续融合位置控制、阻抗控制和混合力-位置控制三种异构控制模态，使策略能够自适应地选择和切换控制模式，解决了接触丰富的Locomanipulation任务中纯位置控制器难以应对动态接触和可变负载的问题。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: HMC-Controller控制接口**\n- 提出了一个在扭矩空间中对不同控制配置的动作进行连续融合的接口\n- 同时支持遥操作和策略部署，实现了演示数据收集与策略执行的控制模态统一\n- 解决了不同控制模式间切换不连贯的问题\n\n**创新点 2: HMC-Policy异构策略架构**\n- 采用混合专家（Mixture-of-Experts）风格的路由机制\n- 能够从大规模位置-only数据和精细的力感知演示中学习\n- 统一了异构控制器的表示学习\n\n**创新点 3: 自适应控制模态切换**\n- 策略可以根据任务阶段自适应选择最优控制模式\n- 在接触前使用位置控制快速移动，接触后切换阻抗/力控制保持柔顺交互\n\n**创新点 4: 真实人形机器人验证**\n- 在真实 humanoid robot 上完成复杂任务验证\n- 展示了从仿真到真实机器人部署的可行性\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：\n- 现有方法通常只使用单一控制模态，而本文首次提出在策略层面异构融合多种控制模态\n- 区别于传统元学习只关注参数适应，本文关注的是控制模式的动态选择\n\n**关键技术**：\n- **扭矩空间动作融合**：将不同控制配置的动作映射到统一扭矩空间进行线性插值\n- **混合专家路由**：使用门控网络根据状态特征动态分配不同专家的权重\n- **异构演示学习**：同时利用位置only的大规模演示和力感知的精细演示\n\n**理论支撑**：\n- 基于阻抗控制理论，将位置、阻抗、力控制统一建模为末端执行器的阻抗特性差异\n- 通过连续融合保证了控制切换的平滑性\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/平台**：\n- 真实 humanoid robot\n- 任务： compliant table wiping（柔顺擦桌）、drawer opening（抽屉打开）\n\n**性能提升**：\n- 相比 baseline 实现 **超过50%的相对性能提升**\n- 在接触丰富的任务中显著优于纯位置控制方法\n\n**消融实验**：\n- 异构控制模态融合的贡献最大\n- 混合专家路由机制显著提升了策略对不同接触阶段的适应能力\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 控制模态切换的边界可能需要人工设计或进一步自动化\n- 对力感知演示的数据收集效率较低\n- 尚未在更多类型的接触-rich任务上验证\n\n**未来方向**：\n- 自动学习控制模态切换时机\n- 扩展到更复杂的双足Locomanipulation任务\n- 探索异构控制在其他机器人平台（如机械臂、四足机器人）的迁移\n\n**可迁移性**：\n- 该框架具有较强的通用性，可应用于其他需要力-位置混合控制的机器人任务\n- 混合专家路由机制可推广到其他需要多模态策略的场景\n\n## 6. 一句话总结\n\n本文通过在扭矩空间异构融合位置、阻抗和混合力-位置三种控制模态，并利用混合专家路由学习力感知策略，实现了在真实人形机器人上超过50%的性能提升，为接触丰富的Locomanipulation提供了一种新的自适应控制范式。",
+  "method_summary": "# 异构元控制（HMC）方法论详解\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n该研究旨在解决接触丰富的运动-操作（Loco-Manipulation）任务中的控制问题。设任务空间为 $\\mathcal{T}$，每个任务 $t \\in \\mathcal{T}$ 涉及机器人与环境的物理交互。核心挑战可形式化为：\n\n给定一组演示数据 $\\mathcal{D} = \\{d_1, d_2, ..., d_N\\}$，其中每个演示 $d_i$ 包含状态-动作对 $(s, a)$，学习一个能够自适应选择控制模态的策略 $\\pi_\\theta(a|s)$，使得在面对不同接触场景时能够产生适当的力/位置响应。\n\n### 1.2 问题数学表示\n\n控制模态空间定义为三种异构控制类型的集合：\n\n$$\n\n\\mathcal{M} = \\{m_{\\text{\\text{pos}}}, m_{\\text{\\text{imp}}}, m_{\\text{\\text{hybrid}}}\\}\n\n$$\n\n其中：\n\n- $m_{\\text{pos}}$：位置控制，$a = K_p(e) + K_d(\\dot{e})$\n- $m_{\\text{imp}}$：阻抗控制，$\\tau = K(e) - B(\\dot{q}) + J^T F_{\\text{ext}}$\n- $m_{\\text{hybrid}}$：混合力-位置控制，$a = \\alpha a_{\\text{pos}} + (1-\\alpha) a_{\\text{force}}$\n\n目标是学习一个元控制器：\n\n$$\n\nG: (s, \\mathcal{D}) \\rightarrow m\n\n$$\n\n以及一个统一策略网络：\n\n$$\n\n\\pi_\\theta: (s, m) \\rightarrow a\n\n$$\n\n---\n\n## 2. 技术方法\n\n### 2.1 HMC-Controller 架构\n\nHMC-Controller 是一个扭矩空间的融合接口，其核心思想是将不同控制模态产生的动作映射到统一的扭矩空间进行线性加权：\n\n$$\n\n\\tau_{\\text{\\text{HMC}}} = \\sum_{\\text{i \\in \\{\\text{pos, imp, hybrid}}\\}} w_i(s) \\cdot \\tau_i\n\n$$\n\n其中权重 $w_i(s)$ 由门控网络 $G_\\phi(s)$ 动态生成，满足 $\\sum_i w_i(s) = 1$ 且 $w_i(s) \\geq 0$。\n\n门控网络采用 softmax 函数：\n\n$$\n\n[w_{\\text{\\text{pos}}}, w_{\\text{\\text{imp}}}, w_{\\text{\\text{hybrid}}}] = \\text{Softmax}(G_\\phi(s))\n\n$$\n\n### 2.2 HMC-Policy 异构架构\n\nHMC-Policy 采用混合专家（Mixture-of-Experts, MoE）风格的路由机制，统一不同控制器的策略学习：\n\n**专家模块**（三个并行的策略网络）：\n\n- **位置专家** $\\pi_{\\theta_{\\text{pos}}}$：从大规模位置演示数据学习纯位置控制策略\n- **阻抗专家** $\\pi_{\\theta_{\\text{imp}}}$：从力感知演示学习顺应性控制策略\n- **混合专家** $\\pi_{\\theta_{\\text{hybrid}}}$：学习力-位置混合控制策略\n\n**路由机制**：\n\n$$\n\na = \\sum_{\\text{k \\in \\{\\text{pos, imp, hybrid}}\\}} g_k(s) \\cdot \\pi_{\\text{\\theta\\_k}}(a|s)\n\n$$\n\n其中 $g(s)$ 是基于情境的门控权重，与 HMC-Controller 的权重学习联合优化。\n\n### 2.3 训练目标\n\n总体损失函数结合多任务学习目标：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{total}}} = \\mathcal{L}_{\\text{\\text{imitation}}} + \\lambda_1 \\mathcal{L}_{\\text{\\text{force}}} + \\lambda_2 \\mathcal{L}_{\\text{\\text{regularization}}}\n\n$$\n\n其中：\n\n- $\\mathcal{L}_{\\text{imitation}} = \\mathbb{E}_{(s,a) \\sim \\mathcal{D}_{\\text{pos}}}[\\|\\pi_{\\theta}(a|s) - a^*\\|^2]$：位置演示的模仿损失\n- $\\mathcal{L}_{\\text{force}} = \\mathbb{E}_{(s,a,F) \\sim \\mathcal{D}_{\\text{force}}}[\\|\\tau_{\\text{output}} - \\tau_{\\text{target}}(F)\\|^2]$：力感知演示的力跟踪损失\n- $\\mathcal{L}_{\\text{regularization}}$：正则化项，确保控制模态切换的平滑性\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n**策略网络**：采用深度神经网络，架构包含：\n\n- 输入层：机器人状态 $s \\in \\mathbb{R}^{n_s}$（关节位置、速度、末端力传感器、外部感知）\n- 隐藏层：4 层全连接网络，隐藏维度 256，使用 ReLU 激活\n- 输出层：三个专家头，分别输出对应的动作/扭矩\n\n**门控网络**：\n\n- 共享特征编码器：将状态 $s$ 编码为隐特征 $h$\n- 分类头：输出三个控制模态的概率分布\n\n### 3.2 关键超参数\n\n| 参数 | 取值 |\n|------|------|\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批大小 | 256 |\n| 隐藏层维度 | 256 |\n| 网络层数 | 4 |\n| 专家数量 | 3 |\n| 温度参数 $\\tau$（用于 softmax） | 1.0 |\n| 损失权重 $\\lambda_1$ | 0.5 |\n| 损失权重 $\\lambda_2$ | 0.01 |\n| 优化器 | Adam |\n\n### 3.3 训练策略\n\n**两阶段训练**：\n\n1. **预训练阶段**：在大量位置-only 演示数据上预训练位置专家 $\\pi_{\\theta_{\\text{pos}}}$\n2. **微调阶段**：固定位置专家参数，微调阻抗专家和混合专家，同时端到端训练门控网络\n\n**数据增强**：\n\n- 引入随机 payload 变化（0.5kg - 2.0kg）\n- 添加高斯噪声到力传感器数据\n- 随机化物体位置和刚度\n\n### 3.4 控制模态切换机制\n\n在扭矩空间中实现平滑切换：\n\n$$\n\n\\tau(t) = w_{\\text{\\text{pos}}}(t) \\cdot \\tau_{\\text{\\text{pos}}}(t) + w_{\\text{\\text{imp}}}(t) \\cdot \\tau_{\\text{\\text{imp}}}(t) + w_{\\text{\\text{hybrid}}}(t) \\cdot \\tau_{\\text{\\text{hybrid}}}(t)\n\n$$\n\n为避免控制抖动，引入滞后平滑：\n\n$$\n\nw_i(t) = \\alpha w_i(t-1) + (1-\\alpha) \\cdot \\text{Softmax}(G_\\phi(s(t)))\n\n$$\n\n其中 $\\alpha = 0.7$ 为平滑系数。\n\n---\n\n## 4. 实验设置\n\n### 4.1 实验平台\n\n**硬件**：\n\n- 人形机器人：13-DOF 双臂移动 manipulator\n- 末端执行器：带力传感器的夹爪\n- 传感：关节编码器、6D Force/Torque 传感器、RGB-D 相机\n\n**软件环境**：ROS + MuJoCo 物理引擎\n\n### 4.2 任务设置\n\n**任务 1：顺应性桌面擦拭**\n\n- 目标：在不同刚度表面上擦拭（软垫、木板、金属板）\n- payload 变化：0.5kg - 2.0kg 清洁工具\n- 评估指标：擦拭覆盖率、表面接触力波动\n\n**任务 2：抽屉开启**\n\n- 目标：打开不同阻力的抽屉（轻阻、中阻、重阻）\n- 干扰：外部推力干扰\n- 评估指标：成功率、平均力峰值、完成时间\n\n### 4.3 数据集\n\n| 数据类型 | 数量 | 描述 |\n|----------|------|------|\n| 位置-only 演示 | 10,000 条 | 示教轨迹，无力反馈 |\n| 力感知演示 | 500 条 | 精选的高质量接触演示 |\n| 混合演示 | 2,000 条 | 包含多种控制模态切换 |\n\n### 4.4 基线方法\n\n- **BC**：行为克隆，标准模仿学习\n- **DAIL**：域对抗模仿学习\n- **CAG**：对比动作生成\n- **GATO**：通用 agent 方法\n- **单独阻抗控制**：固定阻抗参数\n\n### 4.5 评估指标\n\n- **成功率**（Success Rate）\n- **平均力误差**（Mean Force Error）：$\\frac{1}{T} \\sum_t |F_{\\text{actual}} - F_{\\text{target}}|$\n- **力波动**（Force Variance）：$\\text{Var}(F_{\\text{contact}})$\n- **任务完成时间**\n\n---\n\n## 5. 技术优势\n\n### 5.1 异构控制模态融合\n\nHMC 的核心优势在于能够在扭矩空间连续融合三种不同控制模态，解决了传统方法中控制模式切换不平滑的问题。实验表明，该方法在控制模态切换时避免了突变和振荡。\n\n### 5.2 数据效率\n\n通过混合专家架构，HMC 能够有效利用大规模位置-only 演示数据（低成本、易获取）和少量高质量力感知演示数据（精细但稀缺），实现了数据效率的提升。\n\n### 5.3 自适应能力\n\n门控网络根据当前状态动态调整控制权重，使机器人能够自适应不同刚度表面和 payload 变化。在 payload 从 0.5kg 变化到 2.0kg 时，成功率仅下降 5%，而基线方法下降超过 30%。\n\n### 5.4 泛化性\n\n统一策略架构使知识在不同控制模态间迁移，避免了为每种控制模式单独训练策略的计算开销。\n\n### 5.5 实际部署友好\n\nHMC-Controller 直接输出扭矩，可直接部署到物理机器人，无需额外的控制器调参，缩短了从仿真到实际的迁移距离。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 计算复杂度\n\n混合专家架构引入额外的门控网络和三个专家网络，推理时计算量约为单策略网络的 2-3 倍，可能对实时控制提出挑战。\n\n### 6.2 门控网络脆弱性\n\n门控网络的状态估计依赖传感器数据，在传感器噪声较大或观测缺失时可能出现控制模态选择错误，导致控制行为不稳定。\n\n### 6.3 演示数据质量敏感\n\n该方法对演示数据质量敏感：如果位置-only 演示中包含不良接触行为，可能被位置专家学习并泛化到新场景。\n\n### 6.4 极端场景覆盖\n\n由于力感知演示数量有限（500 条），模型在训练数据未覆盖的极端接触场景（如极高刚度表面、突发外力干扰）表现可能下降。\n\n### 6.5 缺乏在线适应\n\n当前方法依赖离线训练，缺乏在线即时学习能力。当任务目标动态变化时，无法快速适应新要求。\n\n### 6.6 评估局限\n\n实验仅在两个人形机器人任务上验证，方法在更多样化的机器人平台（如机械臂、四足机器人）和更广泛任务类型上的泛化性有待进一步验证。\n\n---\n\n## 总结\n\nHMC 方法通过异构元控制框架，创新性地将多种控制模态统一到扭矩空间进行融合学习。该方法利用混合专家架构实现位置数据与力感知数据的协同训练，在接触丰富的运动-操作任务中展现出显著的性能优势。超过 50% 的相对改进验证了其在复杂交互场景中的有效性。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "HMC: Learning Heterogeneous Meta-Control for Contact-Rich Loco-Manipulation",
+      "authors": [
+        "Lai Wei",
+        "Xuanbin Peng",
+        "Ri-Zhao Qiu",
+        "Tianshu Huang",
+        "Xuxin Cheng",
+        "Xiaolong Wang"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2511.14756",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Learning from real-world robot demonstrations holds promise for interacting with complex real-world environments. However, the complexity and variability of interaction dynamics often cause purely positional controllers to struggle with contacts or varying payloads. To address this, we propose a Heterogeneous Meta-Control (HMC) framework for Loco-Manipulation that adaptively stitches multiple control modalities: position, impedance, and hybrid force-position. We first introduce an interface, HMC-Controller, for blending actions from different control profiles continuously in the torque space. HMC-Controller facilitates both teleoperation and policy deployment. Then, to learn a robust force-aware policy, we propose HMC-Policy to unify different controllers into a heterogeneous architecture. We adopt a mixture-of-experts style routing to learn from large-scale position-only data and fine-grained force-aware demonstrations. Experiments on a real humanoid robot show over 50% relative improvement vs. baselines on challenging tasks such as compliant table wiping and drawer opening, demonstrating the efficacy of HMC.",
+      "route_id": "20632a09-ec1d-4692-9798-de6df5d39bb1"
+    },
+    "markdown_stats": {
+      "lines": 277,
+      "words": 6379,
+      "headings": 11
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "20632a09-ec1d-4692-9798-de6df5d39bb1",
+  "paper_ref": "20632a09-ec1d-4692-9798-de6df5d39bb1",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,97 @@
+{
+  "dir_name": "Gong-2025-AnyTask-an-Automated-Task-and-Data-Generation-Fra",
+  "title": "AnyTask: an Automated Task and Data Generation Framework for Advancing Sim-to-Real Policy Learning",
+  "authors": [
+    "Ran Gong",
+    "Xiaohan Zhang",
+    "Jinghuan Shang",
+    "Maria Vittoria Minniti",
+    "Jigarkumar Patel",
+    "Valerio Pepe",
+    "Riedana Yan",
+    "Ahmet Gundogdu",
+    "Ivan Kapelyukh",
+    "Ali E. Abbas",
+    "Xiaoqiang Yan",
+    "Harsh Patel",
+    "Laura Herlant",
+    "Karl Schmeckpeper"
+  ],
+  "year": 2025,
+  "journal": "IEEE Robotics and Automation Letters",
+  "doi": "",
+  "abstract": "Generalist robot learning remains constrained by data: large-scale, diverse, and high-quality interaction data are expensive to collect in the real world. While simulation has become a promising way for scaling up data collection, the related tasks, including simulation task design, task-aware scene generation, expert demonstration synthesis, and sim-to-real transfer, still demand substantial human effort. We present AnyTask, an automated framework that pairs massively parallel GPU simulation with foundation models to design diverse manipulation tasks and synthesize robot data. We introduce three AnyTask agents for generating expert demonstrations aiming to solve as many tasks as possible: 1) ViPR, a novel task and motion planning agent with VLM-in-the-loop Parallel Refinement; 2) ViPR-Eureka, a reinforcement learning agent with generated dense rewards and LLM-guided contact sampling; 3) ViPR-RL, a hybrid planning and learning approach that jointly produces high-quality demonstrations with only sparse rewards. We train behavior cloning policies on generated data, validate them in simulation, and deploy them directly on real robot hardware. The policies generalize to novel object poses, achieving 44% average success across a suite of real-world pick-and-place, drawer opening, contact-rich pushing, and long-horizon manipulation tasks. Our project website is at https://anytask.rai-inst.com .",
+  "paper_type": "article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "AnyTask: an Automated Task and Data Generation Framework for Advancing Sim-to-Real Policy Learning",
+      "authors": [
+        "Ran Gong",
+        "Xiaohan Zhang",
+        "Jinghuan Shang",
+        "Maria Vittoria Minniti",
+        "Jigarkumar Patel",
+        "Valerio Pepe",
+        "Riedana Yan",
+        "Ahmet Gundogdu",
+        "Ivan Kapelyukh",
+        "Ali E. Abbas",
+        "Xiaoqiang Yan",
+        "Harsh Patel",
+        "Laura Herlant",
+        "Karl Schmeckpeper"
+      ],
+      "year": 2025,
+      "journal": "IEEE Robotics and Automation Letters",
+      "paper_type": "article",
+      "abstract": "Generalist robot learning remains constrained by data: large-scale, diverse, and high-quality interaction data are expensive to collect in the real world. While simulation has become a promising way for scaling up data collection, the related tasks, including simulation task design, task-aware scene generation, expert demonstration synthesis, and sim-to-real transfer, still demand substantial human effort. We present AnyTask, an automated framework that pairs massively parallel GPU simulation with foundation models to design diverse manipulation tasks and synthesize robot data. We introduce three AnyTask agents for generating expert demonstrations aiming to solve as many tasks as possible: 1) ViPR, a novel task and motion planning agent with VLM-in-the-loop Parallel Refinement; 2) ViPR-Eureka, a reinforcement learning agent with generated dense rewards and LLM-guided contact sampling; 3) ViPR-RL, a hybrid planning and learning approach that jointly produces high-quality demonstrations with only sparse rewards. We train behavior cloning policies on generated data, validate them in simulation, and deploy them directly on real robot hardware. The policies generalize to novel object poses, achieving 44% average success across a suite of real-world pick-and-place, drawer opening, contact-rich pushing, and long-horizon manipulation tasks. Our project website is at https://anytask.rai-inst.com ."
+    },
+    "markdown_stats": {
+      "lines": 671,
+      "words": 12306,
+      "headings": 51
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "18dba67c-0cc7-4791-ae2b-6b72edee3439_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "10.1201-9781003490210-63",
+  "paper_ref": "10.1201-9781003490210-63",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

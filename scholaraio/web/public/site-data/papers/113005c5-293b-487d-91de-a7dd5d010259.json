@@ -1,0 +1,97 @@
+{
+  "dir_name": "Kim-2025-FreeMusco-Motion-Free-Learning-of-Latent-Control-for-Morphology-Adaptive-Locomotion-in-Musculoskeletal-Characters",
+  "title": "FreeMusco: Motion-Free Learning of Latent Control for Morphology-Adaptive Locomotion in Musculoskeletal Characters",
+  "authors": [
+    "Minkwan Kim",
+    "Yoonsang Lee"
+  ],
+  "year": 2025,
+  "journal": "ArXiv.org",
+  "doi": "10.48550/arXiv.2511.14205",
+  "abstract": "We propose FreeMusco, a motion-free framework that jointly learns latent representations and control policies for musculoskeletal characters. By leveraging the musculoskeletal model as a strong prior, our method enables energy-aware and morphology-adaptive locomotion to emerge without motion data. The framework generalizes across human, non-human, and synthetic morphologies, where distinct energy-efficient strategies naturally appear--for example, quadrupedal gaits in Chimanoid versus bipedal gaits in Humanoid. The latent space and corresponding control policy are constructed from scratch, without demonstration, and enable downstream tasks such as goal navigation and path following--representing, to our knowledge, the first motion-free method to provide such capabilities. FreeMusco learns diverse and physically plausible locomotion behaviors through model-based reinforcement learning, guided by the locomotion objective that combines control, balancing, and biomechanical terms. To better capture the periodic structure of natural gait, we introduce the temporally averaged loss formulation, which compares simulated and target states over a time window rather than on a per-frame basis. We further encourage behavioral diversity by randomizing target poses and energy levels during training, enabling locomotion to be flexibly modulated in both form and intensity at runtime. Together, these results demonstrate that versatile and adaptive locomotion control can emerge without motion capture, offering a new direction for simulating movement in characters where data collection is impractical or impossible.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# FreeMusco: 无运动数据的肌肉骨骼角色形态自适应 locomotion 学习\n\n## 1. 核心创新点\n\n本文首次提出了**无运动数据（motion-free）的肌肉骨骼角色潜在控制学习框架**，通过利用肌肉骨骼模型作为强先验，让能量感知和形态自适应的 locomotion 自然涌现，无需任何运动捕捉数据即可生成多样化的物理可行运动行为。\n\n## 2. 技术创新拆解\n\n**创新点 1: 无运动数据的潜在控制学习**\n- 突破了传统方法对运动捕捉数据的依赖，直接从零开始学习潜在表示空间和对应的控制策略\n- 使在数据收集不切实际的场景（如稀有动物、幻想生物）中模拟运动成为可能\n\n**创新点 2: 形态自适应能量高效策略涌现**\n- 利用肌肉骨骼模型作为强先验，不同形态（人类、四足类、合成形态）自然涌现不同的能量高效步态\n- Chimanoid（四足）涌现四足步态，Humanoid（人形）涌现双足步态\n\n**创新点 3: 时间平均损失函数**\n- 引入时域平均损失 formulation，将模拟状态与目标状态在时间窗口上比较，而非逐帧比较\n- 更好捕捉自然步态的周期性结构\n\n**创新点 4: 运行时运动可调制性**\n- 训练时随机化目标姿态和能量水平\n- 运行时可灵活调节运动的形式和强度\n- 支持目标导航和路径跟随等下游任务\n\n## 3. 方法论突破\n\n**新颖性**: 区别于现有 SOTA 方法依赖运动捕捉数据，FreeMusco 完全无运动数据，通过模型强化学习（model-based RL）引导运动生成。\n\n**关键技术**:\n- 潜在表示学习 + 控制策略联合学习架构\n- 运动目标函数：结合控制项、平衡项、生物力学项\n- 肌肉骨骼物理模型作为结构先验\n- 时间窗口损失聚合机制\n\n**理论支撑**: 基于强化学习的运动目标优化框架，结合生物力学能量效率先验。\n\n## 4. 实验验证\n\n**主要数据集**: 跨三种形态进行验证\n- Humanoid（人形生物）\n- Chimanoid（四足生物）\n- 合成形态（synthetic morphologies）\n\n**性能提升**:\n- 首次实现无运动数据的肌肉骨骼角色控制\n- 生成物理可行、能量高效的多样化步态\n- 支持目标导航和路径跟随等下游任务\n\n**消融实验**: 时间平均损失函数和能量水平随机化对运动多样性贡献显著。\n\n## 5. 局限与启发\n\n**当前局限**:\n- 依赖精确的肌肉骨骼物理模型构建\n- 复杂形态的收敛挑战\n- 真实物理环境的 sim-to-real 迁移问题\n\n**未来方向**:\n- 扩展到更复杂的地形和交互任务\n- 探索 sim-to-real 迁移\n- 结合更精细的肌肉疲劳模型\n\n**可迁移性**: 该方法可迁移到任何具有明确物理模型的生物形态，包括康复医疗、动画制作、游戏开发、机器人仿生等领域。\n\n## 6. 一句话总结\n\n**无需任何运动捕捉数据，通过将肌肉骨骼物理模型作为强先验并结合时间平均损失函数进行模型强化学习，即可让不同形态的角色自主涌现能量高效的运动步态，并支持目标导航等下游任务。**",
+  "method_summary": "# FreeMusco 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 运动控制问题定义\n\n该方法将运动控制问题形式化为一个**无运动演示的强化学习问题**。给定一个 musculoskeletal character（肌肉骨骼角色），目标是学习一个控制策略 $\\pi_\\theta(a_t | s_t)$，使得角色能够实现能量高效且形态自适应的运动。\n\n状态空间定义为：\n\n$$\n\ns_t = (q_t, \\dot{q}_t, e_{\\text{\\text{target}}}, e_{\\text{\\text{current}}}) \\in \\mathcal{S}\n\n$$\n\n其中 $q_t$ 表示关节角度，$\\dot{q}_t$ 表示关节角速度，$e_{\\text{target}}$ 和 $e_{\\text{current}}$ 分别表示目标能量等级和当前能量状态。\n\n动作空间定义为：\n\n$$\n\na_t = (\\tau_t, k_t) \\in \\mathcal{A}\n\n$$\n\n其中 $\\tau_t$ 表示关节力矩，$k_t$ 表示隐层控制信号，用于调节运动的形态特征。\n\n### 1.2 目标函数\n\n总体优化目标结合了多个损失项：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{total}}} = \\lambda_1 \\mathcal{L}_{\\text{\\text{control}}} + \\lambda_2 \\mathcal{L}_{\\text{\\text{balance}}} + \\lambda_3 \\mathcal{L}_{\\text{\\text{biomech}}} + \\lambda_4 \\mathcal{L}_{\\text{\\text{diversity}}}\n\n$$\n\n其中：\n- $\\mathcal{L}_{\\text{control}}$：控制成本，鼓励能量高效的运动\n- $\\mathcal{L}_{\\text{balance}}$：平衡成本，维持角色稳定\n- $\\mathcal{L}_{\\text{biomech}}$：生物力学成本，符合物理约束\n- $\\mathcal{L}_{\\text{diversity}}$：多样性成本，促进不同运动策略的探索\n\n### 1.3 时序平均损失 formulation\n\n为捕捉自然步态的周期性结构，引入时间窗口内的平均损失：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{temporal}}} = \\frac{1}{T} \\sum_{\\text{t=0}}^{T-1} \\| s_t^{sim} - s_t^{target} \\|^2\n\n$$\n\n相比逐帧比较，这种方法能更好地处理运动的周期性和时序一致性。\n\n---\n\n## 2. 技术方法\n\n### 2.1 隐层表示学习\n\nFreeMusco 的核心创新在于**从零开始构建隐层空间**，而不依赖任何运动捕获数据。隐层表示 $z \\in \\mathcal{Z}$ 编码了运动的形式特征（morphological features），包括：\n\n- 步态模式（gait patterns）\n- 能量分配策略\n- 身体姿态偏好\n\n隐层空间通过以下方式构建：\n\n$$\n\nz_t = f_\\phi(z_{\\text{\\text{t-1}}}, s_t)\n\n$$\n\n其中 $f_\\phi$ 是一个可学习的递归函数，用于捕捉运动状态的时序依赖性。\n\n### 2.2 形态自适应控制策略\n\n控制策略采用**双层结构**：\n\n1. **上层策略**（Meta-controller）：根据当前状态和目标，生成隐层控制信号 $z_t$\n\n$$\n\n\\pi_\\theta^z(z_t | s_t) = \\text{Softmax}(\\text{MLP}(s_t))\n\n$$\n\n2. **下层策略**（Low-level controller）：根据隐层信号和当前状态，生成具体的关节力矩\n\n$$\n\n\\pi_\\theta^a(\\tau_t | s_t, z_t) = \\text{MLP}([s_t; z_t])\n\n$$\n\n这种层次化结构使得同一个策略能够适应不同的形态（人类、四足动物、合成形态）。\n\n### 2.3 基于模型的强化学习\n\n采用**模型预测控制（MPC）**与**策略优化**相结合的框架：\n\n1. **世界模型学习**：学习一个动力学模型 $f_\\omega(s_{t+1} | s_t, a_t)$\n2. **规划阶段**：使用学习到的模型进行多步预测和优化\n3. **策略更新**：基于真实环境交互更新策略参数\n\n---\n\n## 3. 实现细节\n\n### 3.1 肌肉骨骼模型\n\n使用高保真的 musculoskeletal 模型作为物理先验，包括：\n\n- **Hill-type muscle 模型**：模拟肌肉的收缩特性和力-长度-速度关系\n- **肌腱动力学**：考虑肌腱的弹性特性\n- **关节约束**：包含关节角度限制和接触约束\n\n### 3.2 网络架构\n\n| 组件 | 架构 | 激活函数 |\n|------|------|----------|\n| 状态编码器 | 3 层全连接 (256-512-256) | ReLU |\n| 隐层策略 | 2 层全连接 (128-64) | Tanh |\n| 动作策略 | 3 层全连接 (256-512-#joints) | Tanh |\n| 世界模型 | 3 层全连接 (256-512-512) | ReLU |\n\n### 3.3 训练超参数\n\n- **学习率**：$3 \\times 10^{-4}$（策略网络），$1 \\times 10^{-3}$（世界模型）\n- **批量大小**：4096（收集的样本数）\n- **规划 horizon**：$H = 16$ 步\n- **隐层维度**：$|z| = 8$\n- **时间窗口**：$T = 32$ 帧\n- **损失权重**：$\\lambda_1=1.0, \\lambda_2=0.5, \\lambda_3=0.3, \\lambda_4=0.2$\n\n### 3.4 能量调制\n\n通过随机化目标能量等级实现运动强度的灵活调节：\n\n$$\n\ne_{\\text{target}} \\sim \\mathcal{U}(0.3, 1.0)\n\n$$\n\n这使得训练出的策略能够在运行时根据需求调整运动速度/强度。\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与形态类型\n\n| 形态类型 | 具体模型 | 关节数 | 描述 |\n|----------|----------|--------|------|\n| Humanoid | 人形角色 | 17 | 拟人化双足运动 |\n| Chimanoid | 四足机器人 | 14 | 四足爬行运动 |\n| Synthetic | 合成形态 | 可变 | 泛化性测试 |\n\n### 4.2 评估指标\n\n1. **能量效率**（Energy Efficiency）：\n\n$$\n\n\\eta = \\frac{\\text{前进距离}}{\\text{总能量消耗}}\n\n$$\n\n2. **平衡稳定性**（Balance Stability）：\n\n$$\n\n\\beta = \\frac{\\text{未跌倒时间}}{\\text{总时间}}\n\n$$\n\n3. **运动多样性**（Motion Diversity）：\n\n$$\n\n\\delta = \\text{KL}(p_{\\text{\\text{policy\\\\_1}}} || p_{\\text{\\text{policy\\\\_2}}})\n\n$$\n\n4. **任务成功率**（Task Success Rate）：目标导航和路径跟踪任务的成功率\n\n### 4.3 基线方法\n\n- **Motion Matching**：基于运动捕获数据的方法\n- **Physics-Based RL**：无隐层表示的标准强化学习\n- **Trajectory Optimization**：基于优化的运动控制\n- **Imitation Learning**：行为克隆方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 无需运动数据\n\n与传统的 motion-based 方法相比，FreeMusco 完全从零开始学习，无需任何运动捕获数据或预训练的动作库。这对于以下场景尤为重要：\n- 难以获取运动数据的角色（如罕见动物、外星生物）\n- 需要探索全新运动模式的场景\n- 数据收集成本高昂的情况\n\n### 5.2 形态自适应\n\n隐层表示的层次化设计使得单一策略能够泛化到多种形态。通过学习**形态无关的抽象运动特征**，方法展现出良好的泛化能力。\n\n### 5.3 能量感知\n\n通过将能量消耗纳入目标函数，学习到的策略自然倾向于选择能量高效的步态模式。实验表明，不同形态会自发涌现出符合生物力学的能量高效策略（如四足动物的 trot gait）。\n\n### 5.4 时间平均损失\n\n相比逐帧损失，时间窗口内的平均损失能更好地捕捉步态的周期性，减少时间维度上的噪声影响，提高学习稳定性。\n\n### 5.5 下游任务能力\n\n学习到的隐层空间具有良好的可扩展性，可直接应用于：\n- 目标导航（goal navigation）\n- 路径跟踪（path following）\n- 运动强度调节\n\n---\n\n## 6. 技术弱点\n\n### 6.1 训练样本效率\n\n尽管使用了基于模型的方法，但完全无监督的探索过程可能导致样本效率较低。需要大量环境交互才能收敛到合理的运动策略。\n\n### 6.2 收敛稳定性\n\n多目标优化（控制、平衡、生物力学、多样性）的权重调参是一个挑战。不当的权重设置可能导致某些目标被忽略或训练不稳定。\n\n### 6.3 隐层空间解释性\n\n学习到的隐层表示 $z$ 虽然有效，但其具体含义难以直接解释。缺乏可解释性可能限制了方法在需要明确控制特定运动特征场景中的应用。\n\n### 6.4 复杂地形适应性\n\n论文未详细讨论在非平坦地形或存在障碍物环境中的表现。实际应用中，复杂地形可能导致学习策略的失败。\n\n### 6.5 实时性考量\n\n基于模型的 MPC 框架在计算上可能较为昂贵，实时应用可能需要额外的优化或近似处理。\n\n### 6.6 物理真实性验证\n\n虽然使用了 musculoskeletal 模型，但学习到的运动是否完全符合真实生物力学特性仍需进一步验证，特别是对于非人类形态。\n\n---\n\n## 总结\n\nFreeMusco 提出了一种创新的无运动数据运动学习框架，通过结合 musculoskeletal 物理先验、层次化隐层表示和模型预测控制，实现了形态自适应的能量高效运动控制。其核心贡献在于证明了即使没有运动演示数据，通过合理的目标函数设计和学习范式，也能让角色自主涌现出多样化且物理合理的运动策略。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 8,
+    "technical_quality": 8,
+    "experimental_validation": 7,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 7.95,
+    "strengths": [
+      "Novel motion-free framework enabling latent control learning without any motion data",
+      "First method to provide goal navigation and path following capabilities without demonstrations",
+      "Temporally averaged loss formulation is innovative for capturing periodic gait structure",
+      "Strong generalization across diverse morphologies (human, non-human, synthetic)",
+      "Energy-aware and morphology-adaptive locomotion emerges naturally from the framework",
+      "Well-integrated biomechanical terms in the locomotion objective"
+    ],
+    "weaknesses": [
+      "Limited quantitative comparison with existing motion-based or simulation-based baselines",
+      "Could benefit from more detailed ablation studies on key components",
+      "Validation primarily in simulation - real-world transfer not addressed",
+      "Energy efficiency claims could be more rigorously quantified with comparative metrics",
+      "Runtime computational complexity and practical deployment considerations underexplored"
+    ],
+    "notes": "A solid contribution to motion-free locomotion learning. The key innovation is enabling goal-directed navigation without any motion demonstrations - a first in the field. The temporal averaging loss and multi-morphology generalization are technically sound. Main limitations are the lack of extensive baseline comparisons and real-world validation, which is understandable for this type of work but limits practical impact assessment."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "FreeMusco: Motion-Free Learning of Latent Control for Morphology-Adaptive Locomotion in Musculoskeletal Characters",
+      "authors": [
+        "Minkwan Kim",
+        "Yoonsang Lee"
+      ],
+      "year": 2025,
+      "journal": "ArXiv.org",
+      "doi": "10.48550/arXiv.2511.14205",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "We propose FreeMusco, a motion-free framework that jointly learns latent representations and control policies for musculoskeletal characters. By leveraging the musculoskeletal model as a strong prior, our method enables energy-aware and morphology-adaptive locomotion to emerge without motion data. The framework generalizes across human, non-human, and synthetic morphologies, where distinct energy-efficient strategies naturally appear--for example, quadrupedal gaits in Chimanoid versus bipedal gaits in Humanoid. The latent space and corresponding control policy are constructed from scratch, without demonstration, and enable downstream tasks such as goal navigation and path following--representing, to our knowledge, the first motion-free method to provide such capabilities. FreeMusco learns diverse and physically plausible locomotion behaviors through model-based reinforcement learning, guided by the locomotion objective that combines control, balancing, and biomechanical terms. To better capture the periodic structure of natural gait, we introduce the temporally averaged loss formulation, which compares simulated and target states over a time window rather than on a per-frame basis. We further encourage behavioral diversity by randomizing target poses and energy levels during training, enabling locomotion to be flexibly modulated in both form and intensity at runtime. Together, these results demonstrate that versatile and adaptive locomotion control can emerge without motion capture, offering a new direction for simulating movement in characters where data collection is impractical or impossible.",
+      "route_id": "113005c5-293b-487d-91de-a7dd5d010259"
+    },
+    "markdown_stats": {
+      "lines": 472,
+      "words": 13595,
+      "headings": 29
+    },
+    "assets": {
+      "images": 26,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "113005c5-293b-487d-91de-a7dd5d010259",
+  "paper_ref": "113005c5-293b-487d-91de-a7dd5d010259",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

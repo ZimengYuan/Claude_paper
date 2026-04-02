@@ -1,0 +1,81 @@
+{
+  "dir_name": "Liao-2025-Berkeley-Humanoid-A-Research-Platform-for-Learning-Based-Control",
+  "title": "Berkeley Humanoid: A Research Platform for Learning-Based Control",
+  "authors": [
+    "Qiayuan Liao",
+    "Bike Zhang",
+    "Xuanyu Huang",
+    "Xiaoyu Huang",
+    "Zhongyu Li",
+    "Koushil Sreenath"
+  ],
+  "year": 2025,
+  "journal": "2025 IEEE International Conference on Robotics and Automation (ICRA)",
+  "doi": "10.1109/icra55743.2025.11127524",
+  "abstract": "We introduce Berkeley Humanoid, a reliable and low-cost mid-scale humanoid research platform for learningbased control. Our lightweight, in-house-built robot is designed specifically for learning algorithms with accurate simulation, low simulation complexity, anthropomorphic motion, and high reliability against falls. The narrow sim-to-real gap enables agile and robust locomotion across various terrains in outdoor environments, achieved with a simple reinforcement learning controller using light domain randomization. Furthermore, we demonstrate the robot traversing for hundreds of meters, walking on a steep unpaved trail, and hopping with single and double legs as a testimony to its high performance in dynamic walking. Capable of omnidirectional locomotion and withstanding large perturbations with a compact setup, our system aims for rapid sim-to-real deployment of learningbased humanoid systems. Please check our website https:// berkeley-humanoid.com/ and code https://github. com/HybridRobotics/isaac_berkeley_humanoid/.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 51,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Berkeley Humanoid: A Research Platform for Learning-Based Control",
+      "authors": [
+        "Qiayuan Liao",
+        "Bike Zhang",
+        "Xuanyu Huang",
+        "Xiaoyu Huang",
+        "Zhongyu Li",
+        "Koushil Sreenath"
+      ],
+      "year": 2025,
+      "journal": "2025 IEEE International Conference on Robotics and Automation (ICRA)",
+      "doi": "10.1109/icra55743.2025.11127524",
+      "paper_type": "proceedings-article",
+      "abstract": "We introduce Berkeley Humanoid, a reliable and low-cost mid-scale humanoid research platform for learningbased control. Our lightweight, in-house-built robot is designed specifically for learning algorithms with accurate simulation, low simulation complexity, anthropomorphic motion, and high reliability against falls. The narrow sim-to-real gap enables agile and robust locomotion across various terrains in outdoor environments, achieved with a simple reinforcement learning controller using light domain randomization. Furthermore, we demonstrate the robot traversing for hundreds of meters, walking on a steep unpaved trail, and hopping with single and double legs as a testimony to its high performance in dynamic walking. Capable of omnidirectional locomotion and withstanding large perturbations with a compact setup, our system aims for rapid sim-to-real deployment of learningbased humanoid systems. Please check our website https:// berkeley-humanoid.com/ and code https://github. com/HybridRobotics/isaac_berkeley_humanoid/.",
+      "route_id": "eb45eb86-1f75-43be-a4fc-d8e93a0e2519"
+    },
+    "markdown_stats": {
+      "lines": 332,
+      "words": 8492,
+      "headings": 26
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "eb45eb86-1f75-43be-a4fc-d8e93a0e2519",
+  "paper_ref": "eb45eb86-1f75-43be-a4fc-d8e93a0e2519",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

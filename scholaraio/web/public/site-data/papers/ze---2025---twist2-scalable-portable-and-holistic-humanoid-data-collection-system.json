@@ -1,0 +1,87 @@
+{
+  "dir_name": "Yanjie-2025-TWIST2-Scalable-Portable-and-Holistic-Humanoid-",
+  "title": "TWIST2: Scalable, Portable, and Holistic Humanoid Data Collection System",
+  "authors": [
+    "Ze, Yanjie",
+    "Zhao, Siheng",
+    "Wang, Weizhuo",
+    "Kanazawa, Angjoo",
+    "Duan, Rocky",
+    "Abbeel, Pieter",
+    "Shi, Guanya",
+    "Wu, Jiajun",
+    "Liu, C. Karen"
+  ],
+  "year": 2025,
+  "journal": "ArXiv.org",
+  "doi": "",
+  "abstract": "Large-scale data has driven breakthroughs in robotics, from language models to vision-language-action models in bimanual manipulation. However, humanoid robotics lacks equally effective data collection frameworks. Existing humanoid teleoperation systems either use decoupled control or depend on expensive motion capture setups. We introduce TWIST2, a portable, mocap-free humanoid teleoperation and data collection system that preserves full whole-body control while advancing scalability. Our system leverages PICO4U VR for obtaining real-time whole-body human motions, with a custom 2-DoF robot neck (cost around $250) for egocentric vision, enabling holistic human-to-humanoid control. We demonstrate long-horizon dexterous and mobile humanoid skills and we can collect 100 demonstrations in 15 minutes with an almost 100% success rate. Building on this pipeline, we propose a hierarchical visuomotor policy framework that autonomously controls the full humanoid body based on egocentric vision. Our visuomotor policy successfully demonstrates whole-body dexterous manipulation and dynamic kicking tasks. The entire system is fully reproducible and open-sourced at https://yanjieze.com/TWIST2 . Our collected dataset is also open-sourced at https://twist-data.github.io .",
+  "paper_type": "article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "TWIST2: Scalable, Portable, and Holistic Humanoid Data Collection System",
+      "authors": [
+        "Ze, Yanjie",
+        "Zhao, Siheng",
+        "Wang, Weizhuo",
+        "Kanazawa, Angjoo",
+        "Duan, Rocky",
+        "Abbeel, Pieter",
+        "Shi, Guanya",
+        "Wu, Jiajun",
+        "Liu, C. Karen"
+      ],
+      "year": 2025,
+      "journal": "ArXiv.org",
+      "paper_type": "article",
+      "abstract": "Large-scale data has driven breakthroughs in robotics, from language models to vision-language-action models in bimanual manipulation. However, humanoid robotics lacks equally effective data collection frameworks. Existing humanoid teleoperation systems either use decoupled control or depend on expensive motion capture setups. We introduce TWIST2, a portable, mocap-free humanoid teleoperation and data collection system that preserves full whole-body control while advancing scalability. Our system leverages PICO4U VR for obtaining real-time whole-body human motions, with a custom 2-DoF robot neck (cost around $250) for egocentric vision, enabling holistic human-to-humanoid control. We demonstrate long-horizon dexterous and mobile humanoid skills and we can collect 100 demonstrations in 15 minutes with an almost 100% success rate. Building on this pipeline, we propose a hierarchical visuomotor policy framework that autonomously controls the full humanoid body based on egocentric vision. Our visuomotor policy successfully demonstrates whole-body dexterous manipulation and dynamic kicking tasks. The entire system is fully reproducible and open-sourced at https://yanjieze.com/TWIST2 . Our collected dataset is also open-sourced at https://twist-data.github.io ."
+    },
+    "markdown_stats": {
+      "lines": 319,
+      "words": 7758,
+      "headings": 22
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "76bbfe5f-7f28-4803-b768-3cfbf293492e_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "ze---2025---twist2-scalable-portable-and-holistic-humanoid-data-collection-system",
+  "paper_ref": "Ze 等 - 2025 - TWIST2 scalable, portable, and holistic humanoid data collection system",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

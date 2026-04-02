@@ -1,0 +1,79 @@
+{
+  "dir_name": "Kim-2025-Stage-Wise-Reward-Shaping-for-Acrobatic-Robots-A-Constrained-Multi-Objective-Reinforcement-Learning-Approach",
+  "title": "Stage-Wise Reward Shaping for Acrobatic Robots: A Constrained Multi-Objective Reinforcement Learning Approach",
+  "authors": [
+    "Dohyeong Kim",
+    "Hyeokjin Kwon",
+    "Junseok Kim",
+    "Gunmin Lee",
+    "Songhwai Oh"
+  ],
+  "year": 2025,
+  "journal": "2025 IEEE International Conference on Robotics and Automation (ICRA)",
+  "doi": "10.1109/icra55743.2025.11128552",
+  "abstract": "As the complexity of tasks addressed through reinforcement learning (RL) increases, the definition of reward functions also has become highly complicated. We introduce an RL method aimed at simplifying the reward-shaping process through intuitive strategies. Initially, instead of a single reward function composed of various terms, we define multiple reward and cost functions within a constrained multi-objective RL (CMORL) framework. For tasks involving sequential complex movements, we segment the task into distinct stages and define multiple rewards and costs for each stage. Finally, we introduce a practical CMORL algorithm that maximizes objectives based on these rewards while satisfying constraints defined by the costs. The proposed method has been successfully demonstrated across a variety of acrobatic tasks in both simulation and real-world environments. Additionally, it has been shown to successfully perform tasks compared to existing RL and constrained RL algorithms. Our code is available at https://github.com/rllab-snu/Stage-Wise-CMORL.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 14,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Stage-Wise Reward Shaping for Acrobatic Robots: A Constrained Multi-Objective Reinforcement Learning Approach",
+      "authors": [
+        "Dohyeong Kim",
+        "Hyeokjin Kwon",
+        "Junseok Kim",
+        "Gunmin Lee",
+        "Songhwai Oh"
+      ],
+      "year": 2025,
+      "journal": "2025 IEEE International Conference on Robotics and Automation (ICRA)",
+      "doi": "10.1109/icra55743.2025.11128552",
+      "paper_type": "proceedings-article",
+      "abstract": "As the complexity of tasks addressed through reinforcement learning (RL) increases, the definition of reward functions also has become highly complicated. We introduce an RL method aimed at simplifying the reward-shaping process through intuitive strategies. Initially, instead of a single reward function composed of various terms, we define multiple reward and cost functions within a constrained multi-objective RL (CMORL) framework. For tasks involving sequential complex movements, we segment the task into distinct stages and define multiple rewards and costs for each stage. Finally, we introduce a practical CMORL algorithm that maximizes objectives based on these rewards while satisfying constraints defined by the costs. The proposed method has been successfully demonstrated across a variety of acrobatic tasks in both simulation and real-world environments. Additionally, it has been shown to successfully perform tasks compared to existing RL and constrained RL algorithms. Our code is available at https://github.com/rllab-snu/Stage-Wise-CMORL.",
+      "route_id": "5a04a71e-6b0f-4659-87b1-88e88969e83b"
+    },
+    "markdown_stats": {
+      "lines": 188,
+      "words": 6412,
+      "headings": 19
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "5a04a71e-6b0f-4659-87b1-88e88969e83b",
+  "paper_ref": "5a04a71e-6b0f-4659-87b1-88e88969e83b",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

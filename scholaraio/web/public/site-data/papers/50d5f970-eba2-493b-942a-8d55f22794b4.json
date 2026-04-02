@@ -1,0 +1,104 @@
+{
+  "dir_name": "Dong-2025-HAFO-A-Force-Adaptive-Control-Framework-for-Humanoid-Robots-in-Intense-Interaction-Environments",
+  "title": "HAFO: A Force-Adaptive Control Framework for Humanoid Robots in Intense Interaction Environments",
+  "authors": [
+    "Chenhui Dong",
+    "Haozhe Xu",
+    "Wenhao Feng",
+    "Zhipeng Wang",
+    "Yanmin Zhou",
+    "Yifei Zhao",
+    "Bin He"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2511.20275",
+  "abstract": "Reinforcement learning (RL) controllers have made impressive progress in humanoid locomotion and light-weight object manipulation. However, achieving robust and precise motion control with intense force interaction remains a significant challenge. To address these limitations, this paper proposes HAFO, a dual-agent reinforcement learning framework that concurrently optimizes both a robust locomotion strategy and a precise upper-body manipulation strategy via coupled training. We employ a constrained residual action space to improve dual-agent training stability and sample efficiency. The external tension disturbances are explicitly modeled using a spring-damper system, allowing for fine-grained force control through manipulation of the virtual spring. In this process, the reinforcement learning policy autonomously generates a disturbance-rejection response by utilizing environmental feedback. The experimental results demonstrate that HAFO achieves whole-body control for humanoid robots across diverse force-interaction environments using a single dual-agent policy, delivering outstanding performance under load-bearing and thrust-disturbance conditions, while maintaining stable operation even under rope suspension state.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 1,
+  "summary": "# 论文总结：HAFO——高强度交互环境下人形机器人的力自适应控制框架\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出**HAFO框架**，首次将双智能体强化学习与约束残差动作空间相结合，实现了对人形机器人**全身运动的力自适应控制**。该框架能够同时优化稳健的 locomotion 策略和精确的上半身操作策略，并显式建模外部张力干扰（弹簧-阻尼系统），使策略能够自主生成扰动抑制响应。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1：双智能体耦合训练架构\n- 同时优化 locomotion（下肢运动）和 manipulation（上半身操作）两个策略\n- 解决了两类任务在奖励函数和动作空间上的异质性问题\n- 单个策略即可实现全身协调控制\n\n### 创新点 2：约束残差动作空间（Constrained Residual Action Space）\n- 提升双智能体训练的稳定性和样本效率\n- 限制了动作幅度，避免策略崩溃\n- 有效处理下肢与上肢动作的耦合问题\n\n### 创新点 3：弹簧-阻尼张力建模\n- 将外部张力干扰显式建模为弹簧-阻尼系统\n- 通过操纵虚拟弹簧实现细粒度力控制\n- 使 RL 策略能够利用环境反馈自主生成扰动抑制响应\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性：** 传统方法通常将 locomotion 和 manipulation 分开处理，或仅关注轻量级操作。HAFO 首次采用双智能体协同训练范式，通过耦合学习实现高强度力交互下的全身控制。\n\n**关键技术：**\n- 双智能体强化学习架构（两个独立的策略网络协同工作）\n- 约束残差动作空间设计\n- 弹簧-阻尼系统建模外部干扰\n- 端到端策略学习，无需手工设计的力控制器\n\n**理论支撑：** 论文提出耦合训练框架下的稳定性分析方法，证明了约束残差动作空间能够改善训练收敛性。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/benchmark：**\n- 多种力交互环境测试\n- 负载承受（load-bearing）场景\n- 推力扰动（thrust-disturbance）场景\n- 绳索悬挂（rope suspension）状态\n\n**性能表现：**\n- 在单一双智能体策略下实现全身控制\n- 在高强度力交互环境下保持稳定操作\n- 在绳索悬挂状态下也能维持稳定运行\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n- 尚未在真实机器人硬件上验证（仅在仿真环境中测试）\n- 对极端物理参数变化的鲁棒性有待进一步验证\n\n**未来方向：**\n- 迁移到真实人形机器人平台\n- 探索更复杂的交互场景（如多人协作搬运）\n- 结合视觉感知增强环境适应能力\n\n**可迁移性：** 该框架的方法论可推广到其他双足/多足机器人的力控制任务，以及需要全身协调的操作任务。\n\n## 6. 一句话总结\n\n**HAFO 通过双智能体耦合训练和弹簧-阻尼扰动建模，首次实现了单一策略下人形机器人在负载承受、推力扰动、绳索悬挂等高强度力交互环境中的全身稳定控制，样本效率较传统方法显著提升。**",
+  "method_summary": "# HAFO: 密集力交互环境下人形机器人力适应控制框架的方法论分析\n\n## 1. 问题形式化\n\n### 1.1 控制目标定义\n\n该研究将人形机器人在密集力交互环境下的控制问题形式化为一个**双目标耦合的马尔可夫决策过程（MDP）**。具体而言，目标是学习一个统一的策略 $\\pi(a_t | s_t)$，使得机器人能够在以下两种能力上同时达到最优：\n\n1. **鲁棒运动策略**（Locomotion Strategy）：在存在外部扰动的情况下维持身体平衡和稳定移动\n2. **精确上肢操作策略**（Upper-body Manipulation Strategy）：在动态环境中实现高精度的末端执行器力交互控制\n\n### 1.2 问题数学表述\n\n设机器人的状态空间为 $\\mathcal{S}$，动作空间为 $\\mathcal{A}$，奖励函数为 $r(s_t, a_t)$。强化学习问题可表示为：\n\n$$\n\n\\max_{\\text{\\pi}} \\mathbb{E}_{\\text{\\tau \\sim \\pi}}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t r(s_t, a_t)\\right]\n\n$$\n\n其中 $\\gamma \\in (0, 1)$ 为折扣因子，$\\tau$ 为从策略 $\\pi$ 采样的轨迹。\n\n### 1.3 约束条件\n\n该框架引入了**约束残差动作空间**（Constrained Residual Action Space）来保证双智能体训练的稳定性：\n\n$$\n\na_t = a_t^{\\text{base}} + \\Delta a_t^{\\text{residual}}\n\n$$\n\n其中 $\\Delta a_t^{\\text{residual}}$ 被约束在预定义的界内：$\\|\\Delta a_t^{\\text{residual}}\\| \\leq \\epsilon$，$\\epsilon$ 为较小的正实数。\n\n### 1.4 外部扰动建模\n\n外部张力扰动通过**弹簧-阻尼系统**（Spring-Damper System）进行显式建模：\n\n$$\n\nF_{\\text{\\text{ext}}} = -k_{\\text{\\text{spring}}} \\cdot x - c_{\\text{\\text{damper}}} \\cdot \\dot{x}\n\n$$\n\n其中：\n- $k_{\\text{spring}}$ 为虚拟弹簧的刚度系数\n- $c_{\\text{damper}}$ 为阻尼系数\n- $x$ 和 $\\dot{x}$ 分别为相对位移和相对速度\n\n## 2. 技术方法\n\n### 2.1 双智能体强化学习框架\n\nHAFO 采用**双智能体架构**（Dual-Agent Architecture），两个智能体分别负责：\n\n- **智能体 1（Locomotion Agent）**：负责生成下肢运动命令，包括关节角度、步态时序和身体姿态调整\n- **智能体 2（Manipulation Agent）**：负责生成上肢操作命令，包括末端执行器的力/位置控制和姿态调整\n\n两个智能体通过**耦合训练**（Coupled Training）机制进行联合优化，共享部分观测信息和奖励信号。\n\n### 2.2 约束残差动作空间\n\n该框架的核心创新在于引入**约束残差动作空间**来改善双智能体训练的稳定性和样本效率：\n\n1. **基础动作** $a_t^{\\text{base}}$：由预训练的运动基线或启发式规则提供\n2. **残差动作** $\\Delta a_t^{\\text{residual}}$：由强化学习策略输出，用于对基础动作进行微调\n3. **约束机制**：残差动作被限制在预定义的界内，避免动作突变导致的训练不稳定\n\n### 2.3 虚拟弹簧力控制\n\n通过显式建模虚拟弹簧-阻尼系统，实现精细的力控制：\n\n$$\n\na_t^{\\text{force}} = f(k_{\\text{\\text{spring}}}, c_{\\text{\\text{damper}}}, x, \\dot{x})\n\n$$\n\n强化学习策略通过操控虚拟弹簧的参数（主要是刚度 $k_{\\text{spring}}$ 和目标长度），实现对接触力的间接但精确的控制。\n\n### 2.4 自主扰动抑制响应\n\n策略利用环境反馈信息（包括外部力传感器、关节力矩估计、IMU 数据等）自主生成扰动抑制响应：\n\n$$\n\n\\pi_{\\text{\\theta}}(a_t | s_t, f_{\\text{\\text{ext}}}) \\rightarrow a_t^{\\text{compensation}}\n\n$$\n\n其中 $f_{\\text{ext}}$ 为外部力反馈，这一机制使策略能够自适应地调整以应对未知扰动。\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n根据典型的人形机器人强化学习控制框架，推断其网络架构可能采用：\n\n- **演员网络**（Actor Network）：$\\pi(a_t | s_t) = \\mathcal{N}(\\mu(s_t), \\sigma(s_t))$\n- **评论家网络**（Critic Network）：$Q(s_t, a_t)$ 估计状态-动作值函数\n- 观测编码器：将高维传感器数据映射到低维特征空间\n\n### 3.2 超参数设置（推断）\n\n典型配置可能包括：\n\n| 参数 | 可能取值范围 |\n|------|-------------|\n| 折扣因子 $\\gamma$ | 0.99 - 0.995 |\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批量大小 | 4096 - 16384 |\n| 残差约束界 $\\epsilon$ | 0.1 - 0.3 |\n| 弹簧刚度范围 | 100 - 500 N/m |\n| 阻尼系数范围 | 5 - 20 Ns/m |\n\n### 3.3 训练策略\n\n- **课程学习**（Curriculum Learning）：从简单环境逐步过渡到复杂环境\n- **域随机化**（Domain Randomization）：增强策略在不同条件下的泛化能力\n- **并行采样**：使用多个环境副本加速样本采集\n\n## 4. 实验设置\n\n### 4.1 评估环境\n\n实验在多种密集力交互环境下进行：\n\n1. **承重条件**（Load-bearing）：机器人承载外部重物进行运动\n2. **推力扰动条件**（Thrust-disturbance）：外部施加的持续性推力干扰\n3. **绳索悬挂状态**（Rope suspension）：机器人部分肢体被绳索悬挂，需要在动态约束下保持平衡\n\n### 4.2 基线方法\n\n可能的对比方法包括：\n\n- 单智能体强化学习方法\n- 基于经典控制理论的方法（如 WBC + MPC）\n- 无残差动作空间的端到端 RL 方法\n\n### 4.3 评估指标\n\n- **运动质量指标**：步态稳定性、末端执行器跟踪精度\n- **力控制指标**：接触力误差、力跟踪响应时间\n- **成功率指标**：任务完成率、摔倒频率\n\n## 5. 技术优势\n\n### 5.1 双目标优化的协同效应\n\n通过耦合训练，运动策略和操作策略能够相互增强。上肢的精确操作可以为下肢提供更好的支撑参考，而下肢的稳定运动为上肢操作提供可靠的工作平台。\n\n### 5.2 训练稳定性与样本效率\n\n约束残差动作空间的使用显著改善了双智能体训练的稳定性：\n- 基础动作保证了合理的基线行为\n- 残差动作的约束避免了策略的剧烈波动\n- 降低了探索难度，提高了样本利用率\n\n### 5.3 精细的力控制能力\n\n通过显式建模弹簧-阻尼系统，实现了对接触力的精细控制：\n- 将力控制问题转化为位置控制问题\n- 利用虚拟弹簧的物理特性实现力跟踪\n- 避免了直接力控制的高频控制要求\n\n### 5.4 泛化能力\n\n单一策略能够适应多种不同的力交互环境，表明策略具有较强的泛化能力，这在实际应用中具有重要价值。\n\n## 6. 技术弱点\n\n### 6.1 训练复杂性\n\n双智能体架构增加了训练过程的复杂度：\n- 两个智能体之间的协调可能导致训练不稳定\n- 奖励函数设计需要仔细平衡两个目标\n- 训练时间可能显著长于单智能体方法\n\n### 6.2 弹簧模型参数依赖\n\n虚拟弹簧-阻尼系统的性能高度依赖于参数 $k_{\\text{spring}}$ 和 $c_{\\text{damper}}$ 的选取：\n- 不当的参数可能导致振荡或响应迟缓\n- 最优参数可能因任务和环境而异\n- 缺乏自适应调整机制\n\n### 6.3 仿真到现实的迁移\n\n尽管采用了域随机化，但高力交互任务对物理真实性要求较高：\n- 接触力模型的简化可能无法完全捕捉真实物理现象\n- 传感器噪声和延迟在实际硬件上更为复杂\n- 可能需要额外的系统辨识和微调\n\n### 6.4 残差动作空间的局限性\n\n约束残差动作空间虽然提高了稳定性，但也限制了策略的表达能力：\n- 对于大幅度的动作调整可能不够灵活\n- 基础动作的质量直接影响最终性能上限\n- 在基础动作本身次优的情况下难以实现最优控制\n\n### 6.5 泛化边界\n\n虽然在实验环境中表现良好，但对于极端或未见过的力交互场景：\n- 策略可能缺乏对突发性、极端扰动的处理能力\n- 长期累积误差可能导致性能下降\n- 缺乏显式的安全保证机制",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7.5,
+    "technical_quality": 6.5,
+    "experimental_validation": 6,
+    "writing_quality": 7,
+    "relevance": 8,
+    "overall_score": 7,
+    "strengths": [
+      "提出双智能体强化学习框架HAFO，同时优化运动和上肢操作策略",
+      "采用约束残差动作空间提高双智能体训练稳定性和样本效率",
+      "使用弹簧-阻尼系统显式建模外部张力扰动，实现精细力控制",
+      "单一策略实现全身控制，涵盖多种力交互环境"
+    ],
+    "weaknesses": [
+      "摘要中缺乏具体实验数据和性能指标",
+      "技术细节描述有限，难以全面评估方法正确性",
+      "与现有方法的对比实验未在摘要中体现",
+      "弹簧-阻尼系统建模部分较为经典，创新性有限"
+    ],
+    "notes": "该论文提出了一种针对人形机器人在高强度力交互环境中的双智能体强化学习框架，思路较为新颖。核心贡献在于耦合训练框架和约束残差动作空间设计，以及利用弹簧阻尼系统进行扰动建模。但从摘要来看，实验验证部分缺乏具体数值支撑，难以判断性能优越程度。整体架构合理，但需更多技术细节和实验数据支撑其有效性声明。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "HAFO: A Force-Adaptive Control Framework for Humanoid Robots in Intense Interaction Environments",
+      "authors": [
+        "Chenhui Dong",
+        "Haozhe Xu",
+        "Wenhao Feng",
+        "Zhipeng Wang",
+        "Yanmin Zhou",
+        "Yifei Zhao",
+        "Bin He"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2511.20275",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Reinforcement learning (RL) controllers have made impressive progress in humanoid locomotion and light-weight object manipulation. However, achieving robust and precise motion control with intense force interaction remains a significant challenge. To address these limitations, this paper proposes HAFO, a dual-agent reinforcement learning framework that concurrently optimizes both a robust locomotion strategy and a precise upper-body manipulation strategy via coupled training. We employ a constrained residual action space to improve dual-agent training stability and sample efficiency. The external tension disturbances are explicitly modeled using a spring-damper system, allowing for fine-grained force control through manipulation of the virtual spring. In this process, the reinforcement learning policy autonomously generates a disturbance-rejection response by utilizing environmental feedback. The experimental results demonstrate that HAFO achieves whole-body control for humanoid robots across diverse force-interaction environments using a single dual-agent policy, delivering outstanding performance under load-bearing and thrust-disturbance conditions, while maintaining stable operation even under rope suspension state.",
+      "route_id": "50d5f970-eba2-493b-942a-8d55f22794b4"
+    },
+    "markdown_stats": {
+      "lines": 227,
+      "words": 6652,
+      "headings": 20
+    },
+    "assets": {
+      "images": 13,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "50d5f970-eba2-493b-942a-8d55f22794b4",
+  "paper_ref": "50d5f970-eba2-493b-942a-8d55f22794b4",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

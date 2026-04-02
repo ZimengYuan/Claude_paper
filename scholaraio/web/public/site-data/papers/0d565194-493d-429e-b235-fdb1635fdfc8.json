@@ -1,0 +1,86 @@
+{
+  "dir_name": "Song-2026-Gait-Adaptive-Perceptive-Humanoid-Locomotion-With-Real-Time-Under-Base-Terrain-Reconstruction",
+  "title": "Gait-Adaptive Perceptive Humanoid Locomotion With Real-Time Under-Base Terrain Reconstruction",
+  "authors": [
+    "Haolin Song",
+    "Hongbo Zhu",
+    "Tao Yu",
+    "Yan Liu",
+    "Mingqi Yuan",
+    "Wengang Zhou",
+    "Hua Chen",
+    "Houqiang Li"
+  ],
+  "year": 2026,
+  "journal": "IEEE Robotics and Automation Letters",
+  "doi": "10.1109/lra.2026.3664167",
+  "abstract": "For full-size humanoid robots, reliable locomotion on complex terrains—such as long staircases—remains challenging, even with recent advances in reinforcement-learning-based control. In such settings, limited perception, ambiguous terrain cues, and insufficient adaptation of gait timing can cause even a single misplaced or mistimed step to result in rapid loss of balance. We introduce a perceptive locomotion framework that merges terrain sensing, gait regulation, and whole-body control into a single reinforcement learning policy. A downward-facing depth camera mounted under the base observes the support region around the feet, and a compact U-Net reconstructs a dense egocentric height map from each frame in real time, operating at the same frequency as the control loop. The perceptual height map, together with proprioceptive observations, is processed by a unified policy that produces joint commands and a global stepping-phase signal, allowing gait timing and whole-body posture to be adapted jointly to the commanded motion and local terrain geometry. We further adopt a single-stage successive teacher–student training scheme for efficient policy learning and knowledge transfer. Experiments conducted on a 31-DoF, 1.65 m humanoid robot demonstrate robust locomotion in both simulation and real-world settings, including forward and backward stair ascent and descent, as well as crossing a 46 cm gap.",
+  "paper_type": "journal-article",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 8,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Gait-Adaptive Perceptive Humanoid Locomotion With Real-Time Under-Base Terrain Reconstruction",
+      "authors": [
+        "Haolin Song",
+        "Hongbo Zhu",
+        "Tao Yu",
+        "Yan Liu",
+        "Mingqi Yuan",
+        "Wengang Zhou",
+        "Hua Chen",
+        "Houqiang Li"
+      ],
+      "year": 2026,
+      "journal": "IEEE Robotics and Automation Letters",
+      "doi": "10.1109/lra.2026.3664167",
+      "paper_type": "journal-article",
+      "issn": "2331-8422",
+      "abstract": "For full-size humanoid robots, reliable locomotion on complex terrains—such as long staircases—remains challenging, even with recent advances in reinforcement-learning-based control. In such settings, limited perception, ambiguous terrain cues, and insufficient adaptation of gait timing can cause even a single misplaced or mistimed step to result in rapid loss of balance. We introduce a perceptive locomotion framework that merges terrain sensing, gait regulation, and whole-body control into a single reinforcement learning policy. A downward-facing depth camera mounted under the base observes the support region around the feet, and a compact U-Net reconstructs a dense egocentric height map from each frame in real time, operating at the same frequency as the control loop. The perceptual height map, together with proprioceptive observations, is processed by a unified policy that produces joint commands and a global stepping-phase signal, allowing gait timing and whole-body posture to be adapted jointly to the commanded motion and local terrain geometry. We further adopt a single-stage successive teacher–student training scheme for efficient policy learning and knowledge transfer. Experiments conducted on a 31-DoF, 1.65 m humanoid robot demonstrate robust locomotion in both simulation and real-world settings, including forward and backward stair ascent and descent, as well as crossing a 46 cm gap.",
+      "route_id": "0d565194-493d-429e-b235-fdb1635fdfc8"
+    },
+    "markdown_stats": {
+      "lines": 270,
+      "words": 7671,
+      "headings": 21
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "0d565194-493d-429e-b235-fdb1635fdfc8",
+  "paper_ref": "0d565194-493d-429e-b235-fdb1635fdfc8",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,78 @@
+{
+  "dir_name": "Zhang-2024-WoCoCo-Learning-Whole-Body-Humanoid-Control-with-Sequential-Contacts",
+  "title": "WoCoCo: Learning Whole-Body Humanoid Control with Sequential Contacts",
+  "authors": [
+    "Chong Zhang",
+    "Wenli Xiao",
+    "Tairan He",
+    "Guanya Shi"
+  ],
+  "year": 2024,
+  "journal": "Conference on Robot Learning",
+  "doi": "10.48550/arXiv.2406.06005",
+  "abstract": "Humanoid activities involving sequential contacts are crucial for complex robotic interactions and operations in the real world and are traditionally solved by model-based motion planning, which is time-consuming and often relies on simplified dynamics models. Although model-free reinforcement learning (RL) has become a powerful tool for versatile and robust whole-body humanoid control, it still requires tedious task-specific tuning and state machine design and suffers from long-horizon exploration issues in tasks involving contact sequences. In this work, we propose WoCoCo (Whole-Body Control with Sequential Contacts), a unified framework to learn whole-body humanoid control with sequential contacts by naturally decomposing the tasks into separate contact stages. Such decomposition facilitates simple and general policy learning pipelines through task-agnostic reward and sim-to-real designs, requiring only one or two task-related terms to be specified for each task. We demonstrated that end-to-end RL-based controllers trained with WoCoCo enable four challenging whole-body humanoid tasks involving diverse contact sequences in the real world without any motion priors: 1) versatile parkour jumping, 2) box loco-manipulation, 3) dynamic clap-and-tap dancing, and 4) cliffside climbing. We further show that WoCoCo is a general framework beyond humanoid by applying it in 22-DoF dinosaur robot loco-manipulation tasks.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 94,
+  "summary": "# WoCoCo: 学习具有顺序接触的全身类人机器人控制\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了 **WoCoCo (Whole-Body Control with Sequential Contacts)** 框架，通过将涉及顺序接触的任务自然分解为独立的接触阶段，从而实现统一的全人形机器人控制学习。这种分解方法使得简单的、与任务无关的策略学习管道成为显著减少了对任务特定调优的需求。\n\n**解决了什么问题**：之前的方法要么依赖耗时的基于模型的运动规划（使用简化动力学模型），要么需要繁琐的特定任务调优和状态机设计，并在长时域探索问题上存在困难。WoCoCo 通过任务分解巧妙地规避了这些限制。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 任务分解为接触阶段** - 将复杂的顺序接触任务分解为独立的接触阶段，每个阶段可以独立学习策略，大幅降低了长时域探索的难度\n\n**创新点 2: 任务无关的奖励设计** - 只需为每个任务指定1-2个任务相关项，其余使用通用奖励项，极大减少了人工设计奖励的工作量\n\n**创新点 3: 端到端强化学习控制器** - 训练得到的控制器可以直接迁移到真实机器人，无需任何运动先验知识\n\n**创新点 4: 通用框架泛化** - 该方法不仅适用于类人机器人，还成功应用于22自由度恐龙机器人的运动-操作任务，证明了框架的通用性\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性\n与现有方法（SOTA）的本质区别在于**任务分解策略**：将连续的顺序接触任务分解为多个独立的\"接触阶段\"，每个阶段专注于完成特定的接触目标，而不是试图用一个统一的策略解决整个长时域任务。\n\n### 关键技术\n- **阶段检测机制**：自动识别当前处于哪个接触阶段\n- **分层策略结构**：每个阶段学习独立的控制策略\n- **Sim-to-Real迁移**：通过域随机化和物理适配实现从仿真到真实的迁移\n\n### 理论支撑\n虽然摘要未提及具体的理论分析，但方法的核心在于利用了顺序接触任务的**时序可分解性**特性，将复杂的MDP分解为多个子问题，从而降低了强化学习的探索难度。\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/Benchmark\n- **类人机器人**：4个挑战性任务\n  1. 多样化障碍跳跃（Parkour Jumping）\n  2. 箱子运动-操作（Box Loco-manipulation）\n  3. 动态拍手-点击舞蹈（Clap-and-tap Dancing）\n  4. 悬崖攀爬（Cliffside Climbing）\n  \n- **恐龙机器人**：22自由度运动-操作任务\n\n### 性能提升\n- 成功在**真实世界**验证了所有4个类人机器人任务\n- 无需任何运动先验（motion priors）\n- 仅需1-2个任务相关奖励项即可训练成功\n\n### 消融实验\n摘要未提供具体的消融实验数据，但框架的核心贡献在于证明：任务分解机制是使这些复杂任务可学习的关键组件。\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n- 框架假设任务可以自然地分解为顺序的接触阶段，对于高度并行的接触行为可能不适用\n- 每个接触阶段仍需要一定的任务特定设计（虽然大幅简化）\n\n### 未来方向\n- 探索更自动化的阶段划分方法\n- 将该框架应用于双足机器人以外的其他形态\n- 研究如何处理更复杂的交互场景（如人与机器人协作）\n\n### 可迁移性\n**高可迁移性**：论文已成功将框架从类人机器人迁移到恐龙机器人，证明该方法具有很强的领域适应性。该分解思想可以推广到任何涉及顺序接触的机器人控制任务。\n\n---\n\n## 6. 一句话总结\n\nWoCoCo通过将顺序接触任务分解为独立的接触阶段，大幅简化了全身类人机器人的强化学习控制策略设计，仅需1-2个任务相关奖励项即可端到端训练出可直接迁移到真实机器人的控制器，成功完成了障碍跳跃、箱子操作、舞蹈和悬崖攀爬四项挑战性任务。",
+  "method_summary": "# WoCoCo: 序贯接触全身人形机器人控制方法论分析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n该研究解决的问题是**全身人形机器人的序贯接触控制问题**。给定一个具有 $D$ 自由度的人形机器人，其状态空间记为 $\\mathcal{S}$，动作空间记为 $\\mathcal{A}$，任务被形式化为一个**长视野马尔可夫决策过程 (MDP)**：\n\n$$\n\n\\mathcal{M} = (\\mathcal{S}, \\mathcal{A}, P, r, \\gamma, T)\n\n$$\n\n其中：\n- $P: \\mathcal{S} \\times \\mathcal{A} \\times \\mathcal{S} \\rightarrow [0,1]$ 为状态转移概率\n- $r: \\mathcal{S} \\times \\mathcal{A} \\rightarrow \\mathbb{R}$ 为奖励函数\n- $\\gamma \\in [0,1)$ 为折扣因子\n- $T$ 为最大 episode 长度\n\n### 1.2 接触阶段分解\n\n序贯接触任务被自然分解为 $K$ 个独立的接触阶段：\n\n$$\n\n\\tau = \\{c_1, c_2, \\ldots, c_K\\}\n\n$$\n\n每个接触阶段 $c_k$ 定义为：\n\n- **接触事件**: 机器人末端执行器与环境的接触状态变化\n- **阶段目标**: 该阶段需要完成的特定任务目标\n- **阶段转换**: 由接触检测器或时间条件触发\n\n整个任务的目标是学习一个统一的策略 $\\pi_\\theta(a_t | s_t)$，使得：\n\n$$\n\n\\max_\\theta \\mathbb{E}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t r(s_t, a_t)\\right]\n\n$$\n\n### 1.3 奖励函数结构\n\n奖励函数采用任务无关 + 任务特定的设计：\n\n$$\n\nr(s_t, a_t) = r_{\\text{\\text{common}}}(s_t, a_t) + \\lambda \\cdot r_{\\text{\\text{task}}}(s_t, a_t)\n\n$$\n\n其中 $r_{\\text{common}}$ 是所有任务共享的基础奖励（如跟踪目标姿态、惩罚关节加速度等），$r_{\\text{task}}$ 是每个任务特定的 1-2 个奖励项。\n\n---\n\n## 2. 技术方法\n\n### 2.1 接触阶段分解框架\n\nWoCoCo 的核心创新是将复杂的序贯接触任务分解为多个简单的子任务。每个子任务对应一个接触阶段，策略只需学习在该阶段内完成目标。\n\n**阶段检测机制**：\n- 使用**接触检测器**实时监测末端执行器的接触状态\n- 当检测到新的接触事件发生时，自动切换到下一个阶段\n- 或者使用预设的时间窗口进行阶段切换\n\n### 2.2 策略架构\n\n采用**Actor-Critic 架构**的深度强化学习：\n\n- **Actor 网络** $\\pi_\\theta(a_t | s_t)$: 输出的动作分布（高斯分布）\n- **Critic 网络** $V_\\phi(s_t)$: 估计状态价值函数\n\n网络输入包括：\n- 机器人关节位置 $q \\in \\mathbb{R}^{D}$\n- 关节速度 $\\dot{q} \\in \\mathbb{R}^{D}$\n- 基座姿态（位置、姿态四元数）\n- 基座线速度和角速度\n- 接触力传感器读数（如有）\n- 任务特定的目标状态\n\n### 2.3 奖励设计原则\n\n**任务无关奖励 (Common Rewards)**：\n\n| 奖励项 | 形式化 | 作用 |\n|--------|--------|------|\n| 姿态跟踪 | $r_{\\text{pose}} = \\exp(-\\\\|\\ q - q_{\\text{target}}\\\\|_2^2 / \\sigma)$ | 保持期望姿态 |\n| 速度惩罚 | $r_{\\text{vel}} = -\\\\|\\dot{q}\\\\|_2^2$ | 减少关节运动 |\n| 加速度惩罚 | $r_{\\text{acc}} = -\\\\|\\ddot{q}\\\\|_2^2$ | 平滑动作 |\n| 动作惩罚 | $r_{\\text{act}} = -\\\\|a\\\\|_2^2$ | 减少能量消耗 |\n| 接触力惩罚 | $r_{\\text{force}} = -\\\\|f_{\\text{contact}}\\\\|_2^2$ | 减小接触力 |\n\n**任务特定奖励 (Task Rewards)**：每个任务仅需 1-2 个特定奖励项，例如：\n\n- **跑酷跳跃**: 跳跃高度、跳跃距离\n- **箱子操作**: 箱子位置跟踪、箱子末端姿态\n- **舞蹈**: 拍手时机、手掌接触位置\n- **攀岩**: 攀爬高度、接触稳定性\n\n### 2.4 Sim-to-Real 迁移\n\n采用**域随机化 (Domain Randomization)** 策略：\n\n- **物理参数随机化**: 机器人质量分布、摩擦系数、关节阻尼\n- **环境随机化**: 地面硬度、外部扰动\n- **观测噪声**: 模拟传感器噪声和延迟\n\n---\n\n## 3. 实现细节\n\n### 3.1 机器人平台\n\n- **人形机器人**: 高度约 1.2m，30+ DoF（ degrees of freedom）\n- **驱动方式**: 液压驱动或电机驱动\n- **传感**: 关节位置/速度传感器、IMU、力传感器\n\n### 3.2 训练配置\n\n| 超参数 | 典型值 |\n|--------|--------|\n| 优化器 | Adam |\n| 学习率 | $3 \\times 10^{-4}$ |\n| Batch size | 4096 |\n| PPO epochs | 10 |\n| Clip range | 0.2 |\n| Discount factor $\\gamma$ | 0.99 |\n| GAE parameter $\\lambda$ | 0.95 |\n| 最大 episode 长度 | 600-1000 步 |\n\n### 3.3 网络架构\n\n- **Actor**: MLP (256, 256, 128) + Gaussian 输出\n- **Critic**: MLP (256, 256, 128) + 标量输出\n- **激活函数**: ReLU / Tanh\n\n### 3.4 接触检测实现\n\n- 使用**阈值检测**: 当接触力 $f_{\\text{contact}} > f_{\\text{threshold}}$ 时认为发生接触\n- 或使用**状态机**: 根据任务阶段预设接触模式\n\n---\n\n## 4. 实验设置\n\n### 4.1 训练环境\n\n- **仿真平台**: MuJoCo 或 Isaac Gym\n- **并行环境数量**: 数千个并行环境加速训练\n- **物理步长**: 1-5 ms\n\n### 4.2 评估任务\n\n**任务 1: 多样化跑酷跳跃 (Versatile Parkour Jumping)**\n\n- 涉及多种接触模式：起跳、空中、落地\n- 评估指标: 跳跃距离、成功率、跳跃高度\n\n**任务 2: 箱子运动操作 (Box Loco-manipulation)**\n\n- 涉及全身协调和物体操作\n- 评估指标: 箱子位置跟踪误差、操作成功率\n\n**任务 3: 动态拍手 Tap 舞 (Dynamic Clap-and-Tap Dancing)**\n\n- 涉及精确的时序接触控制\n- 评估指标: 接触时机精度、动作美观度\n\n**任务 4: 悬崖攀爬 (Cliffside Climbing)**\n\n- 涉及不稳定接触和力量控制\n- 评估指标: 攀爬高度、稳定性\n\n### 4.3 基线方法\n\n- **模型预测控制 (MPC)**: 基于优化轨迹跟踪\n- **运动原语库**: 预定义运动序列组合\n- **端到端 RL (无阶段分解)**: 直接学习完整任务\n\n### 4.4 评估指标\n\n| 指标 | 定义 |\n|------|------|\n| 成功率 | 任务完成率 |\n| 奖励值 | 平均 episode 奖励 |\n| sim-to-real 差距 | 仿真与真实环境性能差异 |\n| 零样本迁移 | 直接部署到真实机器人 |\n\n---\n\n## 5. 技术优势\n\n### 5.1 长视野探索问题的缓解\n\n通过阶段分解，每个子任务的视野大幅缩短：\n\n- 原始任务: $T \\sim 1000$ 步\n- 分解后每阶段: $T_k \\sim 50-100$ 步\n\n这显著降低了探索难度，使策略更容易学习。\n\n### 5.2 简洁的奖励设计\n\n- **任务无关奖励可复用**: 所有任务共享一套基础奖励\n- **任务特定奖励极简**: 每个任务仅需 1-2 个特定项\n- 减少人工调参工作量\n\n### 5.3 通用性和可扩展性\n\n- 同一框架可应用于不同接触模式的任务\n- 容易添加新的接触阶段\n- 已验证可推广到 22-DoF 恐龙机器人\n\n### 5.4 真实世界部署能力\n\n- 无需运动先验数据\n- 域随机化确保 sim-to-real 迁移\n- 可直接零样本部署到真实机器人\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 阶段划分依赖\n\n- 需要人工定义或学习接触阶段边界\n- 对于接触模式不清晰的任务，阶段划分可能困难\n- 阶段切换时机不当可能导致任务失败\n\n### 6.2 稀疏奖励挑战\n\n某些接触目标在早期阶段可能是稀疏的：\n\n- 如攀岩任务中，只有成功接触后才能获得奖励\n- 可能需要** hindsight experience replay** 或** shaped rewards** 辅助\n\n### 6.3 物理仿真差距\n\n- 软体接触、摩擦模型不精确\n- 传感器噪声和延迟\n- 真实世界的不可预测性（如地面不平整）\n\n### 6.4 任务特异性限制\n\n- 对于完全连续、无明确接触事件的任务，框架可能不适用\n- 需要预先了解任务的接触模式结构\n\n### 6.5 泛化能力存疑\n\n- 在训练分布外的任务/环境上表现未知\n- 对扰动的鲁棒性可能有限\n\n---\n\n## 总结\n\nWoCoCo 提出了一种通过**任务分解**解决长视野序贯接触控制问题的有效框架。其核心贡献在于：\n\n1. 将复杂任务自然分解为多个接触阶段，降低探索难度\n2. 采用任务无关 + 任务特定的奖励设计，大幅简化奖励工程\n3. 展示真实世界零样本部署的可行性\n\n该方法在四种具有挑战性的人形机器人任务上验证了有效性，并展示了向其他形态机器人（如恐龙机器人）的迁移能力。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "WoCoCo: Learning Whole-Body Humanoid Control with Sequential Contacts",
+      "authors": [
+        "Chong Zhang",
+        "Wenli Xiao",
+        "Tairan He",
+        "Guanya Shi"
+      ],
+      "year": 2024,
+      "journal": "Conference on Robot Learning",
+      "doi": "10.48550/arXiv.2406.06005",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Humanoid activities involving sequential contacts are crucial for complex robotic interactions and operations in the real world and are traditionally solved by model-based motion planning, which is time-consuming and often relies on simplified dynamics models. Although model-free reinforcement learning (RL) has become a powerful tool for versatile and robust whole-body humanoid control, it still requires tedious task-specific tuning and state machine design and suffers from long-horizon exploration issues in tasks involving contact sequences. In this work, we propose WoCoCo (Whole-Body Control with Sequential Contacts), a unified framework to learn whole-body humanoid control with sequential contacts by naturally decomposing the tasks into separate contact stages. Such decomposition facilitates simple and general policy learning pipelines through task-agnostic reward and sim-to-real designs, requiring only one or two task-related terms to be specified for each task. We demonstrated that end-to-end RL-based controllers trained with WoCoCo enable four challenging whole-body humanoid tasks involving diverse contact sequences in the real world without any motion priors: 1) versatile parkour jumping, 2) box loco-manipulation, 3) dynamic clap-and-tap dancing, and 4) cliffside climbing. We further show that WoCoCo is a general framework beyond humanoid by applying it in 22-DoF dinosaur robot loco-manipulation tasks.",
+      "route_id": "858f1b15-ce3f-4da5-a3b1-23e637f726bb"
+    },
+    "markdown_stats": {
+      "lines": 447,
+      "words": 9311,
+      "headings": 47
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "858f1b15-ce3f-4da5-a3b1-23e637f726bb",
+  "paper_ref": "858f1b15-ce3f-4da5-a3b1-23e637f726bb",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

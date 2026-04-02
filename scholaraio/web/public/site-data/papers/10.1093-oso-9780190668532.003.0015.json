@@ -1,0 +1,81 @@
+{
+  "dir_name": "Jonghae-2025-Periodic-Skill-Discovery",
+  "title": "Periodic Skill Discovery",
+  "authors": [
+    "Park, Jonghae",
+    "Cho, Daesol",
+    "Lee, Jusuk",
+    "Shim, Dongseok",
+    "Jang, Inkyu",
+    "Kim, H. Jin"
+  ],
+  "year": 2025,
+  "journal": "ArXiv.org",
+  "doi": "",
+  "abstract": "Unsupervised skill discovery in reinforcement learning (RL) aims to learn diverse behaviors without relying on external rewards. However, current methods often overlook the periodic nature of learned skills, focusing instead on increasing the mutual dependence between states and skills or maximizing the distance traveled in latent space. Considering that many robotic tasks - particularly those involving locomotion - require periodic behaviors across varying timescales, the ability to discover diverse periodic skills is essential. Motivated by this, we propose Periodic Skill Discovery (PSD), a framework that discovers periodic behaviors in an unsupervised manner. The key idea of PSD is to train an encoder that maps states to a circular latent space, thereby naturally encoding periodicity in the latent representation. By capturing temporal distance, PSD can effectively learn skills with diverse periods in complex robotic tasks, even with pixel-based observations. We further show that these learned skills achieve high performance on downstream tasks such as hurdling. Moreover, integrating PSD with an existing skill discovery method offers more diverse behaviors, thus broadening the agent's repertoire. Our code and demos are available at https://jonghaepark.github.io/psd/",
+  "paper_type": "article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Periodic Skill Discovery",
+      "authors": [
+        "Park, Jonghae",
+        "Cho, Daesol",
+        "Lee, Jusuk",
+        "Shim, Dongseok",
+        "Jang, Inkyu",
+        "Kim, H. Jin"
+      ],
+      "year": 2025,
+      "journal": "ArXiv.org",
+      "paper_type": "article",
+      "abstract": "Unsupervised skill discovery in reinforcement learning (RL) aims to learn diverse behaviors without relying on external rewards. However, current methods often overlook the periodic nature of learned skills, focusing instead on increasing the mutual dependence between states and skills or maximizing the distance traveled in latent space. Considering that many robotic tasks - particularly those involving locomotion - require periodic behaviors across varying timescales, the ability to discover diverse periodic skills is essential. Motivated by this, we propose Periodic Skill Discovery (PSD), a framework that discovers periodic behaviors in an unsupervised manner. The key idea of PSD is to train an encoder that maps states to a circular latent space, thereby naturally encoding periodicity in the latent representation. By capturing temporal distance, PSD can effectively learn skills with diverse periods in complex robotic tasks, even with pixel-based observations. We further show that these learned skills achieve high performance on downstream tasks such as hurdling. Moreover, integrating PSD with an existing skill discovery method offers more diverse behaviors, thus broadening the agent's repertoire. Our code and demos are available at https://jonghaepark.github.io/psd/"
+    },
+    "markdown_stats": {
+      "lines": 526,
+      "words": 15590,
+      "headings": 29
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "d4dfff52-e96a-49aa-98a0-600f59835054_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "10.1093-oso-9780190668532.003.0015",
+  "paper_ref": "10.1093-oso-9780190668532.003.0015",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

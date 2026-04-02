@@ -1,0 +1,79 @@
+{
+  "dir_name": "Chen-2025-HiFAR-Multi-Stage-Curriculum-Learning-for-High-Dynamics-Humanoid-Fall-Recovery",
+  "title": "HiFAR: Multi-Stage Curriculum Learning for High-Dynamics Humanoid Fall Recovery",
+  "authors": [
+    "Penghui Chen",
+    "Yushi Wang",
+    "Changsheng Luo",
+    "Wenhan Cai",
+    "Mingguo Zhao"
+  ],
+  "year": 2025,
+  "journal": "2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)",
+  "doi": "10.1109/iros60139.2025.11245953",
+  "abstract": "Humanoid robots encounter considerable difficulties in autonomously recovering from falls, especially within dynamic and unstructured environments. Conventional control methodologies are often inadequate in addressing the complexities associated with high-dimensional dynamics and the contact-rich nature of fall recovery. Meanwhile, reinforcement learning techniques are hindered by issues related to sparse rewards, intricate collision scenarios, and discrepancies between simulation and real-world applications. In this study, we introduce a multi-stage curriculum learning framework, termed HiFAR. This framework employs a staged learning approach that progressively incorporates increasingly complex and high-dimensional recovery tasks, thereby facilitating the robot’s acquisition of efficient and stable fall recovery strategies. Furthermore, it enables the robot to adapt its policy to effectively manage real-world fall incidents. We assess the efficacy of the proposed method using a real humanoid robot, showcasing its capability to autonomously recover from a diverse range of falls with high success rates, rapid recovery times, robustness, and generalization.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 12,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "HiFAR: Multi-Stage Curriculum Learning for High-Dynamics Humanoid Fall Recovery",
+      "authors": [
+        "Penghui Chen",
+        "Yushi Wang",
+        "Changsheng Luo",
+        "Wenhan Cai",
+        "Mingguo Zhao"
+      ],
+      "year": 2025,
+      "journal": "2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)",
+      "doi": "10.1109/iros60139.2025.11245953",
+      "paper_type": "proceedings-article",
+      "abstract": "Humanoid robots encounter considerable difficulties in autonomously recovering from falls, especially within dynamic and unstructured environments. Conventional control methodologies are often inadequate in addressing the complexities associated with high-dimensional dynamics and the contact-rich nature of fall recovery. Meanwhile, reinforcement learning techniques are hindered by issues related to sparse rewards, intricate collision scenarios, and discrepancies between simulation and real-world applications. In this study, we introduce a multi-stage curriculum learning framework, termed HiFAR. This framework employs a staged learning approach that progressively incorporates increasingly complex and high-dimensional recovery tasks, thereby facilitating the robot’s acquisition of efficient and stable fall recovery strategies. Furthermore, it enables the robot to adapt its policy to effectively manage real-world fall incidents. We assess the efficacy of the proposed method using a real humanoid robot, showcasing its capability to autonomously recover from a diverse range of falls with high success rates, rapid recovery times, robustness, and generalization.",
+      "route_id": "bf6c52b0-45f1-4f1e-aab0-522b09716fc1"
+    },
+    "markdown_stats": {
+      "lines": 271,
+      "words": 4572,
+      "headings": 23
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "bf6c52b0-45f1-4f1e-aab0-522b09716fc1",
+  "paper_ref": "bf6c52b0-45f1-4f1e-aab0-522b09716fc1",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

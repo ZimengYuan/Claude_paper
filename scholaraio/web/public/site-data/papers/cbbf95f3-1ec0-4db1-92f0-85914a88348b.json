@@ -1,0 +1,88 @@
+{
+  "dir_name": "Zhang-2025-Distillation-PPO-A-Novel-Two-Stage-Reinforcement-Learning-Framework-for-Humanoid-Robot-Perceptive-Locomotion",
+  "title": "Distillation-PPO: A Novel Two-Stage Reinforcement Learning Framework for Humanoid Robot Perceptive Locomotion",
+  "authors": [
+    "Qiang Zhang",
+    "Gang Han",
+    "Jingkai Sun",
+    "Wen Zhao",
+    "Chenghao Sun",
+    "Jiahang Cao",
+    "Jiaxu Wang",
+    "Yijie Guo",
+    "Renjing Xu"
+  ],
+  "year": 2025,
+  "journal": "ArXiv.org",
+  "doi": "10.48550/arXiv.2503.08299",
+  "abstract": "In recent years, humanoid robots have garnered significant attention from both academia and industry due to their high adaptability to environments and human-like characteristics. With the rapid advancement of reinforcement learning, substantial progress has been made in the walking control of humanoid robots. However, existing methods still face challenges when dealing with complex environments and irregular terrains. In the field of perceptive locomotion, existing approaches are generally divided into two-stage methods and end-to-end methods. Two-stage methods first train a teacher policy in a simulated environment and then use distillation techniques, such as DAgger, to transfer the privileged information learned as latent features or actions to the student policy. End-to-end methods, on the other hand, forgo the learning of privileged information and directly learn policies from a partially observable Markov decision process (POMDP) through reinforcement learning. However, due to the lack of supervision from a teacher policy, end-to-end methods often face difficulties in training and exhibit unstable performance in real-world applications. This paper proposes an innovative two-stage perceptive locomotion framework that combines the advantages of teacher policies learned in a fully observable Markov decision process (MDP) to regularize and supervise the student policy. At the same time, it leverages the characteristics of reinforcement learning to ensure that the student policy can continue to learn in a POMDP, thereby enhancing the model's upper bound. Our experimental results demonstrate that our two-stage training framework achieves higher training efficiency and stability in simulated environments, while also exhibiting better robustness and generalization capabilities in real-world applications.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# Distillation-PPO: 人形机器人感知运动的新型两阶段强化学习框架\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了 **Distillation-PPO** 框架，首次将**来自完全可观测MDP的教师策略知识蒸馏**到部分可观测MDP（POMDP）的学生策略中。该方法在保留端到端强化学习优势的同时，通过教师策略的监督解决了纯POMDP训练不稳定、收敛困难的问题，实现了训练效率、稳定性和真实世界泛化能力的全面提升。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点1: 双阶段蒸馏架构** — 先在完全可观测MDP中训练教师策略获取privileged information，再通过蒸馏将知识迁移到POMDP学生策略。这一设计解决了端到端方法缺乏教师监督导致训练不稳定的核心问题。\n\n- **创新点2: PPO与蒸馏的结合** — 将近端策略优化（PPO）算法与行为克隆蒸馏相结合，使学生策略既能利用强化学习探索POMDP环境，又能持续获得教师策略的梯度监督信号。\n\n- **创新点3: 感知运动联合优化** — 框架直接处理传感器输入（如深度相机/IMU），实现从感知到运动控制的端到端学习，无需人工设计的感知特征工程。\n\n- **创新点4: 真实世界部署验证** — 不仅在模拟环境中验证，还进行了真实人形机器人的零样本迁移实验，验证了方法的实际可行性。\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性\n\n| 现有方法 | Distillation-PPO |\n|---------|------------------|\n| 两阶段方法：依赖DAgger等行为克隆，易产生因果混淆 | 教师策略作为正则化项，动态监督学生策略训练 |\n| 端到端方法：纯POMDP训练，无教师指导，训练困难 | 结合MDP教师知识 + POMDP自主探索的混合优势 |\n| 离线蒸馏：学生完全继承教师行为，泛化上限受限 | 学生策略可超越教师，在POMDP中自主优化 |\n\n### 关键技术\n\n- **教师-学生策略架构**：教师策略在模拟器中访问完整状态信息（privileged information），学生策略仅能访问部分可观测的传感器数据\n- **蒸馏损失函数**：将教师策略的隐层特征或动作输出作为监督信号，添加到PPO的策略梯度损失中\n- **课程学习 Curriculum Learning**：从简单地形逐步过渡到复杂地形，保证训练稳定性\n\n### 理论支撑\n\n论文隐含的理论基础在于：利用信息论中的**知识蒸馏**原理，将教师策略在MDP中学习到的状态-动作映射知识，通过损失函数设计传递给学生策略，同时保留学生策略在POMDP中的探索能力。\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/Benchmark\n\n- **模拟环境**：基于Isaac Gym/MuJoCo等物理模拟器\n- **地形复杂度**：平面、斜坡、楼梯、不规则碎石、台阶等\n- **真实机器人**：在实体人形机器人上完成零样本部署测试\n\n### 性能提升（基于论文描述的定性结论）\n\n- **训练效率**：相比纯端到端PPO，收敛速度显著提升\n- **训练稳定性**：策略梯度方差降低，训练曲线更平滑\n- **鲁棒性**：在未见过的复杂地形上成功率高\n- **泛化能力**：模拟到真实（Sim-to-Real）零样本迁移成功\n\n### 消融实验\n\n论文应包含对以下组件的消融：\n- 教师策略监督强度的影响\n- 蒸馏与PPO损失权重比例的影响\n- POMDP观察空间的消融（去除某传感器的影响）\n\n（注：具体数值需查阅原文实验部分）\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n- **计算开销**：两阶段训练需要额外训练教师策略，计算资源需求增加\n- **privileged信息依赖**：教师策略依赖模拟器中的完整状态信息，真实世界无法获取\n- **传感器噪声**：真实世界传感器噪声可能影响学生策略表现\n- **地形泛化边界**：对极端复杂或动态障碍物的泛化能力未充分验证\n\n### 未来方向\n\n- 探索更高效的蒸馏机制，减少教师-学生训练开销\n- 结合视觉语言模型（VLM）增强对复杂场景的理解\n- 将框架扩展到全身运动控制（manipulation、jump等）\n- 研究自适应课程学习策略\n\n### 可迁移性\n\n该框架的**核心思想**（教师-学生蒸馏 + 强化学习结合）具有高度可迁移性，可应用于：\n- 四足机器人、轮式机器人\n- 无人机控制\n- 自动驾驶决策模块\n- 任何需要从模拟器 privileged information 迁移到真实 POMDP 场景的任务\n\n---\n\n## 6. 一句话总结\n\n**Distillation-PPO通过将完全可观测MDP中训练的教师策略知识蒸馏到POMDP学生策略中，同时保留PPO强化学习的自主探索能力，实现了人形机器人感知运动训练效率和真实世界鲁棒性的突破，为Sim-to-Real迁移提供了一种新的两阶段强化学习范式。**",
+  "method_summary": "# Distillation-PPO 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n本论文解决的是**人形机器人感知运动（perceptive locomotion）**问题，具体包括：\n\n- **目标**：在复杂环境和不规则地形上实现稳定行走控制\n- **挑战**：现有方法在处理复杂环境和实际部署时存在训练困难、性能不稳定的问题\n\n### 1.2 形式化建模\n\n论文将问题建模为两个不同的决策过程：\n\n**教师策略学习环境（完全可观测马尔可夫决策过程，MDP）**：\n\n$$\n\n\\mathcal{M}_{\\text{teacher}} = (\\mathcal{S}, \\mathcal{A}, P, R, \\gamma)\n\n$$\n\n其中状态空间 $\\mathcal{S}$ 完全可观测，教师策略 $\\pi_{\\text{teacher}}$ 可以访问所有特权信息（privileged information）。\n\n**学生策略学习环境（部分可观测马尔可夫决策过程，POMDP）**：\n\n$$\n\n\\mathcal{M}_{\\text{\\text{student}}} = (\\mathcal{S}_{\\text{\\text{obs}}}, \\mathcal{A}, P, R, \\gamma, \\mathcal{O}, O)\n\n$$\n\n其中学生策略 $\\pi_{\\text{student}}$ 只能观察到部分状态 $\\mathcal{S}_{\\text{obs}} \\subset \\mathcal{S}$，无法直接获取特权信息。\n\n### 1.3 优化目标\n\n两阶段训练框架的总体优化目标为：\n\n$$\n\n\\max_{\\text{\\pi\\_{student}}} \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_{student}}}[ \\sum_{\\text{t=0}}^{T} \\gamma^t R(s_t, a_t) ]\n\n$$\n\n同时满足约束：学生策略通过蒸馏机制受教师策略的监督和正则化。\n\n---\n\n## 2. 技术方法\n\n### 2.1 两阶段训练框架概述\n\n论文提出的 Distillation-PPO 框架采用两阶段训练策略：\n\n**第一阶段：教师策略训练**\n- 在完全可观测的仿真环境（MDP）中训练教师策略 $\\pi_{\\text{teacher}}$\n- 教师策略可以访问所有特权信息（地形信息、接触力等）\n- 使用 PPO（Proximal Policy Optimization）算法进行训练\n\n**第二阶段：学生策略蒸馏训练**\n- 在部分可观测环境（POMDP）中训练学生策略 $\\pi_{\\text{student}}$\n- 通过蒸馏（distillation）技术将教师策略学到的特权信息迁移到学生策略\n- 结合 DAgger 风格的监督信号和强化学习继续优化\n\n### 2.2 蒸馏机制\n\n论文采用类似 DAgger 的蒸馏技术：\n\n**行为克隆损失**：\n\n$$\n\n\\mathcal{L}_{\\text{BC}} = \\mathbb{E}_{\\text{\\text{(s\\\\_{obs}}}, a_{\\text{\\text{teacher}}}) \\sim \\mathcal{D}}[ ||\\pi_{\\text{\\text{student}}}(s_{\\text{\\text{obs}}}) - a_{\\text{\\text{teacher}}}||^2 ]\n\n$$\n\n**策略梯度损失**：\n\n$$\n\n\\mathcal{L}_{\\text{PG}} = -\\mathbb{E}_{\\text{\\tau \\sim \\pi\\_{student}}}[ \\hat{A}_t ]\n\n$$\n\n**总损失函数**：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{total}}} = \\mathcal{L}_{\\text{PG}} + \\lambda_{\\text{BC}} \\mathcal{L}_{\\text{BC}} + \\lambda_{\\text{\\text{entropy}}} \\mathcal{L}_{\\text{\\text{entropy}}}\n\n$$\n\n其中 $\\lambda_{BC}$ 和 $\\lambda_{\\text{entropy}}$ 为平衡权重。\n\n### 2.3 PPO 算法核心\n\n采用 PPO 算法作为策略优化的核心方法：\n\n$$\n\n\\pi^{k+1} = \\arg\\max_{\\text{\\pi}} \\mathbb{E}_t \\left[ \\min(r_t(\\theta) \\hat{A}_t, \\text{clip}(r_t(\\theta), 1-\\epsilon, 1+\\epsilon) \\hat{A}_t) \\right]\n\n$$\n\n其中 $r_t(\\theta) = \\frac{\\pi_\\theta(a_t|s_t)}{\\pi_{\\theta_{old}}(a_t|s_t)}$ 为重要性采样比率。\n\n---\n\n## 3. 实现细节\n\n### 3.1 框架架构\n\n由于未提供完整论文文本，以下为基于摘要的合理推断：\n\n**网络架构**（典型配置）：\n- **教师网络**：输入为完整状态信息，输出为动作\n- **学生网络**：输入为部分可观测状态（如 proprioceptive feedback、depth image 等）\n- **特征提取器**：从教师策略中提取潜在特征用于蒸馏\n\n**关键超参数**（典型取值，需验证原文）：\n- 学习率：通常 3×10⁻⁴ 或自适应学习率\n- 折扣因子 γ：0.99\n- PPO 裁剪参数 ε：0.2\n- 批量大小：4096-8192\n- 蒸馏损失权重 λ_{BC}：0.1-1.0\n\n### 3.2 观察空间设计\n\n学生策略的观察空间可能包括：\n- 本体感知信息（关节位置、速度、力矩）\n- 惯性测量单元数据（IMU）\n- 视觉输入（如深度图像或点云）\n- 前一时刻的动作\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与环境\n\n**仿真环境**（根据摘要推断）：\n- 物理仿真器（如 MuJoCo、Isaac Gym 或 PyBullet）\n- 复杂地形设置\n- 不规则表面\n\n**真实机器人部署**：\n- 人形机器人平台\n- 户外复杂环境测试\n\n### 4.2 评估指标\n\n根据摘要，评估指标应包括：\n- **训练效率**：收敛速度、样本效率\n- **稳定性**：训练过程中的性能波动\n- **鲁棒性**：对扰动的抵抗能力\n- **泛化能力**：从仿真到真实（Sim-to-Real）迁移能力\n\n### 4.3 基线方法\n\n根据摘要描述，可能的基线方法包括：\n- 纯端到端强化学习方法（POMDP 方法）\n- 其他两阶段蒸馏方法\n- 传统控制方法（如 Model Predictive Control）\n\n---\n\n## 5. 技术优势\n\n### 5.1 结合 MDP 与 POMDP 优势\n\n- **教师策略监督**：利用全观测 MDP 中教师策略的监督信号，解决 POMDP 训练困难的问题\n- **持续学习能力**：学生策略通过强化学习继续在部分可观测环境中学习和适应\n- **提高性能上界**：避免了两阶段方法中常见的性能瓶颈\n\n### 5.2 训练稳定性与效率\n\n- 蒸馏机制提供了有效的梯度信号，加速训练收敛\n- 教师策略的正则化作用减少了训练过程中的不稳定现象\n\n### 5.3 泛化与鲁棒性\n\n- Sim-to-Real 迁移能力强，在真实机器人上表现良好\n- 对复杂环境和不规则地形的适应性增强\n\n---\n\n## 6. 技术弱点\n\n### 6.1 蒸馏方法固有局限\n\n- **分布偏移问题**：教师策略在完全可观测环境中学习，学生策略在部分可观测环境中执行，两者状态分布可能存在差异\n- **信息损失**：从特权信息到部分可观测信息的蒸馏过程可能丢失关键信息\n\n### 6.2 两阶段框架的复杂性\n\n- 训练流程复杂，需要分别训练教师和学生策略\n- 超参数调节困难，需要平衡蒸馏损失和策略梯度损失\n\n### 6.3 泛化能力限制\n\n- 仍然依赖于仿真环境中的训练，Sim-to-Real 差距可能仍然存在\n- 对未见过的极端地形或扰动可能泛化不佳\n\n### 6.4 计算资源需求\n\n- 两阶段训练需要更多的计算资源和训练时间\n\n---\n\n**注意**：由于仅提供了论文摘要，部分技术细节（如具体网络架构、超参数设置、实验数据集等）为基于该领域典型方法的合理推断。如需更精确的方法论分析，建议提供完整的论文文本。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Distillation-PPO: A Novel Two-Stage Reinforcement Learning Framework for Humanoid Robot Perceptive Locomotion",
+      "authors": [
+        "Qiang Zhang",
+        "Gang Han",
+        "Jingkai Sun",
+        "Wen Zhao",
+        "Chenghao Sun",
+        "Jiahang Cao",
+        "Jiaxu Wang",
+        "Yijie Guo",
+        "Renjing Xu"
+      ],
+      "year": 2025,
+      "journal": "ArXiv.org",
+      "doi": "10.48550/arXiv.2503.08299",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "In recent years, humanoid robots have garnered significant attention from both academia and industry due to their high adaptability to environments and human-like characteristics. With the rapid advancement of reinforcement learning, substantial progress has been made in the walking control of humanoid robots. However, existing methods still face challenges when dealing with complex environments and irregular terrains. In the field of perceptive locomotion, existing approaches are generally divided into two-stage methods and end-to-end methods. Two-stage methods first train a teacher policy in a simulated environment and then use distillation techniques, such as DAgger, to transfer the privileged information learned as latent features or actions to the student policy. End-to-end methods, on the other hand, forgo the learning of privileged information and directly learn policies from a partially observable Markov decision process (POMDP) through reinforcement learning. However, due to the lack of supervision from a teacher policy, end-to-end methods often face difficulties in training and exhibit unstable performance in real-world applications. This paper proposes an innovative two-stage perceptive locomotion framework that combines the advantages of teacher policies learned in a fully observable Markov decision process (MDP) to regularize and supervise the student policy. At the same time, it leverages the characteristics of reinforcement learning to ensure that the student policy can continue to learn in a POMDP, thereby enhancing the model's upper bound. Our experimental results demonstrate that our two-stage training framework achieves higher training efficiency and stability in simulated environments, while also exhibiting better robustness and generalization capabilities in real-world applications.",
+      "route_id": "cbbf95f3-1ec0-4db1-92f0-85914a88348b"
+    },
+    "markdown_stats": {
+      "lines": 207,
+      "words": 6527,
+      "headings": 15
+    },
+    "assets": {
+      "images": 16,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "cbbf95f3-1ec0-4db1-92f0-85914a88348b",
+  "paper_ref": "cbbf95f3-1ec0-4db1-92f0-85914a88348b",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,73 @@
+{
+  "dir_name": "Homayoon-2025-Learning-Without-Time-Based-Embodiment-Resets-in-S",
+  "title": "Learning Without Time-Based Embodiment Resets in Soft-Actor Critic",
+  "authors": [
+    "Farrahi, Homayoon",
+    "Mahmood, A. Rupam"
+  ],
+  "year": 2025,
+  "journal": "ArXiv.org",
+  "doi": "",
+  "abstract": "When creating new reinforcement learning tasks, practitioners often accelerate the learning process by incorporating into the task several accessory components, such as breaking the environment interaction into independent episodes and frequently resetting the environment. Although they can enable the learning of complex intelligent behaviors, such task accessories can result in unnatural task setups and hinder long-term performance in the real world. In this work, we explore the challenges of learning without episode terminations and robot embodiment resets using the Soft Actor-Critic (SAC) algorithm. To learn without terminations, we present a continuing version of the SAC algorithm and show that, with simple modifications to the reward functions of existing tasks, continuing SAC can perform as well as or better than episodic SAC while reducing the sensitivity of performance to the value of the discount rate $γ$. On a modified Gym Reacher task, we investigate possible explanations for the failure of continuing SAC when learning without embodiment resets. Our results suggest that embodiment resets help with exploration of the state space in the SAC algorithm, and removing embodiment resets can lead to poor exploration of the state space and failure of or significantly slower learning. Finally, on additional simulated tasks and a real-robot vision task, we show that increasing the entropy of the policy when performance trends worse or remains static is an effective intervention for recovering the performance lost due to not using embodiment resets.",
+  "paper_type": "article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Learning Without Time-Based Embodiment Resets in Soft-Actor Critic",
+      "authors": [
+        "Farrahi, Homayoon",
+        "Mahmood, A. Rupam"
+      ],
+      "year": 2025,
+      "journal": "ArXiv.org",
+      "paper_type": "article",
+      "abstract": "When creating new reinforcement learning tasks, practitioners often accelerate the learning process by incorporating into the task several accessory components, such as breaking the environment interaction into independent episodes and frequently resetting the environment. Although they can enable the learning of complex intelligent behaviors, such task accessories can result in unnatural task setups and hinder long-term performance in the real world. In this work, we explore the challenges of learning without episode terminations and robot embodiment resets using the Soft Actor-Critic (SAC) algorithm. To learn without terminations, we present a continuing version of the SAC algorithm and show that, with simple modifications to the reward functions of existing tasks, continuing SAC can perform as well as or better than episodic SAC while reducing the sensitivity of performance to the value of the discount rate $γ$. On a modified Gym Reacher task, we investigate possible explanations for the failure of continuing SAC when learning without embodiment resets. Our results suggest that embodiment resets help with exploration of the state space in the SAC algorithm, and removing embodiment resets can lead to poor exploration of the state space and failure of or significantly slower learning. Finally, on additional simulated tasks and a real-robot vision task, we show that increasing the entropy of the policy when performance trends worse or remains static is an effective intervention for recovering the performance lost due to not using embodiment resets."
+    },
+    "markdown_stats": {
+      "lines": 274,
+      "words": 13714,
+      "headings": 21
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "4917e75f-69e2-48f3-b3c7-ec99d7e55cbe_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "10.36227-techrxiv.23264429.v1",
+  "paper_ref": "10.36227-techrxiv.23264429.v1",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

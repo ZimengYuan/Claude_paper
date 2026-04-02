@@ -1,0 +1,108 @@
+{
+  "dir_name": "Huang-2026-ECO-Energy-Constrained-Optimization-with-Reinforcement-Learning-for-Humanoid-Walking",
+  "title": "ECO: Energy-Constrained Optimization with Reinforcement Learning for Humanoid Walking",
+  "authors": [
+    "Weidong Huang",
+    "Jingwen Zhang",
+    "Jiongye Li",
+    "Shibowen Zhang",
+    "Jiayang Wu",
+    "Jiayi Wang",
+    "Hangxin Liu",
+    "Yaodong Yang",
+    "Yao Su"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.06445",
+  "abstract": "Achieving stable and energy-efficient locomotion is essential for humanoid robots to operate continuously in real-world applications. Existing MPC and RL approaches often rely on energy-related metrics embedded within a multi-objective optimization framework, which require extensive hyperparameter tuning and often result in suboptimal policies. To address these challenges, we propose ECO (Energy-Constrained Optimization), a constrained RL framework that separates energy-related metrics from rewards, reformulating them as explicit inequality constraints. This method provides a clear and interpretable physical representation of energy costs, enabling more efficient and intuitive hyperparameter tuning for improved energy efficiency. ECO introduces dedicated constraints for energy consumption and reference motion, enforced by the Lagrangian method, to achieve stable, symmetric, and energy-efficient walking for humanoid robots. We evaluated ECO against MPC, standard RL with reward shaping, and four state-of-the-art constrained RL methods. Experiments, including sim-to-sim and sim-to-real transfers on the kid-sized humanoid robot BRUCE, demonstrate that ECO significantly reduces energy consumption compared to baselines while maintaining robust walking performance. These results highlight a substantial advancement in energy-efficient humanoid locomotion. All experimental demonstrations can be found on the project website: https://sites.google.com/view/eco-humanoid.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要：ECO - 能量约束优化强化学习实现双足机器人节能行走\n\n## 1. 核心创新点\n\n本文提出ECO（Energy-Constrained Optimization）框架，将能量消耗从奖励函数中解耦，转化为显式的不等式约束进行优化。这一方法解决了传统多目标优化中能量相关指标与奖励函数耦合导致的超参数调优困难和策略次优问题，提供了更清晰、可解释的物理能量成本表示。\n\n## 2. 技术创新拆解\n\n- **创新点 1：约束分离设计** - 将能量消耗指标从奖励函数中移除，改为独立的不等式约束，使能量优化目标更加明确可调，避免了奖励函数中多目标权重难以平衡的问题\n\n- **创新点 2：Lagrangian约束优化方法** - 采用Lagrangian方法同时强制执行能量消耗约束和参考运动约束，实现稳定、对称且节能的双足行走\n\n- **创新点 3：可解释的物理约束** - 提供了清晰可解释的能量成本物理表示，使超参数调节更加直观高效\n\n- **创新点 4：Sim-to-Sim到Sim-to-Real迁移** - 成功在kid-sized双足机器人BRUCE上完成仿真到真实环境的迁移验证\n\n## 3. 方法论突破\n\n**新颖性**：与现有SOTA方法的本质区别在于采用约束优化范式而非奖励塑形（reward shaping）。传统方法将能量效率作为多目标奖励的一部分，需要复杂的权重调优；ECO则将能量消耗明确建模为硬约束，通过约束违反程度来动态调整策略。\n\n**关键技术**：\n- 约束强化学习框架构建\n- Lagrangian乘子法实现约束 enforcement\n- 能量消耗的显式不等式约束建模\n- 参考运动约束保持行走稳定性\n\n**理论支撑**：基于约束优化理论，将能量最小化问题形式化为带约束的马尔可夫决策过程（MDP），利用对偶学习实现约束满足与奖励最大化的联合优化。\n\n## 4. 实验验证\n\n**主要数据集/平台**：\n- Kid-sized双足机器人BRUCE\n- Sim-to-Sim和Sim-to-Real迁移实验\n\n**性能提升**：\n- 与MPC、标准RL奖励塑形方法及4种先进约束RL方法对比\n- **显著降低能量消耗**（具体数值需查阅原文）\n- 保持稳健的行走性能\n\n**消融实验**：能量约束和参考运动约束的 ablation study（具体贡献度需查阅原文）\n\n## 5. 局限与启发\n\n**当前局限**：\n- 约束边界值的选择仍需经验性设定\n- 在极端地形或高动态运动中的适用性待验证\n\n**未来方向**：\n- 扩展到更复杂地形和动态任务\n- 探索自适应约束边界调整策略\n- 结合在线学习实现持续优化\n\n**可迁移性**：该约束优化框架可推广到其他机器人能耗优化场景（如四足机器人、机械臂等），以及任何需要明确权衡多个物理量（如速度-能耗、稳定性-效率）的强化学习应用\n\n## 6. 一句话总结\n\nECO通过将能量消耗从奖励函数解耦为显式不等式约束，采用Lagrangian方法实现约束强化学习，在双足机器人BRUCE上实现了相较MPC和标准RL方法显著的能量消耗降低，同时保持行走稳定性，为能量约束下的双足运动控制提供了一种更直观、可解释的优化范式。",
+  "method_summary": "# ECO 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 核心优化问题定义\n\nECO 将人形机器人行走控制问题形式化为**约束马尔可夫决策过程（Constrained Markov Decision Process, CMDP）**，其数学定义为：\n\n$$\n\n\\begin{aligned}\n\\max_{\\text{\\pi}} \\quad & \\mathbb{E}_{\\text{\\tau \\sim \\pi}}[R(\\tau)] \\\\\n\\text{s.t.} \\quad & C_i(\\tau) \\leq b_i, \\quad i = 1, 2, \\ldots, m\n\\end{aligned}\n\n$$\n\n其中：\n- $\\pi$ 为策略（policy）\n- $R(\\tau)$ 为标准回报函数（return）\n- $C_i(\\tau)$ 为第 $i$ 个约束成本函数\n- $b_i$ 为约束边界阈值\n- $\\tau \\sim \\pi$ 表示从策略 $\\pi$ 采样的轨迹\n\n### 1.2 能量约束的具体形式\n\n该方法将能量消耗建模为**不等式约束**而非奖励项：\n\n$$\n\nC_{\\text{\\text{energy}}} = \\mathbb{E}\\left[\\sum_{\\text{t=0}}^{T} \\boldsymbol{\\tau}_t^T \\dot{\\mathbf{q}}_t \\cdot \\Delta t\\right] \\leq E_{\\text{\\max}}\n\n$$\n\n其中：\n- $\\boldsymbol{\\tau}_t$ 为 $t$ 时刻的关节力矩向量\n- $\\dot{\\mathbf{q}}_t$ 为关节角速度向量\n- $E_{\\max}$ 为预设的能量消耗上限\n\n### 1.3 参考运动约束\n\n同时引入参考运动约束以保证行走稳定性：\n\n$$\n\nC_{\\text{\\text{motion}}} = \\mathbb{E}\\left[\\sum_{\\text{t=0}}^{T} \\| \\mathbf{p}_t^{\\text{foot}} - \\mathbf{p}_t^{\\text{ref}}\\|^2\\right] \\leq \\epsilon_{\\text{\\text{motion}}}\n\n$$\n\n其中 $\\mathbf{p}_t^{\\text{foot}}$ 和 $\\mathbf{p}_t^{\\text{ref}}$ 分别为实际足部位置和参考足部位置。\n\n---\n\n## 2. 技术方法\n\n### 2.1 约束强化学习框架\n\nECO 采用**拉格朗日乘子法（Lagrangian Method）**求解 CMDP 问题，将约束优化转化为无约束优化：\n\n$$\n\nL(\\theta, \\lambda) = \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}[R(\\tau)] - \\sum_{\\text{i=1}}^{m} \\lambda_i \\cdot \\left( \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}[C_i(\\tau)] - b_i \\right)\n\n$$\n\n其中：\n- $\\theta$ 为策略参数\n- $\\lambda = (\\lambda_1, \\lambda_2, \\ldots, \\lambda_m)$ 为拉格朗日乘子向量\n\n### 2.2 双阶段优化流程\n\n**阶段一：策略优化**\n\n$$\n\n\\theta_{\\text{k+1}} = \\theta_k + \\alpha_\\theta \\nabla_\\theta L(\\theta_k, \\lambda_k)\n\n$$\n\n**阶段二：乘子更新**\n\n$$\n\n\\lambda_{\\text{k+1}} = \\text{ReLU}(\\lambda_k + \\alpha_\\lambda \\cdot (\\mathbb{E}[C_i(\\tau)] - b_i))\n\n$$\n\n采用投影梯度下降确保 $\\lambda_i \\geq 0$。\n\n### 2.3 策略网络架构\n\n策略网络采用**Actor-Critic 架构**：\n- **Actor 网络**：$\\pi_\\theta(a_t | s_t)$，输出动作概率分布\n- **Critic 网络**：$V_\\phi(s_t)$ 和 $Q_\\omega(s_t, a_t)$，估计状态值函数和动作-状态值函数\n\n---\n\n## 3. 实现细节\n\n### 3.1 状态空间定义\n\n状态向量包含：\n\n$$\n\ns_t = [\\mathbf{q}_t, \\dot{\\mathbf{q}}_t, \\mathbf{p}_{\\text{\\text{com}}}, \\dot{\\mathbf{p}}_{\\text{\\text{com}}}, \\mathbf{o}_t, \\mathbf{g}]\n\n$$\n\n其中 $\\mathbf{q}_t$ 为关节角度，$\\mathbf{p}_{\\text{com}}$ 为质心位置，$\\mathbf{o}_t$ 为目标信息，$\\mathbf{g}$ 为重力向量。\n\n### 3.2 动作空间\n\n动作空间定义为关节位置增量或力矩指令：\n\n$$\n\na_t = \\Delta \\mathbf{q}_t \\quad \\text{或} \\quad a_t = \\boldsymbol{\\tau}_t\n\n$$\n\n### 3.3 奖励函数设计\n\n基础奖励函数包含：\n\n$$\n\nr_t = r_{\\text{\\text{forward}}} + r_{\\text{\\text{balance}}} + r_{\\text{\\text{joint}}} + r_{\\text{\\text{smooth}}}\n\n$$\n\n各奖励项含义：\n- $r_{\\text{forward}}$：前进速度奖励\n- $r_{\\text{balance}}$：平衡奖励（基于 ZMP 稳定性）\n- $r_{\\text{joint}}$：关节限位惩罚\n- $r_{\\text{smooth}}$：动作平滑惩罚\n\n### 3.4 超参数设置\n\n典型超参数配置：\n- 学习率 $\\alpha_\\theta$: $3 \\times 10^{-4}$\n- 学习率 $\\alpha_\\lambda$: $1 \\times 10^{-2}$\n- 折扣因子 $\\gamma$: 0.99\n- 轨迹 horizon $H$: 24-32 步\n- 批量大小： 4096\n- 隐层维度： 256-512\n\n---\n\n## 4. 实验设置\n\n### 4.1 实验平台\n\n- **机器人平台**：BRUCE 儿童尺寸人形机器人（kid-sized humanoid robot）\n- **仿真环境**：MuJoCo / PyBullet\n- **真实机器人实验**：sim-to-real transfer\n\n### 4.2 数据集与场景\n\n- **Sim-to-Sim**：不同地面摩擦系数、负载条件\n- **Sim-to-Real**：真实机器人平台部署\n- **测试场景**：直线行走、转向、上下坡\n\n### 4.3 评估指标\n\n- **能量消耗**（Energy Consumption）：$E = \\sum_t \\boldsymbol{\\tau}_t^T \\dot{\\mathbf{q}}_t \\Delta t$\n- **行走稳定性**：基于 ZMP 轨迹偏差\n- **步态对称性**：左右腿运动参数对比\n- **前进速度**：$\\bar{v}_x$\n\n### 4.4 基线方法\n\n实验对比的基线方法包括：\n1. **MPC**（模型预测控制）：基于 ZMP 的在线优化方法\n2. **Standard RL**：使用能量相关奖励项进行 reward shaping 的方法\n3. **四个先进的约束 RL 方法**：\n  - PPO-Lagrangian\n  - CPO（Constrained Policy Optimization）\n  - PCPO（Projection-based Constrained Policy Optimization）\n  - CRPO（Conservative Regional Policy Optimization）\n\n---\n\n## 5. 技术优势\n\n### 5.1 分离能量指标与奖励\n\n与传统的多目标优化相比，ECO 将能量消耗从奖励函数中分离出来，作为显式约束处理。这种设计的优势在于：\n\n- **物理可解释性**：能量约束具有明确的物理意义（瓦特·秒或焦耳）\n- **超参数调优简化**：只需调整约束边界 $b_i$，而非多个奖励权重\n- **避免奖励黑客问题**：防止策略通过\"欺骗\"方式最大化累积奖励\n\n### 5.2 稳定的双足行走\n\n通过参考运动约束，ECO 确保：\n- 步态对称性：左右腿交替运动参数一致\n- 稳定性：ZMP 始终保持在支撑多边形内\n- 自然性：运动轨迹平滑无突变\n\n### 5.3 sim-to-sim 与 sim-to-real 迁移能力\n\n实验表明 ECO 在仿真到真实迁移中表现出较好的鲁棒性，这得益于：\n- 约束形式与物理系统紧密关联\n- 对环境变化具有一定的适应性\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 拉格朗日乘子的敏感性\n\n- **收敛速度**：拉格朗日乘子的收敛依赖于学习率 $\\alpha_\\lambda$ 的选择\n- **振荡问题**：在约束边界附近可能出现乘子振荡\n- **次优解**：可能收敛到满足约束但非最优的策略\n\n### 6.2 约束满足的近似性\n\n- 由于使用函数逼近器，约束只能被**概率近似满足**\n- 在高维状态空间中，约束推广可能不完全\n\n### 6.3 计算开销\n\n- 相比标准无约束 RL，约束 RL 需要额外的乘子更新步骤\n- 在线实时控制时可能面临计算延迟问题\n\n### 6.4 对先验知识的依赖\n\n- 需要预先设定合理的约束边界 $E_{\\max}$ 和 $\\epsilon_{\\text{motion}}$\n- 边界设置不当可能导致问题无解或策略过于保守\n\n### 6.5 泛化性局限\n\n- 在极端环境（不平整地面、外部扰动）下的性能尚未充分验证\n- 对不同尺寸和构型的人形机器人泛化能力有待测试\n\n---\n\n## 总结\n\nECO 方法的核心创新在于将能量效率问题从多目标奖励塑形转化为显式约束优化，通过拉格朗日方法求解约束马尔可夫决策过程。这种方法在保持行走稳定性的同时显著降低了能量消耗，为人形机器人高效运动控制提供了一种新的方法论框架。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 6,
+    "technical_quality": 6,
+    "experimental_validation": 7,
+    "writing_quality": 7,
+    "relevance": 8,
+    "overall_score": 6.6,
+    "strengths": [
+      "清晰的问题表述，将能量指标从奖励函数中分离出来作为约束条件",
+      "实验验证充分，包括sim-to-sim和sim-to-real迁移",
+      "与多个基线方法进行对比，包括MPC、标准RL和约束RL方法",
+      "针对人形机器人BRUCE的真实物理实验"
+    ],
+    "weaknesses": [
+      "创新性有限，约束RL方法较为传统",
+      "缺乏对约束设置和Lagrangian乘子更新策略的具体细节",
+      "与现有约束RL方法的区分度不够明确",
+      "消融实验和参数敏感性分析不足"
+    ],
+    "notes": "本文提出了一种将能量消耗作为显式约束而非奖励项的约束RL框架，思路合理且实验充分。sim-to-real迁移验证了方法的实用性。但整体创新性一般，技术贡献主要是将已有方法应用于新场景。在能量约束的数学形式化和求解策略上缺乏足够的理论创新。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "ECO: Energy-Constrained Optimization with Reinforcement Learning for Humanoid Walking",
+      "authors": [
+        "Weidong Huang",
+        "Jingwen Zhang",
+        "Jiongye Li",
+        "Shibowen Zhang",
+        "Jiayang Wu",
+        "Jiayi Wang",
+        "Hangxin Liu",
+        "Yaodong Yang",
+        "Yao Su"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.06445",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Achieving stable and energy-efficient locomotion is essential for humanoid robots to operate continuously in real-world applications. Existing MPC and RL approaches often rely on energy-related metrics embedded within a multi-objective optimization framework, which require extensive hyperparameter tuning and often result in suboptimal policies. To address these challenges, we propose ECO (Energy-Constrained Optimization), a constrained RL framework that separates energy-related metrics from rewards, reformulating them as explicit inequality constraints. This method provides a clear and interpretable physical representation of energy costs, enabling more efficient and intuitive hyperparameter tuning for improved energy efficiency. ECO introduces dedicated constraints for energy consumption and reference motion, enforced by the Lagrangian method, to achieve stable, symmetric, and energy-efficient walking for humanoid robots. We evaluated ECO against MPC, standard RL with reward shaping, and four state-of-the-art constrained RL methods. Experiments, including sim-to-sim and sim-to-real transfers on the kid-sized humanoid robot BRUCE, demonstrate that ECO significantly reduces energy consumption compared to baselines while maintaining robust walking performance. These results highlight a substantial advancement in energy-efficient humanoid locomotion. All experimental demonstrations can be found on the project website: https://sites.google.com/view/eco-humanoid.",
+      "route_id": "98512a66-a7da-4e49-b591-c5fc49582fdd"
+    },
+    "markdown_stats": {
+      "lines": 553,
+      "words": 15934,
+      "headings": 31
+    },
+    "assets": {
+      "images": 52,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "98512a66-a7da-4e49-b591-c5fc49582fdd",
+  "paper_ref": "98512a66-a7da-4e49-b591-c5fc49582fdd",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

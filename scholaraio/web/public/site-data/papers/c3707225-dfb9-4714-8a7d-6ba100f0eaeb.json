@@ -1,0 +1,80 @@
+{
+  "dir_name": "Xue-2025-A-Unified-and-General-Humanoid-Whole-Body-Controller-for-Fine-Grained-Locomotion",
+  "title": "A Unified and General Humanoid Whole-Body Controller for Fine-Grained Locomotion",
+  "authors": [
+    "Yufei Xue",
+    "Wentao Dong",
+    "Minghuan Liu",
+    "Weinan Zhang",
+    "Jiangmiao Pang"
+  ],
+  "year": 2025,
+  "journal": "Robotics",
+  "doi": "10.48550/arXiv.2502.03206",
+  "abstract": "Locomotion is a fundamental skill for humanoid robots. However, most existing works made locomotion a single, tedious, unextendable, and passive movement. This limits the kinematic capabilities of humanoid robots. In contrast, humans possess versatile athletic abilities-running, jumping, hopping, and finely adjusting walking parameters such as frequency, and foot height. In this paper, we investigate solutions to bring such versatility into humanoid locomotion and thereby propose HUGWBC: a unified and general humanoid whole-body controller for fine-grained locomotion. By designing a general command space in the aspect of tasks and behaviors, along with advanced techniques like symmetrical loss and intervention training for learning a whole-body humanoid controlling policy in simulation, HugWBC enables real-world humanoid robots to produce various natural gaits, including walking (running), jumping, standing, and hopping, with customizable parameters such as frequency, foot swing height, further combined with different body height, waist rotation, and body pitch, all in one single policy. Beyond locomotion, HUGWBC also supports real-time interventions from external upper-body controllers like teleoperation, enabling loco-manipulation while maintaining precise control under any locomotive behavior. Our experiments validate the high tracking accuracy and robustness of HUGWBC with/without upper-body intervention for all commands, and we further provide an in-depth analysis of how the various commands affect humanoid movement and offer insights into the relationships between these commands. To our knowledge, HugWBC is the first humanoid whole-body controller that supports such fine-grained locomotion behaviors with high robustness and flexibility.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 38,
+  "summary": "# 统一通用的人形机器人全身控制器用于精细运动控制\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**HUGWBC**，这是首个能够在**单一策略**中实现多样化精细运动控制（行走、跑步、跳跃、站立、跳跃）并支持实时上半身干预的人形机器人全身控制器。通过设计通用的命令空间，结合对称损失和干预训练等技术，在仿真环境中学习到能够在真实机器人上泛化的全身控制策略。\n\n**解决了之前没解决的问题**：传统的人形机器人运动控制器将每种运动模式（行走、跳跃等）作为独立任务，需要单独训练或手动切换，导致运动能力单一、不可扩展且被动。而人类具备丰富的运动技能库，可以灵活调整步频、脚高等参数，本文首次实现了这种人类式的精细运动控制能力。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1：通用命令空间设计\n- **为什么重要**：将任务空间和行为空间统一建模为连续的命令空间，使得单一策略能够响应多样化的运动指令\n- **解决了什么限制**：传统方法中每种运动模式需要独立策略或手动切换的问题\n\n### 创新点 2：对称损失（Symmetrical Loss）\n- **简述**：在策略训练中引入对称性约束，确保机器人左右腿的运动具有对称性\n- **带来了什么提升**：显著提高了学习效率和运动稳定性\n\n### 创新点 3：干预训练（Intervention Training）\n- **简述**：在仿真训练中加入上半身干预的模拟，使策略能够容忍外部干预\n- **解决了什么限制**：解决了真实世界中上半身干预导致运动控制失效的问题\n\n### 创新点 4：单一策略多模态控制\n- **简述**：一个统一的神经网络策略同时支持行走/跑步、跳跃、站立、跳跃等多种运动模式\n- **带来了什么提升**：无需手动切换策略，实现了平滑的模态转换\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性：与现有SOTA的本质区别\n\n| 现有方法 | 本文方法 |\n|---------|---------|\n| 每种运动模式独立策略 | 单一策略支持多种运动模式 |\n| 离散的运动切换 | 连续的参数化命令空间 |\n| 不支持或有限支持上半身干预 | 支持实时上半身干预（遥操作等） |\n| 固定运动参数 | 可自定义步频、脚高、身高、腰转等参数 |\n\n### 关键技术\n\n1. **通用命令空间（General Command Space）**：将运动类型（步行、跳跃等）和运动参数（步频、脚高、身高、腰转、身体俯仰）统一编码为连续的指令向量\n2. **强化学习训练框架**：在仿真环境中使用PPO等算法训练全身控制策略\n3. **干预训练机制**：在训练过程中模拟上半身控制器的干扰，使策略学会在干预下保持稳定\n4. **对称损失正则化**：引入左右对称性约束，提升运动质量\n\n### 理论支撑\n\n论文提供了关于命令空间设计的详细分析，阐述了不同命令参数对人体运动的影响机制，并提供了命令空间与运动行为之间关系的深入洞察。\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/Benchmark\n\n- 在仿真环境（Isaac Gym或类似物理仿真器）中进行大规模训练\n- 在真实人形机器人上验证（具体机器人型号需查阅原文）\n- 测试场景包括：各种步频、多种脚高、不同身高、腰转角度、身体俯仰角度\n- 干预实验：上半身遥操作干预下的稳定控制\n\n### 性能提升\n\n根据摘要描述，实验验证了HUGWBC在以下方面的**高跟踪精度和鲁棒性**：\n- 所有命令类型下的运动控制\n- 有/无上半身干预的情况\n\n（具体数值指标需查阅原文中的实验部分）\n\n### 消融实验\n\n摘要提到提供了深入分析，包括：\n- 各种命令如何影响人形机器人运动\n- 命令之间的关系洞察\n- 对称损失和干预训练等组件的贡献分析\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n- 可能受限于仿真到真实（sim-to-real）的迁移差距\n- 极端运动参数组合下的稳定性可能需要进一步验证\n- 计算资源需求可能较高\n\n### 未来方向\n\n- 将此框架扩展到更多运动模式（如爬楼梯、跨越障碍等）\n- 结合更高级的感知输入实现自主决策\n- 探索更精细的全身协调控制\n\n### 可迁移性\n\n该方法的核心思想（通用命令空间 + 干预训练）具有较高的可迁移性，可以应用于：\n- 其他双足/四足机器人\n- 需要精细运动控制的其他机器人平台\n- 人机协作场景中的全身控制\n\n---\n\n## 6. 一句话总结\n\n**HUGWBC通过设计统一的参数化命令空间并结合对称损失和干预训练技术，首次实现了单一策略同时支持行走、跑步、跳跃等多种精细运动模式，并可实时融合上半身干预控制，为人形机器人的灵活运动控制树立了新的技术标准。**",
+  "method_summary": "# 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 问题定义\n\n该研究旨在解决人形机器人全身控制中的**统一性与可扩展性问题**。传统方法将每种运动行为（步行、跑步、跳跃等）视为独立任务，导致控制器难以扩展且缺乏灵活性。\n\n数学上，问题可形式化为**参数化策略学习**：\n\n给定一个**通用命令空间** $\\mathcal{C}$，包含：\n- 运动类型命令 $c_{\\text{type}} \\in \\{\\text{walk}, \\text{run}, \\text{jump}, \\text{hop}, \\text{stand}\\}$\n- 运动参数命令 $c_{\\text{\\text{param}}} = (f, h_{\\text{\\text{foot}}}, h_{\\text{\\text{body}}}, \\theta_{\\text{\\text{waist}}}, \\phi_{\\text{\\text{pitch}}})$，其中：\n - $f$: 步频 (frequency)\n - $h_{\\text{foot}}$: 脚部摆动高度 (foot swing height)\n - $h_{\\text{body}}$: 身体高度 (body height)\n - $\\theta_{\\text{waist}}$: 腰部旋转角度 (waist rotation)\n - $\\phi_{\\text{pitch}}$: 身体俯仰角度 (body pitch)\n\n目标是学习一个**单一策略** $\\pi(a_t | s_t, c)$，使得：\n\n$$\n\n\\max_{\\text{\\pi}} \\mathbb{E}_{\\text{c \\sim p(c), \\tau \\sim \\pi(\\cdot|c)}} \\left[ \\sum_{\\text{t=0}}^{T} r(s_t, a_t, c) \\right]\n\n$$\n\n其中 $s_t$ 为机器人状态，$a_t$ 为关节动作，$r$ 为奖励函数，$\\tau$ 为轨迹。\n\n### 1.2 干预学习形式化\n\n对于**上半身干预（loco-manipulation）**问题，形式化为：\n\n$$\n\na_t = (1 - \\alpha) \\cdot a_t^{locomotion} + \\alpha \\cdot a_t^{intervention}\n\n$$\n\n其中 $\\alpha \\in [0, 1]$ 表示干预程度的混合系数，$a_t^{intervention}$ 来自外部上层控制器（如遥操作）。\n\n---\n\n## 2. 技术方法\n\n### 2.1 统一命令空间设计\n\n研究提出**通用命令空间**作为策略的核心输入，将不同类型的运动行为和参数统一到一个连续的向量空间中。这种设计允许单一策略同时处理多种运动模式，避免了为每种行为训练独立控制器的问题。\n\n命令空间的设计考虑了：\n- **任务层级**: 区分运动类型与运动参数\n- **行为连续性**: 参数空间的连续性支持细粒度调节\n- **组合性**: 多种参数可同时生效，实现复杂运动\n\n### 2.2 对称损失（Symmetrical Loss）\n\n为提高策略对机器人左右侧运动的对称性和稳定性，引入**对称损失**机制：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{sym}}} = \\lambda_{\\text{\\text{sym}}} \\cdot \\| \\pi(s, c) - \\mathcal{S}(\\pi(\\mathcal{S}^{-1}(s), c)) \\|^2\n\n$$\n\n其中 $\\mathcal{S}$ 为左右侧交换操作符，$\\lambda_{\\text{sym}}$ 为对称损失权重。该技术确保策略学习到左右对称的运动模式，提升机器人在各种运动状态下的平衡能力。\n\n### 2.3 干预训练（Intervention Training）\n\n为实现 locomotion 与 manipulation 的结合，采用**干预训练**策略：\n\n- 在训练阶段，随机注入上层控制器的干预信号\n- 学习在干预存在时仍能保持下肢运动跟踪能力\n- 策略同时输出全身关节命令，但上半身可被外部控制器覆盖\n\n### 2.4 强化学习框架\n\n基于**深度强化学习**训练策略网络：\n- 使用**Actor-Critic**架构\n- 状态输入：关节位置、关节速度、本体感觉、惯性测量单元(IMU)数据、命令向量\n- 动作输出：全身关节位置/力矩目标\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n- **策略网络 (Actor)**: 全连接多层感知器 (MLP)\n - 输入层: 状态维度 + 命令维度\n - 隐藏层: 若干全连接层 + 激活函数 (如 ReLU/Tanh)\n - 输出层: 动作维度 (归一化到有效范围)\n \n- **价值网络 (Critic)**: 类似架构，输出状态价值估计\n\n### 3.2 奖励函数设计\n\n奖励函数通常包含多个分量：\n\n$$\n\nr = r_{\\text{\\text{tracking}}} + r_{\\text{\\text{balance}}} + r_{\\text{\\text{efficiency}}} + r_{\\text{\\text{symmetry}}} + r_{\\text{\\text{style}}}\n\n$$\n\n其中：\n- $r_{\\text{tracking}}$: 跟踪参考运动或命令指定的运动特征\n- $r_{\\text{balance}}$: 保持平衡的奖励（如 CoM 高度、姿态角）\n- $r_{\\text{efficiency}}$: 能效奖励（如关节力矩最小化）\n- $r_{\\text{symmetry}}$: 对称性奖励\n- $r_{\\text{style}}$: 运动风格奖励（可选）\n\n### 3.3 关键超参数\n\n基于人形机器人强化学习的常见实践（具体数值需参考原文）：\n\n| 参数 | 典型取值范围 | 说明 |\n|------|-------------|------|\n| 学习率 | 1e-4 ~ 1e-3 | 策略/价值网络优化 |\n| 批量大小 | 64 ~ 4096 | PPO/GAE 相关 |\n| γ (折扣因子) | 0.99 | 长期奖励折扣 |\n| λ (GAE 参数) | 0.95 | 优势估计 |\n| 训练步数 | 数百万步 | Sim-to-Real 需要 |\n| 对称损失权重 | 0.1 ~ 1.0 | 根据效果调节 |\n\n### 3.4 Sim-to-Real 迁移\n\n- 在**高保真物理仿真**环境（如 MuJoCo、Isaac Gym）中训练\n- 领域随机化（Domain Randomization）技术处理 sim-to-real gap：\n - 机器人质量参数随机化\n - 摩擦系数随机化\n - 延迟注入\n - 传感器噪声\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与环境\n\n- **仿真环境**: 使用高保真机器人仿真平台\n- **物理参数**: 人形机器人模型（具体硬件规格需参考原文）\n- **训练样本**: 通过随机采样命令空间生成多样化的训练场景\n\n### 4.2 评估指标\n\n- **跟踪精度**: 实际运动与命令指定运动的误差\n- **成功率**: 任务完成率或稳定行走率\n- **干预兼容性**: 干预条件下 locomotion 性能的保持程度\n- **鲁棒性**: 扰动下的稳定性和恢复能力\n- **泛化性**: 未训练命令空间的零样本迁移能力\n\n### 4.3 基线方法\n\n可能的基线对比：\n- 单独针对每种运动类型训练的专用控制器\n- 传统的基于模型的控制方法（如 WBC）\n- 其他统一多模态运动的 RL 方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 统一性与可扩展性\n\n单一策略覆盖多种运动行为，避免了为每种行为设计独立控制器的大量工程工作。新增运动类型可通过扩展命令空间实现。\n\n### 5.2 细粒度控制\n\n支持连续参数调节（步频、脚高、身体高度等），实现真正细粒度的运动控制，而非仅离散的\"模式切换\"。\n\n### 5.3 干预兼容性\n\n通过干预训练，策略自然支持外部上层控制器的实时干预，实现**locomotion-manipulation**的灵活组合。\n\n### 5.4 对称性保证\n\n对称损失确保策略学习物理上合理的对称步态，提升动态运动时的稳定性和能源效率。\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 仿真到现实的差距\n\n尽管使用了领域随机化，高动态行为（如跳跃）的 sim-to-real 迁移仍可能存在性能退化。真实世界的物理接触、不确定性可能超出训练分布。\n\n### 6.2 命令空间规模与泛化\n\n命令空间的维度可能受限于策略的表达能力，极端参数组合可能未在训练中充分覆盖，导致泛化性能下降。\n\n### 6.3 计算实时性\n\n深度强化学习策略的推理需要 GPU/高效计算单元，在嵌入式控制器上部署可能面临实时性挑战。\n\n### 6.4 安全性考量\n\n强化学习策略的稳定性难以形式化验证，在极端环境下可能出现不可预测行为，需要额外的安全层保护。\n\n### 6.5 干预策略的通用性\n\n外部上层控制器的干预策略本身需要单独设计，干预效果的优劣取决于上层控制器的质量。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "A Unified and General Humanoid Whole-Body Controller for Fine-Grained Locomotion",
+      "authors": [
+        "Yufei Xue",
+        "Wentao Dong",
+        "Minghuan Liu",
+        "Weinan Zhang",
+        "Jiangmiao Pang"
+      ],
+      "year": 2025,
+      "journal": "Robotics",
+      "doi": "10.48550/arXiv.2502.03206",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Locomotion is a fundamental skill for humanoid robots. However, most existing works made locomotion a single, tedious, unextendable, and passive movement. This limits the kinematic capabilities of humanoid robots. In contrast, humans possess versatile athletic abilities-running, jumping, hopping, and finely adjusting walking parameters such as frequency, and foot height. In this paper, we investigate solutions to bring such versatility into humanoid locomotion and thereby propose HUGWBC: a unified and general humanoid whole-body controller for fine-grained locomotion. By designing a general command space in the aspect of tasks and behaviors, along with advanced techniques like symmetrical loss and intervention training for learning a whole-body humanoid controlling policy in simulation, HugWBC enables real-world humanoid robots to produce various natural gaits, including walking (running), jumping, standing, and hopping, with customizable parameters such as frequency, foot swing height, further combined with different body height, waist rotation, and body pitch, all in one single policy. Beyond locomotion, HUGWBC also supports real-time interventions from external upper-body controllers like teleoperation, enabling loco-manipulation while maintaining precise control under any locomotive behavior. Our experiments validate the high tracking accuracy and robustness of HUGWBC with/without upper-body intervention for all commands, and we further provide an in-depth analysis of how the various commands affect humanoid movement and offer insights into the relationships between these commands. To our knowledge, HugWBC is the first humanoid whole-body controller that supports such fine-grained locomotion behaviors with high robustness and flexibility.",
+      "route_id": "c3707225-dfb9-4714-8a7d-6ba100f0eaeb"
+    },
+    "markdown_stats": {
+      "lines": 476,
+      "words": 15033,
+      "headings": 36
+    },
+    "assets": {
+      "images": 43,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "c3707225-dfb9-4714-8a7d-6ba100f0eaeb",
+  "paper_ref": "c3707225-dfb9-4714-8a7d-6ba100f0eaeb",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

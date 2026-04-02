@@ -1,0 +1,77 @@
+{
+  "dir_name": "Bellegarda-2024-Robust-quadruped-jumping-via-deep-reinforcement-learning",
+  "title": "Robust quadruped jumping via deep reinforcement learning",
+  "authors": [
+    "Guillaume Bellegarda",
+    "Chuong Nguyen",
+    "Quan Nguyen"
+  ],
+  "year": 2024,
+  "journal": "Robotics and Autonomous Systems",
+  "doi": "10.1016/j.robot.2024.104799",
+  "abstract": "In this paper we consider a general task of jumping varying distances and heights for a quadrupedal robot in noisy environments, such as off of uneven terrain and with variable robot dynamics parameters. To accurately jump in such conditions, we propose a framework using deep reinforcement learning to leverage the complex solution of nonlinear trajectory optimization for quadrupedal jumping. While the standalone optimization limits jumping to take-off from flat ground and requires accurate assumption of robot dynamics, our proposed approach improves the robustness to allow jumping off of significantly uneven terrain with variable robot dynamical parameters. Through our method, the quadruped is able to jump distances of up to 1 m and heights of up to 0.4 m, while being robust to environment noise of foot disturbances of up to 0.1 m in height as well as with 5% variability of its body mass and inertia. This behavior is learned through just a few thousand simulated jumps, and video results can be found at this https URL.",
+  "paper_type": "journal-article",
+  "publisher": "Elsevier BV",
+  "issn": "0921-8890",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 87,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Robust quadruped jumping via deep reinforcement learning",
+      "authors": [
+        "Guillaume Bellegarda",
+        "Chuong Nguyen",
+        "Quan Nguyen"
+      ],
+      "year": 2024,
+      "journal": "Robotics and Autonomous Systems",
+      "doi": "10.1016/j.robot.2024.104799",
+      "paper_type": "journal-article",
+      "publisher": "Elsevier BV",
+      "issn": "0921-8890",
+      "abstract": "In this paper we consider a general task of jumping varying distances and heights for a quadrupedal robot in noisy environments, such as off of uneven terrain and with variable robot dynamics parameters. To accurately jump in such conditions, we propose a framework using deep reinforcement learning to leverage the complex solution of nonlinear trajectory optimization for quadrupedal jumping. While the standalone optimization limits jumping to take-off from flat ground and requires accurate assumption of robot dynamics, our proposed approach improves the robustness to allow jumping off of significantly uneven terrain with variable robot dynamical parameters. Through our method, the quadruped is able to jump distances of up to 1 m and heights of up to 0.4 m, while being robust to environment noise of foot disturbances of up to 0.1 m in height as well as with 5% variability of its body mass and inertia. This behavior is learned through just a few thousand simulated jumps, and video results can be found at this https URL.",
+      "route_id": "c8d49a0a-4836-4df3-bbb2-55a213c6c9ff"
+    },
+    "markdown_stats": {
+      "lines": 376,
+      "words": 10443,
+      "headings": 17
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "c8d49a0a-4836-4df3-bbb2-55a213c6c9ff",
+  "paper_ref": "c8d49a0a-4836-4df3-bbb2-55a213c6c9ff",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

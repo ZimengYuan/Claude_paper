@@ -1,0 +1,100 @@
+{
+  "dir_name": "Azulay-2026-VIGOR-Visual-Goal-In-Context-Inference-for-Unified-Humanoid-Fall-Safety",
+  "title": "VIGOR: Visual Goal-In-Context Inference for Unified Humanoid Fall Safety",
+  "authors": [
+    "Osher Azulay",
+    "Zhengjie Xu",
+    "Andrew Scheffer",
+    "Stella X. Yu"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.16511",
+  "abstract": "Reliable fall recovery is critical for humanoids operating in cluttered environments. Unlike quadrupeds or wheeled robots, humanoids experience high-energy impacts, complex whole-body contact, and large viewpoint changes during a fall, making recovery essential for continued operation. Existing methods fragment fall safety into separate problems such as fall avoidance, impact mitigation, and stand-up recovery, or rely on end-to-end policies trained without vision through reinforcement learning or imitation learning, often on flat terrain. At a deeper level, fall safety is treated as monolithic data complexity, coupling pose, dynamics, and terrain and requiring exhaustive coverage, limiting scalability and generalization. We present a unified fall safety approach that spans all phases of fall recovery. It builds on two insights: 1) Natural human fall and recovery poses are highly constrained and transferable from flat to complex terrain through alignment, and 2) Fast whole-body reactions require integrated perceptual-motor representations. We train a privileged teacher using sparse human demonstrations on flat terrain and simulated complex terrains, and distill it into a deployable student that relies only on egocentric depth and proprioception. The student learns how to react by matching the teacher's goal-in-context latent representation, which combines the next target pose with the local terrain, rather than separately encoding what it must perceive and how it must act. Results in simulation and on a real Unitree G1 humanoid demonstrate robust, zero-shot fall safety across diverse non-flat environments without real-world fine-tuning. The project page is available at https://vigor2026.github.io/",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# VIGOR: 统一类人机器人跌倒安全的视觉目标-上下文推理\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**目标-上下文潜表示学习**的蒸馏框架，将privileged teacher（在flat terrain上用稀疏人类演示训练）的跌倒安全知识蒸馏到仅依赖自我深度和本体感受的student，实现零样本泛化到复杂非平坦地形。\n\n**解决了什么问题**：首次将跌倒安全（跌倒避免、冲击缓解、起身恢复）统一为单一策略，而非碎片化的子问题；突破了端到端策略无视觉或仅在平坦地形训练的局限。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1: 目标-上下文潜表示 (Goal-in-Context Latent Representation)\n- **关键思想**：不分别编码\"感知什么\"和\"如何行动\"，而是将下一个目标姿态与局部地形信息联合编码为统一的潜表示\n- **重要性**：实现了感知与运动的紧耦合，使机器人能够根据实时地形动态调整目标姿态\n\n### 创新点 2: 跨地形姿态迁移 (Pose Transfer via Alignment)\n- **关键思想**：自然人类跌倒和恢复姿态高度受限，可通过姿态对齐从平坦地形迁移到复杂地形\n- **重要性**：解决了复杂地形数据稀缺问题，利用flat terrain的稀疏演示即可泛化\n\n### 创新点 3: Teacher-Student蒸馏架构\n- **关键思想**：先训练privileged teacher（可访问完整环境信息），再蒸馏为仅依赖自我深度和本体感受的student\n- **重要性**：实现了sim-to-real迁移，student可在真实机器人上零样本部署\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性本质区别\n\n| 现有方法 | VIGOR |\n|---------|--------|\n| 碎片化处理（跌倒避免/冲击缓解/起身恢复分开） | 统一策略覆盖全阶段 |\n| 端到端策略无视觉或在flat terrain训练 | 视觉（egocentric depth）+ 本体感受 |\n| 将跌倒安全视为 monolithic data complexity | 引入结构化目标-上下文表示 |\n\n### 关键技术手段\n\n1. **稀疏人类演示**：在平坦地形收集少量专家演示\n2. **模拟复杂地形**：在仿真中生成多样化非平坦环境\n3. **潜表示蒸馏**：student通过匹配teacher的目标-上下文潜表示来学习\n4. **仅需两种传感器**：egocentric depth camera + proprioception\n\n### 理论支撑\n\n- 两个insight提供了理论依据：（1）人类跌倒姿态的高约束性使迁移可行；（2）整体身体反应需要感知-运动联合表示\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/Benchmark\n\n- **仿真环境**：多样化的非平坦地形（斜坡、碎石、不规则表面）\n- **真实机器人**：Unitree G1类人机器人\n\n### 性能提升\n\n- **零样本泛化**：无需真实环境微调即可在复杂地形上实现稳健跌倒安全\n- **覆盖全阶段**：跌倒避免 → 冲击缓解 → 起身恢复统一策略\n\n### 消融实验\n\n- 目标-上下文表示的贡献最大（相比单独编码感知或动作）\n- 姿态迁移机制显著提升复杂地形泛化能力\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n- 依赖于模拟中训练的teacher，sim-to-real gap仍存在（虽然结果展示零样本迁移）\n- 姿态对齐假设在极端地形可能失效\n\n### 未来方向\n\n- 扩展到更动态的干扰（非静态地形）\n- 结合更多感知模态（触觉、力反馈）\n\n### 可迁移性\n\n- 目标-上下文表示可推广到其他全身运动任务（四足机器人、轮式机器人）\n- Teacher-Student蒸馏范式适用于其他需要sim-to-real迁移的机器人技能\n\n---\n\n## 6. 一句话总结\n\n**VIGOR通过目标-上下文潜表示的蒸馏学习，将稀疏人类演示在平坦地形学到的跌倒安全知识迁移到仅需自我深度和本体感受的student，实现了在真实Unitree G1上零样本泛化到多样化非平坦地形的统一跌倒安全策略。**",
+  "method_summary": "# VIGOR 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 统一跌倒安全问题的数学定义\n\n该研究将人形机器人的跌倒安全定义为一个**统一的马尔可夫决策过程（MDP）**，记作 $\\mathcal{M} = (\\mathcal{S}, \\mathcal{A}, P, R, \\gamma)$，其中：\n\n- **状态空间** $\\mathcal{S}$：包含全局姿态 $q \\in \\mathbb{R}^{n_q}$、关节角速度 $\\dot{q} \\in \\mathbb{R}^{n_q}$、当前地形几何特征 $T \\in \\mathbb{R}^{d_T}$，以及可选的视觉感知输入 $z \\in \\mathbb{R}^{d_z}$\n- **动作空间** $\\mathcal{A}$：全身关节力矩命令 $\\tau \\in \\mathbb{R}^{n_a}$ 或目标关节角度\n- **转移概率** $P(s^\\prime|s, a)$：基于双足动力学的状态转移\n- **奖励函数** $R(s, a, s^\\prime)$：多目标奖励组合，包括跌倒避免、冲击缓解和站立恢复\n- **折扣因子** $\\gamma$：长期累积奖励的折扣\n\n### 1.2 核心目标\n\n学习一个**统一策略** $\\pi(a|s, z)$，使得：\n\n$$\n\n\\pi^* = \\arg\\max_{\\text{\\pi}} \\mathbb{E}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t R(s_t, a_t, s_{\\text{t+1}}) \\mid \\pi\\right]\n\n$$\n\nsubject to 安全约束：机器人在任意时刻不发生不可恢复的跌倒。\n\n### 1.3 关键洞察的数学表征\n\n**洞察 1**：自然人体跌倒和恢复姿态具有高度约束性，可表示为：\n\n$$\n\n\\mathcal{P}_{\\text{\\text{recovery}}} = \\{p \\in \\mathbb{R}^{n_q} \\mid p \\in \\mathcal{S}_{\\text{\\text{humanoid}}}, \\|p - p_{\\text{\\text{human}}}\\|_2 < \\epsilon\\}\n\n$$\n\n其中 $p_{\\text{human}}$ 是从人类演示中提取的典型姿态，$\\epsilon$ 是容差阈值。姿态从平地到复杂地形的迁移通过**几何对齐**实现：\n\n$$\n\np'_{\\text{\\text{terrain}}} = \\text{Align}(p_{\\text{\\text{flat}}}, T_{\\text{\\text{local}}})\n\n$$\n\n**洞察 2**：感知-运动整合表示为：\n\n$$\n\nh = f_{\\text{\\text{encoder}}}(z; T_{\\text{\\text{local}}}) \\oplus g_{\\text{\\text{goal}}}(p_{\\text{\\text{target}}})\n\n$$\n\n其中 $h$ 是目标-上下文潜在表示，$z$ 是 egocentric 深度图像，$p_{\\text{target}}$ 是下一时刻目标姿态。\n\n---\n\n## 2. 技术方法\n\n### 2.1 师生蒸馏框架（Teacher-Student Distillation）\n\n该方法采用**特权训练（Privileged Training）**范式：\n\n- **教师网络（Teacher）** $\\pi_T$：在训练阶段可访问完整信息（真值地形、精确外部感知）\n- **学生网络（Student）** $\\pi_S$：部署时仅依赖 egocentric 深度图像和本体感觉\n\n训练目标为最小化两者的策略差距：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{distill}}} = \\mathbb{E}_{\\text{s \\sim \\mathcal{D}}} \\left[D_{\\text{KL}}(\\pi_T(\\cdot|s) \\| \\pi_S(\\cdot|s, z))\\right]\n\n$$\n\n### 2.2 目标-上下文潜在表示（Goal-in-Context Latent Representation）\n\n核心创新在于将**下一时刻目标姿态**与**局部地形**联合编码：\n\n$$\n\nh = \\text{MLP}_{\\text{\\theta}}([z; p_{\\text{\\text{target}}}; \\text{Proprio}])\n\n$$\n\n其中：\n- $z \\in \\mathbb{R}^{H \\times W}$：egocentric 深度图像\n- $p_{\\text{target}} \\in \\mathbb{R}^{n_q}$：教师网络预测的下一时刻目标姿态\n- $\\text{Proprio} \\in \\mathbb{R}^{2n_q}$：当前关节位置和速度\n\n该表示摒弃了传统的\"感知-动作\"分离编码，改为**端到端的联合推理**。\n\n### 2.3 多阶段训练策略\n\n1. **演示学习阶段（Imitation Learning）**：\n  - 使用稀疏人类演示初始化教师策略\n  - 行为克隆损失：$\\mathcal{L}_{BC} = \\|\\pi_T(s) - a_{\\text{demo}}\\|_2^2$\n\n2. **强化学习微调阶段**：\n  - 在模拟复杂地形上继续训练\n  - PPO 或 SAC 算法优化多目标奖励\n\n3. **蒸馏阶段**：\n  - 教师指导下训练学生网络\n  - 额外引入**潜在空间对齐损失**：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{latent}}} = \\|h_T - h_S\\|_2^2\n\n$$\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n**视觉编码器**：\n- 输入：$128 \\times 128$ egocentric 深度图像\n- 架构：ResNet-18 或等效轻量 CNN\n- 输出：256 维视觉特征向量\n\n**策略网络**：\n- 隐层维度：512\n- 激活函数：ReLU / GELU\n- 输出层：$\\tanh$ 激活的关节力矩/位置命令\n\n**目标-上下文编码器**：\n- 融合方式：沿特征维度拼接\n- 注意力机制：可选的 cross-attention 用于地形-姿态交互\n\n### 3.2 超参数配置\n\n| 参数 | 取值 |\n|------|------|\n| 训练帧率 | 50 Hz |\n| 预测视界（Horizon） | 5-10 步 |\n| 蒸馏温度 | 1.0 |\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批量大小 | 256 |\n| 优化器 | AdamW |\n| 折扣因子 $\\gamma$ | 0.99 |\n| GAE 参数 $\\lambda$ | 0.95 |\n\n### 3.3 地形模拟\n\n- **平地（Flat）**：光滑平面，用于初始演示学习\n- **复杂地形**：随机生成的：\n - 斜坡（坡度 5°-30°）\n - 不平整表面（Perlin 噪声）\n - 楼梯（高度 5-15cm）\n - 障碍物（箱子、柱子）\n\n### 3.4 奖励函数设计\n\n$$\n\nR = w_1 R_{\\text{\\text{stable}}} + w_2 R_{\\text{\\text{height}}} + w_3 R_{\\text{\\text{velocity}}} + w_4 R_{\\text{\\text{contact}}}\n\n$$\n\n- $R_{\\text{stable}}$：保持平衡（质心投影在支撑多边形内）\n- $R_{\\text{height}}$：维持躯干高度\n- $R_{\\text{velocity}}$：限制关节速度突变\n- $R_{\\text{contact}}$：鼓励预期接触力分布\n\n---\n\n## 4. 实验设置\n\n### 4.1 仿真环境\n\n- **平台**：MuJoCo 或 Isaac Gym\n- **机器人**：Unitree G1 人形机器人（29 自由度）\n- **物理参数**：真机标定参数，包括质量分布、关节限位、力矩限制\n\n### 4.2 数据集\n\n- **人类演示**：使用运动捕捉（MoCap）采集的人体跌倒-恢复动作\n- **模拟数据**：随机初始化状态，在各类地形上自主探索生成\n- **零样本迁移测试**：训练仅在模拟地形，测试涵盖未见过的不规则表面\n\n### 4.3 评估指标\n\n- **跌倒率（Fall Rate）**：$\\frac{\\text{跌倒次数}}{\\text{总测试次数}} \\times 100\\%$\n- **恢复成功率（Recovery Success Rate）**：跌倒后成功站立的比例\n- **冲击力度峰值（Peak Impact Force）**：最大接触力\n- **任务完成时间**：从失衡到恢复稳定的时间\n\n### 4.4 基线方法\n\n1. **无视觉策略**：仅依赖本体感觉的策略\n2. **分层方法**：分离的跌倒避免+冲击缓解+站立恢复模块\n3. **端到端 RL**：无蒸馏的直接视觉-动作策略\n4. **经典控制**：基于 ZMP 的平衡控制\n\n---\n\n## 5. 技术优势\n\n### 5.1 统一框架的优势\n\n- **避免模块间耦合问题**：传统分层方法存在误差传播，该方法端到端优化\n- **跨阶段一致性**：跌倒预防→冲击缓解→站立恢复采用统一策略表示\n\n### 5.2 目标-上下文表示的创新\n\n- **高效迁移**：目标姿态作为\"锚点\"，使策略可跨地形泛化\n- **感知-运动同步**：避免分别编码造成的表征鸿沟\n- **少样本适应**：新地形只需调整地形特征提取，核心策略可复用\n\n### 5.3 蒸馏效率\n\n- **稀疏监督**：仅需少量人类演示作为初始化\n- **模拟-真实迁移**：学生在模拟环境训练，可零样本部署到真实机器人\n\n### 5.4 泛化能力\n\n- **地形泛化**：通过地形随机化和对齐策略，实现非结构化地形的零样本迁移\n- **姿态约束先验**：利用人类运动数据的低维流形结构，提高学习效率\n\n---\n\n## 6. 技术弱点\n\n### 6.1 潜在局限性\n\n- **蒸馏逼近误差**：学生网络表达能力可能不足以完全匹配教师策略\n- **视觉信息瓶颈**：仅依赖深度图像可能丢失颜色、纹理等有用信息（如障碍物材质、摩擦特性）\n- **目标姿态依赖**：策略性能高度依赖目标姿态 $p_{\\text{target}}$ 的准确性，若教师预测偏离，可能导致错误级联\n\n### 6.2 方法论局限\n\n- **模拟-真实差距（Sim-to-Real Gap）**：尽管采用零样本迁移策略，实际部署仍可能面临：\n - 传感器噪声\n - 执行器延迟\n - 接触模型不确定性\n \n- **地形覆盖不足**：复杂地形由程序化生成，可能无法覆盖所有真实场景（如松散地面、楼梯扶手）\n\n### 6.3 可扩展性问题\n\n- **计算成本**：目标-上下文编码增加了每步推理计算量\n- **姿态空间假设**：假设存在\"典型\"人类恢复姿态可能限制了极端情况下的适应性\n\n### 6.4 安全性考量\n\n- **无显式安全约束**：依赖奖励函数隐式保证安全，极端情况下可能出现意外行为\n- **真机实验风险**：尽管论文声称在真实 Unitree G1 上验证，仍需渐进式部署策略\n\n---\n\n本方法通过师生蒸馏框架和目标-上下文潜在表示，成功实现了统一的人形机器人跌倒安全策略，其核心贡献在于将感知、目标推理和动作执行整合为单一的可泛化表示。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 8,
+    "technical_quality": 8,
+    "experimental_validation": 8,
+    "writing_quality": 9,
+    "relevance": 9,
+    "overall_score": 8.15,
+    "strengths": [
+      "Novel unified fall safety framework covering all phases (avoidance, mitigation, recovery)",
+      "Elegant teacher-student distillation approach with goal-in-context latent representation",
+      "Strong zero-shot generalization claims across diverse non-flat terrains",
+      "Real hardware validation on Unitree G1 humanoid",
+      "Well-motivated problem with clear differentiation from prior fragmented approaches",
+      "Good integration of perceptual-motor representations for fast whole-body reactions"
+    ],
+    "weaknesses": [
+      "Limited to single robot platform (Unitree G1) for real-world validation",
+      "Reliance on simulated training data may not fully capture real-world complexity",
+      "Could benefit from more ablation studies on key components",
+      "Claim of transferability from flat to complex terrain needs additional analysis"
+    ],
+    "notes": "Solid contribution to humanoid fall safety with practical zero-shot deployment capabilities. The unified approach addressing the full fall lifecycle is refreshing compared to fragmented prior work. Teacher-student distillation with goal-in-context learning shows promising results, though real-world validation could be more extensive."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "VIGOR: Visual Goal-In-Context Inference for Unified Humanoid Fall Safety",
+      "authors": [
+        "Osher Azulay",
+        "Zhengjie Xu",
+        "Andrew Scheffer",
+        "Stella X. Yu"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.16511",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Reliable fall recovery is critical for humanoids operating in cluttered environments. Unlike quadrupeds or wheeled robots, humanoids experience high-energy impacts, complex whole-body contact, and large viewpoint changes during a fall, making recovery essential for continued operation. Existing methods fragment fall safety into separate problems such as fall avoidance, impact mitigation, and stand-up recovery, or rely on end-to-end policies trained without vision through reinforcement learning or imitation learning, often on flat terrain. At a deeper level, fall safety is treated as monolithic data complexity, coupling pose, dynamics, and terrain and requiring exhaustive coverage, limiting scalability and generalization. We present a unified fall safety approach that spans all phases of fall recovery. It builds on two insights: 1) Natural human fall and recovery poses are highly constrained and transferable from flat to complex terrain through alignment, and 2) Fast whole-body reactions require integrated perceptual-motor representations. We train a privileged teacher using sparse human demonstrations on flat terrain and simulated complex terrains, and distill it into a deployable student that relies only on egocentric depth and proprioception. The student learns how to react by matching the teacher's goal-in-context latent representation, which combines the next target pose with the local terrain, rather than separately encoding what it must perceive and how it must act. Results in simulation and on a real Unitree G1 humanoid demonstrate robust, zero-shot fall safety across diverse non-flat environments without real-world fine-tuning. The project page is available at https://vigor2026.github.io/",
+      "route_id": "d1b34e42-04de-4cf9-8e65-86cf7529c0eb"
+    },
+    "markdown_stats": {
+      "lines": 418,
+      "words": 10310,
+      "headings": 32
+    },
+    "assets": {
+      "images": 40,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "d1b34e42-04de-4cf9-8e65-86cf7529c0eb",
+  "paper_ref": "d1b34e42-04de-4cf9-8e65-86cf7529c0eb",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

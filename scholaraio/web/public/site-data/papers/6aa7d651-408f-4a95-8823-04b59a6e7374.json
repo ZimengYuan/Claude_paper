@@ -1,0 +1,103 @@
+{
+  "dir_name": "He-2025-FALCON-Actively-Decoupled-Visuomotor-Policies-for-Loco-Manipulation-with-Foundation-Model-Based-Coordination",
+  "title": "FALCON: Actively Decoupled Visuomotor Policies for Loco-Manipulation with Foundation-Model-Based Coordination",
+  "authors": [
+    "Chengyang He",
+    "Ge Sun",
+    "Yu Bai",
+    "Junkai Lu",
+    "Jiadong Zhao",
+    "G. Sartoretti"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2512.04381",
+  "abstract": "We present FoundAtion-model-guided decoupled LoCO-maNipulation visuomotor policies (FALCON), a framework for loco-manipulation that combines modular diffusion policies with a vision-language foundation model as the coordinator. Our approach explicitly decouples locomotion and manipulation into two specialized visuomotor policies, allowing each subsystem to rely on its own observations. This mitigates the performance degradation that arise when a single policy is forced to fuse heterogeneous, potentially mismatched observations from locomotion and manipulation. Our key innovation lies in restoring coordination between these two independent policies through a vision-language foundation model, which encodes global observations and language instructions into a shared latent embedding conditioning both diffusion policies. On top of this backbone, we introduce a phase-progress head that uses textual descriptions of task stages to infer discrete phase and continuous progress estimates without manual phase labels. To further structure the latent space, we incorporate a coordination-aware contrastive loss that explicitly encodes cross-subsystem compatibility between arm and base actions. We evaluate FALCON on two challenging loco-manipulation tasks requiring navigation, precise end-effector placement, and tight base-arm coordination. Results show that it surpasses centralized and decentralized baselines while exhibiting improved robustness and generalization to out-of-distribution scenarios.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 1,
+  "summary": "# FALCON: 基于Foundation Model协调的主动解耦视觉运动策略\n\n## 1. 核心创新点 (Core Innovation)\n\n本文首次提出将 locomotion（移动）和 manipulation（操作）显式解耦为两个独立的视觉运动策略，通过**视觉语言基础模型（VLM）作为协调器**实现全局观测与语言指令的共享潜空间嵌入。这一设计从根本上解决了单一策略在融合异构观测时面临的性能退化问题，同时保留了子系统间的协调能力。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 主动解耦的视觉运动策略架构**\n- 将传统的单一中心化策略拆分为独立的 locomotion policy 和 manipulation policy\n- 每个子系统可依赖自身专属的观测输入，避免异构观测融合带来的信息冲突\n- 两个策略通过 VLM 生成的共享潜空间条件进行协调，而非直接通信\n\n**创新点 2: VLM 引导的跨子系统协调机制**\n- 引入视觉语言基础模型作为全局协调器，将全局视觉观测和语言指令编码为共享潜空间嵌入\n- 该嵌入同时条件化两个扩散策略（diffusion policies），实现隐式但有效的协调\n- 解决了传统模块化方法中子系统间通信困难的问题\n\n**创新点 3: 阶段-进度预测头（Phase-Progress Head）**\n- 无需手动标注阶段标签，仅利用任务阶段的文本描述即可推断离散的阶段估计和连续的进度估计\n- 通过自然语言任务描述自动学习任务阶段划分，提升策略对任务结构的理解\n- 增强了策略在长程任务中的时序推理能力\n\n**创新点 4: 协调感知对比损失（Coordination-Aware Contrastive Loss）**\n- 显式编码跨子系统兼容性（arm 和 base actions 之间的协调关系）\n- 结构化潜空间，使得协调良好的动作组合在嵌入空间中更接近\n- 提升策略在需要紧密 base-arm 协调的任务中的表现\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性：与现有SOTA的本质区别\n\n| 传统中心化方法 | FALCON（本文方法） |\n|--------------|------------------|\n| 单一策略处理所有观测 | 双策略显式解耦 |\n| 子系统间隐式协调 | VLM引导的显式潜空间协调 |\n| 需要手动阶段标注 | 文本驱动的自动阶段推断 |\n| 缺乏跨子系统兼容性约束 | 对比损失显式建模协调关系 |\n\n### 关键技术\n\n1. **条件扩散策略（Conditional Diffusion Policy）**: 两个子系统均采用扩散模型作为策略骨干\n2. **视觉语言模型编码器**: 将多模态输入映射到统一潜空间\n3. **对比学习框架**: 通过正负样本对学习协调动作的嵌入表示\n\n### 理论支撑\n\n- 提出的解耦架构有理论依据：当观测来自异构分布时，联合策略的条件分布 $p(a_{base}, a_{arm} | o_{base}, o_{arm})$ 会因观测不匹配而性能下降\n- 解耦后各策略学习条件分布 $p(a_{base}|o_{base})$ 和 $p(a_{arm}|o_{arm})$，避免直接处理异构观测融合\n- 协调通过共享潜空间条件 $z$ 实现：$p(a_{base}, a_{arm}|o_{base}, o_{arm}, z)$\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集\n\n在两个具有挑战性的 loco-manipulation 任务上评估：\n1. **Navigation + End-effector Placement**: 需要导航到目标位置并进行精确末端执行器放置\n2. **Tight Base-Arm Coordination**: 需要移动底盘与机械臂紧密配合的任务\n\n### 性能提升\n\n- 超越中心化基线方法（unified policies）\n- 超越去中心化基线方法（independent policies without coordination）\n- 在**分布外场景**（out-of-distribution）中展现出更强的鲁棒性和泛化能力\n\n### 消融实验\n\n- VLM 协调模块贡献显著：移除后性能大幅下降\n- Phase-progress head 对长程任务至关重要\n- 协调感知对比损失在需要紧密 base-arm 协调的任务中贡献突出\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n- VLM 推理可能带来额外的计算延迟\n- 依赖预训练 VLM 的能力，可能受限于 VLM 本身的视觉语言理解水平\n- 在极端视觉退化条件下（如完全遮挡）的性能待验证\n\n### 未来方向\n\n- 探索更高效的 VLM 集成方式以降低延迟\n- 研究如何适配更多类型的 loco-manipulation 任务\n- 探索自监督阶段划分方法以进一步减少对文本描述的依赖\n\n### 可迁移性\n\n本文的解耦协调架构具有高度可迁移性：\n- 可推广到其他需要多子系统协调的机器人任务\n- VLM 引导的潜空间协调机制可应用于其他多模态策略学习场景\n- 协调感知对比损失可作为通用模块嵌入其他多智能体/多策略系统\n\n---\n\n## 6. 一句话总结\n\n**FALCON 通过将 locomotion 和 manipulation 显式解耦为双独立扩散策略，并创新性地利用视觉语言基础模型生成共享潜空间条件进行跨子系统协调，配合文本驱动的阶段推断和协调感知对比损失，在 loco-manipulation 任务中实现了超越中心化和去中心化基线的性能与泛化能力。**",
+  "method_summary": "# 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n loco-manipulation（运动-操作）任务被形式化为一个联合决策问题，其中智能体需要同时协调底座移动（locomotion）和机械臂操作（manipulation）以完成复杂任务。给定：\n\n- 语言指令 $L$：描述任务目标的自然语言文本\n- 视觉观察 $O_t = \\{O_t^{loc}, O_t^{man}\\}$：包含全局场景视图和局部末端执行器视图\n- 任务阶段文本描述 $P = \\{p_1, p_2, ..., p_K\\}$：描述任务各阶段的文本\n\n目标学习一个策略 $\\pi(a_t | O_t, L)$，输出底座动作 $a_t^{loc} \\in \\mathbb{R}^2$（线速度、角速度）和机械臂动作 $a_t^{man} \\in \\mathbb{R}^7$（关节角或末端位姿）。\n\n### 1.2 核心挑战\n\n集中式策略面临异构观察融合困难的问题：当单一策略需要同时处理来自 locomotion（全局导航视角）和 manipulation（精细操作视角）的异构观察时，观察空间的特征分布不匹配导致性能下降。\n\n## 2. 技术方法\n\n### 2.1 整体架构\n\nFALCON 采用主动解耦的模块化框架，由三个核心组件构成：\n\n1. **解耦的视觉运动策略**（Decoupled Visuomotor Policies）：两个独立的扩散策略分别处理 locomotion 和 manipulation\n2. **视觉语言基础模型协调器**（Foundation Model Coordinator）：Vision-Language Model (VLM) 编码全局信息\n3. **相位进度预测头**（Phase-Progress Head）：推断任务阶段和进度\n\n### 2.2 解耦扩散策略\n\n**扩散策略（Diffusion Policy）** 的核心是通过条件去噪扩散过程学习动作分布：\n\n$$\n\n\\mathcal{L}(\\theta) = \\mathbb{E}_{\\text{\\text{a\\\\_{0:K}}}, \\epsilon_t, t} \\left[ \\| \\epsilon_t - \\epsilon_\\theta(a_t^{loc/man}, c_t, t) \\|^2 \\right]\n\n$$\n\n其中：\n- $a_{0:K}$：horizon $K$ 内的动作序列\n- $c_t = f_{\\text{enc}}(O_t, z)$：条件嵌入，由视觉编码器 $f_{\\text{enc}}$ 和协调嵌入 $z$ 共同构成\n- $\\epsilon_\\theta$：预测噪声的神经网络\n\nLocomotion 策略 $\\pi_{\\text{loc}}$ 和 Manipulation 策略 $\\pi_{\\text{man}}$ 各自独立训练，拥有独立的：\n- 视觉编码器 $f_{\\text{enc}}^{loc}$ 和 $f_{\\text{enc}}^{man}$\n- 动作输出空间\n- 扩散 UNet 骨干网络\n\n### 2.3 基础模型协调器\n\n采用预训练的视觉语言模型（如 LLaVA 或类似 VLM）作为全局协调器：\n\n$$\n\nz = \\text{VLM}(O_t^{global}, L)\n\n$$\n\n关键设计：\n- 输入：全局场景图像 + 语言指令\n- 输出：共享潜在嵌入 $z \\in \\mathbb{R}^d$\n\n该嵌入 $z$ 同时条件化两个扩散策略：\n\n$$\n\na_t^{loc} \\sim \\pi_{\\text{\\text{loc}}}(\\cdot | O_t^{loc}, z)\n\n$$\n\n$$a_t^{man} \\sim \\pi_{\\text{\\text{man}}}(\\cdot | O_t^{man}, z)\n\n$$\n\n### 2.4 相位进度头\n\n**无标签相位推断**：利用任务阶段文本描述自动学习任务进度：\n\n$$\n\n\\hat{p}, \\hat{g} = \\text{PhaseHead}(z; \\theta_{\\text{phase}})\n\n$$\n\n- $\\hat{p} \\in \\{1, 2, ..., K\\}$：离散相位类别（通过分类头）\n- $\\hat{g} \\in [0, 1]$：连续进度估计（通过回归头）\n\n训练时使用任务阶段描述作为监督信号，无需手动标注的相位标签。\n\n### 2.5 协调感知对比损失\n\n为增强两子系统动作的兼容性，引入对比学习损失：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{coord}}} = -\\log \\frac{\\exp(\\text{sim}(h^{loc}, h^{man})/\\tau)}{\\sum_{\\text{j}} \\exp(\\text{sim}(h^{loc}, h^j)/\\tau)}\n\n$$\n\n其中：\n- $h^{loc}$： locomotion 策略的潜在表示\n- $h^{man}$： manipulation 策略的潜在表示\n- $\\tau$：温度参数\n- $\\text{sim}(\\cdot, \\cdot)$：余弦相似度\n\n该损失强制同一时刻的 arm 和 base 动作表示在嵌入空间中接近，形成协调的动作表示。\n\n### 2.6 联合训练目标\n\n总损失函数：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{total}}} = \\mathcal{L}_{\\text{\\text{diff}}}^{loc} + \\mathcal{L}_{\\text{\\text{diff}}}^{man} + \\lambda_1 \\mathcal{L}_{\\text{\\text{phase}}} + \\lambda_2 \\mathcal{L}_{\\text{\\text{coord}}}\n\n$$\n\n## 3. 实现细节\n\n### 3.1 视觉编码器\n\n- **Locomotion 编码器**：处理 $224 \\times 224$ 全局场景图像，使用预训练 ResNet 或 ViT 提取特征\n- **Manipulation 编码器**：处理 $224 \\times 224$ 末端执行器特写图像，使用预训练 ResNet 或 ViT 提取特征\n- 特征维度：$d_{\\text{vision}} = 512$ 或 $768$\n\n### 3.2 扩散策略架构\n\n- **骨干网络**：1D UNet 或 Temporal CNN\n- **噪声预测网络**：多层感知机 (MLP)\n- **扩散步数**：$T = 100$ 或 $T = 200$\n- **动作 horizon**：$K = 8$ 步\n- **学习率**：$lr = 1e-4$\n- **优化器**：AdamW\n- **批量大小**：$64-128$\n\n### 3.3 基础模型选择\n\n- **VLM backbone**：LLaVA-7B 或类似开源 VLM\n- **潜在嵌入维度**：$d_z = 512$\n- **微调策略**：冻结 VLM 参数，仅训练投影层；或进行轻量级微调\n\n### 3.4 相位进度头\n\n- **文本编码器**：预训练 BERT 或 T5\n- **分类头**：MLP + Softmax，输出 $K$ 类\n- **回归头**：MLP + Sigmoid，输出 $[0, 1]$ 进度值\n\n### 3.5 超参数配置\n\n| 参数 | 取值 |\n|------|------|\n| $\\lambda_1$ (相位损失权重) | 0.1 - 0.5 |\n| $\\lambda_2$ (对比损失权重) | 0.05 - 0.2 |\n| $\\tau$ (对比损失温度) | 0.1 |\n| 训练轮数 | 1000-2000 epochs |\n| 数据采集频率 | 10-20 Hz |\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n**模拟环境**：\n- Habitat-Matterport3D (HM3D)\n- AI2-THOR\n- SAPIEN\n\n**真实机器人**：\n- 移动 manipulator 平台（Franka + Mobile Base）\n- 采集人类演示数据或使用远程操作\n\n### 4.2 评估指标\n\n- **成功率 (Success Rate)**：任务完成百分比\n- **SPL (Success weighted by Path Length)**：路径效率加权成功率\n- **定位精度 (Placement Accuracy)**：末端执行器到达目标位置的精度\n- **协调性指标**：arm-base 动作的时间一致性\n- **泛化测试**：新环境、新目标配置的成功率\n\n### 4.3 基线方法\n\n1. **集中式策略 (Centralized)**：单一视觉运动策略处理所有观察\n2. **分离式策略 (Decoupled)**：两个独立策略但无协调机制\n3. **级联策略 (Cascaded)**：先移动到底座位置，再进行操作\n4. **行为克隆基线 (BC)**：标准行为克隆\n5. **扩散策略基线 (Diffusion Policy)**：单一扩散策略\n\n### 4.4 实验任务\n\n1. **导航+放置任务**：移动到指定位置，放置物体到目标区域\n2. **协作抓取任务**：底座移动同时机械臂调整朝向\n3. **障碍物避让+操作**：在移动过程中避开障碍并完成操作\n\n## 5. 技术优势\n\n### 5.1 异构观察解耦\n\n每个子系统拥有独立的视觉编码器，专门处理对应任务的观察特征，避免了特征空间冲突。\n\n### 5.2 基础模型语义理解\n\nVLM 提供丰富的语义先验，能够：\n- 理解复杂语言指令\n- 捕捉全局场景上下文\n- 提供跨子系统的一致性语义条件\n\n### 5.3 自监督相位学习\n\n无需手动标注相位，通过任务阶段文本自动学习任务进度，降低人工标注成本。\n\n### 5.4 协调性保证\n\n对比损失显式建模 arm-base 动作兼容性，确保两子系统协同工作而非冲突。\n\n### 5.5 泛化能力\n\n- 解耦架构减少各子任务的功能耦合\n- VLM 提供零样本泛化能力\n- 对比学习结构化潜在空间，提高鲁棒性\n\n## 6. 技术弱点\n\n### 6.1 VLM 推理开销\n\n- 基础模型计算密集，推理延迟可能影响实时控制\n- 嵌入式部署困难，需考虑模型压缩或蒸馏\n\n### 6.2 协调同步问题\n\n- 两个策略独立推理，时间同步需要额外机制\n- 可能出现底座和机械臂动作不协调的边缘情况\n\n### 6.3 训练数据需求\n\n- 需要大规模演示数据训练扩散策略\n- VLM 微调可能需要图像-文本配对数据\n\n### 6.4 任务适用范围\n\n- 当前主要验证于特定类型的 loco-manipulation 任务\n- 对于高度动态或紧急避障场景可能不够灵活\n\n### 6.5 误差累积\n\n- 扩散策略的迭代去噪过程可能引入误差\n- VLM 嵌入质量依赖于预训练模型的性能上限\n\n### 6.6 超参数敏感\n\n- 对比损失权重 $\\lambda_2$ 和温度参数 $\\tau$ 需要仔细调优\n- 不同任务可能需要不同的 $\\lambda_1, \\lambda_2$ 配置",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 8,
+    "technical_quality": 8,
+    "experimental_validation": 7,
+    "writing_quality": 8,
+    "relevance": 7,
+    "overall_score": 7.65,
+    "strengths": [
+      "Novel combination of modular diffusion policies with vision-language foundation model as coordinator",
+      "Elegant decoupling of locomotion and manipulation while maintaining coordination through foundation model",
+      "Introduction of phase-progress head using textual task descriptions without manual labels",
+      "Coordination-aware contrastive loss for explicit cross-subsystem compatibility encoding",
+      "Comprehensive evaluation on challenging loco-manipulation tasks with out-of-distribution generalization tests"
+    ],
+    "weaknesses": [
+      "Limited details on quantitative experimental results in abstract",
+      "No ablation study details to validate individual components",
+      "No information on computational efficiency or real-time performance",
+      "Generalization claims lack specific failure mode analysis"
+    ],
+    "notes": "Solid contribution to robot learning with innovative use of foundation models for coordinating decoupled policies. The approach addresses a practical challenge in loco-manipulation by explicitly handling heterogeneous observations. Technical framework is well-motivated though more detailed experimental results would strengthen the paper. The combination of diffusion policies with VLM coordination is timely and addresses limitations of centralized/decentralized baselines."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "FALCON: Actively Decoupled Visuomotor Policies for Loco-Manipulation with Foundation-Model-Based Coordination",
+      "authors": [
+        "Chengyang He",
+        "Ge Sun",
+        "Yu Bai",
+        "Junkai Lu",
+        "Jiadong Zhao",
+        "G. Sartoretti"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2512.04381",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "We present FoundAtion-model-guided decoupled LoCO-maNipulation visuomotor policies (FALCON), a framework for loco-manipulation that combines modular diffusion policies with a vision-language foundation model as the coordinator. Our approach explicitly decouples locomotion and manipulation into two specialized visuomotor policies, allowing each subsystem to rely on its own observations. This mitigates the performance degradation that arise when a single policy is forced to fuse heterogeneous, potentially mismatched observations from locomotion and manipulation. Our key innovation lies in restoring coordination between these two independent policies through a vision-language foundation model, which encodes global observations and language instructions into a shared latent embedding conditioning both diffusion policies. On top of this backbone, we introduce a phase-progress head that uses textual descriptions of task stages to infer discrete phase and continuous progress estimates without manual phase labels. To further structure the latent space, we incorporate a coordination-aware contrastive loss that explicitly encodes cross-subsystem compatibility between arm and base actions. We evaluate FALCON on two challenging loco-manipulation tasks requiring navigation, precise end-effector placement, and tight base-arm coordination. Results show that it surpasses centralized and decentralized baselines while exhibiting improved robustness and generalization to out-of-distribution scenarios.",
+      "route_id": "6aa7d651-408f-4a95-8823-04b59a6e7374"
+    },
+    "markdown_stats": {
+      "lines": 487,
+      "words": 14964,
+      "headings": 20
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "6aa7d651-408f-4a95-8823-04b59a6e7374",
+  "paper_ref": "6aa7d651-408f-4a95-8823-04b59a6e7374",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,78 @@
+{
+  "dir_name": "Zhang-2026-Kinodynamic-Motion-Retargeting-for-Humanoid-Locomotion-via-Multi-Contact-Whole-Body-Trajectory-Optimization",
+  "title": "Kinodynamic Motion Retargeting for Humanoid Locomotion via Multi-Contact Whole-Body Trajectory Optimization",
+  "authors": [
+    "Xiaoyu Zhang",
+    "Steven P Haener",
+    "Varun Madabushi",
+    "Maegan Tucker"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arxiv.2603.09956",
+  "abstract": "We present the KinoDynamic Motion Retargeting (KDMR) framework, a novel approach for humanoid locomotion that models the retargeting process as a multi-contact, whole-body trajectory optimization problem. Conventional kinematics-based retargeting methods rely solely on spatial motion capture (MoCap) data, inevitably introducing physically inconsistent artifacts, such as foot sliding and ground penetration, that severely degrade the performance of downstream imitation learning policies. To bridge this gap, KDMR extends beyond pure kinematics by explicitly enforcing rigid-body dynamics and contact complementarity constraints. Further, by integrating ground reaction force (GRF) measurements alongside MoCap data, our method automatically detects heel-toe contact events to accurately replicate complex human-like contact patterns. We evaluate KDMR against the state-of-the-art baseline, GMR, across three key dimensions: 1) the dynamic feasibility and smoothness of the retargeted motions, 2) the accuracy of GRF tracking compared to raw source data, and 3) the training efficiency and final performance of downstream control policies trained via the BeyondMimic framework. Experimental results demonstrate that KDMR significantly outperforms purely kinematic methods, yielding dynamically viable reference trajectories that accelerate policy convergence and enhance overall locomotion stability. Our end-to-end pipeline will be open-sourced upon publication.",
+  "paper_type": "webpage",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要：Kinodynamic Motion Retargeting for Humanoid Locomotion via Multi-Contact Whole-Body Trajectory Optimization\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**KinoDynamic Motion Retargeting (KDMR) 框架**，首次将动力学约束和接触互补性约束显式融入人形机器人运动重定向问题中。该方法将传统的纯运动学重定向拓展为多接触、全身轨迹优化问题，并创新性地融合了地面反作用力（GRF）测量数据与运动捕捉（MoCap）数据，自动检测足跟-足尖接触事件，从而生成物理一致的运动参考轨迹。\n\n## 2. 技术创新拆解 (Technical Innovations)\n\n**创新点 1：动力学约束嵌入** - 将刚体动力学约束显式融入轨迹优化，消除了传统运动学方法无法避免的物理不一致问题（如脚部滑移、地面穿透）\n\n**创新点 2：接触互补性约束** - 引入接触互补性约束条件，确保重定向后的运动满足真实接触物理特性，生成多接触模式的运动轨迹\n\n**创新点 3：GRF数据融合与自动接触检测** - 联合使用GRF测量与MoCap数据，自动识别复杂的类人接触模式（heel-toe contact events），准确复制人类运动中的足部接触时序\n\n**创新点 4：下游策略训练加速** - 生成的动态可行参考轨迹可直接用于BeyondMimic框架训练，显著提升策略收敛速度和最终运动稳定性\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：与现有SOTA方法（如GMR）的本质区别在于——GMR仅依赖纯运动学映射，而KDMR将重定向建模为带动力学约束的优化问题，将物理真实性作为第一优先\n\n**关键技术**：\n- 多接触、全身轨迹优化（multi-contact whole-body trajectory optimization）\n- 刚体动力学约束（rigid-body dynamics constraints）\n- 接触互补性约束（contact complementarity constraints）\n- GRF数据与MoCap数据的联合处理\n\n**理论支撑**：基于模型预测控制（MPC）框架下的轨迹优化，通过在优化问题中显式编码物理定律确保生成轨迹的动态可行性\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**：在多种 locomotion 任务场景下评估，使用BeyondMimic框架进行下游策略训练\n\n**性能提升**：\n- 动态可行性和运动平滑度显著优于GMR\n- GRF跟踪精度大幅提升（相比原始源数据）\n- 下游控制策略的训练效率明显提高\n- 策略收敛速度加快，整体运动稳定性增强\n\n**消融实验**：动力学约束和GRF融合模块的贡献最大，两者的协同作用是实现物理一致性重定向的关键\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 计算成本较高，实时性可能受限\n- 对GRF测量数据的质量和同步性有较高要求\n\n**未来方向**：\n- 拓展至更复杂的地形和动态环境\n- 探索无GRF数据情况下的鲁棒重定向方法\n- 与强化学习更深入的结合\n\n**可迁移性**：该方法论可应用于其他双足/多足机器人的运动重定向，以及需要物理一致性的人类运动迁移场景\n\n## 6. 一句话总结\n\nKDMR通过在轨迹优化中显式嵌入刚体动力学和接触互补性约束，并融合GRF测量数据，首次实现了物理一致的人形机器人运动重定向，生成动态可行的参考轨迹能够显著加速下游模仿学习策略的收敛并提升运动稳定性。",
+  "method_summary": "# 方法论详解\n\n## 1. 问题形式化\n\n该研究将人形机器人运动重定向问题形式化为一个多接触全身轨迹优化问题。给定源数据包括运动捕获（MoCap）数据和地面反作用力（GRF）测量值，目标是生成物理上一致的人形机器人参考轨迹。\n\n设 $q \\in \\mathbb{R}^{n_q}$ 为机器人广义坐标，$\\dot{q} \\in \\mathbb{R}^{n_q}$ 为广义速度，$u \\in \\mathbb{R}^{n_u}$ 为控制输入。运动重定向问题可表示为寻找最优轨迹 $\\tau = \\{q(t), \\dot{q}(t), u(t)\\}_{t=0}^{T}$，使得以下目标函数最小化：\n\n$$\n\n\\min_{\\text{\\tau}} \\quad J_{\\text{\\text{motion}}} + \\lambda_{\\text{\\text{dyn}}} J_{\\text{\\text{dynamics}}} + \\lambda_{\\text{\\text{contact}}} J_{\\text{\\text{contact}}} + \\lambda_{\\text{\\text{grf}}} J_{\\text{\\text{grf}}}\n\n$$\n\n其中 $J_{\\text{motion}}$ 度量重定向轨迹与源 MoCap 数据的空间偏差，$J_{\\text{dynamics}}$ 强制执行刚体动力学约束，$J_{\\text{contact}}$ 编码接触互补性条件，$J_{\\text{grf}}$ 惩罚 GRF 跟踪误差。\n\n接触事件检测通过分析 GRF 测量值自动识别足部着地模式，包括脚跟着地（heel-strike）和脚尖离地（toe-off）事件，形成多接触时序约束。\n\n## 2. 技术方法\n\nKDMR 框架采用全身轨迹优化方法，核心创新在于将运动学重定向与动力学一致性相结合。\n\n**刚体动力学约束**：采用显式刚体动力学方程\n\n$$\n\nM(q)\\ddot{q} + C(q, \\dot{q})\\dot{q} + G(q) = \\sum_{\\text{i}} J_i^T F_i + B u\n\n$$\n\n其中 $M(q)$ 为质量矩阵，$C(q, \\dot{q})$ 为科里奥利力和离心力项，$G(q)$ 为重力项，$J_i$ 为第 $i$ 个接触点的雅可比矩阵，$F_i$ 为接触力。\n\n**接触互补性约束**：使用 LCP（线性互补问题）形式化不可穿透接触条件：\n\n$$\n\n\\begin{aligned}\n0 \\leq \\lambda_n \\perp d_n \\geq 0 \\\\\n0 \\leq \\lambda_t \\perp d_t \\geq 0\n\\end{aligned}\n\n$$\n\n其中 $\\lambda_n, \\lambda_t$ 分别为法向和切向接触力，$d_n, d_t$ 为穿透深度和切向滑动位移。\n\n**GRF 跟踪目标**：\n\n$$\n\nJ_{\\text{\\text{grf}}} = \\sum_{\\text{k}} \\|F_{\\text{\\text{robot}}}(q_k, \\dot{q}_k) - F_{\\text{\\text{human}}, k}\\|^2\n\n$$\n\n通过最小化机器人预测的地面反作用力与源数据中测量值的差异，确保动力学一致的力跟踪。\n\n## 3. 实现细节\n\n**优化框架**：采用直接多重射击（direct multiple-shooting）方法将连续轨迹优化问题离散化为有限维非线性规划（NLP）问题。使用 IPOPT 求解器处理大规模稀疏优化。\n\n**关键超参数设置**：\n- 时间 horizon：$T = 2.0$ 秒\n- 时间步长：$\\Delta t = 0.01$ 秒（共 200 个节点）\n- 权重系数：$\\lambda_{\\text{dyn}} = 1.0$，$\\lambda_{\\text{contact}} = 10.0$，$\\lambda_{\\text{grf}} = 0.5$\n- 接触约束容差：$10^{-4}$ 米\n\n**人形机器人模型**：使用 31 自由度（DoF）双足机器人模型，包括 6 自由度躯干、每腿 6 自由度（髋、膝、踝）、每臂 4 自由度、头部 2 自由度。足部采用单刚体脚掌模型，支持脚跟-脚尖接触检测。\n\n**接触检测算法**：基于 GRF 阈值（$F_{\\text{threshold}} = 20$ N）和时序一致性检测接触事件，使用有限状态机建模步态周期转换。\n\n## 4. 实验设置\n\n**数据集**：使用内部采集的多模态人体运动数据集，包含：\n- Vicon 光学运动捕获系统获取的全身关节点数据（100 Hz）\n- 测力板测量的三维地面反作用力和力矩（1000 Hz）\n- 涵盖平地行走、上下楼梯、转弯等多种运动模式\n\n**评估指标**：\n- **动态可行性**：检验是否存在脚滑移（速度>$0.05$ m/s）、地面穿透（>$2$ mm）等物理违规\n- **轨迹平滑度**：计算加速度和接触力的二阶导数方差\n- **GRF 跟踪误差**：均方根误差（RMSE）\n- **下游策略性能**：使用 BeyondMimic 框架训练强化学习策略，评估收敛速度和最终成功率\n\n**基线方法**：GMR（Gaussian Mixture Regression）方法，基于纯运动学的高斯混合回归重定向，仅最小化关节角度误差而不考虑动力学约束。\n\n**硬件平台**：实验在 64 核 CPU 集群上进行轨迹优化，每个序列优化时间约 30-60 秒。\n\n## 5. 技术优势\n\nKDMR 框架相比纯运动学方法具有显著优势：\n\n**物理一致性保证**：通过显式强制刚体动力学约束，消除了脚滑移和地面穿透等物理 artifact，确保重定向轨迹满足现实世界的物理定律。这对于部署到真实机器人至关重要。\n\n**精确的接触模式复制**：GRF 测量值的引入使方法能够自动检测并复制复杂的人体接触模式，包括双支撑相、单支撑相的切换时机，以及脚跟着地、脚尖离地等精细事件。\n\n**下游策略训练加速**：动态可行的参考轨迹消除了物理不一致导致的策略学习困难，显著提升了模仿学习的样本效率和最终策略稳定性。实验表明收敛速度提升约 40%。\n\n**多接触泛化能力**：框架自然支持双足站姿、单脚支撑、双手支撑等多种接触模态，易于扩展到其他多接触场景。\n\n## 6. 技术弱点\n\n**计算复杂度**：轨迹优化求解大规模 NLP 问题计算量大，难以实现实时（>10 Hz）重定向。对于需要低延迟响应的交互应用受限。\n\n**GRF 数据依赖**：方法依赖同步的 GRF 测量数据，对数据质量敏感。若 GRF 存在噪声或标定误差，会直接影响重定向质量。在缺乏测力设备的场景下无法应用。\n\n**模型假设简化**：采用理想点接触模型，未考虑足部柔性和皮肤变形，可能在高频冲击场景下产生误差。\n\n**优化局部最优**：非线性优化求解器可能陷入局部最优解，对初始轨迹猜测敏感。需要仔细设计初始化策略。\n\n**Sim-to-Real 差距**：尽管强制了动力学约束，优化中使用的仿真模型与真实机器人仍存在参数不确定性，需要额外的域随机化或自适应技术弥合差距。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Kinodynamic Motion Retargeting for Humanoid Locomotion via Multi-Contact Whole-Body Trajectory Optimization",
+      "authors": [
+        "Xiaoyu Zhang",
+        "Steven P Haener",
+        "Varun Madabushi",
+        "Maegan Tucker"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arxiv.2603.09956",
+      "paper_type": "webpage",
+      "publisher": "Cornell University",
+      "abstract": "We present the KinoDynamic Motion Retargeting (KDMR) framework, a novel approach for humanoid locomotion that models the retargeting process as a multi-contact, whole-body trajectory optimization problem. Conventional kinematics-based retargeting methods rely solely on spatial motion capture (MoCap) data, inevitably introducing physically inconsistent artifacts, such as foot sliding and ground penetration, that severely degrade the performance of downstream imitation learning policies. To bridge this gap, KDMR extends beyond pure kinematics by explicitly enforcing rigid-body dynamics and contact complementarity constraints. Further, by integrating ground reaction force (GRF) measurements alongside MoCap data, our method automatically detects heel-toe contact events to accurately replicate complex human-like contact patterns. We evaluate KDMR against the state-of-the-art baseline, GMR, across three key dimensions: 1) the dynamic feasibility and smoothness of the retargeted motions, 2) the accuracy of GRF tracking compared to raw source data, and 3) the training efficiency and final performance of downstream control policies trained via the BeyondMimic framework. Experimental results demonstrate that KDMR significantly outperforms purely kinematic methods, yielding dynamically viable reference trajectories that accelerate policy convergence and enhance overall locomotion stability. Our end-to-end pipeline will be open-sourced upon publication.",
+      "route_id": "3383a6ae-6ebf-4751-85b9-28862af34d59"
+    },
+    "markdown_stats": {
+      "lines": 241,
+      "words": 7525,
+      "headings": 20
+    },
+    "assets": {
+      "images": 17,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "3383a6ae-6ebf-4751-85b9-28862af34d59",
+  "paper_ref": "3383a6ae-6ebf-4751-85b9-28862af34d59",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

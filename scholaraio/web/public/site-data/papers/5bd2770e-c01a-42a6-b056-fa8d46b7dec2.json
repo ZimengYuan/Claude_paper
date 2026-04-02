@@ -1,0 +1,81 @@
+{
+  "dir_name": "Han-2025-ReinDiffuse-Crafting-Physically-Plausible-Motions-with-Reinforced-Diffusion-Model",
+  "title": "ReinDiffuse: Crafting Physically Plausible Motions with Reinforced Diffusion Model",
+  "authors": [
+    "Gaoge Han",
+    "Mingjiang Liang",
+    "Jinglei Tang",
+    "Yongkang Cheng",
+    "Wei Liu",
+    "Shaoli Huang"
+  ],
+  "year": 2025,
+  "journal": "2025 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)",
+  "doi": "10.1109/wacv61041.2025.00222",
+  "abstract": "Generating human motion from textual descriptions is a challenging task. Existing methods either struggle with physical credibility or are limited by the complexities of physics simulations. In this paper, we present ReinDiffuse that combines reinforcement learning with motion diffusion model to generate physically credible human motions that align with textual descriptions. Our method adapts Motion Diffusion Model to output a parameterized distribution of actions, making them compatible with reinforcement learning paradigms. We employ reinforcement learning with the objective of maximizing physically plausible rewards to optimize motion generation for physical fidelity. Our approach outperforms existing state-of-the-art models on two major datasets, HumanML3D and KIT-ML, achieving significant improvements in physical plausibility and motion quality. Project: https://reindiffuse.github.io/",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 21,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "ReinDiffuse: Crafting Physically Plausible Motions with Reinforced Diffusion Model",
+      "authors": [
+        "Gaoge Han",
+        "Mingjiang Liang",
+        "Jinglei Tang",
+        "Yongkang Cheng",
+        "Wei Liu",
+        "Shaoli Huang"
+      ],
+      "year": 2025,
+      "journal": "2025 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)",
+      "doi": "10.1109/wacv61041.2025.00222",
+      "paper_type": "proceedings-article",
+      "abstract": "Generating human motion from textual descriptions is a challenging task. Existing methods either struggle with physical credibility or are limited by the complexities of physics simulations. In this paper, we present ReinDiffuse that combines reinforcement learning with motion diffusion model to generate physically credible human motions that align with textual descriptions. Our method adapts Motion Diffusion Model to output a parameterized distribution of actions, making them compatible with reinforcement learning paradigms. We employ reinforcement learning with the objective of maximizing physically plausible rewards to optimize motion generation for physical fidelity. Our approach outperforms existing state-of-the-art models on two major datasets, HumanML3D and KIT-ML, achieving significant improvements in physical plausibility and motion quality. Project: https://reindiffuse.github.io/",
+      "route_id": "5bd2770e-c01a-42a6-b056-fa8d46b7dec2"
+    },
+    "markdown_stats": {
+      "lines": 257,
+      "words": 7485,
+      "headings": 19
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "5bd2770e-c01a-42a6-b056-fa8d46b7dec2",
+  "paper_ref": "5bd2770e-c01a-42a6-b056-fa8d46b7dec2",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,81 @@
+{
+  "dir_name": "Karunratanakul-2024-Optimizing-Diffusion-Noise-Can-Serve-As-Universal-Motion-Priors-2",
+  "title": "Optimizing Diffusion Noise Can Serve As Universal Motion Priors",
+  "authors": [
+    "Korrawe Karunratanakul",
+    "Konpat Preechakul",
+    "Emre Aksan",
+    "Thabo Beeler",
+    "Supasorn Suwajanakorn",
+    "Siyu Tang"
+  ],
+  "year": 2024,
+  "journal": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+  "doi": "10.1109/cvpr52733.2024.00133",
+  "abstract": "We propose Diffusion Noise Optimization (DNO), a new method that effectively leverages existing motion diffusion models as motion priors for a wide range of motion-related tasks. Instead of training a task-specific diffusion model for each new task, DNO operates by optimizing the diffusion latent noise of an existing pre-trained text-to-motion model. Given the corresponding latent noise of a human motion, it propagates the gradient from the target criteria defined on the motion space through the whole denoising process to update the diffusion latent noise. As a result, DNO supports any use cases where criteria can be defined as a function of motion. In particular, we show that, for motion editing and control, DNO outperforms existing meth-ods in both achieving the objective and preserving the motion content. DNO accommodates a diverse range of editing modes, including changing trajectory, pose, joint lo-cations, or avoiding newly added obstacles. In addition, DNO is effective in motion denoising and completion, pro-ducing smooth and realistic motion from noisy and partial inputs. DNO achieves these results at inference time with-out the need for model retraining, offering great versatility for any defined reward or loss function on the motion rep-resentation.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 71,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Optimizing Diffusion Noise Can Serve As Universal Motion Priors",
+      "authors": [
+        "Korrawe Karunratanakul",
+        "Konpat Preechakul",
+        "Emre Aksan",
+        "Thabo Beeler",
+        "Supasorn Suwajanakorn",
+        "Siyu Tang"
+      ],
+      "year": 2024,
+      "journal": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "doi": "10.1109/cvpr52733.2024.00133",
+      "paper_type": "proceedings-article",
+      "abstract": "We propose Diffusion Noise Optimization (DNO), a new method that effectively leverages existing motion diffusion models as motion priors for a wide range of motion-related tasks. Instead of training a task-specific diffusion model for each new task, DNO operates by optimizing the diffusion latent noise of an existing pre-trained text-to-motion model. Given the corresponding latent noise of a human motion, it propagates the gradient from the target criteria defined on the motion space through the whole denoising process to update the diffusion latent noise. As a result, DNO supports any use cases where criteria can be defined as a function of motion. In particular, we show that, for motion editing and control, DNO outperforms existing meth-ods in both achieving the objective and preserving the motion content. DNO accommodates a diverse range of editing modes, including changing trajectory, pose, joint lo-cations, or avoiding newly added obstacles. In addition, DNO is effective in motion denoising and completion, pro-ducing smooth and realistic motion from noisy and partial inputs. DNO achieves these results at inference time with-out the need for model retraining, offering great versatility for any defined reward or loss function on the motion rep-resentation.",
+      "route_id": "b25e12ca-7f68-483a-b571-f30b2c1779cd"
+    },
+    "markdown_stats": {
+      "lines": 374,
+      "words": 11850,
+      "headings": 31
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "b25e12ca-7f68-483a-b571-f30b2c1779cd",
+  "paper_ref": "b25e12ca-7f68-483a-b571-f30b2c1779cd",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

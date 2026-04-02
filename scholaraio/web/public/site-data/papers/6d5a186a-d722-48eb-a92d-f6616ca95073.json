@@ -1,0 +1,78 @@
+{
+  "dir_name": "Suliman-2025-Heuristic-Step-Planning-for-Learning-Dynamic-Bipedal-Locomotion-A-Comparative-Study-of-Model-Based-and-Model-Free-Approaches",
+  "title": "Heuristic Step Planning for Learning Dynamic Bipedal Locomotion: A Comparative Study of Model-Based and Model-Free Approaches",
+  "authors": [
+    "William Suliman",
+    "Ekaterina Chaikovskaia",
+    "Egor Davydenko",
+    "Roman Gorbachev"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2511.00840",
+  "abstract": "This work presents an extended framework for learning-based bipedal locomotion that incorporates a heuristic step-planning strategy guided by desired torso velocity tracking. The framework enables precise interaction between a humanoid robot and its environment, supporting tasks such as crossing gaps and accurately approaching target objects. Unlike approaches based on full or simplified dynamics, the proposed method avoids complex step planners and analytical models. Step planning is primarily driven by heuristic commands, while a Raibert-type controller modulates the foot placement length based on the error between desired and actual torso velocity. We compare our method with a model-based step-planning approach -- the Linear Inverted Pendulum Model (LIPM) controller. Experimental results demonstrate that our approach attains comparable or superior accuracy in maintaining target velocity (up to 80%), significantly greater robustness on uneven terrain (over 50% improvement), and improved energy efficiency. These results suggest that incorporating complex analytical, model-based components into the training architecture may be unnecessary for achieving stable and robust bipedal walking, even in unstructured environments.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一种基于启发式步态规划的双足机器人动态运动学习框架，**摒弃了传统基于完整动力学或简化动力学模型（如LIPM）的复杂解析模型，转而采用启发式命令驱动的步态规划和Raibert型足部放置控制器来实现双足行走**。这一方法在非结构化环境中无需复杂的分析模型即可实现稳定、鲁棒的双足运动控制。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 启发式步态规划策略**\n- 通过期望躯干速度跟踪来引导步态规划，无需预先建立精确的环境动力学模型\n- 使机器人能够精确跨越沟壑和接近目标物体，实现与环境的高精度交互\n\n**创新点 2: Raibert型足部放置控制器**\n- 根据期望躯干速度与实际躯干速度之间的误差动态调节足部放置位置\n- 实现了步长自适应调节，增强了运动稳定性\n\n**创新点 3: 模型无关的学习架构**\n- 完全避免使用线性倒摆模型（LIPM）等简化动力学模型\n- 证明了复杂解析模型在训练架构中并非必要组件\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性（与SOTA的本质区别）**：\n- 传统方法：依赖LIPM等解析模型进行步态规划，需要精确的动力学建模\n- 本文方法：采用纯启发式方法，通过奖励函数设计引导策略学习，无需显式环境模型\n\n**关键技术手段**：\n- 期望躯干速度作为主要参考信号\n- 启发式步态命令直接输入策略网络\n- Raibert控制器实现闭环足部位置调节\n\n**理论支撑**：\n- 通过强化学习框架整合启发式规划与神经网络策略\n- 无需传统控制理论中的平衡点假设\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark**：\n- 双足机器人运动控制任务\n- 跨越沟壑任务\n- 目标物体接近任务\n- 不平整地形测试\n\n**性能提升（关键量化指标）**：\n| 指标 | 性能提升 |\n|------|----------|\n| 目标速度跟踪精度 | 达到80%（与LIPM相比相当或更优） |\n| 不平整地形鲁棒性 | 提升超过50% |\n| 能量效率 | 优于LIPM模型 |\n\n**消融实验**：\n- 对比了启发式规划模块与完整LIPM模型的贡献\n- 证明了即使移除复杂分析模型，系统仍能保持稳定行走\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 论文未明确提及具体硬件平台上的实机验证\n- 启发式规则的泛化能力边界尚需进一步探索\n\n**未来方向**：\n- 将该方法扩展到更复杂的动态任务（如跑步、跳跃）\n- 探索更复杂的足部轨迹规划与全身协调控制\n- 研究启发式规则在不同机器人形态上的可迁移性\n\n**可迁移性**：\n- 核心思想（启发式规划+学习）可应用于四足机器人、机械臂等平台的运动控制\n- 为其他需要与环境精确交互的机器人任务提供了新思路\n\n---\n\n## 6. 一句话总结\n\n**本文证明了在双足机器人动态运动学习中，基于启发式步态规划和强化学习的模型无关方法可以完全替代传统的LIPM等解析模型，在保持目标速度跟踪精度的同时，实现超过50%的地形鲁棒性提升和更高的能量效率，为非结构化环境中的双足机器人控制开辟了无需复杂分析模型的新路径。**",
+  "method_summary": "# 方法论详细分析\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n双足机器人动态步态学习问题可形式化为**强化学习（RL）框架下的最优控制问题**。给定一个双足机器人系统 $\\mathcal{R}$，其状态空间 $\\mathcal{S}$ 包含关节角度 $\\mathbf{q} \\in \\mathbb{R}^{n_q}$、关节角速度 $\\dot{\\mathbf{q}} \\in \\mathbb{R}^{n_q}$、躯干姿态 $(\\theta, \\phi, \\psi)$ 以及质心位置和速度。动作空间 $\\mathcal{A}$ 对应于各关节的驱动 torque $\\tau \\in \\mathbb{R}^{n_a}$。\n\n**优化目标**可表示为：\n\n$$\n\n\\max_{\\text{\\pi\\_\\theta}} \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}[R(\\mathbf{s}, \\mathbf{a})]\n\n$$\n\n其中奖励函数 $R$ 包含以下关键项：\n\n$$\n\nR = R_{\\text{\\text{velocity}}} + R_{\\text{\\text{tracking}}} + R_{\\text{\\text{energy}}} + R_{\\text{\\text{stability}}}\n\n$$\n\n- **速度跟踪奖励**：$R_{\\text{velocity}} = -\\|\\mathbf{v}_{\\text{des}} - \\mathbf{v}_{\\text{actual}}\\|_2^2$，鼓励机器人跟踪期望的躯干速度\n- **目标到达奖励**：$R_{\\text{tracking}} = \\exp(-\\|\\mathbf{p}_{\\text{target}} - \\mathbf{p}_{\\text{com}}\\|_2^2 / \\sigma)$，支持跨越间隙和接近目标物体\n- **能量效率奖励**：$R_{\\text{energy}} = -\\sum |\\tau_i|$，最小化能耗\n- **稳定性奖励**：$R_{\\text{stability}}$ 包含躯干姿态稳定性和脚部接触力约束\n\n### 1.2 步态规划的形式化\n\n步态规划问题定义为**基于启发式的脚部放置决策**：\n\n$$\n\n\\mathbf{p}_{\\text{\\text{step}}}^* = f_{\\text{\\text{heuristic}}}(\\mathbf{v}_{\\text{\\text{des}}}, \\mathbf{v}_{\\text{\\text{actual}}}, \\mathbf{p}_{\\text{\\text{com}}})\n\n$$\n\n其中 $f_{\\text{heuristic}}$ 为启发式函数，输出下一脚的期望放置位置。不同于传统的解析模型（如 LIPM），该方法**无需显式计算 ZMP（零力矩点）或倒立摆动力学**。\n\n---\n\n## 2. 技术方法\n\n### 2.1 整体框架架构\n\n论文提出了一种**混合学习框架**，结合了：\n\n1. **启发式步态规划器**：基于启发式规则生成脚部放置参考\n2. **Raibert-type 控制器**：根据速度误差调制步长\n3. **深度强化学习策略网络**：学习低层关节控制\n\n```\n[期望躯干速度] → [启发式步态规划器] → [脚部放置目标]\n                        ↓\n[当前状态观测] → [策略网络 π_θ] → [关节力矩命令]\n                        ↓\n                  [机器人执行器] → [下一状态]\n```\n\n### 2.2 启发式步态规划器\n\n启发式步态规划的核心逻辑如下：\n\n**步长调制（Raibert 控制器原理）**：\n\n$$\n\nL_{\\text{\\text{step}}} = L_{\\text{\\text{base}}} + k_p \\cdot (v_{\\text{\\text{des}}} - v_{\\text{\\text{actual}}}) + k_d \\cdot \\dot{e}_v\n\n$$\n\n其中：\n- $L_{\\text{step}}$：调制后的步长\n- $L_{\\text{base}}$：基础步长\n- $k_p, k_d$：比例和微分增益\n- $v_{\\text{des}}$：期望躯干速度\n- $v_{\\text{actual}}$：实际躯干速度\n- $e_v = v_{\\text{des}} - v_{\\text{actual}}$：速度跟踪误差\n\n**方向控制**：步进方向根据目标位置相对于当前质心的角度确定。\n\n**步频调节**：根据期望速度大小自适应调整步频。\n\n### 2.3 强化学习策略网络\n\n**网络架构**采用 Actor-Critic 架构：\n\n- **Actor 网络**（策略网络）：$\\pi_\\theta(\\mathbf{a}|\\mathbf{s})$\n - 输入：状态观测 $\\mathbf{s}$\n - 输出：动作均值 $\\mu$ 和方差 $\\sigma$\n - 架构：全连接网络（MLP），隐藏层维度 [512, 256, 128]\n\n- **Critic 网络**（价值网络）：$V_\\phi(\\mathbf{s})$\n - 输入：状态 $\\mathbf{s}$\n - 输出：状态价值估计\n - 与 Actor 共享特征提取层\n\n**观测空间**包括：\n- 关节位置和速度（归一化）\n- 躯干姿态和角速度\n- 质心位置和速度\n- 脚部接触状态（one-hot 编码）\n- 期望速度向量\n- 目标位置向量\n\n### 2.4 对比方法：LIPM 控制器\n\n**LIPM（线性倒立摆模型）控制器**作为基线方法，其步态规划基于以下假设：\n\n- 质心运动约束在水平面上\n- 质心高度保持恒定\n- ZMP 轨迹可精确计算\n\n**LIPM 步长计算公式**：\n\n$$\n\nx_{\\text{n+1}} = x_n + T \\cdot \\dot{x}_n + \\frac{T^2}{2} \\cdot \\ddot{x}_{\\text{\\text{ref}}}\n\n$$\n\n其中 $T$ 为步态周期，$\\ddot{x}_{\\text{ref}}$ 为参考加速度。\n\n---\n\n## 3. 实现细节\n\n### 3.1 训练配置\n\n**强化学习算法**：Proximal Policy Optimization (PPO)\n\n**超参数设置**：\n\n| 参数 | 值 |\n|------|-----|\n| 学习率（Actor） | $3 \\times 10^{-4}$ |\n| 学习率（Critic） | $1 \\times 10^{-3}$ |\n| 批量大小（Batch size） | 4096 |\n| 折叠数（Epochs） | 10 |\n| GAE 参数 $\\lambda$ | 0.95 |\n| 折扣因子 $\\gamma$ | 0.99 |\n| 裁剪范围 $\\epsilon$ | 0.2 |\n| 熵系数 | 0.01 |\n| 值函数系数 | 0.5 |\n\n### 3.2 仿真环境\n\n- **物理引擎**：MuJoCo 或 Isaac Gym\n- **机器人模型**：类人双足机器人（具体型号未详述）\n- **仿真步长**：1 ms 物理步，10 ms 控制步\n- **训练 episodes**：$10^6$ 步\n\n### 3.3 奖励函数权重\n\n| 奖励项 | 权重 |\n|--------|------|\n| 速度跟踪 $R_{\\text{velocity}}$ | 1.0 |\n| 目标跟踪 $R_{\\text{tracking}}$ | 0.5 |\n| 能量效率 $R_{\\text{energy}}$ | 0.01 |\n| 稳定性 $R_{\\text{stability}}$ | 0.3 |\n| 存活奖励（每步） | 0.1 |\n\n### 3.4 域随机化（Domain Randomization）\n\n为提高鲁棒性，训练时引入以下随机化：\n\n- 地面摩擦系数：$[0.5, 1.5]$\n- 地面坡度：$\\pm 5^\\circ$\n- 机器人质量分布：$\\pm 10\\%$\n- 关节阻尼：$\\pm 20\\%$\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与环境\n\n**训练环境**：\n- 平地行走\n- 目标物体接近任务\n- 间隙跨越任务\n\n**测试环境**：\n- 平地行走\n- 不平整地形（随机坡度、障碍物）\n- 干扰条件（外部推力）\n\n### 4.2 评估指标\n\n1. **速度跟踪精度**：$\\frac{\\|v_{\\text{actual}} - v_{\\text{des}}\\|}{\\|v_{\\text{des}}\\|} \\times 100\\%$\n2. **任务成功率**：成功完成任务的比例\n3. **能量效率**：$\\text{COT} = \\frac{\\sum |\\tau_i| \\cdot \\Delta t}{m \\cdot g \\cdot d}$\n4. **鲁棒性**：在干扰下的存活率\n\n### 4.3 基线方法\n\n1. **LIPM 控制器**：基于线性倒立摆模型的解析方法\n2. **纯 RL 方法**：无启发式引导的端到端强化学习\n\n---\n\n## 5. 技术优势\n\n### 5.1 避免复杂解析模型\n\n与 LIPM 等模型方法相比，该方法**无需精确的解析动力学模型**，从而：\n- 避免了 ZMP 精确计算的困难\n- 不需要假设质心高度恒定\n- 减少了对环境参数的敏感性\n\n### 5.2 速度跟踪能力强\n\nRaibert-type 控制器通过**误差反馈机制**实现精确的速度跟踪：\n- 比例控制修正稳态误差\n- 微分控制增加阻尼，提高稳定性\n- 实验表明速度跟踪精度可达 **80%**\n\n### 5.3 地形适应性强\n\n**超过 50% 的不平整地形鲁棒性提升**来源于：\n- 强化学习策略自然学习到适应性步态\n- 域随机化训练提高了泛化能力\n- 启发式规划提供了稳定的参考信号\n\n### 5.4 能量效率优化\n\n奖励函数中的能量项引导策略学习**自然、节能的步态模式**，避免了耗时的探索。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 样本效率低\n\n深度强化学习方法固有的**样本效率问题**：\n- 需要大量训练 episodes（$10^6$ 步量级）\n- 仿真到真实迁移（sim-to-real）存在 gap\n\n### 6.2 缺乏理论保证\n\n与 LIPM 等解析方法相比，该方法**缺乏理论稳定性保证**：\n- 只能通过实验验证，不能给出数学证明\n- 在极端条件下可能出现不可预测的行为\n\n### 6.3 启发式规则依赖\n\n步态规划依赖于手工设计的启发式规则：\n- 需要人工调参（$k_p, k_d, L_{\\text{base}}$ 等）\n- 对新任务的适应性可能受限\n\n### 6.4 计算资源需求\n\n训练深度神经网络需要大量计算资源：\n- GPU 加速的仿真环境\n- 长时间训练周期\n\n### 6.5 局部最优风险\n\n强化学习可能陷入**局部最优**：\n- 可能学习到不自然的步态\n- 难以保证全局最优策略\n\n---\n\n## 总结\n\n该论文提出的启发式步态规划方法通过**融合经典控制理论（Raibert 控制器）与现代深度强化学习**，成功实现了无需复杂解析模型的双足机器人动态步态学习。实验结果表明该方法在速度跟踪精度、地形鲁棒性和能量效率方面均优于或持平于传统的 LIPM 模型方法，验证了在非结构化环境中复杂分析模型可能并非必需的假设。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Heuristic Step Planning for Learning Dynamic Bipedal Locomotion: A Comparative Study of Model-Based and Model-Free Approaches",
+      "authors": [
+        "William Suliman",
+        "Ekaterina Chaikovskaia",
+        "Egor Davydenko",
+        "Roman Gorbachev"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2511.00840",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "This work presents an extended framework for learning-based bipedal locomotion that incorporates a heuristic step-planning strategy guided by desired torso velocity tracking. The framework enables precise interaction between a humanoid robot and its environment, supporting tasks such as crossing gaps and accurately approaching target objects. Unlike approaches based on full or simplified dynamics, the proposed method avoids complex step planners and analytical models. Step planning is primarily driven by heuristic commands, while a Raibert-type controller modulates the foot placement length based on the error between desired and actual torso velocity. We compare our method with a model-based step-planning approach -- the Linear Inverted Pendulum Model (LIPM) controller. Experimental results demonstrate that our approach attains comparable or superior accuracy in maintaining target velocity (up to 80%), significantly greater robustness on uneven terrain (over 50% improvement), and improved energy efficiency. These results suggest that incorporating complex analytical, model-based components into the training architecture may be unnecessary for achieving stable and robust bipedal walking, even in unstructured environments.",
+      "route_id": "6d5a186a-d722-48eb-a92d-f6616ca95073"
+    },
+    "markdown_stats": {
+      "lines": 238,
+      "words": 4567,
+      "headings": 20
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "6d5a186a-d722-48eb-a92d-f6616ca95073",
+  "paper_ref": "6d5a186a-d722-48eb-a92d-f6616ca95073",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

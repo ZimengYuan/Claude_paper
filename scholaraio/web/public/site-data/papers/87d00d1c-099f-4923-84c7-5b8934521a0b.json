@@ -1,0 +1,85 @@
+{
+  "dir_name": "Cui-2025-GROVE-A-Generalized-Reward-for-Learning-Open-Vocabulary-Physical-Skill-2",
+  "title": "GROVE: A Generalized Reward for Learning Open-Vocabulary Physical Skill",
+  "authors": [
+    "Jieming Cui",
+    "Tengyu Liu",
+    "Ziyu Meng",
+    "Jiale Yu",
+    "Ran Song",
+    "Wei Zhang",
+    "Yixin Zhu",
+    "Siyuan Huang"
+  ],
+  "year": 2025,
+  "journal": "2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+  "doi": "10.1109/cvpr52734.2025.01471",
+  "abstract": "Learning open-vocabulary physical skills for simulated agents presents a significant challenge in Artificial Intelligence (AI). Current Reinforcement Learning (RL) approaches face critical limitations: manually designed rewards lack scalability across diverse tasks, while demonstration-based methods struggle to generalize beyond their training distribution. We introduce GROVE, a generalized reward framework that enables open-vocabulary physical skill learning without manual engineering or task-specific demonstrations. Our key insight is that Large Language Models (LLMs) and Vision Language Models (VLMs) provide complementary guidance—LLMs generate precise physical constraints capturing task requirements, while VLMs evaluate motion semantics and naturalness. Through an iterative design process, VLM-based feedback continuously refines LLM-generated constraints, creating a self-improving reward system. To bridge the domain gap between simulation and natural images, we develop Pose2CLIP, a lightweight mapper that efficiently projects agent poses directly into semantic feature space without computationally expensive rendering. Extensive experiments across diverse embodiments and learning paradigms demonstrate GROVE’s effectiveness, achieving 22.2% higher motion naturalness and 25.7% better task completion scores while training 8.4× faster than previous methods. These results establish a new foundation for scalable physical skill acquisition in simulated environments.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 7,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "GROVE: A Generalized Reward for Learning Open-Vocabulary Physical Skill",
+      "authors": [
+        "Jieming Cui",
+        "Tengyu Liu",
+        "Ziyu Meng",
+        "Jiale Yu",
+        "Ran Song",
+        "Wei Zhang",
+        "Yixin Zhu",
+        "Siyuan Huang"
+      ],
+      "year": 2025,
+      "journal": "2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "doi": "10.1109/cvpr52734.2025.01471",
+      "paper_type": "proceedings-article",
+      "abstract": "Learning open-vocabulary physical skills for simulated agents presents a significant challenge in Artificial Intelligence (AI). Current Reinforcement Learning (RL) approaches face critical limitations: manually designed rewards lack scalability across diverse tasks, while demonstration-based methods struggle to generalize beyond their training distribution. We introduce GROVE, a generalized reward framework that enables open-vocabulary physical skill learning without manual engineering or task-specific demonstrations. Our key insight is that Large Language Models (LLMs) and Vision Language Models (VLMs) provide complementary guidance—LLMs generate precise physical constraints capturing task requirements, while VLMs evaluate motion semantics and naturalness. Through an iterative design process, VLM-based feedback continuously refines LLM-generated constraints, creating a self-improving reward system. To bridge the domain gap between simulation and natural images, we develop Pose2CLIP, a lightweight mapper that efficiently projects agent poses directly into semantic feature space without computationally expensive rendering. Extensive experiments across diverse embodiments and learning paradigms demonstrate GROVE’s effectiveness, achieving 22.2% higher motion naturalness and 25.7% better task completion scores while training 8.4× faster than previous methods. These results establish a new foundation for scalable physical skill acquisition in simulated environments.",
+      "route_id": "87d00d1c-099f-4923-84c7-5b8934521a0b"
+    },
+    "markdown_stats": {
+      "lines": 494,
+      "words": 11345,
+      "headings": 37
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "87d00d1c-099f-4923-84c7-5b8934521a0b",
+  "paper_ref": "87d00d1c-099f-4923-84c7-5b8934521a0b",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

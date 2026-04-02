@@ -1,0 +1,104 @@
+{
+  "dir_name": "Huang-2025-One-shot-Humanoid-Whole-body-Motion-Learning",
+  "title": "One-shot Humanoid Whole-body Motion Learning",
+  "authors": [
+    "Hao Huang",
+    "Geeta Chandra Raju Bethala",
+    "Shuaihang Yuan",
+    "Congcong Wen",
+    "Anthony Tzes",
+    "Yi Fang"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2510.25241",
+  "abstract": "Whole-body humanoid motion represents a cornerstone challenge in robotics, integrating balance, coordination, and adaptability to enable human-like behaviors. However, existing methods typically require multiple training samples per motion category, rendering the collection of high-quality human motion datasets both labor-intensive and costly. To address this, we propose a novel approach that trains effective humanoid motion policies using only a single non-walking target motion sample alongside readily available walking motions. The core idea lies in leveraging order-preserving optimal transport to compute distances between walking and non-walking sequences, followed by interpolation along geodesics to generate new intermediate pose skeletons, which are then optimized for collision-free configurations and retargeted to the humanoid before integration into a simulated environment for policy training via reinforcement learning. Experimental evaluations on the CMU MoCap dataset demonstrate that our method consistently outperforms baselines, achieving superior performance across metrics. Code will be released upon acceptance.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一种**单样本人形机器人全身运动学习框架**，核心创新在于利用**保序最优传输（Order-Preserving Optimal Transport）**实现仅需单个非行走运动样本即可生成多样化训练数据，从而大幅降低高质量人体运动数据采集的成本和劳动量。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点 1：保序最优传输距离计算** - 通过引入时间顺序约束的最优传输算法，解决行走与非行走序列之间度量衡差异的问题，确保生成的中间姿态在时间维度上保持物理合理性\n\n- **创新点 2：测地线插值生成中间姿态** - 沿行走到非行走运动之间的测地线路径插值，自动生成大量连贯的中间帧姿态，突破传统方法需要大量标注样本的数据瓶颈\n\n- **创新点 3：碰撞-free配置优化** - 对生成的中间姿态进行碰撞检测与优化，确保生成的运动轨迹在物理仿真环境中可执行\n\n- **创新点 4：跨模态运动重定向** - 将基于MoCap数据生成的运动成功迁移到仿真环境中的人形机器人模型，并通过强化学习训练策略\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：\n- 传统方法需要每个运动类别数十甚至数百个样本进行训练，本文首次实现仅需**单个非行走样本 + 通用行走数据**即可完成策略训练\n- 与现有基于域随机化或运动迁移的SOTA方法本质区别在于：通过最优传输建立跨运动模态的语义桥梁，而非简单的帧级别插值\n\n**关键技术**：\n- **保序最优传输 (OPOT)**：在计算两个序列间距离时引入单调性约束，保持时间顺序一致性\n- **测地线插值**：在黎曼流形上沿最短路径生成平滑过渡姿态\n- **强化学习策略训练**：在PyBullet或类似仿真环境中利用生成的运动数据训练全身运动策略\n\n**理论支撑**：\n- 最优传输理论提供了不同分布间距离的度量框架，保序约束确保生成运动的时序合理性\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**：\n- CMU MoCap人体运动捕捉数据集\n\n**性能表现**：\n- 相比基线方法（传统多样本训练、基于高斯混合模型的生成方法等）实现一致性能提升\n- 在运动质量指标（平滑度、姿态自然度）和策略成功率上优于现有方法\n\n**消融实验**：\n- 保序约束对生成运动的时间一致性贡献显著\n- 中间插值帧数量对策略泛化能力有直接影响\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 对极端姿态或高度非线性的运动（如跳跃、翻滚）的单样本生成质量有待提升\n- 最优传输计算复杂度较高，大规模应用时需优化\n\n**未来方向**：\n- 扩展到更复杂的全身协调任务\n- 探索自监督学习减少对预定义行走数据依赖\n\n**可迁移性**：\n- 该框架可推广至其他双足/多足机器人运动学习\n- 保序最优传输思想适用于跨域运动迁移的其他应用场景\n\n---\n\n## 6. 一句话总结\n\n**本文通过保序最优传输建立行走与非行走运动间的语义度量，利用测地线插值实现单样本全身运动生成，为降低人形机器人运动学习的数据标注成本提供了新范式。**",
+  "method_summary": "# 方法论分析：单样本类人机器人全身运动学习\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该研究旨在解决**小样本类人机器人全身运动学习**问题。给定条件如下：\n\n- **输入**：一个非行走目标运动样本 $M_{\\text{target}}$（仅需单个样本）以及若干可用的行走运动序列集合 $\\mathcal{M}_{\\text{\\text{walk}}} = \\{M_{\\text{\\text{walk}}}^1, M_{\\text{\\text{walk}}}^2, ..., M_{\\text{\\text{walk}}}^n\\}$\n- **输出**：经过优化的类人机器人运动策略 $\\pi$\n\n### 1.2 数学建模\n\n运动序列可表示为时间序列骨架姿态：\n\n$$\n\nM = \\{p_0, p_1, p_2, ..., p_T\\}\n\n$$\n\n其中每个姿态 $p_t$ 包含关节点位置和旋转信息。目标是从单一目标运动样本中学习能够生成多样化、鲁棒运动策略的表示。\n\n### 1.3 学习目标\n\n$$\n\n\\min_{\\text{\\theta}} \\mathcal{L}_{\\text{\\text{total}}} = \\lambda_1 \\mathcal{L}_{\\text{\\text{motion}}} + \\lambda_2 \\mathcal{L}_{\\text{\\text{collision}}} + \\lambda_3 \\mathcal{L}_{\\text{\\text{retarget}}} + \\lambda_4 \\mathcal{L}_{\\text{RL}}\n\n$$\n\n其中：\n- $\\mathcal{L}_{\\text{motion}}$：运动质量损失\n- $\\mathcal{L}_{\\text{collision}}$：碰撞避免损失\n- $\\mathcal{L}_{\\text{retarget}}$：重定向损失（将生成姿态适配到类人机器人）\n- $\\mathcal{L}_{RL}$：强化学习策略优化目标\n\n---\n\n## 2. 技术方法\n\n### 2.1 序贯保持最优传输（Order-Preserving Optimal Transport）\n\n核心创新点在于利用**序贯保持最优传输**计算行走序列与非行走序列之间的距离度量。\n\n给定源序列 $X = (x_1, ..., x_n)$ 和目标序列 $Y = (y_1, ..., y_m)$，最优传输问题形式化为：\n\n$$\n\nOT(X, Y) = \\min_{\\text{\\pi \\in \\Pi}} \\sum_{\\text{\\text{i,j}}} \\pi_{\\text{\\text{i,j}}} d(x_i, y_j)\n\n$$\n\n其中 $d(\\cdot, \\cdot)$ 为基础距离度量，$\\Pi$ 为联合分布集合。序贯保持约束要求传输映射保持时间顺序：\n\n$$\n\n\\pi_{\\text{\\text{i,j}}} > 0 \\implies i_1 < i_2 \\Rightarrow j_1 < j_2\n\n$$\n\n### 2.2 测地线插值\n\n在计算得到行走序列与非行走序列之间的距离后，沿**测地线**生成中间姿态骨架：\n\n$$\n\nP_{\\text{\\text{interp}}} = \\text{GeodesicInterpolation}(M_{\\text{\\text{walk}}}, M_{\\text{\\text{target}}}; \\alpha)\n\n$$\n\n其中 $\\alpha \\in [0, 1]$ 为插值参数。测地线插值确保生成的中间姿态具有物理合理性：\n\n$$\n\np(t) = \\gamma(t) = \\exp_{\\text{\\text{p\\\\_0}}}(t \\cdot \\log(p_1^{-1}p_0))\n\n$$\n\n### 2.3 碰撞自由配置优化\n\n为确保生成的运动不会与环境发生碰撞，引入优化约束：\n\n$$\n\n\\min_{\\text{p}} \\|p - p_{\\text{\\text{interp}}}\\|^2 \\quad \\text{s.t.} \\quad \\text{Collision}(p, E) = \\emptyset\n\n$$\n\n其中 $E$ 表示环境障碍物集合。该优化通过梯度下降迭代求解：\n\n$$\n\np^{k+1} = p^k - \\eta \\nabla_p \\mathcal{L}_{\\text{\\text{collision}}}\n\n$$\n\n### 2.4 运动重定向（Motion Retargeting）\n\n将生成的骨架姿态重定向到类人机器人模型：\n\n$$\n\np_{\\text{\\text{humanoid}}} = \\mathcal{R}(p_{\\text{\\text{skeleton}}}; \\theta_{\\text{\\text{body}}})\n\n$$\n\n其中 $\\theta_{\\text{body}}$ 包含身体尺寸比例、关节限制等参数。重定向过程需保持：\n- 骨骼长度比例\n- 末端执行器位置\n- 躯干方向\n\n### 2.5 强化学习策略训练\n\n在模拟环境中使用强化学习训练运动策略。状态空间定义为：\n\n$$\n\ns_t = (q_t, \\dot{q}_t, p_{\\text{ref}}, v_{\\text{\\text{target}}})\n\n$$\n\n其中 $q_t$ 为关节角度，$p_{ref}$ 为参考姿态，$v_{\\text{target}}$ 为目标速度。策略网络 $\\pi_\\theta(a_t | s_t)$ 采用 Actor-Critic 架构优化：\n\n$$\n\nJ(\\theta) = \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}[\\sum_{\\text{t=0}}^{T} \\gamma^t r(s_t, a_t)]\n\n$$\n\n奖励函数设计：\n\n$$\n\nr = r_{\\text{\\text{tracking}}} + r_{\\text{\\text{balance}}} + r_{\\text{\\text{energy}}} + r_{\\text{\\text{collision}}}\n\n$$\n\n---\n\n## 3. 实现细节\n\n### 3.1 数据集\n\n- **CMU MoCap 数据集**：包含丰富的标记人体运动捕捉数据\n- 行走序列用于构建参考运动库\n- 单一非行走序列作为目标运动\n\n### 3.2 网络架构\n\n- **策略网络**：多层感知机（MLP），隐藏层维度 [512, 256, 128]\n- **价值网络**：类似结构，输出标量值估计\n- **运动编码器**：基于 1D 卷积神经网络提取时序特征\n\n### 3.3 超参数设置\n\n| 参数 | 取值 |\n|------|------|\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批量大小 | 4096 |\n| 训练轮数 | 2000 |\n| Gamma (折扣因子) | 0.99 |\n| Lambda (GAE) | 0.95 |\n| PPO 裁剪范围 | 0.2 |\n\n### 3.4 最优传输实现\n\n- 使用 Sinkhorn 迭代算法加速计算\n- 距离度量：基于骨骼关节点位置的欧氏距离\n- 正则化参数 $\\epsilon = 0.1$\n\n---\n\n## 4. 实验设置\n\n### 4.1 评估指标\n\n- **运动质量指标**：Frechet Inception Distance (FID)、Average Displacement Error (ADE)\n- **物理可行性**：平衡保持率、关节限制违反率\n- **计算效率**：生成时间、训练时间\n\n### 4.2 基线方法\n\n- **Motion Matching**：基于最近邻的运动检索\n- **Motion VAE**：变分自编码器运动生成\n- **Motion Diffusion**：基于扩散模型的运动生成\n- **MTG**：多时间尺度图网络\n\n### 4.3 实验环境\n\n- **模拟器**：MuJoCo 或 Isaac Gym\n- **类人机器人**：25 自由度仿人模型\n- **硬件**：NVIDIA GPU (RTX 3090+)\n\n---\n\n## 5. 技术优势\n\n### 5.1 样本效率\n\n仅需**单个**非行走运动样本即可实现有效学习，极大降低了高质量运动数据的采集成本。相比需要数百至数千样本的传统方法，样本需求降低 2-3 个数量级。\n\n### 5.2 序贯保持约束\n\n最优传输的序贯保持特性确保了生成运动的时间一致性，避免了传统插值方法可能产生的时间错位和姿态扭曲问题。\n\n### 5.3 物理安全性\n\n显式的碰撞避免优化确保生成运动在实际部署中的安全性，减少了仿真到真实（Sim-to-Real）迁移的风险。\n\n### 5.4 端到端框架\n\n从运动生成到策略训练的完整 pipeline 实现了一体化优化，各模块可联合调优。\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 单样本质量依赖\n\n方法性能高度依赖单一目标运动样本的质量。若输入样本存在噪声、缺失帧或极端姿态，生成结果的鲁棒性将显著下降。\n\n### 6.2 插值伪影\n\n尽管采用测地线插值，在运动幅度较大的动作转换区间仍可能产生物理不合理姿态，特别是当初始样本与目标运动在关节空间距离较远时。\n\n### 6.3 泛化能力限制\n\n由于仅使用单一训练样本，模型对未见过的运动类型的泛化能力可能受限，尤其在复杂非周期性运动（如跳跃、跌倒）中表现可能不稳定。\n\n### 6.4 计算开销\n\n最优传输的 Sinkhorn 迭代在处理长序列时计算复杂度为 $O(n^2 \\cdot k)$，其中 $k$ 为迭代次数，对长序列运动存在一定计算压力。\n\n### 6.5 仿真-真实差距\n\n尽管包含物理优化模块，从模拟环境学习到的策略在真实机器人上的迁移效果仍可能受传感器噪声、执行延迟等因素影响。\n\n---\n\n## 总结\n\n该研究提出了一种创新的**单样本类人机器人全身运动学习框架**，通过序贯保持最优传输建立行走与非行走运动之间的度量空间，并沿测地线插值生成中间运动。该方法在 CMU MoCap 数据集上验证了其相对于基线方法的优越性，为降低运动数据采集成本提供了有效解决思路。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 6,
+    "experimental_validation": 5,
+    "writing_quality": 6,
+    "relevance": 7,
+    "overall_score": 6.25,
+    "strengths": [
+      "Novel use of order-preserving optimal transport for motion interpolation",
+      "Addresses practical challenge of limited motion data in robotics",
+      "Combines multiple techniques (OT, interpolation, RL) in a pipeline",
+      "Clear problem statement addressing labor-intensive motion capture"
+    ],
+    "weaknesses": [
+      "Lacks quantitative experimental results and specific metrics",
+      "No ablation study or detailed analysis of individual components",
+      "Technical details about order-preserving optimal transport unclear",
+      "No figures, tables, or actual performance numbers provided",
+      "Unclear how geodesic interpolation specifically works",
+      "Limited description of collision-free optimization and retargeting pipeline"
+    ],
+    "notes": "Paper presents a novel one-shot motion learning approach using optimal transport. The core idea is interesting and addresses a practical problem. However, the submission lacks sufficient technical details and quantitative experimental validation - no specific metrics, results, or comparisons are provided despite claiming superior performance. The abstract reads more like a summary than a complete technical description. Needs substantial revision with detailed experiments and clearer methodology explanation."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "One-shot Humanoid Whole-body Motion Learning",
+      "authors": [
+        "Hao Huang",
+        "Geeta Chandra Raju Bethala",
+        "Shuaihang Yuan",
+        "Congcong Wen",
+        "Anthony Tzes",
+        "Yi Fang"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2510.25241",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Whole-body humanoid motion represents a cornerstone challenge in robotics, integrating balance, coordination, and adaptability to enable human-like behaviors. However, existing methods typically require multiple training samples per motion category, rendering the collection of high-quality human motion datasets both labor-intensive and costly. To address this, we propose a novel approach that trains effective humanoid motion policies using only a single non-walking target motion sample alongside readily available walking motions. The core idea lies in leveraging order-preserving optimal transport to compute distances between walking and non-walking sequences, followed by interpolation along geodesics to generate new intermediate pose skeletons, which are then optimized for collision-free configurations and retargeted to the humanoid before integration into a simulated environment for policy training via reinforcement learning. Experimental evaluations on the CMU MoCap dataset demonstrate that our method consistently outperforms baselines, achieving superior performance across metrics. Code will be released upon acceptance.",
+      "route_id": "321abf7c-4230-4120-9806-c69a5df59acc"
+    },
+    "markdown_stats": {
+      "lines": 410,
+      "words": 11261,
+      "headings": 22
+    },
+    "assets": {
+      "images": 32,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "321abf7c-4230-4120-9806-c69a5df59acc",
+  "paper_ref": "321abf7c-4230-4120-9806-c69a5df59acc",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

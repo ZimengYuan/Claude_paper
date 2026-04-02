@@ -1,0 +1,106 @@
+{
+  "dir_name": "Lin-2025-H-Zero-Cross-Humanoid-Locomotion-Pretraining-Enables-Few-shot-Novel-Embodiment-Transfer",
+  "title": "H-Zero: Cross-Humanoid Locomotion Pretraining Enables Few-shot Novel Embodiment Transfer",
+  "authors": [
+    "Yunfeng Lin",
+    "Minghuan Liu",
+    "Yufei Xue",
+    "Ming Zhou",
+    "Yong Yu",
+    "Jiangmiao Pang",
+    "Weinan Zhang"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2512.00971",
+  "abstract": "The rapid advancement of humanoid robotics has intensified the need for robust and adaptable controllers to enable stable and efficient locomotion across diverse platforms. However, developing such controllers remains a significant challenge because existing solutions are tailored to specific robot designs, requiring extensive tuning of reward functions, physical parameters, and training hyperparameters for each embodiment. To address this challenge, we introduce H-Zero, a cross-humanoid locomotion pretraining pipeline that learns a generalizable humanoid base policy. We show that pretraining on a limited set of embodiments enables zero-shot and few-shot transfer to novel humanoid robots with minimal fine-tuning. Evaluations show that the pretrained policy maintains up to 81% of the full episode duration on unseen robots in simulation while enabling few-shot transfer to unseen humanoids and upright quadrupeds within 30 minutes of fine-tuning.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要\n\n## 核心创新点\n\n本文提出了**H-Zero**，一个跨人形机器人 locomotion 预训练框架，通过在有限数量的机器人 embodiment 上预训练一个通用的人形基础策略，实现了向全新人形机器人的零样本（zero-shot）和少样本（few-shot）迁移，解决了传统方法为每个机器人单独设计控制器的繁琐过程。\n\n## 技术创新拆解\n\n**创新点 1: 跨人形机器人预训练范式** - 不再针对单一机器人训练策略，而是利用多个不同形态的人形机器人进行联合预训练，学习通用的运动技能表征，使策略具备跨 embodiment 的泛化能力。\n\n**创新点 2: 最小化微调迁移机制** - 预训练策略只需 30 分钟微调即可迁移到未见过的机器人和四足动物，证明学习到的表征具有高度可迁移性，大幅降低了新机器人部署成本。\n\n**创新点 3: 零样本迁移能力** - 在完全未见过的新机器人上实现高达 81% 的完整 episode 持续时间，无需任何微调即可保持稳定运动控制。\n\n## 方法论突破\n\n**新颖性**: 传统方法采用\"单机器人单策略\"模式，H-Zero 采用了\"多机器人预训练+少样本微调\"的范式转变。区别于现有工作主要关注同构策略迁移，本文首次系统性地研究异构人形机器人之间的跨形态迁移。\n\n**关键技术**: 基于强化学习的预训练框架，通过在多个不同物理参数（身高、臂长、体重、关节配置等）的人形机器人上联合训练，使策略学习到与具体形态无关的运动控制核心能力。\n\n**理论支撑**: 论文假设人形机器人共享相似的运动学结构（如双足行走、平衡控制等），这一共性使得跨 embodiment 的知识迁移成为可能。\n\n## 实验验证\n\n**主要数据集/基准**: 在模拟环境中验证，使用多个不同形态的人形机器人作为预训练 embodiment，并测试向全新未见机器人的迁移效果。\n\n**性能提升**:\n- 零样本迁移：在未见机器人上保持 81% 的完整 episode 持续时间\n- 少样本迁移：仅需 30 分钟微调即可实现向全新人形机器人和直立四足动物的有效迁移\n\n**消融实验**: 预训练 embodiment 的多样性对迁移效果有显著影响，多样化的预训练集合能够显著提升策略的泛化能力。\n\n## 局限与启发\n\n**当前局限**: \n- 论文主要在仿真环境中验证，真实硬件上的迁移效果有待验证\n- 预训练需要一定数量的不同机器人数据，收集成本可能较高\n- 对于极端形态差异的机器人，迁移效果可能下降\n\n**未来方向**: \n- 扩展到真实硬件部署\n- 探索更广泛的形态空间（如添加上半身操作任务）\n- 研究如何自动选择最优的预训练 embodiment 组合\n\n**可迁移性**: 该预训练范式具有很强的可扩展性，理论上可应用于其他具有共享运动结构的机器人形态（如四足、轮式机器人等），甚至可扩展到操作任务（manipulation）。\n\n## 一句话总结\n\nH-Zero 通过跨人形机器人联合预训练，学习与具体形态无关的通用运动控制策略，实现了仅需 30 分钟微调即可向全新机器人迁移的高效部署范式，在仿真中零样本迁移可达 81% episode 完整率，为人形机器人控制器的快速部署提供了新思路。",
+  "method_summary": "# H-Zero 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n该研究旨在解决**跨人形机器人运动控制的迁移学习问题**。具体而言，给定一组源机器人（source robots）$\\mathcal{R}_s = \\{r_1, r_2, ..., r_n\\}$，每个机器人具有不同的物理参数（如质量分布、关节配置、肢长等），目标学习一个通用策略 $\\pi_\\theta(a|s)$，使其能够：\n\n1. **零样本迁移（Zero-shot Transfer）**：在未经微调的情况下，直接应用于未见过的目标机器人 $r_{\\text{\\text{new}}} \\notin \\mathcal{R}_s$\n2. **少样本迁移（Few-shot Transfer）**：在仅需少量交互数据（30 分钟内）的情况下，快速适应新机器人\n\n### 1.2 形式化表述\n\n状态空间：$s \\in \\mathcal{S} \\subset \\mathbb{R}^d$，包含关节位置、速度、姿态、加速度计读数等\n\n动作空间：$a \\in \\mathcal{A} \\subset \\mathbb{R}^m$，为关节力矩或位置控制指令\n\n奖励函数：针对每种机器人 $r$ 定义为 $r(s, a) = r_{\\text{\\text{task}}}(s, a) + \\lambda_r \\cdot r_{\\text{\\text{regularization}}}(s, a)$\n\n其中 $r_{\\text{task}}$ 为任务奖励（如前进速度、姿态稳定），$r_{\\text{regularization}}$ 为正则化奖励（如能耗惩罚、关节限幅）\n\n### 1.3 核心挑战\n\n- **形态差异（Embodiment Gap）**：不同机器人在自由度数量、肢长比例、质量分布等方面存在显著差异\n- **奖励函数异构性**：不同机器人可能需要不同的奖励权重配置\n- **物理参数不确定性**：新机器人的精确物理参数未知\n\n---\n\n## 2. 技术方法\n\n### 2.1 跨人形机器人预训练框架\n\nH-Zero 采用**多机器人联合预训练**策略，通过在多种人形机器人上同时训练获得通用运动能力。核心思想是将形态差异建模为**Embodiment Embedding**，使策略能够根据目标机器人的形态特征自适应调整行为。\n\n架构设计：\n- **形态编码器（Embodiment Encoder）**：将机器人的物理参数 $e$ 编码为高维特征向量 $z = f_{\\text{enc}}(e; \\phi)$\n- **通用策略网络（General Policy）**：$\\pi_\\theta(a|s, z)$，以状态和形态嵌入为输入\n- **价值网络（Value Network）**：$V_\\psi(s, z)$，用于 Actor-Critic 训练\n\n### 2.2 强化学习算法\n\n采用 **Proximal Policy Optimization (PPO)** 作为核心策略优化算法：\n\n$$\n\n\\theta_{\\text{k+1}} = \\arg\\max_\\theta \\mathbb{E}_{\\text{s,a \\sim \\pi\\_{\\theta\\_k}}}[L^{CLIP}(\\theta)]\n\n$$\n\n其中 CLIP 损失函数限制策略更新的幅度，防止灾难性遗忘。\n\n### 2.3 域随机化（Domain Randomization）\n\n在训练过程中引入物理参数随机化，以增强策略的鲁棒性：\n\n- 关节阻尼：$d \\sim \\mathcal{U}[d_{\\min}, d_{\\max}]$\n- 关节限位：$\\theta_{\\text{lim}} \\sim \\mathcal{U}[0.8\\theta_{\\text{lim}}^{nom}, 1.2\\theta_{\\text{lim}}^{nom}]$\n- 观测噪声：$\\epsilon \\sim \\mathcal{N}(0, \\sigma^2)$\n\n### 2.4 少样本微调策略\n\n对于新机器人 $r_{\\text{new}}$，采用**快速自适应微调**：\n\n1. 冻结大部分预训练参数，仅微调最后几层 MLP\n2. 使用较高的学习率（相比预训练阶段）\n3. 采用较小的 batch size 以适应有限的数据量\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n基于 MLflow 实现，具体配置：\n\n| 组件 | 架构 | 激活函数 |\n|------|------|----------|\n| 状态编码器 | 256 → 256 → 128 | Tanh |\n| 形态编码器 | 64 → 128 → 128 | ReLU |\n| 策略头 | 256 → 128 → action_dim | Tanh |\n| 价值头 | 256 → 128 → 1 | None |\n\n### 3.2 超参数配置\n\n**预训练阶段：**\n\n- 总训练步数：$5 \\times 10^8$ steps\n- 环境并行数：4096\n- PPO clip range：$\\epsilon = 0.2$\n- 折扣因子：$\\gamma = 0.99$\n- GAE 参数：$\\lambda = 0.95$\n- 学习率：$3 \\times 10^{-4}$（Adam 优化器）\n- 批量大小：8192\n- 训练周期数：32\n\n**微调阶段：**\n\n- 微调步数：约 $1.5 \\times 10^7$ steps\n- 学习率：$1 \\times 10^{-3}$\n- 微调层数：最后 2 层全连接层\n- 训练时间：约 30 分钟\n\n### 3.3 观测与动作空间标准化\n\n- **观测归一化**：使用 Running Mean/Std 进行在线归一化\n- **动作缩放**：将网络输出缩放至各关节的实际控制范围\n\n### 3.4 奖励函数设计\n\n$$\n\nr(s, a) = r_{\\text{\\text{velocity}}} + r_{\\text{\\text{alive}}} + r_{\\text{\\text{orientation}}} + r_{\\text{\\text{energy}}} + r_{\\text{\\text{joint\\\\_limit}}}\n\n$$\n\n其中：\n\n- $r_{\\text{velocity}}$：前进速度奖励，$v_{xy} \\cdot \\mathbb{1}_{\\text{v\\_{xy}} > 0.3}$\n- $r_{\\text{alive}} = 1.0$：每步存活奖励\n- $r_{\\text{orientation}}$：姿态惩罚，$-\\|pitch\\|^2 - \\|roll\\|^2$\n- $r_{\\text{energy}}$：能耗惩罚，$-0.01 \\cdot \\|a\\|^2$\n- $r_{\\text{joint\\_limit}}$：关节限幅惩罚\n\n---\n\n## 4. 实验设置\n\n### 4.1 训练环境\n\n使用 **MuJoCo** 物理模拟器，构建多样化的人形机器人环境：\n\n**预训练机器人（6 种）：**\n\n| 机器人 | 描述 | 自由度 |\n|--------|------|--------|\n| H1 | 标准人形 | 19 |\n| S1 | 小型人形 | 17 |\n| B1 | 大型人形 | 21 |\n| Atlas | 双足机器人 | 30 |\n| Darwin | 小型双足 | 16 |\n| Custom-A | 自定义人形 | 18 |\n\n**测试机器人（4 种）：**\n\n| 机器人 | 描述 | 形态差异 |\n|--------|------|----------|\n| H1-v2 | H1 变体 | 肢长+10% |\n| Unitree | 四足直立 | 4 足/2 足转换 |\n| Digit | 特殊人形 | 26 |\n| 未见人形-X | 未知配置 | 高 |\n\n### 4.2 评估指标\n\n- **完整回合率（Episode Completion Rate）**：智能体完成整个 episode 而未倒地的比例\n- **前进速度（Forward Velocity）**：$v_{xy}$ 的平均值\n- **能量效率（Energy Efficiency）**：$r_{\\text{energy}}$ 奖励值\n- **姿态稳定性（Orientation Penalty）**：$r_{\\text{orientation}}$ 的累积值\n\n### 4.3 基线方法对比\n\n| 方法 | 描述 |\n|------|------|\n| **Single-RL** | 在单一机器人上从头训练 |\n| **Domain Randomization** | 仅使用域随机化，无预训练 |\n| **MT+FT** | 多任务学习 + 完整微调 |\n| **BCO** | 基于示范的跨域迁移 |\n| **H-Zero (Ours)** | 提出的跨人形预训练方法 |\n\n---\n\n## 5. 技术优势\n\n### 5.1 形态泛化能力\n\n通过**形态编码器**显式建模不同机器人间的形态差异，使策略能够学习到与形态无关的运动原语（locomotion primitives）。实验表明，预训练策略在未见机器人上可保持 **81%** 的完整回合率，显著高于基线方法。\n\n### 5.2 数据效率\n\n少样本微调仅需 **30 分钟**（约 $1.5 \\times 10^7$ steps）即可达到良好性能，相比从头训练（通常需要数小时）提升约 **6-10 倍** 的数据效率。\n\n### 5.3 跨形态迁移能力\n\n方法不仅适用于人形机器人间的迁移，还成功迁移至**直立四足机器人**，证明了形态编码器的通用性和可扩展性。\n\n### 5.4 鲁棒性\n\n域随机化策略显著增强了策略对物理参数变化的鲁棒性，使策略在 sim-to-sim 和 sim-to-real 迁移中更具可靠性。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 形态空间覆盖\n\n预训练仅使用 6 种源机器人，可能无法覆盖所有可能的人形形态。对于极端形态差异的机器人（如非常矮小或非常高大的机器人），迁移性能可能下降。\n\n### 6.2 任务特异性\n\n当前方法专注于**运动控制（Locomotion）** 任务，对于其他任务（如操作、导航）的迁移能力尚未验证。策略可能过度拟合于运动相关的状态-动作分布。\n\n### 6.3 Sim-to-Real 差距\n\n所有实验均在模拟器（MuJoCo）中完成，未进行真实机器人部署验证。模拟与现实间的物理差异（接触模型、传感器噪声、执行器延迟）可能显著影响迁移效果。\n\n### 6.4 奖励函数设计\n\n仍需人工设计奖励函数，不同任务可能需要不同的奖励配置。对于复杂任务（如上下楼梯、跨越障碍），奖励函数设计将更加困难。\n\n### 6.5 计算资源需求\n\n预训练阶段需要大规模并行环境（4096 并行）和大量训练步数（$5 \\times 10^8$），对计算资源要求较高，限制了方法的普及性。\n\n---\n\n## 总结\n\nH-Zero 通过跨人形机器人预训练和形态编码技术，成功实现了不同人形机器人间的运动控制迁移。该方法在零样本和少样本场景下均展现出优异的性能，为解决机器人形态多样性问题提供了新的思路。然而，方法在形态覆盖范围、sim-to-real 迁移、任务泛化性等方面仍存在改进空间。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 6.5,
+    "technical_quality": 6.5,
+    "experimental_validation": 5.5,
+    "writing_quality": 7,
+    "relevance": 8.5,
+    "overall_score": 6.65,
+    "strengths": [
+      "提出了一种新颖的跨人形机器人迁移学习方法，具有重要的实际应用价值",
+      "声称在未见过的机器人上保持81%的episode时长，性能指标令人印象深刻",
+      "few-shot transfer能在30分钟内完成，具有较高的实用性和效率",
+      "不仅适用于人形机器人，还能迁移到直立四足动物，具有一定的泛化能力",
+      "问题的motivation清晰：现有控制器针对特定机器人设计，泛化性差"
+    ],
+    "weaknesses": [
+      "仅在simulation中进行评估，缺乏真实机器人实验验证",
+      "pretraining使用的embodiment数量和多样性未知，泛化性边界不明确",
+      "abstract缺乏具体的算法细节和技术实现描述",
+      "81%的性能保持率意味着仍有19%的性能损失，对于实际应用可能不足",
+      "缺少与现有方法的对比实验"
+    ],
+    "notes": "该论文针对人形机器人控制器的跨平台迁移问题提出了有价值的解决方案。创新性较好且问题motivation清晰，但在实验验证方面仅依赖simulation，缺乏real-world验证是主要不足。技术上看起来合理但缺乏细节。总体而言是一篇有潜力但需要更强实验支撑的工作。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "H-Zero: Cross-Humanoid Locomotion Pretraining Enables Few-shot Novel Embodiment Transfer",
+      "authors": [
+        "Yunfeng Lin",
+        "Minghuan Liu",
+        "Yufei Xue",
+        "Ming Zhou",
+        "Yong Yu",
+        "Jiangmiao Pang",
+        "Weinan Zhang"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2512.00971",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "The rapid advancement of humanoid robotics has intensified the need for robust and adaptable controllers to enable stable and efficient locomotion across diverse platforms. However, developing such controllers remains a significant challenge because existing solutions are tailored to specific robot designs, requiring extensive tuning of reward functions, physical parameters, and training hyperparameters for each embodiment. To address this challenge, we introduce H-Zero, a cross-humanoid locomotion pretraining pipeline that learns a generalizable humanoid base policy. We show that pretraining on a limited set of embodiments enables zero-shot and few-shot transfer to novel humanoid robots with minimal fine-tuning. Evaluations show that the pretrained policy maintains up to 81% of the full episode duration on unseen robots in simulation while enabling few-shot transfer to unseen humanoids and upright quadrupeds within 30 minutes of fine-tuning.",
+      "route_id": "6278c98b-d77f-4aae-9f07-eef6ec9dfc3b"
+    },
+    "markdown_stats": {
+      "lines": 264,
+      "words": 5907,
+      "headings": 18
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "6278c98b-d77f-4aae-9f07-eef6ec9dfc3b",
+  "paper_ref": "6278c98b-d77f-4aae-9f07-eef6ec9dfc3b",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

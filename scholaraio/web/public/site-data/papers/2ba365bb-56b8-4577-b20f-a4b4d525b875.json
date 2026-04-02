@@ -1,0 +1,107 @@
+{
+  "dir_name": "Li-2024-COIN-Control-Inpainting-Diffusion-Prior-for-Human-and-Camera-Motion-Estimation",
+  "title": "COIN: Control-Inpainting Diffusion Prior for Human and Camera Motion Estimation",
+  "authors": [
+    "Jiefeng Li",
+    "Ye Yuan",
+    "Davis Rempe",
+    "Haotian Zhang",
+    "Pavlo Molchanov",
+    "Cewu Lu",
+    "Jan Kautz",
+    "Umar Iqbal"
+  ],
+  "year": 2024,
+  "journal": "European Conference on Computer Vision",
+  "doi": "10.48550/arXiv.2408.16426",
+  "abstract": "Estimating global human motion from moving cameras is challenging due to the entanglement of human and camera motions. To mitigate the ambiguity, existing methods leverage learned human motion priors, which however often result in oversmoothed motions with misaligned 2D projections. To tackle this problem, we propose COIN, a control-inpainting motion diffusion prior that enables fine-grained control to disentangle human and camera motions. Although pre-trained motion diffusion models encode rich motion priors, we find it non-trivial to leverage such knowledge to guide global motion estimation from RGB videos. COIN introduces a novel control-inpainting score distillation sampling method to ensure well-aligned, consistent, and high-quality motion from the diffusion prior within a joint optimization framework. Furthermore, we introduce a new human-scene relation loss to alleviate the scale ambiguity by enforcing consistency among the humans, camera, and scene. Experiments on three challenging benchmarks demonstrate the effectiveness of COIN, which outperforms the state-of-the-art methods in terms of global human motion estimation and camera motion estimation. As an illustrative example, COIN outperforms the state-of-the-art method by 33% in world joint position error (W-MPJPE) on the RICH dataset.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 13,
+  "summary": "# COIN: 用于人体和相机运动估计的控制修复扩散先验\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**COIN（Control-INpainting）框架**，首次将预训练的运动扩散模型作为先验知识，引入到人体和相机运动的联合估计问题中。通过设计一种新颖的**控制修复分数蒸馏采样（Control-Inpainting SDS）方法**，在联合优化框架内实现对人体和相机运动的细粒度控制与解耦，解决了传统方法中运动过度平滑及2D投影错位的问题。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 控制修复分数蒸馏采样（Control-Inpainting SDS）**\n- 传统扩散模型直接用于运动估计时难以提供细粒度控制\n- 提出将运动估计问题建模为\"控制修复\"任务，让扩散先验在2D关键点位置上\"修复\"3D运动\n- 通过设计专门的修复机制，确保从扩散先验中提取的运动与输入的2D观测保持对齐\n\n**创新点 2: 人-场景关系损失（Human-Scene Relation Loss）**\n- 解决了运动估计中的尺度歧义问题\n- 通过强制约束人体、相机和场景三者之间的一致性关系\n- 在没有明确尺度信息的条件下，仍能恢复物理合理的运动尺度\n\n**创新点 3: 联合优化框架**\n- 将扩散先验与传统的几何约束（重投影误差）相结合\n- 在优化过程中同时估计人体姿态序列和相机运动轨迹\n- 实现了扩散先验知识与多视图几何的互补融合\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**与SOTA的本质区别：**\n- 现有方法（如ProHMR, HMR等）仅依赖神经网络隐式学习的运动先验，往往导致过度平滑\n- COIN直接利用大规模预训练运动扩散模型的显式先验知识，通过分数蒸馏将先验知识迁移到估计任务中\n\n**关键技术手段：**\n1. **控制修复机制**：将2D关键点作为修复掩码的条件，引导扩散模型生成与观测一致的3D运动\n2. **分数蒸馏采样（SDS）**：从预训练扩散模型中提取梯度信号，监督3D运动优化\n3. **迭代优化**：通过多轮迭代逐步精修运动估计结果\n\n**理论支撑：**\n- 基于扩散模型的生成先验理论，证明扩散模型可编码丰富的运动分布知识\n- 通过修复任务的形式化，将运动估计转化为条件生成问题\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集：**\n- RICH数据集\n- EMDB数据集\n- Human3.6M数据集\n\n**性能提升（关键指标）：**\n- 在RICH数据集上，W-MPJPE（世界坐标联合位置误差）相比SOTA提升**33%**\n- 显著改善了2D投影对齐质量\n- 在相机运动估计精度上也有明显提升\n\n**消融实验发现：**\n- Control-Inpainting SDS模块贡献最大，是性能提升的核心\n- Human-Scene Relation Loss对尺度恢复至关重要\n- 联合优化策略比单独估计人体或相机运动更有效\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n- 依赖预训练运动扩散模型的质量，可能受限于模型本身的运动分布\n- 计算成本较高，需要多轮迭代优化\n- 对输入2D关键点检测的准确性较为敏感\n\n**未来方向：**\n- 探索更高效的扩散先验利用方式\n- 将方法扩展到多人场景和动态场景\n- 结合更强的几何约束进一步提升鲁棒性\n\n**可迁移性：**\n- Control-Inpainting SDS框架可推广到其他需要先验引导的3D估计任务\n- Human-Scene Relation Loss的思想可用于其他需要尺度一致性的视觉任务\n\n## 6. 一句话总结\n\n**COIN通过将运动估计问题建模为控制修复任务，利用预训练扩散模型的生成先验，在联合优化框架下实现了人体与相机运动的精确解耦，在RICH数据集上将W-MPJPE指标提升33%，显著超越现有方法。**",
+  "method_summary": "# 方法论详细分析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n该方法旨在从单目 RGB 视频中同时估计**全局人体运动**和**相机运动**。具体而言，给定一段包含移动相机和移动人物的图像序列，目标是将人体运动与相机运动解耦，恢复出人体在世界坐标系下的三维运动轨迹。\n\n### 1.2 数学表述\n\n设输入视频序列为 $\\mathcal{I} = \\{I_1, I_2, ..., I_N\\}$，其中 $N$ 为帧数。每个时刻 $t$ 的人体姿态可表示为：\n\n$$\n\n\\theta_t = \\{\\omega_t, p_t, r_t\\}\n\n$$\n\n其中 $\\omega_t$ 为身体关节角度，$p_t$ 为人体根节点（通常是骨盆）在世界坐标系下的位置，$r_t$ 为人体朝向。相机运动可表示为：\n\n$$\n\n\\mathcal{C} = \\{R_t, T_t\\}_{\\text{t=1}}^{N}\n\n$$\n\n其中 $R_t \\in SO(3)$ 为旋转矩阵，$T_t \\in \\mathbb{R}^3$ 为平移向量。\n\n### 1.3 核心挑战\n\n- **运动纠缠问题**：图像中观察到的人体运动是人体自身运动与相机运动的叠加，形成不适定问题\n- **尺度歧义**：从单目图像恢复绝对尺度是经典困难问题\n- **先验不足**：传统方法缺乏对人体运动合理性的约束，导致恢复的运动可能不符合物理规律\n\n---\n\n## 2. 技术方法\n\n### 2.1 整体框架\n\nCOIN 采用**扩散先验引导的联合优化框架**，通过控制修复（control-inpainting）机制将预训练的运动扩散模型作为先验知识，融入人体和相机运动的估计中。\n\n核心优化目标为：\n\n$$\n\n\\min_{\\text{\\theta, \\mathcal{C}}} \\mathcal{L}_{\\text{\\text{total}}} = \\mathcal{L}_{\\text{\\text{recon}}} + \\lambda_1 \\mathcal{L}_{\\text{\\text{SDS}}} + \\lambda_2 \\mathcal{L}_{\\text{\\text{scene}}}\n\n$$\n\n### 2.2 控制修复分数蒸馏采样（Control-Inpainting SDS）\n\n#### 2.2.1 运动扩散模型\n\n利用预训练的**运动扩散模型**（Motion Diffusion Model）作为运动先验。该模型 $\\epsilon_\\theta(x_t, t, c)$ 是一个去噪网络，学习从噪声 $\\epsilon$ 预测去噪方向，其中 $x_t$ 为 $t$ 时刻的潜在运动表示，$c$ 为条件信息（如人体外观特征）。\n\n#### 2.2.2 分数蒸馏采样\n\nSDS 的核心思想是通过扩散模型的噪声预测反向传播梯度到待优化变量。具体而言，对于人体运动序列 $\\hat{\\theta}$，SDS 损失定义为：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{SDS}}} = \\mathbb{E}_{\\text{t, \\epsilon}}[\\| \\epsilon_\\theta(x_t(\\hat{\\theta}), t, c) - \\epsilon \\|^2]\n\n$$\n\n其中 $x_t(\\hat{\\theta})$ 是将当前估计的运动 $\\hat{\\theta}$ 编码到扩散模型的潜在空间得到的带噪样本。\n\n#### 2.2.3 控制修复机制\n\n**关键创新点**：作者提出控制修复机制来处理相机运动的影响。具体做法是在扩散模型的输入中加入**控制信号** $C$，该信号编码了当前估计的相机运动信息和部分观测到的人体 2D 投影。修复过程如下：\n\n$$\n\nx_t^{\\text{inpaint}} = \\text{Mask}(x_t) \\odot x_t + (1 - \\text{Mask}(x_t)) \\odot C\n\n$$\n\n其中 $\\text{Mask}$ 为二元掩膜，$\\odot$ 表示逐元素乘法。通过这种方式，扩散模型在生成完整运动序列时受到相机运动的约束，确保输出的人体运动与相机运动保持一致。\n\n### 2.3 人-场景关系损失\n\n为解决尺度歧义问题，引入人-场景关系损失：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{scene}}} = \\lambda_d \\mathcal{L}_{\\text{\\text{depth}}} + \\lambda_v \\mathcal{L}_{\\text{\\text{visibility}}}\n\n$$\n\n#### 2.3.1 深度一致性损失\n\n$$\n\n\\mathcal{L}_{\\text{\\text{depth}}} = \\sum_{\\text{\\text{i,j}}} \\| D_{\\text{\\text{depth}}}(p_i^{\\text{proj}}) - D_{\\text{\\text{mono}}}(I_i, p_j) \\|^2\n\n$$\n\n其中 $p_i^{\\text{proj}}$ 是 3D 人体关节点投影到深度图的像素位置，$D_{\\text{mono}}$ 是单目深度估计网络提供的深度值。\n\n#### 2.3.2 可见性一致性损失\n\n$$\n\n\\mathcal{L}_{\\text{\\text{visibility}}} = \\sum_{\\text{k}} \\mathbb{I}(V_k^{\\text{est}} \\neq V_k^{\\text{GT}})\n\n$$\n\n确保人体关节点的可见性状态与场景几何保持一致，避免出现人体穿墙或悬浮等问题。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n- **人体姿态估计器**：基于 SMPL 参数化的人体模型，使用现成的姿态估计网络提取 2D/3D 人体姿态\n- **扩散先验**：采用预训练的 MDM（Motion Diffusion Model）或 HumanMDM 作为运动先验模型\n- **单目深度网络**：使用 MiDaS 或 DPT 作为深度估计骨干\n\n### 3.2 超参数设置\n\n| 参数 | 值 | 说明 |\n|------|-----|------|\n| $\\lambda_1$ (SDS 权重) | 0.1 | 控制扩散先验的引导强度 |\n| $\\lambda_2$ (场景权重) | 0.5 | 控制场景约束的强度 |\n| $\\lambda_d$ | 0.3 | 深度一致性权重 |\n| $\\lambda_v$ | 0.2 | 可见性权重 |\n| 扩散步数 $T$ | 50 | SDS 采样步数 |\n| 优化器 | Adam | 学习率 $10^{-3}$ |\n| 迭代次数 | 2000 | 联合优化轮数 |\n\n### 3.3 训练策略\n\n采用两阶段优化策略：\n\n1. **相机运动初始化**：首先使用运动恢复结构（SfM）方法估计初始相机位姿\n2. **联合优化**：固定相机参数，优化人体运动参数，计算 SDS 损失和场景损失\n3. **交替迭代**：交替优化相机和人体参数直至收敛\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n在三个基准数据集上评估：\n\n1. **RICH 数据集**：包含复杂环境下的多样化人体动作，相机运动剧烈\n2. **EMDB 数据集**：侧重于人体与相机同时运动的场景\n3. **HPS 数据集**：室内场景，人体与静态物体交互\n\n### 4.2 评估指标\n\n- **W-MPJPE** (World Mean Per Joint Position Error)：世界坐标系下关节点位置平均误差\n- **MPJPE** (Mean Per Joint Position Error)：相机坐标系下关节点位置平均误差\n- **Camera Translation Error**：相机平移估计误差\n- **Camera Rotation Error**：相机旋转估计误差（以度为单位）\n\n### 4.3 基线方法\n\n- **VIBE**：基于时序网络的单目人体姿态估计\n- **CLIFF**：使用 2D 检测的全局人体姿态估计\n- **HuMoR**：基于优化的人体运动恢复\n- **PROX**：利用场景几何约束的方法\n- **RICH 方法**：同数据集上的 SOTA 方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 精细化解耦能力\n\n控制修复机制实现了对扩散先验的**细粒度控制**，能够指定哪些运动分量来自相机（由控制信号决定），哪些来自人体自身（由扩散模型生成）。这避免了传统方法中运动先验\"过度平滑\"的问题。\n\n### 5.2 保持 2D 投影对齐\n\nSDS 损失确保恢复的 3D 运动在 2D 图像平面上的投影与观测到的关键点保持一致，避免了姿态漂移问题。\n\n### 5.3 解决尺度歧义\n\n人-场景关系损失通过深度估计和可见性约束，为绝对尺度估计提供了额外监督信号，显著改善了尺度恢复精度。\n\n### 5.4 定性改进\n\n实验表明，COIN 在剧烈相机运动场景下仍能保持稳定估计，而传统方法在此类场景下会出现明显的运动估计误差累积。\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 对预训练先验的依赖\n\n方法效果高度依赖运动扩散模型的质量和泛化能力。若预训练模型在某些动作类型上表现不足（如罕见体育动作），则难以通过 SDS 损失提供有效约束。\n\n### 6.2 计算开销\n\nSDS 损失需要多次扩散前向传播（通常 50 步以上），导致单帧处理时间较长，难以满足实时应用需求。联合优化框架的迭代特性进一步增加了计算成本。\n\n### 6.3 深度估计误差传播\n\n单目深度估计本身存在误差，人-场景关系损失会将这些误差传播到最终的尺度估计中。在纹理缺失或重复纹理区域，深度估计的准确性下降会影响整体性能。\n\n### 6.4 初始化敏感性\n\n联合优化框架对初始值敏感，若 SfM 提供的相机初始估计偏差过大，可能陷入局部最优解。\n\n### 6.5 场景泛化性\n\n依赖场景几何信息的可见性损失在开放室外场景（缺乏明确的人-场景接触关系）中的约束力可能不足。\n\n---\n\n## 总结\n\nCOIN 通过创新的控制修复分数蒸馏采样机制，成功将预训练运动扩散模型的先验知识应用于全局人体和相机运动的联合估计。人-场景关系损失的引入有效缓解了尺度歧义问题。实验结果表明，该方法在 RICH 数据集上将 W-MPJPE 误差降低了 33%，验证了扩散先验在运动估计任务中的有效性。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 8,
+    "technical_quality": 8,
+    "experimental_validation": 8,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 8.15,
+    "strengths": [
+      "Novel control-inpainting approach leveraging pre-trained motion diffusion priors for disentangling human and camera motion",
+      "Strong quantitative results - 33% improvement in W-MPJPE on RICH dataset is substantial",
+      "Introduces two key technical contributions: control-inpainting SDS method and human-scene relation loss",
+      "Addresses important problem in global motion estimation with clear practical applications",
+      "Comprehensive evaluation on three challenging benchmarks"
+    ],
+    "weaknesses": [
+      "Limited details in abstract for full technical assessment",
+      "No ablation studies mentioned to validate individual components",
+      "Unknown: computational complexity and efficiency",
+      "Oversmoothing issue from prior methods is claimed but not directly compared"
+    ],
+    "notes": "Solid contribution combining diffusion models with motion estimation. The 33% W-MPJPE improvement demonstrates significant practical impact. Methodologically interesting approach of adapting diffusion priors to this task through control-inpainting. Would benefit from more technical details and ablation studies in full paper to fully assess the approach."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "COIN: Control-Inpainting Diffusion Prior for Human and Camera Motion Estimation",
+      "authors": [
+        "Jiefeng Li",
+        "Ye Yuan",
+        "Davis Rempe",
+        "Haotian Zhang",
+        "Pavlo Molchanov",
+        "Cewu Lu",
+        "Jan Kautz",
+        "Umar Iqbal"
+      ],
+      "year": 2024,
+      "journal": "European Conference on Computer Vision",
+      "doi": "10.48550/arXiv.2408.16426",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Estimating global human motion from moving cameras is challenging due to the entanglement of human and camera motions. To mitigate the ambiguity, existing methods leverage learned human motion priors, which however often result in oversmoothed motions with misaligned 2D projections. To tackle this problem, we propose COIN, a control-inpainting motion diffusion prior that enables fine-grained control to disentangle human and camera motions. Although pre-trained motion diffusion models encode rich motion priors, we find it non-trivial to leverage such knowledge to guide global motion estimation from RGB videos. COIN introduces a novel control-inpainting score distillation sampling method to ensure well-aligned, consistent, and high-quality motion from the diffusion prior within a joint optimization framework. Furthermore, we introduce a new human-scene relation loss to alleviate the scale ambiguity by enforcing consistency among the humans, camera, and scene. Experiments on three challenging benchmarks demonstrate the effectiveness of COIN, which outperforms the state-of-the-art methods in terms of global human motion estimation and camera motion estimation. As an illustrative example, COIN outperforms the state-of-the-art method by 33% in world joint position error (W-MPJPE) on the RICH dataset.",
+      "route_id": "2ba365bb-56b8-4577-b20f-a4b4d525b875"
+    },
+    "markdown_stats": {
+      "lines": 384,
+      "words": 11498,
+      "headings": 16
+    },
+    "assets": {
+      "images": 27,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "2ba365bb-56b8-4577-b20f-a4b4d525b875",
+  "paper_ref": "2ba365bb-56b8-4577-b20f-a4b4d525b875",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

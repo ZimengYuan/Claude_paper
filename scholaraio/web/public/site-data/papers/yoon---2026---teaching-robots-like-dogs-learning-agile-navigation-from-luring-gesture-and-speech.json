@@ -1,0 +1,85 @@
+{
+  "dir_name": "Yoon-2026-Teaching-Robots-Like-Dogs-Learning-Agile-Navigati",
+  "title": "Teaching Robots Like Dogs: Learning Agile Navigation from Luring, Gesture, and Speech",
+  "authors": [
+    "Taerim Yoon",
+    "Dongho Kang",
+    "Jin Cheng",
+    "Fatemeh Zargarbashi",
+    "Yijiang Huang",
+    "Minsung Ahn",
+    "Stelian Coros",
+    "Sungjoon Choi"
+  ],
+  "year": 2026,
+  "journal": "ArXiv.org",
+  "doi": "",
+  "abstract": "In this work, we aim to enable legged robots to learn how to interpret human social cues and produce appropriate behaviors through physical human guidance. However, learning through physical engagement can place a heavy burden on users when the process requires large amounts of human-provided data. To address this, we propose a human-in-the-loop framework that enables robots to acquire navigational behaviors in a data-efficient manner and to be controlled via multimodal natural human inputs, specifically gestural and verbal commands. We reconstruct interaction scenes using a physics-based simulation and aggregate data to mitigate distributional shifts arising from limited demonstration data. Our progressive goal cueing strategy adaptively feeds appropriate commands and navigation goals during training, leading to more accurate navigation and stronger alignment between human input and robot behavior. We evaluate our framework across six real-world agile navigation scenarios, including jumping over or avoiding obstacles. Our experimental results show that our proposed method succeeds in almost all trials across these scenarios, achieving a 97.15% task success rate with less than 1 hour of demonstration data in total.",
+  "paper_type": "article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Teaching Robots Like Dogs: Learning Agile Navigation from Luring, Gesture, and Speech",
+      "authors": [
+        "Taerim Yoon",
+        "Dongho Kang",
+        "Jin Cheng",
+        "Fatemeh Zargarbashi",
+        "Yijiang Huang",
+        "Minsung Ahn",
+        "Stelian Coros",
+        "Sungjoon Choi"
+      ],
+      "year": 2026,
+      "journal": "ArXiv.org",
+      "paper_type": "article",
+      "abstract": "In this work, we aim to enable legged robots to learn how to interpret human social cues and produce appropriate behaviors through physical human guidance. However, learning through physical engagement can place a heavy burden on users when the process requires large amounts of human-provided data. To address this, we propose a human-in-the-loop framework that enables robots to acquire navigational behaviors in a data-efficient manner and to be controlled via multimodal natural human inputs, specifically gestural and verbal commands. We reconstruct interaction scenes using a physics-based simulation and aggregate data to mitigate distributional shifts arising from limited demonstration data. Our progressive goal cueing strategy adaptively feeds appropriate commands and navigation goals during training, leading to more accurate navigation and stronger alignment between human input and robot behavior. We evaluate our framework across six real-world agile navigation scenarios, including jumping over or avoiding obstacles. Our experimental results show that our proposed method succeeds in almost all trials across these scenarios, achieving a 97.15% task success rate with less than 1 hour of demonstration data in total."
+    },
+    "markdown_stats": {
+      "lines": 246,
+      "words": 7571,
+      "headings": 23
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "4a2f162a-e4f2-48dc-a6fa-e739ed2a7b18_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "yoon---2026---teaching-robots-like-dogs-learning-agile-navigation-from-luring-gesture-and-speech",
+  "paper_ref": "Yoon 等 - 2026 - Teaching robots like dogs learning agile navigation from luring, gesture, and speech",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

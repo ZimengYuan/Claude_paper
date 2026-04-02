@@ -1,0 +1,78 @@
+{
+  "dir_name": "Miller-2025-High-Performance-Reinforcement-Learning-on-Spot-Optimizing-Simulation-Parameters-with-Distributional-Measures",
+  "title": "High-Performance Reinforcement Learning on Spot: Optimizing Simulation Parameters with Distributional Measures",
+  "authors": [
+    "Tony Miller",
+    "Fangzhou Yu",
+    "Michael Brauckmann",
+    "Farbod Farshidian"
+  ],
+  "year": 2025,
+  "journal": "ArXiv.org",
+  "doi": "10.48550/arXiv.2504.17857",
+  "abstract": "This work presents an overview of the technical details behind a high performance reinforcement learning policy deployment with the Spot RL Researcher Development Kit for low level motor access on Boston Dynamics Spot. This represents the first public demonstration of an end to end end reinforcement learning policy deployed on Spot hardware with training code publicly available through Nvidia IsaacLab and deployment code available through Boston Dynamics. We utilize Wasserstein Distance and Maximum Mean Discrepancy to quantify the distributional dissimilarity of data collected on hardware and in simulation to measure our sim2real gap. We use these measures as a scoring function for the Covariance Matrix Adaptation Evolution Strategy to optimize simulated parameters that are unknown or difficult to measure from Spot. Our procedure for modeling and training produces high quality reinforcement learning policies capable of multiple gaits, including a flight phase. We deploy policies capable of over 5.2ms locomotion, more than triple Spots default controller maximum speed, robustness to slippery surfaces, disturbance rejection, and overall agility previously unseen on Spot. We detail our method and release our code to support future work on Spot with the low level API.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 高性能强化学习在Spot机器人上的部署：基于分布度量的仿真参数优化\n\n## 1. 核心创新点 (Core Innovation)\n\n**本文首次实现了端到端强化学习策略在Boston Dynamics Spot硬件上的公开部署**，并公开了训练代码（Nvidia IsaacLab）和部署代码（Boston Dynamics）。创新性地采用**Wasserstein距离和最大平均偏差（MMD）**来量化仿真与真实硬件之间的数据分布差异，并以此作为CMA-ES优化器的评分函数来调整难以直接测量的仿真参数，成功实现了从仿真到真实机器人的高效迁移。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点1：分布度量驱动的sim2real gap量化** - 使用Wasserstein距离和MMD衡量仿真采集数据与硬件采集数据的分布差异，相比传统单点指标能更全面地捕捉分布偏移，为参数优化提供更准确的监督信号\n\n- **创新点2：CMA-ES仿真参数自动调优** - 针对Spot机器人难以直接测量的物理参数（如摩擦系数、关节阻尼等），利用上述分布度量作为适应度函数，通过进化策略自动搜索最优仿真参数，大幅减少手动调参工作量\n\n- **创新点3：低层次电机API的深度利用** - 通过Spot RL Researcher Development Kit获取底层电机访问权限，实现了对执行器的精细控制，为高动态行为（如飞行相）提供了硬件基础\n\n- **创新点4：多模态步态策略学习** - 训练出支持多种步态的策略，包括具有飞行相的动态步态，突破了传统控制器的运动模式限制\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：传统sim2real方法依赖随机化域随机化或系统辨识，本文提出**基于分布度量的自动参数校准**范式，将仿真-真实数据差异量化为分布层面的距离度量，突破了传统单点误差指标的局限。\n\n**关键技术**：\n- Wasserstein距离：计算两个分布间的最优传输成本，对分布形态差异敏感\n- MMD（最大平均偏差）：基于核方法的分布差异度量\n- CMA-ES（协方差矩阵自适应进化策略）：黑盒优化算法，适合仿真参数这类难以建模的调优任务\n\n**理论支撑**：通过Wasserstein距离和MMD提供的分布级监督信号，使仿真参数能够被\"拉向\"真实硬件的行为分布，建立了一套可量化的sim2real迁移理论框架。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/benchmark**：\n- Boston Dynamics Spot真机硬件\n- Nvidia IsaacLab仿真环境\n\n**性能提升**：\n- 运动速度超过**5.2m/s**，达到Spot默认控制器最大速度的**3倍以上**\n- 成功实现具有**飞行相（flight phase）**的动态步态\n- 在**光滑地面**上保持稳定运动\n- 具备**扰动 rejection**能力\n- 展现出此前Spot上未曾见过的**敏捷性**\n\n**消融实验**：论文未明确披露详细消融结果，但分布度量优化模块被指出是实现成功迁移的关键组件。\n\n## 5. 局限与启发 (Limitations & Future Directions)\n\n**当前局限**：\n- 作为首个公开演示，尚未探索更复杂的任务场景（如楼梯攀爬、复杂地形）\n- 分布度量计算可能带来额外计算开销\n- 依赖于低层次API访问，普通用户可能难以复现\n\n**未来方向**：\n- 扩展到更复杂的运动任务（如跳跃、爬楼梯）\n- 探索更高效的分布度量计算方法\n- 将方法迁移到其他四足机器人平台\n\n**可迁移性**：该方法论框架（Wasserstein/MMD + CMA-ES参数优化）具有较强的通用性，可应用于其他腿式机器人、无人机等需要sim2real迁移的硬件平台。\n\n## 6. 一句话总结\n\n本文通过**Wasserstein距离和MMD量化sim2real分布差异**，并结合**CMA-ES优化仿真参数**，首次在Spot机器人上实现了超5.2m/s高速运动和飞行相步态的端到端强化学习部署，为腿式机器人强化学习迁移提供了可复现的方法论范式。",
+  "method_summary": "# 高性能强化学习在 Spot 平台上的部署方法论：基于分布度量的仿真参数优化\n\n## 1. 问题形式化\n\n本研究的核心问题是如何最小化仿真环境与真实硬件之间的**sim2real 差距（sim-to-real gap）**，从而实现高性能强化学习策略在 Boston Dynamics Spot 四足机器人上的直接部署。\n\n### 1.1 仿真参数优化问题定义\n\n给定一个仿真环境，其参数向量记为 $\\theta \\in \\mathbb{R}^n$，这些参数代表难以从真实硬件直接测量或识别的物理属性，包括但不限于：\n\n- 关节摩擦系数 $\\mu_j$\n- 腿部惯性参数 $I_{\\text{leg}}$\n- 地面接触刚度 $k_c$\n- 电机响应延迟 $\\tau_d$\n\n目标函数定义为**分布差异度量** $D(\\cdot, \\cdot)$，用于量化仿真数据分布 $P_{\\text{sim}}$ 与真实硬件数据分布 $P_{\\text{real}}$ 之间的差异：\n\n$$\n\n\\theta^* = \\arg\\min_{\\text{\\theta}} D(P_{\\text{\\text{sim}}}(\\theta), P_{\\text{\\text{real}}})\n\n$$\n\n### 1.2 分布差异度量\n\n研究者采用两种互补的分布度量方法来评估 sim2real 差距：\n\n**Wasserstein 距离（WD）：**\n\n$$\n\nWD(P_{\\text{\\text{sim}}}, P_{\\text{\\text{real}}}) = \\inf_{\\text{\\gamma \\in \\Gamma(P\\_{sim}}, P_{\\text{\\text{real}}})} \\int_{\\text{\\mathcal{X}} \\times \\mathcal{X}} ||x - y|| d\\gamma(x,y)\n\n$$\n\n其中 $\\Gamma(P_{\\text{sim}}, P_{\\text{real}})$ 表示所有耦合分布的集合。Wasserstein 距离具有理论上的优越性，能够捕捉分布之间的最优传输成本。\n\n**最大均值差异（MMD）：**\n\n$$\n\nMMD(P_{\\text{\\text{sim}}}, P_{\\text{\\text{real}}}; \\mathcal{H}) = ||\\mathbb{E}_{\\text{x \\sim P\\_{sim}}}[\\phi(x)] - \\mathbb{E}_{\\text{y \\sim P\\_{real}}}[\\phi(y)]||_{\\text{\\mathcal{H}}}\n\n$$\n\n其中 $\\phi: \\mathcal{X} \\to \\mathcal{H}$ 表示特征映射，$\\mathcal{H}$ 为再生核希尔伯特空间（RKHS）。MMD 通过核函数（如高斯核 $k(x,y) = \\exp(-\\frac{||x-y||^2}{2\\sigma^2})$）实现无需显式点对点匹配的分布比较。\n\n## 2. 技术方法\n\n### 2.1 整体系统架构\n\n该方法采用**基于优化的仿真参数调优**范式，结合进化策略进行黑盒优化：\n\n```\n┌─────────────────────────────────────────────────────────────────┐\n│          完整 RL 部署流程                │\n├─────────────────────────────────────────────────────────────────┤\n│ ┌──────────┐  ┌─────────────────┐  ┌──────────────────┐ │\n│ │ 真实 Spot │───▶│ 分布差异度量  │───▶│  CMA-ES    │ │\n│ │ 硬件数据 │  │ (WD / MMD)   │  │ 参数优化器   │ │\n│ └──────────┘  └─────────────────┘  └────────┬────────┘ │\n│    ▲                     │      │\n│    │                     ▼      │\n│ ┌──────────┐  ┌─────────────────┐  ┌──────────────────┐ │\n│ │ 部署策略 │◀───│  IsaacLab   │◀───│ 仿真环境参数  │ │\n│ │ 推理   │  │ 训练环境    │  │ θ_new      │ │\n│ └──────────┘  └─────────────────┘  └──────────────────┘ │\n└─────────────────────────────────────────────────────────────────┘\n```\n\n### 2.2 CMA-ES 优化算法\n\n**协方差矩阵自适应进化策略（Covariance Matrix Adaptation Evolution Strategy）** 被选定为仿真参数优化的核心算法。CMA-ES 是一种无梯度的黑盒优化方法，特别适合处理以下问题特征：\n\n- 高维参数空间（$n > 10$）\n- 非凸、非线性目标函数\n- 目标函数评估成本较高\n\n**算法核心更新步骤：**\n\n采样新一代候选解：\n\n$$\n\nx_i^{(g+1)} = m^{(g)} + \\sigma^{(g)} \\cdot N(0, C^{(g)})\n\n$$\n\n其中 $m^{(g)}$ 为均值向量，$\\sigma^{(g)}$ 为步长，$C^{(g)}$ 为协方差矩阵。\n\n协方差矩阵更新：\n\n$$\n\nC^{(g+1)} = (1-c_{\\text{\\text{cov}}})\\cdot C^{(g)} + c_{\\text{\\text{cov}}} \\cdot \\frac{1}{\\mu_eff}\\sum_{\\text{i=1}}^{\\mu_eff} p_{\\text{\\sigma}}^{(g)} (p_{\\text{\\sigma}}^{(g)})^T\n\n$$\n\n其中 $c_{\\text{cov}}$ 为学习率，$\\mu_eff$ 为有效样本量，$p_{\\sigma}$ 为进化路径向量。\n\n### 2.3 强化学习策略训练\n\n策略网络采用**深度神经网络**参数化，状态空间 $s \\in \\mathbb{R}^{d_s}$ 包含：\n\n- 关节位置 $q \\in \\mathbb{R}^{12}$\n- 关节速度 $\\dot{q} \\in \\mathbb{R}^{12}$\n- 基座姿态（Roll, Pitch, Yaw）\n- 基座线速度与角速度\n- 命令信号（目标速度、转向指令）\n\n动作空间 $a \\in \\mathbb{R}^{12}$ 为 12 个关节的目标扭矩。\n\n策略优化采用**基于 Actor-Critic 的 PPO（Proximal Policy Optimization）**算法或类似的离线/在线策略方法，奖励函数设计涵盖：\n\n- 前向运动奖励：$r_{\\text{forward}} = v_{xy} \\cdot \\mathbb{1}_{\\text{v\\_{xy}} > 0}$\n- 姿态稳定性奖励：$r_{\\text{balance}} = -\\sum |pitch| - \\sum |roll|$\n- 关节限制惩罚：$r_{\\text{joint}} = -\\sum \\mathbb{1}_{|q_i| > q_{\\max}}$\n- 步态周期奖励：$r_{\\text{gait}}$ 鼓励周期性的摆动相与支撑相\n\n## 3. 实现细节\n\n### 3.1 仿真平台：Nvidia IsaacLab\n\n训练环境基于**Nvidia IsaacLab**框架实现，该框架提供了：\n\n- 高保真 GPU 加速物理仿真\n- 多种地形生成器（平面、楼梯、不规则地形）\n- 传感器噪声模型\n- 域随机化接口\n\n### 3.2 关键超参数配置\n\n| 组件 | 参数 | 典型值 |\n|------|------|--------|\n| **CMA-ES** | 初始步长 $\\sigma_0$ | 0.1 - 0.5 |\n| | 种群大小 $\\lambda$ | $4 + \\lfloor 3\\ln(n) \\rfloor$ |\n| | 精英个数 $\\mu$ | $\\lfloor \\lambda/2 \\rfloor$ |\n| | 收敛容差 | $10^{-8}$ |\n| **RL 训练** | 最大步数 | $5 \\times 10^8$ |\n| | 批量大小 | 4096 - 16384 |\n| | 学习率 | $3 \\times 10^{-4}$ |\n| | PPO 裁剪参数 $\\epsilon$ | 0.2 |\n| **神经网络** | 隐藏层数 | 3-4 |\n| | 每层神经元数 | 256 - 512 |\n| | 激活函数 | Tanh / ReLU |\n\n### 3.3 低层级电机访问\n\n该工作的关键创新在于使用 Boston Dynamics **低层级 API（Low-Level Motor Access）**进行策略部署：\n\n- 直接发送 12 个关节的扭矩命令（$12 \\times 1$ 扭矩向量）\n- 绕过 Spot 默认的高级 locomotion controller\n- 实现端到端的状态到动作映射，延迟控制在**5.2ms**以内\n\n### 3.4 数据收集与分布计算\n\n真实硬件数据采集流程：\n\n1. 在 Spot 上执行预设的激励信号（如 Chirp 信号、正弦扫频）\n2. 记录关节位置、速度、电机电流响应\n3. 同时采集对应的仿真环境响应\n4. 计算两种分布之间的 WD 和 MMD 值\n\n## 4. 实验设置\n\n### 4.1 数据集与环境\n\n- **仿真环境**：IsaacLab 中的 Spot 模拟器\n- **真实硬件**：Boston Dynamics Spot 机器人\n- **地形条件**：平面硬地、不规则地形、湿滑表面\n- **测试场景**：直线行走、多方向转向、上下楼梯、外部扰动施加\n\n### 4.2 评估指标\n\n| 指标 | 定义 |\n|------|------|\n| **Wasserstein 距离** | 仿真-真实关节响应分布的距离 |\n| **MMD 值** | 核空间中的分布差异 |\n| **最大前向速度** | 能够稳定执行的最大速度（m/s） |\n| **步态类型** | 行走、跑步、有飞行相的步态 |\n| **扰动恢复时间** | 施加外部推力后的稳定时间 |\n| **湿滑表面成功率** | 在湿滑地面上保持稳定行走的比例 |\n\n### 4.3 基线方法对比\n\n- Spot 默认的 WL（Whole Body）控制器\n- 基于经典 MPC 的步态生成器\n- 仅使用域随机化而不进行参数优化的 RL 方法\n\n## 5. 技术优势\n\n### 5.1 分布度量驱动的参数优化\n\n相比传统的试错式域随机化，该方法具有以下优势：\n\n1. **理论保证**：WD 和 MMD 具有坚实的概率理论基础，能够一致地估计分布差异\n2. **无需梯度**：CMA-ES 不依赖目标函数的梯度信息，适用于黑盒仿真参数优化\n3. **自适应**：CMA-ES 自动调整搜索方向和步长，适应非凸优化景观\n\n### 5.2 低延迟端到端部署\n\n- 直接使用低层级电机 API 绕过高层控制器的延迟开销\n- 5.2ms 的推理延迟使得控制器能够以更高频率（>190Hz）响应\n- 为实现动态步态（包括飞行相）提供了硬件基础\n\n### 5.3 多步态泛化能力\n\n通过精心设计的奖励函数和仿真训练，策略能够自然涌现出：\n\n- 多种步态周期模式\n- 速度自适应能力\n- 对不同地形的鲁棒性\n\n## 6. 技术弱点与局限性\n\n### 6.1 分布度量的计算成本\n\n- **MMD 计算复杂度**：$O(m^2 + n^2 + mn)$，其中 m、n 为样本数量，在线评估时计算开销较大\n- **Wasserstein 距离**：需要求解最优传输问题，在高维状态空间中存在**维数灾难**问题\n- 数据收集效率：每次 CMA-ES 迭代需要收集真实硬件数据，样本采集成本高\n\n### 6.2 CMA-ES 的局限性\n\n1. **局部收敛**：在高维空间（$n > 50$）可能陷入局部最优\n2. **样本效率**：相比基于梯度的贝叶斯优化，CMA-ES 需要更多目标函数评估\n3. **非静止环境**：若 sim2real 差距随时间变化（如硬件磨损），静态优化结果可能失效\n\n### 6.3 仿真假设的局限性\n\n- 仿真器无法完全建模：真实世界的摩擦力变化、电机非线性、传感器噪声时变特性\n- **分布匹配≠性能匹配**：即使 WD/MMD 值很小，也不能保证策略在真实环境中表现最优\n- 域随机化范围：参数搜索空间边界的选择对最终结果影响显著\n\n### 6.4 部署挑战\n\n- **安全边界**：强化学习策略在真实硬件上可能产生不可预测的行为，需要额外的安全监控层\n- **sim2real 仍存在**：即使优化了仿真参数，分布度量只是差距的代理指标，而非直接性能指标\n- **可复现性**：硬件差异（不同个体 Spot 的电机特性差异）可能导致跨机器人性能波动\n\n---\n\n本方法通过将 sim2real 差距形式化为分布优化问题，并采用 CMA-ES 配合分布度量进行仿真参数搜索，为四足机器人强化学习部署提供了一个系统化的技术路线。核心贡献在于建立了从仿真训练到硬件部署的完整 pipeline，并在 Spot 平台上首次实现了公开可用的端到端 RL 部署代码。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "High-Performance Reinforcement Learning on Spot: Optimizing Simulation Parameters with Distributional Measures",
+      "authors": [
+        "Tony Miller",
+        "Fangzhou Yu",
+        "Michael Brauckmann",
+        "Farbod Farshidian"
+      ],
+      "year": 2025,
+      "journal": "ArXiv.org",
+      "doi": "10.48550/arXiv.2504.17857",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "This work presents an overview of the technical details behind a high performance reinforcement learning policy deployment with the Spot RL Researcher Development Kit for low level motor access on Boston Dynamics Spot. This represents the first public demonstration of an end to end end reinforcement learning policy deployed on Spot hardware with training code publicly available through Nvidia IsaacLab and deployment code available through Boston Dynamics. We utilize Wasserstein Distance and Maximum Mean Discrepancy to quantify the distributional dissimilarity of data collected on hardware and in simulation to measure our sim2real gap. We use these measures as a scoring function for the Covariance Matrix Adaptation Evolution Strategy to optimize simulated parameters that are unknown or difficult to measure from Spot. Our procedure for modeling and training produces high quality reinforcement learning policies capable of multiple gaits, including a flight phase. We deploy policies capable of over 5.2ms locomotion, more than triple Spots default controller maximum speed, robustness to slippery surfaces, disturbance rejection, and overall agility previously unseen on Spot. We detail our method and release our code to support future work on Spot with the low level API.",
+      "route_id": "27a4e289-eec8-43da-9200-295176bc7dc3"
+    },
+    "markdown_stats": {
+      "lines": 199,
+      "words": 7063,
+      "headings": 16
+    },
+    "assets": {
+      "images": 9,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "27a4e289-eec8-43da-9200-295176bc7dc3",
+  "paper_ref": "27a4e289-eec8-43da-9200-295176bc7dc3",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

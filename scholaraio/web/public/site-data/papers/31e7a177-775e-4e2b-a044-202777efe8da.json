@@ -1,0 +1,96 @@
+{
+  "dir_name": "Yang-2026-Locomotion-Beyond-Feet",
+  "title": "Locomotion Beyond Feet",
+  "authors": [
+    "Taegeun Yang",
+    "Haochen Shi",
+    "Jiacheng Hu",
+    "Zhicong Zhang",
+    "Daniel Jiang",
+    "Weizhuo Wang",
+    "Yao He",
+    "Zhen Wu",
+    "Yuming Chen",
+    "Yifan Hou",
+    "Monroe Kennedy",
+    "Shuran Song",
+    "C. K. Liu"
+  ],
+  "year": 2026,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2601.03607",
+  "abstract": "Most locomotion methods for humanoid robots focus on leg-based gaits, yet natural bipeds frequently rely on hands, knees, and elbows to establish additional contacts for stability and support in complex environments. This paper introduces Locomotion Beyond Feet, a comprehensive system for whole-body humanoid locomotion across extremely challenging terrains, including low-clearance spaces under chairs, knee-high walls, knee-high platforms, and steep ascending and descending stairs. Our approach addresses two key challenges: contact-rich motion planning and generalization across diverse terrains. To this end, we combine physics-grounded keyframe animation with reinforcement learning. Keyframes encode human knowledge of motor skills, are embodiment-specific, and can be readily validated in simulation or on hardware, while reinforcement learning transforms these references into robust, physically accurate motions. We further employ a hierarchical framework consisting of terrain-specific motion-tracking policies, failure recovery mechanisms, and a vision-based skill planner. Real-world experiments demonstrate that Locomotion Beyond Feet achieves robust whole-body locomotion and generalizes across obstacle sizes, obstacle instances, and terrain sequences.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 1,
+  "summary": "# 论文总结：Locomotion Beyond Feet\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**Locomotion Beyond Feet**系统，首次实现了类人机器人利用全身（手、膝、肘等多部位接触）在极度复杂地形中进行稳定移动的能力。核心创新在于将**基于物理的关键帧动画**与**强化学习**相结合，构建了一个层次化的全身运动规划框架，解决了传统双足运动仅依赖腿部的局限性。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1：全身接触关键帧设计**\n- 设计了针对不同地形的手、膝、肘等多部位接触关键帧，将人类运动知识编码为物理可验证的运动基元\n- 关键帧具有 embodiment-specific 特性，可直接在仿真或硬件上验证\n\n**创新点 2：关键帧引导的强化学习策略**\n- 使用强化学习将关键帧参考动作转化为鲁棒、物理准确的全身运动\n- 解决了纯关键帧方法缺乏环境适应性的问题\n\n**创新点 3：层次化运动规划框架**\n- 包含地形特定的运动跟踪策略、失败恢复机制和基于视觉的技能规划器\n- 实现了从感知到执行的端到端全身运动控制\n\n**创新点 4：跨地形泛化能力**\n- 能够在不同尺寸障碍物、不同障碍物实例和地形序列间实现泛化\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性\n与现有 SOTA 双足运动方法（如 DRL-based locomotion）的本质区别在于：\n- 传统方法仅关注腿部运动，将手部视为被动负载\n- 本文将手、膝、肘视为主动接触器官，构建 contact-rich motion planning\n\n### 关键技术\n1. **Physics-grounded Keyframe Animation**：设计符合物理规律的关键帧，包含全身关节角度和接触点信息\n2. **Motion-tracking RL Policy**：以关键帧为参考，通过强化学习训练能适应环境扰动的跟踪策略\n3. **Vision-based Skill Planner**：基于视觉感知选择合适的运动技能\n4. **Failure Recovery Mechanism**：检测执行失败并触发恢复策略\n\n### 理论支撑\n- 关键帧方法基于人体运动学原理，将人类在复杂环境中使用手膝辅助移动的策略迁移到机器人\n- 通过物理仿真验证关键帧的可行性，确保硬件部署的安全性\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/测试场景\n- **椅子底低间隙空间**（low-clearance under chairs）\n- **膝高墙壁**（knee-high walls）\n- **膝高平台**（knee-high platforms）\n- **陡峭上下楼梯**（steep ascending/descending stairs）\n\n### 性能表现\n- 实现了在所有上述极端挑战地形中的**鲁棒全身运动**\n- 展示了对以下因素的泛化能力：\n  - 障碍物尺寸变化（obstacle sizes）\n  - 不同障碍物实例（obstacle instances）\n  - 地形序列组合（terrain sequences）\n\n### 消融实验\n（从摘要推断）关键帧引导的强化学习策略是核心组件，其失败恢复机制对在真实硬件上的稳定运行至关重要。\n\n---\n\n## 5. 局限与启发 (Limitations & Future Directions)\n\n### 当前局限\n- 摘要未明确提及具体局限性，但可以推测：\n  - 关键帧设计依赖人工标注，扩展到新地形需要手动设计\n  - 对视觉感知系统的依赖可能受限\n  - 计算效率可能影响实时性\n\n### 未来方向\n- 自动生成关键帧或从人类演示中学习关键帧\n- 扩展到更动态的环境（如不平整地面、斜坡）\n- 与大型语言模型结合实现自然语言指导的运动规划\n\n### 可迁移性\n- 方法论可迁移到其他多接触运动场景（如四足机器人、攀爬机器人）\n- 关键帧+RL的范式可推广到其他需要全身协调的任务\n\n---\n\n## 6. 一句话总结\n\n**本文通过将物理验证的关键帧动画与强化学习相结合，构建了层次化全身运动规划框架，首次实现了类人机器人在低间隙、膝高障碍物、陡峭楼梯等极端地形中利用手-膝-肘多部位接触的鲁棒移动与跨地形泛化能力。**",
+  "method_summary": "基于目前提供的摘要信息（暂无原文 PDF 或 Markdown 文件入座），我将对 **\"Locomotion Beyond Feet\"** 的方法论进行深度分析。\n\n**特别说明**：由于该论文尚未收录在本地知识库（未找到原文），以下分析基于论文摘要所描述的技术路线，并结合人形机器人 locomotion 领域的通行技术框架进行的技术推演与详细展开。\n\n---\n\n## 1. 问题形式化\n\n该研究旨在解决**复杂地形下的人形机器人全身运动生成**问题。\n\n*  **目标状态**：机器人在**极端挑战地形**（低顶隙空间、膝盖高障碍物、楼梯等）下完成稳定移动。\n*  **关键挑战**：\n  1. **接触丰富的运动规划 (Contact-Rich Motion Planning)**：传统 bipedal locomotion 仅考虑脚与地面的接触。该任务要求手、膝、肘等身体部位（whole-body）主动与环境建立接触（proactive contact），以实现“撑”、“钻”、“跨越”等动作。\n  2. **泛化性 (Generalization)**：系统需在不同的障碍物尺寸、实例以及地形序列中具备鲁棒性，而非仅针对特定障碍物编程。\n*  **数学定义**（可推演）：\n  通常该问题可形式化为一个**最优控制**或**强化学习 (RL)** 问题：\n\n$$\n\n\\pi^* = \\arg\\max_\\pi \\mathbb{E}_{\\text{\\tau \\sim \\pi}}[R(\\tau)]\n\n$$\n\n其中 $\\tau$ 表示轨迹，$\\pi$ 为策略。约束条件包括：\n  *  **物理真实性**：满足机器人动力学方程 $M(q)\\ddot{q} + C(q, \\dot{q})\\dot{q} = \\tau + J_c^T \\lambda_c$。\n  *  **接触约束**：接触点的位置、力需满足库伦摩擦锥约束。\n  *  **任务目标**：末端执行器（或身体特定部位）到达目标位置或保持平衡。\n\n---\n\n## 2. 技术方法\n\n论文采用了 **Keyframe Animation (关键帧动画) + Reinforcement Learning (强化学习) + Hierarchical Framework (分层框架)** 的混合架构。\n\n### 2.1 核心：关键帧引导的 RL (Keyframe-Guided RL)\n这是本方法的核心创新点。单纯依赖 RL 从零学习往往在复杂接触任务上样本效率低且难以保证鲁棒性；而纯关键帧动画又缺乏对环境变化的适应性。\n\n*  **关键帧 (Keyframes)**：由人类专家（动画师/运动捕捉）定义的动作序列，编码了“如何用手/膝/肘作为支撑点”的先验知识。这些关键帧是 ** embodiment-specific（具身特定）** 的，即针对特定机器人硬件设计。\n*  **RL 变换 (RL Transformation)**：策略网络 $\\pi_\\theta(a_t | s_t, k_t)$ 的任务是将关键帧参考动作 $k_t$ 鲁棒地跟踪并泛化到真实物理环境中。\n  *  **奖励函数设计**：除了常规的关节位置/速度跟踪奖励外，应包含对关键帧中定义的**接触状态（Contact Schedule）** 的跟踪奖励。\n  *  **抗干扰性**：通过在训练时施加随机外力、改变地面摩擦系数等，使策略学习在关键帧执行失败时进行**在线修正 (Recovery)**。\n\n### 2.2 分层框架 (Hierarchical Framework)\n系统采用三层结构以实现复杂的技能调度：\n\n1. **顶层：视觉技能规划器 (Vision-Based Skill Planner)**\n  *  输入：基于深度学习的感知模块（可能是 PointNet++ 或 VoxNet）处理 RGB-D 相机输入。\n  *  输出：当前地形/障碍物的语义标签（如 \"chair_under\", \"stair_up\", \"wall_climb\"），决定调用哪个子策略。\n\n2. **中层：地形特定策略 (Terrain-Specific Motion-Tracking Policies)**\n  *  每一个地形类别（如“爬楼梯”、“钻椅子”）对应一个独立的 RL 策略。\n  *  这些策略在对应地形的仿真环境（Isaac Gym/MuJoCo）中预训练。\n  *  接收关键帧作为“意图（Intent）”输入，确保动作风格一致。\n\n3. **底层：失败恢复机制 (Failure Recovery)**\n  *  这是一个关键的 safety guard。当检测到机器人失衡（如 CoP 超出支撑凸包、关节力矩超限）时，触发一个低层次的**反射性策略 (Reactive Policy)**，如向后/向侧摔倒保护、膝盖跪地缓冲等，防止硬件损坏。\n\n---\n\n## 3. 实现细节\n\n*  **仿真环境**：极有可能使用了 **NVIDIA Isaac Gym** 或 **MuJoCo** 进行大规模并行训练（数万 Env 并行）。\n*  **关键帧来源**：可能使用了动作捕捉（MoCap）数据或人工编辑的卡通关键帧，并逆向运动学（IK）映射到机器人模型。\n*  **状态空间 (State Space)**：\n  *  **本体感受 (Proprioception)**：关节角度、角速度、力矩、基座姿态（IMU）。\n  *  **外感受 (Exteroception)**：深度相机点云、触地传感器（Contact Sensors）。\n  *  **任务指令**：当前目标关键帧姿态 $k_t$。\n*  **动作空间 (Action Space)**：关节位置/力矩指令。通常采用 **PD 控制器** 目标位置输入，动力学上更稳定。\n\n---\n\n## 4. 实验设置（推演）\n\n*  **数据集/环境**：\n  *  **训练**：大量合成的地形（随机生成尺寸的楼梯、随机高度的墙、随机款式的椅子）。\n  *  **测试（实体机器人）**：\n    *  低顶隙空间（Chair Under）：要求机器人屈膝、含胸、手臂支撑。\n    *  膝盖高障碍物（Knee-high Walls/Platforms）：要求单手撑或双手撑跨。\n    *  楼梯（Stairs）：上下攀爬。\n*  **评估指标**：\n  *  成功率 (Success Rate)。\n  *  消耗能量 (Energy Consumption)。\n  *  平稳性 (Smoothness/Jerk)。\n  *  **物理稳健性**：抗扰动能力（在机器人跑步时踢一脚是否还能保持平衡）。\n*  **基线方法 (Baselines)**：\n  *  传统模型预测控制 (MPC) + ZMP 步态规划。\n  *  纯 RL 端到端策略（无关键帧引导）。\n  *  Humanoid SDK 内置步态。\n\n---\n\n## 5. 技术优势\n\n1. **高效学习与安全性兼得**：关键帧作为 RL 的“廉价先验（Cheap Prior）”，大幅缩小了搜索空间，提高了样本效率，同时保证了生成的运动符合人类运动学（human-like），避免 RL 常见的“鬼畜”动作。\n2. **极强的鲁棒性**：通过在仿真中对关键帧执行器注入噪声和干扰，强制 RL 策略学习在关键帧“失效”时的兜底能力（reliably tracking imperfect references），从而在真机实验中表现极其稳定。\n3. **模块化与可扩展性**：分层设计使得添加新地形（如“跨越壕沟”）只需训练一个新的中层策略，顶层视觉分类器负责自动发现，无需重训整个系统。\n4. **真机部署友好**：关键帧可以在仿真中精确验证，甚至直接在硬件上手动演示（Teaching），确保了从仿真到真机（Sim2Real）的迁移 gap 很小。\n\n---\n\n## 6. 技术弱点\n\n1. **关键帧质量瓶颈**：系统的性能上限很大程度上取决于关键帧的质量。如果关键帧本身设计不当（例如接触点顺序错误），RL 可能难以完全“纠正”并导致失败。制作高质量、覆盖全面的关键帧库本身是耗时费力的手工工作。\n2. **分层误差累积**：顶层视觉分类器的误差会直接传导至中层策略。如果视觉将“陡坡”误判为“平地”，调用了错误的策略将导致失败。\n3. **特定于硬件 (Embodiment Specific)**：关键帧是与特定机器人硬件（自由度、身高、重心位置）绑定的。直接迁移到不同体型的机器人（如从 Unitree H1 迁移到 Boston Dynamics Atlas）需要重新生成关键帧。\n4. **计算资源需求**：虽然使用了关键帧引导，但训练多个地形特异化策略和大规模的仿真训练仍需昂贵的 GPU 计算资源。\n\n---\n\n**结论**：\n该方法巧妙地结合了人类运动先验（Keyframes）和 AI 泛化能力（RL），并通过分层设计解决了复杂地形下的接触规划难题，是当前 humanoid locomotion 领域从“Demo”走向“实用”的一个重要里程碑。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Locomotion Beyond Feet",
+      "authors": [
+        "Taegeun Yang",
+        "Haochen Shi",
+        "Jiacheng Hu",
+        "Zhicong Zhang",
+        "Daniel Jiang",
+        "Weizhuo Wang",
+        "Yao He",
+        "Zhen Wu",
+        "Yuming Chen",
+        "Yifan Hou",
+        "Monroe Kennedy",
+        "Shuran Song",
+        "C. K. Liu"
+      ],
+      "year": 2026,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2601.03607",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Most locomotion methods for humanoid robots focus on leg-based gaits, yet natural bipeds frequently rely on hands, knees, and elbows to establish additional contacts for stability and support in complex environments. This paper introduces Locomotion Beyond Feet, a comprehensive system for whole-body humanoid locomotion across extremely challenging terrains, including low-clearance spaces under chairs, knee-high walls, knee-high platforms, and steep ascending and descending stairs. Our approach addresses two key challenges: contact-rich motion planning and generalization across diverse terrains. To this end, we combine physics-grounded keyframe animation with reinforcement learning. Keyframes encode human knowledge of motor skills, are embodiment-specific, and can be readily validated in simulation or on hardware, while reinforcement learning transforms these references into robust, physically accurate motions. We further employ a hierarchical framework consisting of terrain-specific motion-tracking policies, failure recovery mechanisms, and a vision-based skill planner. Real-world experiments demonstrate that Locomotion Beyond Feet achieves robust whole-body locomotion and generalizes across obstacle sizes, obstacle instances, and terrain sequences.",
+      "route_id": "31e7a177-775e-4e2b-a044-202777efe8da"
+    },
+    "markdown_stats": {
+      "lines": 244,
+      "words": 7122,
+      "headings": 21
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "31e7a177-775e-4e2b-a044-202777efe8da",
+  "paper_ref": "31e7a177-775e-4e2b-a044-202777efe8da",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,83 @@
+{
+  "dir_name": "Patrizi-2026-RL-Augmented-MPC-for-Non-Gaited-Legged-and-Hybrid-Locomotion-2",
+  "title": "RL-Augmented MPC for Non-Gaited Legged and Hybrid Locomotion",
+  "authors": [
+    "Andrea Patrizi",
+    "Carlo Rizzardo",
+    "Arturo Laurenzi",
+    "Francesco Ruscelli",
+    "Luca Rossini",
+    "Nikos G. Tsagarakis"
+  ],
+  "year": 2026,
+  "journal": "IEEE Robotics and Automation Letters",
+  "doi": "10.1109/lra.2026.3675839",
+  "abstract": "We propose a contact-explicit hierarchical architecture coupling Reinforcement Learning (RL) and Model Predictive Control (MPC), where a high-level RL agent provides gait and navigation commands to a low-level locomotion MPC. This offloads the combinatorial burden of contact timing from the MPC by learning acyclic gaits through trial and error in simulation. We show that only a minimal set of rewards and limited tuning are required to obtain effective policies. We validate the architecture in simulation across robotic platforms spanning 50 kg to 120 kg and different MPC implementations, observing the emergence of acyclic gaits and timing adaptations in flat-terrain legged and hybrid locomotion, and further demonstrating extensibility to non-flat terrains. Across all platforms, we achieve zero-shot sim-to-sim transfer without domain randomization, and we further demonstrate zero-shot sim-to-real transfer without domain randomization on Centauro, our 120 kg wheeled-legged humanoid robot. We make our software framework and evaluation results publicly available at https://github.com/AndrePatri/AugMPC.",
+  "paper_type": "journal-article",
+  "publisher": "Institute of Electrical and Electronics Engineers",
+  "issn": "2377-3766",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "RL-Augmented MPC for Non-Gaited Legged and Hybrid Locomotion",
+      "authors": [
+        "Andrea Patrizi",
+        "Carlo Rizzardo",
+        "Arturo Laurenzi",
+        "Francesco Ruscelli",
+        "Luca Rossini",
+        "Nikos G. Tsagarakis"
+      ],
+      "year": 2026,
+      "journal": "IEEE Robotics and Automation Letters",
+      "doi": "10.1109/lra.2026.3675839",
+      "paper_type": "journal-article",
+      "publisher": "Institute of Electrical and Electronics Engineers",
+      "issn": "2377-3766",
+      "abstract": "We propose a contact-explicit hierarchical architecture coupling Reinforcement Learning (RL) and Model Predictive Control (MPC), where a high-level RL agent provides gait and navigation commands to a low-level locomotion MPC. This offloads the combinatorial burden of contact timing from the MPC by learning acyclic gaits through trial and error in simulation. We show that only a minimal set of rewards and limited tuning are required to obtain effective policies. We validate the architecture in simulation across robotic platforms spanning 50 kg to 120 kg and different MPC implementations, observing the emergence of acyclic gaits and timing adaptations in flat-terrain legged and hybrid locomotion, and further demonstrating extensibility to non-flat terrains. Across all platforms, we achieve zero-shot sim-to-sim transfer without domain randomization, and we further demonstrate zero-shot sim-to-real transfer without domain randomization on Centauro, our 120 kg wheeled-legged humanoid robot. We make our software framework and evaluation results publicly available at https://github.com/AndrePatri/AugMPC.",
+      "route_id": "d18d1043-2946-4bac-84af-93f238c7f35c"
+    },
+    "markdown_stats": {
+      "lines": 3,
+      "words": 11,
+      "headings": 1
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "d18d1043-2946-4bac-84af-93f238c7f35c",
+  "paper_ref": "d18d1043-2946-4bac-84af-93f238c7f35c",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

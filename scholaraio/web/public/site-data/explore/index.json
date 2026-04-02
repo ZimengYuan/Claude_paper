@@ -1,0 +1,19 @@
+[
+  {
+    "name": "current-library",
+    "title": "Current Library",
+    "count": 468,
+    "query": {
+      "scope": "main library",
+      "papers_dir": "data/papers",
+      "topic_model": "data/topic_model"
+    },
+    "source": "local-library",
+    "fetched_at": "2026-03-27T01:42:36",
+    "has_search_index": true,
+    "has_semantic_index": true,
+    "has_topics": true,
+    "roadmap_exists": true,
+    "topic_info": {}
+  }
+]

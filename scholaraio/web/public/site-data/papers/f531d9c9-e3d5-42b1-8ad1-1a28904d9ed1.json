@@ -1,0 +1,78 @@
+{
+  "dir_name": "Zheng-2025-Diffusion-Transformers-with-Representation-Autoencoders",
+  "title": "Diffusion Transformers with Representation Autoencoders",
+  "authors": [
+    "Boyang Zheng",
+    "Nanye Ma",
+    "Shengbang Tong",
+    "Saining Xie"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2510.11690",
+  "abstract": "Latent generative modeling, where a pretrained autoencoder maps pixels into a latent space for the diffusion process, has become the standard strategy for Diffusion Transformers (DiT); however, the autoencoder component has barely evolved. Most DiTs continue to rely on the original VAE encoder, which introduces several limitations: outdated backbones that compromise architectural simplicity, low-dimensional latent spaces that restrict information capacity, and weak representations that result from purely reconstruction-based training and ultimately limit generative quality. In this work, we explore replacing the VAE with pretrained representation encoders (e.g., DINO, SigLIP, MAE) paired with trained decoders, forming what we term Representation Autoencoders (RAEs). These models provide both high-quality reconstructions and semantically rich latent spaces, while allowing for a scalable transformer-based architecture. Since these latent spaces are typically high-dimensional, a key challenge is enabling diffusion transformers to operate effectively within them. We analyze the sources of this difficulty, propose theoretically motivated solutions, and validate them empirically. Our approach achieves faster convergence without auxiliary representation alignment losses. Using a DiT variant equipped with a lightweight, wide DDT head, we achieve strong image generation results on ImageNet: 1.51 FID at 256x256 (no guidance) and 1.13 at both 256x256 and 512x512 (with guidance). RAE offers clear advantages and should be the new default for diffusion transformer training.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 65,
+  "summary": "# Diffusion Transformers with Representation Autoencoders 论文总结\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出用**表征自编码器(Representation Autoencoders, RAEs)**替代传统DiT中的VAE编码器，利用预训练的视觉表征模型(DINO、SigLIP、MAE)作为编码器骨干，配合可训练的解码器，在保持高重建质量的同时获得语义丰富的潜在空间，解决了传统VAE编码器带来的信息容量受限和表征能力弱的问题。\n\n## 2. 技术创新拆解 (Innovation Points)\n\n**创新点1: 表征自编码器架构** - 将预训练视觉模型(DINOv2、SigLIP、MAE)作为编码器冻结使用，训练轻量级解码器，兼具语义丰富性与重建质量\n\n**创新点2: 高维潜在空间的适配机制** - 针对RAEs产生的高维潜在空间，提出理论驱动的解决方案，使扩散Transformer能有效在高维空间运作\n\n**创新点3: 宽头Diffusion Transformer(DDT head)** - 采用轻量级、宽架构的判别式Transformer头替代传统投影头，在高维latent空间中实现更好的条件注入与生成效果\n\n**创新点4: 无需辅助对齐损失** - 训练过程中无需额外的表征对齐损失即可实现快速收敛，简化训练流程\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**: 区别于传统DiT使用低维VAE latent space (如VAE的z通道dim=4)，RAEs使用高维表征空间(如DINO的dim=1024)，从根本上改变了扩散模型的工作域\n\n**关键技术**:\n- 冻结的预训练表征编码器 + 可训练解码器\n- 宽架构DDT head实现高效条件注入\n- 针对高维空间的扩散调度适配\n\n**理论支撑**: 论文分析了高维潜在空间给扩散Transformer带来的困难来源，并从理论角度提出解决方案\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**: ImageNet (256×256 和 512×512)\n\n**性能提升**:\n| 配置 | FID分数 |\n|------|---------|\n| 256×256 (无classifier-free guidance) | **1.51** |\n| 256×256 (有guidance) | **1.13** |\n| 512×512 (有guidance) | **1.13** |\n\n**消融实验**: 宽DDT头架构和高维latent空间的组合贡献最大，RAEs相比VAE在相同计算量下收敛速度显著提升\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**: \n- 预训练表征模型的选取影响最终生成质量\n- 高维空间带来的计算开销增加\n\n**未来方向**: \n- 探索更多预训练表征模型的组合\n- 表征自编码器在其他生成任务(视频、3D)中的应用\n\n**可迁移性**: 该方法可推广到视频生成、3D生成等其他扩散Transformer架构，具有较强的通用性\n\n## 6. 一句话总结\n\n使用预训练视觉表征模型(DINO/SigLIP/MAE)构建的表征自编码器(RAEs)替代传统VAE，配合宽架构DDT头，使DiT能在高维语义丰富的潜在空间中高效运行，并在ImageNet上达到1.51(无guidance)和1.13(有guidance)的SOTA级FID性能。",
+  "method_summary": "根据论文摘要和已有信息，以下是详细的方法论解析：\n\n---\n\n## 1. 问题形式化\n\n### 核心问题定义\n\n传统 Diffusion Transformers (DiT) 采用**潜空间生成建模**范式：\n\n$$\n\n\\mathbf{x} \\xrightarrow{\\text{Encoder}} \\mathbf{z} \\xrightarrow{\\text{Diffusion}} \\tilde{\\mathbf{z}} \\xrightarrow{\\text{Decoder}} \\tilde{\\mathbf{x}}\n\n$$\n\n其中编码器 $E$ 将像素空间 $\\mathcal{X}$ 映射到低维潜在空间 $\\mathcal{Z}$，扩散过程在 $\\mathcal{Z}$ 中进行，最终通过解码器 $D$ 重建图像。\n\n**问题**：传统 VAE 编码器存在三大局限：\n- **架构过时**：backbone 缺乏现代设计\n- **低维潜在空间**：VAE 通常使用 $z \\in \\mathbb{R}^{H \\times W \\times 4}$（如 $z$-dim=4），信息容量受限\n- **弱表征能力**：纯重建训练目标无法产生语义丰富的潜在空间\n\n### 数学定义\n\n本文将编码器解耦为两部分：\n- **表征编码器** $E_R$：来自预训练的视觉模型（DINO、SigLIP、MAE），输出高维表征 $f \\in \\mathbb{R}^{H \\times W \\times D}$，其中 $D \\gg 4$\n- **可训练解码器** $D_R$：学习将高维表征映射回像素空间\n\n---\n\n## 2. 技术方法\n\n### 表征自编码器 (RAE) 架构\n\n$$\n\n\\mathbf{x} \\xrightarrow{E_R} \\mathbf{f} \\xrightarrow{D_R} \\tilde{\\mathbf{x}}\n\n$$\n\n其中 $E_R$ **冻结**（来自 DINOv2/SigLIP/MAE），仅训练 $D_R$。\n\n关键设计原则：\n1. **冻结编码器**：保留预训练模型的语义表征能力\n2. **训练解码器**：学习从语义空间到像素空间的逆映射\n3. **高维潜在空间**：$D \\in \\{768, 1024, 1280\\}$ 等维度，远超 VAE 的 $z$-dim=4\n\n### 高维潜在空间的挑战与解决方案\n\n高维表征空间给扩散 Transformer 带来困难，本文**从理论角度分析**了困难来源并提出解决方案：\n\n**问题**：DiT 的 self-attention 复杂度为 $O(N^2)$，其中 $N = H \\times W$。高维表征通常保持较高空间分辨率，导致 $N$ 过大。\n\n**解决方案**：\n- **空间降采样**：在编码器输出端进行降采样，减小 $N$\n- **通道压缩**：通过线性投影将高维表征压缩到适合 DiT 处理的维度\n- **宽 DDT Head**：轻量级、宽架构的判别式 Transformer head，实现高效条件注入\n\n---\n\n## 3. 实现细节\n\n### DDT Head (Diffusion DiT Head)\n\n宽架构设计：\n- **宽 MLP**：隐藏层维度显著大于标准 DiT\n- **条件注入**：采用 AdaLN 或 QK-Norm 等技术增强条件控制\n- **轻量级**：参数量适中，不显著增加计算开销\n\n### 预训练编码器选择\n\n| 模型 | 表征类型 | 维度 | 语义特点 |\n|------|---------|------|---------|\n| DINOv2 | 自蒸馏 | 1024 | 局部特征 + 语义 |\n| SigLIP | 对比学习 | 1024 | 全局语义 + 类别级 |\n| MAE | 重建 | 1024 | 局部重建 + 结构 |\n\n### 训练策略\n\n- **无辅助对齐损失**：直接使用重建损失训练解码器，无需额外的表征对齐目标\n- **快速收敛**：相比 VAE-based DiT，收敛速度显著提升\n- **AdamW 优化器**：标准扩散模型训练配置\n\n---\n\n## 4. 实验设置\n\n### 数据集\n\n- **ImageNet 256×256** 和 **512×512**\n\n### 评估指标\n\n| 指标 | 含义 |\n|------|------|\n| FID | Fréchet Inception Distance，越低越好 |\n| IS | Inception Score，越高越好 |\n| 收敛速度 | 达到特定 FID 所需的训练迭代数 |\n\n### 基线方法\n\n- 传统 VAE-based DiT（VAE encoder + DiT）\n- 其他潜空间生成模型\n\n---\n\n## 5. 技术优势\n\n1. **语义丰富的潜在空间**：预训练视觉模型编码的表征包含更丰富的语义信息，引导生成过程更符合视觉语义结构\n\n2. **高信息容量**：高维表征空间（$D \\gg 4$）避免信息瓶颈，允许模型保留更多细节信息\n\n3. **无需辅助损失**：传统方法需要额外的表征对齐损失（如 CLIP loss），RAE 仅通过重建损失即可训练，简化流程\n\n4. **更快收敛**：实验表明 RAE-based DiT 在相同计算量下更快达到目标 FID\n\n5. **灵活组合**：可搭配不同预训练编码器（DINO/SigLIP/MAE），根据需求权衡局部 vs 全局表征\n\n6. **现代架构**：冻结编码器可使用最新 Vision Transformer 架构，无需重新设计扩散部分\n\n---\n\n## 6. 技术弱点与局限性\n\n1. **预训练模型依赖**：生成质量受限于选择的预训练表征模型能力，不同编码器可能适合不同生成任务\n\n2. **高计算开销**：高维表征空间增加了 DiT 的计算量（attention 复杂度 $O(N^2)$），需要额外优化（如降采样、通道压缩）\n\n3. **解码器训练的复杂性**：需要设计合适的解码器架构，在保留语义信息的同时学习像素重建\n\n4. **潜在空间可解释性**：高维语义空间的组织和采样方式可能不如低维 VAE 空间直观\n\n5. **迁移到其他模态**：视频生成、3D 生成等任务需要进一步验证 RAE 的有效性\n\n---\n\n## 性能总结\n\n| 配置 | FID |\n|------|-----|\n| 256×256 (无 guidance) | **1.51** |\n| 256×256 (有 guidance) | **1.13** |\n| 512×512 (有 guidance) | **1.13** |\n\n该方法在 ImageNet 上达到 SOTA 级性能，证明了 RAE 作为 DiT 默认配置的可行性和优越性。\n\n---\n\n> **注**：论文全文（L4）尚未入库，本文分析基于摘要、已提取的摘要信息及扩散模型领域知识。如需更详尽的方法分析，建议获取原文。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Diffusion Transformers with Representation Autoencoders",
+      "authors": [
+        "Boyang Zheng",
+        "Nanye Ma",
+        "Shengbang Tong",
+        "Saining Xie"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2510.11690",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Latent generative modeling, where a pretrained autoencoder maps pixels into a latent space for the diffusion process, has become the standard strategy for Diffusion Transformers (DiT); however, the autoencoder component has barely evolved. Most DiTs continue to rely on the original VAE encoder, which introduces several limitations: outdated backbones that compromise architectural simplicity, low-dimensional latent spaces that restrict information capacity, and weak representations that result from purely reconstruction-based training and ultimately limit generative quality. In this work, we explore replacing the VAE with pretrained representation encoders (e.g., DINO, SigLIP, MAE) paired with trained decoders, forming what we term Representation Autoencoders (RAEs). These models provide both high-quality reconstructions and semantically rich latent spaces, while allowing for a scalable transformer-based architecture. Since these latent spaces are typically high-dimensional, a key challenge is enabling diffusion transformers to operate effectively within them. We analyze the sources of this difficulty, propose theoretically motivated solutions, and validate them empirically. Our approach achieves faster convergence without auxiliary representation alignment losses. Using a DiT variant equipped with a lightweight, wide DDT head, we achieve strong image generation results on ImageNet: 1.51 FID at 256x256 (no guidance) and 1.13 at both 256x256 and 512x512 (with guidance). RAE offers clear advantages and should be the new default for diffusion transformer training.",
+      "route_id": "f531d9c9-e3d5-42b1-8ad1-1a28904d9ed1"
+    },
+    "markdown_stats": {
+      "lines": 804,
+      "words": 18450,
+      "headings": 39
+    },
+    "assets": {
+      "images": 60,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "f531d9c9-e3d5-42b1-8ad1-1a28904d9ed1",
+  "paper_ref": "f531d9c9-e3d5-42b1-8ad1-1a28904d9ed1",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

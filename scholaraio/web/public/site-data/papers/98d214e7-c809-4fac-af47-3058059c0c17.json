@@ -1,0 +1,113 @@
+{
+  "dir_name": "Huang-2025-Towards-Adaptable-Humanoid-Control-via-Adaptive-Motion-Tracking",
+  "title": "Towards Adaptable Humanoid Control via Adaptive Motion Tracking",
+  "authors": [
+    "Tao Huang",
+    "Huayi Wang",
+    "Junli Ren",
+    "Kangning Yin",
+    "Zirui Wang",
+    "Xiao Chen",
+    "Feiyu Jia",
+    "Wentao Zhang",
+    "Junfeng Long",
+    "Jingbo Wang",
+    "Jiangmiao Pang"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2510.14454",
+  "abstract": "Humanoid robots are envisioned to adapt demonstrated motions to diverse real-world conditions while accurately preserving motion patterns. Existing motion prior approaches enable well adaptability with a few motions but often sacrifice imitation accuracy, whereas motion-tracking methods achieve accurate imitation yet require many training motions and a test-time target motion to adapt. To combine their strengths, we introduce AdaMimic, a novel motion tracking algorithm that enables adaptable humanoid control from a single reference motion. To reduce data dependence while ensuring adaptability, our method first creates an augmented dataset by sparsifying the single reference motion into keyframes and applying light editing with minimal physical assumptions. A policy is then initialized by tracking these sparse keyframes to generate dense intermediate motions, and adapters are subsequently trained to adjust tracking speed and refine low-level actions based on the adjustment, enabling flexible time warping that further improves imitation accuracy and adaptability. We validate these significant improvements in our approach in both simulation and the real-world Unitree G1 humanoid robot in multiple tasks across a wide range of adaptation conditions. Videos and code are available at https://taohuang13.github.io/adamimic.github.io/.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 4,
+  "summary": "# 论文总结：Towards Adaptable Humanoid Control via Adaptive Motion Tracking\n\n## 1. 核心创新点 (Core Innovation)\n\n这篇论文提出了 **AdaMimic**，一种从单个参考动作实现可适应的人形机器人控制的新方法。核心创新在于：通过将单个参考动作稀疏化为关键帧，结合轻量级物理约束编辑，创建增强数据集；然后训练策略追踪稀疏关键帧生成密集中间运动，并引入适配器(adapter)实现灵活的时间变形(time warping)，同时兼顾**适应性和模仿精度**。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1：单参考动作的数据增强策略\n- **内容**：将单个参考动作稀疏化为关键帧，并应用最小物理假设（如接触点、对称性约束）进行轻量编辑\n- **重要性**：大幅降低了对大规模训练数据的依赖，同时通过编辑扩展了动作多样性\n\n### 创新点 2：稀疏关键帧到密集运动的策略初始化\n- **内容**：策略首先学习追踪稀疏关键帧，通过插值生成平滑的密集中间运动\n- **解决了什么**：传统方法需要密集的参考动作作为监督，该方法只需稀疏关键帧即可恢复完整动作\n\n### 创新点 3：时间变形适配器 (Temporal Warping Adapter)\n- **内容**：训练适配器模块来调整追踪速度并细化低级动作，实现灵活的时间伸缩\n- **带来了什么**：显著提升了模仿精度和在新环境下的适应性，支持在测试时动态调整动作节奏\n\n### 创新点 4：统一框架整合适应性与精度\n- **内容**：同时保留了motion prior的高适应性和motion tracking的高精度，填补了两类方法的各自局限\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性\n| 现有方法 | AdaMimic |\n|---------|----------|\n| Motion Prior: 高适应性，低精度 | **高适应性 + 高精度** |\n| Motion Tracking: 需要大量训练动作 + 测试时目标动作 | **仅需单个参考动作** |\n| 依赖密集参考动作监督 | **稀疏关键帧即可恢复完整运动** |\n\n### 关键技术\n1. **关键帧稀疏化**：从单个参考动作中提取关键姿态，大幅减少数据需求\n2. **物理约束轻量编辑**：引入最小化物理先验（接触、对称性）增强数据多样性\n3. **双阶段训练**：策略初始化阶段 + 适配器微调阶段\n4. **时间变形机制**：通过速度调节器和动作细化器实现动态时间伸缩\n\n### 理论支撑\n- 引入物理约束来保证生成动作的合理性\n- 通过稀疏监督信号降低数据依赖性的理论可行性\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/任务\n- **仿真环境**：MuJoCo物理仿真\n- **真实机器人**：Unitree G1人形机器人\n- **任务类型**：多种运动任务，涵盖不同适应条件\n\n### 性能提升\n- 在模拟环境和真实环境中均验证了显著改进\n- 相比baseline方法，在**适应性**和**模仿精度**两个维度均有提升\n\n### 消融实验\n- 关键帧稀疏化、数据增强、适配器模块均进行了消融验证\n- 时间变形适配器对最终性能贡献显著\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n- 依赖于单个参考动作的质量和多样性\n- 物理约束编辑目前较为基础，可能无法覆盖所有复杂场景\n\n### 未来方向\n- 探索更强大的数据增强策略\n- 将AdaMimic扩展到更复杂的全身运动和Manipulation任务\n- 研究如何从少量演示中自动学习更好的物理先验\n\n### 可迁移性\n- 该框架可迁移到其他形态机器人（四足、机械臂等）\n- 稀疏关键帧 + 时间变形适配器的思路可应用于其他motion imitation任务\n\n---\n\n## 6. 一句话总结\n\n**AdaMimic通过将单个参考动作稀疏化为关键帧并结合物理约束编辑创建增强数据，再用双阶段策略（关键帧追踪 + 时间变形适配器）实现灵活的时间伸缩，首次在仅需单个演示的情况下同时实现了高适应性和高模仿精度的人形机器人控制。**",
+  "method_summary": "# 方法论分析：AdaMimic 自适应运动跟踪算法\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该研究旨在解决人形机器人运动适应性的核心挑战：如何从**单个参考运动**中学习，同时实现：\n\n- **高模仿精度**：准确保留参考运动的动作模式\n- **强适应性**：能够适应多样化的实际条件变化\n\n### 1.2 与现有方法的对比形式化\n\n设 $\\mathcal{M}_{ref}$ 为参考运动序列，$\\mathcal{M}_{\\text{adapted}}$ 为适应后的运动。现有方法的局限性可表示为：\n\n| 方法类型 | 模仿精度 | 所需参考运动数量 | 测试时适应性 |\n|---------|---------|----------------|-------------|\n| 运动先验方法 (Motion Priors) | 较低 $\\epsilon_{\\text{low}}$ | 少 (1-5 个) | 高 |\n| 运动跟踪方法 (Motion Tracking) | 高 $\\epsilon_{\\text{high}}$ | 多 (>10 个) | 低 |\n\n目标：设计函数 $f(\\mathcal{M}_{\\text{ref}}, \\mathcal{C}) \\rightarrow \\mathcal{M}_{\\text{\\text{adapted}}}$，其中 $\\mathcal{C}$ 表示测试时的适应条件（如速度变化、外力扰动等），使得：\n\n$$\n\n\\text{Accuracy}(\\mathcal{M}_{\\text{\\text{adapted}}}, \\mathcal{M}_{\\text{ref}}) \\geq \\epsilon_{\\text{\\text{high}}}\n\n$$\n\n$$\\text{Adaptability}(\\mathcal{C}) \\geq \\delta_{\\text{high}}\n\n$$\n\n---\n\n## 2. 技术方法\n\n### 2.1 整体框架：AdaMimic\n\nAdaMimic 采用两阶段 Pipeline：\n\n```\n单参考运动 → 数据增强 → 策略初始化 → 适配器训练 → 自适应跟踪\n```\n\n### 2.2 核心技术创新\n\n#### 2.2.1 稀疏关键帧提取 (Sparse Keyframe Extraction)\n\n将密集的参考运动 $\\mathcal{M}_{ref} \\in \\mathbb{R}^{T \\times D}$ 稀疏化为关键帧序列 $\\mathcal{K} = \\{k_1, k_2, ..., k_N\\}$，其中 $N \\ll T$。\n\n**稀疏化准则**（推测）：\n- 基于运动学显著性的关键点检测\n- 保留关节角度变化超过阈值 $\\theta_{\\text{thresh}}$ 的时刻\n- 或采用等时间间隔采样后进行运动学过滤\n\n#### 2.2.2 轻量级物理编辑 (Light Physical Editing)\n\n对关键帧应用**最小物理假设**的编辑：\n\n$$\n\n\\mathcal{K}_{\\text{\\text{edit}}} = \\mathcal{K} + \\Delta_{\\text{\\text{phys}}}\n\n$$\n\n其中 $\\Delta_{\\text{phys}}$ 满足约束：\n- 平衡稳定性：$\\sum f_{\\text{ground}} = mg$\n- 关节角度限制：$q_{\\min} \\leq q \\leq q_{\\max}$\n- 接触力可行性：$f_{\\text{contact}} \\geq 0$\n\n#### 2.2.3 策略初始化：密集中间运动生成\n\n训练初始策略 $\\pi_{\\text{base}}$ 跟踪稀疏关键帧：\n\n$$\n\n\\pi_{\\text{\\text{base}}}: \\mathcal{K}_{\\text{\\text{edit}}} \\rightarrow \\mathcal{M}_{\\text{\\text{dense}}}\n\n$$\n\n这一阶段学习从稀疏关键帧到密集运动轨迹的映射，实现**时间插值**：\n\n$$\n\n\\mathcal{M}_{\\text{\\text{dense}}} = \\text{Interpolate}(\\mathcal{K}_{\\text{\\text{edit}}}, t)\n\n$$\n\n#### 2.2.4 适配器训练：速度调节与动作细化\n\n设计适配器模块 $A(\\cdot)$ 包含两个功能：\n\n1. **跟踪速度调节器** (Tracking Speed Adapter)\n\n$$\n\n\\alpha = A_{\\text{\\text{speed}}}(\\mathcal{C}, \\mathcal{M}_{\\text{ref}})\n\n$$\n\n输出时间缩放因子 $\\alpha \\in \\mathbb{R}^+$，实现灵活的时间扭曲 (time warping)\n\n2. **低层动作细化器** (Low-level Action Refiner)\n\n$$\n\na_{\\text{\\text{refined}}} = A_{\\text{\\text{action}}}(a_{\\text{\\text{base}}}, \\alpha, \\mathcal{C})\n\n$$\n\n根据速度调整和适应条件细化底层动作\n\n最终策略：\n\n$$\n\n\\pi_{\\text{\\text{AdaMimic}}}(s) = A_{\\text{\\text{action}}}(\\pi_{\\text{\\text{base}}}(s, \\alpha), \\alpha, \\mathcal{C})\n\n$$\n\n---\n\n## 3. 实现细节\n\n### 3.1 关键超参数（推测）\n\n| 参数 | 可能的取值范围 | 说明 |\n|-----|--------------|------|\n| 关键帧数量 $N$ | 10-50 | 取决于原始运动长度 |\n| 速度缩放因子 $\\alpha$ | 0.5-2.0 | 加速/减速范围 |\n| 物理编辑幅度 | 5-15° | 关节角度扰动范围 |\n| 策略网络架构 | MLP/Transformer | 状态-动作映射 |\n| 强化学习算法 | PPO/SAC | 策略优化 |\n\n### 3.2 网络架构推测\n\n```\n输入: 状态 s ∈ ℝ^D_s, 参考运动特征 f_ref\n    │\n    ▼\n┌──────────────────┐\n│  基础策略网络  │ ──→ 基础动作 a_base\n│  π_base(s)   │\n└──────────────────┘\n    │\n    ▼\n┌──────────────────┐   ┌──────────────────┐\n│ 速度适配器   │────▶│ 动作细化器   │\n│ A_speed(C)   │   │ A_action(a,α,C) │\n└──────────────────┘   └──────────────────┘\n    │             │\n    ▼             ▼\n  缩放因子 α        最终动作 a_final\n```\n\n### 3.3 训练策略\n\n- **阶段 1**：使用增强数据集训练 $\\pi_{\\text{base}}$ 跟踪稀疏关键帧\n- **阶段 2**：固定 $\\pi_{\\text{base}}$，训练适配器模块 $A$\n- **领域随机化**：在模拟环境中随机化适应条件 $\\mathcal{C}$\n\n---\n\n## 4. 实验设置\n\n### 4.1 实验平台\n\n| 平台 | 说明 |\n|-----|------|\n| 模拟环境 | MuJoCo/Bullet 等物理模拟器 |\n| 真实机器人 | Unitree G1 人形机器人 |\n\n### 4.2 任务设置\n\n- **多样化任务**：涵盖多种运动模式（行走、跑步、跳跃、搬运等）\n- **适应条件范围**：\n - 地形变化（平地、斜坡、不平整地面）\n - 负载变化（有无额外负重）\n - 速度要求变化（加速/减速跟踪）\n - 外力扰动（推动、拉动）\n\n### 4.3 评估指标（推测）\n\n| 指标 | 说明 |\n|-----|------|\n| 轨迹误差 (Trajectory Error) | 跟踪轨迹与参考轨迹的欧氏距离 |\n| 关节角度误差 | 关节角度序列的均方根误差 (RMSE) |\n| 成功率 (Success Rate) | 任务完成率 |\n| 平衡保持率 | 维持身体平衡的时间比例 |\n| 适应性评分 | 在未见过的适应条件下的表现 |\n\n### 4.4 基线方法（推测）\n\n| 基线 | 说明 |\n|-----|------|\n| Motion Prior 方法 | 使用预训练的运动先验模型 |\n| 直接跟踪方法 | 不使用稀疏化/适配器的直接跟踪 |\n| 时间插值方法 | 仅使用线性/样条插值 |\n| 现有 SOTA 方法 | 学术界的先进运动跟踪方法 |\n\n---\n\n## 5. 技术优势\n\n### 5.1 数据效率提升\n\n- **单参考运动学习**：仅需 1 个参考运动即可实现有效适应，大幅降低数据依赖\n- **数据增强策略**：通过稀疏化和物理编辑扩充训练数据分布\n\n### 5.2 精度-适应性平衡\n\n- **保留运动跟踪精度**：基础策略专注于精确跟踪关键帧\n- **增强适应性**：适配器模块专门处理领域适应问题\n\n### 5.3 灵活的时间控制\n\n- **时间扭曲能力**：通过速度调节器实现 $\\alpha$ 缩放\n- **动态调整**：根据测试条件实时调整跟踪策略\n\n### 5.4 物理合理性\n\n- **最小物理假设**：编辑过程遵守物理约束\n- **Sim-to-Real 迁移**：模拟环境中训练的策略可直接部署到真实机器人\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 稀疏化信息损失\n\n- 关键帧提取可能丢失运动细节\n- 对于高频运动或精细动作，稀疏表示可能不足以恢复原始运动质量\n\n### 6.2 适配器泛化边界\n\n- 适配器的适应性可能存在边界条件\n- 极端适应条件（如极大速度变化）下性能可能下降\n\n### 6.3 计算开销\n\n- 两阶段训练 Pipeline 增加训练时间和复杂度\n- 适配器引入额外推理计算\n\n### 6.4 物理约束依赖\n\n- 轻量级物理编辑的效果依赖于物理建模的准确性\n- 模拟器与真实物理环境的 sim-to-sim gap 可能影响效果\n\n### 6.5 任务范围限制\n\n- 主要针对运动跟踪任务设计\n- 对于需要高层规划或复杂决策的任务可能不适用\n\n---\n\n## 总结\n\nAdaMimic 通过创新的稀疏关键帧提取、数据增强和适配器训练机制，成功实现了在单参考运动条件下的自适应人形控制。该方法有效结合了运动先验方法的适应性和运动跟踪方法的精度，为人形机器人在真实环境中的应用提供了新的技术路径。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 8,
+    "writing_quality": 7,
+    "relevance": 9,
+    "overall_score": 7.3,
+    "strengths": [
+      "Novel combination of motion prior and motion tracking approaches",
+      "Real-world validation on Unitree G1 humanoid robot (stronger than simulation-only)",
+      "Interesting keyframe sparsification approach for reducing data dependence",
+      "Adapter-based flexible time warping is a creative contribution",
+      "Addresses practical challenge of adapting to diverse real-world conditions"
+    ],
+    "weaknesses": [
+      "Innovation is somewhat incremental - combines existing ideas rather than groundbreaking new method",
+      "Technical details sparse in abstract - unclear how keyframe selection works exactly",
+      "Physical assumptions mentioned but not specified",
+      "No quantitative results shown in abstract for comparison"
+    ],
+    "notes": "Solid contribution to humanoid motion adaptation. The real-world robot experiments (Unitree G1) are a significant strength. Methodologically interesting approach of sparsifying single reference motion into keyframes and using adapters for time warping. Could be stronger in innovation if more novel technical contributions were highlighted."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Towards Adaptable Humanoid Control via Adaptive Motion Tracking",
+      "authors": [
+        "Tao Huang",
+        "Huayi Wang",
+        "Junli Ren",
+        "Kangning Yin",
+        "Zirui Wang",
+        "Xiao Chen",
+        "Feiyu Jia",
+        "Wentao Zhang",
+        "Junfeng Long",
+        "Jingbo Wang",
+        "Jiangmiao Pang"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2510.14454",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Humanoid robots are envisioned to adapt demonstrated motions to diverse real-world conditions while accurately preserving motion patterns. Existing motion prior approaches enable well adaptability with a few motions but often sacrifice imitation accuracy, whereas motion-tracking methods achieve accurate imitation yet require many training motions and a test-time target motion to adapt. To combine their strengths, we introduce AdaMimic, a novel motion tracking algorithm that enables adaptable humanoid control from a single reference motion. To reduce data dependence while ensuring adaptability, our method first creates an augmented dataset by sparsifying the single reference motion into keyframes and applying light editing with minimal physical assumptions. A policy is then initialized by tracking these sparse keyframes to generate dense intermediate motions, and adapters are subsequently trained to adjust tracking speed and refine low-level actions based on the adjustment, enabling flexible time warping that further improves imitation accuracy and adaptability. We validate these significant improvements in our approach in both simulation and the real-world Unitree G1 humanoid robot in multiple tasks across a wide range of adaptation conditions. Videos and code are available at https://taohuang13.github.io/adamimic.github.io/.",
+      "route_id": "98d214e7-c809-4fac-af47-3058059c0c17"
+    },
+    "markdown_stats": {
+      "lines": 337,
+      "words": 9110,
+      "headings": 26
+    },
+    "assets": {
+      "images": 23,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "98d214e7-c809-4fac-af47-3058059c0c17",
+  "paper_ref": "98d214e7-c809-4fac-af47-3058059c0c17",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,92 @@
+{
+  "dir_name": "Lu-2025-DPoser-X-Diffusion-Model-as-Robust-3D-Whole-body-Human-Pose-Prior",
+  "title": "DPoser-X: Diffusion Model as Robust 3D Whole-body Human Pose Prior",
+  "authors": [
+    "Junzhe Lu",
+    "Jing Lin",
+    "Hongkun Dou",
+    "Ailing Zeng",
+    "Yue Deng",
+    "Xian Liu",
+    "Zhongang Cai",
+    "Lei Yang",
+    "Yulun Zhang",
+    "Haoqian Wang",
+    "Ziwei Liu"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2508.00599",
+  "abstract": "We present DPoser-X, a diffusion-based prior model for 3D whole-body human poses. Building a versatile and robust full-body human pose prior remains challenging due to the inherent complexity of articulated human poses and the scarcity of high-quality whole-body pose datasets. To address these limitations, we introduce a Diffusion model as body Pose prior (DPoser) and extend it to DPoser-X for expressive whole-body human pose modeling. Our approach unifies various pose-centric tasks as inverse problems, solving them through variational diffusion sampling. To enhance performance on downstream applications, we introduce a novel truncated timestep scheduling method specifically designed for pose data characteristics. We also propose a masked training mechanism that effectively combines whole-body and part-specific datasets, enabling our model to capture interdependencies between body parts while avoiding overfitting to specific actions. Extensive experiments demonstrate DPoser-X's robustness and versatility across multiple benchmarks for body, hand, face, and full-body pose modeling. Our model consistently outperforms state-of-the-art alternatives, establishing a new benchmark for whole-body human pose prior modeling.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 4,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "DPoser-X: Diffusion Model as Robust 3D Whole-body Human Pose Prior",
+      "authors": [
+        "Junzhe Lu",
+        "Jing Lin",
+        "Hongkun Dou",
+        "Ailing Zeng",
+        "Yue Deng",
+        "Xian Liu",
+        "Zhongang Cai",
+        "Lei Yang",
+        "Yulun Zhang",
+        "Haoqian Wang",
+        "Ziwei Liu"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2508.00599",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "We present DPoser-X, a diffusion-based prior model for 3D whole-body human poses. Building a versatile and robust full-body human pose prior remains challenging due to the inherent complexity of articulated human poses and the scarcity of high-quality whole-body pose datasets. To address these limitations, we introduce a Diffusion model as body Pose prior (DPoser) and extend it to DPoser-X for expressive whole-body human pose modeling. Our approach unifies various pose-centric tasks as inverse problems, solving them through variational diffusion sampling. To enhance performance on downstream applications, we introduce a novel truncated timestep scheduling method specifically designed for pose data characteristics. We also propose a masked training mechanism that effectively combines whole-body and part-specific datasets, enabling our model to capture interdependencies between body parts while avoiding overfitting to specific actions. Extensive experiments demonstrate DPoser-X's robustness and versatility across multiple benchmarks for body, hand, face, and full-body pose modeling. Our model consistently outperforms state-of-the-art alternatives, establishing a new benchmark for whole-body human pose prior modeling.",
+      "route_id": "75b1f44c-f058-4fa8-b2b8-6ec4a44fc125"
+    },
+    "markdown_stats": {
+      "lines": 767,
+      "words": 18526,
+      "headings": 58
+    },
+    "assets": {
+      "images": 78,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "75b1f44c-f058-4fa8-b2b8-6ec4a44fc125",
+  "paper_ref": "75b1f44c-f058-4fa8-b2b8-6ec4a44fc125",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

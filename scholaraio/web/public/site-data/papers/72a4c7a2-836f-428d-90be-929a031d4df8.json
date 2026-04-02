@@ -1,0 +1,86 @@
+{
+  "dir_name": "Xu-2026-HoMMI-Learning-Whole-Body-Mobile-Manipulation-from-Human-Demonstrations",
+  "title": "HoMMI: Learning Whole-Body Mobile Manipulation from Human Demonstrations",
+  "authors": [
+    "Xiaomeng Xu",
+    "Jisang Park",
+    "Han Zhang",
+    "Eric Cousineau",
+    "Aditya Bhat",
+    "Jose Barreiros",
+    "Dian Wang",
+    "Shuran Song"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2603.03243",
+  "abstract": "We present Whole-Body Mobile Manipulation Interface (HoMMI), a data collection and policy learning framework that learns whole-body mobile manipulation directly from robot-free human demonstrations. We augment UMI interfaces with egocentric sensing to capture the global context required for mobile manipulation, enabling portable, robot-free, and scalable data collection. However, naively incorporating egocentric sensing introduces a larger human-to-robot embodiment gap in both observation and action spaces, making policy transfer difficult. We explicitly bridge this gap with a cross-embodiment hand-eye policy design, including an embodiment agnostic visual representation; a relaxed head action representation; and a whole-body controller that realizes hand-eye trajectories through coordinated whole-body motion under robot-specific physical constraints. Together, these enable long-horizon mobile manipulation tasks requiring bimanual and whole-body coordination, navigation, and active perception. Results are best viewed on: https://hommi-robot.github.io",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# HoMMI: 从人类演示学习全身移动操作\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了 **HoMMI (Whole-Body Mobile Manipulation Interface)** 框架，首次实现了从**无机器人参与的人类演示**中直接学习全身移动操作策略。通过将egocentric sensing（自我中心感知）引入UMI接口，解决了移动操作任务中全局上下文捕获的难题，并通过跨本体（cross-embodiment）的手-眼策略设计有效弥合了人类与机器人之间的本体差距。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 增强型UMI数据采集系统** - 通过添加egocentric相机捕获全局环境信息，解决了传统UMI仅能捕获局部信息的问题，使移动操作所需的导航和主动感知成为可能\n\n**创新点 2: 本体无关的视觉表示 (Embodiment Agnostic Visual Representation)** - 学习一种与具体机器人形态无关的视觉特征表示，直接从人类视角的图像提取可迁移的特征，缩小观察空间的本体差距\n\n**创新点 3: 放松的头部动作表示 (Relaxed Head Action Representation)** - 采用更灵活的头部动作建模方式，降低从人类头部运动到机器人颈部的映射难度\n\n**创新点 4: 全身控制器 (Whole-Body Controller)** - 设计能够协调全身运动的控制器，将手-眼轨迹转化为符合机器人物理约束的全身运动，实现精确的任务执行\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**: 区别于传统方法需要机器人参与数据采集或依赖复杂的仿真到现实迁移，HoMMI直接利用人类演示数据进行策略学习，通过跨本体设计规避了传统方法中巨大的本体差距问题\n\n**关键技术**:\n- UMI接口 + egocentric多视角感知系统\n- 本体无关的视觉编码器架构\n- 分层策略：高层手-眼策略 + 低层全身运动控制器\n- 基于优化的全身运动规划\n\n**理论支撑**: 论文提出了系统性的跨本体映射理论框架，从观察空间和动作空间两个维度分析并解决了人类到机器人的本体差距问题\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**: 在真实机器人平台上进行了长期移动操作任务验证\n\n**性能提升**: \n- 成功实现需要双臂协调、导航和主动感知的全身移动操作任务\n- 相比传统方法，数据采集成本显著降低（无需机器人参与）\n\n**消融实验**: 全身控制器和本体无关视觉表示对策略迁移效果贡献最大\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**: \n- 依赖于人类演示的质量和多样性\n- 跨本体映射仍存在一定误差\n- 对复杂动态任务的泛化能力有待验证\n\n**未来方向**: \n- 扩展到更复杂的长时间序任务\n- 探索更高效的本体差距缩小方法\n- 结合强化学习进行策略微调\n\n**可迁移性**: 该跨本体设计思路可推广到其他形态差异更大的人机交互场景，如外骨骼、假肢控制等\n\n---\n\n## 6. 一句话总结\n\nHoMMI通过将egocentric感知引入UMI数据采集并设计跨本体手-眼策略与全身控制器，首次实现了从无机器人参与的人类演示中学习全身移动操作策略，为大规模、低成本机器人技能学习提供了新范式。",
+  "method_summary": "# HoMMI 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该论文旨在解决**从无机器人人类演示中学习全身移动操作策略**的问题。具体而言，研究者试图构建一个数据收集与策略学习框架，能够捕获并迁移人类演示中的全身协调运动（包括双臂、移动底盘、头部感知等），以完成长时域移动操作任务。\n\n### 1.2 数学定义\n\n给定人类演示数据集 $\\mathcal{D} = \\{(\\mathbf{o}_t, \\mathbf{a}_t)\\}_{\\text{t=0}}^{T}$，其中：\n- $\\mathbf{o}_t$ 表示时刻 $t$ 的观测空间\n- $\\mathbf{a}_t$ 表示时刻 $t$ 的动作空间\n\n目标是学习一个策略 $\\pi(\\mathbf{a}_t | \\mathbf{o}_t)$，使得该策略能够在机器人平台上执行与人类演示相似的全身协调动作。\n\n### 1.3 关键挑战\n\n**观测空间差距（Observation Gap）**：人类演示使用的第一人称视角（egocentric sensing）与机器人观察视角存在显著差异。\n\n**动作空间差距（Action Gap）**：人类的身体运动形式（头部、手部）与机器人执行器（底盘、双臂末端）之间存在映射困难。\n\n形式化表示为：\n\n$$\n\n\\min_{\\text{\\pi}} \\mathbb{E}_{\\text{(\\mathbf{o}}, \\mathbf{a}) \\sim \\mathcal{D}}[\\mathcal{L}_{\\text{\\text{transfer}}}(\\pi, \\mathbf{o}, \\mathbf{a})]\n\n$$\n\n其中 $\\mathcal{L}_{\\text{transfer}}$ 衡量策略从人类演示迁移到机器人执行时的性能损失。\n\n---\n\n## 2. 技术方法\n\n### 2.1 整体框架架构\n\nHoMMI 采用**跨本体（Cross-Embodiment）手眼策略设计**，核心包含三个关键组件：\n\n1. **本体无关的视觉表示（Embodiment-Agnostic Visual Representation）**\n2. **放松的头部动作表示（Relaxed Head Action Representation）**\n3. **全身控制器（Whole-Body Controller）**\n\n### 2.2 本体无关视觉表示\n\n研究者提出将人类演示中的视觉信息转换为**本体无关**的特征表示。具体方法为：\n\n使用视觉编码器 $f_v$ 将原始图像 $\\mathbf{I}$ 映射到特征空间：\n\n$$\n\n\\mathbf{z}_v = f_v(\\mathbf{I}; \\theta_v)\n\n$$\n\n该编码器通过以下方式实现本体无关性：\n- 不直接学习从人类视角到机器人视角的像素级映射\n- 学习高层次的语义特征，如物体空间关系、操作目标的几何特征\n- 融合全局上下文信息（来自 egocentric sensing）\n\n### 2.3 放松的头部动作表示\n\n针对头部动作表示，论文提出**放松的连续动作空间**建模：\n\n$$\n\n\\mathbf{a}_{\\text{\\text{head}}} \\in \\mathbb{R}^2 \\quad \\text{或} \\quad \\mathbf{a}_{\\text{\\text{head}}} \\in \\mathbb{R}^3\n\n$$\n\n相比离散的注视点选择或精确的角度控制，放松表示允许：\n- 机器人根据当前任务需求自主调整注视方向\n- 减少人类头部运动与机器人颈部关节之间的直接约束\n- 支持主动感知（Active Perception）行为\n\n### 2.4 全身控制器设计\n\n控制器负责将手眼轨迹转换为机器人可执行的全身协调动作：\n\n$$\n\n\\mathbf{q}_{\\text{\\text{body}}} = \\pi_{\\text{\\text{wb}}}(\\mathbf{z}_v, \\mathbf{a}_{\\text{\\text{hand}}}; \\theta_{\\text{\\text{wb}}})\n\n$$\n\n其中 $\\mathbf{q}_{\\text{body}}$ 包含：\n- 移动底盘位置：$\\mathbf{p}_{\\text{base}} \\in \\mathbb{R}^2$ 或 $\\mathbb{R}^3$\n- 双臂关节角：$\\mathbf{q}_{\\text{arm}} \\in \\mathbb{R}^{n_{\\text{arm}}}$\n- 可能的躯干/颈部姿态\n\n控制器需满足机器人特定的物理约束：\n\n$$\n\n\\mathbf{q}_{\\text{\\text{body}}} \\in \\mathcal{Q}_{\\text{\\text{valid}}}, \\quad \\dot{\\mathbf{q}}_{\\text{\\text{body}}} \\in \\dot{\\mathcal{Q}}_{\\text{\\text{valid}}}\n\n$$\n\n---\n\n## 3. 实现细节\n\n### 3.1 数据收集系统\n\n**UMI（Universal Manipulation Interface）增强版**：\n- 在传统 UMI 接口基础上增加第一人称视角传感器\n- 保持便携性、可扩展性和无机器人依赖的特性\n- 支持双手协调操作的完整捕获\n\n### 3.2 策略网络架构\n\n视觉编码器：ResNet 或 Vision Transformer (ViT) backbone\n\n策略网络：时序建模可能采用：\n- Transformer 架构处理序列观测\n- 或 LSTM/GRU 进行时序依赖建模\n\n### 3.3 关键超参数（推测）\n\n| 参数类别 | 典型取值 |\n|---------|---------|\n| 图像输入分辨率 | 224×224 或 256×256 |\n| 特征维度 | 256-512 |\n| 动作预测频率 | 10-30 Hz |\n| 训练批次大小 | 32-128 |\n| 学习率 | 1e-4 至 1e-3 |\n| 优化器 | Adam/AdamW |\n\n### 3.4 全身运动学约束处理\n\n控制器需处理的约束包括：\n- 关节角度限制：$\\mathbf{q}_{\\min} \\leq \\mathbf{q} \\leq \\mathbf{q}_{\\max}$\n- 关节速度限制：$|\\dot{\\mathbf{q}}| \\leq \\dot{\\mathbf{q}}_{\\max}$\n- 碰撞避免约束\n- 底盘稳定性约束\n\n---\n\n## 4. 实验设置\n\n### 4.1 任务类型\n\n实验聚焦于**长时域移动操作任务**，具体包括：\n- **双臂协调操作**：如搬运、组装、调整物体姿态\n- **移动导航**：自主移动到目标位置\n- **主动感知**：根据任务需要调整观察视角\n\n### 4.2 数据集\n\n数据收集通过无机器人人类演示完成，强调：\n- **可扩展性**：不依赖特定机器人平台\n- **便携性**：设备可快速部署到新环境\n- **数据多样性**：涵盖多种操作场景和任务\n\n### 4.3 评估指标\n\n可能的评估指标包括：\n- 任务成功率（Success Rate）\n- 路径效率（Path Efficiency）\n- 操作精度（Manipulation Accuracy）\n- 策略迁移后的性能保持率\n\n### 4.4 基线方法\n\n可能的对比基线：\n- 直接像素到像素映射方法\n- 仅使用腕部视角的策略（传统 UMI）\n- 无全身协调的独立控制器\n\n---\n\n## 5. 技术优势\n\n### 5.1 数据收集优势\n\n- **无机器人依赖**：降低数据收集成本和门槛\n- **可扩展性强**：可快速收集大量演示数据\n- **便携部署**：设备可迁移至不同环境\n\n### 5.2 策略迁移优势\n\n- **本体无关视觉表示**：减少视觉层面的领域偏移\n- **放松的头部表示**：增加策略执行的灵活性\n- **全身控制器**：确保机器人物理约束得到满足\n\n### 5.3 任务覆盖优势\n\n- 支持双臂协调、双腿（轮式）移动、头部感知等多自由度联动\n- 能够完成传统方法难以处理的长时域复合任务\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 领域差距挑战\n\n尽管采用跨本体设计，人类与机器人之间固有的物理差异仍可能导致：\n- 运动学映射的不精确性\n- 动力学特性的显著差异（如人类手部灵活性 vs 机械臂末端执行器）\n\n### 6.2 感知信息损失\n\n第一人称视角虽然增强了全局上下文感知，但：\n- 可能丢失细粒度的局部操作信息\n- 视角标定和同步可能引入噪声\n\n### 6.3 控制器复杂度\n\n全身协调控制需要实时求解多约束优化问题：\n- 计算复杂度较高\n- 实时性可能受限\n- 稳定性难以保证\n\n### 6.4 泛化能力存疑\n\n- 对新物体、新环境的泛化性能未知\n- 长时域任务中的误差累积问题\n\n### 6.5 数据质量依赖\n\n策略性能高度依赖于人类演示的质量和多样性：\n- 人类操作的不规范可能导致策略学习偏差\n- 演示数据覆盖不足的任务可能无法完成",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "HoMMI: Learning Whole-Body Mobile Manipulation from Human Demonstrations",
+      "authors": [
+        "Xiaomeng Xu",
+        "Jisang Park",
+        "Han Zhang",
+        "Eric Cousineau",
+        "Aditya Bhat",
+        "Jose Barreiros",
+        "Dian Wang",
+        "Shuran Song"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2603.03243",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "We present Whole-Body Mobile Manipulation Interface (HoMMI), a data collection and policy learning framework that learns whole-body mobile manipulation directly from robot-free human demonstrations. We augment UMI interfaces with egocentric sensing to capture the global context required for mobile manipulation, enabling portable, robot-free, and scalable data collection. However, naively incorporating egocentric sensing introduces a larger human-to-robot embodiment gap in both observation and action spaces, making policy transfer difficult. We explicitly bridge this gap with a cross-embodiment hand-eye policy design, including an embodiment agnostic visual representation; a relaxed head action representation; and a whole-body controller that realizes hand-eye trajectories through coordinated whole-body motion under robot-specific physical constraints. Together, these enable long-horizon mobile manipulation tasks requiring bimanual and whole-body coordination, navigation, and active perception. Results are best viewed on: https://hommi-robot.github.io",
+      "route_id": "72a4c7a2-836f-428d-90be-929a031d4df8"
+    },
+    "markdown_stats": {
+      "lines": 367,
+      "words": 10153,
+      "headings": 29
+    },
+    "assets": {
+      "images": 19,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "72a4c7a2-836f-428d-90be-929a031d4df8",
+  "paper_ref": "72a4c7a2-836f-428d-90be-929a031d4df8",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

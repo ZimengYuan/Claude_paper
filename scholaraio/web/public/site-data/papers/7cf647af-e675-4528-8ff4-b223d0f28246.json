@@ -1,0 +1,82 @@
+{
+  "dir_name": "Lai-2024-Diffusion-Reward-Adversarial-Imitation-Learning",
+  "title": "Diffusion-Reward Adversarial Imitation Learning",
+  "authors": [
+    "Chun-Mao Lai",
+    "Hsiang-Chun Wang",
+    "Ping-Chun Hsieh",
+    "Yu-Chiang Frank Wang",
+    "Min-Hung Chen",
+    "Shao-Hua Sun"
+  ],
+  "year": 2024,
+  "journal": "Neural Information Processing Systems",
+  "doi": "10.48550/arXiv.2405.16194",
+  "abstract": "Imitation learning aims to learn a policy from observing expert demonstrations without access to reward signals from environments. Generative adversarial imitation learning (GAIL) formulates imitation learning as adversarial learning, employing a generator policy learning to imitate expert behaviors and discriminator learning to distinguish the expert demonstrations from agent trajectories. Despite its encouraging results, GAIL training is often brittle and unstable. Inspired by the recent dominance of diffusion models in generative modeling, we propose Diffusion-Reward Adversarial Imitation Learning (DRAIL), which integrates a diffusion model into GAIL, aiming to yield more robust and smoother rewards for policy learning. Specifically, we propose a diffusion discriminative classifier to construct an enhanced discriminator, and design diffusion rewards based on the classifier's output for policy learning. Extensive experiments are conducted in navigation, manipulation, and locomotion, verifying DRAIL's effectiveness compared to prior imitation learning methods. Moreover, additional experimental results demonstrate the generalizability and data efficiency of DRAIL. Visualized learned reward functions of GAIL and DRAIL suggest that DRAIL can produce more robust and smoother rewards. Project page: https://nturobotlearninglab.github.io/DRAIL/",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 16,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Diffusion-Reward Adversarial Imitation Learning",
+      "authors": [
+        "Chun-Mao Lai",
+        "Hsiang-Chun Wang",
+        "Ping-Chun Hsieh",
+        "Yu-Chiang Frank Wang",
+        "Min-Hung Chen",
+        "Shao-Hua Sun"
+      ],
+      "year": 2024,
+      "journal": "Neural Information Processing Systems",
+      "doi": "10.48550/arXiv.2405.16194",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Imitation learning aims to learn a policy from observing expert demonstrations without access to reward signals from environments. Generative adversarial imitation learning (GAIL) formulates imitation learning as adversarial learning, employing a generator policy learning to imitate expert behaviors and discriminator learning to distinguish the expert demonstrations from agent trajectories. Despite its encouraging results, GAIL training is often brittle and unstable. Inspired by the recent dominance of diffusion models in generative modeling, we propose Diffusion-Reward Adversarial Imitation Learning (DRAIL), which integrates a diffusion model into GAIL, aiming to yield more robust and smoother rewards for policy learning. Specifically, we propose a diffusion discriminative classifier to construct an enhanced discriminator, and design diffusion rewards based on the classifier's output for policy learning. Extensive experiments are conducted in navigation, manipulation, and locomotion, verifying DRAIL's effectiveness compared to prior imitation learning methods. Moreover, additional experimental results demonstrate the generalizability and data efficiency of DRAIL. Visualized learned reward functions of GAIL and DRAIL suggest that DRAIL can produce more robust and smoother rewards. Project page: https://nturobotlearninglab.github.io/DRAIL/",
+      "route_id": "7cf647af-e675-4528-8ff4-b223d0f28246"
+    },
+    "markdown_stats": {
+      "lines": 505,
+      "words": 14056,
+      "headings": 43
+    },
+    "assets": {
+      "images": 23,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "7cf647af-e675-4528-8ff4-b223d0f28246",
+  "paper_ref": "7cf647af-e675-4528-8ff4-b223d0f28246",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

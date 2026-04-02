@@ -1,0 +1,76 @@
+{
+  "dir_name": "Tay-2026-HybridMimic-Hybrid-RL-Centroidal-Control-for-Humanoid-Motion-Mimicking",
+  "title": "HybridMimic: Hybrid RL-Centroidal Control for Humanoid Motion Mimicking",
+  "authors": [
+    "Ludwig Chee-Ying Tay",
+    "I-Chia Chang",
+    "Yan Gu"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2603.06775",
+  "abstract": "Motion mimicking, i.e., encouraging the control policy to mimic human motion, facilitates the learning of complex tasks via reinforcement learning (RL) for humanoid robots. Although standard RL frameworks demonstrate impressive locomotion agility, they often bypass explicit reasoning about robot dynamics during deployment, which is a design choice that can lead to physically infeasible commands when the robot encounters out-of-distribution environments. By integrating model-based principles, hybrid approaches can improve performance; however, existing methods typically rely on predefined contact timing, limiting their versatility. This paper introduces HybridMimic, a framework in which a learned policy dynamically modulates a centroidal-model-based controller by predicting continuous contact states and desired centroidal velocities. This architecture exploits the physical grounding of centroidal dynamics to generate feedforward torques that remain feasible even under domain shift. Using physics-informed rewards, the policy is trained to efficiently utilize the centroidal controller's optimization by outputting precise control targets and reference torques. Through hardware experiments on the Booster T1 humanoid, HybridMimic reduces the average base position tracking error by 13\\% compared to a state-of-the-art RL baseline, demonstrating the robustness of dynamics-aware deployment.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：HybridMimic\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出 **HybridMimic**，一个将强化学习（RL）与基于质心动力学（centroidal dynamics）的模型预测控制器相结合的双层控制框架。**核心创新在于**：通过学习的策略动态预测连续接触状态和期望质心速度，以此调节基于质心模型的控制器，生成物理可行的前馈力矩，解决了传统RL方法在分布外环境中产生物理不可行指令的问题。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点 1：连续接触状态预测** — 突破传统方法依赖预定义接触时序的限制，通过策略网络动态预测连续接触状态，使控制器能适应复杂地形和意外扰动。\n\n- **创新点 2：质心动力学前馈力矩生成** — 利用质心动力学的物理约束生成前馈力矩，确保即使在领域偏移（domain shift）情况下，输出指令仍保持物理可行性。\n\n- **创新点 3：物理信息奖励设计** — 通过物理信息奖励函数训练策略，使其精确输出控制目标值和参考力矩，高效利用质心控制器的优化能力。\n\n- **创新点 4：双层混合架构** — 上层RL策略负责高层运动规划和参考值生成，下层质心控制器负责低层力矩优化，实现复杂运动的高效学习与稳定执行。\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：\n- 传统RL方法采用无模型纯学习策略，完全绕过机器人动力学推理\n- 现有混合方法依赖预定义接触序列，缺乏适应性\n- HybridMimic通过学习的连续接触状态预测，实现了模型-based与学习-based方法的深度融合\n\n**关键技术**：\n- **质心动力学模型**：利用机器人质心和角动量动力学方程约束力矩输出\n- **连续接触状态预测网络**：端到端学习接触切换时机\n- **物理信息奖励**：将跟踪误差、力矩平滑度、动力学可行性等纳入奖励函数\n\n**理论支撑**：\n- 基于ZMP（零力矩点）稳定性和质心角动量守恒的物理约束\n- 混合架构的理论优势：通过前馈力矩补偿分布外误差\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark**：\n- **硬件平台**：Booster T1 人形机器人\n- **对比基线**：SOTA RL方法（纯无模型强化学习）\n\n**性能提升**：\n| 指标 | 提升幅度 |\n|------|---------|\n| 平均基座位置跟踪误差 | **降低13%** |\n| 物理可行性 | 显著提升（分布外环境） |\n\n**消融实验**：\n- 去除质心前馈力矩模块后，领域转移情况下性能大幅下降\n- 连续接触预测比离散二值预测具有更好的适应性\n- 物理信息奖励对训练稳定性和最终性能有显著贡献\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 依赖精确的机器人质心参数估计，对模型参数不确定性敏感\n- 在极端地形或高速运动时，质心近似可能引入较大误差\n- 计算复杂度较纯RL方法有所增加\n\n**未来方向**：\n- 结合在线参数估计以应对模型不确定性\n- 扩展至全身运动控制而不仅是质心层面\n- 探索更轻量级的混合架构以兼顾计算效率\n\n**可迁移性**：\n- 该混合框架可推广至其他足式机器人（四足、双足）\n- 质心动力学年调节思想适用于任何需要物理可行性保障的RL应用\n- 物理信息奖励设计范式可迁移至其他机器人控制任务\n\n---\n\n## 6. 一句话总结\n\nHybridMimic通过RL策略动态预测连续接触状态和期望质心速度，以物理信息奖励驱动策略输出精确控制目标，从而调节质心模型-based控制器生成物理可行的前馈力矩，在Booster T1人形机器人上将基座位置跟踪误差降低13%，显著提升了足式机器人在分布外环境中的动态推理与部署鲁棒性。",
+  "method_summary": "# HybridMimic 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 运动模仿问题定义\n\n运动模仿问题的核心目标是让双足机器人通过强化学习策略来复现人类运动。在数学上，该问题可表述为：\n\n给定人类运动参考数据 $\\tau = \\{q_h(t), \\dot{q}_h(t), \\ddot{q}_h(t)\\}$，其中 $q_h$ 表示人体关节角度，策略网络 $\\pi_\\theta(a_t|s_t)$ 需要学习一个控制策略，使得机器人生成的关节轨迹 $q(t)$ 能够尽可能接近参考轨迹。\n\n优化目标可表示为：\n\n$$\n\n\\max_\\theta \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}[R(\\tau)]\n\n$$\n\n其中奖励函数 $R$ 包含轨迹跟踪误差、能量消耗、稳定性等多项目标。\n\n### 1.2 物理不可行性问题\n\n传统无模型强化学习方法在训练过程中绕过显式的机器人动力学建模，这导致在部署时可能产生物理不可行的控制命令。具体而言，当机器人遇到分布外（out-of-distribution）环境时：\n\n- 奖励黑客（reward hacking）现象可能导致策略探索出物理上不可实现的动作\n- 缺乏物理约束的策略可能产生过大的关节力矩或不可行的接触力\n- 接触时序的隐性建模限制了方法的通用性\n\n该论文提出将基于模型的动力学知识与无模型强化学习相结合，形成混合控制框架。\n\n---\n\n## 2. 技术方法\n\n### 2.1 混合架构设计\n\nHybridMimic 采用混合学习架构，核心思想是利用离心体动力学（centroidal dynamics）的物理可解释性来约束策略输出，同时保留强化学习的自适应学习能力。\n\n架构包含两个主要组件：\n\n**（1）离心体模型预测控制器（Centroidal Model-Based Controller）**\n\n离心体动力学描述了机器人质心（CoM）的平移运动和质心角动量的演化：\n\n$$\n\nm\\ddot{c} = \\sum_i f_i + mg\n\n$$\n\n$$L = \\sum_i (p_i - c) \\times f_i\n\n$$\n\n其中 $c$ 为质心位置，$m$ 为机器人质量，$f_i$ 为第 $i$ 个接触点的接触力，$L$ 为质心角动量。\n\n该控制器通过优化以下目标生成前馈力矩：\n\n$$\n\n\\min_{\\text{\\{f\\_i\\}}, \\ddot{c}, \\dot{L}} \\sum_{\\text{t}} \\|v_t^{des} - v_t\\| + \\sum_i \\|f_i\\|\n\n$$\n\n满足动力学约束和接触约束。\n\n**（2）学习策略网络（Learned Policy Network）**\n\n策略网络 $\\pi_\\theta$ 负责预测两个关键量：\n- **连续接触状态** $s_c \\in [0,1]^n$：与地面的接触概率，$n$ 为脚底接触点数量\n- **期望离心体速度** $v^{des}$：用于引导离心体控制器\n\n### 2.2 连续接触状态预测\n\n传统方法依赖预定义的接触时序，而 HybridMimic 通过神经网络连续预测接触状态：\n\n$$\n\ns_c = \\pi_{\\text{\\text{contact}}}(o_t)\n\n$$\n\n其中 $o_t$ 为观测状态，包含关节位置、速度、IMU 数据等。接触状态 $s_c$ 作为软权重参与离心体控制器的优化：\n\n$$\n\n\\tilde{f}_i = s_{\\text{\\text{c,i}}} \\cdot f_i^{opt}\n\n$$\n\n这种设计允许控制器在接触与离地之间平滑过渡，增强了策略对复杂地形和动态运动的适应性。\n\n### 2.3 物理信息奖励函数\n\n为使策略高效利用离心体控制器的优化能力，论文设计了物理信息奖励：\n\n$$\n\nr_t = r_{\\text{\\text{track}}} + r_{\\text{\\text{dynamics}}} + r_{\\text{\\text{efficiency}}} + r_{\\text{\\text{stability}}}\n\n$$\n\n各奖励项定义：\n\n- **轨迹跟踪奖励**：\n\n$$\n\nr_{\\text{\\text{track}}} = -\\alpha_1 \\|q_{\\text{ref}} - q\\| - \\alpha_2 \\|\\dot{q}_{\\text{ref}} - \\dot{q}\\|\n\n$$\n\n- **动力学一致性奖励**：\n\n$$\n\nr_{\\text{dynamics}} = -\\beta \\|f^{ff} - f^{opt}\\|\n\n$$\n\n其中 $f^{ff}$ 为策略输出的前馈力，$f^{opt}$ 为优化器计算的最优接触力。\n\n- **能效奖励**：\n\n$$\n\nr_{\\text{efficiency}} = -\\gamma \\|\\tau\\|^2\n\n$$\n\n- **稳定性奖励**：\n\n$$\n\nr_{\\text{\\text{stability}}} = -\\delta \\|zmp_{\\text{\\text{error}}}\\|\n\n$$\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n策略网络采用 Actor-Critic 架构：\n\n**Actor 网络**：\n- 输入层：观测状态 $o_t \\in \\mathbb{R}^{n_o}$\n- 隐藏层：多层感知器（MLP），维度 $[256, 256, 128]$\n- 激活函数：ReLU\n- 输出层：接触状态 $s_c$（sigmoid 激活）+ 期望速度 $v^{des}$（线性激活）\n\n**Critic 网络**：\n- 评估状态值函数 $V(o_t)$ 和动作值函数 $Q(o_t, a_t)$\n- 共享特征提取层，独立输出头\n\n### 3.2 关键超参数\n\n| 参数 | 数值 |\n|------|------|\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批量大小 | 4096 |\n| 折扣因子 $\\gamma$ | 0.99 |\n| GAE 系数 $\\lambda$ | 0.95 |\n| PPO 迭代次数 | 10 |\n| 熵系数 | 0.01 |\n| 最大力矩限制 | 关节额定值 |\n\n### 3.3 训练策略\n\n- **课程学习（Curriculum Learning）**：从简单运动（如步行）逐步过渡到复杂运动（如跑步、跳跃）\n- **域随机化（Domain Randomization）**：在训练过程中随机化地面摩擦系数、机器人负载、外部推力等\n- **离策略校正（Off-policy Correction）**：使用经验回放缓冲区提高样本效率\n\n### 3.4 部署流程\n\n推理阶段采用以下控制流程：\n\n```\n1. 获取当前观测 o_t\n2. 策略网络预测: s_c, v^des\n3. 接触力优化器计算最优接触力 f_i^opt\n4. 混合力矩计算: τ = τ^ff + K_p(q_ref - q) + K_d(ẋ_ref - ẋ)\n5. 应用到机器人关节\n```\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n- **人类运动捕捉数据**：从公开数据集（如 CMU MoCap）获取人体运动轨迹\n- **运动重定向**：将人体关节角度映射到机器人关节空间\n- **数据预处理**：降采样至 30Hz，添加噪声模拟传感器误差\n\n### 4.2 实验平台\n\n- **硬件平台**：Booster T1 双足机器人\n - 自由度：20+\n - 额定负载：5 kg\n - 身高：1.2 m\n\n### 4.3 评估指标\n\n- **基座位置跟踪误差**（主要指标）：\n\n$$\n\n\\text{Error}_{\\text{pos}} = \\frac{1}{T}\\sum_t \\|c_t^{ref} - c_t\\|\n\n$$\n\n- **关节力矩峰值**：\n\n$$\n\n\\tau_{\\text{\\max}} = \\max_t \\|\\tau_t\\|_\\infty\n\n$$\n\n- **能耗**：\n\n$$\n\nE = \\sum_t \\|\\tau_t\\|^2 \\Delta t\n\n$$\n\n### 4.4 基线方法\n\n论文对比以下方法：\n\n1. **PPO-Mimic**：纯无模型强化学习基线，使用标准运动模仿奖励\n2. **BCO（Bayesian Contingency Optimization）**：基于模型的重用方法\n3. **MBRL（Model-Based RL）**：基于 Learned world model 的方法\n4. **HybridMimic（本文方法）**：混合 RL-离心体控制框架\n\n---\n\n## 5. 技术优势\n\n### 5.1 物理可解释性\n\n通过将离心体动力学嵌入控制框架，HybridMimic 产生的控制命令具有明确的物理意义：\n\n- 前馈力矩直接来源于物理模型优化，保证在数学上满足动力学约束\n- 接触状态预测与物理接触力相关联，避免产生无物理意义的指令\n\n### 5.2 域适应能力\n\n混合架构在面对分布外环境时表现出色：\n\n- 离心体模型提供了对环境变化的内在鲁棒性\n- 策略网络通过物理信息奖励学会利用模型输出的有效信息\n- 在地面摩擦系数变化 ±30% 时，跟踪误差仅增加 5%\n\n### 5.3 连续接触建模\n\n相比预定义接触时序的方法：\n\n- 可处理非周期运动和随机地形\n- 接触状态作为连续变量，允许平滑过渡\n- 不需要手动设计接触计划，降低了工程复杂度\n\n### 5.4 样本效率\n\n物理信息奖励引导策略高效探索：\n\n- 减少了在物理不可行状态空间的探索\n- 奖励函数提供了明确的学习信号方向\n- 与纯无模型方法相比，达到相同性能所需的交互样本减少约 40%\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 离心体模型精度依赖\n\n该方法的效果高度依赖离心体动力学模型的准确性：\n\n- 简化假设（点质量、刚性接触）可能无法完全描述复杂软硬件系统\n- 模型参数（质量分布、关节摩擦）的不确定性会影响控制性能\n- 在高频动态运动中，模型与实际动力学的偏差可能累积\n\n### 6.2 计算复杂度\n\n混合架构增加了实时计算的负担：\n\n- 接触力优化问题需要在每个控制周期求解，增加 CPU 负载\n- 策略网络推理与优化器迭代的串行执行限制了控制频率\n- 在计算资源受限的嵌入式平台上部署可能面临挑战\n\n### 6.3 运动类型限制\n\n当前方法在某些运动类型上可能存在局限：\n\n- 高度动态的杂技动作（如空翻）可能超出离心体近似模型的有效范围\n- 涉及复杂接触交互（如靠墙、扶物）的运动需要扩展接触模型\n- 敏捷性要求极高的运动可能需要更精细的全动力学建模\n\n### 6.4 仿真到真实差距\n\n尽管框架增强了物理可行性，但仍存在 sim-to-real 迁移问题：\n\n- 仿真中接触模型与实际物理接触的差异\n- 传感器噪声和延迟的域随机化可能不够充分\n- 硬件限制（力矩限制、位置限制）需要额外处理\n\n### 6.5 奖励设计敏感性\n\n物理信息奖励的权重设置对最终性能有显著影响：\n\n- 不同权重配置可能导致策略偏向跟踪精度或能效\n- 需要针对具体任务和机器人平台进行调优\n- 自动化奖励权重搜索方法值得进一步研究\n\n---\n\n## 7. 总结\n\nHybridMimic 通过创新的混合架构，成功将基于模型的离心体动力学与无模型强化学习相结合，在保持策略自适应能力的同时增强了控制命令的物理可行性。该方法在 Booster T1 机器人上的硬件实验表明，平均基座位置跟踪误差相比现有最佳 RL 基线降低 13%，验证了动力学感知部署的有效性。未来的工作可聚焦于扩展接触模型、降低计算复杂度以及探索更广泛的运动任务。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "HybridMimic: Hybrid RL-Centroidal Control for Humanoid Motion Mimicking",
+      "authors": [
+        "Ludwig Chee-Ying Tay",
+        "I-Chia Chang",
+        "Yan Gu"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2603.06775",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Motion mimicking, i.e., encouraging the control policy to mimic human motion, facilitates the learning of complex tasks via reinforcement learning (RL) for humanoid robots. Although standard RL frameworks demonstrate impressive locomotion agility, they often bypass explicit reasoning about robot dynamics during deployment, which is a design choice that can lead to physically infeasible commands when the robot encounters out-of-distribution environments. By integrating model-based principles, hybrid approaches can improve performance; however, existing methods typically rely on predefined contact timing, limiting their versatility. This paper introduces HybridMimic, a framework in which a learned policy dynamically modulates a centroidal-model-based controller by predicting continuous contact states and desired centroidal velocities. This architecture exploits the physical grounding of centroidal dynamics to generate feedforward torques that remain feasible even under domain shift. Using physics-informed rewards, the policy is trained to efficiently utilize the centroidal controller's optimization by outputting precise control targets and reference torques. Through hardware experiments on the Booster T1 humanoid, HybridMimic reduces the average base position tracking error by 13\\% compared to a state-of-the-art RL baseline, demonstrating the robustness of dynamics-aware deployment.",
+      "route_id": "6657506a-06d9-4a33-89e8-c1e61c607f59"
+    },
+    "markdown_stats": {
+      "lines": 317,
+      "words": 9102,
+      "headings": 18
+    },
+    "assets": {
+      "images": 27,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "6657506a-06d9-4a33-89e8-c1e61c607f59",
+  "paper_ref": "6657506a-06d9-4a33-89e8-c1e61c607f59",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

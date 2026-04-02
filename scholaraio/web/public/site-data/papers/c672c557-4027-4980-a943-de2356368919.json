@@ -1,0 +1,78 @@
+{
+  "dir_name": "Sun-2022-PaCo-Parameter-Compositional-Multi-Task-Reinforcement-Learning-2",
+  "title": "PaCo: Parameter-Compositional Multi-Task Reinforcement Learning",
+  "authors": [
+    "Lingfeng Sun",
+    "Masayoshi Tomizuka",
+    "Wei Xu",
+    "Haichao Zhang"
+  ],
+  "year": 2022,
+  "journal": "Advances in Neural Information Processing Systems 35",
+  "doi": "10.52202/068431-1562",
+  "abstract": "The purpose of multi-task reinforcement learning (MTRL) is to train a single policy that can be applied to a set of different tasks. Sharing parameters allows us to take advantage of the similarities among tasks. However, the gaps between contents and difficulties of different tasks bring us challenges on both which tasks should share the parameters and what parameters should be shared, as well as the optimization challenges due to parameter sharing. In this work, we introduce a parameter-compositional approach (PaCo) as an attempt to address these challenges. In this framework, a policy subspace represented by a set of parameters is learned. Policies for all the single tasks lie in this subspace and can be composed by interpolating with the learned set. It allows not only flexible parameter sharing but also a natural way to improve training. We demonstrate the state-of-the-art performance on Meta-World benchmarks, verifying the effectiveness of the proposed approach.",
+  "paper_type": "proceedings-article",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 7,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "PaCo: Parameter-Compositional Multi-Task Reinforcement Learning",
+      "authors": [
+        "Lingfeng Sun",
+        "Masayoshi Tomizuka",
+        "Wei Xu",
+        "Haichao Zhang"
+      ],
+      "year": 2022,
+      "journal": "Advances in Neural Information Processing Systems 35",
+      "doi": "10.52202/068431-1562",
+      "paper_type": "proceedings-article",
+      "publisher": "Cornell University",
+      "abstract": "The purpose of multi-task reinforcement learning (MTRL) is to train a single policy that can be applied to a set of different tasks. Sharing parameters allows us to take advantage of the similarities among tasks. However, the gaps between contents and difficulties of different tasks bring us challenges on both which tasks should share the parameters and what parameters should be shared, as well as the optimization challenges due to parameter sharing. In this work, we introduce a parameter-compositional approach (PaCo) as an attempt to address these challenges. In this framework, a policy subspace represented by a set of parameters is learned. Policies for all the single tasks lie in this subspace and can be composed by interpolating with the learned set. It allows not only flexible parameter sharing but also a natural way to improve training. We demonstrate the state-of-the-art performance on Meta-World benchmarks, verifying the effectiveness of the proposed approach.",
+      "route_id": "c672c557-4027-4980-a943-de2356368919"
+    },
+    "markdown_stats": {
+      "lines": 406,
+      "words": 11269,
+      "headings": 35
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "c672c557-4027-4980-a943-de2356368919",
+  "paper_ref": "c672c557-4027-4980-a943-de2356368919",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

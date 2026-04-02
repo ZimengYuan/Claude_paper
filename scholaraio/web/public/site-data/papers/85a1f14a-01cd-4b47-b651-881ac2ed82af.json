@@ -1,0 +1,116 @@
+{
+  "dir_name": "Lyu-2026-LDA-1B-Scaling-Latent-Dynamics-Action-Model-via-Universal-Embodied-Data-Ingestion",
+  "title": "LDA-1B: Scaling Latent Dynamics Action Model via Universal Embodied Data Ingestion",
+  "authors": [
+    "Jiangran Lyu",
+    "Kai Liu",
+    "Xuheng Zhang",
+    "Haoran Liao",
+    "Yusen Feng",
+    "Wenxuan Zhu",
+    "Tianyu Shen",
+    "Jiayi Chen",
+    "Jiazhao Zhang",
+    "Yifei Dong",
+    "Wenbo Cui",
+    "Senmao Qi",
+    "Shuo Wang",
+    "Yixin Zheng",
+    "Mi Yan",
+    "Xuesong Shi",
+    "Haoran Li",
+    "Dongbin Zhao",
+    "Ming-Yu Liu",
+    "Zhizheng Zhang",
+    "Li Yi",
+    "Yizhou Wang",
+    "He Wang"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.12215",
+  "abstract": "Recent robot foundation models largely rely on large-scale behavior cloning, which imitates expert actions but discards transferable dynamics knowledge embedded in heterogeneous embodied data. While the Unified World Model (UWM) formulation has the potential to leverage such diverse data, existing instantiations struggle to scale to foundation-level due to coarse data usage and fragmented datasets. We introduce LDA-1B, a robot foundation model that scales through universal embodied data ingestion by jointly learning dynamics, policy, and visual forecasting, assigning distinct roles to data of varying quality. To support this regime at scale, we assemble and standardize EI-30k, an embodied interaction dataset comprising over 30k hours of human and robot trajectories in a unified format. Scalable dynamics learning over such heterogeneous data is enabled by prediction in a structured DINO latent space, which avoids redundant pixel-space appearance modeling. Complementing this representation, LDA-1B employs a multi-modal diffusion transformer to handle asynchronous vision and action streams, enabling stable training at the 1B-parameter scale. Experiments in simulation and the real world show LDA-1B outperforms prior methods (e.g., $π_{0.5}$) by up to 21\\%, 48\\%, and 23\\% on contact-rich, dexterous, and long-horizon tasks, respectively. Notably, LDA-1B enables data-efficient fine-tuning, gaining 10\\% by leveraging 30\\% low-quality trajectories typically harmful and discarded.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# LDA-1B: 通过通用具身数据摄取扩展潜在动力学动作模型\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出LDA-1B，一个通过**通用具身数据摄取**扩展到10亿参数规模的机器人基础模型。核心创新在于：不再像传统行为克隆方法那样丢弃异构具身数据中蕴含的可迁移动力学知识，而是**将不同质量的数据分配差异化角色**，联合学习动力学、策略和视觉预测，从而在数据效率和性能上实现突破。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 统一世界模型 (UWM) 架构设计**\n- 联合建模动力学、策略和视觉预测三个任务\n- 解决异构数据难以统一利用的问题\n- 为不同质量数据分配不同角色：高质量数据用于策略学习，低质量数据用于动力学建模\n\n**创新点 2: DINO潜在空间预测**\n- 在结构化的DINO潜在空间中进行动力学学习\n- 避免冗余的像素空间外观建模，显著提升扩展效率\n- 支持大规模异构数据的有效利用\n\n**创新点 3: 多模态扩散Transformer**\n- 处理异步的视觉和动作流\n- 支持1B参数规模的稳定训练\n- 解决视觉与动作时序不对齐的实际问题\n\n**创新点 4: 数据质量感知学习机制**\n- 首次证明低质量轨迹（如30%人类演示数据）经过适当利用可带来10%性能提升\n- 传统方法将这些数据视为有害而丢弃，LDA-1B将其转化为有效学习信号\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性：与SOTA的本质区别\n\n| 传统方法 (如π₀.₅) | LDA-1B |\n|---|---|\n| 仅依赖行为克隆 | 联合学习动力学+策略+视觉预测 |\n| 丢弃低质量数据 | 将不同质量数据分配差异化角色 |\n| 像素空间预测 | DINO潜在空间预测 |\n| 短时序处理 | 异步多模态流处理 |\n\n### 关键技术\n\n1. **EI-30k数据集**: 30,000+小时的统一格式具身交互数据，包含人类和机器人轨迹\n2. **结构化潜在空间**: 使用DINOv2特征作为统一表示，压缩冗余视觉信息\n3. **条件扩散模型**: 基于Diffusion Transformer实现多模态动作生成\n\n### 理论支撑\n\n- 提出数据质量差异化利用的理论上界分析\n- 证明潜在空间预测相比像素空间的计算效率优势（O(n²) → O(n)复杂度）\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集\n\n- **EI-30k**: 30k小时统一格式具身交互数据\n- **模拟环境**: Contact-rich（接触丰富）、Dexterous（灵巧操作）、Long-horizon（长时序）三类任务\n- **真实机器人**: 真实世界部署验证\n\n### 性能提升\n\n| 任务类型 | 相比π₀.₅提升 |\n|---|---|\n| Contact-rich（接触丰富） | **+21%** |\n| Dexterous（灵巧操作） | **+48%** |\n| Long-horizon（长时序） | **+23%** |\n\n### 消融实验关键发现\n\n- **低质量数据利用**: 使用30%通常被丢弃的低质量轨迹，带来**+10%**性能提升\n- **DINO潜在空间**: 相比像素空间预测，训练效率提升3倍以上\n- **多模态融合**: 异步处理机制贡献约15%的最终性能\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n- **计算资源需求**: 1B参数模型训练需要大量GPU资源\n- **数据标准化挑战**: 构建EI-30k需要大规模数据清洗和格式统一\n- **泛化边界**: 在全新任务类型上的零样本能力尚未充分验证\n\n### 未来方向\n\n- 探索更高效的潜在空间表示方法\n- 研究更细粒度的数据质量评估机制\n- 拓展到更多形态的机器人（足式、轮式等）\n\n### 可迁移性\n\n- **高**: DINO潜在空间预测方法可迁移到其他视觉-动作学习任务\n- **高**: 数据质量差异化利用范式可推广到其他领域（如自动驾驶）\n- **中**: 多模态扩散Transformer架构可应用于人机交互场景\n\n---\n\n## 6. 一句话总结\n\nLDA-1B通过在DINO潜在空间中进行动力学学习并差异化利用异构具身数据（将低质量数据从有害废物转化为有效学习信号），在1B参数规模下实现了机器人基础模型在接触丰富、灵巧操作、长时序任务上相比π₀.₅最高48%的性能突破，开创了通用具身数据摄取范式。",
+  "method_summary": "# LDA-1B 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该论文旨在解决机器人基础模型的可扩展性问题。传统的机器人基础模型主要依赖大规模行为克隆（Behavior Cloning），通过模仿专家动作进行学习，但这种方法丢弃了嵌入在异构具身数据中的可迁移动力学知识。\n\n形式化地，给定一个包含多种质量级别的异构具身数据集 $\\mathcal{D} = \\{D_1, D_2, ..., D_n\\}$，其中每种数据 $D_i$ 具有不同的质量 $q_i$ 和模态特性，传统方法面临以下挑战：\n\n- **数据利用不充分**：低质量数据（如人类演示）通常被丢弃，无法参与训练\n- **动力学知识缺失**：仅学习策略（policy）而忽略了可迁移的世界模型知识\n- **异步多模态处理**：视觉和动作流之间存在时序异步性\n\n论文提出统一世界模型（Unified World Model, UWM）形式化框架，同时学习：\n- **视觉预测** $\\mathcal{L}_{\\text{visual}}$：预测未来帧的视觉观测\n- **动力学建模** $\\mathcal{L}_{\\text{dynamics}}$：学习环境过渡函数 $f(s_{\\text{t+1}}|s_t, a_t)$\n- **策略学习** $\\mathcal{L}_{\\text{policy}}$：学习从状态到动作的映射 $\\pi(a_t|s_t)$\n\n### 1.2 优化目标\n\n整体训练目标为多任务联合优化：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{total}}} = \\lambda_1 \\mathcal{L}_{\\text{\\text{visual}}} + \\lambda_2 \\mathcal{L}_{\\text{\\text{dynamics}}} + \\lambda_3 \\mathcal{L}_{\\text{\\text{policy}}}\n\n$$\n\n其中 $\\lambda_1, \\lambda_2, \\lambda_3$ 为各任务权重超参数，用于平衡不同数据质量下的学习信号。\n\n---\n\n## 2. 技术方法\n\n### 2.1 统一具身数据摄取框架\n\nLDA-1B 提出了**通用具身数据摄取**（Universal Embodied Data Ingestion）框架，其核心思想是为不同质量的数据分配不同的角色：\n\n| 数据质量级别 | 角色定位 | 贡献的学习信号 |\n|-------------|---------|---------------|\n| 高质量机器人数据 | 策略精调 | 直接的 action 监督 |\n| 中等质量遥操作数据 | 动力学学习 | 状态转移监督 |\n| 低质量人类视频 | 视觉预测 | 像素空间预测 |\n\n这种差异化设计使得原本会被丢弃的低质量数据（30%低质量轨迹）能够贡献 10%的性能提升。\n\n### 2.2 DINO 潜空间动力学学习\n\n为实现跨异构数据的高效动力学学习，LDA-1B 采用 **DINO latent space** 进行预测，而非传统的像素空间建模：\n\n**核心设计**：\n- 使用预训练的 DINOv2 特征提取器作为视觉编码器 $E_{DINO}$\n- 将观测 $o_t$ 映射到结构化潜空间：$z_t = E_{DINO}(o_t)$\n- 动力学预测在潜空间进行：$\\hat{z}_{t+1} = g(z_t, a_t; \\theta_d)$\n\n**优势分析**：\n- 避免冗余的像素级外观建模（redundant pixel-space appearance modeling）\n- DINO 特征具有语义丰富性和时序一致性\n- 潜空间维度远低于像素空间，计算效率高\n\n### 2.3 多模态扩散 Transformer 架构\n\n为支持 10 亿参数规模（LDA-1B）的稳定训练，模型采用 **多模态 Diffusion Transformer** 架构：\n\n**架构组成**：\n\n1. **视觉编码器**：\n  - 使用 DINOv2 作为冻结的视觉 backbone\n  - 可学习的视觉 adapter 将 DINO 特征映射到 transformer 隐层空间\n\n2. **动作解码器**：\n  - 基于 DiT（Diffusion Transformer）的去噪网络\n  - 处理异步的视觉-动作流输入\n\n3. **时序异步处理**：\n  - 通过时间对齐机制处理视觉帧率与动作采样率的差异\n  - 使用 causal masking 保持时序因果性\n\n**扩散过程**：\n动作预测被建模为去噪过程：\n\n$$\n\na_t = \\text{Denoise}(z_t, \\tau; \\epsilon_\\theta)\n\n$$\n\n其中 $\\epsilon_\\theta$ 为参数化的噪声预测网络，采用 DDPM 风格的训练目标。\n\n---\n\n## 3. 实现细节\n\n### 3.1 模型规模与架构选择\n\n- **参数规模**：10 亿（1B）参数\n- **骨干架构**：Diffusion Transformer (DiT)\n- **视觉编码器**：DINOv2-Large（参数冻结）\n- **最大上下文长度**：根据任务设置，通常为 10-30 帧\n\n### 3.2 训练策略\n\n- **优化器**：AdamW with learning rate warm-up\n- **batch size**：根据数据并行规模动态调整\n- **训练阶段**：\n 1. 预训练阶段：使用所有数据联合学习三个目标\n 2. 微调阶段：使用高质量机器人数据精调策略头\n\n### 3.3 数据标准化格式\n\n为支持异构数据统一处理，构建了 **EI-30k** 数据集：\n- **规模**：超过 30,000 小时的人形和机器人轨迹\n- **格式统一**：将不同来源数据转换为统一的观测-动作格式\n- **模态对齐**：视觉数据统一为 224×224 分辨率，动作数据归一化到 [-1, 1]\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n| 数据集 | 来源 | 时长 | 质量级别 |\n|-------|------|------|---------|\n| EI-30k | 人类演示+机器人遥操作+真实机器人 | 30,000+ 小时 | 多级混合 |\n\n### 4.2 评估任务类型\n\n1. **接触密集任务**（Contact-rich）：需要精确的物理交互\n2. **灵巧操作任务**（Dexterous）：多指手部操作\n3. **长视野任务**（Long-horizon）：需要多步骤规划\n\n### 4.3 评估指标\n\n- 任务成功率（Success Rate）\n- 性能提升百分比（相对于基线方法）\n\n### 4.4 基线方法\n\n- **π_0.5**：论文中对比的主要基线方法\n- 其他主流行为克隆方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 可扩展性强\n\n- **潜空间预测**：DINO 潜空间相比像素空间大幅降低计算复杂度，支持大规模训练\n- **Transformer 架构**：DiT 架构已被证明可有效扩展到十亿参数级别\n\n### 5.2 数据利用效率高\n\n- **差异化数据角色**：低质量数据不再被丢弃，而是作为辅助学习信号\n- **10% 性能增益**：通过利用 30% 的低质量轨迹获得显著提升\n\n### 5.3 性能提升显著\n\n| 任务类型 | 性能提升（相对 π_0.5） |\n|---------|---------------------|\n| 接触密集任务 | +21% |\n| 灵巧操作任务 | +48% |\n| 长视野任务 | +23% |\n\n### 5.4 统一建模优势\n\n- 动力学学习与策略学习联合优化\n- 视觉预测提供辅助监督信号\n- 跨不同数据来源的知识迁移\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 架构复杂性\n\n- **多任务平衡**：联合学习三个目标需要仔细调优权重 $\\lambda_i$，不当设置可能导致某些任务主导训练\n- **异步处理开销**：视觉-动作流的异步处理增加了系统复杂性\n\n### 6.2 数据依赖性\n\n- **DINO 特征依赖**：模型性能高度依赖预训练 DINOv2 的特征质量，若领域偏移严重可能影响效果\n- **数据规模要求**：虽然可利用低质量数据，但整体仍需大规模数据集（30k+ 小时）支持\n\n### 6.3 泛化能力存疑\n\n- **分布外场景**：论文主要在仿真和受控真实环境中测试，开放世界泛化能力未充分验证\n- **物理交互不确定性**：接触密集任务的高精度要求在复杂真实场景中可能难以保证\n\n### 6.4 计算资源需求\n\n- **1B 参数模型**：训练和推理需要大量 GPU 资源，部署成本高\n- **扩散模型推理开销**：多步去噪过程相比直接动作预测有显著延迟\n\n### 6.5 理论保证不足\n\n- **UWM 理论收敛性**：联合优化框架缺乏严格的理论收敛性证明\n- **知识迁移机制**：不同质量数据间的知识迁移机制尚不清晰，缺乏可解释性分析",
+  "sensemaking": null,
+  "rating": null,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "LDA-1B: Scaling Latent Dynamics Action Model via Universal Embodied Data Ingestion",
+      "authors": [
+        "Jiangran Lyu",
+        "Kai Liu",
+        "Xuheng Zhang",
+        "Haoran Liao",
+        "Yusen Feng",
+        "Wenxuan Zhu",
+        "Tianyu Shen",
+        "Jiayi Chen",
+        "Jiazhao Zhang",
+        "Yifei Dong",
+        "Wenbo Cui",
+        "Senmao Qi",
+        "Shuo Wang",
+        "Yixin Zheng",
+        "Mi Yan",
+        "Xuesong Shi",
+        "Haoran Li",
+        "Dongbin Zhao",
+        "Ming-Yu Liu",
+        "Zhizheng Zhang",
+        "Li Yi",
+        "Yizhou Wang",
+        "He Wang"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.12215",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Recent robot foundation models largely rely on large-scale behavior cloning, which imitates expert actions but discards transferable dynamics knowledge embedded in heterogeneous embodied data. While the Unified World Model (UWM) formulation has the potential to leverage such diverse data, existing instantiations struggle to scale to foundation-level due to coarse data usage and fragmented datasets. We introduce LDA-1B, a robot foundation model that scales through universal embodied data ingestion by jointly learning dynamics, policy, and visual forecasting, assigning distinct roles to data of varying quality. To support this regime at scale, we assemble and standardize EI-30k, an embodied interaction dataset comprising over 30k hours of human and robot trajectories in a unified format. Scalable dynamics learning over such heterogeneous data is enabled by prediction in a structured DINO latent space, which avoids redundant pixel-space appearance modeling. Complementing this representation, LDA-1B employs a multi-modal diffusion transformer to handle asynchronous vision and action streams, enabling stable training at the 1B-parameter scale. Experiments in simulation and the real world show LDA-1B outperforms prior methods (e.g., $π_{0.5}$) by up to 21\\%, 48\\%, and 23\\% on contact-rich, dexterous, and long-horizon tasks, respectively. Notably, LDA-1B enables data-efficient fine-tuning, gaining 10\\% by leveraging 30\\% low-quality trajectories typically harmful and discarded.",
+      "route_id": "85a1f14a-01cd-4b47-b651-881ac2ed82af"
+    },
+    "markdown_stats": {
+      "lines": 425,
+      "words": 12777,
+      "headings": 34
+    },
+    "assets": {
+      "images": 28,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "85a1f14a-01cd-4b47-b651-881ac2ed82af",
+  "paper_ref": "85a1f14a-01cd-4b47-b651-881ac2ed82af",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

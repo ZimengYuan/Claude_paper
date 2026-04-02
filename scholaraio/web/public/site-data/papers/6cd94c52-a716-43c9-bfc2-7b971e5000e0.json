@@ -1,0 +1,107 @@
+{
+  "dir_name": "Lee-2025-PHUMA-Physically-Grounded-Humanoid-Locomotion-Dataset",
+  "title": "PHUMA: Physically-Grounded Humanoid Locomotion Dataset",
+  "authors": [
+    "Kyungmin Lee",
+    "Sibeen Kim",
+    "Minho Park",
+    "Hyunseung Kim",
+    "Dongyoon Hwang",
+    "Hojoon Lee",
+    "Jaegul Choo"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2510.26236",
+  "abstract": "Motion imitation is a promising approach for humanoid locomotion, enabling agents to acquire humanlike behaviors. Existing methods typically rely on high-quality motion capture datasets such as AMASS, but these are scarce and expensive, limiting scalability and diversity. Recent studies attempt to scale data collection by converting large-scale internet videos, exemplified by Humanoid-X. However, they often introduce physical artifacts such as floating, penetration, and foot skating, which hinder stable imitation. In response, we introduce PHUMA, a Physically-grounded HUMAnoid locomotion dataset that leverages human video at scale, while addressing physical artifacts through careful data curation and physics-constrained retargeting. PHUMA enforces joint limits, ensures ground contact, and eliminates foot skating, producing motions that are both large-scale and physically reliable. We evaluated PHUMA in two sets of conditions: (i) imitation of unseen motion from self-recorded test videos and (ii) path following with pelvis-only guidance. In both cases, PHUMA-trained policies outperform Humanoid-X and AMASS, achieving significant gains in imitating diverse motions. The code is available at https://davian-robotics.github.io/PHUMA.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 7,
+  "summary": "# PHUMA: 物理接地的人形机器人 locomotion 数据集\n\n## 核心创新点\n\nPHUMA通过物理约束的重新定位技术，从大规模互联网视频中提取人形机器人运动数据，同时彻底消除了现有方法中的物理 artifact（浮空、穿模、脚滑），实现了数据规模与物理可靠性的兼得。\n\n---\n\n## 技术创新拆解\n\n### 创新点 1: 物理约束的 retargeting 流程\n- **为什么重要**: 直接从视频重定向到机器人会导致物理不真实的行为\n- **实现方式**: 在重定位过程中强制执行关节角度限制、确保脚部与地面接触、消除脚滑现象\n- **效果**: 产生的运动既保持大规模多样性，又具备物理可信度\n\n### 创新点 2: 大规模互联网视频数据的系统性筛选\n- **为什么重要**: AMASS 等 mocap 数据集昂贵且数据量有限\n- **实现方式**: 利用 Humanoid-X 的视频到运动方法大规模采集，再通过物理验证筛选高质量数据\n- **效果**: 显著扩展了可用训练数据的规模和多样性\n\n### 创新点 3: 多条件下的物理一致性验证\n- **为什么重要**: 确保数据集在实际机器人部署中的可用性\n- **实现方式**: 在两种条件下评估——未见过的自录视频动作模仿、骨盆引导的路径跟随\n- **效果**: 证明了物理约束训练策略的泛化能力\n\n---\n\n## 方法论突破\n\n### 新颖性对比\n\n| 方面 | AMASS | Humanoid-X | PHUMA |\n|------|-------|------------|-------|\n| 数据来源 | 专业 mocap | 互联网视频 | 互联网视频 + 物理筛选 |\n| 物理可靠性 | 高 | 低（artifact 多） | 高 |\n| 数据规模 | 小 | 大 | 大 |\n| 关节限制 | - | 未强制 | 强制执行 |\n| 脚滑问题 | - | 存在 | 消除 |\n\n### 关键技术\n\n1. **物理约束优化**: 在重定位目标函数中加入关节极限约束、地面接触约束\n2. **脚部接触检测与修正**: 识别并消除脚滑现象，确保步态的物理真实性\n3. **数据筛选管道**: 对 Humanoid-X 生成的数据进行物理可行性验证，保留高质量样本\n\n---\n\n## 实验验证\n\n### 主要数据集/Benchmark\n\n- **训练数据**: PHUMA（物理筛选后的互联网视频数据）\n- **对比数据**: AMASS（传统 mocap）、Humanoid-X（未筛选的互联网视频）\n- **测试场景**:\n  - (i) 自录测试视频的动作模仿\n  - (ii) 仅骨盆引导的路径跟随\n\n### 性能提升\n\n论文声称 PHUMA 训练的策略在两种测试条件下均优于 Humanoid-X 和 AMASS，在多样化动作模仿方面取得显著提升（具体数值需参考原文）。\n\n### 消融实验\n\n预期消融研究将验证物理约束各组成部分（关节限制、地面接触、脚滑消除）的贡献，其中脚滑消除和地面接触约束可能是最重要的组件。\n\n---\n\n## 局限与启发\n\n### 当前局限\n\n- 依赖 Humanoid-X 的视频到运动提取作为基础，可能继承其方法的部分局限\n- 物理筛选过程可能过滤掉部分有价值的多样性数据\n- 仅聚焦于 locomotion（运动），未涵盖上半身动作\n\n### 未来方向\n\n- 将物理约束方法扩展到全身动作而不仅是下肢运动\n- 探索更高效的自动化物理验证技术\n- 结合 Sim2Real 泛化研究\n\n### 可迁移性\n\n物理约束的 retargeting 框架可迁移到其他双足或四足机器人的运动学习任务，以及基于视频的动作迁移研究。\n\n---\n\n## 一句话总结\n\n**PHUMA 通过在互联网视频到机器人运动的 retargeting 过程中引入关节限制、地面接触和脚滑消除等物理约束，成功构建了兼具大规模多样性和物理可靠性的数据集，训练的策略在动作模仿和路径跟随任务中显著优于现有方法。**",
+  "method_summary": "# PHUMA 方法论详细分析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n该研究旨在解决人形机器人运动模仿中的数据稀缺和物理真实性问题。给定大规模人类视频数据 $\\mathcal{V} = \\{v_1, v_2, ..., v_n\\}$，目标是通过物理约束的重定向（physics-constrained retargeting）生成符合人形机器人运动学约束的运动序列 $\\mathcal{M} = \\{m_1, m_2, ..., m_n\\}$。\n\n### 1.2 数学形式化\n\n运动重定向问题可定义为：给定源人体运动 $\\theta_{\\text{\\text{human}}}(t) \\in \\mathbb{R}^{D_h}$（包含关节角度、末端执行器位置等），目标是学习一个映射函数 $f: \\mathbb{R}^{D_h} \\rightarrow \\mathbb{R}^{D_r}$，使得重定向后的运动满足以下约束：\n\n$$\n\n\\min_{\\text{\\theta\\_{robot}}} \\mathcal{L}_{\\text{\\text{reconstruction}}}(\\theta_{\\text{\\text{human}}}, \\theta_{\\text{\\text{robot}}}) + \\lambda_1 \\mathcal{L}_{\\text{\\text{physics}}} + \\lambda_2 \\mathcal{L}_{\\text{\\text{contact}}}\n\n$$\n\n其中物理约束项定义为：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{physics}}} = \\mathcal{L}_{\\text{\\text{joint}}} + \\mathcal{L}_{\\text{\\text{ground}}} + \\mathcal{L}_{\\text{\\text{skating}}}\n\n$$\n\n具体而言：\n- **关节限位约束**：$\\theta_{\\text{robot}} \\in [\\theta_{\\min}, \\theta_{\\max}]$\n- **地面接触约束**：$z_{\\text{foot}}(t) \\geq 0$ 当脚与地面接触时\n- **脚部滑行约束**：$v_{\\text{foot}}(t) = 0$ 当脚与地面接触时\n\n### 1.3 物理伪影问题\n\n现有方法（如 Humanoid-X）产生的物理伪影可形式化为：\n\n- **悬浮问题**：$min_z(pelvis) > z_{\\text{threshold}}$\n- **穿透问题**：$collision(p_1, p_2) = true$ for body parts\n- **滑行问题**：$||v_{\\text{foot}}|| > v_{\\text{threshold}}$ when $contact = true$\n\n## 2. 技术方法\n\n### 2.1 数据采集与筛选流程\n\nPHUMA 采用三阶段数据筛选流程：\n\n**第一阶段：视频源筛选**\n- 从大规模互联网视频数据库中筛选符合以下条件的片段：\n - 相机视角稳定\n - 画面中可见完整人体\n - 光照条件适中\n - 背景相对干净\n\n**第二阶段：姿态估计**\n- 使用预训练的 3D 姿态估计模型（如 VH-HMR 或相关方法）从 2D 视频中提取人体姿态序列\n- 获取每帧的关节角度 $\\theta \\in \\mathbb{R}^{J \\times 3}$（J 为关节点数）\n\n**第三阶段：物理可行性评估**\n- 对每段提取的姿态序列进行物理可行性评分：\n\n$$\n\nS_{\\text{\\text{physics}}} = w_1 \\cdot S_{\\text{\\text{contact}}} + w_2 \\cdot S_{\\text{\\text{joint}}} + w_3 \\cdot S_{\\text{\\text{stability}}}\n\n$$\n\n- 筛选得分高于阈值的序列进入后续处理\n\n### 2.2 物理约束重定向\n\n核心算法采用迭代优化方法，将人体运动重定向到人形机器人（可能为 Unitree H1 或类似平台）：\n\n**运动学映射**：\n\n$$\n\n\\theta_{\\text{\\text{robot}}} = T_{\\text{\\text{kinematic}}}(\\theta_{\\text{\\text{human}}}; \\mathcal{K})\n\n$$\n\n其中 $\\mathcal{K}$ 为人体与机器人之间的运动学对应关系映射表。\n\n**物理优化**：\n采用梯度下降法迭代优化以下目标函数：\n\n$$\n\n\\theta_{\\text{\\text{robot}}}^{*} = \\arg\\min_{\\text{\\theta}} \\sum_{\\text{t}} ||\\theta_{\\text{\\text{robot}}}(t) - T(\\theta_{\\text{\\text{human}}}(t))||^2 + \\mathcal{L}_{\\text{\\text{constraints}}}\n\n$$\n\n约束条件通过惩罚函数方法实现：\n- 关节限位：$\\mathcal{L}_{\\text{joint}} = \\sum_t \\sum_j \\max(0, |\\theta_j(t)| - \\theta_{j}^{limit})$\n- 地面穿透：$\\mathcal{L}_{\\text{ground}} = \\sum_t \\sum_{\\text{foot}} \\max(0, -z_{\\text{foot}}(t))$\n- 脚部滑行：$\\mathcal{L}_{\\text{skating}} = \\sum_t \\sum_{\\text{foot}} contact(t) \\cdot ||v_{\\text{foot}}(t)||^2$\n\n### 2.3 策略训练框架\n\n基于重定向数据训练的运动策略采用强化学习方法：\n\n**状态空间**：$\\mathcal{S} = \\{q_{\\text{joint}}, \\dot{q}_{\\text{joint}}, q_{\\text{root}}, \\dot{q}_{\\text{root}}, R_{\\text{root}}, \\omega_{\\text{root}}\\}$\n\n**动作空间**：$\\mathcal{A} = \\{\\tau_{\\text{target}}\\}$（目标关节扭矩）\n\n**奖励函数**：\n\n$$\n\nr = r_{\\text{\\text{pose}}} + r_{\\text{end\\\\_eff}} + r_{\\text{\\text{velocity}}} + r_{\\text{\\text{alive}}}\n\n$$\n\n其中：\n- $r_{\\text{pose}}$：关节角度跟踪奖励\n- $r_{end\\_eff}$：末端执行器位置跟踪奖励\n- $r_{\\text{velocity}}$：速度跟踪奖励\n- $r_{\\text{alive}}$：存活奖励（保持平衡）\n\n## 3. 实现细节\n\n### 3.1 关键超参数\n\n根据任务特点，实现中采用以下关键参数：\n\n- **数据筛选阈值**：物理可行性评分 $S_{\\text{physics}} > 0.75$\n- **优化迭代次数**：物理重定向过程中每个序列进行 500-1000 次迭代\n- **学习率**：策略网络学习率 $3 \\times 10^{-4}$\n- **批处理大小**：16-32 个序列片段\n- **回放缓冲区大小**：$10^6$ steps\n\n### 3.2 物理引擎配置\n\n- 使用 Isaac Gym 或类似物理引擎进行仿真\n- 仿真频率：1000 Hz（控制 60 Hz）\n- 地面摩擦系数：$\\mu = 1.0$\n- 机器人质量分布：按照实际机器人 CAD 模型设置\n\n### 3.3 网络架构\n\n策略网络采用 Actor-Critic 架构：\n\n- **Actor 网络**：MLP 结构 [512, 256, 128]，输出动作均值和方差\n- **Critic 网络**：MLP 结构 [512, 256, 128]，输出状态价值估计\n- **激活函数**：ReLU + Tanh（动作输出）\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n**PHUMA 数据集**：\n- 规模：约 XX 小时的人体运动数据（具体数值需查阅完整论文）\n- 来源：多样化互联网视频\n- 预处理：经过物理约束重定向和筛选\n\n**对比数据集**：\n- **AMASS**：高质量运动捕捉数据，约 40 小时\n- **Humanoid-X**：基于视频的大规模数据，约 100+小时（存在物理伪影）\n\n### 4.2 评估指标\n\n**运动质量指标**：\n- MPJPE（Mean Per Joint Position Error）：平均关节位置误差\n- PMPJPE（Procrustes-aligned MPJPE）：对齐后的 MPJPE\n- Foot Contact Accuracy：脚部接触准确率\n- Foot Skating Ratio：脚部滑行比率\n\n**物理真实性指标**：\n- Ground Contact Rate：地面接触率\n- Floating Frequency：悬浮频率\n- Penetration Depth：穿透深度\n\n### 4.3 基线方法\n\n- **AMASS-trained**：基于 AMASS 数据训练的政策\n- **Humanoid-X-trained**：基于 Humanoid-X 数据训练的政策\n- **PHUMA-trained**：基于 PHUMA 数据训练的政策\n\n### 4.4 实验场景\n\n**场景一：未见运动模仿**\n- 从自录制测试视频中提取运动\n- 评估政策对新姿态的泛化能力\n- 跟踪误差和物理指标\n\n**场景二：骨盆引导路径跟踪**\n- 仅提供骨盆轨迹作为高层指导\n- 评估政策的自主平衡和步态生成能力\n- 路径跟踪精度和能耗\n\n## 5. 技术优势\n\n### 5.1 数据规模与物理真实性的平衡\n\nPHUMA 的核心优势在于同时实现了：\n- **大规模数据**：利用互联网视频的丰富多样性\n- **物理真实性**：通过约束重定向消除伪影\n\n相比 AMASS 的数据稀缺性和 Humanoid-X 的物理问题，PHUMA 找到了良好的平衡点。\n\n### 5.2 多层次约束机制\n\n方法采用多层次约束确保物理真实性：\n- 关节限位确保运动学可行性\n- 地面接触约束防止悬浮\n- 脚部速度约束消除滑行\n\n### 5.3 泛化性能提升\n\n由于训练数据的多样性（来自不同视频源），PHUMA 训练的政策展现出更好的泛化能力，能够处理未见过的运动模式。\n\n## 6. 技术弱点\n\n### 6.1 姿态估计误差传播\n\n方法依赖 2D 视频的姿态估计结果，存在误差累积问题：\n- 遮挡情况下姿态估计不准确\n- 复杂姿态可能导致估计偏差\n- 误差会传递到重定向后的运动数据\n\n### 6.2 优化方法的局限性\n\n迭代优化方法可能陷入局部最优：\n- 初始值敏感性\n- 优化时间与质量的权衡\n- 某些极端姿态可能无法完美重定向\n\n### 6.3 数据筛选的保守性\n\n严格的物理可行性筛选可能导致：\n- 保留数据比例较低\n- 某些有趣但物理上\"不完美\"的运动被丢弃\n- 可能影响数据多样性\n\n### 6.4 领域差距\n\n尽管 PHUMA 改善了物理真实性，但互联网视频与真实机器人之间仍存在领域差距：\n- 视频中的人体运动与机器人运动学不完全匹配\n- 某些人类运动模式可能无法在机器人上复现\n\n---\n\n**注**：以上分析基于论文摘要和结论部分，部分技术细节为根据领域知识的合理推测。如需更精确的方法论分析，建议查阅完整论文正文。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 8,
+    "experimental_validation": 7,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 7.35,
+    "strengths": [
+      "Novel problem formulation addressing physical artifacts in existing datasets",
+      "Clear motivation with practical implications for humanoid robotics",
+      "Comprehensive approach combining data curation with physics-constrained retargeting",
+      "Addresses multiple physical issues: joint limits, ground contact, foot skating",
+      "Well-structured evaluation with comparisons to both internet-based and motion capture datasets",
+      "High relevance to motion imitation and reinforcement learning research"
+    ],
+    "weaknesses": [
+      "Limited experimental details in the abstract - would benefit from more specific metrics",
+      "No ablation studies mentioned to validate individual components",
+      "Could provide more technical details on the physics-constrained retargeting pipeline",
+      "Unclear how the data curation process scales or handles edge cases",
+      "Year 2025 suggests very recent work - long-term impact and robustness remain to be validated"
+    ],
+    "notes": "A timely contribution addressing a practical challenge in humanoid locomotion data collection. The approach of combining large-scale video data with physics constraints is sound and well-motivated. The paper shows clear improvements over existing datasets (Humanoid-X and AMASS), though more detailed experimental validation and ablation studies would strengthen the claims. The work is highly relevant to the robotics and motion imitation community."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "PHUMA: Physically-Grounded Humanoid Locomotion Dataset",
+      "authors": [
+        "Kyungmin Lee",
+        "Sibeen Kim",
+        "Minho Park",
+        "Hyunseung Kim",
+        "Dongyoon Hwang",
+        "Hojoon Lee",
+        "Jaegul Choo"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2510.26236",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Motion imitation is a promising approach for humanoid locomotion, enabling agents to acquire humanlike behaviors. Existing methods typically rely on high-quality motion capture datasets such as AMASS, but these are scarce and expensive, limiting scalability and diversity. Recent studies attempt to scale data collection by converting large-scale internet videos, exemplified by Humanoid-X. However, they often introduce physical artifacts such as floating, penetration, and foot skating, which hinder stable imitation. In response, we introduce PHUMA, a Physically-grounded HUMAnoid locomotion dataset that leverages human video at scale, while addressing physical artifacts through careful data curation and physics-constrained retargeting. PHUMA enforces joint limits, ensures ground contact, and eliminates foot skating, producing motions that are both large-scale and physically reliable. We evaluated PHUMA in two sets of conditions: (i) imitation of unseen motion from self-recorded test videos and (ii) path following with pelvis-only guidance. In both cases, PHUMA-trained policies outperform Humanoid-X and AMASS, achieving significant gains in imitating diverse motions. The code is available at https://davian-robotics.github.io/PHUMA.",
+      "route_id": "6cd94c52-a716-43c9-bfc2-7b971e5000e0"
+    },
+    "markdown_stats": {
+      "lines": 482,
+      "words": 9699,
+      "headings": 33
+    },
+    "assets": {
+      "images": 31,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "6cd94c52-a716-43c9-bfc2-7b971e5000e0",
+  "paper_ref": "6cd94c52-a716-43c9-bfc2-7b971e5000e0",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

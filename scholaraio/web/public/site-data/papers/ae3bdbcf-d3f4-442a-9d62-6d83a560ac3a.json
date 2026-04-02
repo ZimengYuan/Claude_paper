@@ -1,0 +1,80 @@
+{
+  "dir_name": "He-2024-NRDF-Neural-Riemannian-Distance-Fields-for-Learning-Articulated-Pose-Priors",
+  "title": "NRDF: Neural Riemannian Distance Fields for Learning Articulated Pose Priors",
+  "authors": [
+    "Yannan He",
+    "Garvita Tiwari",
+    "Tolga Birdal",
+    "Jan Eric Lenssen",
+    "Gerard Pons‐Moll"
+  ],
+  "year": 2024,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2403.03122",
+  "abstract": "Faithfully modeling the space of articulations is a crucial task that allows recovery and generation of realistic poses, and remains a notorious challenge. To this end, we introduce Neural Riemannian Distance Fields (NRDFs), data-driven priors modeling the space of plausible articulations, represented as the zero-level-set of a neural field in a high-dimensional product-quaternion space. To train NRDFs only on positive examples, we introduce a new sampling algorithm, ensuring that the geodesic distances follow a desired distribution, yielding a principled distance field learning paradigm. We then devise a projection algorithm to map any random pose onto the level-set by an adaptive-step Riemannian optimizer, adhering to the product manifold of joint rotations at all times. NRDFs can compute the Riemannian gradient via backpropagation and by mathematical analogy, are related to Riemannian flow matching, a recent generative model. We conduct a comprehensive evaluation of NRDF against other pose priors in various downstream tasks, i.e., pose generation, image-based pose estimation, and solving inverse kinematics, highlighting NRDF's superior performance. Besides humans, NRDF's versatility extends to hand and animal poses, as it can effectively represent any articulation.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "NRDF: Neural Riemannian Distance Fields for Learning Articulated Pose Priors",
+      "authors": [
+        "Yannan He",
+        "Garvita Tiwari",
+        "Tolga Birdal",
+        "Jan Eric Lenssen",
+        "Gerard Pons‐Moll"
+      ],
+      "year": 2024,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2403.03122",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Faithfully modeling the space of articulations is a crucial task that allows recovery and generation of realistic poses, and remains a notorious challenge. To this end, we introduce Neural Riemannian Distance Fields (NRDFs), data-driven priors modeling the space of plausible articulations, represented as the zero-level-set of a neural field in a high-dimensional product-quaternion space. To train NRDFs only on positive examples, we introduce a new sampling algorithm, ensuring that the geodesic distances follow a desired distribution, yielding a principled distance field learning paradigm. We then devise a projection algorithm to map any random pose onto the level-set by an adaptive-step Riemannian optimizer, adhering to the product manifold of joint rotations at all times. NRDFs can compute the Riemannian gradient via backpropagation and by mathematical analogy, are related to Riemannian flow matching, a recent generative model. We conduct a comprehensive evaluation of NRDF against other pose priors in various downstream tasks, i.e., pose generation, image-based pose estimation, and solving inverse kinematics, highlighting NRDF's superior performance. Besides humans, NRDF's versatility extends to hand and animal poses, as it can effectively represent any articulation.",
+      "route_id": "ae3bdbcf-d3f4-442a-9d62-6d83a560ac3a"
+    },
+    "markdown_stats": {
+      "lines": 598,
+      "words": 19193,
+      "headings": 33
+    },
+    "assets": {
+      "images": 49,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "ae3bdbcf-d3f4-442a-9d62-6d83a560ac3a",
+  "paper_ref": "ae3bdbcf-d3f4-442a-9d62-6d83a560ac3a",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

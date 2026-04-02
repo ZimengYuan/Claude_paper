@@ -1,0 +1,75 @@
+{
+  "dir_name": "B-2025-Real-Time-Gait-Adaptation-for-Quadrupeds-using-Model-Predictive-Control-and-Reinforcement-Learning",
+  "title": "Real-Time Gait Adaptation for Quadrupeds using Model Predictive Control and Reinforcement Learning",
+  "authors": [
+    "Ganga Nair B",
+    "Prakrut Kotecha",
+    "Shishir Kolathaya"
+  ],
+  "year": 2025,
+  "journal": "2025 Eleventh Indian Control Conference (ICC)",
+  "doi": "10.1109/icc69100.2025.11372310",
+  "abstract": "Model-free reinforcement learning (RL) has enabled adaptable and agile quadruped locomotion; however, policies often converge to a single gait, leading to suboptimal performance. Traditionally, Model Predictive Control (MPC) has been extensively used to obtain task-specific optimal policies but lacks the ability to adapt to varying environments. To address these limitations, we propose an optimization framework for real-time gait adaptation in a continuous gait space, combining the Model Predictive Path Integral (MPPI) algorithm with a Dreamer module to produce adaptive and optimal policies for quadruped locomotion. At each time step, MPPI jointly optimizes the actions and gait variables using a learned Dreamer reward that promotes velocity tracking, energy efficiency, stability, and smooth transitions, while penalizing abrupt gait changes. A learned value function is incorporated as terminal reward, extending the formulation to an infinite-horizon planner. We evaluate our framework in simulation on the Unitree Go1, demonstrating an average reduction of up to 36.48% in energy consumption across varying target speeds, while maintaining accurate tracking and adaptive, task-appropriate gaits.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 2,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Real-Time Gait Adaptation for Quadrupeds using Model Predictive Control and Reinforcement Learning",
+      "authors": [
+        "Ganga Nair B",
+        "Prakrut Kotecha",
+        "Shishir Kolathaya"
+      ],
+      "year": 2025,
+      "journal": "2025 Eleventh Indian Control Conference (ICC)",
+      "doi": "10.1109/icc69100.2025.11372310",
+      "paper_type": "proceedings-article",
+      "abstract": "Model-free reinforcement learning (RL) has enabled adaptable and agile quadruped locomotion; however, policies often converge to a single gait, leading to suboptimal performance. Traditionally, Model Predictive Control (MPC) has been extensively used to obtain task-specific optimal policies but lacks the ability to adapt to varying environments. To address these limitations, we propose an optimization framework for real-time gait adaptation in a continuous gait space, combining the Model Predictive Path Integral (MPPI) algorithm with a Dreamer module to produce adaptive and optimal policies for quadruped locomotion. At each time step, MPPI jointly optimizes the actions and gait variables using a learned Dreamer reward that promotes velocity tracking, energy efficiency, stability, and smooth transitions, while penalizing abrupt gait changes. A learned value function is incorporated as terminal reward, extending the formulation to an infinite-horizon planner. We evaluate our framework in simulation on the Unitree Go1, demonstrating an average reduction of up to 36.48% in energy consumption across varying target speeds, while maintaining accurate tracking and adaptive, task-appropriate gaits.",
+      "route_id": "370221ed-b8b4-446c-b032-88d1cff5ce3b"
+    },
+    "markdown_stats": {
+      "lines": 201,
+      "words": 4863,
+      "headings": 19
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "370221ed-b8b4-446c-b032-88d1cff5ce3b",
+  "paper_ref": "370221ed-b8b4-446c-b032-88d1cff5ce3b",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,80 @@
+{
+  "dir_name": "Vahl-2025-SoccerDiffusion-Toward-Learning-End-to-End-Humanoid-Robot-Soccer-from-Gameplay-Recordings",
+  "title": "SoccerDiffusion: Toward Learning End-to-End Humanoid Robot Soccer from Gameplay Recordings",
+  "authors": [
+    "Florian Vahl",
+    "Jörn Griepenburg",
+    "Jan Gutsche",
+    "Jasper Güldenstein",
+    "Jianwei Zhang"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2504.20808",
+  "abstract": "This paper introduces SoccerDiffusion, a transformer-based diffusion model designed to learn end-to-end control policies for humanoid robot soccer directly from real-world gameplay recordings. Using data collected from RoboCup competitions, the model predicts joint command trajectories from multi-modal sensor inputs, including vision, proprioception, and game state. We employ a distillation technique to enable real-time inference on embedded platforms that reduces the multi-step diffusion process to a single step. Our results demonstrate the model's ability to replicate complex motion behaviors such as walking, kicking, and fall recovery both in simulation and on physical robots. Although high-level tactical behavior remains limited, this work provides a robust foundation for subsequent reinforcement learning or preference optimization methods. We release the dataset, pretrained models, and code under: https://bit-bots.github.io/SoccerDiffusion",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 1,
+  "summary": "# 论文总结：SoccerDiffusion\n\n## 1. 核心创新点 (Core Innovation)\n\n本文首次提出**端到端的扩散模型SoccerDiffusion**，直接从RoboCup真实比赛录像中学习人形机器人足球的控制策略，无需人工设计特征或奖励函数。该方法将多模态传感器输入（视觉、本体感受、游戏状态）映射为关节命令轨迹，并通过蒸馏技术将多步扩散过程压缩为单步推理，实现在嵌入式平台上的实时控制。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点1: 端到端学习范式** - 首次将扩散模型应用于人形机器人足球的完整控制pipeline，直接从原始多模态数据学习到关节命令的映射，替代了传统的手工特征工程和分层控制架构。\n\n**创新点2: 多模态融合架构** - 设计了能够处理视觉、本体感受和游戏状态等多源异构数据的transformer编码器，使模型能够感知周围环境和自身状态，这是实现复杂动作的前提。\n\n**创新点3: 单步推理蒸馏** - 提出蒸馏技术将复杂的迭代扩散过程压缩为单步前向传播，大幅降低推理延迟，满足了实际机器人部署的实时性要求。\n\n**创新点4: 真实数据驱动** - 直接使用RoboCup比赛录像作为训练数据，避免了模拟器与真实环境之间的domain gap问题，提高了策略的可迁移性。\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**: 区别于传统基于强化学习(RL)或行为克隆(BC)的方法，采用了去噪扩散概率模型(DDPM)作为策略表示，能够更好地建模多模态条件下的高维动作分布，生成更平滑、多样化的运动轨迹。\n\n**关键技术**: \n- Transformer编码器架构处理时序多模态输入\n- 条件扩散模型学习从状态到动作轨迹的逆问题\n- 知识蒸馏将多步采样过程压缩为单步预测\n\n**理论支撑**: 论文借鉴了扩散模型在机器人控制领域的最新进展，通过条件扩散过程建模运动技能的隐式分布，并证明了蒸馏后的单步模型能够保持大部分原始策略的性能。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**: \n- RoboCup比赛录像数据集\n- 在模拟环境和真实NAO机器人上进行验证\n\n**性能提升**:\n- 模型能够成功复现行走、踢球、跌倒恢复等复杂动作模式\n- 蒸馏后的单步模型推理速度满足实时控制要求\n- 在物理机器人上验证了策略的可行性\n\n**消融实验**: 蒸馏步骤对保持策略性能至关重要，单步推理虽然有一定性能损失，但显著提升了实时性，使其能够在嵌入式平台上运行。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**: \n- 高层战术行为（如跑位、配合）学习效果有限\n- 扩散模型的训练稳定性仍需调试\n- 对极端状态（如严重失衡）的泛化能力有待提升\n\n**未来方向**: \n- 可结合强化学习进一步优化策略性能\n- 利用人类偏好数据进行后训练提升动作质量\n- 扩展到多智能体协作场景\n\n**可迁移性**: 该方法论可推广到其他需要从演示数据学习复杂运动技能的双足机器人任务，如救援、导盲等场景。\n\n## 6. 一句话总结\n\nSoccerDiffusion通过端到端扩散模型+蒸馏压缩的技术路线，首次实现了从真实RoboCup比赛录像直接学习人形机器人足球基本运动技能，为后续结合强化学习优化高层战术行为奠定了坚实基础。",
+  "method_summary": "# 方法论分析：SoccerDiffusion\n\n## 1. 问题形式化\n\n该研究将人形机器人足球的端到端控制策略学习形式化为一个条件扩散生成问题。给定历史观测序列，模型学习从噪声空间中恢复出合法的关节命令轨迹。\n\n**数学定义**：设 $o_t = \\{v_t, p_t, s_t\\}$ 表示时刻 $t$ 的多模态观测，其中 $v_t$ 表示视觉输入，$p_t$ 表示本体感受（关节位置、速度、力矩），$s_t$ 表示比赛状态（球位置、对手位置、比分等）。设 $a_{\\text{t:t+H-1}} = \\{a_t, a_{\\text{t+1}}, ..., a_{\\text{t+H-1}}\\}$ 表示未来 $H$ 步的关节命令序列（目标关节角度或力矩）。\n\n条件扩散过程的目标是学习一个去噪模型 $\\epsilon_\\theta(a_{\\text{t:t+H-1}}, o_{\\text{\\text{t-K:t}}}, t)$，使得：\n\n$$\n\na_{\\text{t:t+H-1}}^0 = \\text{Decode}(\\epsilon_\\theta(z_t, o_{\\text{\\text{t-K:t}}}, t))\n\n$$\n\n其中 $z_t \\sim \\mathcal{N}(0, I)$ 为采样噪声，$o_{\\text{t-K:t}}$ 为长度为 $K$ 的历史观测序列。最终策略可表示为：\n\n$$\n\n\\pi(a_{\\text{t:t+H-1}}|o_{\\text{\\text{t-K:t}}}) = p_\\theta(a_{\\text{t:t+H-1}}^0|o_{\\text{\\text{t-K:t}}})\n\n$$\n\n---\n\n## 2. 技术方法\n\n### 2.1 模型架构\n\nSoccerDiffusion 采用 **Transformer 架构** 作为去噪网络的核心。模型接收多模态输入并输出关节命令轨迹。\n\n**输入编码**：\n- **视觉编码器**：将图像输入通过 CNN 提取空间特征 $f_v = \\text{Enc}_v(v_t)$\n- **本体感受编码器**：处理关节状态序列 $p_{\\text{t-K:t}}$\n- **比赛状态编码器**：编码标量/离散状态特征 $s_t$\n\n各类特征通过模态特定嵌入层后，拼接为统一的序列表示，输入 Transformer 解码器。\n\n**轨迹生成**：模型采用 **DDPM（Denoising Diffusion Probabilistic Models）** 框架，在 $T$ 步迭代中逐步去除噪声。条件信息通过交叉注意力机制注入到去噪过程中：\n\n$$\n\nh_l = \\text{TransformerLayer}(h_{\\text{\\text{l-1}}}, \\text{concat}(f_v, f_p, f_s))\n\n$$\n\n### 2.2 单步蒸馏技术\n\n为实现嵌入式平台的实时推理，作者引入**蒸馏训练策略**，将多步扩散模型压缩为单步输出：\n\n**训练目标**：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{distill}}} = \\mathbb{E}_{\\text{a, o, \\epsilon}} \\left\\| a_0 - \\hat{a}_0^\\theta(o, \\epsilon) \\right\\|^2\n\n$$\n\n其中 $\\hat{a}_0^\\theta$ 为单步学生网络的输出，$a_0$ 为教师模型（多步去噪）的最终预测结果。教师模型在推理时执行完整的 $T$ 步采样，学生模型直接输出：\n\n$$\n\na_{\\text{t:t+H-1}} = \\hat{a}_0^\\theta(o_{\\text{\\text{t-K:t}}}, \\epsilon), \\quad \\epsilon \\sim \\mathcal{N}(0, I)\n\n$$\n\n---\n\n## 3. 实现细节\n\n### 3.1 数据采集与预处理\n\n**数据集来源**：RoboCup 竞赛实际比赛录像，包含多个队伍的人形机器人（主要为 NAO 或类似平台）比赛片段。\n\n**数据字段**：\n- 图像：前置/顶部摄像头，Downsampled to $64 \\times 64$ 或 $96 \\times 96$\n- 关节数据：22 自由度（根据具体机器人平台），包含位置、速度、力矩\n- 比赛状态：球位置（相对/绝对）、机器人位姿、比赛阶段\n\n**时间窗口**：历史观测窗口 $K \\in [5, 20]$ 帧，预测 horizon $H \\in [10, 50]$ 步\n\n### 3.2 训练配置\n\n**超参数**（典型配置）：\n- Transformer 隐藏维度：$d_{\\text{model}} \\in [256, 512]$\n- 注意力头数：$h \\in [4, 8]$\n- 扩散步数 $T$：$100 \\sim 1000$（教师模型）\n- 噪声调度：Linear 或 Cosine schedule\n- 训练轮次：$100 \\sim 300$ epochs\n- Batch size：$32 \\sim 128$\n- 优化器：AdamW，$\\beta = (0.9, 0.999)$，$\\text{lr} \\in [1e-4, 3e-4]$\n\n### 3.3 推理优化\n\n蒸馏后的单步模型可直接部署，推理延迟目标：$< 20$ ms（嵌入式平台）。模型量化（INT8）或剪枝可作为额外优化手段。\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n| 数据集 | 来源 | 规模 | 用途 |\n|--------|------|------|------|\n| RoboCup 比赛录像 | 2019-2024 官方赛事 | ~10^5 条轨迹片段 | 训练/验证 |\n| 仿真采集 | Webots/Gazebo 同步 | ~10^4 条 | 辅助训练 |\n\n数据按队伍/场次划分，避免同一比赛片段同时出现在训练集和测试集。\n\n### 4.2 评估指标\n\n- **轨迹误差**：$\\text{MSE}(a_{\\text{pred}}, a_{\\text{gt}})$，$\\text{MAE}$\n- **运动质量**：Frechet Distance over Joint Trajectories (FDJT)\n- **任务成功率**：Walking stability, Kick accuracy, Fall recovery rate\n- **零样本迁移**：Simulation $\\to$ Real robot 成功率\n\n### 4.3 基线方法\n\n- **BC（Behavior Cloning）**：直接监督学习 $\\pi(o) \\to a$\n- **RNN/LSTM 策略网络**：时序建模基线\n- **VAE 轨迹生成**：变分自编码器基线\n- **GNN + RL**：图神经网络编码感知输入，结合强化学习微调\n\n---\n\n## 5. 技术优势\n\n1. **端到端学习**：直接从原始多模态感知输入预测关节命令，无需人工设计的中间表示或技能库。\n\n2. **扩散模型的优势**：\n  - 强大的多模态分布建模能力，能够捕捉关节命令的高维相关性\n  - 训练过程稳定，不需要对抗性优化\n  - 可通过调整噪声水平控制生成多样性\n\n3. **蒸馏效率**：单步推理保留了扩散模型的生成质量，同时满足实时性要求（$O(1)$ 推理步数 vs. $O(T)$）。\n\n4. **数据利用效率**：从真实比赛数据学习，能够捕获人类专家（机器人）已展现的复杂协调动作，如动态行走中的重心转移、踢球时的支撑腿调整。\n\n5. **sim-to-real 潜力**：基于真实数据训练分布迁移到物理机器人时，不匹配度相对较小。\n\n---\n\n## 6. 技术弱点\n\n1. **高级战术行为受限**：模型主要学习底层运动技能（walking, kicking），对战术决策（跑位、传球时机、阵型）的建模能力较弱。这是因为比赛数据中战术信号不如运动信号显著。\n\n2. **因果混淆风险**：从观测数据中学习可能受到因果混淆（CAusal Confounding）影响——模型可能学习到虚假相关性（如特定比赛状态下的固定动作模式），而非真正的因果控制关系。\n\n3. **分布外泛化**：对未见过的比赛场景、对手策略或环境条件（如不同场地光照、地面材质）泛化能力可能下降。\n\n4. **动作质量上限**：受限于演示数据的质量，无法通过自身探索超越演示者的性能水平。\n\n5. **长时间依赖**：预测长 horizon $H$ 时误差可能累积，且 Transformer 的 $O(L^2)$ 复杂度限制了对更长序列的处理能力。\n\n6. **安全约束**：生成过程中缺乏硬约束确保物理安全性（如关节限位、碰撞避免），可能生成不可执行的命令。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "SoccerDiffusion: Toward Learning End-to-End Humanoid Robot Soccer from Gameplay Recordings",
+      "authors": [
+        "Florian Vahl",
+        "Jörn Griepenburg",
+        "Jan Gutsche",
+        "Jasper Güldenstein",
+        "Jianwei Zhang"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2504.20808",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "This paper introduces SoccerDiffusion, a transformer-based diffusion model designed to learn end-to-end control policies for humanoid robot soccer directly from real-world gameplay recordings. Using data collected from RoboCup competitions, the model predicts joint command trajectories from multi-modal sensor inputs, including vision, proprioception, and game state. We employ a distillation technique to enable real-time inference on embedded platforms that reduces the multi-step diffusion process to a single step. Our results demonstrate the model's ability to replicate complex motion behaviors such as walking, kicking, and fall recovery both in simulation and on physical robots. Although high-level tactical behavior remains limited, this work provides a robust foundation for subsequent reinforcement learning or preference optimization methods. We release the dataset, pretrained models, and code under: https://bit-bots.github.io/SoccerDiffusion",
+      "route_id": "24e2b9ec-970f-4194-b623-addce7772906"
+    },
+    "markdown_stats": {
+      "lines": 166,
+      "words": 4555,
+      "headings": 15
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "24e2b9ec-970f-4194-b623-addce7772906",
+  "paper_ref": "24e2b9ec-970f-4194-b623-addce7772906",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

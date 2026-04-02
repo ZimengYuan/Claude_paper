@@ -1,0 +1,76 @@
+{
+  "dir_name": "Zhou-2026-Adaptive-Legged-Locomotion-via-Online-Learning-for-Model-Predictive-Control",
+  "title": "Adaptive Legged Locomotion via Online Learning for Model Predictive Control",
+  "authors": [
+    "Hongyu Zhou",
+    "Xiaoyu Zhang",
+    "Vasileios Tzoumas"
+  ],
+  "year": 2026,
+  "journal": "IEEE Robotics and Automation Letters",
+  "doi": "10.1109/lra.2025.3644161",
+  "abstract": "We provide an algorithm for adaptive legged locomotion via online learning and model predictive control. The algorithm is composed of two interacting modules: model predictive control (MPC) and online learning of residual dynamics. The residual dynamics can represent modeling errors and external disturbances. We are motivated by the future of autonomy where quadrupeds will autonomously perform complex tasks despite real-world unknown uncertainty, such as unknown payload and uneven terrains. The algorithm uses random Fourier features to approximate the residual dynamics in reproducing kernel Hilbert spaces. Then, it employs MPC based on the current learned model of the residual dynamics. The model is updated online in a self-supervised manner using least squares based on the data collected while controlling the quadruped. The algorithm enjoys sublinear <italic>dynamic regret</italic>, defined as the suboptimality against an optimal clairvoyant controller that knows how the residual dynamics. We validate our algorithm in Gazebo and MuJoCo simulations, where the quadruped aims to track reference trajectories. The Gazebo simulations include constant unknown external forces up to <inline-formula><tex-math notation=\"LaTeX\">$12\\boldsymbol{g}$</tex-math></inline-formula>, where <inline-formula><tex-math notation=\"LaTeX\">$\\boldsymbol{g}$</tex-math></inline-formula> is the gravity vector, in flat terrain, slope terrain with <inline-formula><tex-math notation=\"LaTeX\">$20^{\\circ }$</tex-math></inline-formula> inclination, and rough terrain with <inline-formula><tex-math notation=\"LaTeX\">$0.25\\,\\text{m}$</tex-math></inline-formula> height variation. The MuJoCo simulations include time-varying unknown disturbances with payload up to <inline-formula><tex-math notation=\"LaTeX\">$\\text{8}\\,\\text{kg}$</tex-math></inline-formula> and time-varying ground friction coefficients in flat terrain.",
+  "paper_type": "journal-article",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 1,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Adaptive Legged Locomotion via Online Learning for Model Predictive Control",
+      "authors": [
+        "Hongyu Zhou",
+        "Xiaoyu Zhang",
+        "Vasileios Tzoumas"
+      ],
+      "year": 2026,
+      "journal": "IEEE Robotics and Automation Letters",
+      "doi": "10.1109/lra.2025.3644161",
+      "paper_type": "journal-article",
+      "issn": "2331-8422",
+      "abstract": "We provide an algorithm for adaptive legged locomotion via online learning and model predictive control. The algorithm is composed of two interacting modules: model predictive control (MPC) and online learning of residual dynamics. The residual dynamics can represent modeling errors and external disturbances. We are motivated by the future of autonomy where quadrupeds will autonomously perform complex tasks despite real-world unknown uncertainty, such as unknown payload and uneven terrains. The algorithm uses random Fourier features to approximate the residual dynamics in reproducing kernel Hilbert spaces. Then, it employs MPC based on the current learned model of the residual dynamics. The model is updated online in a self-supervised manner using least squares based on the data collected while controlling the quadruped. The algorithm enjoys sublinear <italic>dynamic regret</italic>, defined as the suboptimality against an optimal clairvoyant controller that knows how the residual dynamics. We validate our algorithm in Gazebo and MuJoCo simulations, where the quadruped aims to track reference trajectories. The Gazebo simulations include constant unknown external forces up to <inline-formula><tex-math notation=\"LaTeX\">$12\\boldsymbol{g}$</tex-math></inline-formula>, where <inline-formula><tex-math notation=\"LaTeX\">$\\boldsymbol{g}$</tex-math></inline-formula> is the gravity vector, in flat terrain, slope terrain with <inline-formula><tex-math notation=\"LaTeX\">$20^{\\circ }$</tex-math></inline-formula> inclination, and rough terrain with <inline-formula><tex-math notation=\"LaTeX\">$0.25\\,\\text{m}$</tex-math></inline-formula> height variation. The MuJoCo simulations include time-varying unknown disturbances with payload up to <inline-formula><tex-math notation=\"LaTeX\">$\\text{8}\\,\\text{kg}$</tex-math></inline-formula> and time-varying ground friction coefficients in flat terrain.",
+      "route_id": "49512214-064c-4276-84dd-8975a173c479"
+    },
+    "markdown_stats": {
+      "lines": 312,
+      "words": 10936,
+      "headings": 17
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "49512214-064c-4276-84dd-8975a173c479",
+  "paper_ref": "49512214-064c-4276-84dd-8975a173c479",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

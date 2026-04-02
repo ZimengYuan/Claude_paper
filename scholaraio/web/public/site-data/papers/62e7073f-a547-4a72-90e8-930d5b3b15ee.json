@@ -1,0 +1,87 @@
+{
+  "dir_name": "Li-2025-COIN-Control-Inpainting-Diffusion-Prior-for-Human-and-Camera-Motion-Estimation",
+  "title": "COIN: Control-Inpainting Diffusion Prior for Human and Camera Motion Estimation",
+  "authors": [
+    "Jiefeng Li",
+    "Ye Yuan",
+    "Davis Rempe",
+    "Haotian Zhang",
+    "Pavlo Molchanov",
+    "Cewu Lu",
+    "Jan Kautz",
+    "Umar Iqbal"
+  ],
+  "year": 2025,
+  "journal": "Lecture Notes in Computer Science",
+  "doi": "10.1007/978-3-031-72640-8_24",
+  "abstract": "Estimating global human motion from moving cameras is challenging due to the entanglement of human and camera motions. To mitigate the ambiguity, existing methods leverage learned human motion priors, which however often result in oversmoothed motions with misaligned 2D projections. To tackle this problem, we propose COIN, a control-inpainting motion diffusion prior that enables fine-grained control to disentangle human and camera motions. Although pre-trained motion diffusion models encode rich motion priors, we find it non-trivial to leverage such knowledge to guide global motion estimation from RGB videos. COIN introduces a novel control-inpainting score distillation sampling method to ensure well-aligned, consistent, and high-quality motion from the diffusion prior within a joint optimization framework. Furthermore, we introduce a new human-scene relation loss to alleviate the scale ambiguity by enforcing consistency among the humans, camera, and scene. Experiments on three challenging benchmarks demonstrate the effectiveness of COIN, which outperforms the state-of-the-art methods in terms of global human motion estimation and camera motion estimation. As an illustrative example, COIN outperforms the state-of-the-art method by 33% in world joint position error (W-MPJPE) on the RICH dataset. Keywords: Global Human Motion Estimation · Human Motion Prior · Score Distillation Sampling",
+  "paper_type": "book-chapter",
+  "publisher": "Springer Science+Business Media",
+  "issn": "0302-9743",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 3,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "COIN: Control-Inpainting Diffusion Prior for Human and Camera Motion Estimation",
+      "authors": [
+        "Jiefeng Li",
+        "Ye Yuan",
+        "Davis Rempe",
+        "Haotian Zhang",
+        "Pavlo Molchanov",
+        "Cewu Lu",
+        "Jan Kautz",
+        "Umar Iqbal"
+      ],
+      "year": 2025,
+      "journal": "Lecture Notes in Computer Science",
+      "doi": "10.1007/978-3-031-72640-8_24",
+      "paper_type": "book-chapter",
+      "publisher": "Springer Science+Business Media",
+      "issn": "0302-9743",
+      "abstract": "Estimating global human motion from moving cameras is challenging due to the entanglement of human and camera motions. To mitigate the ambiguity, existing methods leverage learned human motion priors, which however often result in oversmoothed motions with misaligned 2D projections. To tackle this problem, we propose COIN, a control-inpainting motion diffusion prior that enables fine-grained control to disentangle human and camera motions. Although pre-trained motion diffusion models encode rich motion priors, we find it non-trivial to leverage such knowledge to guide global motion estimation from RGB videos. COIN introduces a novel control-inpainting score distillation sampling method to ensure well-aligned, consistent, and high-quality motion from the diffusion prior within a joint optimization framework. Furthermore, we introduce a new human-scene relation loss to alleviate the scale ambiguity by enforcing consistency among the humans, camera, and scene. Experiments on three challenging benchmarks demonstrate the effectiveness of COIN, which outperforms the state-of-the-art methods in terms of global human motion estimation and camera motion estimation. As an illustrative example, COIN outperforms the state-of-the-art method by 33% in world joint position error (W-MPJPE) on the RICH dataset. Keywords: Global Human Motion Estimation · Human Motion Prior · Score Distillation Sampling",
+      "route_id": "62e7073f-a547-4a72-90e8-930d5b3b15ee"
+    },
+    "markdown_stats": {
+      "lines": 384,
+      "words": 11498,
+      "headings": 16
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "62e7073f-a547-4a72-90e8-930d5b3b15ee",
+  "paper_ref": "62e7073f-a547-4a72-90e8-930d5b3b15ee",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

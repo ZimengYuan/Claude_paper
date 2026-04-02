@@ -1,0 +1,77 @@
+{
+  "dir_name": "Malhotra-2025-Humanoid-Motion-Scripting-with-Postural-Synergies-2",
+  "title": "Humanoid Motion Scripting with Postural Synergies",
+  "authors": [
+    "Rhea Malhotra",
+    "William Chong",
+    "Catie Cuan",
+    "Oussama Khatib"
+  ],
+  "year": 2025,
+  "journal": "2025 IEEE-RAS 24th International Conference on Humanoid Robots (Humanoids)",
+  "doi": "10.1109/humanoids65713.2025.11203029",
+  "abstract": "Generating sequences of human-like motions for humanoid robots presents challenges in collecting and analyzing reference human motions, synthesizing new motions based on these reference motions, and mapping the generated motion onto humanoid robots. To address these issues, we introduce SynSculptor, a humanoid motion analysis and editing framework that leverages postural synergies for training-free humanlike motion scripting. To analyze human motion, we collect 3+ hours of motion capture data across 20 individuals where a real-time operational space controller mimics human motion on a simulated humanoid robot. The major postural synergies are extracted using principal component analysis (PCA) for velocity trajectories segmented by changes in robot momentum, constructing a style-conditioned synergy library for free-space motion generation. To evaluate generated motions using the synergy library, the foot-sliding ratio and proposed metrics for motion smoothness involving total momentum and kinetic energy deviations are computed for each generated motion, and compared with reference motions. Finally, we leverage the synergies with a motion-language transformer, where the humanoid, during execution of motion tasks with its endeffectors, adapts its posture based on the chosen synergy. Supplementary material, code, and videos are available at https://rhea-mal.github.io/humanoidsynergies.io/.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Humanoid Motion Scripting with Postural Synergies",
+      "authors": [
+        "Rhea Malhotra",
+        "William Chong",
+        "Catie Cuan",
+        "Oussama Khatib"
+      ],
+      "year": 2025,
+      "journal": "2025 IEEE-RAS 24th International Conference on Humanoid Robots (Humanoids)",
+      "doi": "10.1109/humanoids65713.2025.11203029",
+      "paper_type": "proceedings-article",
+      "abstract": "Generating sequences of human-like motions for humanoid robots presents challenges in collecting and analyzing reference human motions, synthesizing new motions based on these reference motions, and mapping the generated motion onto humanoid robots. To address these issues, we introduce SynSculptor, a humanoid motion analysis and editing framework that leverages postural synergies for training-free humanlike motion scripting. To analyze human motion, we collect 3+ hours of motion capture data across 20 individuals where a real-time operational space controller mimics human motion on a simulated humanoid robot. The major postural synergies are extracted using principal component analysis (PCA) for velocity trajectories segmented by changes in robot momentum, constructing a style-conditioned synergy library for free-space motion generation. To evaluate generated motions using the synergy library, the foot-sliding ratio and proposed metrics for motion smoothness involving total momentum and kinetic energy deviations are computed for each generated motion, and compared with reference motions. Finally, we leverage the synergies with a motion-language transformer, where the humanoid, during execution of motion tasks with its endeffectors, adapts its posture based on the chosen synergy. Supplementary material, code, and videos are available at https://rhea-mal.github.io/humanoidsynergies.io/.",
+      "route_id": "17c3eab1-be48-4653-826b-bf6fa49cbf46"
+    },
+    "markdown_stats": {
+      "lines": 302,
+      "words": 6932,
+      "headings": 20
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "17c3eab1-be48-4653-826b-bf6fa49cbf46",
+  "paper_ref": "17c3eab1-be48-4653-826b-bf6fa49cbf46",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

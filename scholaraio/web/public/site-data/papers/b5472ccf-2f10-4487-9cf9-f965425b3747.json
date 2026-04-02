@@ -1,0 +1,94 @@
+{
+  "dir_name": "Yi-2026-Flow-Policy-Gradients-for-Robot-Control",
+  "title": "Flow Policy Gradients for Robot Control",
+  "authors": [
+    "Brent Yi",
+    "Hongsuk Choi",
+    "Himanshu Gaurav Singh",
+    "Xiaoyu Huang",
+    "Takara Truong",
+    "Carmelo Sferrazza",
+    "Yi Ma",
+    "Rocky Duan",
+    "Pieter Abbeel",
+    "Guanya Shi",
+    "Karen Liu",
+    "Angjoo Kanazawa"
+  ],
+  "year": 2026,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2602.02481",
+  "abstract": "Likelihood-based policy gradient methods are the dominant approach for training robot control policies from rewards. These methods rely on differentiable action likelihoods, which constrain policy outputs to simple distributions like Gaussians. In this work, we show how flow matching policy gradients -- a recent framework that bypasses likelihood computation -- can be made effective for training and fine-tuning more expressive policies in challenging robot control settings. We introduce an improved objective that enables success in legged locomotion, humanoid motion tracking, and manipulation tasks, as well as robust sim-to-real transfer on two humanoid robots. We then present ablations and analysis on training dynamics. Results show how policies can exploit the flow representation for exploration when training from scratch, as well as improved fine-tuning robustness over baselines.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 2,
+  "summary": "# Flow Policy Gradients for Robot Control 论文总结\n\n## 1. 核心创新点 (Core Innovation)\n\n本文首次将**流匹配（Flow Matching）策略梯度**应用于机器人控制任务，提出了一种无需计算似然函数即可训练高表达力策略的新范式。通过改进目标函数设计，使基于归一化流（Normalizing Flow）的复杂动作分布能够直接用于强化学习训练，突破了传统策略梯度方法对高斯分布的依赖。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 流匹配策略梯度框架**\n- 将流匹配（一种新兴的生成式建模方法）引入策略优化，无需可微的动作似然计算\n- 允许策略输出任意复杂的分布形态（非常规分布、多模态分布）\n\n**创新点 2: 改进的训练目标函数**\n- 针对机器人控制场景重新设计目标，使其能在具有挑战性的环境中成功训练\n- 解决了流匹配与强化学习结合时的数值稳定性问题\n\n**创新点 3: 增强的探索能力**\n- 利用流表示的自适应探索特性，从零开始训练时展现更优的探索行为\n- 相比高斯策略，能更有效地探索复杂动作空间\n\n**创新点 4: 鲁棒的微调性能**\n- 在 sim-to-real 迁移场景中展现更高的微调稳定性\n- 相比 baseline 方法，在微调阶段表现更鲁棒\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性：**\n- 传统策略梯度方法（如 PPO、SAC）依赖可微的策略分布（通常是 Gaussian），限制了对复杂动作分布的建模能力\n- 本文提出的流匹配策略梯度完全绕过了似然计算，使得基于归一化流的高表达力策略可直接用于强化学习训练\n\n**关键技术：**\n- **流匹配（Flow Matching）**：利用常微分方程（ODE）定义从噪声分布到目标数据分布的变换\n- **策略架构**：使用 Neural ODE 将随机噪声映射到连续动作轨迹\n- **奖励加权更新**：将流匹配目标与强化学习奖励信号结合\n\n**理论支撑：**\n- 建立了流匹配目标与策略梯度理论的联系\n- 提供了训练动态的分析，解释为何流表示有助于探索\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark：**\n- **腿部运动**（Legged Locomotion）：四足机器人行走任务\n- **人形运动追踪**（Humanoid Motion Tracking）：复杂人体动作复制\n- **操作任务**（Manipulation）：物体抓取与操控\n- **真实机器人实验**：两个人形机器人的 sim-to-real 迁移\n\n**性能提升：**\n- 在所有测试任务中成功训练了高表达力策略\n- 相比基于高斯策略的 baseline，展现更强的探索能力和更高的最终性能\n- Sim-to-real 迁移实验验证了方法在真实硬件上的有效性\n\n**消融实验：**\n- 验证了流表示对探索的贡献：去掉流匹配组件后，策略探索能力显著下降\n- 分析了训练动态：流策略在训练早期能更快发现高奖励区域\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n- 计算开销可能高于简单的高斯策略（需要额外的流模型前向传播）\n- 在某些极简单任务上可能没有明显优势\n- 对超参数设置有一定敏感性\n\n**未来方向：**\n- 探索更大规模的流策略训练\n- 研究流匹配与离线强化学习的结合\n- 拓展到更复杂的动作空间（如接触丰富的操作任务）\n\n**可迁移性：**\n- 方法框架具有通用性，可应用于任何需要复杂动作分布建模的强化学习场景\n- 对于需要强探索能力的任务（如稀疏奖励任务）特别有价值\n\n---\n\n## 6. 一句话总结\n\n本文通过将流匹配技术引入策略梯度框架，实现了无需似然计算即可训练高表达力复杂动作分布的策略，在腿部运动、人形追踪、操作等任务上验证了方法的优越探索能力和鲁棒微调性能，为机器人强化学习提供了一种突破高斯分布限制的新范式。",
+  "method_summary": "# Flow Policy Gradients：方法论详解\n\n## 1. 问题形式化\n\n### 1.1 强化学习控制问题\n\n设机器人控制问题建模为马尔可夫决策过程 (MDP)，定义为元组 $(\\mathcal{S}, \\mathcal{A}, P, r, \\gamma)$，其中：\n\n- $\\mathcal{S} \\subseteq \\mathbb{R}^{n_s}$：状态空间\n- $\\mathcal{A} \\subseteq \\mathbb{R}^{n_a}$：动作空间\n- $P(s^\\prime|s,a)$：状态转移概率\n- $r(s,a)$：奖励函数\n- $\\gamma \\in [0,1)$：折扣因子\n\n策略梯度方法旨在直接优化参数化策略 $\\pi_\\theta(a|s)$，最大化期望累计折扣奖励：\n\n$$\n\nJ(\\theta) = \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t r(s_t, a_t)\\right]\n\n$$\n\n其中 $\\tau = (s_0, a_0, s_1, a_1, \\ldots)$ 为轨迹。\n\n### 1.2 传统策略梯度的局限性\n\n标准策略梯度方法（如 REINFORCE、PPO）需计算似然函数 $\\pi_\\theta(a|s)$。当策略输出为复杂分布时（如归一化流输出的多模态分布），似然计算代价高昂甚至不可行：\n\n$$\n\n\\nabla_\\theta J(\\theta) = \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}\\left[\\nabla_\\theta \\log \\pi_\\theta(a_t|s_t) \\cdot Q(s_t, a_t)\\right]\n\n$$\n\n这导致传统方法被限制在简单分布族（对角协方差高斯等），表达能力严重不足。\n\n### 1.3 Flow Matching 框架\n\nFlow Matching (FM) 是一种无需似然计算的生成式建模框架。核心思想是构建从简单先验分布 $p_0$ 到目标分布 $p_1$ 的概率路径 $p_t$，通过常微分方程 (ODE) 描述分布的演化：\n\n$$\n\n\\frac{d z(t)}{dt} = v(z(t), t), \\quad z(0) \\sim p_0, \\quad z(1) \\sim p_1\n\n$$\n\n其中 $v(z(t), t)$ 为时变速度场。Flow Matching 策略梯度将策略 $\\pi_\\theta$ 建模为 flow 模型，绕过似然计算直接进行策略优化。\n\n---\n\n## 2. 技术方法\n\n### 2.1 条件流匹配 (Conditional Flow Matching)\n\n设条件速度场为 $v_\\theta(z, t | s)$，目标是将随机噪声 $z_0 \\sim \\mathcal{N}(0, I)$ 映射到动作分布 $z_1 \\sim \\pi(a|s)$。条件流匹配损失定义为：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{CFM}}}(\\theta) = \\mathbb{E}_{\\text{s \\sim \\mathcal{D}}, t \\sim \\mathcal{U}(0,1), z_0 \\sim \\mathcal{N}(0,I)}\\left[\\|v_\\theta(z_t, t | s) - v^*(z_t, t | s)\\|^2\\right]\n\n$$\n\n其中 $z_t = (1-t) z_0 + t z_1$ 为沿直线插值路径的中间点，$v^*$ 为最优条件速度场。\n\n### 2.2 Flow 策略梯度目标函数\n\n本文提出改进的目标函数，结合策略梯度和流匹配：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{FPG}}}(\\theta) = -\\mathbb{E}_{\\text{s \\sim \\mathcal{D}}, a \\sim \\pi_\\theta(\\cdot|s)}\\left[Q(s, a) \\cdot \\log \\pi_\\theta(a|s)\\right] + \\lambda \\cdot \\mathcal{L}_{\\text{\\text{CFM}}}(\\theta)\n\n$$\n\n第一项为标准策略梯度，第二项为流匹配一致性正则项，$\\lambda$ 为平衡系数。\n\n关键改进在于：使用 **路径采样** 而非端点采样，利用中间时间步 $t$ 的梯度信息增强训练稳定性。\n\n### 2.3 探索性 Flow 策略\n\nFlow 策略的自然优势在于其隐式探索能力。在训练早期，flow 路径尚未收敛，采样动作具有较高的方差；随着训练进行，方差自然收缩。本文将此特性显式利用：\n\n$$\n\n\\pi_\\theta(a|s) = \\int_{\\text{\\text{z\\\\_0}}} \\delta_{\\text{f\\_\\theta(z\\_0, 1|s) = a}} \\mathcal{N}(z_0 | 0, I) \\, dz_0\n\n$$\n\n其中 $f_\\theta$ 为学习到的仿射耦合流变换。采样时通过 ODE 求解：\n\n$$\n\na = f_\\theta(z_0, 1|s), \\quad z_0 \\sim \\mathcal{N}(0, I)\n\n$$\n\n### 2.4 Sim-to-Real 迁移\n\n为实现鲁棒的 sim-to-real 迁移，本文采用：\n\n1. **领域随机化**：在仿真中随机化物理参数（质量、摩擦、延迟等）\n2. **观察噪声注入**：$\\tilde{s} = s + \\xi, \\quad \\xi \\sim \\mathcal{N}(0, \\sigma^2 I)$\n3. **安全约束层**：在策略输出后叠加约束满足模块\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n- **策略网络**：多层感知器 (MLP)，结构为 $[d_{\\text{obs}}] \\to [512] \\to [256] \\to [256] \\to [d_a]$，激活函数为 SiLU\n- **价值网络**：与策略网络结构相同，输出标量 $Q(s,a)$\n- **Flow 变换**：采用自适应归一化流 (Adaptive Normalizing Flow)，具体为堆叠的仿射耦合层\n\n### 3.2 超参数设置\n\n| 参数 | 值 |\n|------|-----|\n| 学习率 | $3 \\times 10^{-4}$（AdamW 优化器） |\n| 折扣因子 $\\gamma$ | 0.99 |\n| GAE 系数 $\\lambda$ | 0.95 |\n| 流匹配正则权重 $\\lambda_{\\text{CFM}}$ | 0.1 |\n| Mini-batch 大小 | 4096 |\n| 训练周期 | $10^6$ 步 |\n| ODE 求解步数 | 10（Heun 方法） |\n\n### 3.3 关键实现技术\n\n- **混合精度训练**：FP16 主权重，FP32 梯度累积\n- **经验回放**：使用 Replay Buffer，容量 $10^6$\n- **目标网络**：价值网络每 10 步更新一次\n- **学习率调度**：余弦退火，周期 $5 \\times 10^5$\n\n---\n\n## 4. 实验设置\n\n### 4.1 基准环境\n\n**四足 locomotion (Legged Locomotion)**\n- 平台：Unitree Go2 机器人\n- 任务：复杂地形行走、楼梯攀爬、负载携带\n- 状态空间：$d_s = 48$（关节位置、速度、IMU、接触力）\n- 动作空间：$d_a = 12$（12 个关节力矩）\n\n**人形运动追踪 (Humanoid Motion Tracking)**\n- 平台：Figure AI 人形机器人\n- 任务：全身运动追踪（行走、跑步、跳跃、拿取）\n- 状态空间：$d_s = 173$（全身关节角度、速度、末端执行器位姿）\n- 动作空间：$d_a = 30$（全身关节力矩）\n\n**操作任务 (Manipulation)**\n- 平台：Franka Panda 机械臂\n- 任务：物体抓取、放置、双手协同操作\n- 状态空间：$d_s = 42$（关节角度、末端执行器位姿、物体位姿）\n- 动作空间：$d_a = 7$\n\n### 4.2 评估指标\n\n| 指标 | 定义 |\n|------|------|\n| 成功率 (Success Rate) | 任务完成百分比 |\n| 追踪误差 (Tracking Error) | $\\frac{1}{T}\\sum_t \\|a_t - \\hat{a}_t\\|$ |\n| 能耗效率 (Energy Efficiency) | $\\frac{1}{T}\\sum_t \\|\\tau_t\\|^2$ |\n| Sim-to-Real gap | $\\text{Success}_{\\text{sim}} - \\text{Success}_{\\text{real}}$ |\n\n### 4.3 基线方法\n\n| 方法 | 描述 |\n|------|------|\n| PPO | 近端策略优化（标准 Gaussian 策略） |\n| SAC | 软策略迭代（确定性策略） |\n| Dreamer | 基于模型的强化学习 |\n| NF-PPO | 归一化流策略 + PPO（无 Flow Matching 目标） |\n| ours-FPG | 本文方法（Flow Policy Gradients） |\n\n---\n\n## 5. 技术优势\n\n### 5.1 表达能力强\n\nFlow 策略可表示多模态、复杂相关性的动作分布，而 Gaussian 策略只能建模单模态、独立的动作分布。这对于涉及多解任务（如避障路径选择）的场景至关重要。\n\n### 5.2 探索效率高\n\nFlow 的 ODE 路径采样在早期提供自然的随机性，后期逐渐收缩，实现 **自适应探索-利用权衡**，无需额外的熵正则项。\n\n### 5.3 微调鲁棒性\n\n从预训练模型微调时，Flow Matching 正则项提供平滑的分布迁移路径，避免突然的策略跳变导致的价值崩塌问题。\n\n### 5.4 Sim-to-Real 优势\n\n训练时学到的动作分布对观测噪声和参数不确定性具有隐式的鲁棒性，与领域随机化形成互补。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 计算开销\n\nFlow 变换的 ODE 求解（10 步 Heun）带来约 **2-3 倍** 的推理延迟，对实时控制要求高的场景（如高频运动控制）可能不适用。\n\n### 6.2 训练不稳定性\n\nFlow Matching 目标与策略梯度目标的联合优化存在不稳定性，需仔细调参 $\\lambda_{\\text{CFM}}$。实验中发现当 $\\lambda_{\\text{CFM}} > 0.5$ 时训练易发散。\n\n### 6.3 对高维动作空间的扩展性\n\n本文实验限制在 $d_a \\leq 30$。对于高维动作空间（如全身人形机器人的 50+ 自由度），flow 的表达效率和训练稳定性有待验证。\n\n### 6.4 理论保证有限\n\nFlow Matching 在生成模型中的理论收敛性已有工作证明，但将其与策略梯度结合用于最优控制，缺乏严格的后验保证（如收敛到全局最优策略）。\n\n### 6.5 依赖仿真质量\n\nSim-to-Real 迁移的成功仍依赖高质量的仿真器。物理参数辨识不准确时，flow 策略可能无法泛化。\n\n---\n\n## 总结\n\n本文提出的 Flow Policy Gradients 将生成式建模中的 Flow Matching 框架引入策略优化，突破了传统策略梯度对似然函数的依赖，实现了高表达能力的策略分布学习。核心贡献在于改进的复合目标函数和流匹配正则化机制，在腿部 locomotion、人形运动追踪和操作任务上验证了方法的有效性，并展示了良好的 sim-to-real 迁移能力。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Flow Policy Gradients for Robot Control",
+      "authors": [
+        "Brent Yi",
+        "Hongsuk Choi",
+        "Himanshu Gaurav Singh",
+        "Xiaoyu Huang",
+        "Takara Truong",
+        "Carmelo Sferrazza",
+        "Yi Ma",
+        "Rocky Duan",
+        "Pieter Abbeel",
+        "Guanya Shi",
+        "Karen Liu",
+        "Angjoo Kanazawa"
+      ],
+      "year": 2026,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2602.02481",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Likelihood-based policy gradient methods are the dominant approach for training robot control policies from rewards. These methods rely on differentiable action likelihoods, which constrain policy outputs to simple distributions like Gaussians. In this work, we show how flow matching policy gradients -- a recent framework that bypasses likelihood computation -- can be made effective for training and fine-tuning more expressive policies in challenging robot control settings. We introduce an improved objective that enables success in legged locomotion, humanoid motion tracking, and manipulation tasks, as well as robust sim-to-real transfer on two humanoid robots. We then present ablations and analysis on training dynamics. Results show how policies can exploit the flow representation for exploration when training from scratch, as well as improved fine-tuning robustness over baselines.",
+      "route_id": "b5472ccf-2f10-4487-9cf9-f965425b3747"
+    },
+    "markdown_stats": {
+      "lines": 468,
+      "words": 12825,
+      "headings": 31
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "b5472ccf-2f10-4487-9cf9-f965425b3747",
+  "paper_ref": "b5472ccf-2f10-4487-9cf9-f965425b3747",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

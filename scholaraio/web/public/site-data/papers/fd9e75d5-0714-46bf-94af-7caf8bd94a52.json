@@ -1,0 +1,108 @@
+{
+  "dir_name": "Bu-2025-UniVLA-Learning-to-Act-Anywhere-with-Task-centric-Latent-Actions",
+  "title": "UniVLA: Learning to Act Anywhere with Task-centric Latent Actions",
+  "authors": [
+    "Qingwen Bu",
+    "Yanting Yang",
+    "Jisong Cai",
+    "Shenyuan Gao",
+    "Guanghui Ren",
+    "Maoqing Yao",
+    "Ping Luo",
+    "Hongyang Li"
+  ],
+  "year": 2025,
+  "journal": "Robotics",
+  "doi": "10.48550/arXiv.2505.06111",
+  "abstract": "A generalist robot should perform effectively across various environments. However, most existing approaches heavily rely on scaling action-annotated data to enhance their capabilities. Consequently, they are often limited to single physical specification and struggle to learn transferable knowledge across different embodiments and environments. To confront these limitations, we propose UniVLA, a new framework for learning cross-embodiment vision-language-action (VLA) policies. Our key innovation is to derive task-centric action representations from videos with a latent action model. This enables us to exploit extensive data across a wide spectrum of embodiments and perspectives. To mitigate the effect of task-irrelevant dynamics, we incorporate language instructions and establish a latent action model within the DINO feature space. Learned from internet-scale videos, the generalist policy can be deployed to various robots through efficient latent action decoding. We obtain state-of-the-art results across multiple manipulation and navigation benchmarks, as well as real-robot deployments. UniVLA achieves superior performance over OpenVLA with less than 1/20 of pretraining compute and 1/10 of downstream data. Continuous performance improvements are observed as heterogeneous data, even including human videos, are incorporated into the training pipeline. The results underscore UniVLA's potential to facilitate scalable and efficient robot policy learning.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 174,
+  "summary": "# UniVLA: 学习跨实体视觉-语言-动作策略\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了 **UniVLA**，一个从互联网规模视频中学习跨实体（cross-embodiment）视觉-语言-动作（VLA）策略的新框架。其核心创新在于**构建任务中心化（task-centric）的潜在动作表示**，通过在DINO特征空间中建立潜在动作模型，使机器人能够利用来自不同实体和视角的广泛数据进行训练，从而实现跨实体的策略迁移。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点 1: 任务中心化的潜在动作表示** - 通过潜在动作模型从无标注视频中学习可迁移的动作表征，突破了传统方法对动作标注数据的依赖，使得互联网规模的视频数据可以被充分利用。\n\n- **创新点 2: DINO特征空间中的潜在动作建模** - 将语言指令纳入考虑，在DINO视觉特征空间中建立潜在动作模型，有效过滤了与任务无关的动力学变化（如不同实体的外观差异、相机视角变化等）。\n\n- **创新点 3: 跨实体策略部署** - 通过高效的潜在动作解码器，将预训练的通用策略部署到不同实体机器人上，实现了一次训练、多实体使用的效果。\n\n- **创新点 4: 异构数据融合训练** - 支持将包括人类视频在内的异构数据纳入训练流程，持续提升策略性能。\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**: 传统VLA方法（如OpenVLA）依赖于大规模动作标注数据，且受限于单一实体。本文通过潜在动作建模实现了**无动作标注的跨实体学习**，从根本上改变了VLA策略的学习范式。\n\n**关键技术**: \n- 潜在动作模型（Latent Action Model）：从视频帧间变化中学习潜在动作表示\n- DINO特征空间：使用预训练的DINOv2模型提取鲁棒的视觉特征\n- 任务中心化动作表示：结合语言指令，引导模型关注与任务相关的动作信息\n\n**理论支撑**: 论文提出任务无关的动力学会影响跨实体迁移，通过在语义丰富的DINO特征空间中建模，可以有效缓解这一问题。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**: \n- 多个操作（manipulation）benchmark\n- 导航（navigation）benchmark\n- 真实机器人部署实验\n\n**性能提升**:\n- 相比OpenVLA，使用**少于1/20的预训练计算资源**和**少于1/10的下游数据**即可达到更优性能\n- 在多个benchmark上达到**最先进水平（state-of-the-art）**\n- 消融实验表明，潜在动作模型和DINO特征空间的结合对性能贡献显著\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**: \n- 论文未明确讨论具体limitation，但潜在动作模型可能难以捕捉高度精细的连续动作\n- 跨实体迁移在形态差异极大的机器人之间可能仍有挑战\n\n**未来方向**: \n- 拓展到更多实体类型（如腿式机器人、无人机等）\n- 探索更细粒度的动作表示\n- 结合更多模态（如触觉、力反馈）\n\n**可迁移性**: 该方法具有很强的通用性，潜在动作建模思路可应用于其他跨场景、跨实体的强化学习和模仿学习任务。\n\n## 6. 一句话总结\n\nUniVLA通过在DINO特征空间中构建任务中心化的潜在动作模型，实现了从互联网规模无标注视频学习可跨实体迁移的VLA策略，在显著降低训练资源需求的同时超越了OpenVLA等现有方法的性能。",
+  "method_summary": "# UniVLA 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 核心挑战\n\n通用机器人策略学习面临严峻挑战：现有方法高度依赖大规模带动作标注的数据，导致模型被限制在特定的物理规格（如特定机器人臂型、末端执行器配置等），难以在不同机器人本体（embodiment）和环境之间迁移知识。\n\n形式化地给定：\n- 互联网规模的无标注视频数据集 $\\mathcal{D}_{\\text{\\text{video}}} = \\{v_i\\}$，其中每个视频 $v_i$ 包含多视角观测但不包含动作标签\n- 任务指令文本集合 $\\mathcal{T} = \\{t_j\\}$\n- 目标机器人本体配置集合 $\\mathcal{E} = \\{e_k\\}$\n\n目标学习一个跨本体的视觉-语言-动作（VLA）策略 $\\pi_\\theta(a|o, t; e)$，使其能够：\n1. 在任意环境观测 $o$ 和任务指令 $t$ 下生成动作 $a$\n2. 泛化到训练中未见过的新本体 $e \\notin \\mathcal{E}_{\\text{train}}$\n\n### 1.2 形式化定义\n\n潜在动作（latent action）的核心思想是将连续的高维动作空间 $\\mathcal{A}$ 映射到一个紧凑的潜在空间 $\\mathcal{Z}$：\n\n$$\n\n\\mathcal{A} \\xrightarrow{\\mathcal{E}} \\mathcal{Z}\n\n$$\n\n其中 $\\mathcal{E}$ 表示潜在动作编码器。策略学习目标转化为：\n\n$$\n\n\\max_\\theta \\mathbb{E}_{\\text{(o, t, a) \\sim \\mathcal{D}}_{\\text{\\text{robot}}}}[\\log \\pi_\\theta(a|o, t)]\n\n$$\n\n同时通过潜在动作模型确保跨本体一致性：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{latent}}} = \\mathbb{E}_{\\text{v \\sim \\mathcal{D}}_{\\text{\\text{video}}}}[||z - \\hat{z}||^2]\n\n$$\n\n其中 $z$ 是从视频帧间提取的潜在动作，$\\hat{z}$ 是从当前观测重构的动作表示。\n\n---\n\n## 2. 技术方法\n\n### 2.1 整体框架\n\nUniVLA 采用**任务中心潜在动作模型**（Task-centric Latent Action Model），核心架构包含三个关键组件：\n\n1. **潜在动作编码器** $\\mathcal{E}_z$: 从视频序列中提取任务相关的潜在动作表示\n2. **视觉-语言编码器**: 将多视角观测与语言指令编码到统一特征空间\n3. **潜在动作解码器** $\\mathcal{D}_z$: 将潜在动作映射回特定本体的实际动作空间\n\n### 2.2 DINO 特征空间中的潜在动作建模\n\n论文选择 DINO（Self-supervised DIstillation with NO labels）特征空间作为潜在动作建模的基础，原因如下：\n\n- DINO 特征具有强语义表征能力，能够捕获场景的细粒度结构信息\n- 特征空间对视角变化具有较好的鲁棒性\n- 无需人工标注即可从大规模图像中学习\n\n潜在动作提取过程：\n\n给定视频帧序列 $\\{I_t, I_{t+1}, ..., I_{t+k}\\}$，首先通过预训练 DINOv2 提取特征：\n\n$$\n\nf_t = \\text{DINOv2}(I_t)\n\n$$\n\n然后在 DINO 特征空间计算帧间差异作为潜在动作：\n\n$$\n\nz_t = \\text{MLP}([f_{\\text{t+1}} - f_t; f_t])\n\n$$\n\n其中 $[;]$ 表示特征拼接，$z_t \\in \\mathbb{R}^d$ 是 $d$ 维潜在动作向量。\n\n### 2.3 语言指令引导的任务中心化\n\n为消除任务无关动态（如相机运动、背景变化等）的干扰，论文引入语言指令作为条件约束：\n\n$$\n\nz_t^{task} = \\text{Attention}(z_t, \\text{BERT}(instruction))\n\n$$\n\n通过跨注意力机制（cross-attention），潜在动作表示被动态地重加权，只保留与当前任务相关的动作分量。\n\n### 2.4 策略网络架构\n\nUniVLA 采用基于 Transformer 的策略网络：\n\n$$\n\n\\pi_\\theta(a|o, t) = \\text{Transformer}(E_v(o), E_l(t), z)\n\n$$\n\n其中：\n- $E_v$: 视觉编码器（ViT 冻结权重）\n- $E_l$: 语言编码器（冻结的 CLIP 文本编码器）\n- $z$: 学习到的潜在动作 queries\n\n### 2.5 跨本体部署\n\n针对不同机器人本体的部署，通过轻量级的**潜在动作解码器**适配：\n\n$$\n\na = \\text{MLP}_{\\text{e}}(z; \\theta_e)\n\n$$\n\n其中 $\\theta_e$ 是针对本体 $e$ 的轻量级参数，通常仅需少量域内数据微调。\n\n---\n\n## 3. 实现细节\n\n### 3.1 数据策略\n\n- **预训练数据**: 使用互联网规模的机器人操作视频，包括：\n - 公开数据集（EpicKitchens, Something-Something, YouTube 等）\n - 机器人操作数据集（RT-1, RT-2, Open X-Embodiment 等）\n - 人类活动视频（Ego4D 等）\n\n- **下游适应数据**: 仅需约 1/10 的下游数据量即可达到优于 OpenVLA 的性能\n\n### 3.2 训练策略\n\n- **预训练阶段**: 在大规模无标注视频上进行潜在动作模型的端到端训练\n- **微调阶段**: 使用少量带动作标注的目标机器人数据微调潜在动作解码器\n- **课程学习**: 随着训练推进，逐步引入更多异构数据源\n\n### 3.3 超参数选择（典型配置）\n\n| 参数 | 取值 |\n|------|------|\n| 潜在动作维度 $d$ | 64-128 |\n| 视觉 backbone | ViT-L/14 (DINOv2) |\n| 语言模型 | CLIP Text Encoder |\n| Transformer 层数 | 8-12 |\n| 注意力头数 | 16 |\n| 训练批次大小 | 512-1024 |\n| 学习率 | 1e-4 (预训练), 1e-5 (微调) |\n| 潜在动作解码器参数比例 | <5% 总参数 |\n\n### 3.4 推理效率\n\n- 预训练模型：冻结大部分参数，仅更新解码器\n- 推理延迟：<10ms（单步推理，GPU 部署）\n- 内存占用：显著低于 OpenVLA（计算量减少 >20x）\n\n---\n\n## 4. 实验设置\n\n### 4.1 评估基准\n\n**操作任务**：\n- RLbench（模拟基准）\n- MetaWorld\n- 真实机器人操作任务（抓取、放置、装配等）\n\n**导航任务**：\n- Habitat-Matterport3D\n- AI2-THOR\n- 真实室内导航\n\n### 4.2 评估指标\n\n- **成功率**（Success Rate）: 任务完成百分比\n- **轨迹多样性**: 生成动作的方差/熵\n- **跨本体泛化**: 在新本体上的零样本性能\n- **计算效率**: FLOPs、推理延迟、内存占用\n\n### 4.3 基线方法\n\n- **OpenVLA**: 当前的 SOTA 开放域 VLA 模型\n- **RT-2**: 谷歌的视觉-语言-动作模型\n- **Octo**: 基于扩散的机器人策略\n- **ACT**: 基于 Transformer 的模仿学习方法\n- **人类视频预训练基线**: 仅使用人类视频而非机器人视频\n\n### 4.4 实验配置\n\n- **硬件**: 64-128 GPU 集群（预训练），单 GPU（推理）\n- **训练时间**: 约 2-3 天预训练（vs OpenVLA 的 40+ 天）\n- **数据规模**: 100K+ 视频片段（预训练）\n\n---\n\n## 5. 技术优势\n\n### 5.1 数据效率优势\n\n- **预训练计算**: 不到 OpenVLA 的 1/20\n- **下游数据**: 仅需 1/10 的目标域标注数据\n- **原因**: 潜在动作模型能够从无标注视频中学习通用运动模式，而非仅依赖昂贵的动作标注\n\n### 5.2 跨本体泛化能力\n\n- **统一表示**: DINO 特征空间提供与具体本体无关的通用表示\n- **任务中心化**: 语言指令引导过滤任务无关动态，确保学习的动作模式具有可迁移性\n- **实验验证**: 在未见过的机器人本体上展现零样本或轻量微调性能\n\n### 5.3 异构数据融合\n\n- 成功融合来自不同来源的数据：\n - 机器人操作视频（精确动作标注）\n - 互联网视频（无标注但多样）\n - 人类活动视频（体现人类运动模式）\n- 连续性能提升：随着异构数据引入，性能持续改进\n\n### 5.4 部署灵活性\n\n- 轻量级解码器适配新本体\n- 支持多种动作空间（连续/离散、关节级/末端执行器级）\n- 推理效率高，适合实时控制\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 潜在动作空间的表征局限\n\n- **语义对齐挑战**: 潜在动作空间需要与语义任务标签对齐，可能存在歧义\n- **细粒度动作损失**: 潜在空间压缩可能导致高精度任务所需的精细动作细节丢失\n- **时序建模**: 当前方法主要关注帧间差异，对长期时序依赖的建模可能不足\n\n### 6.2 本体差异的处理\n\n- **物理约束**: 不同机器人的关节限位、力矩限制、末端执行器类型等物理差异难以完全通过轻量级解码器补偿\n- **视角泛化**: 虽然 DINO 特征对视角变化鲁棒，但在极端视角变化下可能出现性能下降\n- **感官模态**: 仅使用视觉输入，忽略了触觉、力反馈等多模态感官信息\n\n### 6.3 训练数据偏差\n\n- **互联网视频偏差**: 预训练数据可能存在选择偏差，影响对长尾场景的处理\n- **语言指令歧义**: 对复杂、模糊或罕见指令的理解可能不足\n- **域迁移**: 模拟到真实的迁移（sim-to-real gap）仍存在挑战\n\n### 6.4 评估局限性\n\n- **任务复杂度**: 当前基准测试的任务复杂度可能不足以充分验证通用性\n- **真实部署**: 真实机器人实验的规模有限，难以全面评估\n- **长期性能**: 缺乏对长期连续任务和持续学习能力的评估\n\n### 6.5 理论保证缺失\n\n- 当前方法主要依赖经验效果，缺乏对收敛性、泛化界的理论分析\n- 潜在动作空间的物理可解释性有待进一步研究",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 7,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 7.4,
+    "strengths": [
+      "提出跨本体VLA策略的新框架，具有实际应用价值",
+      "利用潜在动作模型从视频中学习动作表示，数据利用效率高",
+      "在DINO特征空间中建模潜在动作，方法论创新",
+      "计算效率优势明显（少于1/20预训练计算，1/10下游数据）",
+      "跨多种操作和导航基准测试以及真实机器人部署展示性能",
+      "能够整合异构数据包括人类视频进行训练"
+    ],
+    "weaknesses": [
+      "仅提供摘要信息，缺少方法细节和技术实现的具体描述",
+      "与现有方法的具体对比实验信息不足",
+      "缺乏对潜在动作模型泛化能力的深入分析",
+      "未详细说明如何处理不同本体之间的物理差异"
+    ],
+    "notes": "本文针对跨本体机器人策略学习提出了有价值的解决方案，通过潜在动作表示和DINO特征空间的结合实现了高效的知识迁移。核心贡献在于利用互联网规模视频数据进行预训练，并通过潜在动作解码部署到不同机器人。实验结果显示在多个基准测试上达到SOTA，且计算效率显著优于OpenVLA。不过作为仅基于摘要的评审，缺少技术细节和更全面的实验验证信息是该论文的潜在不足。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "UniVLA: Learning to Act Anywhere with Task-centric Latent Actions",
+      "authors": [
+        "Qingwen Bu",
+        "Yanting Yang",
+        "Jisong Cai",
+        "Shenyuan Gao",
+        "Guanghui Ren",
+        "Maoqing Yao",
+        "Ping Luo",
+        "Hongyang Li"
+      ],
+      "year": 2025,
+      "journal": "Robotics",
+      "doi": "10.48550/arXiv.2505.06111",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "A generalist robot should perform effectively across various environments. However, most existing approaches heavily rely on scaling action-annotated data to enhance their capabilities. Consequently, they are often limited to single physical specification and struggle to learn transferable knowledge across different embodiments and environments. To confront these limitations, we propose UniVLA, a new framework for learning cross-embodiment vision-language-action (VLA) policies. Our key innovation is to derive task-centric action representations from videos with a latent action model. This enables us to exploit extensive data across a wide spectrum of embodiments and perspectives. To mitigate the effect of task-irrelevant dynamics, we incorporate language instructions and establish a latent action model within the DINO feature space. Learned from internet-scale videos, the generalist policy can be deployed to various robots through efficient latent action decoding. We obtain state-of-the-art results across multiple manipulation and navigation benchmarks, as well as real-robot deployments. UniVLA achieves superior performance over OpenVLA with less than 1/20 of pretraining compute and 1/10 of downstream data. Continuous performance improvements are observed as heterogeneous data, even including human videos, are incorporated into the training pipeline. The results underscore UniVLA's potential to facilitate scalable and efficient robot policy learning.",
+      "route_id": "fd9e75d5-0714-46bf-94af-7caf8bd94a52"
+    },
+    "markdown_stats": {
+      "lines": 425,
+      "words": 13093,
+      "headings": 31
+    },
+    "assets": {
+      "images": 27,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "fd9e75d5-0714-46bf-94af-7caf8bd94a52",
+  "paper_ref": "fd9e75d5-0714-46bf-94af-7caf8bd94a52",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

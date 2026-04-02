@@ -1,0 +1,80 @@
+{
+  "dir_name": "Dugar-2025-Learning-Multi-Modal-Whole-Body-Control-for-Real-World-Humanoid-Robots-2",
+  "title": "Learning Multi-Modal Whole-Body Control for Real-World\nHumanoid Robots",
+  "authors": [
+    "Pranay Dugar",
+    "Aayam Shrestha",
+    "Fangzhou Yu",
+    "Bart Van Marum",
+    "Alan Fern"
+  ],
+  "year": 2025,
+  "journal": "Proceedings of the AAAI Symposium Series",
+  "doi": "10.1609/aaaiss.v7i1.36946",
+  "abstract": "A major challenge in humanoid robotics is designing a unified interface for commanding diverse whole-body behaviors, from precise footstep sequences to partial-body mimicry and joystick teleoperation. We introduce the Masked Humanoid Controller (MHC), a learned whole-body controller that exposes a simple yet expressive interface: the specification of masked target trajectories over selected subsets of the robot’s state variables. This unified abstraction allows high-level systems to issue commands in a flexible format that accommodates multi-modal inputs such as optimized trajectories, motion capture clips, re-targeted video, and real-time joystick signals. The MHC is trained in simulation using a curriculum that spans this full range of modalities, enabling robust execution of partially specified behaviors while maintaining balance and disturbance rejection. We demonstrate the MHC both in simulation and on the real-world Digit V3 humanoid, showing that a single learned controller is capable of executing such diverse whole-body commands in the real world through a common representational interface.",
+  "paper_type": "journal-article",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Learning Multi-Modal Whole-Body Control for Real-World\nHumanoid Robots",
+      "authors": [
+        "Pranay Dugar",
+        "Aayam Shrestha",
+        "Fangzhou Yu",
+        "Bart Van Marum",
+        "Alan Fern"
+      ],
+      "year": 2025,
+      "journal": "Proceedings of the AAAI Symposium Series",
+      "doi": "10.1609/aaaiss.v7i1.36946",
+      "paper_type": "journal-article",
+      "publisher": "Cornell University",
+      "abstract": "A major challenge in humanoid robotics is designing a unified interface for commanding diverse whole-body behaviors, from precise footstep sequences to partial-body mimicry and joystick teleoperation. We introduce the Masked Humanoid Controller (MHC), a learned whole-body controller that exposes a simple yet expressive interface: the specification of masked target trajectories over selected subsets of the robot’s state variables. This unified abstraction allows high-level systems to issue commands in a flexible format that accommodates multi-modal inputs such as optimized trajectories, motion capture clips, re-targeted video, and real-time joystick signals. The MHC is trained in simulation using a curriculum that spans this full range of modalities, enabling robust execution of partially specified behaviors while maintaining balance and disturbance rejection. We demonstrate the MHC both in simulation and on the real-world Digit V3 humanoid, showing that a single learned controller is capable of executing such diverse whole-body commands in the real world through a common representational interface.",
+      "route_id": "1846fc2a-e72c-4b45-abe1-3241d59970eb"
+    },
+    "markdown_stats": {
+      "lines": 201,
+      "words": 6867,
+      "headings": 20
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "1846fc2a-e72c-4b45-abe1-3241d59970eb",
+  "paper_ref": "1846fc2a-e72c-4b45-abe1-3241d59970eb",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

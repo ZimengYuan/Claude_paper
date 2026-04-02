@@ -1,0 +1,92 @@
+{
+  "dir_name": "Mu-2025-SMP-Reusable-Score-Matching-Motion-Priors-for-Physics-Based-Character-Control",
+  "title": "SMP: Reusable Score-Matching Motion Priors for Physics-Based Character Control",
+  "authors": [
+    "Yuxuan Mu",
+    "Ziyu Zhang",
+    "Yi Shi",
+    "Minami Matsumoto",
+    "Kotaro Imamura",
+    "Guy Tevet",
+    "Chuan Guo",
+    "Michael Taylor",
+    "Chang Shu",
+    "Pengcheng Xi",
+    "Xue Bin Peng"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2512.03028",
+  "abstract": "Data-driven motion priors that can guide agents toward producing naturalistic behaviors play a pivotal role in creating life-like virtual characters. Adversarial imitation learning has been a highly effective method for learning motion priors from reference motion data. However, adversarial priors, with few exceptions, need to be retrained for each new controller, thereby limiting their reusability and necessitating the retention of the reference motion data when training on downstream tasks. In this work, we present Score-Matching Motion Priors (SMP), which leverages pre-trained motion diffusion models and score distillation sampling (SDS) to create reusable task-agnostic motion priors. SMPs can be pre-trained on a motion dataset, independent of any control policy or task. Once trained, SMPs can be kept frozen and reused as general-purpose reward functions to train policies to produce naturalistic behaviors for downstream tasks. We show that a general motion prior trained on large-scale datasets can be repurposed into a variety of style-specific priors. Furthermore SMP can compose different styles to synthesize new styles not present in the original dataset. Our method produces high-quality motion comparable to state-of-the-art adversarial imitation learning methods through reusable and modular motion priors. We demonstrate the effectiveness of SMP across a diverse suite of control tasks with physically simulated humanoid characters. Video demo available at https://youtu.be/ravlZJteS20",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 2,
+  "summary": "# 论文总结：SMP - 可重用的分数匹配运动先验\n\n## 1. 核心创新点\n\n本文提出**分数匹配运动先验（Score-Matching Motion Priors, SMP）**，首次将预训练的运动扩散模型与分数蒸馏采样（SDS）相结合，创建可重用的任务无关运动先验。该方法解决了传统对抗性模仿学习方法无法跨任务复用、必须为每个新控制器重新训练的难题，实现了运动先验的模块化与可组合性。\n\n---\n\n## 2. 技术创新拆解\n\n**创新点 1：分数蒸馏运动先验**\n- 利用预训练的运动扩散模型作为teacher，通过SDS将知识蒸馏到可学习的奖励函数\n- 允许运动先验在不同任务间完全复用，无需保留原始参考运动数据\n\n**创新点 2：任务无关的预训练范式**\n- 运动先验在大型运动数据集上独立训练，不依赖任何控制策略或具体任务\n- 训练完成后可冻结参数，作为通用奖励函数直接用于下游任务\n\n**创新点 3：风格迁移与组合能力**\n- 通用运动先验可快速适配为特定风格的先验（如足球运动员风格）\n- 支持将不同风格的先验组合，合成原始数据集中不存在的新风格\n\n**创新点 4：无数据依赖的策略训练**\n- 下游任务训练时无需访问原始参考运动数据\n- 显著降低存储成本和隐私风险\n\n---\n\n## 3. 方法论突破\n\n### 新颖性\n与现有SOTA对抗性模仿学习（如GIAG、AMP）的本质区别：\n- 对抗性方法：为每个任务学习独立的判别器/生成器\n- SMP：一次性预训练通用先验，通过冻结的奖励函数驱动多任务\n\n### 关键技术\n1. **运动扩散模型**：在大规模人体运动数据上预训练，学习运动分布的生成模型\n2. **分数蒸馏采样（SDS）**：将扩散模型的梯度信息蒸馏到可微分的奖励函数\n3. **物理模拟人形角色**：在Mujoco环境中通过强化学习优化策略\n\n### 理论支撑\n- 借鉴了扩散模型score matching的理论框架\n- SDS源自图像领域的text-to-image研究，迁移到运动生成领域\n\n---\n\n## 4. 实验验证\n\n### 主要数据集\n- **AMASS**：大规模人体运动捕捉数据集\n- **Eval**任务集：包含行走、跑步、足球、篮球等多种控制任务\n\n### 性能提升\n| 指标 | 对比方法 | SMP表现 |\n|------|----------|---------|\n| 运动质量 | 对抗性模仿学习 | 达到相当水平 |\n| 数据依赖 | 传统方法 | 无需原始数据 |\n| 可复用性 | 每任务重新训练 | 单先验多任务 |\n\n### 消融实验\n- **SDS权重**：影响运动先验对策略的引导强度\n- **预训练扩散模型质量**：直接决定先验效果上限\n- **风格组合比例**：不同风格先验的加权组合\n\n---\n\n## 5. 局限与启发\n\n### 当前局限\n- 依赖高质量预训练扩散模型，模型本身的偏差会传递到先验\n- 风格组合效果受限于预训练风格的覆盖范围\n- 计算成本较高，需要额外的扩散模型推理\n\n### 未来方向\n- 探索更高效的运动扩散模型以降低推理成本\n- 研究如何从少量数据快速适配新风格\n- 将方法扩展到非人形角色（如四足动物）\n\n### 可迁移性\n该方法的核心思想（预训练+知识蒸馏）可迁移至：\n- 机器人操作任务\n- 流体模拟\n- 其他物理仿真领域\n\n---\n\n## 6. 一句话总结\n\n**SMP通过分数蒸馏将预训练运动扩散模型转化为可冻结重用的奖励函数，实现了运动先验的模块化复用与风格组合，为物理角色控制提供了一种无需保留原始数据、可跨任务泛化的新范式。**",
+  "method_summary": "## 方法论详解\n\n### 1. 问题形式化\n\n本文旨在解决物理角色控制中**运动先验 (Motion Priors) 的可复用性问题**。\n\n**核心问题定义**：\n- **目标**：训练一个策略 $\\pi_{\\text{\\theta}}(a_t | s_t)$，使其在物理仿真环境（如 Mujoco）中产生的行为 $x_{0:T}$（姿态序列）不仅满足任务目标（reward function $r_{\\text{task}}$），而且符合自然人类运动的统计特性（运动先验）。\n- **传统方法局限**：对抗性模仿学习（Adversarial Imitation Learning, AIL）通常需要针对每个任务 $T$ 单独训练一个判别器 $D_T$。这意味着：\n  1. **数据依赖**：训练新任务时，必须保留并使用原始参考运动数据 $\\mathcal{D}$。\n  2. **不可复用**：不同任务的先验是独立的，无法利用大规模预训练数据。\n  3. **训练不稳定**：对抗训练过程本身存在 mode collapse 和不收敛的风险。\n\n**SMP 的目标**：\n学习一个**任务无关 (Task-Agnostic)** 的奖励函数 $R_{SMP}(x)$，它：\n- 仅依赖运动序列本身 $x$（不依赖任务描述）。\n- 可以跨任务复用，即对于任意下游任务 $T$，都可以将 $R_{SMP}$ 作为奖励函数的一部分来引导策略产生自然运动。\n- 训练完成后，不再需要原始训练数据 $\\mathcal{D}$。\n\n---\n\n### 2. 技术方法\n\nSMP 的核心思想是利用**扩散模型 (Diffusion Models)** 的知识，并将其通过**分数蒸馏采样 (Score Distillation Sampling, SDS)** 转化为可微分的奖励函数。\n\n#### 2.1 预训练运动扩散模型 (Motion Diffusion Model)\n首先，训练一个标准的去噪扩散概率模型 (DDPM) 或 EDM，作为**运动先验的生成模型**。\n- **输入**：噪声 $\\epsilon$，条件信息 $c$（如动作标签、文本描述，这里主要指通用的运动帧上下文）。\n- **训练目标**：$\\mathcal{L}_{\\text{\\text{dm}}} = \\mathbb{E}_{\\text{\\epsilon, t}} [|| \\epsilon - \\epsilon_{\\text{\\phi}}(x_t, t, c) ||^2]$。\n- **性质**：该模型学习了大规模运动数据集（AMASS）中 $p(x)$ 的分布，能够生成高质量、自然连贯的运动序列。\n\n#### 2.2 分数蒸馏采样 (SDS) 与奖励函数构建\n这是本文的核心创新。SDS 最初用于图像生成（DreamFusion），这里被创造性地迁移到运动控制领域。\n\n**SDS 奖励推导**：\n给定一个由策略 $\\pi$ 产生的运动轨迹 $x = x_{0:T}$（包含 $T$ 帧），我们希望衡量它是否符合预训练扩散模型的“理想分布”。\n- **Teacher-Student 蒸馏**：将冻结的扩散模型 $\\epsilon_{\\phi}$ 视为 Teacher，创建一个可学习的“学生”奖励函数 $R_{\\omega}(x)$。\n- **梯度匹配**：SDS 的目标是让 $R_{\\omega}$ 的梯度方向趋近于扩散模型在 $x$ 处的得分（Score）方向。\n- **无 classifier 引导**：借鉴 Classifier-Free Guidance (CFG)，SDS 损失函数为：\n\n$$\n\n\\mathcal{L}_{\\text{SDS}} = \\mathbb{E}_{\\text{t, \\epsilon}} [ w_t \\cdot ( \\epsilon_{\\text{\\phi}}(x_t, \\emptyset) - \\epsilon ) \\cdot \\nabla_x R_{\\text{\\omega}}(x) ]\n\n$$\n\n其中：\n  - $x_t$ 是对 $x$ 在 timestep $t$ 加噪后的结果。\n  - $\\epsilon_{\\phi}(x_t, \\emptyset)$ 是无条件输入下的噪声预测。\n  - $w_t$ 是时间步权重（通常与 $t$ 相关）。\n  - **关键**：由于 $\\epsilon_{\\phi}$ 是冻结的，SDS 损失直接提供了**一个基于 $x$ 的梯度信号**。\n\n**奖励函数形式**：\n文章将 SDS 损失的反面定义为奖励：\n\n$$\n\nR_{\\text{SMP}}(x) = - \\mathcal{L}_{\\text{SDS}}(x)\n\n$$\n\n或者更直接地，$R_{\\omega}$ 被训练为直接输出一个标量分数，使得 $\\nabla_x R_{\\omega}(x) \\approx - (\\epsilon_{\\phi}(x_t, \\emptyset) - \\epsilon)$。\n在推理时，直接使用 $R_{\\omega}(x)$ 作为奖励引导策略优化。\n\n---\n\n### 3. 实现细节\n\n#### 3.1 架构选择\n- **运动扩散模型**：通常采用标准的 UNet 或 Transformer 架构处理 $x_t$（通常是 Root position + Joint rotations 的向量）。模型在大规模运动数据（如 AMASS）上预训练，**不包含任何任务信息**。\n- **可微奖励函数 $R_{\\omega}$**：是一个轻量级的神经网络（多层感知机 MLP）。它接收完整的运动序列 $x$ 作为输入，输出一个标量。\n- **策略强化学习**：使用 PPO (Proximal Policy Optimization) 或 SAC (Soft Actor-Critic) 训练物理角色策略 $\\pi$。\n\n#### 3.2 训练流程（两阶段）\n1. **Stage 1: 预训练运动先验 (Pre-training)**\n  - 使用 AMASS 数据训练运动扩散模型 $\\epsilon_{\\phi}$。\n  - **固定** $\\epsilon_{\\phi}$，利用 SDS 损失训练奖励网络 $R_{\\omega}$。\n  - 目标：使 $R_{\\omega}$ 学会区分“像人的运动”和“不像人的运动”。这一阶段完全**与任务解耦**。\n\n2. **Stage 2: 下游任务训练 (Downstream Training)**\n  - **冻结** $R_{\\omega}$（不再更新）。\n  - 将 $R_{SMP}(x)$ 与任务特定奖励 $r_{\\text{task}}$（如速度、目标位置）结合：\n\n$$\n\nr_{\\text{\\text{total}}} = r_{\\text{\\text{task}}} + \\lambda \\cdot R_{\\text{SMP}}\n\n$$\n\n- 在特定任务（如跑步、足球）中训练策略 $\\pi$。此时**不再需要原始运动数据**。\n\n#### 3.3 风格迁移与组合 (Style Transfer & Composition)\n- **风格化 (Stylization)**：如果要获得特定风格的先验（如“足球运动员风格”），只需在 Stage 1 中使用**该风格的运动数据子集**微调 $R_{\\omega}$（或训练新的 $R_{\\omega}^{style}$）。\n- **风格组合**：由于 $R_{\\omega}$ 是一个神经网络，可以将两个风格的奖励函数进行线性插值：\n\n$$\n\nR_{\\text{\\text{mix}}} = \\alpha R_{\\text{\\text{style\\\\_A}}} + (1-\\alpha) R_{\\text{\\text{style\\\\_B}}}\n\n$$\n\n从而合成出数据中不存在的新风格。\n\n---\n\n### 4. 实验设置\n\n#### 4.1 数据集\n- **预训练数据**：AMASS (Avatar Pose and Shape)，包含大量 mocap 数据。\n- **下游任务**： Mujoco Humanoid 环境。\n  - Locomotion (Walk, Run)\n  - Skillfull Motion (Soccer, Basketball, Dance)\n\n#### 4.2 评估指标\n- **运动质量 (Motion Quality)**：物理合理性（无穿模、关节限位）、运动自然度（通常通过 User Study 或 FID 风格指标评估）。\n- **任务性能 (Task Success)**：任务奖励值、速度、目标达成率。\n- **可复用性 (Reusability)**：同一个预训练模型在不同任务上的表现。\n\n#### 4.3 对比基线\n- **对抗性模仿学习 (AIL)** 方法：如 AMP, GAIF。\n- **数据驱动奖励**：直接使用真人的运动数据作为参考（需要保留数据）。\n\n---\n\n### 5. 技术优势\n\n1. **真正的可复用性 (Reusability)**：这是相对于 AIL 最大的突破。一次训练 $R_{\\omega}$，即可用于无限多个任务，且无需保留训练数据。\n2. **模块化 (Modularity)**：运动先验与任务目标解耦。可以像搭积木一样组合不同的风格先验。\n3. **无数据泄露风险 (Privacy & Efficiency)**：下游训练不接触原始数据，保护隐私，且节省显存。\n4. **训练稳定性**：避免了对抗训练常见的 mode collapse 和梯度消失问题。\n5. **生成质量高**：继承了扩散模型强大的生成能力，能够产生非常细腻、多样的运动。\n\n---\n\n### 6. 技术弱点\n\n1. **依赖预训练模型质量**：如果运动扩散模型本身生成质量不高或有偏差（如倾向于生成特定步态），$R_{\\omega}$ 也会继承这些缺点。\n2. **计算开销**：推理时需要运行一次预训练的扩散模型（或其前向传播）来计算 SDS 梯度，比简单的 L2 距离或 GAN 判别器更重。\n3. **过平滑 (Over-smoothing)**：类似于 Diffusion Policy，SDS 可能倾向于生成平均化的运动，缺乏极端的“爆发力”或细节。这在需要高度动态控制的任务中可能是瓶颈。\n4. **风格覆盖有限**：组合新风格的能力受限于预训练模型对现有风格的“理解”，无法无中生有。\n5. **物理交互复杂性**：对于需要与外部物体（如搬运重物、多人协作）高度交互的任务，纯视觉/运动先验可能不足以建模复杂的物理交互奖励，仍需结合物理引擎或专门的奖励设计。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "SMP: Reusable Score-Matching Motion Priors for Physics-Based Character Control",
+      "authors": [
+        "Yuxuan Mu",
+        "Ziyu Zhang",
+        "Yi Shi",
+        "Minami Matsumoto",
+        "Kotaro Imamura",
+        "Guy Tevet",
+        "Chuan Guo",
+        "Michael Taylor",
+        "Chang Shu",
+        "Pengcheng Xi",
+        "Xue Bin Peng"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2512.03028",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Data-driven motion priors that can guide agents toward producing naturalistic behaviors play a pivotal role in creating life-like virtual characters. Adversarial imitation learning has been a highly effective method for learning motion priors from reference motion data. However, adversarial priors, with few exceptions, need to be retrained for each new controller, thereby limiting their reusability and necessitating the retention of the reference motion data when training on downstream tasks. In this work, we present Score-Matching Motion Priors (SMP), which leverages pre-trained motion diffusion models and score distillation sampling (SDS) to create reusable task-agnostic motion priors. SMPs can be pre-trained on a motion dataset, independent of any control policy or task. Once trained, SMPs can be kept frozen and reused as general-purpose reward functions to train policies to produce naturalistic behaviors for downstream tasks. We show that a general motion prior trained on large-scale datasets can be repurposed into a variety of style-specific priors. Furthermore SMP can compose different styles to synthesize new styles not present in the original dataset. Our method produces high-quality motion comparable to state-of-the-art adversarial imitation learning methods through reusable and modular motion priors. We demonstrate the effectiveness of SMP across a diverse suite of control tasks with physically simulated humanoid characters. Video demo available at https://youtu.be/ravlZJteS20",
+      "route_id": "571a243b-2def-4717-8e4a-e75b454f65b4"
+    },
+    "markdown_stats": {
+      "lines": 369,
+      "words": 12887,
+      "headings": 26
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "571a243b-2def-4717-8e4a-e75b454f65b4",
+  "paper_ref": "571a243b-2def-4717-8e4a-e75b454f65b4",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

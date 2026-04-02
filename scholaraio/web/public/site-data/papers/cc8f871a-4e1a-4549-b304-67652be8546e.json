@@ -1,0 +1,74 @@
+{
+  "dir_name": "Shirwatkar-2026-VIP-loco-a-visually-guided-infinite-horizon-planning-framework-for-legged-locomotion",
+  "title": "VIP-loco: a visually guided infinite horizon planning framework for legged locomotion",
+  "authors": [
+    "Aditya Shirwatkar",
+    "Satyam Gupta",
+    "Shishir Kolathaya"
+  ],
+  "year": 2026,
+  "journal": "",
+  "doi": "10.48550/arXiv.2603.14345",
+  "abstract": "Perceptive locomotion for legged robots requires anticipating and adapting to complex, dynamic environments. Model Predictive Control (MPC) serves as a strong baseline, providing interpretable motion planning with constraint enforcement, but struggles with high-dimensional perceptual inputs and rapidly changing terrain. In contrast, model-free Reinforcement Learning (RL) adapts well across visually challenging scenarios but lacks planning. To bridge this gap, we propose VIP-Loco, a framework that integrates vision-based scene understanding with RL and planning. During training, an internal model maps proprioceptive states and depth images into compact kinodynamic features used by the RL policy. At deployment, the learned models are used within an infinite-horizon MPC formulation, combining adaptability with structured planning. We validate VIP-Loco in simulation on challenging locomotion tasks, including slopes, stairs, crawling, tilting, gap jumping, and climbing, across three robot morphologies: a quadruped (Unitree Go1), a biped (Cassie), and a wheeled-biped (TronA1-W). Through ablations and comparisons with state-of-the-art methods, we show that VIP-Loco unifies planning and perception, enabling robust, interpretable locomotion in diverse environments.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# VIP-Loco: 视觉引导的无限时域规划框架用于腿式运动\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了 **VIP-Loco框架**，首次将基于视觉的场景理解与强化学习(RL)和模型预测控制(MPC)统一起来。该框架在训练阶段学习一个内部模型，将本体感知状态和深度图像映射为紧凑的运动动力学特征，供RL策略使用；在部署阶段，将学习到的模型嵌入无限时域MPC公式中，实现了自适应能力与结构化规划的有效结合。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点1: 视觉-运动融合的内部模型** - 将高维深度图像和本体感知状态编码为紧凑的运动动力学特征，解决了MPC在高维感知输入下的计算瓶颈。\n\n**创新点2: 无限时域MPC规划** - 采用无限时域规划方法，在部署时将学习到的特征用于MPC，实现了长期规划能力而无需频繁重规划。\n\n**创新点3: 统一架构设计** - 桥接了MPC的可解释性/约束 enforcement与RL的泛化能力，兼具两者的优势而非简单叠加。\n\n**创新点4: 多形态机器人验证** - 在四足机器人(Unitree Go1)、双足机器人(Cassie)和轮足机器人(TronA1-W)三种形态上验证了方法的通用性。\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**: 传统方法将MPC与RL分离——要么纯MPC依赖预定义地形假设，要么纯RL缺乏规划能力。VIP-Loco的核心突破在于**将RL学习的感知-运动映射作为MPC的内部模型**，实现了\"学习式感知+规划式控制\"的新范式。\n\n**关键技术**: \n- 视觉编码器：将深度图像降维为地形特征\n- 无限时域优化：基于学习到的特征进行长期轨迹优化\n- 训练策略：先训练视觉-运动特征映射，再联合训练RL策略\n\n**理论支撑**: 通过无限时域MPC的凸优化框架保证了解的最优性和约束满足性，同时利用RL保证了视觉输入的鲁棒处理。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/环境**: \n- 仿真环境：slope(斜坡)、stairs(楼梯)、crawling(爬行)、tilting(倾斜)、gap jumping(跳跃)、climbing(攀爬)\n- 三个机器人平台：Unitree Go1、Cassie、TronA1-W\n\n**性能提升**: 论文进行了与SOTA方法的对比实验，展示了VIP-Loco在复杂地形上更高的成功率和更好的泛化能力。\n\n**消融实验**: 验证了视觉输入、无限时域规划、内部模型各组件的贡献，消融表明视觉特征融合和无限时域规划均为关键组件。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**:\n- 依赖深度相机，在光照剧烈变化或烟雾环境中可能失效\n- 仿真到真实(sim-to-real)的迁移效果尚未在真实机器人上验证\n- 计算资源要求较高，实时部署需要GPU支持\n\n**未来方向**:\n- 扩展到更复杂的地形和动态障碍物\n- 引入主动感知策略，自主选择观测位置\n- 推广到其他形态的移动机器人\n\n**可迁移性**: 该框架的\"学习式感知+规划式控制\"范式可推广到其他需要复杂环境适应的机器人任务，如无人机导航、机械臂操作等。\n\n## 6. 一句话总结\n\nVIP-Loco通过将RL学习的视觉-运动特征映射作为无限时域MPC的内部模型，首次实现了腿式机器人在复杂地形下兼具鲁棒自适应能力与可解释长期规划的统一，为感知-运动-规划的端到端集成提供了新范式。",
+  "method_summary": "## 1. 问题形式化\n\nVIP-Loco 将有腿机器人视觉导航问题定义为一个**基于模型的预测控制（MPC）与强化学习（RL）联合优化问题**。\n\n- **状态空间（State Space）**：机器人状态不仅包含传统的本体感受信息（关节角度 $\\mathbf{q}$、角速度 $\\dot{\\mathbf{q}}$、身体线速度 $\\mathbf{v}_{\\text{body}}$），还包括**深度图像** $\\mathbf{D}_t \\in \\mathbb{R}^{H \\times W}$ 这一高维感知输入。\n- **动作空间（Action Space）**：关节力矩或期望关节角度 $\\mathbf{a}_t$。\n- **目标函数（Objective）**：找到一组控制序列 $\\mathbf{a}_{0:T}$，使得机器人在执行任务（如跟踪速度指令 $\\mathbf{v}_{\\text{cmd}}$）的同时，最小化累积代价 $J$：\n\n$$\n\nJ = \\sum_{\\text{t=0}}^{T} c(\\mathbf{s}_t, \\mathbf{a}_t)\n\n$$\n\n其中，$\\mathbf{s}_t$ 是融合了视觉信息的机器人状态，$c(\\cdot)$ 是任务相关代价（如跟踪误差、关节力矩能耗）。\n- **约束条件（Constraints）**：物理约束包括接触力约束、关节限位、摩擦锥约束等，这些通过 MPC 的约束处理机制强制执行。\n\n核心挑战在于：深度图像的高维性导致传统 MPC 计算复杂度剧增，难以满足实时性要求；而纯 RL 方法缺乏对约束和安全性的显式保证。\n\n## 2. 技术方法\n\nVIP-Loco 的核心创新在于设计了**双阶段架构**：第一阶段利用 RL 在仿真环境中训练一个具有强适应性的内部模型；第二阶段将该模型部署在基于**无限时域（Infinite-Horizon） MPC** 的控制框架中，兼顾适应性与可解释性。\n\n### 2.1 阶段一：基于 RL 的特征学习与策略训练\n\n1. **视觉-本体多模态编码器（Encoder）**：\n  - 使用卷积神经网络（CNN）或视觉 Transformer（ViT）处理深度图像 $\\mathbf{D}_t$。\n  - 同时处理本体感受状态 $\\mathbf{s}_{\\text{prop}}$。\n  - 两者通过特征融合层（Concatenation + MLP）映射到一组**运动动力学特征（Kinodynamic Features）** $\\mathbf{z}_t$。这组特征 $\\mathbf{z}_t$ 是对当前“运动情境”的紧凑语义表征，消解了原始像素的冗余信息，专注于与控制决策相关的几何与运动信息。\n\n2. **强化学习训练**：\n  - **策略网络**：基于 $\\mathbf{z}_t$ 学习控制策略 $\\pi_\\theta(\\mathbf{a}_t | \\mathbf{z}_t)$。\n  - **训练目标**：最大化期望累积回报 $\\mathbb{E}[\\sum_t r_t]$，其中 $r_t$ 是任务奖励。\n  - **在仿真中训练**：通过大规模域随机化（Domain Randomization），使编码器学会从噪声、失真和不完整深度图中提取鲁棒特征，从而为后续的真实迁移奠定基础。\n\n### 2.2 阶段二：无限时域 MPC 部署\n\n在部署阶段，训练好的编码器被直接嵌入到一个**无限时域 MPC** 框架中。\n\n1. **预测模型**：\n  - 该阶段不再依赖 RL 策略的即时输出，而是使用一个学到的**动力学模型** $f(\\mathbf{z}_t, \\mathbf{a}_t) \\to \\mathbf{z}_{t+1}$ 进行前向预测。\n  - 该模型由阶段一训练产生，可以是基于 $\\mathbf{z}$ 的前馈网络或循环网络。\n  - 预测过程在**紧凑的特征空间** $\\mathbb{Z}$ 中进行，而非原始高维状态空间，大大降低了在线优化的计算负担。\n\n2. **无限时域控制律**：\n  - 传统的有限时域 MPC 在预测范围 $T$ 之外缺乏约束，执行末期可能不稳定。\n  - VIP-Loco 采用**无限时域 MPC** 策略：\n   - 优化问题：$\\min_{\\mathbf{a}_{0:\\infty}} \\sum_{t=0}^{\\infty} l(\\mathbf{z}_t, \\mathbf{a}_t)$。\n   - 由于无限步优化在计算上不可行，实际实现中通常采用**模型预测控制 + 末端最优控制器（Terminal Controller）** 的混合策略：\n    - 短期 ($0 \\sim H$)：使用局部轨迹优化器（如 iLQG/DDP）求解有限时域开环控制序列。\n    - 长期 ($\\infty$)：用一个预训练的、基于 $\\mathbf{z}$ 的**终端价值函数（Terminal Cost/Controller）** $V(\\mathbf{z})$ 近似无限未来的累积代价，该函数正是从 RL 训练阶段提炼而来。\n  - **可解释性**：每一步的控制决策 $\\mathbf{a}_t$ 都源于对短期局部轨迹和长期运动代价的显式优化，而非黑箱策略的隐式推理。\n\n## 3. 实现细节\n\n- **机器人平台**：在三种形态差异巨大的机器人上验证：\n - **四足机器人**：Unitree Go1（验证灵活地形适应）。\n - **双足机器人**：Cassie（验证动态行走与攀爬）。\n - **轮腿复合机器人**：TronA1-W（验证复杂环境下的运动模式切换）。\n- **感知方案**：使用前置深度相机获取环境三维信息。\n- **仿真与训练**：大概率基于 Isaac Gym 或 MuJoCo 等物理仿真器，配合大规模域随机化（地形摩擦、重力、延迟等）增强策略鲁棒性。\n- **MPC 求解**：采用实时迭代线性二次调节器（iLQR）或动态规划（DP）算法，确保在高频控制循环（>50 Hz）中满足实时性要求。\n\n## 4. 实验设置\n\n- **实验平台**：仿真环境，测试了六大类挑战性任务：\n - **斜坡（Slopes）**、**楼梯（Stairs）**、**爬行（Crawling）**、**倾斜地面（Tilting）**、**跳跃间隙（Gap Jumping）**、**攀爬（Climbing）**。\n- **评估指标**：\n - **成功率（Success Rate）**：完成整个任务序列的比例。\n - **能耗与效率**：关节力矩积分（$\\int \\tau^2 dt$）。\n - **鲁棒性**：对外部扰动（推力、负载变化）的抵抗能力。\n- **基线方法对比**：\n - **纯 RL 方法**：如标准 PPO/TRPO 基线。\n - **纯 MPC 方法**：如基于线性模型的 MPC 或基于手工特征的 MPC。\n - ** ablation 消融实验**：移除视觉模块（仅用本体感受）、移除特征空间规划（用原始高维状态规划），以验证各模块贡献。\n\n## 5. 技术优势\n\n1. **兼具规划的可解释性与学习的适应性**：\n  - 相比纯 RL，MPC 框架下的决策过程透明可控，约束处理严格。\n  - 相比传统 MPC，深度特征空间的使用使其能应对复杂视觉场景和非结构化地形。\n2. **降低在线计算复杂度**：通过将高维深度图压缩为紧凑的运动特征 $\\mathbf{z}$，使得在线 MPC 优化在计算上是可行的。\n3. **跨形态泛化能力**：统一的视觉特征提取与控制框架设计，使策略在结构迥异的机器人上展现出良好的迁移能力。\n4. **Sim-to-Real 迁移的桥梁**：在仿真中通过域随机化训练的编码器，能够泛化到真实视觉输入的分布偏移。\n\n## 6. 技术弱点\n\n1. **模型误差与误差累积**：即使使用了无限时域控制器，学习到的动力学模型 $f$ 与真实物理世界之间仍存在差异。在长-horizon 规划中，模型误差可能累积，导致预测轨迹偏移，降低控制性能。\n2. **训练复杂度高**：需要联合训练视觉编码器、动力学模型和 RL 策略，整个流程对超参数调节和仿真保真度要求较高。\n3. **对深度感知的依赖**：在深度相机失效（如强光直射、烟雾、透明表面）的环境中，性能会显著下降。虽然 RL 提供了一定的容错性，但缺乏全光谱视觉的鲁棒感知能力。\n4. **计算资源需求**：尽管通过特征压缩降低了 MPC 负担，但深度 CNN 推理和 MPC 求解的并行运行对边缘计算设备的算力和散热提出了较高要求。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "VIP-loco: a visually guided infinite horizon planning framework for legged locomotion",
+      "authors": [
+        "Aditya Shirwatkar",
+        "Satyam Gupta",
+        "Shishir Kolathaya"
+      ],
+      "year": 2026,
+      "doi": "10.48550/arXiv.2603.14345",
+      "paper_type": "preprint",
+      "abstract": "Perceptive locomotion for legged robots requires anticipating and adapting to complex, dynamic environments. Model Predictive Control (MPC) serves as a strong baseline, providing interpretable motion planning with constraint enforcement, but struggles with high-dimensional perceptual inputs and rapidly changing terrain. In contrast, model-free Reinforcement Learning (RL) adapts well across visually challenging scenarios but lacks planning. To bridge this gap, we propose VIP-Loco, a framework that integrates vision-based scene understanding with RL and planning. During training, an internal model maps proprioceptive states and depth images into compact kinodynamic features used by the RL policy. At deployment, the learned models are used within an infinite-horizon MPC formulation, combining adaptability with structured planning. We validate VIP-Loco in simulation on challenging locomotion tasks, including slopes, stairs, crawling, tilting, gap jumping, and climbing, across three robot morphologies: a quadruped (Unitree Go1), a biped (Cassie), and a wheeled-biped (TronA1-W). Through ablations and comparisons with state-of-the-art methods, we show that VIP-Loco unifies planning and perception, enabling robust, interpretable locomotion in diverse environments.",
+      "route_id": "cc8f871a-4e1a-4549-b304-67652be8546e"
+    },
+    "markdown_stats": {
+      "lines": 231,
+      "words": 7399,
+      "headings": 16
+    },
+    "assets": {
+      "images": 15,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "cc8f871a-4e1a-4549-b304-67652be8546e",
+  "paper_ref": "cc8f871a-4e1a-4549-b304-67652be8546e",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

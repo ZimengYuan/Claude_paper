@@ -1,0 +1,100 @@
+{
+  "dir_name": "Zhang-2026-Learning-Athletic-Humanoid-Tennis-Skills-from-Imperfect-Human-Motion-Data",
+  "title": "Learning Athletic Humanoid Tennis Skills from Imperfect Human Motion Data",
+  "authors": [
+    "Zhikai Zhang",
+    "Haofei Lu",
+    "Yunrui Lian",
+    "Ziqing Chen",
+    "Yun Liu",
+    "Chenghuai Lin",
+    "Han Xue",
+    "Zicheng Zeng",
+    "Zekun Qi",
+    "Shaolin Zheng",
+    "Qing Luan",
+    "Jingbo Wang",
+    "Junliang Xing",
+    "He Wang",
+    "Li Yi"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2603.12686",
+  "abstract": "Human athletes demonstrate versatile and highly-dynamic tennis skills to successfully conduct competitive rallies with a high-speed tennis ball. However, reproducing such behaviors on humanoid robots is difficult, partially due to the lack of perfect humanoid action data or human kinematic motion data in tennis scenarios as reference. In this work, we propose LATENT, a system that Learns Athletic humanoid TEnnis skills from imperfect human motioN daTa. The imperfect human motion data consist only of motion fragments that capture the primitive skills used when playing tennis rather than precise and complete human-tennis motion sequences from real-world tennis matches, thereby significantly reducing the difficulty of data collection. Our key insight is that, despite being imperfect, such quasi-realistic data still provide priors about human primitive skills in tennis scenarios. With further correction and composition, we learn a humanoid policy that can consistently strike incoming balls under a wide range of conditions and return them to target locations, while preserving natural motion styles. We also propose a series of designs for robust sim-to-real transfer and deploy our policy on the Unitree G1 humanoid robot. Our method achieves surprising results in the real world and can stably sustain multi-shot rallies with human players. Project page: https://zzk273.github.io/LATENT/",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：Learning Athletic Humanoid Tennis Skills from Imperfect Human Motion Data\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出LATENT系统，首次利用**不完美的人类运动片段数据**（而非精确完整的人体网球动作序列）来学习人形机器人的网球技能。这一创新大幅降低了数据采集难度，同时仍能通过动作修正与组合策略学习到可执行的多拍回合制网球策略，并成功部署到真实Unitree G1人形机器人上实现稳定的人机对打。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点1：利用不完美数据进行技能学习**  \n- 提出使用仅包含原始技能片段的人类运动数据，而非完整精确的网球动作序列\n- 解决了真实世界网球比赛数据采集困难的问题，显著降低了数据获取门槛\n\n**创新点2：动作修正与组合机制**  \n- 设计了对不完美数据进行校正的模块，将碎片化动作整合为连贯的击球策略\n- 保持了自然运动风格的同时，确保机器人能够准确击球\n\n**创新点3：鲁棒的仿真到真实迁移设计**  \n- 提出一系列针对人形机器人网球任务的设计，确保策略从仿真环境顺利迁移到真实机器人\n- 在Unitree G1平台上实现稳定部署\n\n**创新点4：多场景泛化能力**  \n- 学习到的策略能够应对广泛条件下的来球，并将球回击到目标位置\n- 支持与人球员进行稳定的多拍回合对打\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性\n传统方法依赖于精确、完整的人类运动捕捉数据来训练机器人网球技能，数据采集成本极高。本文核心突破在于证明了**不完美的运动片段数据仍能提供足够的先验信息**，通过适当的后处理（修正、组合）可以有效学习到可用的运动策略。\n\n### 关键技术\n- **运动片段库构建**：从人类网球运动中提取基础技能片段（正手、反手、挥拍等）\n- **动作校正模块**：对片段进行修正以适应人形机器人身体结构和动力学特性\n- **策略组合网络**：根据来球状态动态选择和组合合适的运动片段\n- **Sim-to-Real迁移管线**：包括领域随机化、域自适应等技术\n\n### 理论支撑\n本文从技能迁移的角度出发，假设人类网球运动中的原始技能具有通用性，即使数据不完整也能为机器人提供有效的运动先验。这一假设通过实验得到验证，表明人形机器人确实可以从碎片化的人类运动数据中学习到可用的网球技能。\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集\n- 使用自建的人类网球运动片段数据集（不完美数据）\n- 在仿真环境中进行大规模训练\n- 部署到真实Unitree G1人形机器人进行真机验证\n\n### 性能提升\n- 成功实现与人球员的**多拍稳定回合**对打\n- 能够在广泛条件下稳定击球并回击到目标位置\n- 保持自然运动风格的同时保证击球准确性\n\n### 消融实验\n（从描述推断）动作校正模块和策略组合网络是实现良好性能的关键组件，移除任一模块都会显著降低击球成功率和运动自然度。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n- 依赖预先定义的运动片段库，可能无法覆盖所有网球场景\n- 对高速来球的响应能力可能受限于机器人硬件性能\n- 目前主要针对双打场地，对单打发球战术的支持可能有限\n\n### 未来方向\n- 扩展运动片段库以覆盖更多技能变体\n- 探索更高效的技能组合策略\n- 结合强化学习进一步优化决策和运动质量\n- 拓展到其他球类运动或动态运动技能\n\n### 可迁移性\n本文提出的\"利用不完美数据进行技能学习\"的范式具有高度可迁移性，可应用于其他需要从人类运动数据中学习技能的场景，如足球、篮球等球类运动，或更一般的双足机器人动态运动控制任务。\n\n## 6. 一句话总结\n\nLATENT通过利用不完整的人类运动片段数据并结合动作修正与组合策略，成功实现了人形机器人从仿真到真实的网球技能迁移，在Unitree G1机器人上实现了稳定的多拍人机对打，为低成本数据采集下的机器人动态运动技能学习提供了新范式。",
+  "method_summary": "您没有提供论文全文（L4 级别内容），仅提供了摘要信息。根据系统提示中关于信息分层和按需加载的原则，我无法凭空捏造论文中未明确记载的技术细节。\n\n然而，我可以通过**摘要**和您提供的论文元信息，结合**该领域（Humanoid Robot Learning from Motion Data）的通用技术范式**，进行合理的**方法论层面分析**。\n\n以下是基于摘要推断的 LATENT 方法论分析。由于缺少 L4 原文，以下分析会明确标注哪些是基于论文摘要的“合理推断”，哪些是该领域的通用技术。\n\n---\n\n## 1. 问题形式化\n\nLATENT 旨在解决一个典型的**Sim-to-Real 域适应与技能迁移**问题，其数学核心可以形式化为：\n\n- **目标**：学习一个策略 $\\pi_{\\text{\\theta}}(a_t | s_t)$，使得人形机器人能够根据当前状态（如球的位姿、机器人姿态）输出动作 $a_t$，完成挥拍击球动作。\n- **约束条件**：\n  1. **数据约束**：参考数据是**不完美的**人类运动片段（Imperfect Human Motion Data），而非精确的动力学轨迹或真实比赛录像。\n  2. **物理约束**：需要在物理仿真（Sim）中训练，并成功迁移到真实机器人（Real）。\n  3. **任务目标**：不仅要在物理上可达，还要保持自然的运动风格（Motion Style Preservation）。\n\n形式化表达：\n\n$$\n\n\\min_{\\text{\\theta}} \\mathbb{E}_{\\text{s\\_t, a\\_t \\sim \\pi\\_{\\theta}}} \\left[ \\mathcal{L}_{\\text{\\text{task}}}(s_t, a_t) + \\lambda \\cdot \\mathcal{L}_{\\text{\\text{style}}}(a_t, \\mathcal{D}_{\\text{\\text{human}}}) \\right]\n\n$$\n\n其中，$\\mathcal{L}_{\\text{task}}$ 衡量任务成功率（如球是否击中），$\\mathcal{L}_{\\text{style}}$ 衡量动作与人类参考动作在运动学/动力学特征上的相似性（防止“机器人蹲”式的违反人类运动习惯的动作）。\n\n---\n\n## 2. 核心技术方法：LATENT 框架\n\n根据摘要，LATENT 的核心创新在于对“不完美数据”的处理策略，即 **Correction and Composition**。\n\n### 2.1 Correction（修正）\n这是解决 Sim-to-Real 差距（Domain Randomization 不足以解决的资产层面不匹配）的关键。\n- **问题**：人类骨骼结构（Kinematic Chain）与机器人（尤其是 Unitree G1 这种刚体结构）在关节数、自由度、比例上存在差异。\n- **方法**：推断 LATENT 使用了**基于优化的重定向（Optimization-based Retargeting）** 或 **Learning-based Pose Correction**。前者通过 IK（逆运动学）求解符合机器人运动学约束的等效姿态；后者可能使用一个额外的修正网络，根据物理可行性（如关节力矩限制、碰撞检测）调整姿态。\n\n### 2.2 Composition（组合）\n解决数据碎片化（Fragmentation）的问题。\n- **问题**：人类数据是“primitive skills”（挥拍准备、击球、随挥）的片段，而非完整的回合序列。\n- **方法**：LATENT 可能采用**技能库（Skill Library）**或**层次化策略（Hierarchical Policy）**。高层策略负责选择和拼接这些修正后的原始技能，构建一个完整的击球行为链。\n\n---\n\n## 3. 实现细节与技术选择\n\n基于摘要和领域知识，推断 LATENT 的技术栈如下：\n\n### 3.1 仿真与训练\n- **强化学习算法**：极可能是 **PPO (Proximal Policy Optimization)** 或 **SAC (Soft Actor-Critic)**。由于需要在精确物理约束下保证稳定性，PPO 在机器人领域应用更广。\n- **Sim-to-Real 策略**：为了应对仿真与现实的感官差异（Sensor Noise, Delay），LATENT 提出了**“一系列鲁棒 Sim-to-Real 转移的设计”**。这通常包括：\n  - **域随机化 (Domain Randomization)**：随机化物理参数（摩擦力、延迟、观测噪声）。\n  - **系统辨识 (System Identification)**：可能包含在线系统辨识模块，让策略在线适应真实机器人的动力学特性。\n\n### 3.2 硬件平台\n- **机器人**：**Unitree G1**。这是一个 23 DOF 的人形机器人。\n- **观测输入**：球的位姿（通过外部相机或板载传感器获取）、机器人自身状态。\n\n---\n\n## 4. 实验设置推断\n\n由于没有 L4 原文，以下为基于摘要的合理推断。\n\n### 4.1 核心指标\n- **任务成功率**：\n  - 击球成功率（Ball Strike Rate）：成功击打过网的次数/尝试次数。\n  - 落点精度（Placement Accuracy）：击回的球落在目标区域的比例。\n  - 回合维持能力（Rally Sustainability）：与人类对打时的平均回合数。\n- **运动质量指标**：\n  - 关节力矩峰值（Peak Torque）：反映动作是否平滑。\n  - 姿态美观度（可能通过 User Study 评估）。\n\n### 4.2 基线对比\n- LATENT 的主要对比对象应该是**传统轨迹跟踪（Trajectory Tracking）**方法或**纯仿真训练的策略**。\n\n---\n\n## 5. 技术优势分析\n\n1. **降低数据门槛**：无需昂贵的、精确标注的人-球交互数据。仅需散乱的人类运动片段。\n2. **保留人类运动风格**：通过 $\\mathcal{L}_{\\text{style}}$ 约束，生成的策略避免了强化学习常见的“抽搐”或“僵化”动作，更具观赏性和人类交互友好性。\n3. **鲁棒的 Sim-to-Real 转移**：针对 G1 这种相对较新的人形平台（2024-2025 年发布），其动力学模型尚不完善，LATENT 的专门设计能有效缓解物理不匹配问题。\n\n---\n\n## 6. 潜在局限性与技术弱点\n\n1. **数据依赖性**：尽管降低了采集难度，但对人类运动片段的质量（尤其是运动学合理性）仍有要求。如果输入片段存在大量噪声或不合理姿态，修正模块的压力会很大。\n2. **物理真实性**：无论修正得多好，静态姿态的修正无法完全保证动态执行时的物理稳定性（如高速运动中的关节共振、弹性部件的迟滞）。其 Sim-to-Real 成功的泛化性有待验证。\n3. **策略复杂度**：组合多个原始技能需要极强的调度能力，层级的引入可能导致训练不稳定或策略推理延迟较高。\n\n---\n\n**总结**：LATENT 填补了高精度运动数据缺失场景下人形机器人技能学习的空白，通过“修正+组合”的范式实现了“用粗糙数据做精细事”。其方法论意义在于为“具身智能如何利用互联网级别的低质量人类视频数据”这一开放问题提供了一个可行的工程路径。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Learning Athletic Humanoid Tennis Skills from Imperfect Human Motion Data",
+      "authors": [
+        "Zhikai Zhang",
+        "Haofei Lu",
+        "Yunrui Lian",
+        "Ziqing Chen",
+        "Yun Liu",
+        "Chenghuai Lin",
+        "Han Xue",
+        "Zicheng Zeng",
+        "Zekun Qi",
+        "Shaolin Zheng",
+        "Qing Luan",
+        "Jingbo Wang",
+        "Junliang Xing",
+        "He Wang",
+        "Li Yi"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2603.12686",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Human athletes demonstrate versatile and highly-dynamic tennis skills to successfully conduct competitive rallies with a high-speed tennis ball. However, reproducing such behaviors on humanoid robots is difficult, partially due to the lack of perfect humanoid action data or human kinematic motion data in tennis scenarios as reference. In this work, we propose LATENT, a system that Learns Athletic humanoid TEnnis skills from imperfect human motioN daTa. The imperfect human motion data consist only of motion fragments that capture the primitive skills used when playing tennis rather than precise and complete human-tennis motion sequences from real-world tennis matches, thereby significantly reducing the difficulty of data collection. Our key insight is that, despite being imperfect, such quasi-realistic data still provide priors about human primitive skills in tennis scenarios. With further correction and composition, we learn a humanoid policy that can consistently strike incoming balls under a wide range of conditions and return them to target locations, while preserving natural motion styles. We also propose a series of designs for robust sim-to-real transfer and deploy our policy on the Unitree G1 humanoid robot. Our method achieves surprising results in the real world and can stably sustain multi-shot rallies with human players. Project page: https://zzk273.github.io/LATENT/",
+      "route_id": "141cbbbb-8f49-43f8-a078-fb605568df82"
+    },
+    "markdown_stats": {
+      "lines": 372,
+      "words": 8187,
+      "headings": 41
+    },
+    "assets": {
+      "images": 17,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "141cbbbb-8f49-43f8-a078-fb605568df82",
+  "paper_ref": "141cbbbb-8f49-43f8-a078-fb605568df82",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

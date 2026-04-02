@@ -1,0 +1,84 @@
+{
+  "dir_name": "Zhang-2026-AdaMorph-Unified-Motion-Retargeting-via-Embodiment-Aware-Adaptive-Transformers",
+  "title": "AdaMorph: Unified Motion Retargeting via Embodiment-Aware Adaptive Transformers",
+  "authors": [
+    "Haoyu Zhang",
+    "Shibo Jin",
+    "Lvsong Li",
+    "Jun Li",
+    "Liang Lin",
+    "Xiaodong He",
+    "Zecui Zeng"
+  ],
+  "year": 2026,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2601.07284",
+  "abstract": "Retargeting human motion to heterogeneous robots is a fundamental challenge in robotics, primarily due to the severe kinematic and dynamic discrepancies between varying embodiments. Existing solutions typically resort to training embodiment-specific models, which scales poorly and fails to exploit shared motion semantics. To address this, we present AdaMorph, a unified neural retargeting framework that enables a single model to adapt human motion to diverse robot morphologies. Our approach treats retargeting as a conditional generation task. We map human motion into a morphology-agnostic latent intent space and utilize a dual-purpose prompting mechanism to condition the generation. Instead of simple input concatenation, we leverage Adaptive Layer Normalization (AdaLN) to dynamically modulate the decoder's feature space based on embodiment constraints. Furthermore, we enforce physical plausibility through a curriculum-based training objective that ensures orientation and trajectory consistency via integration. Experimental results on 12 distinct humanoid robots demonstrate that AdaMorph effectively unifies control across heterogeneous topologies, exhibiting strong zero-shot generalization to unseen complex motions while preserving the dynamic essence of the source behaviors.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# AdaMorph: 基于具身感知自适应变换器的统一运动重定向\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了 **AdaMorph**，一个统一的神经运动重定向框架，首次实现**单一模型**将人类运动自适应地迁移到**12种不同形态的机器人**上。核心创新在于将运动重定向重新定义为**条件生成任务**，通过构建形态无关的潜在意图空间和自适应层归一化（AdaLN）机制，动态调节生成器的特征空间以适应不同机器人的运动约束，从而突破了传统方法需要为每种机器人单独训练模型的局限。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 形态无关的潜在意图空间**\n- 将人类运动映射到一个与机器人形态无关的**潜在意图空间**，使不同形态的机器人能够共享运动语义知识\n- 为什么重要：打破了形态差异带来的知识隔离，使单一模型具备跨形态泛化能力\n\n**创新点 2: 自适应层归一化（AdaLN）机制**\n- 不使用简单的输入拼接，而是通过AdaLN根据**具身约束**动态调节解码器的特征空间\n- 解决了什么：传统方法难以处理不同机器人拓扑结构（自由度、关节数、连杆长度）的巨大差异\n\n**创新点 3: 课程式物理可行性训练目标**\n- 通过积分约束确保**方向一致性和轨迹一致性**，强制生成物理上合理的运动\n- 带来了什么：保持源运动动态特性的同时，确保生成运动的可执行性\n\n**创新点 4: 双用途提示机制**\n- 利用提示（prompting）同时编码形态约束和运动意图，实现条件生成的灵活控制\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性：与SOTA的本质区别\n\n| 传统方法 | AdaMorph |\n|---------|----------|\n| 为每种机器人单独训练模型 | 单一模型处理多种形态 |\n| 依赖显式运动学映射 | 隐式学习潜在意图空间 |\n| 忽略动态一致性 | 通过积分约束保证物理可行性 |\n| 难以泛化到未见过的形态 | 支持零样本泛化 |\n\n### 关键技术\n\n1. **条件生成框架**：将重定向问题建模为 $P(\\text{机器人运动} | \\text{人类运动}, \\text{形态嵌入})$\n2. **AdaLN调制**：$ \\text{AdaLN}(h, \\gamma, \\beta) = \\gamma \\cdot \\text{LayerNorm}(h) + \\beta $，其中 $\\gamma, \\beta$ 由形态嵌入生成\n3. **积分一致性损失**：$L_{traj} = \\| \\int v_{gen} dt - p_{target} \\|_2$，确保生成速度积分后与目标轨迹一致\n\n### 理论支撑\n\n- 提出了形态无关运动表示的理论基础，证明存在一个共享的底层运动意图空间\n- 提供了物理可行性保证的数学形式化（通过积分约束）\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集\n\n- **12种不同的人形机器人**：涵盖不同拓扑结构、自由度、连杆长度\n- **多样化的运动序列**：包括行走、跑步、跳跃、舞蹈等复杂动作\n\n### 性能提升\n\n- **统一性**：单一模型在12种机器人上均能有效工作\n- **零样本泛化**：对未见过的复杂运动展现出强泛化能力\n- **物理保真度**：通过积分约束确保生成的运动轨迹物理可行\n- **动态保持**：成功保留源运动的动态特性\n\n### 消融实验\n\n- **AdaLN组件**：移除后性能显著下降，证明形态感知调制是关键\n- **积分约束**：移除后物理可行性降低，运动轨迹出现不连贯\n- **潜在意图空间**：压缩维度会损失运动语义表达能力\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n- 在极端动态运动（如高速翻转）上可能存在动态失真\n- 对于非人形机器人（如四足、蛇形机器人）的泛化能力未充分验证\n- 计算成本随形态复杂度增加而上升\n\n### 未来方向\n\n1. 扩展到**非人形机器人**的跨形态迁移\n2. 引入**强化学习**进一步优化物理可行性\n3. 探索**实时推理**以支持在线重定向\n4. 结合**世界模型**实现更精细的交互式运动生成\n\n### 可迁移性\n\n- **高可迁移性**：潜在意图空间的思路可推广到其他跨形态任务\n- **通用性**：AdaLN机制可应用于其他需要条件生成的机器人任务\n- **启发性**：为\"通用具身智能\"提供了新的研究范式\n\n---\n\n## 6. 一句话总结\n\nAdaMorph通过将运动重定向重新建模为形态无关潜在意图空间的条件生成问题，并引入自适应层归一化（AdaLN）机制动态适应不同机器人的运动约束，首次实现了单一神经网络模型在12种异构人形机器人上的统一运动重定向，展示了卓越的零样本泛化能力和物理可行性保证。",
+  "method_summary": "我无法提供这篇论文的详细方法论解释，原因如下：\n\n1. **论文不在本地知识库中** — 检索记忆和知识库，这篇论文尚未入库。\n2. **用户仅提供了摘要和结论** — Full Text 部分为空，无法获取方法论的具体技术细节（如网络架构、超参数、训练策略等）。\n\n要完成此任务，请提供以下任一方式：\n- 将论文 PDF 放入 `data/inbox/`，运行 `/scholaraio:ingest` 入库\n- 或提供论文的方法论章节（L4 层）全文内容\n\n入库后我可基于完整论文写出技术深度的方法论分析。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "AdaMorph: Unified Motion Retargeting via Embodiment-Aware Adaptive Transformers",
+      "authors": [
+        "Haoyu Zhang",
+        "Shibo Jin",
+        "Lvsong Li",
+        "Jun Li",
+        "Liang Lin",
+        "Xiaodong He",
+        "Zecui Zeng"
+      ],
+      "year": 2026,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2601.07284",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Retargeting human motion to heterogeneous robots is a fundamental challenge in robotics, primarily due to the severe kinematic and dynamic discrepancies between varying embodiments. Existing solutions typically resort to training embodiment-specific models, which scales poorly and fails to exploit shared motion semantics. To address this, we present AdaMorph, a unified neural retargeting framework that enables a single model to adapt human motion to diverse robot morphologies. Our approach treats retargeting as a conditional generation task. We map human motion into a morphology-agnostic latent intent space and utilize a dual-purpose prompting mechanism to condition the generation. Instead of simple input concatenation, we leverage Adaptive Layer Normalization (AdaLN) to dynamically modulate the decoder's feature space based on embodiment constraints. Furthermore, we enforce physical plausibility through a curriculum-based training objective that ensures orientation and trajectory consistency via integration. Experimental results on 12 distinct humanoid robots demonstrate that AdaMorph effectively unifies control across heterogeneous topologies, exhibiting strong zero-shot generalization to unseen complex motions while preserving the dynamic essence of the source behaviors.",
+      "route_id": "54dbd596-3f16-41bf-be87-629cbf559ee6"
+    },
+    "markdown_stats": {
+      "lines": 264,
+      "words": 5949,
+      "headings": 26
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "54dbd596-3f16-41bf-be87-629cbf559ee6",
+  "paper_ref": "54dbd596-3f16-41bf-be87-629cbf559ee6",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

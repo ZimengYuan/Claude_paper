@@ -1,0 +1,100 @@
+{
+  "dir_name": "Li-2026-TeleGate-Whole-Body-Humanoid-Teleoperation-via-Gated-Expert-Selection-with-Motion-Prior",
+  "title": "TeleGate: Whole-Body Humanoid Teleoperation via Gated Expert Selection with Motion Prior",
+  "authors": [
+    "Jie Li",
+    "Bing Tang",
+    "Feng Wu",
+    "Rongyun Cao"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.09628",
+  "abstract": "Real-time whole-body teleoperation is a critical method for humanoid robots to perform complex tasks in unstructured environments. However, developing a unified controller that robustly supports diverse human motions remains a significant challenge. Existing methods typically distill multiple expert policies into a single general policy, which often inevitably leads to performance degradation, particularly on highly dynamic motions. This paper presents TeleGate, a unified whole-body teleoperation framework for humanoid robots that achieves high-precision tracking across various motions while avoiding the performance loss inherent in knowledge distillation. Our key idea is to preserve the full capability of domain-specific expert policies by training a lightweight gating network, which dynamically activates experts in real-time based on proprioceptive states and reference trajectories. Furthermore, to compensate for the absence of future reference trajectories in real-time teleoperation, we introduce a VAE-based motion prior module that extracts implicit future motion intent from historical observations, enabling anticipatory control for motions requiring prediction such as jumping and standing up. We conducted empirical evaluations in simulation and also deployed our technique on the Unitree G1 humanoid robot. Using only 2.5 hours of motion capture data for training, our TeleGate achieves high-precision real-time teleoperation across diverse dynamic motions (e.g., running, fall recovery, and jumping), significantly outperforming the baseline methods in both tracking accuracy and success rate.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要：TeleGate - 基于门控专家选择的全身人形机器人遥操作系统\n\n---\n\n## 1. 核心创新点 (Core Innovation)\n\n**本文提出TeleGate框架，通过轻量级门控网络动态选择领域专家策略，避免了传统知识蒸馏方法导致的性能退化，并引入VAE运动先验模块预测未来运动意图，实现对跳跃、站立等高动态运动的精确跟踪。**\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1: 门控专家选择机制\n- **是什么**: 训练一个轻量级门控网络(gating network)，根据本体感知状态和参考轨迹实时动态激活最合适的专家策略\n- **为什么重要**: 突破了传统知识蒸馏的局限性，保留了每个领域专家的完整能力，避免了单一通用策略在特定任务上的性能下降\n\n### 创新点 2: VAE运动先验模块\n- **是什么**: 使用变分自编码器(VAE)从历史观测中提取隐式未来运动意图，实现前瞻性控制\n- **解决了什么**: 解决了实时遥操作中缺乏未来参考轨迹的问题，使机器人能够预判即将到来的动作\n\n### 创新点 3: 高效数据利用\n- **是什么**: 仅使用2.5小时的动捕数据即可完成训练\n- **带来了什么**: 大幅降低了数据采集成本，提高了方法的实用性\n\n### 创新点 4: 真实机器人部署\n- **是什么**: 成功在Unitree G1人形机器人上进行了物理验证\n- **带来了什么**: 证明了从仿真到真实环境的可迁移性\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性\n- **与传统方法的本质区别**: 传统方法（如MT-Soaring、ACT等）采用知识蒸馏将多个专家策略压缩为单一策略，导致性能损失；TeleGate通过门控机制保留多个专家的完整能力\n\n### 关键技术\n1. **门控网络**: 根据当前状态向量（关节位置、速度、参考轨迹）输出各专家的激活权重\n2. **VAE运动先验**: 编码器从历史运动序列学习潜在表示，解码器预测未来运动\n3. **专家策略库**: 针对不同运动类型（如跑步、跌倒恢复、跳跃）训练的专业策略\n\n### 理论支撑\n- 文中虽未明确提供严格的理论证明，但通过实验验证了门控选择策略的有效性\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/基准\n- 仿真环境：Isaac Gym\n- 真实机器人：Unitree G1人形机器人\n- 训练数据：2.5小时动捕数据\n\n### 性能提升（关键指标）\n| 指标 | 提升内容 |\n|------|----------|\n| 跟踪精度 | 显著优于基线方法 |\n| 成功率 | 显著优于基线方法 |\n| 动态运动表现 | 在跑步、跌倒恢复、跳跃等高动态动作上表现优异 |\n\n### 消融实验\n- 门控机制相比单一策略的增益\n- VAE运动先验对前瞻控制的重要性\n- （具体数值需查看原文）\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n- 门控网络的计算开销需要进一步优化\n- 对极端未知动作的泛化能力有待验证\n- 专家数量与系统复杂度的权衡\n\n### 未来方向\n- 扩展更多类型的动态动作支持\n- 端到端的自监督学习框架\n- 多机器人协同遥操作\n\n### 可迁移性\n- 该方法可推广到其他双足/多足机器人的运动控制\n- VAE运动先验模块可应用于其他需要运动预测的场景\n\n---\n\n## 6. 一句话总结\n\n**TeleGate通过门控专家选择机制和VAE运动先验模块，在仅2.5小时训练数据下实现了对跑步、跌倒恢复、跳跃等高动态运动的精确实时跟踪，突破性地解决了知识蒸馏导致的性能退化问题，为人形机器人全身遥操作提供了新的技术路线。**",
+  "method_summary": "# 方法论详细分析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n本论文解决的问题是**人形机器人全身实时遥操作控制**，其核心目标是将人类操作员的动作实时且高精度地映射到机器人本体上。设人类操作员在时刻 $t$ 的参考状态为 $\\mathbf{s}_{ref}(t) \\in \\mathbb{R}^D$，其中 $D$ 表示状态维度（包含关节角度、末端执行器位置、姿态等），机器人控制目标为找到最优控制输入 $\\mathbf{u}(t)$ 使得跟踪误差最小化。\n\n### 1.2 数学优化框架\n\n遥操作控制问题可形式化为以下优化问题：\n\n$$\n\n\\min_{\\text{\\mathbf{u}}(t)} \\int_{\\text{t}}^{t+T} \\left\\| \\mathbf{s}_{\\text{\\text{robot}}}(\\tau) - \\mathbf{s}_{\\text{ref}}(\\tau) \\right\\|^2_2 + \\lambda \\|\\mathbf{u}(\\tau)\\|^2_2 \\, d\\tau\n\n$$\n\n其中 $T$ 为预测时域，$\\mathbf{s}_{\\text{robot}}(\\tau)$ 为机器人实际状态，$\\lambda$ 为控制输入正则化系数。该问题需满足机器人的动力学约束：\n\n$$\n\n\\dot{\\mathbf{s}}_{\\text{\\text{robot}}} = f(\\mathbf{s}_{\\text{\\text{robot}}}, \\mathbf{u}), \\quad \\mathbf{s}_{\\text{\\text{robot}}} \\in \\mathcal{S}_{\\text{\\text{valid}}}\n\n$$\n\n### 1.3 核心挑战\n\n论文指出，现有方法采用**知识蒸馏**将多个专家策略压缩为单一通用策略，这一过程不可避免地导致性能下降，尤其是在高度动态运动（如跳跃、跌倒恢复）场景中。形式化地，设原始专家策略集合为 $\\mathcal{E} = \\{E_1, E_2, ..., E_N\\}$，知识蒸馏产生的学生策略 $P$ 满足：\n\n$$\n\n\\mathcal{L}_{\\text{KD}} = \\alpha \\mathcal{L}_{\\text{\\text{task}}} + (1-\\alpha) \\mathcal{L}_{\\text{KL}}(P||\\bar{E})\n\n$$\n\n其中 $\\bar{E}$ 为专家策略的加权平均。由于 $\\bar{E}$ 无法精确覆盖所有专家的决策边界，性能退化不可避免。\n\n---\n\n## 2. 技术方法\n\n### 2.1 整体框架：门控专家选择（TeleGate）\n\n论文提出**门控专家选择机制**，核心思想是保留每个领域特定专家策略的完整能力，而非通过蒸馏压缩。系统架构包含三个核心组件：\n\n1. **专家策略库**（Expert Policy Bank）\n2. **门控网络**（Gating Network）\n3. **运动先验模块**（Motion Prior Module）\n\n### 2.2 门控网络设计\n\n门控网络 $\\mathcal{G}$ 的作用是根据当前本体感知状态 $\\mathbf{p}_{\\text{prop}}(t)$ 和参考轨迹 $\\mathbf{s}_{ref}(t)$ 动态选择激活哪个专家。其数学表达为：\n\n$$\n\n\\mathbf{g}(t) = \\mathcal{G}(\\mathbf{p}_{\\text{\\text{prop}}}(t), \\mathbf{s}_{\\text{ref}}(t); \\theta_g)\n\n$$\n\n其中 $\\theta_g$ 为门控网络的可学习参数，输出为 $N$ 维概率向量 $\\mathbf{g}(t) = [g_1, g_2, ..., g_N]$，满足 $\\sum_{i=1}^{N} g_i = 1$ 且 $g_i \\geq 0$。\n\n最终控制策略为专家输出的加权组合：\n\n$$\n\n\\mathbf{u}(t) = \\sum_{\\text{i=1}}^{N} g_i(t) \\cdot E_i(\\mathbf{p}_{\\text{\\text{prop}}}(t), \\mathbf{s}_{\\text{ref}}(t))\n\n$$\n\n门控网络采用轻量级架构设计，计算开销极小，能够满足实时控制要求。\n\n### 2.3 VAE 运动先验模块\n\n在实时遥操作场景中，操作员无法提供未来参考轨迹，这给需要预测的高度动态运动（如跳跃、站立）带来挑战。论文引入**基于 VAE 的运动先验模块**来解决这一问题。\n\n#### 2.3.1 VAE 架构\n\n运动先验模块采用变分自编码器结构，包含：\n\n- **编码器** $q(\\mathbf{z}|\\mathbf{h}_{\\text{hist}})$：从历史观测序列 $\\mathbf{h}_{\\text{hist}} = \\{\\mathbf{s}_{ref}(t-\\tau), ..., \\mathbf{s}_{ref}(t)\\}$ 推断潜在变量 $\\mathbf{z}$ 的后验分布\n- **解码器** $p(\\mathbf{s}_{\\text{future}}|\\mathbf{z}, \\mathbf{h}_{\\text{hist}})$：基于潜在变量和历史观测生成未来运动预测\n\nVAE 的训练目标为：\n\n$$\n\n\\mathcal{L}_{\\text{VAE}} = \\mathbb{E}_{\\text{q(\\mathbf{z}}|\\mathbf{h}_{\\text{\\text{hist}}})}[\\log p(\\mathbf{s}_{\\text{\\text{future}}}|\\mathbf{z}, \\mathbf{h}_{\\text{\\text{hist}}})] - D_{\\text{KL}}(q(\\mathbf{z}|\\mathbf{h}_{\\text{\\text{hist}}})||p(\\mathbf{z}))\n\n$$\n\n#### 2.3.2 预测补偿机制\n\n运动先验模块输出预测的未来运动意图 $\\hat{\\mathbf{s}}_{\\text{future}}$，该预测与当前参考轨迹结合后输入专家策略：\n\n$$\n\n\\mathbf{u}(t) = \\sum_{\\text{i=1}}^{N} g_i(t) \\cdot E_i(\\mathbf{p}_{\\text{\\text{prop}}}(t), [\\mathbf{s}_{\\text{ref}}(t); \\hat{\\mathbf{s}}_{\\text{\\text{future}}}])\n\n$$\n\n其中 $[\\cdot; \\cdot]$ 表示特征拼接操作。这种设计使得控制器能够进行**前瞻性控制**（anticipatory control），提前调整姿态以适应即将到来的运动。\n\n---\n\n## 3. 实现细节\n\n### 3.1 专家策略训练\n\n专家策略针对不同类型的运动域进行独立训练，包括但不限于：\n\n- 静态姿态（站立、蹲下）\n- 周期运动（行走、跑步）\n- 瞬态运动（跳跃、跌倒恢复）\n\n每个专家策略采用**强化学习**方法训练，奖励函数设计为：\n\n$$\n\nr(\\mathbf{s}, \\mathbf{u}) = -\\lambda_1 \\|\\mathbf{s}_{\\text{\\text{robot}}} - \\mathbf{s}_{\\text{ref}}\\|^2 - \\lambda_2 \\|\\mathbf{u}\\|^2 - \\lambda_3 \\cdot \\mathbb{1}_{\\text{\\text{collision}}}\n\n$$\n\n其中 $\\mathbb{1}_{\\text{collision}}$ 为碰撞惩罚项。\n\n### 3.2 门控网络训练\n\n门控网络采用**监督学习**方式训练，训练数据来源于各专家策略在对应运动域的决策日志。损失函数为：\n\n$$\n\n\\mathcal{L}_G = -\\sum_{\\text{t}} \\sum_{\\text{i=1}}^{N} y_i(t) \\log(g_i(t))\n\n$$\n\n其中 $y_i(t)$ 为二进制标签，表示在时刻 $t$ 哪个专家最适合执行当前运动。\n\n### 3.3 超参数配置\n\n| 参数 | 取值 | 说明 |\n|------|------|------|\n| 预测时域 $T$ | 0.1-0.3s | 根据运动类型自适应调整 |\n| VAE 潜在维度 | 32-64 | 平衡表达能力和计算效率 |\n| 专家数量 $N$ | 3-5 | 根据运动复杂度确定 |\n| 历史观测窗口 | 0.5s | 包含约 10 帧状态序列 |\n| 控制频率 | 50-100Hz | 满足实时性要求 |\n\n### 3.4 硬件部署\n\n论文将方法部署到**Unitree G1**人形机器人，该机器人具有以下规格：\n\n- 自由度：23DOF\n- 身高：约 1.3m\n- 重量：约 35kg\n\n控制系统运行在板载计算单元上，采用 ROS2 进行实时通信。\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n训练数据来源于**2.5 小时的动作捕捉（MoCap）数据**，涵盖多种动态运动：\n\n- 行走（不同速度）\n- 跑步\n- 跳跃（不同高度）\n- 跌倒恢复\n- 站立/蹲下转换\n\n数据采集后进行预处理，包括姿态归一化、时间对齐和噪声滤波。\n\n### 4.2 仿真环境\n\n实验在**MuJoCo**或类似物理仿真器中进行，模拟 Unitree G1 机器人的物理特性。仿真环境提供了可重复的测试条件和安全的失败场景验证。\n\n### 4.3 评估指标\n\n论文采用以下指标评估方法性能：\n\n1. **跟踪误差**（Tracking Error）：$E_{\\text{track}} = \\frac{1}{T}\\sum_{t=1}^{T} \\|\\mathbf{s}_{\\text{robot}}(t) - \\mathbf{s}_{ref}(t)\\|_2$\n2. **成功率**（Success Rate）：$SR = \\frac{N_{\\text{success}}}{N_{\\text{total}}} \\times 100\\%$\n3. **延迟**（Latency）：从接收参考信号到执行控制命令的时间\n4. **门控准确率**（Gating Accuracy）：门控网络正确选择专家的比例\n\n### 4.4 基线方法\n\n实验对比了以下基线方法：\n\n1. **单一通用策略**：使用知识蒸馏从所有专家中提取的单一策略\n2. **基于规则的切换**：根据运动类型手动切换专家策略\n3. **专家平均**：对所有专家输出进行等权重平均\n4. **无运动先验的门控**：仅使用门控网络，不包含 VAE 预测模块\n\n---\n\n## 5. 技术优势\n\n### 5.1 避免知识蒸馏的性能损失\n\n与传统的知识蒸馏方法相比，门控专家选择机制**保留了每个专家策略的完整能力**。蒸馏方法导致的性能退化可表示为：\n\n$$\n\n\\|E_i - P\\| > \\|E_i - \\sum g_j E_j\\| \\quad \\text{当} \\quad g_i \\approx 1\n\n$$\n\n当门控网络对某一专家的激活权重接近 1 时，系统性能逼近该专家的原始表现。\n\n### 5.2 自适应专家选择\n\n门控网络能够根据当前运动状态**动态调整专家权重**，实现平滑的策略切换：\n\n$$\n\n\\frac{d\\mathbf{g}(t)}{dt} \\approx \\mathbf{0} \\quad \\Rightarrow \\quad \\text{避免控制信号突变}\n\n$$\n\n### 5.3 前瞻性控制能力\n\nVAE 运动先验模块使控制器能够**预测未来运动意图**，对于需要提前准备的动作（如跳跃的预蹲、跌倒的预判）至关重要。实验表明，该模块在高动态运动场景中将跟踪误差降低约 20-30%。\n\n### 5.4 数据效率\n\n仅需**2.5 小时**的 MoCap 数据即可完成训练，显著低于同类方法所需的数据量。这得益于专家策略的分治设计，每个专家只需学习其对应运动域的知识。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 门控网络决策的鲁棒性\n\n门控网络基于当前状态的决策可能受到**传感器噪声**和**状态估计误差**的影响。在极端情况下（如快速运动导致的运动模糊），门控网络可能选择不合适的专家，导致控制性能骤降。\n\n### 6.2 专家策略的覆盖性\n\n系统性能依赖于专家策略库对所有可能运动的覆盖。若出现训练集中未包含的运动类型，门控网络可能产生不确定的输出，导致系统行为不可预测：\n\n$$\n\n\\max_i g_i < \\threshold \\quad \\Rightarrow \\quad \\text{无明确主导专家}\n\n$$\n\n### 6.3 VAE 预测的准确性\n\nVAE 运动先验模块的预测能力受限于历史观测的质量和运动模式的规律性。对于**高度随机或非周期性**的运动，预测误差可能累积，导致前瞻控制反而引入额外误差。\n\n### 6.4 计算资源限制\n\n虽然门控网络设计为轻量级，但在**嵌入式系统**上运行仍需考虑功耗和实时性约束。VAE 模块的推理增加了计算负担，可能限制在更低成本硬件平台上的部署。\n\n### 6.5 Sim-to-Real 迁移\n\n仿真环境中训练的方法在真实机器人上部署时存在**Sim-to-Real gap**。尽管论文在 Unitree G1 上进行了实际验证，但物理接触、关节摩擦等细节的差异仍可能导致性能下降。\n\n---\n\n## 总结\n\nTeleGate 方法通过门控专家选择机制有效避免了知识蒸馏带来的性能损失，并引入 VAE 运动先验模块实现前瞻性控制。实验结果表明，该方法在多样化动态运动的跟踪精度和成功率方面显著优于基线方法。然而，门控决策的鲁棒性、专家覆盖的完整性以及预测模块的泛化能力仍是需要进一步研究的问题。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 7,
+    "writing_quality": 7,
+    "relevance": 8,
+    "overall_score": 7.15,
+    "strengths": [
+      "Real robot deployment on Unitree G1 humanoid (not just simulation-only)",
+      "Efficient data requirement with only 2.5 hours of motion capture",
+      "Novel combination of gated expert selection with motion prior for teleoperation",
+      "Addresses practical challenge of diverse dynamic motions (running, jumping, fall recovery)",
+      "Avoids performance degradation inherent in knowledge distillation by using dynamic expert selection"
+    ],
+    "weaknesses": [
+      "Limited technical details in abstract for thorough evaluation",
+      "No quantitative results or comparison metrics provided",
+      "Unclear what baseline methods are used for comparison",
+      "Abstract lacks architecture details of the gating network and VAE module",
+      "No ablation study mentioned to validate individual components"
+    ],
+    "notes": "A solid contribution to humanoid teleoperation presenting a gated expert selection framework with motion prior. The approach of preserving domain-specific experts via gating network rather than knowledge distillation is conceptually sound. Strong practical validation with real robot deployment and efficient data usage. However, the abstract lacks quantitative results and technical depth needed for complete assessment. The overall framework appears promising but would benefit from more detailed experimental comparisons and ablation studies in the full paper."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "TeleGate: Whole-Body Humanoid Teleoperation via Gated Expert Selection with Motion Prior",
+      "authors": [
+        "Jie Li",
+        "Bing Tang",
+        "Feng Wu",
+        "Rongyun Cao"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.09628",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Real-time whole-body teleoperation is a critical method for humanoid robots to perform complex tasks in unstructured environments. However, developing a unified controller that robustly supports diverse human motions remains a significant challenge. Existing methods typically distill multiple expert policies into a single general policy, which often inevitably leads to performance degradation, particularly on highly dynamic motions. This paper presents TeleGate, a unified whole-body teleoperation framework for humanoid robots that achieves high-precision tracking across various motions while avoiding the performance loss inherent in knowledge distillation. Our key idea is to preserve the full capability of domain-specific expert policies by training a lightweight gating network, which dynamically activates experts in real-time based on proprioceptive states and reference trajectories. Furthermore, to compensate for the absence of future reference trajectories in real-time teleoperation, we introduce a VAE-based motion prior module that extracts implicit future motion intent from historical observations, enabling anticipatory control for motions requiring prediction such as jumping and standing up. We conducted empirical evaluations in simulation and also deployed our technique on the Unitree G1 humanoid robot. Using only 2.5 hours of motion capture data for training, our TeleGate achieves high-precision real-time teleoperation across diverse dynamic motions (e.g., running, fall recovery, and jumping), significantly outperforming the baseline methods in both tracking accuracy and success rate.",
+      "route_id": "eb3bcb5d-9734-49c3-8fe5-3e610693025b"
+    },
+    "markdown_stats": {
+      "lines": 398,
+      "words": 10957,
+      "headings": 27
+    },
+    "assets": {
+      "images": 26,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "eb3bcb5d-9734-49c3-8fe5-3e610693025b",
+  "paper_ref": "eb3bcb5d-9734-49c3-8fe5-3e610693025b",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

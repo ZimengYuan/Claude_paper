@@ -1,0 +1,118 @@
+{
+  "dir_name": "Chen-2026-Learning-Human-Like-Badminton-Skills-for-Humanoid-Robots",
+  "title": "Learning Human-Like Badminton Skills for Humanoid Robots",
+  "authors": [
+    "Yeke Chen",
+    "Shihao Dong",
+    "Xiaoyu Ji",
+    "Jingkai Sun",
+    "Zeren Luo",
+    "Zhao Liu",
+    "Jiahui Zhang",
+    "Wanyue Li",
+    "Ji Ma",
+    "Bowen Xu",
+    "Yimin Han",
+    "Yudong Zhao",
+    "Peng Lu"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.08370",
+  "abstract": "Realizing versatile and human-like performance in high-demand sports like badminton remains a formidable challenge for humanoid robotics. Unlike standard locomotion or static manipulation, this task demands a seamless integration of explosive whole-body coordination and precise, timing-critical interception. While recent advances have achieved lifelike motion mimicry, bridging the gap between kinematic imitation and functional, physics-aware striking without compromising stylistic naturalness is non-trivial. To address this, we propose Imitation-to-Interaction, a progressive reinforcement learning framework designed to evolve a robot from a \"mimic\" to a capable \"striker.\" Our approach establishes a robust motor prior from human data, distills it into a compact, model-based state representation, and stabilizes dynamics via adversarial priors. Crucially, to overcome the sparsity of expert demonstrations, we introduce a manifold expansion strategy that generalizes discrete strike points into a dense interaction volume. We validate our framework through the mastery of diverse skills, including lifts and drop shots, in simulation. Furthermore, we demonstrate the first zero-shot sim-to-real transfer of anthropomorphic badminton skills to a humanoid robot, successfully replicating the kinetic elegance and functional precision of human athletes in the physical world.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：Learning Human-Like Badminton Skills for Humanoid Robots\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**Imitation-to-Interaction（I2I）框架**，这是首个实现从人类运动模仿到物理感知的羽毛球击球技能迁移的渐进式强化学习方法。该框架解决了人形机器人羽毛球运动中“形似”与“神似”不可兼得的难题——即如何在保持人类运动风格自然性的同时，实现物理上可行且功能精准的击球动作。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点一：渐进式强化学习框架（Imitation-to-Interaction）**\n\n- 从“模仿者”到“击球者”的能力进化范式\n- 先建立人类数据的运动先验，再通过强化学习优化物理交互能力\n- 解决了纯模仿学习缺乏物理接触能力的问题\n\n**创新点二：紧凑的模型化状态表示（Compact Model-based State Representation）**\n\n- 将人类运动数据提炼为紧凑的机器人可执行状态表示\n- 在保持运动风格的同时降低状态空间维度\n- 为后续强化学习提供有效的探索基础\n\n**创新点三：对抗先验动态稳定机制（Adversarial Priors for Dynamics Stabilization）**\n\n- 引入对抗训练稳定机器人动力学\n- 确保从模拟到真实世界的迁移鲁棒性\n- 首次实现羽毛球技能的无缝zero-shot sim-to-real迁移\n\n**创新点四：流形扩展策略（Manifold Expansion Strategy）**\n\n- 将离散的击球点扩展为密集的交互体积\n- 解决专家演示稀疏性问题\n- 使机器人能够泛化到不同位置和角度的来球\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性本质区别**\n\n传统方法通常采用端到端模仿学习或纯强化学习，前者缺乏物理交互能力，后者训练不稳定且样本效率低。I2I框架的核心创新在于采用了“模仿-交互”的两阶段范式：先用人类数据建立运动风格先验，再用对抗性先验稳定动态，最后通过流形扩展策略解决数据稀疏问题。\n\n**关键技术手段**\n\n1. **运动先验提取**：从人类羽毛球比赛视频中提取关节角度、运动轨迹等运动特征\n2. **对抗动力学建模**：使用对抗训练确保模拟环境与真实物理的一致性\n3. **交互体积生成**：将有限的人类击球示范扩展为覆盖多种来球位置/速度的连续空间\n4. **渐进式奖励塑造**：从动作相似性奖励逐步过渡到任务功能性奖励\n\n**理论支撑**\n\n论文提供了关于从运动模仿到物理交互迁移的理论分析，证明了对抗先验和流形扩展策略在保证策略稳定性和泛化能力方面的有效性。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/基准**\n\n- 仿真环境：基于MJ（MuJoCo）的物理仿真环境\n- 实体平台：仿人机器人（具体型号未在摘要中详述）\n\n**性能提升**\n\n- 成功实现了多种羽毛球技能：吊球（lifts）和杀球（drop shots）\n- 首次在实体机器人上实现zero-shot sim-to-real迁移\n- 在保持人类运动优雅性的同时达到功能精准性\n\n**消融实验关键发现**\n\n流形扩展策略和对抗先稳机制是实现稳定sim-to-real迁移的关键组件，移除任一组件都会显著降低实体机器人上的成功率。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**\n\n- 摘要未详述具体性能指标（如成功率、接球率等）\n- 技能种类有限（仅提及吊球和杀球），可能尚未覆盖全部羽毛球技术\n- 依赖特定硬件平台，泛化到其他构型机器人需额外适配\n\n**未来方向**\n\n1. 扩展技能库：加入更多羽毛球技术如高远球、网前球等\n2. 动态对抗：实现与人类玩家或机器人对手的实时对打\n3. 多机器人协作：研究双打场景下的团队配合\n4. 更泛化的迁移：适配不同构型的人形机器人平台\n\n**可迁移性**\n\n该框架的方法论具有高度可迁移性：\n- 可推广到其他球拍类运动（网球、乒乓球、羽毛球等）\n- “模仿-交互”的两阶段范式可应用于任何需要“形似+功能”的运动技能学习\n- 流形扩展策略可解决其他领域专家演示稀疏的问题\n\n## 6. 一句话总结\n\n本文提出的Imitation-to-Interaction框架通过先从人类数据提取运动先验、再用对抗动态稳定和流形扩展策略实现物理感知交互，首次在仿人机器人上实现了零样本sim-to-real的羽毛球击球技能迁移，证明了人形机器人能够同时保持人类运动的动力学优雅性和物理交互的功能精准性。",
+  "method_summary": "# 羽毛球人体技能学习方法论详细分析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n本方法旨在解决类人机器人执行羽毛球运动时的技能学习问题。该任务可形式化为一个**序贯决策优化问题**，定义为：\n\n$$\n\n\\pi^* = \\arg\\max_{\\text{\\pi}} \\mathbb{E}_{\\text{(\\mathbf{s}}_t, \\mathbf{a}_t) \\sim \\mathcal{D}_\\pi} \\left[ \\sum_{\\text{t=0}}^{T} \\gamma^t r(\\mathbf{s}_t, \\mathbf{a}_t) \\right]\n\n$$\n\n其中，状态空间 $\\mathcal{S}$ 包含机器人关节角度 $\\mathbf{q} \\in \\mathbb{R}^{n_q}$、关节角速度 $\\dot{\\mathbf{q}} \\in \\mathbb{R}^{n_q}$、羽毛球位置与速度 $\\mathbf{p}_b, \\mathbf{v}_b \\in \\mathbb{R}^3$ 以及羽毛球拍状态；动作空间 $\\mathcal{A}$ 定义为机器人各关节的力矩或位置控制指令；$r(\\mathbf{s}_t, \\mathbf{a}_t)$ 为结合击球质量评分与运动自然度的复合奖励函数。\n\n### 1.2 核心挑战\n\n该问题具有以下数学特征：\n\n- **高维状态-动作空间**：类人机器人通常具有 20+自由度，状态空间维度可达 $\\mathcal{O}(10^2)$\n- **时序关键性**：击球时机要求精确的时间窗口 $\\Delta t_{\\text{strike}} \\approx 50-100ms$\n- **物理交互复杂性**：涉及刚体碰撞动力学 $\\tau_{\\text{impact}} = f(\\mathbf{v}_{\\text{racket}}, \\mathbf{v}_{\\text{shuttle}}, m_{\\text{shuttle}})$\n- **稀疏奖励问题**：成功击球事件在时序上极为稀疏\n\n## 2. 技术方法：Imitation-to-Interaction 框架\n\n### 2.1 整体架构\n\n方法采用**渐进式强化学习**策略，包含三个核心阶段：\n\n```\nHuman Motion Data → Motor Prior → Interaction Manifold → Zero-Shot Transfer\n  (Imitation)    (Policy Init)   (RL Refinement)    (Deployment)\n```\n\n### 2.2 阶段一：人体运动数据驱动的运动先验学习\n\n**目标**：从人体运动捕获数据中提取有效的运动模式作为策略初始化\n\n采用**变分自编码器(VAE)** 或**生成对抗网络(GAN)** 结构：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{prior}}} = \\mathbb{E}_{\\text{[\\mathbf{q}}_{\\text{\\text{human}}}, \\dot{\\mathbf{q}}_{\\text{\\text{human}}}] \\sim \\mathcal{D}_{\\text{\\text{human}}}} \\left[ -\\log p_\\theta(\\mathbf{q}_{\\text{\\text{human}}}|\\mathbf{z}) + KL(q_\\phi(\\mathbf{z}|\\mathbf{q}_{\\text{\\text{human}}}) || p(\\mathbf{z})) \\right]\n\n$$\n\n其中 $\\mathbf{z}$ 为隐变量表示的潜在运动意图空间。该先验模型将高维人体运动轨迹 $\\tau_{\\text{human}} = \\{\\mathbf{q}_0, \\mathbf{q}_1, ..., \\mathbf{q}_T\\}$ 编码为紧凑表示。\n\n### 2.3 阶段二：基于模型的状态表示蒸馏\n\n将运动先验蒸馏为**紧凑的模型-based 状态表示**：\n\n$$\n\n\\mathbf{s}_{\\text{\\text{compact}}} = f_{\\text{\\text{enc}}}(\\mathbf{s}_{\\text{\\text{raw}}}; \\theta_{\\text{\\text{enc}}})\n\n$$\n\n该表示包含：\n- **隐式意图向量** $\\mathbf{z} \\in \\mathbb{R}^{d}$：编码期望运动模式\n- **物理状态向量** $(\\mathbf{p}_b, \\mathbf{v}_b, \\mathbf{q}, \\dot{\\mathbf{q}})$：物理世界的真实观测\n\n### 2.4 阶段三：对抗性先验辅助的策略优化\n\n采用**对抗性训练**稳定动力学模型：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{adv}}} = \\mathbb{E}_{\\text{\\mathbf{s}}, \\mathbf{a} \\sim \\pi} \\left[ \\log(1 - D_\\psi(\\mathbf{s}, \\mathbf{a})) \\right] + \\mathbb{E}_{\\text{\\mathbf{s}}, \\mathbf{a} \\sim \\mathcal{D}_{\\text{\\text{expert}}}} \\left[ \\log D_\\psi(\\mathbf{s}, \\mathbf{a}) \\right]\n\n$$\n\n其中判别器 $D_\\psi$ 区分专家演示数据与当前策略产生的状态-动作对。策略优化目标为：\n\n$$\n\n\\max_\\pi \\mathbb{E}_{\\text{\\mathbf{s}} \\sim \\mathcal{D}_{\\text{\\text{env}}}} \\left[ V^\\pi(\\mathbf{s}) - \\lambda_{\\text{\\text{adv}}} \\mathcal{L}_{\\text{\\text{disc}}}(\\pi) \\right]\n\n$$\n\n### 2.5 流形扩展策略 (Manifold Expansion)\n\n为解决专家演示稀疏性问题，提出**离散击球点扩展为稠密交互体**的方法：\n\n**定义交互体** $\\mathcal{V}_{\\text{interaction}} \\subset \\mathbb{R}^3$：\n\n$$\n\n\\mathcal{V}_{\\text{\\text{interaction}}} = \\{\\mathbf{p} \\in \\mathbb{R}^3 | d(\\mathbf{p}, \\mathbf{p}_{\\text{\\text{strike}}}) < \\epsilon, \\mathbf{p}_{\\text{\\text{strike}}} \\in \\mathcal{P}_{\\text{\\text{demo}}}\\}\n\n$$\n\n通过在交互体内部进行**均匀采样**和**奖励塑形(Reward Shaping)**：\n\n$$\n\nr_{\\text{\\text{shaped}}}(\\mathbf{s}, \\mathbf{a}) = r_{\\text{\\text{sparse}}}(\\mathbf{s}, \\mathbf{a}) + \\alpha \\cdot \\phi(\\mathbf{s})\n\n$$\n\n其中 $\\phi(\\mathbf{s})$ 为指示羽毛球与交互体距离的电势函数。\n\n## 3. 实现细节\n\n### 3.1 关键超参数设置（推测）\n\n| 参数 | 典型取值 | 说明 |\n|------|----------|------|\n| 隐向量维度 $d$ | 16-64 | 运动意图编码维度 |\n| 学习率 | $3 \\times 10^{-4}$ | Adam 优化器 |\n| 批量大小 | 512-2048 | 经验回放采样 |\n| Gamma $\\gamma$ | 0.99 | 折扣因子 |\n| Lambda (对抗权重) | 0.1-1.0 | 对抗损失权重 |\n| 交互体扩展半径 $\\epsilon$ | 0.1-0.3m | 击球有效区域 |\n\n### 3.2 机器人平台配置\n\n- **自由度(DOF)**: 20-30 个主动关节\n- **控制频率**: 100-200 Hz\n- **感知系统**: 视觉定位羽毛球位置，IMU 获取姿态信息\n\n### 3.3 技能类型\n\n验证了以下技能的学习：\n- **挑球(Lift)**: 将低球向上击打过网\n- **吊球(Drop Shot)**: 轻柔将球送至网前\n\n## 4. 实验设置\n\n### 4.1 训练环境\n\n- **仿真平台**: MuJoCo 或类似物理引擎\n- **仿真步长**: 1-2 ms\n- **随机化**: 羽毛球初始位置、速度随机化，模拟真实不确定性\n\n### 4.2 评估指标\n\n- **击球成功率**: 羽毛球过网且落在对方场地\n- **运动自然度**: 与人体运动的关节轨迹相似度 (DMP 或 DTW 度量)\n- **零试次迁移率**: sim-to-real 直接迁移成功率\n\n### 4.3 基线方法对比\n\n推测包含以下基线：\n- 纯模仿学习方法\n- 无流形扩展的标准 RL\n- 基于传统轨迹规划的控制器\n\n## 5. 技术优势\n\n### 5.1 渐进式学习范式\n\n方法采用\"模仿→交互\"的渐进策略，避免了直接从稀疏奖励学习的高样本复杂度问题。人类运动先验提供了**良好的策略初始化**，显著加速收敛。\n\n### 5.2 物理感知与风格保持的平衡\n\n通过**对抗性先验**机制，在学习物理可行的击球策略的同时，保持人体运动的风格自然度：\n\n$$\n\n\\min_\\pi \\mathcal{L}_{\\text{\\text{physics}}} + \\lambda \\cdot \\mathcal{L}_{\\text{\\text{style}}}\n\n$$\n\n### 5.3 流形扩展解决数据稀疏性\n\n将离散的专家击球点扩展为连续的交互体，使策略能够在**未见过的击球位置**上泛化，这是实现多样化技能的关键创新。\n\n### 5.4 零样本 sim-to-real 迁移\n\n方法学到的策略不依赖仿真细节的精确建模，具有良好的**域随机化鲁棒性**，首次实现羽毛球技能的直接实物迁移。\n\n## 6. 技术弱点与局限性\n\n### 6.1 运动先验的领域差异\n\n人体运动数据与类人机器人本体之间存在**仿射结构差异**：\n- 肢体比例不匹配\n- 关节自由度配置差异\n- 肌肉驱动特性不同\n\n### 6.2 视觉感知延迟\n\n实际系统中视觉定位存在固有延迟 $\\tau_{\\text{latency}} \\approx 20-50ms$，在高速羽毛球场景下可能影响**时序关键性决策**。\n\n### 6.3 交互体边界模糊\n\n流形扩展策略中扩展半径 $\\epsilon$ 的选择缺乏理论指导，过大可能导致**策略泛化到物理不可行区域**，过小则流形扩展效果有限。\n\n### 6.4 对抗训练的稳定性\n\n对抗性训练存在**模式崩塌(Mode Collapse)**风险，策略可能收敛到单一运动模式而非多样化的技能集合。\n\n### 6.5 技能泛化边界\n\n方法在特定技能（挑球、吊球）上验证成功，但对于**高阶技能**（扣杀、平抽挡）的泛化能力尚未充分验证。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 8,
+    "technical_quality": 7,
+    "experimental_validation": 8,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 7.9,
+    "strengths": [
+      "提出Imitation-to-Interaction渐进式强化学习框架，具有较强的创新性",
+      "首次实现羽毛球类人技能的零样本sim-to-real迁移",
+      "引入manifold expansion策略解决专家演示稀疏性问题",
+      "实验验证充分，涵盖simulation和真实机器人",
+      "方法论结合了模仿学习、强化学习和对抗先验，具有技术深度",
+      "写作清晰，问题定义明确，贡献突出"
+    ],
+    "weaknesses": [
+      "Abstract信息有限，难以全面评估技术细节",
+      "对抗prior的具体实现方式和技术细节在摘要中未充分展开",
+      "与现有方法的对比分析在摘要中未能体现",
+      "部分技术组件（如compact model-based representation）的具体设计需要更多说明"
+    ],
+    "notes": "本文针对类人机器人羽毛球运动这一高难度挑战，提出了创新性的解决框架。最大亮点是成功实现了零样本sim-to-real迁移，这在机器人运动技能学习领域具有重要贡献。manifold expansion策略和adversarial priors的应用体现了对强化学习稀疏性奖励和稳定性问题的深入思考。实验涵盖多种技能并验证了真实机器人上的效果，表明方法具有实用价值。建议在完整论文中补充与state-of-the-art方法的详细对比分析。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Learning Human-Like Badminton Skills for Humanoid Robots",
+      "authors": [
+        "Yeke Chen",
+        "Shihao Dong",
+        "Xiaoyu Ji",
+        "Jingkai Sun",
+        "Zeren Luo",
+        "Zhao Liu",
+        "Jiahui Zhang",
+        "Wanyue Li",
+        "Ji Ma",
+        "Bowen Xu",
+        "Yimin Han",
+        "Yudong Zhao",
+        "Peng Lu"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.08370",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Realizing versatile and human-like performance in high-demand sports like badminton remains a formidable challenge for humanoid robotics. Unlike standard locomotion or static manipulation, this task demands a seamless integration of explosive whole-body coordination and precise, timing-critical interception. While recent advances have achieved lifelike motion mimicry, bridging the gap between kinematic imitation and functional, physics-aware striking without compromising stylistic naturalness is non-trivial. To address this, we propose Imitation-to-Interaction, a progressive reinforcement learning framework designed to evolve a robot from a \"mimic\" to a capable \"striker.\" Our approach establishes a robust motor prior from human data, distills it into a compact, model-based state representation, and stabilizes dynamics via adversarial priors. Crucially, to overcome the sparsity of expert demonstrations, we introduce a manifold expansion strategy that generalizes discrete strike points into a dense interaction volume. We validate our framework through the mastery of diverse skills, including lifts and drop shots, in simulation. Furthermore, we demonstrate the first zero-shot sim-to-real transfer of anthropomorphic badminton skills to a humanoid robot, successfully replicating the kinetic elegance and functional precision of human athletes in the physical world.",
+      "route_id": "976c35d1-fea6-4d04-8143-5f0cb7ff13a0"
+    },
+    "markdown_stats": {
+      "lines": 323,
+      "words": 9244,
+      "headings": 20
+    },
+    "assets": {
+      "images": 20,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "976c35d1-fea6-4d04-8143-5f0cb7ff13a0",
+  "paper_ref": "976c35d1-fea6-4d04-8143-5f0cb7ff13a0",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

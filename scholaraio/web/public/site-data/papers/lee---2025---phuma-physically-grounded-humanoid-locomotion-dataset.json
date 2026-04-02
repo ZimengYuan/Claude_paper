@@ -1,0 +1,67 @@
+{
+  "dir_name": "1KAIST-None-PHUMA-PHYSICALLY-GROUNDED-HUMANOIDLOCOMOTION-DATA",
+  "title": "PHUMA: PHYSICALLY-GROUNDED HUMANOIDLOCOMOTION DATASET",
+  "authors": [
+    "Kyungmin Lee1 Sibeen Kim Minho Park Hyunseung Kim Dongyoon Hwang Hojoon Lee Jaegul Choo 1KAIST"
+  ],
+  "year": null,
+  "journal": "",
+  "doi": "",
+  "abstract": "",
+  "paper_type": "",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "PHUMA: PHYSICALLY-GROUNDED HUMANOIDLOCOMOTION DATASET",
+      "authors": [
+        "Kyungmin Lee1 Sibeen Kim Minho Park Hyunseung Kim Dongyoon Hwang Hojoon Lee Jaegul Choo 1KAIST"
+      ]
+    },
+    "markdown_stats": {
+      "lines": 482,
+      "words": 9699,
+      "headings": 33
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "ceca849b-fbb9-4fda-a25b-23b9c113f106_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "lee---2025---phuma-physically-grounded-humanoid-locomotion-dataset",
+  "paper_ref": "Lee 等 - 2025 - PHUMA physically-grounded humanoid locomotion dataset",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

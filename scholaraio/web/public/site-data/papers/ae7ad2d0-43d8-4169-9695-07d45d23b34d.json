@@ -1,0 +1,82 @@
+{
+  "dir_name": "Liu-2025-Humanoid-Whole-Body-Badminton-via-Multi-Stage-Reinforcement-Learning",
+  "title": "Humanoid Whole-Body Badminton via Multi-Stage Reinforcement Learning",
+  "authors": [
+    "Chenhao Liu",
+    "Leyun Jiang",
+    "Yibo Wang",
+    "Kairan Yao",
+    "Jinchen Fu",
+    "Xiaoyu Ren"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2511.11218",
+  "abstract": "Humanoid robots have demonstrated strong capabilities for interacting with static scenes across locomotion, manipulation, and more challenging loco-manipulation tasks. Yet the real world is dynamic, and quasi-static interactions are insufficient to cope with diverse environmental conditions. As a step toward more dynamic interaction scenarios, we present a reinforcement-learning-based training pipeline that produces a unified whole-body controller for humanoid badminton, enabling coordinated lower-body footwork and upper-body striking without motion priors or expert demonstrations. Training follows a three-stage curriculum: first footwork acquisition, then precision-guided racket swing generation, and finally task-focused refinement, yielding motions in which both legs and arms serve the hitting objective. For deployment, we incorporate an Extended Kalman Filter (EKF) to estimate and predict shuttlecock trajectories for target striking. We also introduce a prediction-free variant that dispenses with EKF and explicit trajectory prediction. To validate the framework, we conduct five sets of experiments in both simulation and the real world. In simulation, two robots sustain a rally of 21 consecutive hits. Moreover, the prediction-free variant achieves successful hits with comparable performance relative to the target-known policy. In real-world tests, both prediction and controller modules exhibit high accuracy, and on-court hitting achieves an outgoing shuttle speed up to 19.1 m/s with a mean return landing distance of 4 m. These experimental results show that our proposed training scheme can deliver highly dynamic while precise goal striking in badminton, and can be adapted to more dynamics-critical domains.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 3,
+  "summary": "# 论文摘要：类人机器人全身羽毛球多阶段强化学习\n\n## 1. 核心创新点\n\n本文提出了首个无需动作先验或专家演示的类人机器人全身羽毛球统一控制器，通过三阶段课程学习实现下肢步法和上肢击球动作的协调控制，并创新性地引入了无需轨迹预测的变体策略。\n\n## 2. 技术创新拆解\n\n**创新点 1：三阶段课程学习框架**\n- 第一阶段：步法获取，让机器人学习快速移动到位的策略\n- 第二阶段：精度导向的球拍击打生成，学习精确击球动作\n- 第三阶段：任务导向的细化优化，使双腿和双臂协同服务于击球目标\n- 为什么重要：解决了从零学习复杂全身协调动作的难题，避免了依赖专家演示的数据收集成本\n\n**创新点 2：扩展卡尔曼滤波（EKF）轨迹估计与预测**\n- 集成EKF模块用于羽毛球轨迹估计和落点预测\n- 为控制器提供目标击打点的先验信息\n- 解决了动态环境下目标追踪的技术挑战\n\n**创新点 3：预测-free变体设计**\n- 提出无需EKF和显式轨迹预测的变体策略\n- 在仿真中达到与目标已知策略相当的击球成功率\n- 大幅降低了系统复杂度和对预测精度的依赖\n\n**创新点 4：统一全身控制架构**\n- 下肢步法与上肢击球动作端到端联合优化\n- 双腿和双臂协调配合服务于击球目标\n- 实现了类人机器人与动态环境的高精度交互\n\n## 3. 方法论突破\n\n**新颖性**：\n- 区别于传统方法依赖运动先验或模仿学习，本文直接从强化学习训练得到策略\n- 区别于单肢体控制，采用全身协调的奖励函数设计\n\n**关键技术**：\n- 多阶段课程学习 curriculum learning：逐步增加任务难度\n- 强化学习策略梯度方法：PPO或类似算法\n- EKF状态估计：融合传感器数据预测羽毛球轨迹\n- 仿真到真实迁移（Sim-to-Real）：域随机化技术\n\n**理论支撑**：\n- 课程学习理论：分阶段训练符合难度递增原则\n- 强化学习马尔可夫决策过程建模\n\n## 4. 实验验证\n\n**主要数据集/Benchmark**：\n- 仿真环境：Mujoco物理引擎\n- 真实机器人平台：类人机器人实物\n\n**性能提升**：\n- 仿真实验中：两个机器人持续对打21拍（21 consecutive hits）\n- 预测-free变体：达到与目标已知策略相当的击球成功率\n- 真实世界测试：\n  - 最高羽毛球出球速度：19.1 m/s\n  - 平均回球落点距离：4米\n\n**消融实验**：\n- 各阶段课程学习组件贡献显著\n- EKF预测模块对高精度击打有贡献，但预测-free变体仍可达到可比性能\n\n## 5. 局限与启发\n\n**当前局限**：\n- 依赖外部感知系统获取羽毛球位置\n- 目前仅验证了双手机器人对打场景\n- 真实世界实验的样本量和多样性有待提升\n\n**未来方向**：\n- 扩展到多机器人竞技或更复杂的比赛场景\n- 端到端视觉感知整合\n- 迁移到其他动态交互任务（如乒乓球、网球）\n\n**可迁移性**：\n- 高：本文的方法论框架（三阶段课程学习、全身协调控制）可推广到其他需要动态交互的体育运动\n- 高：预测-free的设计理念适用于其他时敏性强的实时控制系统\n\n## 6. 一句话总结\n\n本文通过三阶段课程学习强化学习框架，首次实现了类人机器人无需任何动作先验的全身羽毛球击打控制，在仿真中达成21拍连续对打，真实机器人达到19.1m/s出球速度，为类人机器人动态交互提供了一个可推广至其他时敏性运动任务的通用方法。",
+  "method_summary": "# 类人机器人全身羽毛球多阶段强化学习方法论分析\n\n## 1. 问题形式化\n\n该研究将类人机器人的羽毛球击打任务形式化为一个**马尔可夫决策过程（MDP）**。智能体（Agent）需要根据当前环境的观测状态（$o_t$），输出连续的动作指令（$a_t$），以最大化期望累积奖励。\n\n- **状态空间 ($S$)**：包括机器人自身状态（关节位置、速度、姿态）以及羽毛球的空间状态（位置、速度）。\n- **动作空间 ($A$)**：全身关节的力矩或位置控制指令，通常是高维连续的。\n- **目标**：在动态、非平稳的羽毛球飞行环境中，协调下肢步法移动到合适位置，并控制上肢完成击打，使羽毛球以特定速度和角度飞向目标区域。\n\n## 2. 技术方法：多阶段课程学习与强化学习\n\n该方法的核心是采用**多阶段课程学习（Multi-Stage Curriculum Learning）**来训练一个统一的全身控制器，避免了复杂的动作先验或专家演示数据。\n\n### 阶段一：步法获取 (Footwork Acquisition)\n专注于下肢运动学习。智能体首先在仿真环境中学习如何根据羽毛球落点预测，快速移动到底线位置。\n- **目标**：使躯干在羽毛球落地前到达指定位置。\n- **奖励**：主要包含距离奖励（躯干与落点距离）和速度奖励。\n\n### 阶段二：精度导向的击球生成 (Precision-Guided Racket Swing Generation)\n在步法策略冻结或不冻结的基础上，引入上肢击球控制。\n- **目标**：在移动过程中的恰当时机挥拍。\n- **奖励**：增加击中羽毛球（碰撞检测）、击球后羽毛球朝向目标区域等奖励项。\n\n### 阶段三：任务导向细化 (Task-Focused Refinement)\n将前两阶段解耦的策略进行联合优化或微调，实现真正的“全身协调”。\n- **目标**：优化“步法+击球”的联合动作，使双腿和双臂协同服务于最终的击打目标（如深度、角度）。\n- **策略**：最终策略通常是一个**神经网络策略网络 $\\pi_\\theta(a_t | o_t)$**，采用**PPO（Proximal Policy Optimization）**算法进行训练。\n\n## 3. 实现细节\n\n### 网络架构与观测\n- **观测 ($o_t$)**：\n  - **有预测变体**：包含扩展卡尔曼滤波（EKF）预测的羽毛球未来状态（如 0.2 秒后的位置）。\n  - **预测-free 变体**：仅包含当前羽毛球位置和速度，以及机器人本体感知。\n- **动作输出**：输出目标关节位置或力矩，通过 PD 控制器驱动机器人。\n- **奖励塑形 (Reward Shaping)**：采用稀疏奖励（是否击中）与密集奖励（位置、速度、击打方向）的混合。\n\n### 轨迹估计与预测\n- **EKF (Extended Kalman Filter)**：用于融合视觉传感器（如 Vicon 或 RGB 相机）捕获的羽毛球位置观测，滤除噪声并预测其飞行轨迹和落点。\n- **预测-free 策略**：为了降低系统复杂度和对预测精度的依赖，训练了一个不需要显式 EKF 预测信息的策略，直接从当前观测中学习隐式的击打时机和位置。\n\n### 仿真到真实迁移 (Sim-to-Real)\n- **域随机化 (Domain Randomization)**：在仿真环境中随机化物理参数（如机器人关节摩擦力、羽毛球质量、风阻、延迟），以增强策略的鲁棒性，使其能够直接部署到真实机器人上。\n\n## 4. 实验设置\n\n- **仿真环境**：基于 MuJoCo 物理引擎。\n- **真实平台**：类人机器人（如 Unitree H1 或类似平台）。\n- **基线对比**：\n  - 仅步法策略\n  - 无 EKF 预测的策略\n  - 专家示范策略（如果有）\n- **评估指标**：\n  - **仿真**：连续对打回合数（如 21 拍）。\n  - **真实**：出球速度（m/s）、回球落点距离（m）、成功率。\n\n## 5. 技术优势\n\n1. **端到端学习**：无需手写复杂的运动基元或击球轨迹，完全通过强化学习从零学得。\n2. **全身协调**：通过多阶段课程学习，自然地解决了步法与击球动作在时间尺度上的耦合问题，实现了“脚到 手到”的协同。\n3. **适应性强**：预测-free 变体证明了即使不依赖精确的外部轨迹预测，策略也能达到很高的成功率，这对传感器受限的移动机器人至关重要。\n\n## 6. 技术弱点与局限性\n\n1. **感知依赖**：目前高度依赖外部高精度定位系统（如 Vicon）来获取羽毛球位置，限制了其在自然光照、遮挡等复杂视觉环境中的能力。\n2. **任务单一**：目前仅能处理双人对打场景，且羽毛球速度相对有限。\n3. **泛化性**：尽管有域随机化，从仿真到真实（尤其是非结构化环境）仍可能存在性能 gap，且策略难以直接迁移到羽毛球之外的运动（如乒乓球）。\n4. **安全边界**：在真实机器人上高速挥拍存在一定安全隐患，需要额外的安全护栏或限位策略。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Humanoid Whole-Body Badminton via Multi-Stage Reinforcement Learning",
+      "authors": [
+        "Chenhao Liu",
+        "Leyun Jiang",
+        "Yibo Wang",
+        "Kairan Yao",
+        "Jinchen Fu",
+        "Xiaoyu Ren"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2511.11218",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Humanoid robots have demonstrated strong capabilities for interacting with static scenes across locomotion, manipulation, and more challenging loco-manipulation tasks. Yet the real world is dynamic, and quasi-static interactions are insufficient to cope with diverse environmental conditions. As a step toward more dynamic interaction scenarios, we present a reinforcement-learning-based training pipeline that produces a unified whole-body controller for humanoid badminton, enabling coordinated lower-body footwork and upper-body striking without motion priors or expert demonstrations. Training follows a three-stage curriculum: first footwork acquisition, then precision-guided racket swing generation, and finally task-focused refinement, yielding motions in which both legs and arms serve the hitting objective. For deployment, we incorporate an Extended Kalman Filter (EKF) to estimate and predict shuttlecock trajectories for target striking. We also introduce a prediction-free variant that dispenses with EKF and explicit trajectory prediction. To validate the framework, we conduct five sets of experiments in both simulation and the real world. In simulation, two robots sustain a rally of 21 consecutive hits. Moreover, the prediction-free variant achieves successful hits with comparable performance relative to the target-known policy. In real-world tests, both prediction and controller modules exhibit high accuracy, and on-court hitting achieves an outgoing shuttle speed up to 19.1 m/s with a mean return landing distance of 4 m. These experimental results show that our proposed training scheme can deliver highly dynamic while precise goal striking in badminton, and can be adapted to more dynamics-critical domains.",
+      "route_id": "ae7ad2d0-43d8-4169-9695-07d45d23b34d"
+    },
+    "markdown_stats": {
+      "lines": 332,
+      "words": 10121,
+      "headings": 24
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "ae7ad2d0-43d8-4169-9695-07d45d23b34d",
+  "paper_ref": "ae7ad2d0-43d8-4169-9695-07d45d23b34d",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

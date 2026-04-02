@@ -1,0 +1,76 @@
+{
+  "dir_name": "Prakrut-2025-Real-Time-Gait-Adaptation-for-Quadrupeds-using-Model-Predictive-Control-and-Reinforcement-Learning",
+  "title": "Real-Time Gait Adaptation for Quadrupeds using Model Predictive Control and Reinforcement Learning",
+  "authors": [
+    "Kotecha, Prakrut",
+    "B, Ganga Nair",
+    "Kolathaya, Shishir"
+  ],
+  "year": 2025,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2510.20706",
+  "abstract": "Model-free reinforcement learning (RL) has enabled adaptable and agile quadruped locomotion; however, policies often converge to a single gait, leading to suboptimal performance. Traditionally, Model Predictive Control (MPC) has been extensively used to obtain task-specific optimal policies but lacks the ability to adapt to varying environments. To address these limitations, we propose an optimization framework for real-time gait adaptation in a continuous gait space, combining the Model Predictive Path Integral (MPPI) algorithm with a Dreamer module to produce adaptive and optimal policies for quadruped locomotion. At each time step, MPPI jointly optimizes the actions and gait variables using a learned Dreamer reward that promotes velocity tracking, energy efficiency, stability, and smooth transitions, while penalizing abrupt gait changes. A learned value function is incorporated as terminal reward, extending the formulation to an infinite-horizon planner. We evaluate our framework in simulation on the Unitree Go1, demonstrating an average reduction of up to 36.48\\% in energy consumption across varying target speeds, while maintaining accurate tracking and adaptive, task-appropriate gaits.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结\n\n## 核心创新点 (Core Innovation)\n\n本文提出了一种结合模型预测路径积分控制（MPPI）与Dreamer强化学习模块的优化框架，首次实现了四足机器人在连续步态空间中的实时步态自适应。该框架将步态变量纳入MPC的优化范畴，同时利用Dreamer习得的价值函数将有限时域规划扩展为无限时域Planner，突破了传统MPC缺乏环境适应能力和纯RL策略收敛于单一步态的局限性。\n\n## 技术创新拆解 (Technical Contributions)\n\n**创新点1：连续步态空间的联合优化** — 将步态变量（步频、步幅、相位等）作为可优化变量纳入MPPI的优化过程，而非使用预定义的固定步态，实现了真正的连续步态空间搜索，大幅提升了运动灵活性和环境适应性。\n\n**创新点2：Dreamer奖励函数与价值函数的融合** — 采用Dreamer架构习得奖励函数和价值函数，奖励函数综合考虑速度跟踪、能量效率、稳定性和步态平滑过渡等多目标，优化目标不仅包含即时奖励，还通过学习到的价值函数作为终端奖励实现无限时域规划。\n\n**创新点3：步态变化平滑惩罚机制** — 在奖励函数中显式惩罚 abrupt gait changes，确保步态转换的平滑性，避免优化过程中出现物理上不可行或机体损伤的突变步态。\n\n**创新点4：自适应任务步态生成** — 框架能够根据不同的目标速度和地形条件自动生成适配的步态模式，而非简单地从离散步态库中选择，实现了真正的任务自适应能力。\n\n## 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：传统MPC方法通过求解有限时域最优控制问题获得特定任务的步态，但无法适应环境变化；纯RL方法虽能学习自适应策略，但往往收敛于单一步态导致次优性能。本文创新性地将MPPI的在线优化能力与Dreamer的长期价值估计能力结合，形成\"规划-学习\"混合范式。\n\n**关键技术**：\n- **MPPI算法**：基于采样的一阶最优控制方法，在每一步采样大量动作序列并选择期望回报最高的序列，具有计算效率高、易于处理约束的优点\n- **Dreamer架构**：基于世界模型的强化学习方法，能够习得环境的隐式动力学模型和长期价值函数\n- **联合优化框架**：在每个时间步同时优化控制动作（关节力矩/位置）和步态变量（步态参数），形成闭环自适应\n\n**理论支撑**：将有限时域MPPI扩展为近似无限时域Planner，通过学习的状态-动作价值函数估计终端奖励，理论上保证了长期优化的一致性。\n\n## 实验验证 (Key Results)\n\n**主要数据集/平台**：\n- 仿真环境：Unitree Go1四足机器人\n- 验证场景：不同目标速度下的运动任务\n\n**性能提升**：\n- **能耗降低**：平均能耗降低最高达36.48%（相比baseline）\n- **速度跟踪**：保持精确的速度跟踪能力\n- **步态适应性**：能够根据不同任务自动生成适配的步态模式\n\n**消融实验**：根据论文描述，能耗显著降低的主要贡献来自于联合优化框架对能量效率目标的显式优化，以及步态变量的自适应调整能力。\n\n## 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 仿真验证尚未在真实机器人上验证（sim-to-real gap）\n- 计算实时性需进一步优化以满足实际硬件部署需求\n- 对复杂地形（如楼梯、不平整地面）的适应性未充分验证\n\n**未来方向**：\n- 迁移至真实四足机器人平台进行验证\n- 扩展框架以处理地形变化和外部扰动\n- 探索更复杂的奖励函数设计以平衡多目标\n\n**可迁移性**：该框架的核心思想（结合在线MPC优化与学习到的长期价值函数）可迁移至其他足式机器人（如双足机器人）、机械臂操作或其他需要实时自适应控制的机器人系统。\n\n## 一句话总结\n\n本文通过将步态变量纳入MPPI优化范畴并引入Dreamer习得的价值函数实现无限时域规划，首次在连续步态空间实现了四足机器人实时、自适应、最优的步态生成，能耗降低最高达36.48%，为解决传统MPC缺乏适应性和RL步态单一化问题提供了有效的“规划-学习”混合方案。",
+  "method_summary": "# 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 四足机器人步态适应问题\n\n该研究将四足机器人实时步态适应问题形式化为一个连续空间中的优化问题。给定四足机器人的动力学模型和环境信息，目标是找到最优的动作序列 $u_{t:t+H-1}$ 和步态变量 $g_{t:t+H-1}$，使得机器人能够：\n\n- 准确跟踪目标速度 $v_{ref}$\n- 最小化能量消耗\n- 保持身体稳定性\n- 实现平滑的步态转换\n\n### 1.2 数学定义\n\n状态空间定义为 $\\mathcal{S}$，包含机器人基座状态（位置、姿态、线速度、角速度）、关节位置、关节速度以及地形信息。动作空间定义为 $\\mathcal{A} = \\mathcal{A}_{\\text{action}} \\times \\mathcal{G}$，其中 $\\mathcal{A}_{\\text{action}}$ 表示关节力矩或位置控制指令，$\\mathcal{G}$ 表示步态参数空间。\n\n目标函数可表示为：\n\n$$\n\nJ(\\tau) = \\sum_{\\text{k=0}}^{H-1} r(s_k, a_k, g_k) + V(s_H)\n\n$$\n\n其中 $r(s_k, a_k, g_k)$ 为即时奖励函数，$V(s_H)$ 为终端价值函数，$H$ 为预测视界。步态变量 $g_k \\in \\mathbb{R}^{n_g}$ 连续参数化了摆动相位、步态周期、步幅等特征。\n\n### 1.3 MPPI 框架\n\n该方法采用 Model Predictive Path Integral (MPPI)控制框架，将最优控制问题转化为采样优化问题。MPPI 通过从提议分布中采样多条轨迹，计算每条轨迹的累积代价，然后根据指数加权方式更新控制分布：\n\n$$\n\n\\pi_{\\text{t}}(u) \\propto \\exp\\left(-\\frac{1}{\\lambda}Q_t(u)\\right)\n\n$$\n\n其中 $\\lambda$ 为温度参数，$Q_t(u)$ 为轨迹 $u$ 的累积代价。\n\n---\n\n## 2. 技术方法\n\n### 2.1 MPPI-Dreamer 混合架构\n\n该方法的核心创新在于将 MPPI 与 Dreamer 模块深度整合，形成一个双层优化框架：\n\n**上层（规划层）**：MPPI 作为路径积分控制器，在连续动作-步态空间中进行滚动时域优化。\n\n**下层（学习层）**：Dreamer 模块包含：\n- **世界模型** $f(s_{t+1}|s_t, a_t, g_t)$：学习环境动力学\n- **奖励模型** $\\hat{r}(s_t, a_t, g_t)$：预测即时奖励\n- **价值模型** $V(s_t)$：估计终端累积回报\n\n### 2.2 联合优化机制\n\nMPPI 在每个控制周期同时优化两类变量：\n\n1. **动作变量** $a_t$：关节控制指令\n2. **步态变量** $g_t$：步态参数（摆动相位、步态周期、步幅、抬腿高度等）\n\n奖励函数设计为多目标加权形式：\n\n$$\n\nr(s, a, g) = w_1 r_{\\text{\\text{velocity}}} + w_2 r_{\\text{\\text{energy}}} + w_3 r_{\\text{\\text{stability}}} + w_4 r_{\\text{\\text{smoothness}}} + w_5 r_{\\text{\\text{tracking}}}\n\n$$\n\n各分项定义为：\n\n- **速度跟踪奖励**：$r_{\\text{velocity}} = -\\alpha_v \\|v_{\\text{base}} - v_{ref}\\|^2$\n- **能量效率奖励**：$r_{\\text{energy}} = -\\alpha_e \\sum |\\tau_i \\dot{q}_i|$\n- **稳定性奖励**：$r_{\\text{stability}} = -\\alpha_s \\|roll, pitch\\|^2$（惩罚 Roll 和 Pitch 角度）\n- **平滑性惩罚**：$r_{\\text{smoothness}} = -\\alpha_{\\text{sm}} \\|g_t - g_{\\text{t-1}}\\|^2$\n- **跟踪奖励**：$r_{\\text{tracking}} = \\beta \\cdot \\mathbb{1}_{\\text{(|v\\_{base}} - v_{ref}| < \\epsilon)}$\n\n### 2.3 无限视界扩展\n\n通过引入学习到的价值函数 $V(s)$ 作为终端奖励，将有限视界 MPPI 扩展为近似无限视界规划器：\n\n$$\n\nQ(s_t, u_{\\text{\\text{t:H}}}) = \\sum_{\\text{k=0}}^{H-1} \\hat{r}(s_k, a_k, g_k) + V(s_H)\n\n$$\n\n价值网络通过 TD-learning 进行训练：\n\n$$\n\nL_V = \\mathbb{E}[(V(s_t) - \\hat{\\mathbb{E}}[r_t + \\gamma V(s_{\\text{t+1}})])^2]\n\n$$\n\n### 2.4 步态参数化\n\n步态变量采用连续参数化表示：\n\n$$\n\ng = [\\phi_{\\text{\\text{sw}}}, T_{\\text{\\text{cycle}}}, s_{\\text{\\text{step}}}, h_{\\text{\\text{swing}}}, \\dots]^T\n\n$$\n\n其中 $\\phi_{\\text{sw}} \\in [0, 1)$ 为摆动相位，$T_{\\text{cycle}}$ 为步态周期，$s_{\\text{step}}$ 为步幅，$h_{\\text{swing}}$ 为抬腿高度。\n\n---\n\n## 3. 实现细节\n\n### 3.1 世界模型架构\n\n世界模型采用循环神经网络架构：\n\n- **编码器**：将状态-动作-步态元组映射到隐表示 $z_t = \\text{Encoder}(s_t, a_t, g_t)$\n- **转换模型**：$h_{t+1} = \\text{GRU}(h_t, z_t)$\n- **解码器**：$\\hat{s}_{t+1} = \\text{Decoder}(h_{t+1})$\n\n损失函数包含重构损失和 KL 散度正则项：\n\n$$\n\nL_{\\text{\\text{world}}} = \\|s_{\\text{t+1}} - \\hat{s}_{\\text{t+1}}\\|^2 + D_{\\text{KL}}(p(z|s,a,g) \\| \\mathcal{N}(0, I))\n\n$$\n\n### 3.2 采样策略\n\nMPPI 采用以下采样策略：\n\n- **采样数量**：$K$ 条候选轨迹（通常 $K \\approx 100-500$）\n- **噪声分布**：$\\epsilon \\sim \\mathcal{N}(0, \\Sigma)$，其中 $\\Sigma$ 为对角协方差矩阵\n- **提议分布**：基于上一时刻最优控制序列添加扰动\n\n### 3.3 超参数设置\n\n典型超参数配置：\n\n| 参数 | 取值范围 |\n|------|----------|\n| 预测视界 $H$ | 10-20 步 |\n| 温度参数 $\\lambda$ | 0.5-2.0 |\n| 采样数量 $K$ | 200-500 |\n| 控制频率 | 20-50 Hz |\n| 价值折扣因子 $\\gamma$ | 0.99 |\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批量大小 | 64-256 |\n| 隐状态维度 | 256-512 |\n\n### 3.4 奖励权重\n\n典型权重配置（需根据具体任务调整）：\n\n$$\n\nw = [1.0,\\ 0.5,\\ 2.0,\\ 0.3,\\ 5.0]\n\n$$\n\n---\n\n## 4. 实验设置\n\n### 4.1 仿真平台\n\n- **机器人**：Unitree Go1 四足机器人\n- **仿真器**：MuJoCo 或 Isaac Gym\n- **仿真环境**：平坦地面、不规则地形、斜坡等\n\n### 4.2 数据集与训练\n\n- **训练数据**：通过随机目标速度指令收集的经验数据\n- **目标速度范围**：0.1 - 2.0 m/s\n- **步态空间**：连续参数空间，支持 Trot、Pace、Walk 等步态\n\n### 4.3 评估指标\n\n主要评估指标包括：\n\n1. **能量消耗**：$E_{\\text{total}} = \\sum |\\tau_i \\dot{q}_i| \\cdot \\Delta t$\n2. **速度跟踪误差**：$\\|v_{\\text{base}} - v_{ref}\\|_2$\n3. **姿态稳定性**：Roll/Pitch 角度标准差\n4. **步态平滑性**：$\\|g_t - g_{\\text{t-1}}\\|_2$\n5. **成功率**：完成任务的比例\n\n### 4.4 基线方法\n\n对比方法包括：\n\n- **纯 RL 策略**：如 PPO 训练的单一步态策略\n- **传统 MPC**：基于固定步态的 MPPI\n- **变步态 MPC**：仅优化动作，步态参数固定\n- **基于规则的方法**：启发式步态调度\n\n---\n\n## 5. 技术优势\n\n### 5.1 连续步态空间优化\n\n相比传统 RL 策略（通常收敛到单一步态），该方法在连续步态空间中实时优化，能够根据任务需求自动选择最优步态。例如：低速时采用慢速步态，高速时自动切换到 Trot 步态。\n\n### 5.2 结合学习与规划\n\n- **学习优势**：Dreamer 模块能够学习环境模型和价值函数，减少在线优化计算量\n- **规划优势**：MPPI 提供显式的轨迹优化，保证短期最优性\n- **无限视界扩展**：价值函数提供长期回报估计，缓解有限视界的短视问题\n\n### 5.3 自适应能力\n\n- **环境适应**：能够根据地形变化自动调整步态参数\n- **任务适应**：根据目标速度动态调整步态频率和步幅\n- **鲁棒性**：通过平滑性惩罚避免突变，增强系统稳定性\n\n### 5.4 计算效率\n\n- 相比纯 RL，推理时无需前向传播神经网络\n- 相比纯 MPC，预测模型更精确（学习型模型）\n- 采样并行化可进一步加速\n\n---\n\n## 6. 技术弱点\n\n### 6.1 采样复杂度\n\nMPPI 的采样复杂度为 $O(K \\cdot H)$，在高维动作-步态空间中可能面临维数灾难问题。当步态参数维度增加时，需要更多采样才能保证优化质量。\n\n### 6.2 模型误差\n\n世界模型的预测误差会累积，特别是在：\n\n- **长期预测**：误差随预测步数增加\n- **分布外状态**：训练数据未覆盖的状态空间区域\n- **非平稳环境**：地形动态变化时\n\n### 6.3 局部最优\n\nMPPI 作为基于采样的优化方法，可能陷入局部最优：\n\n- **步态空间非凸性**：不同步态可能具有相似的累积代价\n- **初始化敏感**：初始轨迹影响收敛结果\n- **温度参数敏感**：$\\lambda$ 过大导致过度探索，过小导致过早收敛\n\n### 6.4 计算延迟\n\n- **滚动时域计算**：每个控制周期需要在线优化，存在计算延迟\n- **实时性约束**：在高控制频率（如 50Hz）下可能无法完成足够采样\n- **硬件依赖**：性能受限于嵌入式平台的计算能力\n\n### 6.5 仿真-现实差距\n\n- 仿真中训练的世界模型可能无法准确捕捉真实机器人动力学\n- 接触力学建模不精确\n- 传感器噪声和延迟未充分考虑\n\n### 6.6 奖励设计依赖\n\n- 多目标奖励函数的权重需要手动调整\n- 不同任务可能需要不同的权重配置\n- 自动化奖励塑形技术尚未充分研究\n\n---\n\n## 总结\n\n该方法通过 MPPI-Dreamer 混合架构实现了四足机器人的实时步态适应，在连续步态空间中进行联合优化。实验表明该方法能在 Unitree Go1 上实现高达 36.48%的能量降低，同时保持良好的速度跟踪和自适应步态选择能力。主要局限在于采样复杂度、模型误差累积以及计算实时性约束，未来可研究层次化方法、迁移学习等技术进一步提升性能。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Real-Time Gait Adaptation for Quadrupeds using Model Predictive Control and Reinforcement Learning",
+      "authors": [
+        "Kotecha, Prakrut",
+        "B, Ganga Nair",
+        "Kolathaya, Shishir"
+      ],
+      "year": 2025,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2510.20706",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Model-free reinforcement learning (RL) has enabled adaptable and agile quadruped locomotion; however, policies often converge to a single gait, leading to suboptimal performance. Traditionally, Model Predictive Control (MPC) has been extensively used to obtain task-specific optimal policies but lacks the ability to adapt to varying environments. To address these limitations, we propose an optimization framework for real-time gait adaptation in a continuous gait space, combining the Model Predictive Path Integral (MPPI) algorithm with a Dreamer module to produce adaptive and optimal policies for quadruped locomotion. At each time step, MPPI jointly optimizes the actions and gait variables using a learned Dreamer reward that promotes velocity tracking, energy efficiency, stability, and smooth transitions, while penalizing abrupt gait changes. A learned value function is incorporated as terminal reward, extending the formulation to an infinite-horizon planner. We evaluate our framework in simulation on the Unitree Go1, demonstrating an average reduction of up to 36.48\\% in energy consumption across varying target speeds, while maintaining accurate tracking and adaptive, task-appropriate gaits.",
+      "route_id": "1f9e4fd5-5d33-4c61-8beb-79d3181624e4"
+    },
+    "markdown_stats": {
+      "lines": 201,
+      "words": 4863,
+      "headings": 19
+    },
+    "assets": {
+      "images": 14,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "1f9e4fd5-5d33-4c61-8beb-79d3181624e4",
+  "paper_ref": "1f9e4fd5-5d33-4c61-8beb-79d3181624e4",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

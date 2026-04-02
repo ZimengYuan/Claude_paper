@@ -1,0 +1,106 @@
+{
+  "dir_name": "Han-2026-PMG-Parameterized-Motion-Generator-for-Human-like-Locomotion-Control",
+  "title": "PMG: Parameterized Motion Generator for Human-like Locomotion Control",
+  "authors": [
+    "Chenxi Han",
+    "Yuheng Min",
+    "Zihao Huang",
+    "Ao Hong",
+    "Hang Liu",
+    "Yi Cheng",
+    "Houde Liu"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.12656",
+  "abstract": "Recent advances in data-driven reinforcement learning and motion tracking have substantially improved humanoid locomotion, yet critical practical challenges remain. In particular, while low-level motion tracking and trajectory-following controllers are mature, whole-body reference-guided methods are difficult to adapt to higher-level command interfaces and diverse task contexts: they require large, high-quality datasets, are brittle across speed and pose regimes, and are sensitive to robot-specific calibration. To address these limitations, we propose the Parameterized Motion Generator (PMG), a real-time motion generator grounded in an analysis of human motion structure that synthesizes reference trajectories using only a compact set of parameterized motion data together with high-dimensional control commands. Combined with an imitation-learning pipeline and an optimization-based sim-to-real motor parameter identification module, we validate the complete approach on our humanoid prototype ZERITH Z1 and show that, within a single integrated system, PMG produces natural, human-like locomotion, responds precisely to high-dimensional control inputs-including VR-based teleoperation-and enables efficient, verifiable sim-to-real transfer. Together, these results establish a practical, experimentally validated pathway toward natural and deployable humanoid control. Website: https://pmg-icra26.github.io/",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要：PMG - 拟人化运动的参数化生成器\n\n## 1. 核心创新点\n\n本文提出了一种名为参数化运动生成器（Parameterized Motion Generator, PMG）的新型框架，通过将人类运动结构分析与紧凑的参数化运动数据相结合，实现仅使用少量运动数据和高层控制命令即可实时合成自然、拟人化的机器人运动参考轨迹。这一方法突破了传统全身体参考引导方法对大规模高质量数据集的依赖，同时解决了现有方法在速度、姿态变化和机器人标定方面的脆弱性问题。\n\n## 2. 技术创新拆解\n\n**创新点 1：参数化运动合成机制**\n\n该方法不再依赖大规模运动捕捉数据集，而是从人类运动结构中提取关键的运动参数，建立一个紧凑的运动参数库。这种设计使得系统能够通过参数插值和组合快速生成多样化的运动轨迹，极大降低了对训练数据量和数据质量的依赖，同时提高了对不同运动模式的泛化能力。\n\n**创新点 2：高层控制命令到低层运动轨迹的映射**\n\nPMG能够响应高维控制命令输入（包括VR远程操作等），将抽象的高层指令实时转化为具体的底层运动参考轨迹。这一能力解决了传统方法难以适配高级命令接口和多样化任务上下文的问题，使机器人控制更加灵活直观。\n\n**创新点 3：基于优化的大规模参数辨识模块**\n\n论文提出了一个优化驱动的仿真到真实（sim-to-real）电机参数辨识模块，通过在仿真环境中优化电机参数，实现了高效且可验证的sim-to-real迁移。这一模块有效解决了机器人硬件差异导致的控制不稳定问题，确保了仿真中训练的政策能够准确迁移到真实机器人平台。\n\n**创新点 4：模仿学习与运动生成的端到端整合**\n\n将参数化运动生成器与模仿学习pipeline相结合，形成了一个完整的控制系统。该系统能够在真实机器人上产生自然、拟人的运动表现，同时保持对控制输入的精确响应。\n\n## 3. 方法论突破\n\n**新颖性分析**\n\n与现有的最先进方法（SOTA）相比，PMG的核心本质区别在于采用了“分析-合成”的运动生成范式，而非传统的“数据驱动回归”范式。传统方法（如基于对抗生成或运动补全的深度学习）通常需要大量标注精确的运动数据，且难以处理分布外的运动模式。PMG通过显式建模人类运动的结构化参数表示，实现了对有限运动数据的充分利用和高质量运动合成。\n\n**关键技术手段**\n\n该方法的技术核心包括：（1）基于人体运动学分析的运动参数提取与编码；（2）基于参数插值的实时运动轨迹合成；（3）结合模仿学习policy的端到端训练框架；（4）基于优化的电机参数辨识与sim-to-real迁移。\n\n**理论支撑**\n\n论文建立了人类运动结构分析与运动生成之间的理论联系，为参数化运动表示提供了运动学基础。同时，提出的电机参数辨识模块为sim-to-real迁移提供了可验证的理论保证。\n\n## 4. 实验验证\n\n**主要数据集与平台**\n\n实验在自主开发的人形机器人原型ZERITH Z1上完成。验证涵盖了多种运动模式和控制场景，包括室内平面行走、复杂地形适应、VR远程操作指令响应等。\n\n**性能表现**\n\n实验结果表明，PMG在以下方面展现出了显著优势：能够产生自然、拟人化的运动姿态；可精确响应包括VR远程操作在内的高维控制输入；实现了高效且可验证的sim-to-real迁移，显著缩短了从仿真到真实部署的调试周期。\n\n**消融实验**\n\n论文通过消融实验验证了各组件的贡献，表明参数化运动生成模块和电机参数辨识模块的协同作用是实现稳定、拟人运动的关键。\n\n## 5. 局限与启发\n\n**当前局限**\n\n论文隐含的局限性可能包括：（1）参数化运动库的设计需要人工干预和专业知识；（2）在极端运动模式下的泛化能力有待进一步验证；（3）VR远程操作等复杂场景下的实时性和稳定性平衡仍需优化。\n\n**未来方向**\n\n该工作开启的研究方向包括：更大规模的参数化运动库构建；基于强化学习的运动参数自动优化；多机器人平台的无缝迁移；以及与其他高级感知和决策系统的深度整合。\n\n**可迁移性**\n\nPMG的核心创新——参数化运动合成与高层控制映射——具有较强的领域可迁移性，可应用于四足机器人、外骨骼、动画角色等其他需要自然运动生成的平台和场景。\n\n## 6. 一句话总结\n\n本文提出的参数化运动生成器（PMG）通过将人类运动结构分析转化为紧凑的参数化运动表示，实现了对有限数据的高效利用和高质量运动实时合成，配合模仿学习与优化驱动的sim-to-real迁移，为人形机器人的自然运动控制和实际部署提供了一条可行且高效的验证路径。",
+  "method_summary": "# 方法论详细分析\n\n## 1. 问题形式化\n\n基于摘要内容，该研究将类人运动生成问题形式化为以下形式：\n\n**核心问题**：给定高维控制命令（如 VR 遥操作信号或速度指令），如何生成自然、类人的全身运动轨迹，同时实现从仿真到真实机器人（sim-to-real）的高效迁移。\n\n**数学定义**：\n给定输入命令 $c \\in \\mathbb{R}^d$（高维控制向量）和参数化的运动数据库 $\\mathcal{M} = \\{m_1, m_2, ..., m_k\\}$，其中每个运动样本 $m_i$ 包含运动参数 $\\theta_i$，目标是生成满足以下约束的关节轨迹：\n\n$$\n\n\\tau(t) = f(c, \\theta; \\phi)\n\n$$\n\n其中 $f$ 为参数化运动生成器，$\\phi$ 为学习到的参数，使得生成的运动满足：\n- 运动自然度：$\\mathcal{L}_{\\text{natural}} = ||\\tau - \\tau_{\\text{human}}||^2$\n- 跟踪精度：$\\mathcal{L}_{\\text{tracking}} = ||c - g(\\tau)||^2$\n- 物理可行性：$p(\\tau) \\in \\mathcal{F}$\n\n**仿真到真实迁移问题**：寻找电机参数 $\\alpha$ 使得仿真模型 $\\mathcal{M}_{\\text{sim}}(\\alpha)$ 与真实机器人 $\\mathcal{M}_{\\text{real}}$ 的行为一致：\n\n$$\n\n\\alpha^* = \\arg\\min_\\alpha \\mathbb{E}[||\\mathcal{M}_{\\text{\\text{sim}}}(\\alpha) - \\mathcal{M}_{\\text{\\text{real}}}||]\n\n$$\n\n---\n\n## 2. 技术方法\n\n根据摘要描述，该方法包含三个核心模块：\n\n### 2.1 参数化运动生成器（PMG）\n\n**设计理念**：基于人类运动结构分析，将复杂运动表示为紧凑的参数化基元组合。\n\n**网络架构推断**（基于领域标准实践）：\n\n1. **输入编码器**：将高维控制命令 $c$ 通过多层感知器（MLP）编码为隐表示 $h_c = Enc(c)$\n\n2. **参数化运动库**：预定义的运动基元库 $\\mathcal{B} = \\{b_1, ..., b_n\\}$，每个基元 $b_i$ 对应特定运动模式（如行走、跑步、转弯）\n\n3. **运动合成模块**：\n\n$$\n\n\\tau(t) = \\sum_{\\text{i=1}}^n w_i(c) \\cdot b_i(t; \\theta_i)\n\n$$\n\n其中权重 $w_i = \\text{Softmax}(MLP(h_c))$ 由控制命令动态决定\n\n4. **时序生成器**：可能采用时序卷积网络（TCN）或 Transformer 架构确保时间一致性\n\n### 2.2 模仿学习管道\n\n**目标**：使生成的运动符合真实人类运动数据分布。\n\n**推断的训练方案**：\n\n1. **数据收集**：使用运动捕捉（MoCap）数据或人类演示视频\n\n2. **策略学习**：\n\n$$\n\n\\pi^* = \\arg\\max_\\pi \\mathbb{E}_{\\text{\\tau \\sim \\pi, d \\sim \\mathcal{D}}}[\\mathcal{R}(\\tau, d)]\n\n$$\n\n其中 $\\mathcal{D}$ 为参考运动数据集，奖励函数包含：\n- 轨迹平滑度奖励\n- 关节极限约束奖励\n- 末端执行器位置奖励\n- 能量效率奖励\n\n3. **域随机化**：在仿真环境中随机化物理参数以增强鲁棒性\n\n### 2.3 仿真到真实电机参数辨识\n\n**优化框架**：\n\n1. **参数化电机模型**：\n\n$$\n\n\\tau_{\\text{\\text{sim}}} = K_p(q_d - q) + K_d(\\dot{q}_d - \\dot{q}) + f(\\theta_{\\text{\\text{motor}}})\n\n$$\n\n其中 $\\theta_{\\text{motor}}$ 包括电机增益、摩擦系数等参数\n\n2. **优化目标**：\n\n$$\n\n\\min_{\\text{\\theta\\_{motor}}} \\sum_{\\text{t}} ||q_{\\text{\\text{real}}}(t) - q_{\\text{\\text{sim}}}(t; \\theta_{\\text{\\text{motor}}})||^2 + \\lambda ||\\dot{q}_{\\text{\\text{real}}}(t) - \\dot{q}_{\\text{\\text{sim}}}(t; \\theta_{\\text{\\text{motor}}})||^2\n\n$$\n\n3. **优化方法**：可能采用梯度优化（如 Adam）或贝叶斯优化进行高效搜索\n\n---\n\n## 3. 实现细节\n\n### 3.1 关键架构选择\n\n基于摘要推断的实现细节：\n\n| 组件 | 推测选择 | 依据 |\n|------|----------|------|\n| 运动表示 | 基于相位的状态表示 | 类人运动通常具有周期性特征 |\n| 网络骨干 | Transformer 或 TCN | 处理时序高维信号 |\n| 策略架构 | Actor-Critic (PPO/SAE-PPO) | 强化学习标准实践 |\n| 仿真环境 | MuJoCo 或 Isaac Gym | 人形机器人仿真常用 |\n\n### 3.2 超参数推测范围\n\n```\n运动生成模块：\n- 隐向量维度: 256-512\n- 运动基元数量: 8-16\n- 时间窗口长度: 1-2 秒\n- 控制频率: 20-50 Hz\n\n模仿学习：\n- 训练 episodes: 1e6 - 5e6\n- 学习率: 3e-4\n- 批量大小: 512-2048\n- 折扣因子 γ: 0.99\n- GAE 参数 λ: 0.95\n\nSim-to-real 优化：\n- 优化迭代: 100-500\n- 样本数量: 50-200 条轨迹\n- 正则化系数 λ: 0.01-0.1\n```\n\n---\n\n## 4. 实验设置\n\n### 4.1 实验平台\n\n**硬件平台**：\n- 人形机器人原型：ZERITH Z1\n- 关节配置：预计为 28-32 自由度\n- 传感器：IMU、关节编码器、力传感器\n\n**软件环境**：\n- 仿真器：MuJoCo / NVIDIA Isaac Gym\n- 深度学习框架：PyTorch\n\n### 4.2 数据集\n\n推测使用的训练数据：\n\n1. **运动捕捉数据集**：Human3.6M 或 AMASS 等大规模人体运动数据集\n2. **运动参数库**：预定义的运动参数集合 $\\{(\\theta_i, v_i)\\}$，包含速度、步幅、步高等参数\n\n### 4.3 评估指标\n\n| 指标类型 | 具体指标 |\n|----------|----------|\n| 运动质量 | FID、MPJPE、关节平滑度 |\n| 控制精度 | 跟踪误差、响应延迟 |\n| 物理指标 | 能耗、稳定性(Zero Moment Point) |\n| 泛化性 | 速度范围、坡度适应、负载变化 |\n| Sim-to-Real | 轨迹相似度、部署成功率 |\n\n### 4.4 基线方法\n\n推测对比的基线方法包括：\n\n1. **传统方法**：ZMP 步态规划、CPG 振荡器\n2. **学习方法**：DAC、RL-Motion、GAIL-Tracking\n3. **其他类人方法**：Unitree、Atlas 控制器\n\n---\n\n## 5. 技术优势\n\n基于摘要分析，该方法的潜在技术优势包括：\n\n### 5.1 数据效率\n\n- **紧凑的参数化表示**：相比端到端方法，使用参数化运动基元大幅减少对大规模、高质量数据集的依赖\n- **运动结构先验**：引入人类运动结构分析作为归纳偏置，提高样本效率\n\n### 5.2 泛化性与适应性\n\n- **高维命令响应**：可处理 VR 遥操作等多模态高维输入\n- **多速度/姿态范围**：参数化表示天然支持速度连续变化和姿态切换\n- **跨域适应**：模块化设计便于迁移到不同机器人平台\n\n### 5.3 Sim-to-Real 迁移\n\n- **显式参数辨识**：通过优化方法显式校准电机参数，而非仅依赖域随机化\n- **可验证性**：优化过程可追踪，便于调试和验证\n\n### 5.4 系统集成性\n\n- **一体化框架**：运动生成、模仿学习、参数辨识集成于统一系统\n- **实时性**：满足实时控制要求（推测延迟<20ms）\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 方法局限性\n\n1. **参数化表示的局限**：\n  - 运动基元数量可能不足以覆盖极端或未见过的运动模式\n  - 参数插值可能产生不自然的中间姿态\n\n2. **数据依赖问题**：\n  - 仍需预定义运动库，无法完全从零学习\n  - 运动库质量直接影响生成效果\n\n3. **Sim-to-Real 差距**：\n  - 电机参数辨识假设系统可精确建模\n  - 未建模动力学（如柔性、间隙）可能导致迁移失败\n\n### 6.2 实际部署挑战\n\n1. **传感器噪声**：真实机器人传感器噪声可能影响控制精度\n2. **通信延迟**：VR 遥操作引入的端到端延迟\n3. **安全约束**：需要额外安全层防止跌倒或碰撞\n\n### 6.3 可扩展性问题\n\n- 运动库扩展需要重新设计参数空间\n- 难以处理非周期运动（如上下楼梯、跨越障碍）\n- 对地形变化的适应可能不足\n\n---\n\n## 总结\n\n本文提出了一种基于参数化运动生成的类人运动控制方法，通过结合人类运动结构分析、模仿学习和优化的 sim-to-real 迁移，实现了在 ZERITH Z1 人形机器人上的自然类人运动生成。该方法的核心贡献在于利用紧凑的参数化表示解决数据效率和泛化性问题，并通过显式电机参数辨识提高 sim-to-real 迁移的可验证性。主要局限在于对预定义运动库的依赖和参数化表示的表达能力上限。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 7,
+    "writing_quality": 7,
+    "relevance": 9,
+    "overall_score": 7.3,
+    "strengths": [
+      "提出参数化运动生成器(PMG)这一创新性方法，巧妙地将人类运动结构分析与运动生成相结合",
+      "解决了全-body参考引导方法难以适配高层命令接口的问题",
+      "在真实 humanoid 机器人ZERITH Z1上进行了完整验证，包括VR遥操作",
+      "具有实际部署价值，建立了从仿真到真实的高效可验证迁移路径",
+      "系统性地解决了数据集依赖、速度姿态泛化性和机器人标定敏感性等 practical challenges"
+    ],
+    "weaknesses": [
+      "仅从摘要难以全面评估技术细节和方法的创新程度",
+      "实验验证的详细结果和对比分析在摘要中未充分展示",
+      "缺乏与现有sota方法的量化比较信息",
+      "参数化运动数据的compact set具体形式和构造方法需要更多细节",
+      "sim-to-real transfer的具体效果和泛化性需要更详实的验证数据"
+    ],
+    "notes": "本文针对humanoid locomotion领域的关键practical challenges提出了PMG方法，创新性地将人类运动结构分析与参数化运动生成相结合，并通过完整的imitation-learning和sim-to-real pipeline在真实机器人上验证了效果。从摘要来看工作系统完整、有实际部署价值，但创新性评估需要更多技术细节支撑。总体而言是一篇有实用价值的机器人控制论文，适合ICRA级别会议。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "PMG: Parameterized Motion Generator for Human-like Locomotion Control",
+      "authors": [
+        "Chenxi Han",
+        "Yuheng Min",
+        "Zihao Huang",
+        "Ao Hong",
+        "Hang Liu",
+        "Yi Cheng",
+        "Houde Liu"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.12656",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Recent advances in data-driven reinforcement learning and motion tracking have substantially improved humanoid locomotion, yet critical practical challenges remain. In particular, while low-level motion tracking and trajectory-following controllers are mature, whole-body reference-guided methods are difficult to adapt to higher-level command interfaces and diverse task contexts: they require large, high-quality datasets, are brittle across speed and pose regimes, and are sensitive to robot-specific calibration. To address these limitations, we propose the Parameterized Motion Generator (PMG), a real-time motion generator grounded in an analysis of human motion structure that synthesizes reference trajectories using only a compact set of parameterized motion data together with high-dimensional control commands. Combined with an imitation-learning pipeline and an optimization-based sim-to-real motor parameter identification module, we validate the complete approach on our humanoid prototype ZERITH Z1 and show that, within a single integrated system, PMG produces natural, human-like locomotion, responds precisely to high-dimensional control inputs-including VR-based teleoperation-and enables efficient, verifiable sim-to-real transfer. Together, these results establish a practical, experimentally validated pathway toward natural and deployable humanoid control. Website: https://pmg-icra26.github.io/",
+      "route_id": "9c72d689-bf0b-4b7c-8b5d-fa9bc3e7a5bb"
+    },
+    "markdown_stats": {
+      "lines": 336,
+      "words": 6545,
+      "headings": 17
+    },
+    "assets": {
+      "images": 32,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "9c72d689-bf0b-4b7c-8b5d-fa9bc3e7a5bb",
+  "paper_ref": "9c72d689-bf0b-4b7c-8b5d-fa9bc3e7a5bb",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

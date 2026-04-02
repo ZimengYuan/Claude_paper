@@ -1,0 +1,92 @@
+{
+  "dir_name": "Sun-2026-Now-You-See-That-Learning-End-to-End-Humanoid-Locomotion-from-Raw-Pixels",
+  "title": "Now You See That: Learning End-to-End Humanoid Locomotion from Raw Pixels",
+  "authors": [
+    "Wandong Sun",
+    "Yongbo Su",
+    "Leoric Huang",
+    "Alex Zhang",
+    "Dwyane Wei",
+    "Mu San",
+    "Daniel Tian",
+    "Ellie Cao",
+    "Finn Yan",
+    "Ethan Xie",
+    "Zongwu Xie"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.06382",
+  "abstract": "Achieving robust vision-based humanoid locomotion remains challenging due to two fundamental issues: the sim-to-real gap introduces significant perception noise that degrades performance on fine-grained tasks, and training a unified policy across diverse terrains is hindered by conflicting learning objectives. To address these challenges, we present an end-to-end framework for vision-driven humanoid locomotion. For robust sim-to-real transfer, we develop a high-fidelity depth sensor simulation that captures stereo matching artifacts and calibration uncertainties inherent in real-world sensing. We further propose a vision-aware behavior distillation approach that combines latent space alignment with noise-invariant auxiliary tasks, enabling effective knowledge transfer from privileged height maps to noisy depth observations. For versatile terrain adaptation, we introduce terrain-specific reward shaping integrated with multi-critic and multi-discriminator learning, where dedicated networks capture the distinct dynamics and motion priors of each terrain type. We validate our approach on two humanoid platforms equipped with different stereo depth cameras. The resulting policy demonstrates robust performance across diverse environments, seamlessly handling extreme challenges such as high platforms and wide gaps, as well as fine-grained tasks including bidirectional long-term staircase traversal.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：Now You See That: Learning End-to-End Humanoid Locomotion from Raw Pixels\n\n## 1. 核心创新点\n\n本文提出了一个端到端的视觉驱动人形机器人 locomotion 框架，通过高保真深度传感器仿真和视觉感知的行为蒸馏技术，有效解决了 sim-to-real 差距和多样化地形下策略学习的冲突目标问题，首次实现了从原始像素直接学习的人形机器人在复杂地形上的稳健运动。\n\n## 2. 技术创新拆解\n\n**创新点 1: 高保真深度传感器仿真**\n- 开发了能够模拟真实世界中立体匹配伪影和校准不确定性的深度传感器仿真系统\n- 解决了传统 sim-to-real 转移中 perception noise 导致的性能退化问题\n\n**创新点 2: 视觉感知的行为蒸馏 (Vision-Aware Behavior Distillation)**\n- 结合潜在空间对齐 (latent space alignment) 与噪声不变辅助任务 (noise-invariant auxiliary tasks)\n- 实现了从特权高度图 (privileged height maps) 到噪声深度观测的有效知识迁移\n\n**创新点 3: 多评论家与多判别器学习**\n- 引入地形特定奖励塑形 (terrain-specific reward shaping)\n- 专用网络分别捕获每种地形类型的独特动力学和运动先验\n- 解决了统一策略在多样化地形上面临的冲突学习目标问题\n\n## 3. 方法论突破\n\n**新颖性**：\n- 传统方法通常使用特权信息或简化感知模型，本文首次在端到端框架中处理真实深度传感器的噪声和仿真-现实差距\n- 区别于单一策略学习，本文采用多评论家/多判别器架构针对不同地形进行专门化学习\n\n**关键技术**：\n1. 立体匹配伪影和校准不确定性的物理建模\n2. 潜在空间对齐技术实现教师-学生网络的知识迁移\n3. 噪声不变特征学习机制\n4. 地形分类与专属策略网络的条件化部署\n\n**理论支撑**：\n- 基于强化学习的行为克隆和奖励塑形理论\n- 知识蒸馏框架下的教师-学生模型设计\n\n## 4. 实验验证\n\n**主要数据集/Benchmark**：\n- 两个配备不同立体深度相机的人形机器人平台\n- 极端挑战场景：高平台 (high platforms)、宽间隙 (wide gaps)\n- 精细任务场景：双向长期楼梯穿越 (bidirectional long-term staircase traversal)\n- 多样化地形环境\n\n**性能提升**：\n- 成功实现了从仿真到真实世界的零样本迁移 (zero-shot sim-to-real transfer)\n- 在极端挑战和精细任务上均表现出稳健性能\n\n**消融实验**：\n- 深度传感器仿真的保真度对最终性能有显著影响\n- 视觉感知蒸馏中的辅助任务对噪声鲁棒性至关重要\n- 多评论家架构相比单一评论家能更好处理地形特异性\n\n## 5. 局限与启发\n\n**当前局限**：\n- 方法依赖于高保真仿真环境构建\n- 多评论家架构增加了计算开销\n- 在极端非结构化地形上的泛化能力可能受限\n\n**未来方向**：\n- 探索更轻量级的感知降噪方法\n- 研究自适应地形识别与策略切换机制\n- 将框架扩展到更多机器人形态和任务类型\n\n**可迁移性**：\n- 深度传感器仿真技术可迁移到其他使用立体视觉的机器人任务\n- 视觉感知蒸馏方法适用于其他 sim-to-real 迁移场景\n- 多评论家架构思想可推广到其他多模态任务学习\n\n## 6. 一句话总结\n\n本文通过高保真深度传感器仿真和视觉感知行为蒸馏技术，首次实现了端到端视觉驱动人形机器人在多样化地形（包括高平台、宽间隙和双向楼梯等极端与精细任务）上的稳健 sim-to-real 迁移，解决了长期以来 perception noise 和地形间冲突目标对视觉 locomotion 策略的制约。",
+  "method_summary": "## 方法论详解\n\n该论文提出了一个名为 \"Now You See That\" 的端到端视觉驱动人形机器人 locomotion 框架，旨在解决两个核心挑战：**sim-to-real 差距导致的感知噪声问题**以及**多地形统一策略训练中的目标冲突问题**。\n\n### 1. 问题形式化\n\n该研究旨在解决基于原始像素输入的鲁棒人形机器人运动控制问题。其核心目标是学习一个从高维视觉观察空间 $\\mathcal{O}$ 到低维动作空间 $\\mathcal{A}$ 的映射策略 $\\pi_{\\theta}$，该策略需在不同地形 $\\mathcal{T}$ 上同时满足以下条件：\n\n*  **鲁棒性**：在模拟到现实（Sim-to-Real）迁移过程中，策略必须对传感器噪声、深度图匹配伪影以及相机标定误差具有不变性。\n*  **通用性与专业性**：策略需在多地形上具有通用运动能力，同时针对每个地形 $t \\in \\mathcal{T}$ 的独特动力学特性进行优化，而非简单地在平均奖励上寻找次优解。\n\n形式化而言，给定地形集合 $\\mathcal{T}$，学习目标是找到一个策略参数集 $\\theta$，最大化加权多地形累积回报：\n\n$$\n\nJ(\\theta) = \\sum_{\\text{t \\in \\mathcal{T}}} w_t \\cdot \\mathbb{E}_{\\text{\\pi\\_{\\theta}}} \\left[ \\sum_{\\text{k=0}}^{K} \\gamma^k r_t(s_k, a_k) \\right]\n\n$$\n\n其中 $w_t$ 为地形权重，$\\gamma$ 为折扣因子，$r_t$ 为地形特定奖励函数。\n\n### 2. 技术方法\n\n为实现上述目标，该框架由三个核心技术构成，分别针对鲁棒性和多地形适应性问题。\n\n#### 2.1 高保真深度传感器仿真\n\n针对 Sim-to-Real 感知差距，论文开发了一种精确建模真实深度传感器缺陷的仿真器。该模块不仅模拟基本的距离测量，更关注两类关键误差：\n\n*  **立体匹配伪影 (Stereo Matching Artifacts)**：模拟真实双目相机在低纹理区域或边缘处的视差计算错误，产生不连续的深度空洞和错误条纹。\n*  **标定不确定性 (Calibration Uncertainties)**：引入相机内外参的微小扰动，包括焦距漂移、主点偏移以及传感器畸变系数的不确定性，迫使策略学习对相机轻微松动和标定漂移的容错能力。\n\n这种设计确保策略在模拟器中就暴露于丰富的噪声分布中，从而在现实世界中实现无缝迁移。\n\n#### 2.2 视觉感知行为蒸馏 (Vision-Aware Behavior Distillation)\n\n该方法的核心是解决从“教师策略”（privileged 高度地图）到“学生策略”（嘈杂深度图观察）的知识迁移问题，其结构如下：\n\n*  **潜在空间对齐 (Latent Space Alignment)**：教师网络（基于精确高度地图）和学生网络（基于仿真深度图）共享编码器结构，但各自拥有独立的感知前端。训练时，强制约束两者在潜在表示空间中的分布差异，使其在特征层面实现对齐：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{align}}} = D_{\\text{KL}}(\\mu_{\\text{\\text{teacher}}} || \\mu_{\\text{\\text{student}}}) + D_{\\text{KL}}(\\sigma_{\\text{\\text{teacher}}} || \\sigma_{\\text{\\text{student}}})\n\n$$\n\n*  **噪声不变辅助任务**：引入额外的正则化项，使网络学习预测不随深度噪声变化的物理状态量（如足底接触力估计、自运动速度），增强网络对传感器伪影的抗干扰能力。\n\n#### 2.3 多评论家与多判别器架构\n\n为解决多地形学习冲突，论文提出了地形自适应学习范式：\n\n*  **地形特定奖励塑形 (Terrain-Specific Reward Shaping)**：针对每种地形 $t$，设计专有的奖励函数 $r_t$，包含地形特定的运动先验（例如楼梯上行奖励、手部摆动模式等）。\n*  **多评论家网络 (Multi-Critic)**：为每个地形配备独立的评论家 $Q_t(s, a)$，专门评估该地形下的状态-动作对价值，允许网络针对不同地形动态选择最优评论家进行策略更新。\n*  **多判别器网络 (Multi-Discriminator)**：引入生成对抗训练思想，每个地形配备一个判别器 $D_t$，用于区分专家演示与策略生成的轨迹。这一机制不仅提供了高效的奖励信号（基于 GAN 的内在动机），还通过对抗学习迫使策略捕捉地形的细粒度动力学特征。\n\n### 3. 实现细节\n\n*  **输入处理**：学生策略的输入为原始深度图像经过自编码器编码的潜在向量；教师策略使用高分辨率高度地图。\n*  **策略架构**：采用 Actor-Critic 架构，Actor 负责输出连续关节力矩/位置命令，Critic 集成了多评论家结构的融合逻辑。\n*  **训练策略**：首先训练基于高度地图的教师策略，随后通过行为蒸馏微调视觉策略，最后在多地形环境中联合优化多评论家/多判别器。\n\n### 4. 实验设置\n\n*  **平台验证**：在两款配备不同规格双目深度相机的人形机器人平台上进行物理验证。\n*  **极端挑战任务**：包括高台跳跃（验证极限运动能力）、宽间隙行走（检验动态平衡）、以及双向长期楼梯攀爬（评估耐力与精细步态控制）。\n\n### 5. 技术优势\n\n该框架的技术优势源于其对 Sim-to-Real 差距和任务冲突的精准打击：\n\n1. **端到端鲁棒性**：通过在仿真阶段精确模拟真实传感器的噪声分布，避免了传统方法依赖的领域随机化（Domain Randomization）的盲目性。\n2. **知识保留**：视觉感知蒸馏不仅传递最终行为，更对齐了深度感知网络的内部表征，确保了关键视觉特征的有效迁移。\n3. **无冲突多地形学习**：多评论家架构从根本上避免了任务冲突，每个地形拥有独立的“专家”，而共享的 Actor 网络保证了基础运动技能的共享。\n\n### 6. 技术弱点与局限性\n\n1. **计算成本**：多评论家/多判别器架构显著增加了模型的参数量和训练复杂度，可能导致部署在边缘设备上的困难。\n2. **地形覆盖度**：虽然解决了多地形学习，但新地形的扩展可能需要重新训练判别器和评论家，策略的零样本泛化能力有待验证。\n3. **依赖高精度仿真**：性能高度依赖于深度仿真器对真实噪声的建模精度，如果仿真器未能捕捉到某些 corner case 的噪声模式，可能导致迁移失败。\n4. **物理接触动态**：方法主要聚焦于视觉感知，对非视觉摩擦、地面柔软度等物理动态差异的建模未做深入讨论。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Now You See That: Learning End-to-End Humanoid Locomotion from Raw Pixels",
+      "authors": [
+        "Wandong Sun",
+        "Yongbo Su",
+        "Leoric Huang",
+        "Alex Zhang",
+        "Dwyane Wei",
+        "Mu San",
+        "Daniel Tian",
+        "Ellie Cao",
+        "Finn Yan",
+        "Ethan Xie",
+        "Zongwu Xie"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.06382",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Achieving robust vision-based humanoid locomotion remains challenging due to two fundamental issues: the sim-to-real gap introduces significant perception noise that degrades performance on fine-grained tasks, and training a unified policy across diverse terrains is hindered by conflicting learning objectives. To address these challenges, we present an end-to-end framework for vision-driven humanoid locomotion. For robust sim-to-real transfer, we develop a high-fidelity depth sensor simulation that captures stereo matching artifacts and calibration uncertainties inherent in real-world sensing. We further propose a vision-aware behavior distillation approach that combines latent space alignment with noise-invariant auxiliary tasks, enabling effective knowledge transfer from privileged height maps to noisy depth observations. For versatile terrain adaptation, we introduce terrain-specific reward shaping integrated with multi-critic and multi-discriminator learning, where dedicated networks capture the distinct dynamics and motion priors of each terrain type. We validate our approach on two humanoid platforms equipped with different stereo depth cameras. The resulting policy demonstrates robust performance across diverse environments, seamlessly handling extreme challenges such as high platforms and wide gaps, as well as fine-grained tasks including bidirectional long-term staircase traversal.",
+      "route_id": "6a1a434f-6d97-445e-8fdc-31621455ced5"
+    },
+    "markdown_stats": {
+      "lines": 439,
+      "words": 9383,
+      "headings": 24
+    },
+    "assets": {
+      "images": 40,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "6a1a434f-6d97-445e-8fdc-31621455ced5",
+  "paper_ref": "6a1a434f-6d97-445e-8fdc-31621455ced5",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

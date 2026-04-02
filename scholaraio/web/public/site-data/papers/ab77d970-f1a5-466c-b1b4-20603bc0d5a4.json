@@ -1,0 +1,102 @@
+{
+  "dir_name": "Capuano-2025-Robot-Learning-A-Tutorial",
+  "title": "Robot Learning: A Tutorial",
+  "authors": [
+    "Francesco Capuano",
+    "Caroline Pascal",
+    "Adil Zouitine",
+    "Thomas Wolf",
+    "Michel Aractingi"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2510.12403",
+  "abstract": "Robot learning is at an inflection point, driven by rapid advancements in machine learning and the growing availability of large-scale robotics data. This shift from classical, model-based methods to data-driven, learning-based paradigms is unlocking unprecedented capabilities in autonomous systems. This tutorial navigates the landscape of modern robot learning, charting a course from the foundational principles of Reinforcement Learning and Behavioral Cloning to generalist, language-conditioned models capable of operating across diverse tasks and even robot embodiments. This work is intended as a guide for researchers and practitioners, and our goal is to equip the reader with the conceptual understanding and practical tools necessary to contribute to developments in robot learning, with ready-to-use examples implemented in $\\texttt{lerobot}$.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 2,
+  "summary": "# 机器人学习教程综述\n\n## 1. 核心创新点\n\n本文作为一篇综合性教程，首次系统性地梳理了从强化学习（RL）和行为克隆（BC）基础方法到现代大型语言模型赋能的通用机器人模型的完整技术演进路线，并提供了基于 `lerobot` 框架的即用型代码实现，旨在降低机器人学习领域的入门门槛并推动研究实践结合。\n\n## 2. 技术创新拆解\n\n- **全栈式教程架构设计**：将机器人学习划分为基础（强化学习与行为克隆）到高级（通用语言条件模型）的递进式知识体系，配合 `lerobot` 框架的实践代码，使读者能够从理论理解无缝过渡到实际部署。\n\n- **多范式方法覆盖**：系统性地涵盖模仿学习（行为克隆）、强化学习、视觉-语言-动作（VLA）模型等多种主流范式，并分析各方法的适用场景与局限性。\n\n- **即用型代码资源**：提供基于 `lerobot` 框架的完整实现示例，降低了机器人学习研究的复现门槛，促进了学术界与工业界的知识共享。\n\n- **跨实体与跨任务泛化能力探讨**：重点介绍语言条件下的通用机器人模型如何实现跨不同任务和机器人本体（embodiment）的泛化，这是当前机器人学习的核心挑战之一。\n\n## 3. 方法论突破\n\n**新颖性**：与传统的机器人学习综述不同，本文不仅回顾理论方法，更强调从经典基于模型的方法向数据驱动学习范式转变的历史脉络，并提供可直接运行的代码框架，将\"教\"与\"学\"紧密结合。\n\n**关键技术**：\n- 强化学习（RL）：通过与环境交互学习最优策略\n- 行为克隆（BC）：通过监督学习直接从专家演示中克隆策略\n- 视觉-语言-动作（VLA）模型：结合大语言模型的推理能力与机器人感知-动作环路\n\n**理论支撑**：教程梳理了各类方法的核心数学基础，包括马尔可夫决策过程（MDP）、策略梯度、行为克隆的分布偏移（distribution shift）问题等理论概念，为读者建立扎实的理论基础。\n\n## 4. 实验验证\n\n由于本文定位为教程而非原始研究论文，未包含传统意义上的实验验证部分。但文中提供的 `lerobot` 框架实现了多个标准机器人学习 benchmark 的基线方法，读者可通过复现这些示例验证所学内容。\n\n**主要数据集与基准**：教程覆盖的典型任务包括单臂操作（如抓取、放置）、双臂协作、复杂长程任务等，涉及的主要数据集包括 Open X-Embodiment 等大规模机器人数据集。\n\n## 5. 局限与启发\n\n**当前局限**：\n- 教程主要聚焦于方法论梳理，对于硬件控制细节（如电机控制、传感器融合）的覆盖相对有限\n- 模拟到现实（Sim-to-Real）的迁移问题虽有提及但未深入展开\n- 安全性与可解释性作为机器人部署的关键问题，在通用教程框架下难以深入讨论\n\n**未来方向**：随着大语言模型与多模态学习的快速发展，语言条件下的通用机器人模型将成为重要研究方向；如何高效利用大规模机器人数据、解决跨实体泛化仍是开放挑战。\n\n**可迁移性**：`lerobot` 框架的设计具有良好的模块化特性，其中的方法论和代码实现思路可迁移至工业机器人、服务机器人、自动驾驶等相关领域。\n\n## 6. 一句话总结\n\n这篇教程通过系统化地从强化学习与行为克隆基础延伸至大型语言模型赋能的通用机器人模型，并配合开源的 `lerobot` 实践框架，为研究者和工程师提供了从理论到代码的完整学习路径，标志着机器人学习从分散研究向系统化工程实践的关键转变。",
+  "method_summary": "# 机器人学习方法论分析\n\n根据提供的信息，本文是一篇关于机器人学习的教程/指南性论文，发表于 2025 年。由于用户未提供完整的论文正文，我将基于摘要中明确提及的内容以及机器人学习领域的通用方法论框架进行分析。\n\n---\n\n## 1. 问题形式化\n\n机器人学习的核心问题可以形式化为：**如何使机器人通过与环境的交互或从演示数据中学习，获得完成多样化任务的自主能力**。\n\n具体而言，论文涉及以下几类问题的数学定义：\n\n### 1.1 强化学习问题（Reinforcement Learning）\n\n通常建模为**马尔可夫决策过程（MDP）**：定义为一个五元组 $(\\mathcal{S}, \\mathcal{A}, P, R, \\gamma)$，其中：\n- $\\mathcal{S}$：状态空间\n- $\\mathcal{A}$：动作空间 \n- $P(s^\\prime|s,a)$：状态转移概率函数\n- $R(s,a)$：奖励函数\n- $\\gamma \\in [0,1)$：折扣因子\n\n学习目标是找到最优策略 $\\pi^*$ 最大化累积奖励的期望：\n\n$$\n\n\\pi^* = \\arg\\max_\\pi \\mathbb{E}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t R(s_t, a_t)\\right]\n\n$$\n\n其中 $a_t \\sim \\pi(\\cdot|s_t)$。\n\n### 1.2 行为克隆问题（Behavioral Cloning）\n\n行为克隆将模仿学习形式化为**监督学习问题**：给定专家演示数据集 $\\mathcal{D} = \\{(s_i, a_i)\\}_{i=1}^N$，学习一个策略网络 $\\pi_\\theta(a|s)$，通过最小化以下损失函数：\n\n$$\n\n\\mathcal{L}(\\theta) = \\mathbb{E}_{\\text{(s,a) \\sim \\mathcal{D}}}[\\ell(\\pi_\\theta(a|s), a)]\n\n$$\n\n其中 $\\ell$ 通常为交叉熵（离散动作）或均方误差（连续动作）。\n\n### 1.3 语言条件化策略学习\n\n对于语言 conditioned 模型，问题扩展为：\n\n$$\n\n\\pi(a|s, g)\n\n$$\n\n其中 $g$ 表示自然语言目标或指令。策略条件于视觉观察、语言指令和机器人本体状态。\n\n---\n\n## 2. 技术方法\n\n根据摘要，本文覆盖了以下核心技术方法：\n\n### 2.1 强化学习（RL）方法家族\n\n论文涵盖了强化学习的基础到高级方法：\n\n**基于价值的方法（Value-based Methods）**：\n- Q-learning、DQN 及其变体\n- 估计动作价值函数 $Q(s,a)$，策略由 $\\pi(a|s) = \\arg\\max_a Q(s,a)$ 给出\n\n**基于策略的方法（Policy-based Methods）**：\n- REINFORCE、Actor-Critic 架构\n- 直接优化策略参数 $\\theta$，通过梯度上升更新：\n\n$$\n\n\\theta \\leftarrow \\theta + \\alpha \\nabla_\\theta J(\\pi_\\theta)\n\n$$\n\n**高级 RL 算法**：\n- PPO（Proximal Policy Optimization）\n- SAC（Soft Actor-Critic）\n- TD3、DDPG（连续控制）\n\n### 2.2 行为克隆（Behavioral Cloning）\n\n模仿学习的基础方法，通过监督学习直接从专家演示中克隆策略。论文涵盖了：\n- 状态表示学习\n- 动作预测模型\n- 数据增强技术\n- DAGGER 等迭代改进方法\n\n### 2.3 通用化语言条件模型（Generalist Models）\n\n论文探讨了**大型预训练模型在机器人学中的应用**：\n- 视觉-语言-动作（VLA）模型\n- 跨任务、跨 embodiment 的泛化能力\n- 零样本/少样本任务执行\n\n---\n\n## 3. 实现细节\n\n论文提及了一个关键实现工具：**lerobot** 框架。\n\n### 3.1 lerobot 框架特点\n\n根据摘要，lerobot 提供了：\n- 预实现的机器人学习算法\n- 标准化数据格式和流程\n- 快速原型开发能力\n\n### 3.2 典型的超参数设置（根据领域通用实践）\n\n**强化学习典型配置**：\n- 学习率：$3 \\times 10^{-4}$（PPO）、$3 \\times 10^{-4}$（SAC）\n- 折扣因子 $\\gamma$：0.99\n- GAE 参数 $\\lambda$：0.95（PPO）\n- PPO 裁剪范围 $\\epsilon$：0.2\n- 批量大小：256-4096\n- 训练步数：$10^6$ 步量级\n\n**行为克隆典型配置**：\n- 优化器：Adam/AdamW\n- 学习率：$10^{-3}$ 至 $10^{-4}$\n- 批量大小：64-256\n\n---\n\n## 4. 实验设置\n\n由于未提供完整文本，基于摘要推断实验设置如下：\n\n### 4.1 数据集\n\n可能涵盖的机器人学习数据集：\n- 模拟环境数据（MuJoCo、PyBullet、Isaac Gym）\n- 真实机器人数据集\n- 大规模机器人操作数据集\n\n### 4.2 评估指标\n\n根据机器人学习领域标准：\n- 任务成功率（Success Rate）\n- 平均回报（Average Return）\n- 泛化性能（Cross-task/Cross-embodiment）\n- 学习效率（Sample Efficiency）\n\n### 4.3 基线方法\n\n论文作为教程可能对比的基线：\n- 经典 RL：PPO、SAC、TD3\n- 行为克隆\n- 现有 VLA 模型\n- 单一任务 vs 多任务方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 统一视角\n\n论文作为教程性工作，优势在于：\n- 从基础 RL 到现代通用模型的完整知识图谱\n- 概念理解与实践工具结合\n- 降低了研究者进入该领域的门槛\n\n### 5.2 实践导向\n\n- 提供即用型代码实现（lerobot）\n- 理论到代码的桥梁\n- 适合研究者和从业者\n\n### 5.3 前沿覆盖\n\n- 涵盖语言条件化模型等最新进展\n- 强调跨任务、跨 embodiment 的通用能力\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 泛化挑战\n\n- 语言条件模型可能在分布外场景失败\n- 模拟到真实（Sim-to-Real）迁移仍具挑战\n\n### 6.2 数据效率\n\n- 强化学习通常需要大量样本\n- 行为克隆受限于演示数据质量\n\n### 6.3 安全性与可靠性\n\n- 真实世界部署的安全考量\n- 缺乏理论保证的策略可靠性\n\n---\n\n**注意**：由于未提供完整的论文正文，以上分析基于摘要内容及机器人学习领域的通用方法论进行推断。如需更精确的方法论分析，请提供完整的论文内容。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 3,
+    "technical_quality": 6,
+    "experimental_validation": 3,
+    "writing_quality": 7,
+    "relevance": 7,
+    "overall_score": 4.75,
+    "strengths": [
+      "清晰阐述从经典基于模型方法到数据驱动范式的转变",
+      "覆盖RL、行为克隆和语言条件化模型等主流方法",
+      "提供lerobot开源实现便于实践",
+      "结构清晰,适合作为研究者和从业者的入门指南",
+      "涵盖多种机器人具身和多样化任务"
+    ],
+    "weaknesses": [
+      "作为教程论文,缺乏原创性技术贡献",
+      "无新颖算法或方法提出",
+      "实验验证部分有限,主要提供示例代码",
+      "内容深度可能不足以满足高级研究者",
+      "未展示显著的技术突破"
+    ],
+    "notes": "这是一篇机器人学习的教程/综述性论文,旨在为读者提供概念理解和实践工具。作为教程,其写作质量良好,内容覆盖全面,但按研究论文标准评估时,创新性和实验验证部分评分较低。适合作为入门学习材料,但不构成前沿研究贡献。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Robot Learning: A Tutorial",
+      "authors": [
+        "Francesco Capuano",
+        "Caroline Pascal",
+        "Adil Zouitine",
+        "Thomas Wolf",
+        "Michel Aractingi"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2510.12403",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Robot learning is at an inflection point, driven by rapid advancements in machine learning and the growing availability of large-scale robotics data. This shift from classical, model-based methods to data-driven, learning-based paradigms is unlocking unprecedented capabilities in autonomous systems. This tutorial navigates the landscape of modern robot learning, charting a course from the foundational principles of Reinforcement Learning and Behavioral Cloning to generalist, language-conditioned models capable of operating across diverse tasks and even robot embodiments. This work is intended as a guide for researchers and practitioners, and our goal is to equip the reader with the conceptual understanding and practical tools necessary to contribute to developments in robot learning, with ready-to-use examples implemented in $\\texttt{lerobot}$.",
+      "route_id": "ab77d970-f1a5-466c-b1b4-20603bc0d5a4"
+    },
+    "markdown_stats": {
+      "lines": 2247,
+      "words": 48653,
+      "headings": 71
+    },
+    "assets": {
+      "images": 88,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "ab77d970-f1a5-466c-b1b4-20603bc0d5a4",
+  "paper_ref": "ab77d970-f1a5-466c-b1b4-20603bc0d5a4",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

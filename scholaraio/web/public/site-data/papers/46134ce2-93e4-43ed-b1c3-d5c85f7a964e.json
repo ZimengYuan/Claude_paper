@@ -1,0 +1,77 @@
+{
+  "dir_name": "Olsen-2026-Towards-Quadrupedal-Jumping-and-Walking-for-Dynamic-Locomotion-Using-Reinforcement-Learning",
+  "title": "Towards Quadrupedal Jumping and Walking for Dynamic Locomotion Using Reinforcement Learning",
+  "authors": [
+    "Jørgen Anker Olsen",
+    "Lars Rønhaug Pettersen",
+    "Kostas Alexis"
+  ],
+  "year": 2026,
+  "journal": "IEEE Robotics and Automation Letters",
+  "doi": "10.1109/lra.2026.3668467",
+  "abstract": "This paper presents a curriculum-based reinforcement learning framework for training precise and high-performance jumping policies for the robot Olympus. Separate policies are developed for vertical and horizontal jumps, leveraging a simple yet effective strategy. First, we densify the inherently sparse jumping reward using the laws of projectile motion. Next, a reference state initialization scheme is employed to accelerate the exploration of dynamic jumping behaviors. We also present a walking policy that, when combined with the jumping policies, unlocks versatile and dynamic locomotion capabilities. Comprehensive testing validates walking on varied terrain surfaces and jumping performance that exceeds previous works, effectively crossing the Sim2Real gap. Experimental validation demonstrates horizontal jumps up to 1.25 m with centimeter accuracy and vertical jumps up to 1.0 m. Additionally, we show that with only minor modifications, the proposed method can be used to learn omnidirectional jumping.",
+  "paper_type": "journal-article",
+  "publisher": "Institute of Electrical and Electronics Engineers",
+  "issn": "2377-3766",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Towards Quadrupedal Jumping and Walking for Dynamic Locomotion Using Reinforcement Learning",
+      "authors": [
+        "Jørgen Anker Olsen",
+        "Lars Rønhaug Pettersen",
+        "Kostas Alexis"
+      ],
+      "year": 2026,
+      "journal": "IEEE Robotics and Automation Letters",
+      "doi": "10.1109/lra.2026.3668467",
+      "paper_type": "journal-article",
+      "publisher": "Institute of Electrical and Electronics Engineers",
+      "issn": "2377-3766",
+      "abstract": "This paper presents a curriculum-based reinforcement learning framework for training precise and high-performance jumping policies for the robot Olympus. Separate policies are developed for vertical and horizontal jumps, leveraging a simple yet effective strategy. First, we densify the inherently sparse jumping reward using the laws of projectile motion. Next, a reference state initialization scheme is employed to accelerate the exploration of dynamic jumping behaviors. We also present a walking policy that, when combined with the jumping policies, unlocks versatile and dynamic locomotion capabilities. Comprehensive testing validates walking on varied terrain surfaces and jumping performance that exceeds previous works, effectively crossing the Sim2Real gap. Experimental validation demonstrates horizontal jumps up to 1.25 m with centimeter accuracy and vertical jumps up to 1.0 m. Additionally, we show that with only minor modifications, the proposed method can be used to learn omnidirectional jumping.",
+      "route_id": "46134ce2-93e4-43ed-b1c3-d5c85f7a964e"
+    },
+    "markdown_stats": {
+      "lines": 258,
+      "words": 7848,
+      "headings": 22
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "46134ce2-93e4-43ed-b1c3-d5c85f7a964e",
+  "paper_ref": "46134ce2-93e4-43ed-b1c3-d5c85f7a964e",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

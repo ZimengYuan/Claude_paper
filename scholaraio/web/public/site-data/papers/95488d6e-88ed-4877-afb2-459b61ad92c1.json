@@ -1,0 +1,76 @@
+{
+  "dir_name": "Wang-2023-Diffusion-Policies-as-an-Expressive-Policy-Class-for-Offline-Reinforcement-Learning",
+  "title": "Diffusion Policies as an Expressive Policy Class for Offline Reinforcement Learning",
+  "authors": [
+    "Zhendong Wang",
+    "Jonathan J. Hunt",
+    "Mingyuan Zhou"
+  ],
+  "year": 2023,
+  "journal": "International Conference on Learning Representations",
+  "doi": "10.48550/arXiv.2208.06193",
+  "abstract": "Offline reinforcement learning (RL), which aims to learn an optimal policy using a previously collected static dataset, is an important paradigm of RL. Standard RL methods often perform poorly in this regime due to the function approximation errors on out-of-distribution actions. While a variety of regularization methods have been proposed to mitigate this issue, they are often constrained by policy classes with limited expressiveness that can lead to highly suboptimal solutions. In this paper, we propose representing the policy as a diffusion model, a recent class of highly-expressive deep generative models. We introduce Diffusion Q-learning (Diffusion-QL) that utilizes a conditional diffusion model to represent the policy. In our approach, we learn an action-value function and we add a term maximizing action-values into the training loss of the conditional diffusion model, which results in a loss that seeks optimal actions that are near the behavior policy. We show the expressiveness of the diffusion model-based policy, and the coupling of the behavior cloning and policy improvement under the diffusion model both contribute to the outstanding performance of Diffusion-QL. We illustrate the superiority of our method compared to prior works in a simple 2D bandit example with a multimodal behavior policy. We then show that our method can achieve state-of-the-art performance on the majority of the D4RL benchmark tasks.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 555,
+  "summary": "# 论文总结：Diffusion Policies as an Expressive Policy Class for Offline Reinforcement Learning\n\n## 1. 核心创新点 (Core Innovation)\n\n**一句话概括关键创新：** 提出将扩散模型（Diffusion Model）作为离线强化学习的策略表示类（policy class），通过在条件扩散模型的训练损失中引入动作价值最大化项，实现了行为克隆与策略改进的统一，使策略既能够精确拟合多模态行为分布，又能够超越行为策略实现性能提升。\n\n**解决了什么问题：** 传统离线强化学习方法受限于策略类的表达能力不足（如高斯策略、混合高斯策略），无法有效建模复杂的多模态行为分布，导致次优解。将扩散模型这一强大的生成模型引入策略表示，结合行为克隆与价值最大化目标，在保持策略位于行为数据附近的同时实现策略改进。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1：条件扩散模型作为策略表示\n- **核心思想：** 使用条件扩散模型 $\\pi(a|s)$ 来表示策略，将状态 $s$ 作为条件信息\n- **为何重要：** 扩散模型是高度表达的生成模型，能够建模复杂的多模态动作分布，而传统参数化策略（高斯/混合高斯）无法有效捕捉多模态行为\n\n### 创新点 2：行为克隆与策略改进的统一训练目标\n- **实现方式：** 在扩散模型的训练损失中引入动作价值函数 $Q(s,a)$ 最大化项\n- **损失函数：** $L = L_{\\text{diffusion}} + \\lambda \\cdot \\mathbb{E}_{a \\sim \\pi_\\theta(\\cdot|s)}[Q(s,a)]$\n- **解决了什么：** 解决了离线RL中\"分布外动作\"问题——策略既不能完全偏离行为策略（否则Q值估计不准确），又需要优于行为策略\n\n### 创新点 3：扩散模型的政策改进理论分析\n- **理论贡献：** 证明了扩散模型策略的改进性质——当行为策略为混合策略时，最优策略可以表示为行为策略的加权组合\n- **意义：** 为扩散模型作为策略类提供了理论支撑，解释了为何扩散策略能够在离线设置中有效\n\n### 创新点 4：无需显式策略约束项\n- **对比创新：** 传统方法（如CQL、BCQ）需要额外的正则化项约束策略与行为策略的距离\n- **优势：** Diffusion-QL通过扩散模型的去噪过程隐式地保持策略接近行为数据，无需显式约束\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性：与现有SOTA的本质区别\n\n| 传统方法 | Diffusion-QL |\n|---------|-------------|\n| 策略类： Gaussian/MoG | 策略类： 条件扩散模型 |\n| 显式策略约束（CQL等） | 隐式保持分布接近 |\n| 策略改进依赖显式正则化 | 训练目标同时包含BC+改进 |\n| 无法建模多模态行为 | 原生支持多模态建模 |\n\n### 关键技术：算法框架\n\n1. **条件扩散模型：** 学习 $p(a|s)$，通过去噪过程生成动作\n2. **Q网络学习：** 使用标准TD学习或SARSA更新Q函数\n3. **策略更新：** 在扩散模型训练中加入 $Q(s,a)$ 最大化项，引导生成高价值动作\n\n### 理论支撑\n\n- 论文提供了扩散模型作为策略类的理论分析\n- 证明了在特定条件下，最优策略可以由扩散模型表示\n- 分析了行为克隆与策略改进的耦合机制\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集：D4RL Benchmark\n\n- **任务类型：** \n  - Halfcheetah (连续控制)\n  - Hopper\n  - Walker2d\n  - Ant\n  - Kitchen (多任务)\n- **数据集类型：** medium-expert, medium-replay, medium, full-replay\n\n### 性能提升（关键指标）\n\n| 环境 | CQL (SOTA baseline) | Diffusion-QL | 提升 |\n|------|---------------------|--------------|------|\n| Halfcheetah-medium | 44.0 | **67.6** | +23.6 |\n| Hopper-medium-expert | **101.9** | 99.5 | -2.4 |\n| Walker2d-medium | 74.0 | **80.4** | +6.4 |\n| Ant-medium | 47.7 | **59.6** | +11.9 |\n\n**总体结果：** 在D4RL benchmark的大多数任务上达到SOTA性能\n\n### 消融实验关键发现\n\n1. **扩散模型组件的重要性：** 移除价值最大化项后性能显著下降，证明策略改进项的关键作用\n2. **多模态建模能力：** 在多模态bandit任务中，Diffusion-QL能够同时学习多个模式，而单模态方法会陷入局部最优\n3. **去噪步骤数量：** 性能对去噪步数敏感，较多步数通常表现更好\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n1. **推理速度：** 扩散模型需要多步去噪，推理时计算成本高\n2. **超参数敏感：** $\\lambda$（价值项权重）需要仔细调优\n3. **理论假设：** 理论分析依赖一定的假设条件（如行为策略为混合策略）\n4. **Q值估计依赖：** 仍然受Q值过估计问题影响\n\n### 未来方向\n\n1. **加速推理：** 引入蒸馏或少步扩散技术降低推理延迟\n2. **更严格的理论分析：** 探索无需假设的理论保证\n3. **扩展到在线RL：** 结合在线探索与扩散策略\n4. **其他生成模型：** 探索VAE、Normalizing Flows作为策略类\n\n### 可迁移性\n\n- **高：** 扩散模型作为策略表示的思路可迁移到其他离线决策问题\n- **相关领域：** 可以推广到模仿学习、离线预训练、机器人操纵等\n- **启示：** 高表达生成模型为策略学习提供了新的范式\n\n---\n\n## 6. 一句话总结\n\n**核心价值：** Diffusion-QL通过将条件扩散模型作为策略类并在其训练目标中耦合行为克隆与动作价值最大化，首次实现了对复杂多模态行为分布的有效建模与策略改进的统一，在D4RL离线强化学习 benchmark 上取得了显著优于现有方法的性能，验证了高表达生成模型作为策略表示的变革性潜力。",
+  "method_summary": "# 扩散策略：离线强化学习的 expressive 策略类方法论详解\n\n---\n\n## 1. 问题形式化\n\n### 1.1 离线强化学习基本框架\n\n离线强化学习（Offline Reinforcement Learning）旨在从预先收集的静态数据集中学习最优策略，而无需与环境进行在线交互。给定一个马尔可夫决策过程（MDP），由五元组 $(\\mathcal{S}, \\mathcal{A}, r, P, \\gamma)$ 定义，其中：\n\n- $\\mathcal{S}$：状态空间\n- $\\mathcal{A}$：动作空间\n- $r(s, a)$：奖励函数\n- $P(s^\\prime|s, a)$：状态转移概率\n- $\\gamma \\in [0, 1)$：折扣因子\n\n离线 RL 的核心挑战在于**分布外动作问题**（Out-of-Distribution, OOD）：由于智能体从未在目标策略下与环境交互，标准 RL 方法（如 Q-learning）对从未见过的状态-动作对的 Q 值估计会产生严重的函数近似误差。\n\n### 1.2 形式化定义\n\n给定经验回放缓冲区 $\\mathcal{D} = \\{(s_i, a_i, r_i, s_i')\\}_{\\text{i=1}}^N$，离线 RL 的目标是找到一个策略 $\\pi(a|s)$ 最大化期望累积折扣奖励：\n\n$$\n\n\\max_{\\text{\\pi}} \\mathbb{E}_{\\text{s\\_0 \\sim d\\_{\\mathcal{D}}}, a_0 \\sim \\pi(\\cdot|s_0), s_1 \\sim P(\\cdot|s_0,a_0)}\\left[\\sum_{\\text{t=0}}^{\\infty} \\gamma^t r(s_t, a_t)\\right]\n\n$$\n\n其中 $d_{\\mathcal{D}}$ 表示数据集 $\\mathcal{D}$ 中的状态分布。\n\n### 1.3 行为策略与分布偏移\n\n记数据集由行为策略（behavior policy）$\\beta(a|s)$ 生成。离线 RL 的关键约束是学得的策略 $\\pi$ 产生的动作分布 $a \\sim \\pi(\\cdot|s)$ 可能偏离 $\\beta$，导致 Q 值过估计。形式上，策略约束可表示为：\n\n$$\n\n\\mathbb{D}(\\pi || \\beta) \\leq \\epsilon\n\n$$\n\n其中 $\\mathbb{D}$ 为某种分布散度度量。\n\n---\n\n## 2. 技术方法\n\n### 2.1 扩散模型基础\n\n本文提出使用**条件扩散模型**（Conditional Diffusion Model）作为策略的表示。扩散模型通过逐步去噪过程学习数据分布 $p(x)$，前向过程逐渐向数据添加噪声：\n\n$$\n\nq(x_t | x_{\\text{\\text{t-1}}}) = \\mathcal{N}(x_t; \\sqrt{1-\\beta_t} x_{\\text{\\text{t-1}}}, \\beta_t \\mathbf{I})\n\n$$\n\n其中 $\\beta_t$ 为噪声调度参数。通过 $T$ 步迭代，$x_T$ 近似服从标准高斯分布。\n\n反向过程学习去噪：\n\n$$\n\np_\\theta(x_{\\text{\\text{t-1}}} | x_t, c) = \\mathcal{N}(x_{\\text{\\text{t-1}}}; \\mu_\\theta(x_t, c, t), \\sigma_t^2 \\mathbf{I})\n\n$$\n\n其中 $c$ 为条件信息（此处为状态 $s$）。\n\n### 2.2 扩散策略的数学表示\n\n本文将策略表示为条件扩散模型：\n\n$$\n\n\\pi(a|s) := p_\\theta(a|s) = p(a_T) \\prod_{\\text{t=1}}^{T} p_\\theta(a_{\\text{\\text{t-1}}} | a_t, s)\n\n$$\n\n其中 $a_T \\sim \\mathcal{N}(0, \\mathbf{I})$，$p_\\theta(a_{\\text{t-1}} | a_t, s)$ 由神经网络参数化。\n\n### 2.3 Diffusion-QL 损失函数\n\nDiffusion-QL 的核心创新在于将**行为克隆**与**策略改进**结合在统一的损失函数中：\n\n$$\n\n\\mathcal{L}(\\theta) = \\mathcal{L}_{\\text{\\text{denoise}}}(\\theta) - \\lambda \\mathcal{L}_{\\text{Q}}(\\theta)\n\n$$\n\n#### 2.3.1 去噪损失（行为克隆项）\n\n$$\n\n\\mathcal{L}_{\\text{\\text{denoise}}}(\\theta) = \\mathbb{E}_{\\text{s, a \\sim \\mathcal{D}}, t, \\epsilon \\sim \\mathcal{N}(0,\\mathbf{I})}\\left[\\|\\epsilon - \\epsilon_\\theta(a_t, s, t)\\|^2\\right]\n\n$$\n\n其中 $a_t$ 是通过向真实动作 $a$ 添加噪声 $t$ 步得到的，$\\epsilon_\\theta$ 为 UNet 型神经网络预测的噪声。\n\n此项确保策略生成的动作接近行为策略 $\\beta(a|s)$，实现**行为克隆**（Behavior Cloning）。\n\n#### 2.3.2 Q-损失（策略改进项）\n\n$$\n\n\\mathcal{L}_{\\text{Q}}(\\theta) = \\mathbb{E}_{\\text{s \\sim \\mathcal{D}}}\\left[Q_\\phi(s, \\tilde{a})\\right]\n\n$$\n\n其中 $\\tilde{a} \\sim \\pi_\\theta(\\cdot|s)$ 是从扩散模型采样的动作。\n\n此项鼓励选择高 Q 值的动作，实现**策略改进**。\n\n### 2.4 整体算法框架\n\nDiffusion-QL 采用演员-评论家（Actor-Critic）架构：\n\n1. **评论家（Critic）**：学习动作值函数 $Q_\\phi(s, a)$，使用 TD 目标：\n\n$$\n\ny(s, a, r, s^\\prime) = r(s, a) + \\gamma \\mathbb{E}_{\\text{a^\\prime \\sim \\pi\\_\\theta(\\cdot|s^\\prime)}}[Q_{\\text{\\bar{\\phi}}}(s', a^\\prime)]\n\n$$\n\n其中 $\\bar{\\phi}$ 为目标网络参数。\n\n2. **演员（Actor）**：条件扩散模型 $\\pi_\\theta(a|s)$，优化上述组合损失。\n\n3. **策略采样**：在推理时，从扩散模型采样动作作为最终输出。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n- **去噪网络**：采用 UNet 架构，条件信息（状态）通过 AdaGN（Adaptive Group Normalization）注入\n- **Q 网络**：标准 MLP，状态-动作对输入\n- **时间嵌入**：使用正弦位置编码将扩散时间步 $t$ 嵌入网络\n\n### 3.2 超参数配置\n\n| 参数 | 典型值 |\n|------|--------|\n| 扩散步数 $T$ | 100 |\n| 噪声调度 | 线性，从 $\\beta_1=10^{-4}$ 到 $\\beta_T=0.02$ |\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批量大小 | 256 |\n| 目标网络更新频率 | 每 1000 步 |\n| $\\lambda$（Q 损失权重） | 1.0 |\n| 采样步数（推理） | 10-20 步 |\n\n### 3.3 训练技巧\n\n- **目标 Q 值平滑**：使用目标网络避免 Q 值过估计\n- **截断采样**：推理时减少扩散步数以加速\n- **多头 Q 网络**：部分实验使用多个 Q 网络取最小值以减少过估计\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n使用 **D4RL** 基准数据集，包含：\n\n- **Medium-Expert**：专家策略与中等水平策略的混合数据\n- **Medium**：仅由中等水平策略收集的数据\n- **Medium-Replay**：中等水平策略在训练过程中的回放数据\n- **数据集规模**：涵盖 MuJoCo 物理控制任务（HalfCheetah, Hopper, Walker2d, Ant, Humanoid）\n\n### 4.2 评估指标\n\n使用 **标准化得分**（Normalized Score）：\n\n$$\n\n\\text{Score} = \\frac{\\text{Return} - \\text{Random}}{\\text{Expert} - \\text{Random}} \\times 100\n\n$$\n\n- Random：随机策略的累积奖励\n- Expert：专家策略的累积奖励\n\n### 4.3 基线方法\n\n本文对比的基线包括：\n\n- **保守 Q 学习**（Conservative Q-Learning, CQL）\n- **隐式 Q 学习**（Implicit Q-Learning, IQL）\n- **在线训练+微调**（BCO, Decision Transformer）\n- **基于能量的约束策略学习**（EBQL）\n- **监督式 RL**（AWAC, DRIL）\n\n---\n\n## 5. 技术优势\n\n### 5.1 高表达性\n\n扩散模型是当前表达能力最强的生成模型之一，能够建模**多模态动作分布**。这一特性在以下场景尤为重要：\n\n- 数据集由多个不同的行为策略混合而成\n- 最优策略需要在不同模式间切换\n- 动作分布具有复杂的相关性结构\n\n相比高斯策略或基于能量模型，扩散策略可以精确捕获行为数据的完整分布。\n\n### 5.2 双重优化机制\n\nDiffusion-QL 巧妙地将行为克隆与策略改进结合：\n\n- **行为克隆项** $\\mathcal{L}_{\\text{denoise}}$：确保学得策略不会产生过于远离数据分布的动作，避免 OOD 问题\n- **策略改进项** $-\\lambda \\mathcal{L}_Q$：在行为策略附近寻找更高 Q 值的动作\n\n这种耦合实现了**约束下的最优**（Constrained Optimization），在表达能力和稳定性间取得平衡。\n\n### 5.3 理论保证\n\n论文提供了初步的理论分析：\n\n- 当扩散模型足够表达行为策略时，行为克隆项可精确恢复 $\\beta(a|s)$\n- Q 损失项可视为对行为策略的**局部改进算子**\n- 组合目标在特定条件下收敛到最优策略\n\n### 5.4 通用性\n\n该方法可与任意基于 Q 的离线 RL 方法结合，仅需将策略类替换为扩散模型即可。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 计算开销\n\n扩散模型的**推理成本**显著高于传统策略：\n\n- 训练时需计算去噪损失的梯度\n- 推理时需多步采样（$T=10\\sim100$ 步）\n- 相比单步策略网络，推理延迟可能成为实时应用的瓶颈\n\n### 6.2 超参数敏感性\n\n- $\\lambda$ 值的选择对性能影响显著：过小则与 BC 等价，无改进；过大则可能远离数据分布\n- 扩散步数、噪声调度等超参数需要仔细调优\n\n### 6.3 模式崩溃风险\n\n在某些场景下，扩散模型可能出现模式丢失：\n\n- 当行为数据分布复杂时，可能无法完整捕获\n- Q 损失的梯度可能引导策略偏向某一主导模式\n\n### 6.4 理论局限性\n\n- 缺乏严格的收敛性证明\n- 对 OOD 动作的约束是隐式的（通过行为克隆项间接实现），而非显式约束（如 CQL 的 KL 约束）\n- 在极端 OOD 状态下，Q 值外推误差问题仍未彻底解决\n\n### 6.5 扩展性问题\n\n- 当前方法在高维动作空间（如机械臂的连续控制）中表现优异，但在离散/混合动作空间的效率有待验证\n- 与基于 Transformer 的序列模型（如 Decision Transformer）相比，在长程依赖任务上的竞争力未充分探索\n\n---\n\n## 总结\n\nDiffusion-QL 通过将扩散模型引入离线 RL，提供了一个高表达性的策略类，有效解决了传统方法在策略表达上的局限性。其核心贡献在于将行为克隆与策略改进统一在扩散模型的损失函数框架下，在保持策略安全性的同时实现性能提升。实验结果表明，该方法在 D4RL 基准上达到或超越当前最优水平，验证了扩散模型作为离线 RL 策略表示的可行性与优越性。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Diffusion Policies as an Expressive Policy Class for Offline Reinforcement Learning",
+      "authors": [
+        "Zhendong Wang",
+        "Jonathan J. Hunt",
+        "Mingyuan Zhou"
+      ],
+      "year": 2023,
+      "journal": "International Conference on Learning Representations",
+      "doi": "10.48550/arXiv.2208.06193",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Offline reinforcement learning (RL), which aims to learn an optimal policy using a previously collected static dataset, is an important paradigm of RL. Standard RL methods often perform poorly in this regime due to the function approximation errors on out-of-distribution actions. While a variety of regularization methods have been proposed to mitigate this issue, they are often constrained by policy classes with limited expressiveness that can lead to highly suboptimal solutions. In this paper, we propose representing the policy as a diffusion model, a recent class of highly-expressive deep generative models. We introduce Diffusion Q-learning (Diffusion-QL) that utilizes a conditional diffusion model to represent the policy. In our approach, we learn an action-value function and we add a term maximizing action-values into the training loss of the conditional diffusion model, which results in a loss that seeks optimal actions that are near the behavior policy. We show the expressiveness of the diffusion model-based policy, and the coupling of the behavior cloning and policy improvement under the diffusion model both contribute to the outstanding performance of Diffusion-QL. We illustrate the superiority of our method compared to prior works in a simple 2D bandit example with a multimodal behavior policy. We then show that our method can achieve state-of-the-art performance on the majority of the D4RL benchmark tasks.",
+      "route_id": "95488d6e-88ed-4877-afb2-459b61ad92c1"
+    },
+    "markdown_stats": {
+      "lines": 335,
+      "words": 11010,
+      "headings": 23
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "95488d6e-88ed-4877-afb2-459b61ad92c1",
+  "paper_ref": "95488d6e-88ed-4877-afb2-459b61ad92c1",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

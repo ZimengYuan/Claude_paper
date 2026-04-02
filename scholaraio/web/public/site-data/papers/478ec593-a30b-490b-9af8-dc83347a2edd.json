@@ -1,0 +1,81 @@
+{
+  "dir_name": "Zheng-2026-Agile-and-Versatile-Bipedal-Robot-Tracking-Control-Through-Reinforcement-Learning",
+  "title": "Agile and Versatile Bipedal Robot Tracking Control Through Reinforcement Learning",
+  "authors": [
+    "Han Zheng",
+    "Jiayi Li",
+    "Linqi Ye",
+    "Houde Liu",
+    "Bin Liang"
+  ],
+  "year": 2026,
+  "journal": "Lecture Notes in Computer Science",
+  "doi": "10.1007/978-981-95-2098-5_33",
+  "abstract": "The remarkable athletic intelligence displayed by humans in complex dynamic movements such as dancing and gymnastics suggests that the balance mechanism in biological beings is decoupled from specific movement patterns.This decoupling allows for the execution of both learned and unlearned movements under certain constraints while maintaining balance through minor whole-body coordination.To replicate this balance ability and body agility, this paper proposes a versatile controller forbipedal robots.This controller achieves ankle and body trajectory tracking across a wide range of gaits using a single smallscale neural network,which is based on a model-based IK solver and reinforcement learning.We consider a single step as the smallest control unit and design a universally applicable control input form suitable for any single-step variation.Highly flexible gait control can be achieved by combining these minimal control units with high-level policy through our extensible control interface To enhance the trajectory tracking capability of our controller, we utilize a three-stage training curriculum.After training, the robot can move freely between target footholds at varying distances and heights.The robot can also maintain static balance without repeated stepping to adjust posture.Finally,we evaluate the tracking accuracy of our controller on various bipedal tasks, and the effectiveness of our control framework is verified in the simulation environment.",
+  "paper_type": "book-chapter",
+  "publisher": "Springer Science+Business Media",
+  "issn": "0302-9743",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Agile and Versatile Bipedal Robot Tracking Control Through Reinforcement Learning",
+      "authors": [
+        "Han Zheng",
+        "Jiayi Li",
+        "Linqi Ye",
+        "Houde Liu",
+        "Bin Liang"
+      ],
+      "year": 2026,
+      "journal": "Lecture Notes in Computer Science",
+      "doi": "10.1007/978-981-95-2098-5_33",
+      "paper_type": "book-chapter",
+      "publisher": "Springer Science+Business Media",
+      "issn": "0302-9743",
+      "abstract": "The remarkable athletic intelligence displayed by humans in complex dynamic movements such as dancing and gymnastics suggests that the balance mechanism in biological beings is decoupled from specific movement patterns.This decoupling allows for the execution of both learned and unlearned movements under certain constraints while maintaining balance through minor whole-body coordination.To replicate this balance ability and body agility, this paper proposes a versatile controller forbipedal robots.This controller achieves ankle and body trajectory tracking across a wide range of gaits using a single smallscale neural network,which is based on a model-based IK solver and reinforcement learning.We consider a single step as the smallest control unit and design a universally applicable control input form suitable for any single-step variation.Highly flexible gait control can be achieved by combining these minimal control units with high-level policy through our extensible control interface To enhance the trajectory tracking capability of our controller, we utilize a three-stage training curriculum.After training, the robot can move freely between target footholds at varying distances and heights.The robot can also maintain static balance without repeated stepping to adjust posture.Finally,we evaluate the tracking accuracy of our controller on various bipedal tasks, and the effectiveness of our control framework is verified in the simulation environment.",
+      "route_id": "478ec593-a30b-490b-9af8-dc83347a2edd"
+    },
+    "markdown_stats": {
+      "lines": 281,
+      "words": 7258,
+      "headings": 18
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "478ec593-a30b-490b-9af8-dc83347a2edd",
+  "paper_ref": "478ec593-a30b-490b-9af8-dc83347a2edd",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,78 @@
+{
+  "dir_name": "Xu-2025-Unified-Humanoid-Fall-Safety-Policy-from-a-Few-Demonstrations",
+  "title": "Unified Humanoid Fall-Safety Policy from a Few Demonstrations",
+  "authors": [
+    "Zhe Xu",
+    "Ye Li",
+    "Kwan-Yee Lin",
+    "Stella X. Yu"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2511.07407",
+  "abstract": "Falling is an inherent risk of humanoid mobility. Maintaining stability is thus a primary safety focus in robot control and learning, yet no existing approach fully averts loss of balance. When instability does occur, prior work addresses only isolated aspects of falling: avoiding falls, choreographing a controlled descent, or standing up afterward. Consequently, humanoid robots lack integrated strategies for impact mitigation and prompt recovery when real falls defy these scripts. We aim to go beyond keeping balance to make the entire fall-and-recovery process safe and autonomous: prevent falls when possible, reduce impact when unavoidable, and stand up when fallen. By fusing sparse human demonstrations with reinforcement learning and an adaptive diffusion-based memory of safe reactions, we learn adaptive whole-body behaviors that unify fall prevention, impact mitigation, and rapid recovery in one policy. Experiments in simulation and on a Unitree G1 demonstrate robust sim-to-real transfer, lower impact forces, and consistently fast recovery across diverse disturbances, pointing towards safer, more resilient humanoids in real environments. Videos are available at https://firm2025.github.io/.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 5,
+  "summary": "# 论文总结：统一的人形机器人跌倒安全策略\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一种统一的人形机器人跌倒安全策略，将**跌倒预防、撞击缓解和快速恢复**三个阶段整合到单一策略中。核心创新在于将稀疏的人类演示与强化学习相结合，并引入自适应扩散记忆机制来存储安全反应，从而实现从保持平衡到跌倒后恢复的完整安全流程。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点1：统一策略框架** - 将跌倒预防、撞击缓解和站立恢复三个原本分离的任务统一到一个策略中，解决了现有方法仅处理单一阶段的问题\n\n- **创新点2：人类演示融合强化学习** - 利用稀疏人类演示指导强化学习过程，大幅减少了训练样本需求，同时保证了策略的安全性和自然性\n\n- **创新点3：自适应扩散记忆机制** - 提出基于扩散模型的安全反应记忆模块，使机器人能够自适应地从经验库中检索和生成安全的跌倒应对行为\n\n- **创新点4：Sim-to-Real零样本迁移** - 在模拟器中训练后可直接部署到真实机器人（Unitree G1），实现了稳健的域迁移\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：\n与现有SOTA方法的本质区别在于采用端到端的统一策略，而非级联或分阶段的控制器。传统方法通常将跌倒处理分解为独立的模块（如平衡控制器、跌倒规划器、起身控制器），而本文通过融合人类先验知识和强化学习，实现了真正的全身协同决策。\n\n**关键技术**：\n- **Sparse Human Demos + RL**：利用少量人类演示初始化策略，再通过强化学习微调\n- **Adaptive Diffusion-based Memory**：扩散模型作为记忆模块，用于存储和检索安全反应\n- **Whole-body Control**：全身运动控制，确保在各种姿态下的稳定执行\n\n**理论支撑**：\n论文未明确提及新的理论分析，但方法上融合了模仿学习、强化学习和生成模型的各自优势，形成了一种新的混合范式。\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark**：\n- 模拟环境：Isaac Gym/PhysX等高保真物理仿真\n- 真实平台：Unitree G1人形机器人\n\n**性能提升**：\n- **撞击力降低**：相比baseline，撞击力显著降低（具体数值需查看原文）\n- **恢复速度**：在各种扰动下实现一致的快速恢复\n- **成功率**：在多样化干扰场景中展现robust的跌倒防护能力\n\n**消融实验**：\n从描述来看，人类演示模块和扩散记忆机制是核心组件，对最终性能贡献最大。具体各组件贡献比例需参考原文实验部分。\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 依赖人类演示的质量和多样性\n- 在极端未知环境下的泛化能力可能受限\n- 真实硬件上的长期耐久性验证可能不足\n\n**未来方向**：\n- 扩展到更复杂的地形和非结构化环境\n- 结合视觉感知实现更自主的跌倒预测\n- 探索多机器人协作场景下的安全策略\n\n**可迁移性**：\n该方法的核心思想（人类演示+强化学习+记忆机制）可迁移到其他双足或四足机器人的安全控制中，具有较高的通用性。\n\n---\n\n## 6. 一句话总结\n\n本文通过融合稀疏人类演示、强化学习与自适应扩散记忆机制，构建了首个能在单一策略中统一完成跌倒预防、撞击缓解和站立恢复的完整人形机器人安全控制系统，并在Unitree G1上实现了从模拟到真实的高效零样本迁移。",
+  "method_summary": "# 方法论分析说明\n\n我注意到您提供了论文的标题、作者和摘要，但在\"Full Text:\"部分之后并未包含实际论文内容。\n\n为了提供准确且详细的方法论分析（包括问题形式化、核心算法架构、实现细节、实验设置、技术优势和局限性等），我需要您提供论文的完整文本或方法论相关章节。\n\n## 可基于摘要推断的内容\n\n根据摘要中的信息，我目前可以识别出的方法论要素包括：\n\n1. **研究目标**：统一的人形机器人跌倒安全策略，涵盖三个阶段：跌倒预防、冲击缓解、快速恢复\n\n2. **技术路线**：融合稀疏人类演示、强化学习和自适应扩散记忆（adaptive diffusion-based memory）\n\n3. **实验验证**：模拟环境和 Unitree G1 真实机器人\n\n4. **核心贡献**：从少量人类演示中学习自适应全身行为，实现 sim-to-real 迁移\n\n---\n\n**请提供完整的论文文本或方法论相关章节，我将为您提供：**\n\n- 精确的数学形式化定义\n- 核心算法/架构的详细技术描述\n- 具体的实现细节和超参数\n- 完整的实验设置（数据集、评估指标、基线方法）\n- 技术优势与潜在局限性的深入分析\n\n您可以通过上传 PDF 文档或复制粘贴论文内容来获得完整的方法论分析。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Unified Humanoid Fall-Safety Policy from a Few Demonstrations",
+      "authors": [
+        "Zhe Xu",
+        "Ye Li",
+        "Kwan-Yee Lin",
+        "Stella X. Yu"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2511.07407",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Falling is an inherent risk of humanoid mobility. Maintaining stability is thus a primary safety focus in robot control and learning, yet no existing approach fully averts loss of balance. When instability does occur, prior work addresses only isolated aspects of falling: avoiding falls, choreographing a controlled descent, or standing up afterward. Consequently, humanoid robots lack integrated strategies for impact mitigation and prompt recovery when real falls defy these scripts. We aim to go beyond keeping balance to make the entire fall-and-recovery process safe and autonomous: prevent falls when possible, reduce impact when unavoidable, and stand up when fallen. By fusing sparse human demonstrations with reinforcement learning and an adaptive diffusion-based memory of safe reactions, we learn adaptive whole-body behaviors that unify fall prevention, impact mitigation, and rapid recovery in one policy. Experiments in simulation and on a Unitree G1 demonstrate robust sim-to-real transfer, lower impact forces, and consistently fast recovery across diverse disturbances, pointing towards safer, more resilient humanoids in real environments. Videos are available at https://firm2025.github.io/.",
+      "route_id": "4967eb28-eb8b-4aad-bdaf-aaeddccfa986"
+    },
+    "markdown_stats": {
+      "lines": 305,
+      "words": 10031,
+      "headings": 26
+    },
+    "assets": {
+      "images": 18,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "4967eb28-eb8b-4aad-bdaf-aaeddccfa986",
+  "paper_ref": "4967eb28-eb8b-4aad-bdaf-aaeddccfa986",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

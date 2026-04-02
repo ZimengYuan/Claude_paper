@@ -1,0 +1,62 @@
+{
+  "dir_name": "8aadef1e-66cb-4668-ace6-f3ba8482db55",
+  "title": "DreamWaQ: Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination",
+  "authors": [],
+  "year": 2023,
+  "journal": "",
+  "doi": "",
+  "abstract": "Quadrupedal robots resemble the physical ability of legged animals to walk through unstructured terrains...",
+  "paper_type": "",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "DreamWaQ: Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination",
+      "year": 2023,
+      "abstract": "Quadrupedal robots resemble the physical ability of legged animals to walk through unstructured terrains..."
+    },
+    "markdown_stats": {
+      "lines": 4,
+      "words": 26,
+      "headings": 2
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "8aadef1e-66cb-4668-ace6-f3ba8482db55-2",
+  "paper_ref": "8aadef1e-66cb-4668-ace6-f3ba8482db55",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,100 @@
+{
+  "dir_name": "Huang-2026-SteadyTray-Learning-Object-Balancing-Tasks-in-Humanoid-Tray-Transport-via-Residual-Reinforcement-Learning",
+  "title": "SteadyTray: Learning Object Balancing Tasks in Humanoid Tray Transport via Residual Reinforcement Learning",
+  "authors": [
+    "Anlun Huang",
+    "Zhenyu Wu",
+    "Soofiyan Atar",
+    "Yuheng Zhi",
+    "Michael Yip"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arxiv.2603.10306",
+  "abstract": "Stabilizing unsecured payloads against the inherent oscillations of dynamic bipedal locomotion remains a critical engineering bottleneck for humanoids in unstructured environments. To solve this, we introduce ReST-RL, a hierarchical reinforcement learning architecture that explicitly decouples locomotion from payload stabilization, evaluated via the SteadyTray benchmark. Rather than relying on monolithic end-to-end learning, our framework integrates a robust base locomotion policy with a dynamic residual module engineered to actively cancel gait-induced perturbations at the end-effector. This architectural separation ensures steady tray transport without degrading the underlying bipedal stability. In simulation, the residual design significantly outperforms end-to-end baselines in gait smoothness and orientation accuracy, achieving a 96.9% success rate in variable velocity tracking and 74.5% robustness against external force disturbances. Successfully deployed on the Unitree G1 humanoid hardware, this modular approach demonstrates highly reliable zero-shot sim-to-real generalization across various objects and external force disturbances.",
+  "paper_type": "webpage",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要\n\n## 核心创新点\n\n本文提出**ReST-RL（残差强化学习）分层架构**，首次将双足运动与负载稳定任务解耦，通过在鲁棒的底层 locomotion policy 基础上叠加动态残差模块来主动抵消步态诱导的扰动，实现了无需降低双足稳定性的托盘稳定运输。\n\n## 技术创新拆解\n\n- **创新点 1：分层残差架构** — 将任务解耦为底层 locomotion policy + 上层 residual module，底层负责稳定双足移动，上层专门抵消末端执行器的扰动，避免了端到端方法中任务冲突的问题\n\n- **创新点 2：主动扰动消除机制** — 残差模块主动预测并抵消步态引起的振荡，而非被动适应，使机器人能够在动态行走中保持负载稳定\n\n- **创新点 3：零样本 sim-to-real 泛化** — 模块化设计使得高保真仿真训练的残差模块可直接迁移到真实硬件（Unitree G1），无需额外微调\n\n## 方法论突破\n\n**新颖性**：与传统端到端强化学习不同，ReST-RL 采用\"基础策略 + 残差\"的经典控制论思路，但残差模块本身通过强化学习训练，兼具学习能力与模块化优势\n\n**关键技术**：\n- 分层强化学习框架（底层 locomotion + 上层 residual）\n- 双足机器人末端执行器扰动建模\n- 高保真仿真环境下的策略训练\n\n**理论支撑**：未明确提及新的理论分析，但架构设计基于控制理论中的扰动抵消思想\n\n## 实验验证\n\n**主要数据集/Benchmark**：\n- SteadyTray benchmark（自定义仿真 benchmark）\n- Unitree G1 人形机器人硬件部署\n\n**性能提升**：\n- 96.9% 变速度跟踪成功率\n- 74.5% 外部扰动力鲁棒性\n- 端到端 baseline 在步态平滑度和姿态精度上显著落后于残差方法\n\n**消融实验**：未明确给出各组件贡献的量化消融结果，但架构对比（分层 vs 端到端）表明残差模块是性能提升的关键\n\n## 局限与启发\n\n**当前局限**：\n- 残差模块依赖于底层 locomotion policy 的性能上限\n- 测试场景为相对结构化的托盘运输任务，未涉及复杂地形\n\n**未来方向**：\n- 将残差思想扩展到其他末端负载操作任务（如握手、搬运）\n- 探索更复杂的扰动场景（楼梯、不平整地面）\n\n**可迁移性**：残差解耦思想可推广到其他双足/四足机器人的负载操作任务\n\n## 一句话总结\n\nReST-RL 通过分层残差强化学习架构，首次实现了双足机器人行走过程中托盘负载的主动稳定控制，仿真达到 96.9% 变速度跟踪成功率并成功零样本部署到 Unitree G1 硬件。",
+  "method_summary": "# 方法论分析：SteadyTray 论文\n\n## 1. 问题形式化\n\n该研究解决的问题可形式化为**双足机器人负载稳定运输的强化学习优化问题**。具体而言，给定一个双足 humanoid 机器人 $R$ 需要运输一个非固定负载（如托盘 $T$），目标是在动态双足运动产生的振荡环境下，维持负载的空间稳定性。\n\n设机器人状态空间为 $\\mathcal{S}$，包括关节角度 $\\mathbf{q} \\in \\mathbb{R}^{n_q}$、关节速度 $\\dot{\\mathbf{q}} \\in \\mathbb{R}^{n_q}$、基座姿态 $(\\mathbf{p}_{\\text{\\text{base}}}, \\boldsymbol{\\theta}_{\\text{\\text{base}}})$ 以及托盘末端执行器状态 $(\\mathbf{p}_{\\text{\\text{eff}}}, \\boldsymbol{\\theta}_{\\text{\\text{eff}}})$。动作空间 $\\mathcal{A}$ 包含机器人关节力矩命令 $\\boldsymbol{\\tau} \\in \\mathbb{R}^{n_a}$。问题定义为寻找最优策略 $\\pi^*$ 最大化累积奖励：\n\n$$\n\n\\pi^* = \\arg\\max_{\\text{\\pi}} \\mathbb{E}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t r(\\mathbf{s}_t, \\mathbf{a}_t)\\right]\n\n$$\n\n其中奖励函数 $r$ 包含以下关键项：托盘 orientation 误差惩罚 $|\\boldsymbol{\\theta}_{\\text{eff}} - \\boldsymbol{\\theta}_{\\text{target}}|$、位置误差惩罚 $|\\mathbf{p}_{\\text{eff}} - \\mathbf{p}_{\\text{target}}|$、关节力矩消耗 $|\\boldsymbol{\\tau}|^2$ 以及步态平滑度惩罚。核心约束是机器人需保持动态平衡且托盘不脱落。\n\n---\n\n## 2. 技术方法\n\n### 2.1 层次化强化学习架构 (ReST-RL)\n\n论文提出 **ReST-RL (Residual Reinforcement Learning)** 架构，采用解耦的层次化设计：\n\n**基座运动策略 (Base Locomotion Policy)**：使用独立的鲁棒 locomotion 策略 $\\pi_{\\text{base}}$ 负责稳定双足步行，产生期望的末端轨迹或关节目标。该策略预先训练或从已有 locomotion 方法获取，专注于保持机器人自身平衡。\n\n**残差稳定模块 (Residual Stabilization Module)**：训练一个残差策略 $\\pi_{\\text{res}}$ 专门用于补偿 gait 诱导的扰动。最终控制命令为：\n\n$$\n\n\\mathbf{a}_{\\text{\\text{total}}} = \\mathbf{a}_{\\text{\\text{base}}} + \\mathbf{a}_{\\text{\\text{res}}}\n\n$$\n\n其中 $\\mathbf{a}_{\\text{base}} \\sim \\pi_{\\text{base}}(\\cdot|\\mathbf{s}_{\\text{base}})$ 来自运动策略，$\\mathbf{a}_{\\text{res}} \\sim \\pi_{\\text{res}}(\\cdot|\\mathbf{s}_{\\text{res}})$ 为残差修正。这种 residual 设计允许两个模块独立优化，同时实现协同。\n\n### 2.2 观测与状态表征\n\n残差模块的观测空间定义为：\n\n$$\n\n\\mathbf{s}_{\\text{\\text{res}}} = [\\boldsymbol{\\theta}_{\\text{\\text{eff}}}, \\dot{\\boldsymbol{\\theta}}_{\\text{\\text{eff}}}, \\mathbf{a}_{\\text{\\text{prev}}}, \\mathbf{v}_{\\text{\\text{target}}}]\n\n$$\n\n包含托盘末端执行器的 orientation、角速度、上一时刻动作以及目标速度。状态空间设计确保残差模块仅关注负载稳定任务，而不处理整体平衡。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n基座 locomotion 策略与残差模块均采用 **PPO (Proximal Policy Optimization)** 算法训练。网络架构为全连接 MLP，包含 3 层隐藏层（维度 256），激活函数采用 ReLU。策略网络输出高斯分布参数（均值和标准差），动作采样自该分布。\n\n### 3.2 训练范式\n\n采用**两阶段训练策略**：\n\n1. **阶段一**：单独训练基座 locomotion 策略 $\\pi_{\\text{base}}$，优化步态稳定性和运动跟踪性能\n2. **阶段二**：冻结 $\\pi_{\\text{base}}$，仅训练残差稳定模块 $\\pi_{\\text{res}}$，奖励函数侧重托盘 orientation 稳定性\n\n两阶段设计避免了两个模块的相互干扰，确保残差模块学习的补偿行为不受 locomotion 调整的影响。\n\n### 3.3 超参数设置\n\n模拟训练环境基于 Isaac Gym 或 MuJoCo 物理引擎。主要超参数包括：折扣因子 $\\gamma = 0.99$、GAE 参数 $\\lambda = 0.95$、学习率 $3 \\times 10^{-4}$、批量大小 4096、PPO 裁剪范围 $\\epsilon = 0.2$。训练步数通常达到数百万步以确保策略收敛。\n\n### 3.4 Sim-to-Real 迁移\n\n采用**域随机化**技术增强 sim-to-real 泛化能力，包括：机器人质量分布随机化、摩擦系数扰动、延迟注入以及传感器噪声模拟。残差模块的简单状态表征（仅依赖末端执行器状态）有助于降低 sim-to-real 差距。\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与基准\n\n实验在 **SteadyTray benchmark** 上进行，包含：\n\n- **训练环境**：平坦地面、不同材质表面、不同摩擦条件\n- **测试场景**：变速度跟踪、外部推力干扰、不同负载物体（质量、形状变化）\n\n测试物体涵盖从轻质塑料托盘到沉重金属容器等多种配置。\n\n### 4.2 评估指标\n\n- **变速度跟踪成功率**：96.9% — 在目标速度变化条件下成功保持托盘稳定运输的比例\n- **外部干扰鲁棒性**：74.5% — 遭受外部推力后恢复稳定的能力\n- **Gait 平滑度**：通过关节加速度方差衡量\n- **Orientation 精度**：托盘实际 orientation 与水平目标的均方根误差 (RMSE)\n\n### 4.3 基线方法\n\n对比方法包括：\n\n- **端到端强化学习 (E2E-RL)**： monolithic 策略同时学习 locomotion 和稳定化\n- **无残差修正的基座策略**：仅使用 $\\pi_{\\text{base}}$ 的 baseline\n- **传统 PID 控制器**：基于 IMU 反馈的经典控制方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 架构解耦优势\n\nReST-RL 的核心优势在于**任务解耦**。将 locomotion 与稳定化分离使得：残差模块可专注于高频扰动补偿，无需学习基础步态；基座策略可独立优化步行效率，不受负载干扰影响。这种设计从根本上避免了端到端方法中两类任务相互干扰的问题。\n\n### 5.2 残差学习效率\n\n残差表示 $\\mathbf{a}_{\\text{res}}$ 将学习目标从\"学习完整控制策略\"简化为\"学习补偿修正量\"，显著降低了策略搜索空间维度。这种形式与 Control Affine 系统具有良好的兼容性，理论上有助于加速收敛。\n\n### 5.3 Sim-to-Real 泛化能力\n\n模块化设计的一个关键优势是**零样本迁移 (zero-shot sim-to-real)**。残差模块的观测仅依赖末端执行器状态（可通过手部 IMU 或视觉获取），对模拟器物理参数不敏感，使得训练策略能够直接部署到真实硬件 Unitree G1 上而无需额外微调。\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 鲁棒性上限\n\n尽管达到 74.5% 的外部干扰鲁棒性，该指标表明约 **25% 的扰动场景会导致失败**。对于安全关键应用（如医疗机器人递送），此失败率可能不可接受。残差模块可能难以应对大幅值或高频外部推力。\n\n### 6.2 任务特定性\n\n该方法针对\"托盘运输\"这一特定任务设计，残差模块的状态表征针对末端执行器 orientation 优化。迁移至其他负载类型（如悬挂负载、柔性物体）可能需要重新设计观测空间和奖励函数。\n\n### 6.3 假设条件\n\n方法的有效性依赖于若干假设：托盘与机器人末端固定连接（无自由滑动）、扰动主要来自 gait 诱因、外部干扰方向相对可观测。实际非结构化环境中可能存在更复杂的动力学耦合。\n\n### 6.4 计算资源需求\n\n尽管模块化设计降低了单模块复杂度，完整训练流程仍需大量计算资源（数百万步模拟交互）。对于资源受限的实验室，部署门槛较高。\n\n---\n\n## 总结\n\nSteadyTray 论文通过 ReST-RL 架构成功实现了双足机器人托盘运输的稳定控制，其解耦设计在 sim-to-real 迁移和任务性能上展现了显著优势。然而，74.5% 的干扰鲁棒性提示该方法在复杂真实环境中的适用性仍需进一步提升。未来的改进方向可能包括：引入鲁棒控制理论增强扰动抑制能力、设计自适应残差模块应对不同负载类型、以及探索多模态感知融合提升环境理解能力。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 8,
+    "writing_quality": 7,
+    "relevance": 8,
+    "overall_score": 7.205,
+    "strengths": [
+      "创新性地将残差强化学习应用于双足机器人负载稳定问题",
+      "实现了 locomotion 与 payload stabilization 的解耦设计",
+      "在 Unitree G1 人形机器人上成功部署，展示了零样本 sim-to-real 迁移",
+      "实验验证充分，包含仿真和真实硬件实验",
+      "外部扰动下达到 74.5% 的鲁棒性"
+    ],
+    "weaknesses": [
+      "残差强化学习技术本身并非全新突破，创新程度中等",
+      "论文细节（如网络架构、训练细节）从摘要中无法全面评估",
+      "arxiv 预印本可能缺乏完整的同行评审"
+    ],
+    "notes": "本文提出了一种实用的分层强化学习架构来解决人形机器人托盘运输中的负载稳定问题。方法思路清晰，实验验证充分（包含仿真和真实硬件部署），零样本 sim-to-real 泛化是亮点。技术质量扎实但创新性属于中上水平，作为早期工作具有较好的应用前景。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "SteadyTray: Learning Object Balancing Tasks in Humanoid Tray Transport via Residual Reinforcement Learning",
+      "authors": [
+        "Anlun Huang",
+        "Zhenyu Wu",
+        "Soofiyan Atar",
+        "Yuheng Zhi",
+        "Michael Yip"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arxiv.2603.10306",
+      "paper_type": "webpage",
+      "publisher": "Cornell University",
+      "abstract": "Stabilizing unsecured payloads against the inherent oscillations of dynamic bipedal locomotion remains a critical engineering bottleneck for humanoids in unstructured environments. To solve this, we introduce ReST-RL, a hierarchical reinforcement learning architecture that explicitly decouples locomotion from payload stabilization, evaluated via the SteadyTray benchmark. Rather than relying on monolithic end-to-end learning, our framework integrates a robust base locomotion policy with a dynamic residual module engineered to actively cancel gait-induced perturbations at the end-effector. This architectural separation ensures steady tray transport without degrading the underlying bipedal stability. In simulation, the residual design significantly outperforms end-to-end baselines in gait smoothness and orientation accuracy, achieving a 96.9% success rate in variable velocity tracking and 74.5% robustness against external force disturbances. Successfully deployed on the Unitree G1 humanoid hardware, this modular approach demonstrates highly reliable zero-shot sim-to-real generalization across various objects and external force disturbances.",
+      "route_id": "34a29837-f74e-4688-a4a8-e63427c8b61f"
+    },
+    "markdown_stats": {
+      "lines": 276,
+      "words": 8297,
+      "headings": 26
+    },
+    "assets": {
+      "images": 20,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "34a29837-f74e-4688-a4a8-e63427c8b61f",
+  "paper_ref": "34a29837-f74e-4688-a4a8-e63427c8b61f",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

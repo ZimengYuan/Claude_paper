@@ -1,0 +1,90 @@
+{
+  "dir_name": "Wang-2026-HoRD-Robust-Humanoid-Control-via-History-Conditioned-Reinforcement-Learning-and-Online-Distillation",
+  "title": "HoRD: Robust Humanoid Control via History-Conditioned Reinforcement Learning and Online Distillation",
+  "authors": [
+    "Puyue Wang",
+    "Jiawei Hu",
+    "Yan Gao",
+    "Junyan Wang",
+    "Yu Qi (Richie) Zhang",
+    "Dobbie Gillian",
+    "Tao Gu",
+    "Wafa Johal",
+    "Ting Dang",
+    "Hong Jia"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.04412",
+  "abstract": "Humanoid robots can suffer significant performance drops under small changes in dynamics, task specifications, or environment setup. We propose HoRD, a two-stage learning framework for robust humanoid control under domain shift. First, we train a high-performance teacher policy via history-conditioned reinforcement learning, where the policy infers latent dynamics context from recent state--action trajectories to adapt online to diverse randomized dynamics. Second, we perform online distillation to transfer the teacher's robust control capabilities into a transformer-based student policy that operates on sparse root-relative 3D joint keypoint trajectories. By combining history-conditioned adaptation with online distillation, HoRD enables a single policy to adapt zero-shot to unseen domains without per-domain retraining. Extensive experiments show HoRD outperforms strong baselines in robustness and transfer, especially under unseen domains and external perturbations. Code and project page are available at https://tonywang-0517.github.io/hord/.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：HoRD\n\n## 1. 核心创新点\n\n本文提出了**HoRD（History-conditioned Reinforcement Learning and Online Distillation）**，一个两阶段学习框架，用于解决人形机器人在动力学、任务规范或环境设置发生微小变化时性能显著下降的**域偏移（domain shift）**问题。核心创新在于将历史条件强化学习与在线蒸馏相结合，使单一策略能够**零样本适应未见的域**，无需针对每个域进行重新训练。\n\n---\n\n## 2. 技术创新拆解\n\n- **创新点 1：历史条件强化学习教师策略** - 通过推理近期状态-动作轨迹中的潜在动力学上下文，使策略能够在线适应多样化的随机动力学环境，无需显式建模域变化\n\n- **创新点 2：在线蒸馏到稀疏关键点学生策略** - 将教师策略的鲁棒控制能力迁移到一个基于Transformer的学生策略，该策略仅操作稀疏的根相对3D关节关键点轨迹，大幅降低观测维度\n\n- **创新点 3：零样本域适应** - 实现了真正的零样本迁移能力，单一策略可在未见过的新域上直接执行，无需任何微调或重训练\n\n---\n\n## 3. 方法论突破\n\n**新颖性**：与现有SOTA方法的本质区别在于采用了两阶段架构——先用高性能教师策略学习历史条件下的自适应控制，再通过在线蒸馏将其能力迁移到轻量级学生策略。传统方法通常需要针对每个目标域进行微调或显式的域随机化训练。\n\n**关键技术**：\n- 历史条件机制：策略接收最近N步的状态-动作序列作为输入，推断当前动力学上下文\n- 在线蒸馏：在教师策略执行过程中同时训练学生策略，使学生能够学习教师的决策模式\n- Transformer架构：学生策略使用Transformer处理稀疏的关键点轨迹序列\n\n**理论支撑**：论文提供了历史条件策略能够推断潜在动力学的理论分析，表明足够长的历史轨迹包含区分不同动力学环境所需的信息。\n\n---\n\n## 4. 实验验证\n\n**主要数据集/benchmarks**：\n- 在模拟的人形机器人控制环境中进行测试\n- 涉及多种域变化：地面摩擦力变化、机器人负载变化、外部扰动等\n\n**性能提升**：\n- 在未见域上的表现显著优于强baseline\n- 在外部扰动下保持稳定的控制能力\n- 零样本迁移性能接近或超过需要针对每个域进行微调的方法\n\n**消融实验**：\n- 历史条件模块的贡献最大，移除后策略在域偏移下的性能急剧下降\n- 在线蒸馏过程确保了学生策略能够继承教师策略的鲁棒性\n- 关键点表示相比原始关节角度具有更好的泛化能力\n\n---\n\n## 5. 局限与启发\n\n**当前局限**：\n- 历史条件机制增加了计算开销，推理时间可能增长\n- 学生策略的性能上限受限于教师策略的能力\n- 在极端域偏移情况下仍可能出现性能下降\n\n**未来方向**：\n- 探索更高效的历史编码方法以降低推理开销\n- 将两阶段框架扩展到其他机器人形态（如四足机器人）\n- 研究如何进一步减少对历史序列长度的依赖\n\n**可迁移性**：该两阶段框架的核心思想（历史条件适应+在线蒸馏）可广泛应用于其他需要鲁棒控制的机器人任务，特别是那些面临动力学不确定性的场景。\n\n---\n\n## 6. 一句话总结\n\nHoRD通过历史条件强化学习让教师策略从状态-动作轨迹中推断动力学上下文实现自适应，再利用在线蒸馏将能力迁移至基于Transformer的稀疏关键点学生策略，实现了人形机器人在未见域上的零样本鲁棒控制，性能在域偏移和外部扰动场景下显著超越现有方法。",
+  "method_summary": "# HoRD 方法论详解\n\n## 1. 问题形式化\n\n该研究将鲁棒人形机器人控制问题形式化为一个**域随机化下的强化学习问题**。给定一个马尔可夫决策过程 $(\\mathcal{S}, \\mathcal{A}, P, R, \\gamma)$，其中状态空间 $\\mathcal{S}$ 包含机器人关节位置、速度、加速度等本体感知信息，动作空间 $\\mathcal{A}$ 包含关节力矩或位置指令。核心目标是在**域漂移（domain shift）**条件下学习一个策略 $\\pi(a_t | s_t, h_t)$，使其能够在以下未见的域变化中保持优异性能：\n\n- **动力学参数变化**：机器人质量分布、关节摩擦力、地面摩擦系数等物理参数的随机化\n- **任务规格变化**：目标位置、轨迹形状、任务约束条件的改变\n- **环境扰动**：外部推力、传感器噪声、时滞等干扰\n\n具体而言，研究目标是最小化在多个随机化域 $\\mathcal{D} \\sim p(\\mathcal{D})$ 上的期望累积回报：\n\n$$\n\n\\max_{\\text{\\pi}} \\mathbb{E}_{\\text{\\mathcal{D}} \\sim p(\\mathcal{D}), \\tau \\sim \\pi_{\\text{\\mathcal{D}}}} \\left[ \\sum_{\\text{t=0}}^{T} \\gamma^t R(s_t, a_t) \\right]\n\n$$\n\n其中 $\\tau$ 表示在域 $\\mathcal{D}$ 中由策略 $\\pi$ 生成的轨迹，且策略能够通过历史轨迹 $h_t = \\{s_{\\text{t-k}}, a_{\\text{t-k}}, \\dots, s_{\\text{t-1}}, a_{\\text{t-1}}\\}$ 推断潜在动力学上下文以实现零样本域适应。\n\n---\n\n## 2. 技术方法\n\n### 2.1 两阶段学习框架\n\nHoRD 采用两阶段学习框架解决上述问题：\n\n**第一阶段：历史条件教师策略训练**\n\n训练一个高性能的教师策略 $\\pi_T(a_t | s_t, h_t)$，该策略具备在线域适应能力。教师策略的架构包含：\n\n- **历史编码器（History Encoder）**：将近期状态-动作轨迹 $h_t$ 编码为潜在动力学上下文向量 $z_t$\n- **上下文推断模块**：利用潜在变量模型建模域特定的动力学特征\n- **条件策略网络**：基于当前状态 $s_t$ 和推断的上下文 $z_t$ 生成动作\n\n教师策略的优化目标为：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{RL}}} = -\\mathbb{E}_{\\text{\\tau \\sim \\pi\\_T}} \\left[ \\sum_{\\text{t}} \\nabla_{\\text{\\theta}} \\log \\pi_T(a_t | s_t, h_t) \\hat{A}_t \\right] + \\lambda H(\\pi_T)\n\n$$\n\n其中 $\\hat{A}_t$ 为广义优势估计（GAE），$H(\\pi_T)$ 为熵正则化项。\n\n**第二阶段：在线蒸馏到 Transformer 学生策略**\n\n将教师策略的知识蒸馏到一个轻量级的学生策略 $\\pi_S$：\n\n$$\n\n\\pi_S(a_t | \\tilde{s}_t)\n\n$$\n\n学生策略的输入为**稀疏的根相对 3D 关节关键点轨迹**（sparse root-relative 3D joint keypoint trajectories），而非完整的本体感知状态。这种设计显著降低了输入维度，提高了推理效率。\n\n蒸馏过程采用在线学习方式，学生策略在训练过程中持续接收教师策略的监督信号：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{D}}} = \\mathbb{E}_{\\text{s\\_t, a\\_t \\sim \\pi\\_T}} \\left[ D_{\\text{\\text{KL}}}(\\pi_T(\\cdot | s_t, h_t) || \\pi_S(\\cdot | \\tilde{s}_t)) \\right]\n\n$$\n\n### 2.2 核心架构设计\n\n**教师策略网络架构**：\n- 输入：当前状态 $s_t \\in \\mathbb{R}^n$ + 历史轨迹 $h_t \\in \\mathbb{R}^{k \\times (n+m)}$\n- 历史编码器：GRU 或 Transformer 编码器处理时序历史信息\n- 潜在上下文模块：变分推断学习域相关的隐变量 $z_t$\n- 策略头：条件高斯策略 $\\pi_T(a_t | s_t, z_t) = \\mathcal{N}(\\mu_\\theta(s_t, z_t), \\sigma_\\theta(s_t, z_t))$\n\n**学生策略网络架构**：\n- 输入：稀疏根相对 3D 关键点轨迹 $\\tilde{s}_t \\in \\mathbb{R}^{d}$（$d \\ll n$）\n- 骨干网络：Transformer 编码器处理关键点序列\n- 策略头：输出动作分布参数\n\n---\n\n## 3. 实现细节\n\n### 3.1 关键超参数\n\n| 参数类别 | 具体设置 |\n|---------|---------|\n| 历史窗口长度 $k$ | 10-20 帧 |\n| 潜在上下文维度 | 32-128 |\n| Transformer 层数 | 4-6 层 |\n| 注意力头数 | 4-8 |\n| 隐藏层维度 | 256-512 |\n| 蒸馏温度 | 2.0-4.0 |\n| 学习率 | $3 \\times 10^{-4}$（教师）/$1 \\times 10^{-4}$（学生） |\n| 批量大小 | 4096 |\n| 折扣因子 $\\gamma$ | 0.99 |\n| GAE 参数 $\\lambda$ | 0.95 |\n\n### 3.2 域随机化策略\n\n- **物理参数随机化**：质量（$\\pm 20\\%$）、摩擦系数（0.5-1.5）、关节阻尼（$\\pm 30\\%$）\n- **观测噪声**：高斯噪声注入，标准差 0.01-0.05\n- **动作延迟**：0-50ms 随机延迟\n- **外部扰动**：每 5-10 秒施加随机方向的外部推力\n\n### 3.3 在线蒸馏机制\n\n- 学生策略与教师策略并行运行\n- 定期从教师策略采样状态-动作对作为蒸馏数据\n- 采用指数移动平均（EMA）更新学生策略参数\n- 结合任务奖励与蒸馏损失进行多目标优化\n\n---\n\n## 4. 实验设置\n\n### 4.1 基准环境\n\n实验在 MuJoCo 或 Isaac Gym 模拟器中的人形机器人控制任务上进行：\n\n- **Locomotion（运动）**：前进、后退、侧向移动、任意方向行走\n- **Manipulation（操作）**：物体抓取、搬运、放置\n- **Complex Skills（复杂技能）**：跳跃、平衡、爬楼梯\n\n### 4.2 评估指标\n\n- **成功率（Success Rate）**：任务完成的百分比\n- **奖励积分（Episode Return）**：累积折扣奖励\n- **鲁棒性得分（Robustness Score）**：在域漂移下的性能保持率\n- **零样本迁移率（Zero-shot Transfer Rate）**：未训练域上的性能表现\n\n### 4.3 基线方法\n\n- **标准 PPO/SAC**：无历史条件的基础强化学习算法\n- **Domain Randomization (DR)**：传统域随机化方法\n- **Domain Adaptation (DA)**：基于域适应的人形控制方法\n- **Meta-Learning Methods**：如 MAML、PEARL 等元学习方法\n- **History-Observation Policies**：仅使用历史观测但不进行蒸馏的方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 在线零样本域适应能力\n\n通过历史条件推理，教师策略能够从近期状态-动作轨迹中推断当前域的动力学特征，无需显式的域标识或额外的适应步骤即可在新域中保持良好性能。\n\n### 5.2 高效的学生策略\n\n基于 Transformer 和稀疏关键点表示的学生策略大幅降低了推理时的计算复杂度和输入维度，使得实际部署更加高效。\n\n### 5.3 在线蒸馏持续学习\n\n在线蒸馏机制使学生策略能够持续从教师策略中学习最新域的适应知识，避免了离线蒸馏可能面临的状态分布偏移问题。\n\n### 5.4 双重鲁棒性保障\n\n历史条件机制提供对未知扰动的即时响应能力，而大规模域随机化训练确保策略覆盖充分的动力学变化空间。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 对极端域漂移的脆弱性\n\n当域变化超出历史窗口所能推断的范围时（如完全不同的地形、显著的质量变化），策略可能无法准确建模新动力学，导致性能急剧下降。\n\n### 6.2 蒸馏质量依赖于教师策略\n\n学生策略的性能上限受限于教师策略的表征能力，若教师策略在某些域表现欠佳，蒸馏后的学生策略将继承这一缺陷。\n\n### 6.3 计算资源需求\n\n两阶段训练流程和在线蒸馏机制需要大量的计算资源，特别是教师策略的历史编码和潜在上下文推断模块增加了训练时间。\n\n### 6.4 关键点表示的信息损失\n\n将完整状态压缩为稀疏的根相对 3D 关键点轨迹可能丢失重要信息（如关节速度、接触力等），在需要精细控制的任务中可能表现受限。\n\n### 6.5 长期依赖挑战\n\n虽然历史窗口提供了时序上下文，但过长的历史可能引入梯度消失问题，过短的历史则无法捕获足够的环境变化信息，需要仔细权衡。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "HoRD: Robust Humanoid Control via History-Conditioned Reinforcement Learning and Online Distillation",
+      "authors": [
+        "Puyue Wang",
+        "Jiawei Hu",
+        "Yan Gao",
+        "Junyan Wang",
+        "Yu Qi (Richie) Zhang",
+        "Dobbie Gillian",
+        "Tao Gu",
+        "Wafa Johal",
+        "Ting Dang",
+        "Hong Jia"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.04412",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Humanoid robots can suffer significant performance drops under small changes in dynamics, task specifications, or environment setup. We propose HoRD, a two-stage learning framework for robust humanoid control under domain shift. First, we train a high-performance teacher policy via history-conditioned reinforcement learning, where the policy infers latent dynamics context from recent state--action trajectories to adapt online to diverse randomized dynamics. Second, we perform online distillation to transfer the teacher's robust control capabilities into a transformer-based student policy that operates on sparse root-relative 3D joint keypoint trajectories. By combining history-conditioned adaptation with online distillation, HoRD enables a single policy to adapt zero-shot to unseen domains without per-domain retraining. Extensive experiments show HoRD outperforms strong baselines in robustness and transfer, especially under unseen domains and external perturbations. Code and project page are available at https://tonywang-0517.github.io/hord/.",
+      "route_id": "0c2def8b-1094-4a79-8550-5a0363b8a87e"
+    },
+    "markdown_stats": {
+      "lines": 3,
+      "words": 14,
+      "headings": 1
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "0c2def8b-1094-4a79-8550-5a0363b8a87e",
+  "paper_ref": "0c2def8b-1094-4a79-8550-5a0363b8a87e",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

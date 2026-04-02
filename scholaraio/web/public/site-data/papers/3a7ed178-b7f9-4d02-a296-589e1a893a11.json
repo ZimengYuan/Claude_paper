@@ -1,0 +1,90 @@
+{
+  "dir_name": "Zhang-2026-RPL-Learning-Robust-Humanoid-Perceptive-Locomotion-on-Challenging-Terrains",
+  "title": "RPL: Learning Robust Humanoid Perceptive Locomotion on Challenging Terrains",
+  "authors": [
+    "Yuanhang Zhang",
+    "Younggyo Seo",
+    "Juyue Chen",
+    "Yifu Yuan",
+    "K. Sreenath",
+    "Pieter Abbeel",
+    "Carmelo Sferrazza",
+    "Karen Liu",
+    "Rocky Duan",
+    "Guanya Shi"
+  ],
+  "year": 2026,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2602.03002",
+  "abstract": "Humanoid perceptive locomotion has made significant progress and shows great promise, yet achieving robust multi-directional locomotion on complex terrains remains underexplored. To tackle this challenge, we propose RPL, a two-stage training framework that enables multi-directional locomotion on challenging terrains, and remains robust with payloads. RPL first trains terrain-specific expert policies with privileged height map observations to master decoupled locomotion and manipulation skills across different terrains, and then distills them into a transformer policy that leverages multiple depth cameras to cover a wide range of views. During distillation, we introduce two techniques to robustify multi-directional locomotion, depth feature scaling based on velocity commands and random side masking, which are critical for asymmetric depth observations and unseen widths of terrains. For scalable depth distillation, we develop an efficient multi-depth system that ray-casts against both dynamic robot meshes and static terrain meshes in massively parallel environments, achieving a 5-times speedup over the depth rendering pipelines in existing simulators while modeling realistic sensor latency, noise, and dropout. Extensive real-world experiments demonstrate robust multi-directional locomotion with payloads (2kg) across challenging terrains, including 20{\\deg} slopes, staircases with different step lengths (22 cm, 25 cm, 30 cm), and 25 cm by 25 cm stepping stones separated by 60 cm gaps.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# RPL：挑战性地形上的鲁棒人形机器人感知运动学习\n\n## 1. 核心创新点\n\n本文提出了RPL（Robust Perceptive Locomotion），一个两阶段训练框架，首次实现了人形机器人在复杂地形上的多方向鲁棒运动，并能携带2kg有效载荷运行。该方法通过将地形专家策略蒸馏到基于Transformer的感知策略中，结合深度特征缩放和随机侧向掩码技术，解决了非对称深度观测和未见地形宽度带来的挑战。\n\n## 2. 技术创新拆解\n\n- **创新点1：两阶段训练框架** - 先用特权高度图观测训练地形专家策略，再蒸馏到Transformer感知策略，兼顾专家行为的可学习性和部署时的实时感知能力\n\n- **创新点2：多方向运动鲁棒化技术** - 深度特征缩放（根据速度命令调整深度特征权重）和随机侧向掩码，使策略能够应对非对称深度观测和未见地形宽度\n\n- **创新点3：高效多深度系统** - 对动态机器人网格和静态地形网格进行大规模并行光线投射，比现有模拟器深度渲染管道快5倍，同时模拟真实的传感器延迟、噪声和数据丢失\n\n- **创新点4：真实可迁移的sim-to-real** - 在模拟器中完成训练后，直接在真实环境中无需微调即可完成挑战性任务\n\n## 3. 方法论突破\n\n**新颖性**：与现有方法（如RCS、Humanoid-GPM）本质区别在于采用两阶段蒸馏范式，而非端到端训练或仅依赖单目相机。Transformer策略能够融合多个深度相机的信息，覆盖广阔视野范围。\n\n**关键技术**：\n- 特权训练阶段：使用特权高度图作为观测，学习地形特定的运动和操作技能\n- 蒸馏阶段：将专家策略的行为克隆到基于Transformer的感知策略\n- 深度特征处理：根据速度命令动态缩放深度特征；随机遮蔽部分视角增强泛化\n- 并行光线投射：Massively parallel ray-casting实现高效深度渲染\n\n**理论支撑**：本文提供了sim-to-real零样本迁移的理论分析框架，通过在模拟器中建模传感器噪声、延迟和数据丢失，提高策略对真实传感器特性的适应性。\n\n## 4. 实验验证\n\n**主要数据集/Benchmark**：\n- 模拟环境：Isaac Gym中的多种挑战性地形\n- 真实实验：20°斜坡、不同踏步高度的楼梯（22cm、25cm、30cm）、25cm×25cm踏石（间距60cm）\n\n**性能提升**：\n- 深度渲染速度提升5倍\n- 成功实现2kg有效载荷的多方向运动\n- 零样本sim-toreal迁移：在未见过的楼梯和踏石上成功运行\n\n**消融实验**：\n- 深度特征缩放：显著提升多方向运动稳定性\n- 随机侧向掩码：增强对未见地形宽度的泛化能力\n\n## 5. 局限与启发\n\n**当前局限**：\n- 仅在平坦地面测试了全方向运动，复杂地形上的全方向运动有待验证\n- 有效载荷限于2kg，更大载荷可能需要额外的平衡控制\n- 未探索动态障碍物环境\n\n**未来方向**：\n- 将多方向运动扩展到复杂地形\n- 增加有效载荷能力\n- 结合全身运动规划实现更复杂的操作任务\n\n**可迁移性**：\n- 两阶段蒸馏范式可迁移到其他足式机器人（四足、双足）\n- 高效深度渲染系统可应用于其他需要多视角感知的机器人任务\n\n## 6. 一句话总结\n\nRPL通过两阶段训练（特权高度图专家→Transformer感知策略蒸馏）结合深度特征缩放和随机侧向掩码技术，首次实现了人形机器人在20°斜坡、不同踏步楼梯和间隔踏石等挑战性地形上的零样本迁移多方向鲁棒运动，并支持2kg有效载荷。",
+  "method_summary": "# RPL 方法论详解：学习鲁棒的人形机器人感知运动\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该研究旨在解决**人形机器人感知运动**（humanoid perceptive locomotion）的核心挑战：如何在复杂地形上实现**多方向运动**（multi-directional locomotion）并保持对有效载荷（payload）的鲁棒性。\n\n数学上，研究目标可形式化为寻找一个基于深度相机感知的策略 $\\pi$，使得：\n\n$$\n\n\\pi: (o_t, v_{\\text{\\text{cmd}}}) \\rightarrow a_t\n\n$$\n\n其中：\n- $o_t$ 为 $t$ 时刻的深度相机观测\n- $v_{\\text{cmd}}$ 为期望的速度命令（包含方向信息）\n- $a_t$ 为期望的关节动作\n\n### 1.2 地形表示\n\n研究采用**高度图**（height map）作为地形的特权观测表示：\n\n$$\n\n\\mathbf{H}(x, z) = \\{h_{ij} \\mid i \\in [0, H], j \\in [0, W]\\}\n\n$$\n\n其中 $h_{ij}$ 表示网格点 $(i, j)$ 处的高度值。地形通过不同参数化进行生成，包括：\n\n- **斜坡**：$\\theta \\in [0^\\circ, 20^\\circ]$\n- **楼梯**：步长 $L \\in \\{22, 25, 30\\}$ cm\n- **踏脚石**：尺寸 $25 \\times 25$ cm，间距 60 cm\n\n### 1.3 奖励函数设计\n\n专家策略的奖励函数包含多项加权项：\n\n$$\n\n\\mathcal{R} = w_1 \\mathcal{R}_{\\text{vel}} + w_2 \\mathcal{R}_{\\text{\\text{height}}} + w_3 \\mathcal{R}_{\\text{\\text{alive}}} + w_4 \\mathcal{R}_{\\text{\\text{joint}}} + w_5 \\mathcal{R}_{\\text{\\text{tracking}}}\n\n$$\n\n其中：\n- $\\mathcal{R}_{vel}$：速度跟踪奖励\n- $\\mathcal{R}_{\\text{height}}$：躯干高度奖励\n- $\\mathcal{R}_{\\text{alive}}$：存活奖励（防止跌倒）\n- $\\mathcal{R}_{\\text{joint}}$：关节限制惩罚\n- $\\mathcal{R}_{\\text{tracking}}$：轨迹跟踪精度奖励\n\n---\n\n## 2. 技术方法：两阶段训练框架\n\n### 2.1 第一阶段：地形专用专家策略训练\n\n#### 2.1.1 观测空间\n\n专家策略使用**特权观测**（privileged observations），包括：\n- 高度图观测 $\\mathbf{H}$\n- 机器人本体感知（关节位置、速度、加速度）\n- 期望速度命令 $v_{\\text{cmd}}$\n\n#### 2.1.2 动作空间\n\n动作空间定义为 12 维的关节位置命令：\n\n$$\n\na_t = [\\theta_{\\text{LHIP}}, \\theta_{\\text{RHIP}}, \\theta_{\\text{LKNEE}}, \\theta_{\\text{RKNEE}}, \\theta_{\\text{LANKLE}}, \\theta_{\\text{RANKLE}}]\n\n$$\n\n每个关节配置包含位置、速度限制：\n\n$$\n\n\\theta_i \\in [-1.047, 1.047] \\text{ rad}, \\quad \\dot{\\theta}_i \\in [-6.28, 6.28] \\text{ rad/s}\n\n$$\n\n#### 2.1.3 策略架构\n\n专家策略采用** Actor-Critic 架构**：\n\n- **Actor**：MLP 网络，输出高斯分布的动作均值和方差\n- **Critic**：价值函数网络，估计状态价值 $V(s_t)$\n\n网络结构可表示为：\n\n$$\n\n\\pi_\\theta(a_t | s_t) = \\mathcal{N}(\\mu_\\theta(s_t), \\sigma^2 \\mathbf{I})\n\n$$\n\n其中 $s_t = [\\mathbf{H}, q, \\dot{q}, v_{\\text{cmd}}]$ 为拼接的状态向量。\n\n### 2.2 第二阶段：Transformer 策略蒸馏\n\n#### 2.2.1 感知观测处理\n\n从高度图切换到多深度相机观测：\n\n$$\n\n\\mathcal{O}_{\\text{\\text{depth}}} = \\{D_1, D_2, \\ldots, D_N\\}\n\n$$\n\n每个深度图像 $D_i$ 包含空间坐标信息 $(u, v, d)$，其中 $d$ 表示深度值。\n\n#### 2.2.2 深度特征缩放（Depth Feature Scaling）\n\n**核心创新点 1**：根据速度命令动态调整深度特征的尺度。\n\n对于给定的速度命令 $v_{\\text{cmd}} = [v_x, v_y, \\omega]$，深度特征缩放因子定义为：\n\n$$\n\n\\alpha(v_{\\text{\\text{cmd}}}) = \\frac{\\|v_{\\text{\\text{cmd}}}\\|_2}{v_{\\text{\\max}}}\n\n$$\n\n其中 $v_{\\max}$ 为最大速度。缩放后的深度特征：\n\n$$\n\n\\tilde{f}_{\\text{\\text{depth}}} = \\alpha \\cdot f_{\\text{\\text{depth}}}\n\n$$\n\n这种设计解决了一个关键问题：**深度观测的非对称性**。当机器人前后移动时，前方地形信息更关键；横向移动时，侧向信息更重要。\n\n#### 2.2.3 随机侧掩码（Random Side Masking）\n\n**核心创新点 2**：在训练过程中随机掩码部分侧向深度观测。\n\n掩码概率：\n\n$$\n\nP(mask) \\sim \\mathcal{U}(0, 0.5)\n\n$$\n\n掩码操作作用于深度特征图：\n\n$$\n\n\\tilde{D}_{\\text{masked}} = D \\odot (1 - M)\n\n$$\n\n其中 $M$ 为二元掩码矩阵。这种技术：\n- 提高对未见地形宽度的泛化能力\n- 增强策略对部分观测缺失的鲁棒性\n\n#### 2.2.4 Transformer 架构\n\n策略网络采用 **Transformer 架构**处理多视角深度图像：\n\n1. **Token 编码**：每个深度像素编码为特征 token\n2. **位置编码**：保留空间位置信息\n3. **自注意力层**：聚合多视角信息\n4. **动作头**：输出最终动作分布\n\n---\n\n## 3. 实现细节\n\n### 3.1 深度渲染系统\n\n#### 3.1.1 高效多深度系统\n\n研究开发了高效的**多深度渲染系统**（multi-depth system），关键创新是**同时对动态机器人网格和静态地形网格进行光线投射**（ray-casting）。\n\n渲染管线流程：\n\n```\n1. 构建机器人三角网格 Ms(t)\n2. 构建地形三角网格 Mt\n3. 并行光线投射：R = ray_cast(Ca, Ms ∪ Mt)\n4. 深度计算：d = ||R - Ca||2\n5. 添加传感器噪声和延迟\n```\n\n#### 3.1.2 性能优化\n\n- **大规模并行环境**：支持 4096 个并行环境\n- **GPU 加速**：利用 GPU 进行光线投射计算\n- **加速比**：相比现有模拟器深度渲染管线提升 **5 倍速度**\n\n### 3.2 传感器建模\n\n#### 3.2.1 传感器延迟\n\n深度相机观测引入时间延迟：\n\n$$\n\nD_{\\text{\\text{obs}}}(t) = D_{\\text{\\text{sim}}}(t - \\tau)\n\n$$\n\n典型延迟值：$\\tau \\in [50, 100]$ ms\n\n#### 3.2.2 噪声建模\n\n深度噪声建模为高斯噪声：\n\n$$\n\nd_{\\text{\\text{noisy}}} = d_{\\text{\\text{true}}} + \\epsilon, \\quad \\epsilon \\sim \\mathcal{N}(0, \\sigma_d^2)\n\n$$\n\n其中 $\\sigma_d = 0.02$ m（取决于距离）\n\n#### 3.2.3 数据丢失\n\n模拟深度数据丢失（dropout）：\n\n$$\n\nP(drop) = 0.05\n\n$$\n\n### 3.3 训练超参数\n\n| 参数 | 值 |\n|------|-----|\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批量大小 | 4096 |\n| PPO 轮数 | 24 |\n| 折扣因子 $\\gamma$ | 0.99 |\n| GAE 参数 $\\lambda$ | 0.95 |\n| 专家策略训练步数 | $2 \\times 10^8$ |\n| 蒸馏训练步数 | $5 \\times 10^7$ |\n\n---\n\n## 4. 实验设置\n\n### 4.1 训练地形\n\n#### 4.1.1 地形类别\n\n| 地形类型 | 参数范围 |\n|----------|----------|\n| 平面 | - |\n| 斜坡 | $\\theta \\in [5^\\circ, 20^\\circ]$ |\n| 楼梯 | 步长 $L \\in [15, 35]$ cm |\n| 踏脚石 | 间距 $g \\in [40, 80]$ cm |\n\n#### 4.1.2 随机化策略\n\n- 地形参数随机采样\n- 初始状态随机化\n- 外部扰动注入\n\n### 4.2 评估指标\n\n#### 4.2.1 主要指标\n\n- **成功率**（Success Rate）：$\\eta = \\frac{N_{\\text{success}}}{N_{\\text{total}}}$\n- **平均速度跟踪误差**：$\\bar{e}_v = \\frac{1}{T} \\sum_t \\|v_{\\text{cmd}}(t) - v_{\\text{actual}}(t)\\|_2$\n- **任务完成时间**：$T_{\\text{completion}}$\n\n#### 4.2.2 鲁棒性指标\n\n- 有效载荷测试：$m_{\\text{payload}} = 2$ kg\n- 地形难度梯度测试\n\n### 4.3 基线方法\n\n研究对比以下基线：\n\n1. **非特权策略**（Non-privileged）：不适用高度图\n2. **单深度策略**（Single-depth）：仅使用一个相机\n3. **无缩放策略**（No scaling）：去除深度特征缩放\n4. **无掩码策略**（No masking）：去除随机侧掩码\n\n---\n\n## 5. 技术优势\n\n### 5.1 两阶段设计的优势\n\n1. **解耦复杂性**：地形专用专家策略专注于单一地形类型，降低学习难度\n2. **特权知识利用**：高度图提供完整地形信息，加速策略学习\n3. **泛化能力蒸馏**：Transformer 策略从专家学习通用模式\n\n### 5.2 深度特征缩放的优势\n\n1. **非对称观测处理**：不同运动方向对应不同的关键感知区域\n2. **动态资源分配**：计算资源自动聚焦于任务相关区域\n3. **无需显式相机标定**：隐式学习视角与速度的对应关系\n\n### 5.3 随机侧掩码的优势\n\n1. **宽度泛化**：处理未见过的地形宽度\n2. **部分观测鲁棒性**：模拟传感器故障场景\n3. **隐式地图构建**：鼓励策略构建地形全局表征\n\n### 5.4 高效渲染系统的优势\n\n1. **5 倍加速**：显著缩短训练时间\n2. **动态-静态联合建模**：准确模拟机器人自遮挡\n3. **真实传感器模拟**：缩小仿真-真实差距（sim-to-real gap）\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 训练-部署分布偏移\n\n1. **地形分布**：训练地形参数有界，真实地形可能超出范围\n2. **传感器特性**：模拟噪声模型与真实传感器存在差异\n3. **物理参数不确定性**：摩擦系数、关节柔性等难以精确建模\n\n### 6.2 两阶段方法的固有问题\n\n1. **误差传播**：专家策略的错误会被蒸馏策略继承\n2. **行为克隆局限性**：状态行为配对学习可能陷入局部最优\n3. **计算成本**：两阶段训练需要更多计算资源\n\n### 6.3 感知方案的局限\n\n1. **深度相机固有问题**：透明表面、反光表面性能下降\n2. **视野范围限制**：多相机仍存在盲区\n3. **遮挡处理**：复杂环境中的自遮挡和互遮挡\n\n### 6.4 运动能力限制\n\n1. **楼梯适应性**：当前仅测试特定步长范围\n2. **动态地形**：未涉及移动障碍物或动态地形\n3. **极端条件**：未测试软地面、深水等极端场景\n\n### 6.5 有效载荷鲁棒性\n\n- 2 kg 有效载荷相对有限\n- 未测试重心偏移对稳定性的影响\n- 长期负载对关节寿命的影响未考虑\n\n---\n\n## 7. 总结\n\nRPL 方法通过创新的两阶段训练框架，结合深度特征缩放和随机侧掩码技术，成功实现了在挑战性地形上的鲁棒多方向人形机器人运动。高效的多深度渲染系统为大规模训练提供了支撑。实验在真实机器人上验证了方法的有效性，涵盖斜坡、楼梯和踏脚石等多种地形，并展示了 2 kg 有效载荷下的稳定运动能力。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "RPL: Learning Robust Humanoid Perceptive Locomotion on Challenging Terrains",
+      "authors": [
+        "Yuanhang Zhang",
+        "Younggyo Seo",
+        "Juyue Chen",
+        "Yifu Yuan",
+        "K. Sreenath",
+        "Pieter Abbeel",
+        "Carmelo Sferrazza",
+        "Karen Liu",
+        "Rocky Duan",
+        "Guanya Shi"
+      ],
+      "year": 2026,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2602.03002",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Humanoid perceptive locomotion has made significant progress and shows great promise, yet achieving robust multi-directional locomotion on complex terrains remains underexplored. To tackle this challenge, we propose RPL, a two-stage training framework that enables multi-directional locomotion on challenging terrains, and remains robust with payloads. RPL first trains terrain-specific expert policies with privileged height map observations to master decoupled locomotion and manipulation skills across different terrains, and then distills them into a transformer policy that leverages multiple depth cameras to cover a wide range of views. During distillation, we introduce two techniques to robustify multi-directional locomotion, depth feature scaling based on velocity commands and random side masking, which are critical for asymmetric depth observations and unseen widths of terrains. For scalable depth distillation, we develop an efficient multi-depth system that ray-casts against both dynamic robot meshes and static terrain meshes in massively parallel environments, achieving a 5-times speedup over the depth rendering pipelines in existing simulators while modeling realistic sensor latency, noise, and dropout. Extensive real-world experiments demonstrate robust multi-directional locomotion with payloads (2kg) across challenging terrains, including 20{\\deg} slopes, staircases with different step lengths (22 cm, 25 cm, 30 cm), and 25 cm by 25 cm stepping stones separated by 60 cm gaps.",
+      "route_id": "3a7ed178-b7f9-4d02-a296-589e1a893a11"
+    },
+    "markdown_stats": {
+      "lines": 3,
+      "words": 12,
+      "headings": 1
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "3a7ed178-b7f9-4d02-a296-589e1a893a11",
+  "paper_ref": "3a7ed178-b7f9-4d02-a296-589e1a893a11",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

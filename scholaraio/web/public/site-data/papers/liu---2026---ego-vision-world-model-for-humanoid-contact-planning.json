@@ -1,0 +1,81 @@
+{
+  "dir_name": "Liu-None-Ego-Vision-World-Model-for-Humanoid-Contact-Planni",
+  "title": "Ego-Vision World Model for Humanoid Contact Planning",
+  "authors": [
+    "Hang Liu",
+    "Yuman Gao",
+    "Sangli Teng",
+    "Yufeng Chi",
+    "Yakun Sophia Shao",
+    "Zhongyu Li",
+    "Maani Ghaffari",
+    "Koushil Sreenath"
+  ],
+  "year": null,
+  "journal": "",
+  "doi": "",
+  "abstract": "",
+  "paper_type": "",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Ego-Vision World Model for Humanoid Contact Planning",
+      "authors": [
+        "Hang Liu",
+        "Yuman Gao",
+        "Sangli Teng",
+        "Yufeng Chi",
+        "Yakun Sophia Shao",
+        "Zhongyu Li",
+        "Maani Ghaffari",
+        "Koushil Sreenath"
+      ]
+    },
+    "markdown_stats": {
+      "lines": 303,
+      "words": 8470,
+      "headings": 20
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "016376ab-5039-423b-ae47-0b3c2bf27406_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "liu---2026---ego-vision-world-model-for-humanoid-contact-planning",
+  "paper_ref": "Liu 等 - 2026 - Ego-Vision World Model for Humanoid Contact Planning",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

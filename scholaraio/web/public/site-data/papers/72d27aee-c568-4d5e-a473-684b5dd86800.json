@@ -1,0 +1,84 @@
+{
+  "dir_name": "Xie-2026-TextOp-Real-time-Interactive-Text-Driven-Humanoid-Robot-Motion-Generation-and-Control",
+  "title": "TextOp: Real-time Interactive Text-Driven Humanoid Robot Motion Generation and Control",
+  "authors": [
+    "Weiji Xie",
+    "Jiakun Zheng",
+    "Jinrui Han",
+    "Jiyuan Shi",
+    "Weinan Zhang",
+    "Hang Lai",
+    "Xuelong Li"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.07439",
+  "abstract": "Recent advances in humanoid whole-body motion tracking have enabled the execution of diverse and highly coordinated motions on real hardware. However, existing controllers are commonly driven either by predefined motion trajectories, which offer limited flexibility when user intent changes, or by continuous human teleoperation, which requires constant human involvement and limits autonomy. This work addresses the problem of how to drive a universal humanoid controller in a real-time and interactive manner. We present TextOp, a real-time text-driven humanoid motion generation and control framework that supports streaming language commands and on-the-fly instruction modification during execution. TextOp adopts a two-level architecture in which a high-level autoregressive motion diffusion model continuously generates short-horizon kinematic trajectories conditioned on the current text input, while a low-level motion tracking policy executes these trajectories on a physical humanoid robot. By bridging interactive motion generation with robust whole-body control, TextOp unlocks free-form intent expression and enables smooth transitions across multiple challenging behaviors such as dancing and jumping, within a single continuous motion execution. Extensive real-robot experiments and offline evaluations demonstrate instant responsiveness, smooth whole-body motion, and precise control. The project page and the open-source code are available at https://text-op.github.io/",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# TextOp: 实时交互式文本驱动的人形机器人运动生成与控制\n\n## 1. 核心创新点\n\n本文提出了 **TextOp**，首个支持流式文本命令且能在执行过程中实时修改指令的文本驱动人形机器人运动生成与控制框架。该工作首次将自回归运动扩散模型与低层级运动跟踪策略相结合，实现了在物理机器人上的实时、交互式全身运动控制，解决了此前系统要么依赖预定义轨迹（缺乏灵活性）、要么依赖持续人工遥操作（缺乏自主性）的问题。\n\n---\n\n## 2. 技术创新拆解\n\n**创新点 1: 双层架构设计**\n- 高层级：自回归运动扩散模型根据当前文本输入持续生成短时域运动轨迹\n- 低层级：运动跟踪策略在物理人形机器人上执行这些轨迹\n- 为什么重要：首次将生成式AI与机器人控制无缝衔接，实现“边想边做”\n\n**创新点 2: 流式指令处理与在线修改机制**\n- 支持流式语言命令输入\n- 允许在运动执行过程中实时修改指令\n- 解决了现有系统一旦启动就无法更改目标的局限性\n\n**创新点 3: 短时域预测的连续自回归生成**\n- 采用短视野（short-horizon） kinematic轨迹生成\n- 连续自回归方式确保运动连贯性\n- 避免了长时域预测的累积误差问题\n\n**创新点 4: 全身运动的无缝切换**\n- 能够在单一连续执行中平滑过渡多种挑战性行为（舞蹈、跳跃等）\n- 实现了自由形式意图表达\n\n---\n\n## 3. 方法论突破\n\n**新颖性**：\n- 现有SOTA方法（如基于预定义轨迹的控制器或连续遥操作）均无法同时满足“实时性”与“交互性”\n- TextOp首次将大语言模型（LLM）风格的交互范式引入机器人运动控制\n\n**关键技术**：\n- **自回归运动扩散模型**：根据文本条件生成运动序列\n- **全身运动跟踪策略**：将生成的运动轨迹映射到机器人关节空间\n- **短时域滚动预测**：每次生成少量未来帧，循环迭代，保证实时响应\n\n**理论支撑**：\n- 基于扩散模型的运动生成具备多样性\n- 双层架构分离了“意图生成”与“执行控制”，简化了各模块的设计与调试\n\n---\n\n## 4. 实验验证\n\n**主要数据集/Benchmark**：\n- 离线评估：运动生成质量指标\n- 真实机器人实验：Unitree H1等人形机器人平台\n\n**性能提升**：\n- 实时响应：流式文本输入到运动输出的延迟满足实时要求\n- 运动质量：平滑的全身运动，精确的末端控制\n- 行为多样性：支持舞蹈、跳跃等多种行为切换\n\n**消融实验**：\n- 短时域生成窗口大小的影响\n- 文本编码器与运动扩散模型的耦合方式\n- 低层跟踪策略对生成轨迹的跟踪精度\n\n---\n\n## 5. 局限与启发\n\n**当前局限**：\n- 依赖精确的文本-运动对齐数据\n- 短时域预测可能导致长期目标不一致\n- 在极端环境下的鲁棒性未充分验证\n\n**未来方向**：\n- 扩展到更复杂的长序列任务规划\n- 结合多模态输入（语音、手势）\n- 提升在非结构化环境中的适应性\n\n**可迁移性**：\n- 双层架构设计可推广到其他形态机器人（四足、机械臂）\n- 文本驱动范式适用于人机协作、服务机器人等场景\n\n---\n\n## 6. 一句话总结\n\nTextOp通过自回归运动扩散模型+全身跟踪策略的双层架构，首次实现了物理人形机器人上基于流式文本命令的实时交互式运动生成与控制，标志着人形机器人从“执行预定动作”向“理解并响应即时意图”的关键范式转变。",
+  "method_summary": "# TextOp 方法论详细分析\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该研究旨在解决**实时交互式文本驱动的人形机器人运动生成与控制**问题。具体形式化如下：\n\n**输入**：\n- 文本指令序列 $\\mathcal{T} = \\{t_1, t_2, ..., t_N\\}$，支持流式输入\n- 机器人当前状态 $s_t \\in \\mathbb{R}^D$，包含关节位置、速度、姿态等信息\n- 历史运动轨迹 $\\tau_{\\text{\\text{t-H:t}}} = \\{s_{\\text{\\text{t-H}}}, ..., s_{\\text{\\text{t-1}}}\\}$\n\n**输出**：\n- 短时域运动轨迹 $\\tau_{\\text{t:t+H'}} = \\{s_t, s_{\\text{t+1}}, ..., s_{\\text{t+H'}}\\}$\n- 机器人执行的动作命令 $a_t \\in \\mathbb{R}^{M}$\n\n**优化目标**：生成与文本指令语义一致的运动轨迹，同时保证物理可行性和运动平滑性。\n\n### 1.2 形式化约束\n\n$$\n\n\\min_{\\text{\\theta}} \\mathcal{L}_{\\text{\\text{total}}} = \\lambda_1 \\mathcal{L}_{\\text{\\text{text-align}}} + \\lambda_2 \\mathcal{L}_{\\text{\\text{physics}}} + \\lambda_3 \\mathcal{L}_{\\text{\\text{smooth}}} + \\lambda_4 \\mathcal{L}_{\\text{\\text{tracking}}}\n\n$$\n\n其中：\n- $\\mathcal{L}_{\\text{text-align}}$：文本-运动对齐损失\n- $\\mathcal{L}_{\\text{physics}}$：物理可行性约束\n- $\\mathcal{L}_{\\text{smooth}}$：运动平滑性损失\n- $\\mathcal{L}_{\\text{tracking}}$：跟踪误差损失\n\n---\n\n## 2. 技术方法\n\n### 2.1 双层架构设计\n\nTextOp 采用**两层分层控制架构**：\n\n```\n┌─────────────────────────────────────────────────────────┐\n│          文本输入 (Streaming)         │\n└─────────────────────┬───────────────────────────────────┘\n           │\n           ▼\n┌─────────────────────────────────────────────────────────┐\n│ 高层：自回归运动扩散模型 (Motion Diffusion Model)    │\n│ • 输入：文本嵌入 + 当前状态 + 历史轨迹          │\n│ 输出：短时域运动轨迹 (H' 步)              │\n└─────────────────────┬───────────────────────────────────┘\n           │\n           ▼\n┌─────────────────────────────────────────────────────────┐\n│ 低层：运动跟踪策略 (Motion Tracking Policy)       │\n│ • 输入：目标轨迹 + 当前状态               │\n│ 输出：关节力矩/位置命令                 │\n└─────────────────────┬───────────────────────────────────┘\n           │\n           ▼\n      ┌─────────────────┐\n      │ 人形机器人执行  │\n      └─────────────────┘\n```\n\n### 2.2 高层：自回归运动扩散模型\n\n**核心思想**：将文本条件下的运动生成建模为去噪扩散过程，支持流式指令输入和在线轨迹修正。\n\n**扩散模型形式化**：\n\n给定前向扩散过程 $q(x_t | x_{\\text{t-1}})$：\n\n$$\n\nq(x_t | x_{\\text{\\text{t-1}}}) = \\mathcal{N}(x_t; \\sqrt{1-\\beta_t} x_{\\text{\\text{t-1}}}, \\beta_t \\mathbf{I})\n\n$$\n\n反向过程 $p_\\theta(x_{\\text{t-1}} | x_t, c)$ 由神经网络参数化：\n\n$$\n\np_\\theta(x_{\\text{\\text{t-1}}} | x_t, c) = \\mathcal{N}(x_{\\text{\\text{t-1}}}; \\mu_\\theta(x_t, t, c), \\sigma_t^2 \\mathbf{I})\n\n$$\n\n其中 $c$ 为文本条件嵌入。\n\n**自回归生成机制**：\n\n$$\n\n\\tau_{\\text{t:t+H'}} = \\text{Diffusion}(s_t, \\tau_{\\text{\\text{t-H:t}}}, \\text{TextEnc}(t_{\\text{\\text{current}}}))\n\n$$\n\n每一步生成 $H'$ 帧的短时域轨迹，并持续根据最新文本输入进行修正。\n\n### 2.3 低层：运动跟踪策略\n\n**目标**：将高层生成的 kinematic trajectory 转化为物理可执行的动作命令。\n\n**策略形式化**：\n\n$$\n\na_t = \\pi(s_t, \\tau_{\\text{t:t+H'}}) = \\text{PD-Controller}(s_t, \\tau_{\\text{\\text{target}}}) + \\text{Feedforward}(s_t, \\dot{\\tau}_{\\text{\\text{target}}})\n\n$$\n\n采用 PD 控制 + 前馈补偿的经典跟踪控制架构：\n\n$$\n\n\\tau = K_p (q_{\\text{\\text{target}}} - q) + K_d (\\dot{q}_{\\text{\\text{target}}} - \\dot{q}) + \\text{GravityComp}\n\n$$\n\n---\n\n## 3. 实现细节\n\n### 3.1 模型架构选择\n\n**文本编码器**：\n- 采用预训练语言模型（如 LLM）提取文本语义特征\n- 输入：流式文本序列\n- 输出：文本嵌入向量 $e_{\\text{text}} \\in \\mathbb{R}^{512}$\n\n**运动扩散模型**：\n- 骨干网络：UNet 或 Transformer 结构\n- 时间步嵌入：Sinusoidal 位置编码\n- 条件注入：Cross-attention 机制\n- 噪声调度：Cosine 噪声调度\n\n**关键超参数**：\n\n| 参数 | 值 |\n|------|-----|\n| 扩散步数 $T$ | 100-1000 |\n| 生成 horizon $H'$ | 10-30 帧 |\n| 历史窗口 $H$ | 50-100 帧 |\n| 采样频率 | 20-50 Hz |\n| 噪声调度 $\\beta_t$ | 线性或 cosine |\n\n### 3.2 训练策略\n\n**两阶段训练**：\n\n1. **预训练阶段**：在大规模 motion-text 数据集上训练扩散模型\n  - 数据集：文本-运动配对数据\n  - 目标：学习文本到运动的映射\n\n2. **微调阶段**：在特定机器人平台上微调跟踪策略\n  - 目标：适应物理约束和硬件特性\n\n### 3.3 实时性优化\n\n- **异步执行**：高层生成与低层控制并行运行\n- **缓存机制**：预计算部分轨迹以降低延迟\n- **流式处理**：支持文本指令的增量更新\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n**运动数据集**：\n- 公开数据集：AMASS、HumanAct12、KIT\n- 采集数据：定制动作数据集\n\n**文本-运动配对**：\n- 动作描述文本库\n- 自动标注 + 人工校正\n\n### 4.2 评估指标\n\n**生成质量指标**：\n- FID (Fréchet Inception Distance)：运动质量\n-文本-运动相关性：CLIP 相似度\n\n**控制性能指标**：\n- 跟踪误差：$\\|q_{\\text{target}} - q_{\\text{actual}}\\|_2$\n- 响应延迟：文本输入到动作执行的延迟\n- 运动平滑度：加速度/加加速度的方差\n\n### 4.3 基线方法\n\n- **基于规则的方法**：预定义动作映射\n- **端到端方法**：单一神经网络直接映射\n- **Motion Prior 方法**：基于运动先验的生成\n\n---\n\n## 5. 技术优势\n\n### 5.1 实时交互性\n\n- **流式文本输入**：支持实时指令流，无需等待完整句子\n- **在线轨迹修正**：执行过程中可动态修改指令\n- **低延迟响应**：双层架构确保端到端延迟在可接受范围内\n\n### 5.2 运动质量\n\n- **扩散模型优势**：生成多样化、自然的运动\n- **短时域预测**：降低误差累积，保持运动连贯性\n- **全身协调**：支持复杂的多部位协调动作\n\n### 5.3 泛化能力\n\n- **开放词汇**：支持任意文本指令（非预定义动作库）\n- **零样本迁移**：可适应新指令类型\n\n---\n\n## 6. 技术弱点\n\n### 6.1 局限性\n\n**物理约束建模不足**：\n- 扩散模型主要学习 kinematic 轨迹\n- 物理可行性（如力矩限制、接触约束）依赖低层跟踪器补偿\n- 复杂动态行为（跳跃、跑步）的物理一致性难以保证\n\n**文本理解挑战**：\n- 细粒度动作控制受限：难以精确指定动作幅度、速度等参数\n- 歧义性问题：同一文本可能有多种合理动作解释\n- 长程一致性：长序列生成时可能出现语义漂移\n\n**硬件依赖**：\n- 对机器人本体特性敏感，需针对特定平台微调\n- 传感器噪声和延迟影响系统稳定性\n\n### 6.2 潜在问题\n\n**稳定性风险**：\n- 自回归生成中的误差累积\n- 文本突变时的运动跳变\n\n**计算资源**：\n- 扩散模型推理计算量大，需 GPU 加速\n- 边缘部署存在挑战\n\n---\n\n## 总结\n\nTextOp 提出了一种创新的双层架构，通过结合高层自回归运动扩散模型与低层跟踪控制器，实现了文本驱动的实时人形机器人运动生成与控制。该方法在开放词汇支持、实时交互性方面具有显著优势，但在物理约束建模和细粒度控制方面仍存在改进空间。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "TextOp: Real-time Interactive Text-Driven Humanoid Robot Motion Generation and Control",
+      "authors": [
+        "Weiji Xie",
+        "Jiakun Zheng",
+        "Jinrui Han",
+        "Jiyuan Shi",
+        "Weinan Zhang",
+        "Hang Lai",
+        "Xuelong Li"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.07439",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Recent advances in humanoid whole-body motion tracking have enabled the execution of diverse and highly coordinated motions on real hardware. However, existing controllers are commonly driven either by predefined motion trajectories, which offer limited flexibility when user intent changes, or by continuous human teleoperation, which requires constant human involvement and limits autonomy. This work addresses the problem of how to drive a universal humanoid controller in a real-time and interactive manner. We present TextOp, a real-time text-driven humanoid motion generation and control framework that supports streaming language commands and on-the-fly instruction modification during execution. TextOp adopts a two-level architecture in which a high-level autoregressive motion diffusion model continuously generates short-horizon kinematic trajectories conditioned on the current text input, while a low-level motion tracking policy executes these trajectories on a physical humanoid robot. By bridging interactive motion generation with robust whole-body control, TextOp unlocks free-form intent expression and enables smooth transitions across multiple challenging behaviors such as dancing and jumping, within a single continuous motion execution. Extensive real-robot experiments and offline evaluations demonstrate instant responsiveness, smooth whole-body motion, and precise control. The project page and the open-source code are available at https://text-op.github.io/",
+      "route_id": "72d27aee-c568-4d5e-a473-684b5dd86800"
+    },
+    "markdown_stats": {
+      "lines": 637,
+      "words": 17033,
+      "headings": 34
+    },
+    "assets": {
+      "images": 50,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "72d27aee-c568-4d5e-a473-684b5dd86800",
+  "paper_ref": "72d27aee-c568-4d5e-a473-684b5dd86800",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

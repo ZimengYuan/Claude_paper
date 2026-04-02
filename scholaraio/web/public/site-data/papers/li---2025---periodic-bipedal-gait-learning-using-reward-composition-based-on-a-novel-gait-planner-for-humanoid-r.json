@@ -1,0 +1,73 @@
+{
+  "dir_name": "Li-None-Periodic-Bipedal-Gait-Learning-Using-Reward-Compos",
+  "title": "Periodic Bipedal Gait Learning Using Reward Composition Based on a Novel Gait Planner for Humanoid Robots",
+  "authors": [
+    "Bolin Li",
+    "Linwei Sun",
+    "Xuecong Huang",
+    "Yuzhi Jiang",
+    "Lijun Zhu"
+  ],
+  "year": null,
+  "journal": "",
+  "doi": "",
+  "abstract": "",
+  "paper_type": "",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Periodic Bipedal Gait Learning Using Reward Composition Based on a Novel Gait Planner for Humanoid Robots",
+      "authors": [
+        "Bolin Li",
+        "Linwei Sun",
+        "Xuecong Huang",
+        "Yuzhi Jiang",
+        "Lijun Zhu"
+      ]
+    },
+    "markdown_stats": {
+      "lines": 469,
+      "words": 14670,
+      "headings": 14
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "li---2025---periodic-bipedal-gait-learning-using-reward-composition-based-on-a-novel-gait-planner-for-humanoid-r",
+  "paper_ref": "Li 等 - 2025 - Periodic Bipedal Gait Learning Using Reward Composition Based on a Novel Gait Planner for Humanoid R",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

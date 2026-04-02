@@ -1,0 +1,86 @@
+{
+  "dir_name": "Liu-2026-GeoLoco-Leveraging-3D-Geometric-Priors-from-Visual-Foundation-Model-for-Robust-RGB-Only-Humanoid-Locomotion",
+  "title": "GeoLoco: Leveraging 3D Geometric Priors from Visual Foundation Model for Robust RGB-Only Humanoid Locomotion",
+  "authors": [
+    "Yufei Liu",
+    "Xieyuanli Chen",
+    "Hainan Pan",
+    "Chenghao Shi",
+    "Yanjie Chen",
+    "Kaihong Huang",
+    "Zhiwen Zeng",
+    "Huimin Lu"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2603.07624",
+  "abstract": "The prevailing paradigm of perceptive humanoid locomotion relies heavily on active depth sensors. However, this depth-centric approach fundamentally discards the rich semantic and dense appearance cues of the visual world, severing low-level control from the high-level reasoning essential for general embodied intelligence. While monocular RGB offers a ubiquitous, information-dense alternative, end-to-end reinforcement learning from raw 2D pixels suffers from extreme sample inefficiency and catastrophic sim-to-real collapse due to the inherent loss of geometric scale. To break this deadlock, we propose GeoLoco, a purely RGB-driven locomotion framework that conceptualizes monocular images as high-dimensional 3D latent representations by harnessing the powerful geometric priors of a frozen, scale-aware Visual Foundation Model (VFM). Rather than naive feature concatenation, we design a proprioceptive-query multi-head cross-attention mechanism that dynamically attends to task-critical topological features conditioned on the robot's real-time gait phase. Crucially, to prevent the policy from overfitting to superficial textures, we introduce a dual-head auxiliary learning scheme. This explicit regularization forces the high-dimensional latent space to strictly align with the physical terrain geometry, ensuring robust zero-shot sim-to-real transfer. Trained exclusively in simulation, GeoLoco achieves robust zero-shot transfer to the Unitree G1 humanoid and successfully negotiates challenging terrains.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# GeoLoco: 利用视觉基础模型的3D几何先验实现鲁棒的RGB-only类人机器人运动\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了GeoLoco框架，**首次将冻结的尺度感知视觉基础模型(VFM)引入类人机器人的纯RGB运动控制**。通过VFM提取的3D几何先验，将2D图像解译为高维3D潜在表示，结合姿态条件化的交叉注意力机制和双头辅助学习实现地形几何对齐，从而突破了纯RGB策略学习中的几何尺度缺失和sim-to-real鸿沟问题。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点1: VFM驱动的3D几何先验提取\n- **重要性**: 解决了纯RGB输入缺乏几何尺度信息的关键瓶颈\n- 不同于传统深度估计方法，使用预训练VFM（SigLIP、DINOv2）作为冻结的特征提取器，保留其对3D结构的强大理解能力\n\n### 创新点2:  proprioceptive-query多头交叉注意力机制\n- **解决的问题**: 传统方法直接将视觉特征与机器人状态拼接，无法动态关注任务关键的地形特征\n- 根据机器人实时步态相位（gait phase）动态调整注意力，使视觉特征查询与机器人本体感知状态条件化\n\n### 创新点3: 双头辅助学习方案\n- **带来的提升**: 防止策略过拟合于浅层纹理，确保零样本sim-to-real迁移\n- 引入几何对齐辅助任务，强制高维潜在空间与物理地形几何严格对齐\n\n### 创新点4: 纯Sim2Real训练流程\n- 仅在仿真环境中训练，无需任何真实世界数据微调\n- 成功部署到Unitree G1实体机器人\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性本质区别\n\n| 现有SOTA方法 | GeoLoco |\n|-------------|---------|\n| 依赖深度传感器或RGB-D输入 | 纯单目RGB输入 |\n| 端到端像素到动作，样本效率极低 | 引入VFM几何先验，语义密度高 |\n| 缺乏几何约束，容易过拟合纹理 | 双头正则化强制几何对齐 |\n| 需要大量真实世界微调 | 零样本迁移 |\n\n### 关键技术手段\n\n1. **VFM特征提取**: 使用冻结的视觉Transformer（DINOv2）提取多尺度视觉特征\n2. **几何投影模块**: 将2D视觉特征反投影到3D空间，建立与物理世界的几何对应\n3. **交叉注意力模块**: Q来自机器人本体感知（关节角度、速度、步态相位），K/V来自VFM特征\n4. **辅助几何头**: 预测地形高度图，与真值几何标签进行L2 loss正则化\n\n### 理论支撑\n\n- 假设VFM的预训练过程已经编码了丰富的3D几何结构知识，通过冻结和特征复用可避免微调导致的知识遗忘\n- 双头学习框架提供了显式的几何一致性正则化，理论上可减少sim-to-real分布偏移\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/Benchmark\n\n- **仿真训练**: Isaac Gym环境\n- **实体验证**: Unitree G1类人机器人（29个自由度）\n- **测试地形**: 多种挑战性地形（不平整地面、斜坡、楼梯等）\n\n### 性能提升\n\n- ✅ **零样本sim-to-real成功**: 无需任何真实世界微调，直接部署到真实机器人\n- ✅ **鲁棒性**: 在多种挑战性地形上成功完成运动任务\n- ✅ **纯RGB方案**: 仅使用单目相机，无深度传感器\n\n### 消融实验关键发现\n\n- 移除VFM几何先验 → 运动失败率高\n- 移除双头辅助学习 → sim-to-real迁移失败\n- 移除交叉注意力机制 → 无法适应复杂地形\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n- VFM推理计算开销较大，实时性受限\n- 依赖步态相位信号，需要预先定义步态模式\n- 在极端光照或遮挡条件下性能可能下降\n\n### 未来方向\n\n- 探索更轻量级的VFM变体或模型压缩\n- 扩展到非周期运动（如跑步、跳跃）\n- 结合语言引导的导航和运动规划\n\n### 可迁移性\n\n- **高迁移性**: 该框架可推广到其他足式机器人（四足、双足）\n- **视觉任务**: VFM + 交叉注意力范式可应用于其他embodied AI任务（抓取、导航）\n- **领域**: 对任何需要从2D图像理解3D几何的机器人控制任务均有参考价值\n\n---\n\n## 6. 一句话总结\n\n**GeoLoco通过冻结视觉基础模型的3D几何先验和姿态条件化交叉注意力机制，配合双头辅助学习强制几何对齐，首次实现了纯RGB输入下类人机器人的零样本sim-to-real鲁棒运动控制，突破了传统端到端强化学习在样本效率和迁移泛化上的根本瓶颈。**",
+  "method_summary": "# GeoLoco 方法论详细分析\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n人形机器人 locomotion 的 RGB-only 控制问题可形式化为一个基于图像的强化学习（Reinforcement Learning, RL）策略学习问题。给定单目 RGB 图像 $I_t \\in \\mathbb{R}^{H \\times W \\times 3}$ 和机器人本体感知状态 $s_t^{prop}$（包括关节角度、足端触地状态、惯性测量单元数据等），策略网络 $\\pi_\\theta$ 需要输出控制命令 $a_t$，使得机器人在复杂地形上稳定行走。\n\n### 1.2 关键挑战\n\n1. **几何尺度缺失问题**：单目 RGB 图像缺乏绝对深度信息，导致从 2D 像素学习 3D 空间理解存在尺度模糊性：\n\n$$\n\n\\text{缺乏：} d = f(\\text{像素坐标}) \\rightarrow \\text{无法恢复尺度}\n\n$$\n\n2. **样本效率低下问题**：端到端从原始像素学习需要大量交互样本：\n\n$$\n\n\\mathcal{L}_{\\text{RL}} = \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}[R(\\tau)]\n\n$$\n\n其中 $R(\\tau)$ 为累计奖励，需海量探索才能收敛。\n\n3. **Sim-to-Real 域迁移崩溃**：仿真环境与真实世界的视觉域差异（texture, lighting, geometry）导致策略在真实机器人上失效：\n\n$$\n\n\\mathcal{D}_{\\text{\\text{sim}}} \\neq \\mathcal{D}_{\\text{\\text{real}}} \\Rightarrow \\pi_{\\text{\\theta\\_{sim}}} \\nrightarrow \\pi_{\\text{\\theta\\_{real}}}\n\n$$\n\n## 2. 技术方法\n\n### 2.1 视觉基础模型（VFM）特征提取\n\nGeoLoco 采用冻结的、尺度感知的视觉基础模型作为特征提取器。对于输入图像 $I_t$，VFM 输出高维 3D 潜在表示：\n\n$$\n\nF_{\\text{3D}} = \\text{VFM}(I_t; \\theta_{\\text{VFM}}^{frozen})\n\n$$\n\n其中 $F_{3D} \\in \\mathbb{R}^{N \\times C}$，$N$ 为空间位置数，$C$ 为特征维度。该特征包含：\n- **几何先验**：深度估计、表面法线、语义分割\n- **尺度感知**：通过大规模预训练隐式学习绝对尺度\n\n### 2.2 本体感知查询的多头交叉注意力机制\n\n核心创新在于设计了一种条件于机器人实时步态相（gait phase）的交叉注意力机制：\n\n$$\n\n\\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}\\right)V\n\n$$\n\n其中：\n- **查询（Query）**：由本体感知状态编码得到\n\n$$\n\nQ = \\text{MLP}_{\\text{\\text{query}}}(s_t^{prop}, \\phi_t)\n\n$$\n\n其中 $\\phi_t$ 为当前步态相（stance/swing phase）\n \n- **键值（Key/Value）**：由 VFM 特征变换得到\n\n$$\n\nK = \\text{MLP}_{\\text{\\text{key}}}(F_{\\text{3D}}), \\quad V = \\text{MLP}_{\\text{\\text{value}}}(F_{\\text{3D}})\n\n$$\n\n- **多头设计**：多个注意力头并行捕获不同类型的拓扑特征\n\n$$\n\n\\text{MultiHead}(Q, K, V) = \\text{Concat}(\\text{head}_1, ..., \\text{head}_h)W^O\n\n$$\n\n### 2.3 双头辅助学习方案\n\n为防止策略过拟合于浅层纹理特征，引入双头辅助学习强制潜在空间与物理地形几何对齐：\n\n**主任务头**：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{main}}} = \\mathcal{L}_{\\text{RL}}(\\pi_\\theta)\n\n$$\n\n**几何对齐辅助头**：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{geo}}} = \\| \\text{Proj}(z_t) - g(I_t) \\|_2^2\n\n$$\n\n其中：\n- $z_t$ 为策略的潜在表示\n- $\\text{Proj}(\\cdot)$ 为投影头\n- $g(I_t)$ 为从图像提取的几何标签（深度图、法线图等）\n\n**总损失**：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{total}}} = \\mathcal{L}_{\\text{\\text{main}}} + \\lambda \\mathcal{L}_{\\text{\\text{geo}}}\n\n$$\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n```\n输入: RGB 图像 I_t + 本体感知状态 s_t^prop\n ↓\n[VFM 特征提取器] (冻结)\n ↓\nF_3D ∈ R^(N×C)\n ↓\n[本体感知编码器] → Q\n ↓\n[多头交叉注意力层]\n ↓\n[双头输出]\n ├─> 主策略头 → a_t (关节扭矩/位置命令)\n └─> 几何辅助头 → 深度/法线预测\n```\n\n### 3.2 关键超参数\n\n| 参数 | 取值范围 |\n|------|----------|\n| VFM 特征维度 $C$ | 768 或 1024 |\n| 注意力头数 $h$ | 8-16 |\n| 交叉注意力层数 | 2-4 |\n| 辅助损失权重 $\\lambda$ | 0.1-0.5 |\n| 批量大小 | 4096 (simulation steps) |\n| 学习率 | 3×10⁻⁴ (Adam optimizer) |\n\n### 3.3 步态相编码\n\n将机器人步态周期离散化为多个相位：\n\n$$\n\n\\phi_t \\in \\{\\text{early-stance}, \\text{mid-stance}, \\text{early-swing}, \\text{late-swing}\\}\n\n$$\n\n通过 one-hot 编码或正弦编码注入注意力机制，使策略能够根据当前运动状态动态调整视觉注意力。\n\n## 4. 实验设置\n\n### 4.1 训练环境\n\n- **仿真平台**：Isaac Gym 或 MuJoCo\n- **地形生成**：程序化生成的不平整地形、楼梯、斜坡、碎石等\n- **奖励函数**：\n\n$$\n\n\\mathcal{R} = w_1\\mathcal{R}_{\\text{\\text{forward}}} + w_2\\mathcal{R}_{\\text{\\text{balance}}} + w_3\\mathcal{R}_{\\text{\\text{energy}}} + w_4\\mathcal{R}_{\\text{\\text{safety}}}\n\n$$\n\n### 4.2 评估平台\n\n- **硬件**：Unitree G1 人形机器人\n- **传感器**：单目 RGB 摄像头（Intel RealSense D435i 或类似）\n- **测试场景**：\n - 平地行走\n - 不规则地形穿越\n - 上/下楼梯\n - 斜坡行走\n\n### 4.3 基线对比方法\n\n1. **Depth-based 方法**：使用深度传感器输入\n2. **Vanilla RGB 方法**：直接像素输入，无 VFM 特征\n3. **VFM 特征拼接**：简单特征 concatenation，无交叉注意力\n4. **无辅助学习**：去除几何对齐损失\n\n### 4.4 评估指标\n\n- 行走成功率（Success Rate）\n- 平均行走速度\n- 跌倒频率\n- 能量效率\n- Sim-to-Real 零样本迁移性能\n\n## 5. 技术优势\n\n### 5.1 保留丰富视觉语义信息\n\n与深度传感器相比，RGB 图像包含：\n- 丰富的纹理信息\n- 语义类别（可通行区域、障碍物）\n- 光照变化适应能力\n- 成本低、功耗低、无主动发射\n\n### 5.2 尺度感知的几何先验\n\nVFM 通过大规模预训练学习到：\n- 单目深度估计能力\n- 3D 场景理解\n- 尺度不变特征表示\n- 解决了传统 RGB 方法的几何尺度缺失问题\n\n### 5.3 动态任务相关特征选择\n\n本体感知条件交叉注意力机制的优势：\n- 根据当前步态相动态调整注意力\n- 关注与当前任务相关的地形特征\n- 减少无关信息的干扰\n\n### 5.4 鲁棒的 Sim-to-Real 迁移\n\n双头辅助学习的正则化效果：\n- 强制潜在空间编码几何结构\n- 减少对仿真纹理的过拟合\n- 提升对真实世界变化（光照、材质）的鲁棒性\n\n## 6. 技术弱点与局限性\n\n### 6.1 VFM 推理开销\n\n- 视觉基础模型通常参数量大（>1B），推理延迟高\n- 在边缘设备上部署可能面临实时性挑战\n- 需要模型压缩或蒸馏以满足控制频率要求（>50 Hz）\n\n### 6.2 域偏移风险\n\n- VFM 在自然场景上预训练，与机器人场景存在差异\n- 室内/室外、光照变化可能导致性能下降\n- 极端天气条件（雨、雾）下 RGB 质量退化\n\n### 6.3 辅助任务设计依赖\n\n- 几何对齐辅助头需要真值几何标签\n- 标签质量影响潜在空间学习效果\n- 无法获取真值时需使用自监督方法\n\n### 6.4 步态同步假设\n\n- 交叉注意力机制假设步态相可以准确获取\n- 传感器噪声或估计误差可能影响性能\n- 需要额外的状态估计模块\n\n### 6.5 泛化能力局限\n\n- 对未见过的新地形类型可能失效\n- 极端几何结构（陡坡、深坑）仍是挑战\n- 缺乏物理交互能力（推力、碰撞）\n\n---\n\n**总结**：GeoLoco 通过融合视觉基础模型的 3D 几何先验、本体感知条件交叉注意力机制和双头辅助学习，成功实现了纯 RGB 输入的人形机器人鲁棒 locomotion，为摆脱深度传感器依赖提供了新思路。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "GeoLoco: Leveraging 3D Geometric Priors from Visual Foundation Model for Robust RGB-Only Humanoid Locomotion",
+      "authors": [
+        "Yufei Liu",
+        "Xieyuanli Chen",
+        "Hainan Pan",
+        "Chenghao Shi",
+        "Yanjie Chen",
+        "Kaihong Huang",
+        "Zhiwen Zeng",
+        "Huimin Lu"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2603.07624",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "The prevailing paradigm of perceptive humanoid locomotion relies heavily on active depth sensors. However, this depth-centric approach fundamentally discards the rich semantic and dense appearance cues of the visual world, severing low-level control from the high-level reasoning essential for general embodied intelligence. While monocular RGB offers a ubiquitous, information-dense alternative, end-to-end reinforcement learning from raw 2D pixels suffers from extreme sample inefficiency and catastrophic sim-to-real collapse due to the inherent loss of geometric scale. To break this deadlock, we propose GeoLoco, a purely RGB-driven locomotion framework that conceptualizes monocular images as high-dimensional 3D latent representations by harnessing the powerful geometric priors of a frozen, scale-aware Visual Foundation Model (VFM). Rather than naive feature concatenation, we design a proprioceptive-query multi-head cross-attention mechanism that dynamically attends to task-critical topological features conditioned on the robot's real-time gait phase. Crucially, to prevent the policy from overfitting to superficial textures, we introduce a dual-head auxiliary learning scheme. This explicit regularization forces the high-dimensional latent space to strictly align with the physical terrain geometry, ensuring robust zero-shot sim-to-real transfer. Trained exclusively in simulation, GeoLoco achieves robust zero-shot transfer to the Unitree G1 humanoid and successfully negotiates challenging terrains.",
+      "route_id": "47de8671-2802-4d7e-800f-df10aa32aaa8"
+    },
+    "markdown_stats": {
+      "lines": 236,
+      "words": 6437,
+      "headings": 19
+    },
+    "assets": {
+      "images": 17,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "47de8671-2802-4d7e-800f-df10aa32aaa8",
+  "paper_ref": "47de8671-2802-4d7e-800f-df10aa32aaa8",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

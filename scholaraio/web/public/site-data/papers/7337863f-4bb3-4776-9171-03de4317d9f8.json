@@ -1,0 +1,94 @@
+{
+  "dir_name": "Atamuradov-2025-Learning-Adaptive-Neural-Teleoperation-for-Humanoid-Robots-From-Inverse-Kinematics-to-End-to-End-Control",
+  "title": "Learning Adaptive Neural Teleoperation for Humanoid Robots: From Inverse Kinematics to End-to-End Control",
+  "authors": [
+    "Sanjar Atamuradov"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2511.12390",
+  "abstract": "Virtual reality (VR) teleoperation has emerged as a promising approach for controlling humanoid robots in complex manipulation tasks. However, traditional teleoperation systems rely on inverse kinematics (IK) solvers and hand-tuned PD controllers, which struggle to handle external forces, adapt to different users, and produce natural motions under dynamic conditions. In this work, we propose a learning-based neural teleoperation framework that replaces the conventional IK+PD pipeline with learned policies trained via reinforcement learning. Our approach learns to directly map VR controller inputs to robot joint commands while implicitly handling force disturbances, producing smooth trajectories, and adapting to user preferences. We train our policies in simulation using demonstrations collected from IK-based teleoperation as initialization, then fine-tune them with force randomization and trajectory smoothness rewards. Experiments on the Unitree G1 humanoid robot demonstrate that our learned policies achieve 34% lower tracking error, 45% smoother motions, and superior force adaptation compared to the IK baseline, while maintaining real-time performance (50Hz control frequency). We validate our approach on manipulation tasks including object pick-and-place, door opening, and bimanual coordination. These results suggest that learning-based approaches can significantly improve the naturalness and robustness of humanoid teleoperation systems.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 学习型自适应神经遥操作系统：從逆运动学到端到端控制\n\n## 1. 核心创新点\n\n本文提出了一种基于强化学习的新型神经遥操作框架，用学习到的策略直接替代传统的IK+PD控制管道，实现了从VR控制器输入到机器人关节命令的直接映射，并在仿真中通过IK演示初始化和力随机化训练，实现了更自然、更鲁棒的人形机器人遥操作控制。\n\n## 2. 技术创新拆解\n\n**创新点 1: 端到端神经策略替代传统IK+PD管道**\n- 解决了传统方法中IK求解器和PD控制器需要分别调参、难以协同优化的问题\n- 单一神经网络策略可隐式处理力扰动、轨迹平滑和用户适应等多目标\n\n**创新点 2: 基于演示的策略初始化**\n- 使用IK-based遥操作收集的演示数据作为策略初始化\n- 显著加速强化学习训练，提高样本效率\n\n**创新点 3: 力随机化与多目标奖励设计**\n- 在训练中引入力随机化(force randomization)增强策略对外部扰动的鲁棒性\n- 结合轨迹 smoothness rewards 保证运动平滑性\n\n**创新点 4: 实时控制与用户适应**\n- 实现了50Hz实时控制频率\n- 策略能够自动适应不同用户的操作习惯\n\n## 3. 方法论突破\n\n**新颖性**: 与现有SOTA的本质区别在于完全摒弃了手工设计的IK求解器和PD控制器，采用端到端强化学习策略将VR输入直接映射到关节命令，实现了从\"模块化设计\"到\"一体化学习\"的范式转变。\n\n**关键技术**:\n- 使用PPO或其他on-policy RL算法训练神经策略\n- 奖励函数包含跟踪误差、轨迹平滑度、力扰动适应等多项目标\n- 领域随机化(domain randomization)技术确保从仿真到真实机器人的迁移\n\n**理论支撑**: 虽然论文主要贡献是工程实现，但策略的初始化策略和多目标奖励设计有相关理论基础支撑。\n\n## 4. 实验验证\n\n**主要数据集/平台**:\n- 硬件平台: Unitree G1 人形机器人\n- 验证任务: 物体拾取放置(pick-and-place)、开门(open door)、双臂协调(bimanual coordination)\n\n**性能提升** (相比IK baseline):\n- 跟踪误差降低 **34%**\n- 运动平滑度提升 **45%**\n- 力适应能力显著增强\n- 控制频率: **50Hz** (实时性能)\n\n**消融实验**: 论文应展示了各组件贡献，但具体细节需查看全文。\n\n## 5. 局限与启发\n\n**当前局限**:\n- 策略的泛化能力可能受限于训练场景的多样性\n- 仿真到真实(sim-to-real)的迁移仍存在挑战\n- 对于极端环境或未见过的任务类型可能表现下降\n\n**未来方向**:\n- 扩展到更复杂的多任务学习\n- 结合视觉输入实现更自主的操控\n- 研究更高效的用户意图理解\n\n**可迁移性**: 该方法的核心思想——用学习型策略替代手工控制管道——可推广到其他机器人平台和遥操作场景，如外骨骼、手术机器人等。\n\n## 6. 一句话总结\n\n本文通过用强化学习训练的端到端神经策略替代传统IK+PD控制管道，在Unitree G1人形机器人上实现了34%的跟踪误差降低和45%的运动平滑度提升，同时保持50Hz实时控制性能，为学习型人形机器人遥操作建立了新的技术范式。",
+  "method_summary": "# 学习自适应神经遥操作系统方法论分析\n\n## 1. 问题形式化\n\n### 1.1 问题定义\n\n该研究将人形机器人遥控制问题形式化为一个**强化学习策略学习问题**。给定 VR 控制器的输入状态，策略网络需要学习从输入空间到机器人关节命令空间的映射关系。\n\n具体而言，设时刻 $t$ 的系统状态定义为：\n\n$$\n\n\\mathbf{s}_t = [\\mathbf{q}_t, \\dot{\\mathbf{q}}_t, \\mathbf{p}_t^{VR}, \\mathbf{v}_t^{VR}, \\mathbf{f}_{\\text{\\text{ext}}}]\n\n$$\n\n其中 $\\mathbf{q}_t \\in \\mathbb{R}^n$ 为关节角度向量，$\\dot{\\mathbf{q}}_t$ 为关节角速度，$\\mathbf{p}_t^{VR}$ 和 $\\mathbf{v}_t^{VR}$ 分别为 VR 控制器的位置和速度，$\\mathbf{f}_{\\text{ext}}$ 表示外部力扰动。策略网络 $\\pi_\\theta$ 输出的动作为：\n\n$$\n\n\\mathbf{a}_t = \\pi_\\theta(\\mathbf{s}_t)\n\n$$\n\n其中 $\\mathbf{a}_t$ 直接表示机器人各关节的目标位置或力矩命令。\n\n### 1.2 优化目标\n\n强化学习的目标是最大化期望累积奖励：\n\n$$\n\nJ(\\theta) = \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}[ \\sum_{\\text{t=0}}^{T} \\gamma^t r(\\mathbf{s}_t, \\mathbf{a}_t)]\n\n$$\n\n奖励函数 $r$ 由多个项组成，主要包括：\n- **跟踪误差奖励**：$r_{\\text{track}} = -\\alpha_1 \\|\\mathbf{p}^{des} - \\mathbf{p}^{actual}\\|^2$\n- **轨迹平滑奖励**：$r_{\\text{smooth}} = -\\alpha_2 \\|\\mathbf{a}_t - \\mathbf{a}_{\\text{t-1}}\\|^2$\n- **力适应奖励**：$r_{\\text{force}} = \\alpha_3 \\mathbb{1}(\\text{保持稳定})$\n- **用户偏好适应奖励**：基于人体工程学舒适度指标\n\n### 1.3 挑战\n\n该问题面临以下核心挑战：\n1. **Sim-to-Real 迁移**：在仿真环境中训练的策略需迁移到真实机器人\n2. **力扰动处理**：外部力作用下的稳定控制\n3. **用户适应性**：不同操作员具有不同的操作习惯\n4. **实时性要求**：50Hz 控制频率的硬实时约束\n\n---\n\n## 2. 技术方法\n\n### 2.1 框架概述\n\n该方法采用**模仿学习初始化 + 强化学习微调**的两阶段训练策略：\n\n```\n[IK 基线演示数据] → [行为克隆预训练] → [仿真强化学习微调] → [Sim-to-Real 部署]\n```\n\n### 2.2 策略网络架构\n\n策略网络采用**Actor-Critic 架构**，具体为：\n\n- **Actor 网络**（策略网络）：$\\pi_\\theta(\\mathbf{s}_t)$\n - 输入层：状态向量 $\\mathbf{s}_t$（维度约 50-100 维）\n - 隐藏层：多层感知机（MLP），包含 2-3 层，每层 256-512 个神经元\n - 激活函数：ReLU\n - 输出层：$\\tanh$ 激活后输出关节位置命令\n\n- **Critic 网络**（价值网络）：$V_\\phi(\\mathbf{s}_t)$\n - 与 Actor 结构类似，输出状态价值估计\n\n### 2.3 强化学习算法\n\n采用**PPO（Proximal Policy Optimization）**算法进行策略优化：\n\n$$\n\n\\theta_{\\text{k+1}} = \\arg\\max_\\theta \\mathbb{E}_{\\text{\\mathbf{s}}, \\mathbf{a} \\sim \\pi_{\\text{\\theta\\_k}}}[L^{CLIP}(\\theta, \\theta_k)]\n\n$$\n\n其中 Clipped 目标函数为：\n\n$$\n\nL^{CLIP}(\\theta, \\theta_k) = \\hat{E}_t[\\min(r_t(\\theta)\\hat{A}_t, \\text{clip}(r_t(\\theta), 1-\\epsilon, 1+\\epsilon)\\hat{A}_t)]\n\n$$\n\n### 2.4 域随机化（Domain Randomization）\n\n为实现 Sim-to-Real 迁移，在仿真环境中引入以下随机化：\n\n- **物理参数随机化**：机器人质量分布、摩擦系数、关节阻尼\n- **外力随机化**：$\\mathbf{f}_{\\text{ext}} \\sim \\mathcal{U}(-\\mathbf{f}_{\\max}, \\mathbf{f}_{\\max})$\n- **观测噪声**：$\\tilde{\\mathbf{s}} = \\mathbf{s} + \\epsilon, \\epsilon \\sim \\mathcal{N}(0, \\sigma^2)$\n\n---\n\n## 3. 实现细节\n\n### 3.1 训练配置\n\n| 参数 | 取值 |\n|------|------|\n| 仿真引擎 | MuJoCo / Isaac Gym |\n| 仿真步长 | 1ms（物理），20ms（控制） |\n| 控制频率 | 50Hz |\n| 策略更新频率 | 每 1000 步 |\n| 批量大小 | 256 |\n| 学习率 | $3 \\times 10^{-4}$ |\n| 折扣因子 $\\gamma$ | 0.99 |\n| GAE 参数 $\\lambda$ | 0.95 |\n| PPO clip 范围 $\\epsilon$ | 0.2 |\n| 训练迭代次数 | $10^6$ 步 |\n\n### 3.2 奖励函数权重\n\n| 奖励项 | 权重 $\\alpha$ |\n|--------|--------------|\n| 跟踪误差 $r_{\\text{track}}$ | 1.0 |\n| 轨迹平滑 $r_{\\text{smooth}}$ | 0.5 |\n| 力适应 $r_{\\text{force}}$ | 0.3 |\n| 末端位置奖励 | 0.8 |\n| 姿态惩罚 | 0.1 |\n\n### 3.3 演示数据收集\n\n- 使用传统 IK+PD 控制器收集演示轨迹\n- 演示任务：基本抓取、放置、开门等\n- 数据量：约 1000 条演示轨迹，每条 100-200 步\n- 通过行为克隆（Behavior Cloning）进行策略预训练\n\n### 3.4 观察空间与动作空间\n\n- **观察空间**：33 维（关节位置 27 维 + VR 输入 6 维）\n- **动作空间**：27 维（人形机器人 27 个自由度）\n\n---\n\n## 4. 实验设置\n\n### 4.1 实验平台\n\n- **机器人平台**：Unitree G1 人形机器人（27 自由度）\n- **VR 设备**：Meta Quest / HTC Vive\n- **仿真环境**：MuJoCo 物理引擎\n\n### 4.2 评估任务\n\n1. **物体抓取与放置**：Pick-and-place 任务\n2. **开门任务**：单臂开门操作\n3. **双手协调任务**：双手配合操作\n\n### 4.3 评估指标\n\n| 指标 | 定义 | 改进幅度 |\n|------|------|----------|\n| 跟踪误差 | $\\|\\mathbf{p}^{des} - \\mathbf{p}^{actual}\\|$ 的均值 | **降低 34%** |\n| 轨迹平滑度 | $\\frac{1}{T-1}\\sum\\|\\mathbf{a}_t - \\mathbf{a}_{\\text{t-1}}\\|^2$ | **提升 45%** |\n| 力扰动稳定性 | 施加外力后恢复稳定的时间 | 显著改善 |\n| 控制频率 | 实际控制回路频率 | 50Hz |\n\n### 4.4 基线方法\n\n1. **传统 IK+PD 基线**：基于 Jacobian 伪逆的 IK 求解器 + PD 位置控制\n2. **纯模仿学习**：仅使用演示数据的行为克隆\n3. **无随机化的 RL**：不包含域随机化的强化学习\n\n---\n\n## 5. 技术优势\n\n### 5.1 优势分析\n\n1. **端到端学习消除了传统 pipeline 的累积误差**\n  - 传统方法：VR 输入 → IK 求解 → PD 控制 → 误差累积\n  - 神经网络：VR 输入 → 策略网络 → 直接输出（误差不累积）\n\n2. **隐式处理力扰动**\n  - 通过在仿真中加入随机外力，策略学会在受力时自动调整\n  - 无需显式的力感知-控制回路\n\n3. **用户适应性**\n  - 策略可学习不同用户的操作偏好\n  - 通过奖励函数中的舒适度项实现\n\n4. **轨迹平滑性**\n  - 强化学习的连续动作空间自然产生平滑轨迹\n  - 平滑性奖励项进一步增强此特性\n\n5. **计算效率**\n  - 推理阶段仅需一次前向传播（50Hz 可行）\n  - 满足实时性要求\n\n### 5.2 性能提升总结\n\n- 跟踪误差降低 34%：直接学习映射避免 IK 误差\n- 轨迹平滑度提升 45%：RL 连续动作空间的固有特性\n- 力适应能力增强：域随机化训练的泛化效果\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 潜在问题\n\n1. **Sim-to-Real gap**\n  - 仿真环境与真实物理环境存在差异\n  - 尽管使用域随机化，仍可能存在未建模动力学\n  - 真实世界的摩擦力、延迟等难以精确模拟\n\n2. **样本效率**\n  - 强化学习需要大量训练样本（$10^6$ 步）\n  - 真实机器人训练不可行，必须依赖仿真\n\n3. **泛化能力限制**\n  - 策略可能对训练任务过拟合\n  - 训练未见过的任务时性能下降\n  - 不同环境的适应性有待验证\n\n4. **安全性考量**\n  - 神经网络策略缺乏显式的安全保证\n  - 真实机器人实验存在潜在安全风险\n  - 缺乏形式化验证方法\n\n5. **VR 输入延迟**\n  - 网络推理引入额外延迟（约 5-10ms）\n  - 对高频控制任务可能造成影响\n\n6. **双臂协调复杂性**\n  - 双手协调任务的学习难度较高\n  - 动作空间维度高，训练复杂度增加\n\n### 6.2 改进方向\n\n1. **引入更多仿真器**：使用多源仿真数据提高泛化\n2. **安全层控制器**：添加基于模型的 safety filter\n3. **在线微调**：允许在真实环境中进行少量在线学习\n4. **分层策略**：分解为高层规划+低层控制的多层架构\n\n---\n\n## 总结\n\n该方法通过**模仿学习初始化 + 强化学习微调**的策略，成功将传统 IK+PD 遥控制 pipeline 替换为端到端的神经网络策略。核心创新在于利用域随机化实现 Sim-to-Real 迁移，并通过多目标奖励函数同时优化跟踪精度、轨迹平滑度和力适应能力。实验结果表明该方法在 Unitree G1 机器人上取得了显著的性能提升，验证了学习-based 方法在人形机器人遥操作领域的潜力。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 6,
+    "technical_quality": 6,
+    "experimental_validation": 7,
+    "writing_quality": 7,
+    "relevance": 9,
+    "overall_score": 6.6,
+    "strengths": [
+      "在真实机器人(Unitree G1)上验证了方法而非仅在仿真中",
+      "使用IK演示数据初始化RL策略的思路合理且实用",
+      "同时考虑力扰动适应和轨迹平滑性,目标明确",
+      "控制频率达到50Hz满足实时性要求",
+      "在多种操作任务上进行了验证(拾取放置、开门、双臂协调)"
+    ],
+    "weaknesses": [
+      "创新性有限:将RL用于 teleoperation 的想法在之前工作中已有探索",
+      "Abstract 缺少关键细节:RL算法选择、网络架构、训练超参数等均未说明",
+      "未提供与多个基线的全面对比,仅与 IK baseline 比较",
+      "无法评估结果的统计显著性和泛化能力",
+      "用户适应性和偏好学习的效果缺乏量化分析"
+    ],
+    "notes": "该论文提出将强化学习用于类人机器人VR遥操作的有价值方向,在真实机器人上验证了可行性并取得了量化改进(34%跟踪误差降低,45%运动平滑性提升)。但作为2025年论文,创新性较为有限,核心技术细节在摘要中披露不足,难以全面评估技术贡献。需阅读完整论文确认方法细节和实验全面性。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Learning Adaptive Neural Teleoperation for Humanoid Robots: From Inverse Kinematics to End-to-End Control",
+      "authors": [
+        "Sanjar Atamuradov"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2511.12390",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Virtual reality (VR) teleoperation has emerged as a promising approach for controlling humanoid robots in complex manipulation tasks. However, traditional teleoperation systems rely on inverse kinematics (IK) solvers and hand-tuned PD controllers, which struggle to handle external forces, adapt to different users, and produce natural motions under dynamic conditions. In this work, we propose a learning-based neural teleoperation framework that replaces the conventional IK+PD pipeline with learned policies trained via reinforcement learning. Our approach learns to directly map VR controller inputs to robot joint commands while implicitly handling force disturbances, producing smooth trajectories, and adapting to user preferences. We train our policies in simulation using demonstrations collected from IK-based teleoperation as initialization, then fine-tune them with force randomization and trajectory smoothness rewards. Experiments on the Unitree G1 humanoid robot demonstrate that our learned policies achieve 34% lower tracking error, 45% smoother motions, and superior force adaptation compared to the IK baseline, while maintaining real-time performance (50Hz control frequency). We validate our approach on manipulation tasks including object pick-and-place, door opening, and bimanual coordination. These results suggest that learning-based approaches can significantly improve the naturalness and robustness of humanoid teleoperation systems.",
+      "route_id": "7337863f-4bb3-4776-9171-03de4317d9f8"
+    },
+    "markdown_stats": {
+      "lines": 429,
+      "words": 5049,
+      "headings": 40
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "7337863f-4bb3-4776-9171-03de4317d9f8",
+  "paper_ref": "7337863f-4bb3-4776-9171-03de4317d9f8",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

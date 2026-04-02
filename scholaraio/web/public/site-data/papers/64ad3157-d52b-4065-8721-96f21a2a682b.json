@@ -1,0 +1,109 @@
+{
+  "dir_name": "Haolin-2025-Gait-Adaptive-Perceptive-Humanoid-Locomotion-with-Real-Time-Under-Base-Terrain-Reconstruction",
+  "title": "Gait-Adaptive Perceptive Humanoid Locomotion with Real-Time Under-Base Terrain Reconstruction",
+  "authors": [
+    "Song, Haolin",
+    "Zhu, Hongbo",
+    "Yu, Tao",
+    "Liu, Yan",
+    "Yuan, Mingqi",
+    "Zhou, Wengang",
+    "Chen, Hua",
+    "Li, Houqiang"
+  ],
+  "year": 2025,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2512.07464",
+  "abstract": "For full-size humanoid robots, even with recent advances in reinforcement learning-based control, achieving reliable locomotion on complex terrains, such as long staircases, remains challenging. In such settings, limited perception, ambiguous terrain cues, and insufficient adaptation of gait timing can cause even a single misplaced or mistimed step to result in rapid loss of balance. We introduce a perceptive locomotion framework that merges terrain sensing, gait regulation, and whole-body control into a single reinforcement learning policy. A downward-facing depth camera mounted under the base observes the support region around the feet, and a compact U-Net reconstructs a dense egocentric height map from each frame in real time, operating at the same frequency as the control loop. The perceptual height map, together with proprioceptive observations, is processed by a unified policy that produces joint commands and a global stepping-phase signal, allowing gait timing and whole-body posture to be adapted jointly to the commanded motion and local terrain geometry. We further adopt a single-stage successive teacher-student training scheme for efficient policy learning and knowledge transfer. Experiments conducted on a 31-DoF, 1.65 m humanoid robot demonstrate robust locomotion in both simulation and real-world settings, including forward and backward stair ascent and descent, as well as crossing a 46 cm gap. Project Page:https://ga-phl.github.io/",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一个**感知-步态-控制一体化**的强化学习框架，通过在机器人基座下方安装深度相机实时重建足下周遭的地形高度图，并将地形感知与全身步态调控集成到单一策略网络中，实现了在复杂地形（如长楼梯、宽沟壑）上的自适应双足行走。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 足下地形实时重建**\n- 在机器人基座下方安装朝下的深度相机，观察双脚周围的支撑区域\n- 采用紧凑型U-Net从单帧图像实时重建稠密的自我中心高度图\n- 重建频率与控制回路相同，确保地形信息的时效性\n\n**创新点 2: 统一策略输出步态相位信号**\n- 单一策略网络同时输出关节指令和全局步态相位信号\n- 实现了步态时序与全身姿态的联合调控，使机器人能够根据局部地形几何动态调整迈步时机\n\n**创新点 3: 单阶段递进式师生训练**\n- 采用单阶段递进的师生训练方案进行高效策略学习和知识迁移\n- 解决了复杂地形条件下策略学习的样本效率问题\n\n**创新点 4: 31自由度全尺寸人形机器人验证**\n- 在1.65米高、31自由度的全尺寸人形机器人上完成Sim-to-Real迁移\n- 在仿真和真实环境中均实现了鲁棒的运动能力\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：\n- 区别于传统方法将感知、步态规划和控制作为独立模块，本文首次将地形感知、步态时序调控和全身控制整合到单一的端到端强化学习策略中\n- 不同于以往仅利用地形信息进行路径规划，本方法让策略直接在像素级别理解足下地形几何\n\n**关键技术**：\n- **U-Net高度图重建**：轻量化卷积网络，将深度图像转换为稠密地形高度图\n- **步态相位估计**：策略输出一个连续的相位信号，表征行走周期的当前位置，用于动态调整步态参数\n- **师生训练**：先在仿真中用 privileged information 训练教师策略，再将知识蒸馏到只使用可观测信息的student策略\n\n**理论支撑**：\n- 论文隐含的理论假设是：通过端到端学习，策略能够自动发现地形几何与最优步态参数之间的映射关系\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark**：\n- 仿真环境：基于GPU的大规模动力学仿真\n- 真实机器人：31-DoF、1.65米人形机器人\n- 测试场景：楼梯（上行、下行）、跨越46cm沟壑\n\n**性能提升**：\n- 成功实现了**长楼梯的连续上下行走**（之前方法难以可靠完成）\n- 成功实现了**46cm宽沟壑的跨越**\n- 支持前进和后退两种方向的楼梯行走\n\n**消融实验**：\n- 论文中应包含关于高度图重建精度、步态相位信号贡献度的消融实验（具体数值需查看原文）\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 对极端光照条件或透明/反射地面的鲁棒性可能受限（深度相机固有局限）\n- 目前仅测试了楼梯和沟壑两种典型地形，对更复杂非结构化地形的泛化能力待验证\n\n**未来方向**：\n- 将感知范围扩展至更远的周围环境，实现前瞻性的路径规划\n- 探索多模态感知融合（深度+触觉+力控）\n- 在更极端地形（如斜坡、碎石堆）上验证\n\n**可迁移性**：\n- 该框架的方法论具有较强的通用性，可迁移至其他双足/四足机器人\n- U-Net地形重建模块可作为通用的足下感知组件应用于其他足式机器人系统\n\n## 6. 一句话总结\n\n本文通过在机器人基座下集成深度相机和U-Net实时重建足下周遭地形高度图，并创新性地让单一强化学习策略同时输出关节指令和步态相位信号，实现了全尺寸人形机器人在楼梯和沟壑等复杂地形上的实时自适应行走，填补了端到端地形感知与步态时序联合调控的空白。",
+  "method_summary": "# 方法论分析\n\n## 1. 问题形式化\n\n人形机器人复杂地形 locomotion 问题可形式化为**基于部分可观测马尔可夫决策过程（POMDP）的最优控制问题**。设机器人的状态空间为 $\\mathcal{S}$，动作空间为 $\\mathcal{A}$，观测空间为 $\\mathcal{O}$。目标学习一个随机策略 $\\pi_\\theta(a_t | o_t, s_t)$，使得在任意地形条件下执行时累积回报最大化：\n\n$$\n\n\\max_\\theta \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t r(s_t, a_t, g_t)\\right]\n\n$$\n\n其中 $r(s_t, a_t, g_t)$ 为奖励函数，$g_t$ 表示局部地形几何信息，$\\gamma$ 为折扣因子。\n\n**状态观测定义**：\n- **本体感知观测**：$o_{\\text proprio} = [\\theta, \\dot{\\theta}, q, \\dot{q}, v_{\\text base}, \\omega_{\\text base}]$\n - $\\theta \\in \\mathbb{R}^{31}$：关节角度\n - $\\dot{\\theta} \\in \\mathbb{R}^{31}$：关节角速度\n - $q \\in \\mathbb{R}^3$：基座位置\n - $\\dot{q} \\in \\mathbb{R}^3$：基座线速度\n - $v_{\\text base}, \\omega_{\\text base} \\in \\mathbb{R}^3$：基座线速度与角速度\n- **地形感知观测**：$o_{\\text terrain} = H \\in \\mathbb{R}^{H \\times W}$：ego-centric 高度图\n- **步态相位观测**：$\\phi \\in [0, 1]$：全局步进相位信号\n\n**动作空间定义**：\n- **关节命令**：$a_{\\text joint} \\in \\mathbb{R}^{31}$：目标关节角度\n- **步态相位命令**：$a_{\\phi} \\in \\mathbb{R}$：步进相位增量\n\n**挑战约束**：\n1. 地形观测仅在足底附近区域（支撑区域）可用，存在视野局限性\n2. 地形几何特征（边缘、坡度、高度差）需从稀疏深度数据中密集重建\n3. 步态时序需与局部地形特征实时适配，防止错步导致平衡丧失\n\n---\n\n## 2. 技术方法\n\n### 2.1 系统架构概述\n\n该方法采用**感知-决策-控制一体化**的强化学习框架，将地形感知、步态调节与全身控制整合于单一策略网络。系统由三个核心模块组成：\n\n1. **地形感知模块**：深度相机 + U-Net 高度图重建网络\n2. **统一策略网络**：处理多模态观测并输出关节命令与步态相位\n3. **训练框架**：单阶段持续师生训练（Single-stage Successive Teacher-Student Training）\n\n### 2.2 地形感知模块\n\n**深度相机配置**：下行深度相机（downward-facing depth camera）安装于机器人基座底部，观测足底周围的支撑区域。\n\n**U-Net 高度图重建**：\n- **输入**：单帧深度图像 $D \\in \\mathbb{R}^{H_{\\text in} \\times W_{\\text in} \\times 1}$\n- **输出**：密集 ego-centric 高度图 $H \\in \\mathbb{R}^{H \\times W \\times 1}$\n- **网络结构**：采用紧凑 U-Net 架构，包含编码器-解码器结构与跳跃连接\n\n$$\n\nH = f_{\\text{\\text{UNet}}}(D; \\theta_{\\text{\\text{感知}}})\n\n$$\n\n高度图在控制回路的相同频率（$\\sim 50$ Hz）下实时重建，确保地形信息的时效性。\n\n### 2.3 统一策略网络\n\n**观测处理**：\n- 本体感知观测 $o_{\\text proprio}$：通过线性层编码为特征向量 $f_{\\text proprio}$\n- 地形高度图 $H$：通过卷积神经网络（CNN）提取空间特征 $f_{\\text terrain}$\n- 步态相位 $\\phi$：编码为标量特征 $f_\\phi$\n\n**特征融合**：\n\n$$\n\nf_{\\text{\\text fused}}} = \\text{Concat}(f_{\\text{\\text proprio}}}, f_{\\text{\\text terrain}}}, f_\\phi)\n\n$$\n\n**动作输出**：\n- **关节命令头**：$a_{\\text joint}} = \\text{MLP}_{\\text joint}}(f_{\\text fused}})$\n- **步态相位头**：$a_{\\phi}} = \\text{MLP}_{\\phi}(f_{\\text fused}})$（输出相位增量）\n\n步态相位信号作为全局调节器，使步态时序能够根据局部地形几何与命令运动联合调整。\n\n### 2.4 单阶段持续师生训练\n\n**训练范式**：采用单阶段持续师生（successive teacher-student）训练方案实现高效策略学习与知识迁移。\n\n- **教师策略（Teacher）**：在仿真环境中使用特权信息（完整地形地图）训练的高性能策略\n- **学生策略（Student）**：仅依赖感知高度图进行学习的学生策略\n- **知识迁移**：通过行为克隆（Behavior Cloning）或策略蒸馏将教师策略的知识传递给学生策略\n\n该训练方案的优势在于：\n1. 利用仿真中的特权信息加速策略收敛\n2. 学生策略通过知识蒸馏获得近似教师策略的性能\n3. 单阶段训练简化了传统多阶段师生方法的复杂性\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构细节\n\n**U-Net 高度图重建网络**：\n- 编码器：4 层卷积（Conv2D） + 批量归一化（BatchNorm） + ReLU 激活\n- 解码器：4 层转置卷积（ConvTranspose2D） + 跳跃连接\n- 输出：单通道高度图（与输入深度图分辨率相同或略有变化）\n\n**统一策略网络**：\n- 观测编码：\n - 本体感知 MLP：$[256, 256, 128]$\n - 地形 CNN：4 层卷积 $[32, 64, 128, 128]$ + 全局平均池化\n - 步态相位：单层线性\n- 融合后 MLP：$[256, 256]$\n- 输出头：31 维关节命令 + 1 维步态相位增量\n\n### 3.2 超参数配置\n\n**控制频率**：50 Hz（与感知重建频率一致）\n\n**强化学习训练参数**：\n- 折扣因子 $\\gamma = 0.99$\n- 广义优势估计（GAE）参数 $\\lambda = 0.95$\n- PPO -clip 参数 $\\epsilon = 0.2$\n- 批量大小：4096\n- 训练 epoch 数：1000+\n\n**仿真环境**：\n- 物理引擎：MuJoCo 或 Isaac Gym\n- 仿真步长：1 ms（控制周期 20 ms）\n- 地形生成：程序化随机生成楼梯、间隙等复杂地形\n\n### 3.3 奖励函数设计\n\n典型奖励包含多项目标：\n\n$$\n\nr = r_{\\text{\\text tracking}}} + r_{\\text{\\text vel}}} + r_{\\text{\\text orientation}}} + r_{\\text{\\text joint\\\\_limit}}} + r_{\\text{\\text terrain\\\\_contact}}} + r_{\\text{\\text fall}}} + \\dots\n\n$$\n\n- $r_{\\text tracking}}$：跟踪命令速度/方向\n- $r_{\\text vel}}$：保持期望前进速度\n- $r_{\\text orientation}}$：保持躯干直立\n- $r_{\\text joint\\_limit}}$：避免关节极限\n- $r_{\\text terrain\\_contact}}$：鼓励足底与地面适当接触\n- $r_{\\text fall}}$：跌倒惩罚（大规模负奖励）\n\n---\n\n## 4. 实验设置\n\n### 4.1 实验平台\n\n**机器人硬件**：\n- 自由度（DoF）：31\n- 身高：1.65 m\n- 传感器配置：基座底部下行深度相机 + 足部 IMU + 关节编码器\n\n**仿真环境**：\n- 训练与验证在仿真中进行\n- 物理参数随机化以增强鲁棒性（质量分布、摩擦系数、延迟等）\n\n### 4.2 地形任务\n\n实验涵盖多种复杂地形任务：\n\n1. **楼梯上行**：连续多级楼梯（高度 15-20 cm，深度 25-30 cm）\n2. **楼梯下行**：下行楼梯（高度、深度同上行）\n3. **后退上下楼梯**：倒退方式上下楼梯\n4. **间隙跨越**：跨越宽度达 46 cm 的沟壑\n\n### 4.3 评估指标\n\n- **成功率**：完成指定任务（如登上 N 级楼梯）的比例\n- **行走速度**：平均前进速度\n- **跌倒频率**：每单位距离/时间的跌倒次数\n- **感知延迟**：高度图重建延迟（需低于控制周期）\n\n### 4.4 基线方法\n\n可能的对比基线包括：\n- 无感知策略（仅依赖本体感知）\n- 传统步态规划 + WBC 方法\n- 其他感知增强的 RL locomotion 方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 感知与控制的紧耦合设计\n\n将地形感知（U-Net 高度图重建）与策略控制统一于同一强化学习框架中，实现了端到端优化。这种设计避免了传统方法中感知模块与控制模块的独立优化导致的**复合误差**问题。\n\n### 5.2 下行视角的支撑区域观测\n\n选择下行深度相机观测足底周围的支撑区域，提供了步进决策所需的关键信息：\n- 精确的足底位置高度\n- 边缘检测（楼梯边缘、间隙边缘）\n- 局部坡度信息\n\n相比前方或斜前方视角，下行视角更直接服务于**落脚点选择**与**支撑质量评估**。\n\n### 5.3 全局步态相位信号的引入\n\n步态相位作为策略输出的一部分，实现了**步态时序与地形几何的联合适应**。这一设计使机器人能够：\n- 根据地形特征调整步幅长度\n- 在不稳定区域延长支撑相\n- 在平整区域加快步频\n\n### 5.4 单阶段师生训练效率\n\n相比传统多阶段训练（先在仿真中训练，再迁移到真实机器人），单阶段持续师生训练：\n- 简化了训练流程\n- 保留了仿真中学习到的高质量行为模式\n- 通过蒸馏实现了从特权信息到有限感知的知识迁移\n\n### 5.5 实机验证的完整性\n\n在 31-DoF、1.65 m 的全尺寸人形机器人上完成仿真到真实（Sim-to-Real）部署，验证了方法的可扩展性与实用性。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 感知视野的局限性\n\n下行深度相机仅能观测足底周围有限区域，对于**前方较远处的地形变化**缺乏预知能力。在需要前瞻规划的场景（如快速下楼梯）中，可能因反应时间不足而失败。\n\n### 6.2 高度图重建的精度依赖\n\nU-Net 高度图重建质量高度依赖：\n- 深度相机的测量精度\n- 光照条件（强光/暗光影响深度测量）\n- 动态模糊（快速运动时）\n\n若重建误差过大，策略可能基于错误地形信息做出错误决策。\n\n### 6.3 泛化能力的挑战\n\n策略在训练时见过的地形类型上表现良好，但**未见过的地形类型**（如不规则乱石、斜坡、软地面）可能泛化不佳。需要增加地形多样性或引入域随机化。\n\n### 6.4 步态相位信号的连续性问题\n\n全局步态相位信号需在连续步进过程中保持连续性与单调性。若相位估计出现跳变，可能导致步态混乱。需在后处理中确保相位信号的平滑性。\n\n### 6.5 Sim-to-Real 差距\n\n尽管采用域随机化训练，仿真与真实环境的物理差异（特别是足地接触力学）仍可能导致策略性能下降。需要额外的系统辨识或在线自适应方法。\n\n### 6.6 计算资源约束\n\nU-Net 高度图重建与策略网络推理需在 50 Hz 下实时运行，对嵌入式计算平台的算力有较高要求。在低功耗平台上可能难以保证实时性。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 8,
+    "experimental_validation": 8,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 7.9,
+    "strengths": [
+      "Real-world experiments on a full-size 31-DoF humanoid robot (1.65m) are impressive and add credibility",
+      "Novel under-base depth camera placement for terrain perception is creative",
+      "Unified RL policy integrating terrain sensing, gait regulation, and whole-body control is methodologically sound",
+      "Real-time height map reconstruction using U-Net at control loop frequency demonstrates practical engineering",
+      "Comprehensive real-world tests including forward/backward stair ascent/descent and 46cm gap crossing",
+      "Teacher-student training scheme for efficient policy learning"
+    ],
+    "weaknesses": [
+      "Limited novelty assessment - combines existing techniques (U-Net, RL, teacher-student) rather than fundamentally new methods",
+      "Missing ablation studies to isolate contribution of each component",
+      "Lacks comparison with state-of-the-art methods in the field",
+      "Training details insufficiently detailed for reproducibility",
+      "No discussion of failure cases or limitations in edge cases"
+    ],
+    "notes": "Solid engineering work with convincing real-world validation on a challenging task. The integration of under-base perception with gait-adaptive control is practical and well-executed. Main contribution is system integration rather than fundamental algorithmic innovation. The experiments are the strong suit, demonstrating robust locomotion on complex terrains that are notoriously difficult for humanoid robots."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Gait-Adaptive Perceptive Humanoid Locomotion with Real-Time Under-Base Terrain Reconstruction",
+      "authors": [
+        "Song, Haolin",
+        "Zhu, Hongbo",
+        "Yu, Tao",
+        "Liu, Yan",
+        "Yuan, Mingqi",
+        "Zhou, Wengang",
+        "Chen, Hua",
+        "Li, Houqiang"
+      ],
+      "year": 2025,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2512.07464",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "For full-size humanoid robots, even with recent advances in reinforcement learning-based control, achieving reliable locomotion on complex terrains, such as long staircases, remains challenging. In such settings, limited perception, ambiguous terrain cues, and insufficient adaptation of gait timing can cause even a single misplaced or mistimed step to result in rapid loss of balance. We introduce a perceptive locomotion framework that merges terrain sensing, gait regulation, and whole-body control into a single reinforcement learning policy. A downward-facing depth camera mounted under the base observes the support region around the feet, and a compact U-Net reconstructs a dense egocentric height map from each frame in real time, operating at the same frequency as the control loop. The perceptual height map, together with proprioceptive observations, is processed by a unified policy that produces joint commands and a global stepping-phase signal, allowing gait timing and whole-body posture to be adapted jointly to the commanded motion and local terrain geometry. We further adopt a single-stage successive teacher-student training scheme for efficient policy learning and knowledge transfer. Experiments conducted on a 31-DoF, 1.65 m humanoid robot demonstrate robust locomotion in both simulation and real-world settings, including forward and backward stair ascent and descent, as well as crossing a 46 cm gap. Project Page:https://ga-phl.github.io/",
+      "route_id": "64ad3157-d52b-4065-8721-96f21a2a682b"
+    },
+    "markdown_stats": {
+      "lines": 270,
+      "words": 7671,
+      "headings": 21
+    },
+    "assets": {
+      "images": 21,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "64ad3157-d52b-4065-8721-96f21a2a682b",
+  "paper_ref": "64ad3157-d52b-4065-8721-96f21a2a682b",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

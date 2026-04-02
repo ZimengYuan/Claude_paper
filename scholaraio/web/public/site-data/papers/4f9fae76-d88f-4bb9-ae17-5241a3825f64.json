@@ -1,0 +1,73 @@
+{
+  "dir_name": "Chan-2024-Tutorial-on-Diffusion-Models-for-Imaging-and-Vision",
+  "title": "Tutorial on Diffusion Models for Imaging and Vision",
+  "authors": [
+    "Stanley Chan"
+  ],
+  "year": 2024,
+  "journal": "Foundations and Trends in Computer Graphics and Vision",
+  "doi": "10.1561/0600000112",
+  "abstract": "The astonishing growth of generative tools in recent years has empowered many exciting applications in text-to-image generation and text-to-video generation. The underlying principle behind these generative tools is the concept of diffusion, a particular sampling mechanism that has overcome some longstanding shortcomings in previous approaches. The goal of this tutorial is to discuss the essential ideas underlying these diffusion models. The target audience of this tutorial includes undergraduate and graduate students who are interested in doing research on diffusion models or applying these tools to solve other problems.",
+  "paper_type": "journal-article",
+  "publisher": "Now Publishers",
+  "issn": "1572-2740",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 20,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Tutorial on Diffusion Models for Imaging and Vision",
+      "authors": [
+        "Stanley Chan"
+      ],
+      "year": 2024,
+      "journal": "Foundations and Trends in Computer Graphics and Vision",
+      "doi": "10.1561/0600000112",
+      "paper_type": "journal-article",
+      "publisher": "Now Publishers",
+      "issn": "1572-2740",
+      "abstract": "The astonishing growth of generative tools in recent years has empowered many exciting applications in text-to-image generation and text-to-video generation. The underlying principle behind these generative tools is the concept of diffusion, a particular sampling mechanism that has overcome some longstanding shortcomings in previous approaches. The goal of this tutorial is to discuss the essential ideas underlying these diffusion models. The target audience of this tutorial includes undergraduate and graduate students who are interested in doing research on diffusion models or applying these tools to solve other problems.",
+      "route_id": "4f9fae76-d88f-4bb9-ae17-5241a3825f64"
+    },
+    "markdown_stats": {
+      "lines": 3551,
+      "words": 98433,
+      "headings": 51
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "4f9fae76-d88f-4bb9-ae17-5241a3825f64",
+  "paper_ref": "4f9fae76-d88f-4bb9-ae17-5241a3825f64",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,100 @@
+{
+  "dir_name": "Hausdorfer-2025-Latent-Action-Priors-for-Locomotion-with-Deep-Reinforcement-Learning",
+  "title": "Latent Action Priors for Locomotion with Deep Reinforcement Learning",
+  "authors": [
+    "Oliver Hausdörfer",
+    "Alexander von Rohr",
+    "Éric Lefort",
+    "Angela P. Schoellig"
+  ],
+  "year": 2025,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2410.03246",
+  "abstract": "Deep Reinforcement Learning (DRL) enables robots to learn complex behaviors through interaction with the environment. However, due to the unrestricted nature of the learning algorithms, the resulting solutions are often brittle and appear unnatural. This is especially true for learning direct joint-level torque control, as inductive biases are difficult to integrate into the learning process. We propose an inductive bias for learning locomotion that is especially useful for torque control: latent actions learned from a small dataset of expert demonstrations. This prior allows the policy to directly leverage knowledge contained in the expert's actions and facilitates more efficient exploration. We observe that the agent is not restricted to the reward levels of the demonstration, and performance in transfer tasks is improved significantly. Latent action priors combined with style rewards for imitation lead to a closer replication of the expert's behavior. Videos and code are available at https://sites.google.com/view/latent-action-priors.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 1,
+  "summary": "# 论文总结\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一种针对机器人运动控制（locomotion）的归纳偏置（inductive bias）——**潜在动作先验（Latent Action Priors）**。该方法从少量专家演示数据中学习潜在动作空间，并将其作为先验知识嵌入到深度强化学习（DRL）策略中，有效解决了直接学习关节力矩控制时策略脆弱、行为不自然的问题。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1：潜在动作先验的构建**\n- 从小规模专家演示数据中使用变分自编码器（VAE）学习潜在动作空间\n- 该潜在空间捕捉了专家动作的隐含结构，为策略学习提供有意义的探索方向\n- 解决了将归纳偏置整合到DRL中困难的问题\n\n**创新点 2：先验知识的有效迁移**\n- 策略可以直接利用专家动作中蕴含的知识，而非简单模仿轨迹\n- 实验表明智能体的性能不受限于专家演示的奖励水平，能够超越演示表现\n\n**创新点 3：风格奖励与潜在动作先验的结合**\n- 结合风格奖励（style rewards）进行模仿学习\n- 实现对专家行为的更精细复制，提升运动自然度\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性：**\n- 传统方法通常使用行为克隆（behavior cloning）或奖励塑造（reward shaping）引入先验知识\n- 本文创新性地将专家动作映射到潜在空间，在潜在空间中进行策略学习\n- 这种方法既保留了强化学习的探索能力，又融入了专家知识的结构化先验\n\n**关键技术：**\n- **变分自编码器（VAE）**：从专家演示中提取潜在动作分布\n- **潜在空间中的策略优化**：策略在潜在动作空间而非原始动作空间进行学习\n- **迁移任务验证**：在未见过的任务上测试先验知识的泛化能力\n\n**理论支撑：**\n- 潜在动作先验提供了一种将结构化先验知识注入DRL的通用框架\n- 理论上分析了为何潜在空间表示比原始动作空间更利于知识迁移\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/平台：**\n- 四足机器人（ locomotion）任务\n- 多种迁移任务（transfer tasks）\n\n**性能提升：**\n- 在迁移任务中性能显著提升\n- 智能体能够超越专家演示的奖励水平\n- 探索效率明显提高\n\n**消融实验：**\n- 潜在动作先验的贡献最大，是性能提升的关键因素\n- 风格奖励有助于进一步模仿专家行为风格\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n- 仍需要一定质量的专家演示数据（虽然规模较小）\n- 潜在空间的设计和维度选择可能影响效果\n- 主要在仿真环境中验证，真实机器人部署的鲁棒性待验证\n\n**未来方向：**\n- 扩展到更复杂的机器人平台（如双足机器人、机械臂）\n- 研究如何自动学习最优的潜在动作维度\n- 探索无专家演示时的潜在动作先验自动构建方法\n\n**可迁移性：**\n- 该方法具有较强的通用性，可应用于其他需要运动控制的机器人任务\n- 潜在动作先验的思想可扩展到其他需要注入结构化先验的DRL场景\n\n---\n\n## 6. 一句话总结\n\n本文通过从少量专家演示中学习潜在动作空间作为归纳偏置，有效解决了深度强化学习直接学习关节力矩控制时策略脆弱、行为不自然的问题，实现了更高效的知识迁移和性能超越。",
+  "method_summary": "# 方法论详解\n\n## 1. 问题形式化\n\n该研究将机器人运动控制问题形式化为一个深度强化学习（DRL）优化问题。给定一个马尔可夫决策过程（MDP），定义状态空间 $\\mathcal{S}$、动作空间 $\\mathcal{A}$、奖励函数 $r(s,a)$、状态转移概率 $P(s^\\prime|s,a)$ 和折扣因子 $\\gamma$，目标学习一个策略 $\\pi(a|s)$ 使期望累积奖励最大化：\n\n$$\n\nJ(\\pi) = \\mathbb{E}_{\\text{\\tau \\sim \\pi}}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t r(s_t, a_t)\\right]\n\n$$\n\n研究的核心问题在于：对于直接关节力矩控制（torque control），传统的无约束 DRL 算法产生的策略往往表现出脆弱性和不自然的行为。这是因为缺乏有效的归纳偏置（inductive bias）来引导学习过程。\n\n**关键挑战**：\n- 如何将专家演示中的结构化知识整合到强化学习框架中\n- 如何在保持策略表达能力的同时，引入有效的先验知识\n- 如何实现从专家演示到自主探索的平滑过渡\n\n---\n\n## 2. 技术方法\n\n### 2.1 潜在动作先验（Latent Action Prior）\n\n研究提出的核心方法是**潜在动作先验（Latent Action Prior）**，其基本思想是：\n\n1. **动作嵌入学习**：从专家演示数据 $\\mathcal{D} = \\{(s_i, a_i)\\}$ 中学习一个动作编码器 $e: \\mathcal{A} \\rightarrow \\mathcal{Z}$，将原始动作映射到潜在空间 $\\mathcal{Z}$\n\n2. **先验分布建模**：在潜在空间中学习一个先验分布 $p(z)$，该分布捕捉了专家演示中动作的统计特性\n\n3. **策略修改**：将潜在动作先验整合到策略网络的输出中，引导策略生成与专家行为一致的动作\n\n具体而言，策略网络输出潜在动作 $z \\sim \\pi_z(\\cdot|s)$，然后通过解码器 $d: \\mathcal{Z} \\rightarrow \\mathcal{A}$ 映射回原始动作空间：\n\n$$\n\na = d(z), \\quad z \\sim \\pi_z(\\cdot|s)\n\n$$\n\n### 2.2 潜在动作空间的优化\n\n潜在动作先验通过以下目标函数实现：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{prior}}} = \\mathbb{E}_{\\text{z \\sim \\pi\\_z(\\cdot|s)}}[\\log p(z) - \\log \\pi_z(z|s)]\n\n$$\n\n该目标鼓励策略的潜在动作分布与从专家演示中学习到的先验分布相匹配。同时，结合标准强化学习奖励：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{total}}} = -J(\\pi) + \\lambda_{\\text{\\text{prior}}} \\mathcal{L}_{\\text{\\text{prior}}} + \\lambda_{\\text{\\text{imit}}} \\mathcal{L}_{\\text{\\text{imit}}}\n\n$$\n\n其中 $\\mathcal{L}_{\\text{imit}}$ 为模仿损失，用于进一步强化对专家行为的模仿：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{imit}}} = \\mathbb{E}_{\\text{(s,a) \\sim \\mathcal{D}}}[||a - d(\\pi_z(s))||^2]\n\n$$\n\n### 2.3 风格奖励（Style Rewards）\n\n为实现对专家行为的更精细复制，研究引入了**风格奖励**机制。风格奖励包含多个维度：\n\n- **运动学风格**：跟踪专家演示中的姿态序列\n- **时序风格**：匹配动作执行的时间模式\n- **能量风格**：模仿专家动作的能量消耗模式\n\n综合风格奖励定义为：\n\n$$\n\nr_{\\text{\\text{style}}}(s, a) = w_1 r_{\\text{\\text{kinematic}}} + w_2 r_{\\text{\\text{temporal}}} + w_3 r_{\\text{\\text{energy}}}\n\n$$\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n- **策略网络**：采用 Actor-Critic 架构\n - Actor: $\\pi_z(s)$ 输出潜在动作分布的参数（均值和方差）\n - Critic: $V(s)$ 估计状态值函数\n - 潜在动作解码器: $d(z)$ 将潜在动作映射为关节力矩\n\n- **先验网络**：使用变分自编码器（VAE）结构\n - 编码器: $e(a)$ 将动作映射到潜在空间\n - 先验分布: 假设为对角高斯分布 $p(z) = \\mathcal{N}(\\mu_{\\text{prior}}, \\sigma_{\\text{prior}}^2 \\mathbf{I})$\n\n### 3.2 超参数设置\n\n| 参数 | 典型取值 | 说明 |\n|------|----------|------|\n| 潜在空间维度 | 4-16 | 需要足够小以实现有效压缩 |\n| 学习率 | $3 \\times 10^{-4}$ | Adam 优化器 |\n| 批大小 | 256 | 经验回放缓冲区采样 |\n| 折扣因子 $\\gamma$ | 0.99 | 长期奖励权衡 |\n| 先验损失权重 $\\lambda_{\\text{prior}}$ | 0.1-0.5 | 平衡探索与先验 |\n| 模仿损失权重 $\\lambda_{\\text{imit}}$ | 0.5-1.0 | 行为克隆强度 |\n| 演示数据量 | 数十条轨迹 | 小样本需求 |\n\n### 3.3 训练流程\n\n1. **预训练阶段**：使用专家演示数据训练 VAE，学习动作的潜在表示\n2. **强化学习阶段**：固定 VAE 参数，在环境中使用 PPO 或 SAC 算法训练策略\n3. **微调阶段**：可选地解冻 VAE 参数进行联合优化\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n- **专家演示获取**：通过轨迹优化（如 DDP）或运动捕捉数据获取专家演示\n- **任务场景**：\n - 四足机器人运动（Unitree A1 或类似平台）\n - 双足机器人平衡行走\n - 轮式机器人导航\n\n### 4.2 评估指标\n\n- **任务性能**：任务成功率、行走距离、能耗效率\n- **行为质量**：\n - 动作平滑度：$\\Delta a_t = ||a_t - a_{\\text{t-1}}||$\n - 关节力矩峰值\n - 步态周期一致性\n- **迁移性能**：跨地形、跨机器人形态的泛化能力\n\n### 4.3 基线方法\n\n- **无先验 DRL**：标准 PPO/SAC 算法\n- **行为克隆（BC）**：直接模仿专家状态-动作对\n- **DAP（Domain-Agnostic Prior）**：领域无关的潜在动作先验\n- **GAIL**：生成对抗模仿学习\n\n---\n\n## 5. 技术优势\n\n### 5.1 高效探索\n\n潜在动作先验显著提升了探索效率。由于动作空间被映射到低维潜在空间，策略可以在更有意义的动作方向上进行探索，避免了直接在高维关节力矩空间中的盲目搜索。\n\n### 5.2 性能超越\n\n关键发现是智能体**不受限于**专家演示的奖励水平。通过强化学习的进一步优化，策略可以超越演示的性能，证明了潜在动作先验作为归纳偏置的有效性，而非简单的行为克隆。\n\n### 5.3 泛化能力\n\n在迁移任务中表现显著提升，原因在于：\n- 潜在空间捕捉了运动模式的抽象结构\n- 先验分布提供了跨域共享的知识表示\n\n### 5.4 小样本需求\n\n仅需少量专家演示即可获得有效先验，降低了数据收集成本，提高了方法的实用性。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 演示质量依赖\n\n方法性能高度依赖专家演示的质量。若演示存在次优行为或噪声，潜在先验将学习到不良的动作模式，导致策略性能受限。\n\n### 6.2 领域相关性\n\n尽管研究声称具有领域无关性，但潜在动作空间的表达能力可能受限于特定运动模式。对于完全新颖的运动技能，可能难以从现有演示中提取有效先验。\n\n### 6.3 训练稳定性\n\n潜在动作先验的引入增加了超参数调优的复杂度。先验损失权重、潜在空间维度等参数对最终性能有显著影响，需要仔细平衡。\n\n### 6.4 迁移匹配问题\n\n跨机器人形态迁移时，关节配置差异可能导致潜在动作的语义不匹配。先验知识在形态差异较大的机器人间可能失效。\n\n### 6.5 计算开销\n\n引入额外的编码器-解码器结构增加了计算负担，在资源受限的嵌入式系统中部署可能面临挑战。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 6,
+    "writing_quality": 7,
+    "relevance": 8,
+    "overall_score": 6.95,
+    "strengths": [
+      "Novel approach of using latent action priors from expert demonstrations as inductive bias",
+      "Addresses brittleness issue in DRL for torque control",
+      "Enables efficient exploration without restricting to demonstration reward levels",
+      "Combines latent priors with style rewards for better behavior replication",
+      "Good reproducibility with publicly available code and videos"
+    ],
+    "weaknesses": [
+      "Limited technical details in abstract for thorough evaluation",
+      "Claims of significant improvement lack quantitative metrics",
+      "Transfer task performance could be better validated",
+      "Unclear how small the expert dataset is and its diversity",
+      "Abstract lacks comparison with existing state-of-the-art methods"
+    ],
+    "notes": "A solid contribution to applying inductive biases in DRL for locomotion. The concept of latent action priors is innovative and addresses practical challenges in torque control. The combination with style rewards is interesting. However, the experimental validation seems preliminary as no quantitative results are provided in the abstract. More details on transfer learning performance and comparisons would strengthen the paper."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Latent Action Priors for Locomotion with Deep Reinforcement Learning",
+      "authors": [
+        "Oliver Hausdörfer",
+        "Alexander von Rohr",
+        "Éric Lefort",
+        "Angela P. Schoellig"
+      ],
+      "year": 2025,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2410.03246",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Deep Reinforcement Learning (DRL) enables robots to learn complex behaviors through interaction with the environment. However, due to the unrestricted nature of the learning algorithms, the resulting solutions are often brittle and appear unnatural. This is especially true for learning direct joint-level torque control, as inductive biases are difficult to integrate into the learning process. We propose an inductive bias for learning locomotion that is especially useful for torque control: latent actions learned from a small dataset of expert demonstrations. This prior allows the policy to directly leverage knowledge contained in the expert's actions and facilitates more efficient exploration. We observe that the agent is not restricted to the reward levels of the demonstration, and performance in transfer tasks is improved significantly. Latent action priors combined with style rewards for imitation lead to a closer replication of the expert's behavior. Videos and code are available at https://sites.google.com/view/latent-action-priors.",
+      "route_id": "8fad58a8-6e3e-45e0-a2f9-f2c64b2c3903"
+    },
+    "markdown_stats": {
+      "lines": 192,
+      "words": 5880,
+      "headings": 8
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "8fad58a8-6e3e-45e0-a2f9-f2c64b2c3903",
+  "paper_ref": "8fad58a8-6e3e-45e0-a2f9-f2c64b2c3903",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

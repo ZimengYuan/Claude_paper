@@ -1,0 +1,83 @@
+{
+  "dir_name": "Fu-2026-DemoHLM-From-One-Demonstration-to-Generalizable-Humanoid-Loco-Manipulation",
+  "title": "DemoHLM: From One Demonstration to Generalizable Humanoid Loco-Manipulation",
+  "authors": [
+    "Yuhui Fu",
+    "Feiyang Xie",
+    "Chaoyi Xu",
+    "Jing Xiong",
+    "Haoqi Yuan",
+    "Zongqing Lu"
+  ],
+  "year": 2026,
+  "journal": "IEEE Robotics and Automation Letters",
+  "doi": "10.1109/lra.2026.3666395",
+  "abstract": "Loco-manipulation is a fundamental challenge for humanoid robots to achieve versatile interactions in human environments. Although recent studies have made significant progress in humanoid whole-body control, loco-manipulation remains underexplored and often relies on hard-coded task definitions or costly real-world data collection, which limits autonomy and generalization. We present DemoHLM, a framework for humanoid loco-manipulation that achieves generalization to different robot and object poses from just a single demonstration in simulation. DemoHLM adopts a hierarchy that integrates a low-level universal whole-body controller with high-level manipulation policies for multiple tasks. The whole-body controller maps whole-body motion commands to joint positions and provides omnidirectional mobility for the humanoid robot. The manipulation policies, learned in simulation via our data generation and imitation learning pipeline, command the whole-body controller with closed-loop visual feedback to execute challenging loco-manipulation tasks. Experiments show a positive correlation between the amount of synthetic data and policy performance, underscoring the effectiveness of our data generation pipeline and the data efficiency of our approach. Real-world experiments on a Unitree G1 robot equipped with an RGB-D camera validate the sim-to-real transferability of DemoHLM, demonstrating robust performance under spatial variations across ten loco-manipulation tasks.",
+  "paper_type": "journal-article",
+  "publisher": "Institute of Electrical and Electronics Engineers",
+  "issn": "2377-3766",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 7,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "DemoHLM: From One Demonstration to Generalizable Humanoid Loco-Manipulation",
+      "authors": [
+        "Yuhui Fu",
+        "Feiyang Xie",
+        "Chaoyi Xu",
+        "Jing Xiong",
+        "Haoqi Yuan",
+        "Zongqing Lu"
+      ],
+      "year": 2026,
+      "journal": "IEEE Robotics and Automation Letters",
+      "doi": "10.1109/lra.2026.3666395",
+      "paper_type": "journal-article",
+      "publisher": "Institute of Electrical and Electronics Engineers",
+      "issn": "2377-3766",
+      "abstract": "Loco-manipulation is a fundamental challenge for humanoid robots to achieve versatile interactions in human environments. Although recent studies have made significant progress in humanoid whole-body control, loco-manipulation remains underexplored and often relies on hard-coded task definitions or costly real-world data collection, which limits autonomy and generalization. We present DemoHLM, a framework for humanoid loco-manipulation that achieves generalization to different robot and object poses from just a single demonstration in simulation. DemoHLM adopts a hierarchy that integrates a low-level universal whole-body controller with high-level manipulation policies for multiple tasks. The whole-body controller maps whole-body motion commands to joint positions and provides omnidirectional mobility for the humanoid robot. The manipulation policies, learned in simulation via our data generation and imitation learning pipeline, command the whole-body controller with closed-loop visual feedback to execute challenging loco-manipulation tasks. Experiments show a positive correlation between the amount of synthetic data and policy performance, underscoring the effectiveness of our data generation pipeline and the data efficiency of our approach. Real-world experiments on a Unitree G1 robot equipped with an RGB-D camera validate the sim-to-real transferability of DemoHLM, demonstrating robust performance under spatial variations across ten loco-manipulation tasks.",
+      "route_id": "200153e8-5780-4713-a0e8-b77f270d9f52"
+    },
+    "markdown_stats": {
+      "lines": 345,
+      "words": 8246,
+      "headings": 33
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "200153e8-5780-4713-a0e8-b77f270d9f52",
+  "paper_ref": "200153e8-5780-4713-a0e8-b77f270d9f52",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

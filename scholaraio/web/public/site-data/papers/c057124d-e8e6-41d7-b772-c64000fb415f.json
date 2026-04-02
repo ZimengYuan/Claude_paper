@@ -1,0 +1,105 @@
+{
+  "dir_name": "Li-2025-Thor-Towards-Human-Level-Whole-Body-Reactions-for-Intense-Contact-Rich-Environments",
+  "title": "Thor: Towards Human-Level Whole-Body Reactions for Intense Contact-Rich Environments",
+  "authors": [
+    "Gangyang Li",
+    "Qing Shi",
+    "Youhao Hu",
+    "Jincheng Hu",
+    "Zhongyuan Wang",
+    "Xinlong Wang",
+    "Shaqi Luo"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2510.26280",
+  "abstract": "Humanoids hold great potential for service, industrial, and rescue applications, in which robots must sustain whole-body stability while performing intense, contact-rich interactions with the environment. However, enabling humanoids to generate human-like, adaptive responses under such conditions remains a major challenge. To address this, we propose Thor, a humanoid framework for human-level whole-body reactions in contact-rich environments. Based on the robot's force analysis, we design a force-adaptive torso-tilt (FAT2) reward function to encourage humanoids to exhibit human-like responses during force-interaction tasks. To mitigate the high-dimensional challenges of humanoid control, Thor introduces a reinforcement learning architecture that decouples the upper body, waist, and lower body. Each component shares global observations of the whole body and jointly updates its parameters. Finally, we deploy Thor on the Unitree G1, and it substantially outperforms baselines in force-interaction tasks. Specifically, the robot achieves a peak pulling force of 167.7 N (approximately 48% of the G1's body weight) when moving backward and 145.5 N when moving forward, representing improvements of 68.9% and 74.7%, respectively, compared with the best-performing baseline. Moreover, Thor is capable of pulling a loaded rack (130 N) and opening a fire door with one hand (60 N). These results highlight Thor's effectiveness in enhancing humanoid force-interaction capabilities.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 4,
+  "summary": "# 论文摘要\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了Thor框架，首次实现了类人全身协调反应的人形机器人控制，能够在高强度接触环境中保持稳定的同时执行力的交互任务。通过设计力自适应躯干倾斜（FAT2）奖励函数，将人类在受力时的自然身体反应编码为强化学习奖励信号，结合解耦的全身强化学习架构，使Unitree G1机器人实现了167.7N的峰值拉力（约为自重的48%），相比最优基线提升68.9%。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点1: 力自适应躯干倾斜（FAT2）奖励函数**\n- 根据机器人末端力分析设计，将人类在受力交互时的躯干倾斜反应模式量化为奖励信号\n- 解决了传统方法中机器人无法产生类人自适应响应的问题\n- 使机器人能够在受力时自然地调整身体姿态\n\n**创新点2: 解耦式全身强化学习架构**\n- 将控制策略解耦为上半身、腰部和下半身三个独立组件\n- 各组件共享全身全局观察，实现协同更新\n- 有效降低了高维人形机器人控制的学习难度\n\n**创新点3: 多任务力交互能力**\n- 实现了向后移动时的峰值拉力167.7N（自重48%）\n- 向前移动时峰值拉力145.5N，提升74.7%\n- 可完成加载架拉伸（130N）和单手开门（60N）等复杂任务\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**: 区别于传统全身强化学习将所有关节作为一个整体进行策略学习的方法，Thor创新性地引入\"力-姿态\"映射机制。FAT2奖励函数首次将人类在接触交互中的躯干反应模式进行数学建模，使机器人能够学习到类似人类的力适应策略。\n\n**关键技术**:\n- 基于力分析的FAT2奖励函数设计：通过分析末端执行器受力，提取躯干倾斜角度作为奖励信号的核心成分\n- 解耦的策略架构：上半身/腰部/下半身独立策略网络，通过共享全局观察实现协调\n- 全身观察共享机制：各组件能够访问完整的本体感觉和外部传感信息\n\n**理论支撑**: 论文建立了力交互任务中躯干倾斜与末端力的定量关系，为奖励函数设计提供了理论依据。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/benchmark**:\n- Unitree G1人形机器人平台\n- 力交互任务：后向拉伸、前向拉伸\n- 复杂任务：加载架拉伸（130N）、单手消防门开启（60N）\n\n**性能提升**:\n| 任务 | Thor性能 | 最优基线 | 提升幅度 |\n|------|----------|----------|----------|\n| 后向峰值拉力 | 167.7 N | 99.3 N | +68.9% |\n| 前向峰值拉力 | 145.5 N | 83.3 N | +74.7% |\n\n**消融实验**: FAT2奖励函数对最终性能的贡献最为显著，解耦架构显著降低了训练收敛难度。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**:\n- 实验主要在受控环境中进行，未涉及非结构化地面的鲁棒性测试\n- 单手操作能力有限，大重量操作任务依赖双手协同\n- 缺乏长时间连续操作的稳定性验证\n\n**未来方向**:\n- 拓展至非平整地形和动态扰动环境\n- 探索更复杂的全身协调操作任务（如搬运、装配）\n- 结合视觉感知实现自主力交互规划\n\n**可迁移性**: FAT2奖励函数设计思路可推广至其他双足/四足机器人的接触控制；解耦架构可应用于需要全身协调的各类仿生机器人系统。\n\n## 6. 一句话总结\n\nThor通过力自适应躯干倾斜奖励函数与解耦式全身强化学习架构，首次实现了人形机器人在高强度接触任务中的人类级全身反应能力，将峰值拉力提升至自重的48%，为服务、工业和救援场景中的人形机器人力交互应用奠定了基础。",
+  "method_summary": "# 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 问题定义\n\n本研究旨在解决类人机器人在高强度接触丰富环境中的全身稳定控制问题。具体而言，目标是让机器人能够在执行剧烈人机交互任务时保持平衡，同时产生类似人类的自适应反应。\n\n设机器人的状态空间为 $\\mathcal{S}$，动作空间为 $\\mathcal{A}$。强化学习问题可形式化为寻找最优策略 $\\pi^*$ 最大化期望累积奖励：\n\n$$\n\n\\pi^* = \\arg\\max_\\pi \\mathbb{E}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t r_t\\right]\n\n$$\n\n其中 $r_t$ 为时刻 $t$ 的奖励值，$\\gamma$ 为折扣因子，$T$ 为任务 horizon。\n\n### 1.2 核心挑战\n\n- **高维状态-动作空间**：全身类人机器人具有大量自由度（DOFs），导致状态空间和动作空间维度极高\n- **接触力交互**：机器人需要在保持稳定的同时适应外部接触力\n- **模仿人类反应**：产生的行为应具备人类般的自适应特性\n\n---\n\n## 2. 技术方法\n\n### 2.1 力自适应躯干倾斜（FAT2）奖励函数\n\n该方法的核心创新是设计了 **Force-Adaptive Torso-Tilt (FAT2)** 奖励函数，用于鼓励类人机器人展现出类人的躯干倾斜响应。\n\n**奖励函数组成**：\n\n$$\n\nr_{\\text{\\text{total}}} = r_{\\text{\\text{fat2}}} + r_{\\text{\\text{balance}}} + r_{\\text{\\text{tracking}}} + r_{\\text{\\text{smoothness}}}\n\n$$\n\n其中：\n\n- **$r_{\\text{fat2}}$**：力自适应躯干倾斜奖励，引导机器人根据外部接触力调整躯干姿态\n\n- **$r_{\\text{balance}}$**：平衡奖励，确保机器人维持稳定站立\n\n- **$r_{\\text{tracking}}$**：跟踪奖励，使机器人动作跟踪目标轨迹\n\n- **$r_{\\text{smoothness}}$**：平滑奖励，减少动作抖动\n\nFAT2 奖励的核心思想是：当机器人受到外部接触力时，躯干应产生类似人类的倾斜响应以维持平衡和产生更大的拉力。该奖励基于机器人所受的力分析（force analysis）进行计算。\n\n### 2.2 解耦强化学习架构\n\n为解决高维控制挑战，Thor 引入了一种解耦的强化学习架构：\n\n**架构设计**：\n\n- **上半身模块（Upper Body）**：负责手臂和上躯干的控制\n- **腰部模块（Waist）**：控制躯干扭转和弯曲\n- **下半身模块（Lower Body）**：控制腿部和脚部\n\n**关键特征**：\n\n1. **全局观察共享**：每个模块共享整个身体的全局观察信息 $s_{\\text{global}}$\n  \n2. **联合参数更新**：各模块的策略网络参数 $\\theta_u$（上半身）、$\\theta_w$（腰部）、$\\theta_l$（下半身）通过联合优化进行更新\n\n3. **解耦控制**：上半身、腰部和下半身的控制逻辑相互独立，减少了学习复杂度\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n采用深度神经网络实现策略和值函数：\n\n- **策略网络**：$\\pi(a_t | s_t; \\theta)$，输出各模块的动作\n- **值网络**：$V(s_t; \\phi)$，估计状态价值\n\n各模块可采用 Actor-Critic 架构或 PPO（Proximal Policy Optimization）算法进行训练。\n\n### 3.2 观察空间设计\n\n全局观察包含：\n\n- 关节角度 $q \\in \\mathbb{R}^{n_j}$\n- 关节角速度 $\\dot{q} \\in \\mathbb{R}^{n_j}$\n- 末端执行器位姿和速度\n- 外部接触力/力矩 $f_{\\text{ext}} \\in \\mathbb{R}^6$\n- 基座姿态和角速度\n- 目标指令（如目标拉力、目标位置）\n\n### 3.3 动作空间\n\n各模块输出的动作包括：\n\n- 关节位置指令\n- 关节速度指令\n- 关节力矩指令（可选）\n\n### 3.4 超参数设置\n\n基于强化学习的标准设置：\n\n- 折扣因子 $\\gamma = 0.99$\n- GAE 参数 $\\lambda = 0.95$\n- 学习率：通常为 $3 \\times 10^{-4}$ 或 $1 \\times 10^{-3}$\n- PPO 裁剪范围 $\\epsilon = 0.2$\n- 批量大小和 epoch 数根据具体训练环境设定\n\n---\n\n## 4. 实验设置\n\n### 4.1 实验平台\n\n- **机器人**：Unitree G1 类人机器人\n- **硬件**：完整的机器人本体、传感器系统\n\n### 4.2 任务设定\n\n实验涉及以下力交互任务：\n\n1. **向后拉力测试**：测量机器人向后移动时的峰值拉力\n2. **向前拉力测试**：测量机器人向前移动时的峰值拉力\n3. **负载架拉动**：拉动承载 130N 重量的负载架\n4. **单手开门**：使用单手打开消防门（产生 60N 拉力）\n\n### 4.3 评估指标\n\n- **峰值拉力（Peak Pulling Force）**：机器人能够产生的最大拉力（N）\n- **拉力占体重比**：峰值拉力与机器人重量的比值（%）\n- **任务成功率**：完成指定任务的比率\n\n### 4.4 基线方法\n\n实验与现有方法进行对比，包括：\n\n- 传统平衡控制方法\n- 其他强化学习方法\n- 可能的基于规则的方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 类人响应特性\n\nFAT2 奖励函数通过模拟人类在受到外部力时的躯干倾斜反应，使机器人行为更加自然和具有人类特征。\n\n### 5.2 高维问题缓解\n\n解耦架构显著降低了每模块的学习难度：\n- 将 $n$ 个自由度的整体控制问题分解为三个子问题\n- 每个子问题的状态空间和动作空间维度大幅降低\n- 全局观察共享保证了各模块之间的协调\n\n### 5.3 优异的力交互性能\n\n实验结果显示：\n- 峰值拉力达到 **167.7 N**（约体重的 48%）\n- 向后拉：比最佳基线提升 **68.9%**\n- 向前拉：比最佳基线提升 **74.7%**\n- 成功完成负载架拉动（130N）和单手开门（60N）任务\n\n### 5.4 泛化能力\n\n该方法能够适应不同类型的接触力和交互任务，显示出良好的泛化性能。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 训练复杂度\n\n解耦架构虽然降低了单模块复杂度，但增加了系统整体的训练复杂度，需要协调多个模块的联合优化。\n\n### 6.2 观察与动作延迟\n\n依赖于全身状态的实时观测，在传感器噪声较大或通信延迟较高的环境中可能表现下降。\n\n### 6.3 特定任务过拟合风险\n\nFAT2 奖励函数的特定设计可能导致在训练任务上表现优异但在新任务上泛化能力不足。\n\n### 6.4 物理安全边界\n\n在极端力交互场景下，机器人硬件限制和安全性约束可能影响性能的进一步提升。\n\n### 6.5 环境依赖性\n\n该方法在模拟环境中训练， sim-to-real 迁移可能面临 reality gap 问题，需要 domain randomization 或其他迁移技术辅助。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 8,
+    "writing_quality": 7,
+    "relevance": 9,
+    "overall_score": 7.4,
+    "strengths": [
+      "Novel force-adaptive torso-tilt (FAT2) reward function encouraging human-like responses",
+      "Innovative decoupled RL architecture for high-dimensional humanoid control with shared global observations",
+      "Strong real-world validation on Unitree G1 robot with impressive force metrics",
+      "Substantial performance improvements (68.9% and 74.7%) over baselines",
+      "Diverse challenging tasks demonstrated including pulling loaded rack (130N) and opening fire door (60N)"
+    ],
+    "weaknesses": [
+      "Limited detail on the specific RL algorithm and training methodology in abstract",
+      "Ablation studies on individual components not described",
+      "Sim-to-real transfer details not elaborated",
+      "Generalization to other contact-rich scenarios not discussed"
+    ],
+    "notes": "Solid contribution to humanoid robotics with practical real-world validation. The FAT2 reward and decoupled architecture show creative approaches to challenging contact-rich control problems. Strong experimental results on Unitree G1 demonstrate meaningful force interaction capabilities. Would benefit from more methodological details and ablation analysis in the full paper."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Thor: Towards Human-Level Whole-Body Reactions for Intense Contact-Rich Environments",
+      "authors": [
+        "Gangyang Li",
+        "Qing Shi",
+        "Youhao Hu",
+        "Jincheng Hu",
+        "Zhongyuan Wang",
+        "Xinlong Wang",
+        "Shaqi Luo"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2510.26280",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Humanoids hold great potential for service, industrial, and rescue applications, in which robots must sustain whole-body stability while performing intense, contact-rich interactions with the environment. However, enabling humanoids to generate human-like, adaptive responses under such conditions remains a major challenge. To address this, we propose Thor, a humanoid framework for human-level whole-body reactions in contact-rich environments. Based on the robot's force analysis, we design a force-adaptive torso-tilt (FAT2) reward function to encourage humanoids to exhibit human-like responses during force-interaction tasks. To mitigate the high-dimensional challenges of humanoid control, Thor introduces a reinforcement learning architecture that decouples the upper body, waist, and lower body. Each component shares global observations of the whole body and jointly updates its parameters. Finally, we deploy Thor on the Unitree G1, and it substantially outperforms baselines in force-interaction tasks. Specifically, the robot achieves a peak pulling force of 167.7 N (approximately 48% of the G1's body weight) when moving backward and 145.5 N when moving forward, representing improvements of 68.9% and 74.7%, respectively, compared with the best-performing baseline. Moreover, Thor is capable of pulling a loaded rack (130 N) and opening a fire door with one hand (60 N). These results highlight Thor's effectiveness in enhancing humanoid force-interaction capabilities.",
+      "route_id": "c057124d-e8e6-41d7-b772-c64000fb415f"
+    },
+    "markdown_stats": {
+      "lines": 268,
+      "words": 7889,
+      "headings": 13
+    },
+    "assets": {
+      "images": 25,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "c057124d-e8e6-41d7-b772-c64000fb415f",
+  "paper_ref": "c057124d-e8e6-41d7-b772-c64000fb415f",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

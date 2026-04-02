@@ -1,0 +1,106 @@
+{
+  "dir_name": "Han-2026-HUSKY-Humanoid-Skateboarding-System-via-Physics-Aware-Whole-Body-Control",
+  "title": "HUSKY: Humanoid Skateboarding System via Physics-Aware Whole-Body Control",
+  "authors": [
+    "Jinrui Han",
+    "Dewei Wang",
+    "Chenyun Zhang",
+    "Xinzhe Liu",
+    "Ping Luo",
+    "Chenjia Bai",
+    "Xuelong Li"
+  ],
+  "year": 2026,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2602.03205",
+  "abstract": "While current humanoid whole-body control frameworks predominantly rely on the static environment assumptions, addressing tasks characterized by high dynamism and complex interactions presents a formidable challenge. In this paper, we address humanoid skateboarding, a highly challenging task requiring stable dynamic maneuvering on an underactuated wheeled platform. This integrated system is governed by non-holonomic constraints and tightly coupled human-object interactions. Successfully executing this task requires simultaneous mastery of hybrid contact dynamics and robust balance control on a mechanically coupled, dynamically unstable skateboard. To overcome the aforementioned challenges, we propose HUSKY, a learning-based framework that integrates humanoid-skateboard system modeling and physics-aware whole-body control. We first model the coupling relationship between board tilt and truck steering angles, enabling a principled analysis of system dynamics. Building upon this, HUSKY leverages Adversarial Motion Priors (AMP) to learn human-like pushing motions and employs a physics-guided, heading-oriented strategy for lean-to-steer behaviors. Moreover, a trajectory-guided mechanism ensures smooth and stable transitions between pushing and steering. Experimental results on the Unitree G1 humanoid platform demonstrate that our framework enables stable and agile maneuvering on skateboards in real-world scenarios. The project page is available on https://husky-humanoid.github.io/.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 1,
+  "summary": "# HUSKY: 基于物理感知全身控制的人形滑板系统\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了HUSKY框架，首次实现人形机器人在真实世界中的稳定滑板运动。该框架通过显式建模人形-滑板耦合系统的动力学特性，将滑板倾斜与转向架转向角度之间的物理约束融入学习过程，并结合对抗性运动先验(AMP)学习类人推动策略，以及基于物理感知的倾斜-转向控制，实现了高动态、欠驱动系统上的稳定滑板操作。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1: 人形-滑板系统建模与倾斜-转向耦合约束\n- **重要性**：滑板的机械结构将板身倾斜转化为转向架转向，这种非完整约束是实现lean-to-steer行为的核心物理机制\n- **解决的问题**：之前的方法简化了滑板动力学，无法捕捉复杂的非完整约束和欠驱动特性\n\n### 创新点 2: 基于AMP的类人推动风格学习\n- **重要性**：利用判别器区分策略轨迹与人类推动动作，引导策略学习自然、鲁棒的推动行为\n- **解决的问题**：传统参考跟踪方法产生的动作僵硬，缺乏对不同环境和速度的适应性\n\n### 创新点 3: 物理感知的倾角引导转向策略\n- **重要性**：通过建立倾角-偏航率解析关系，提供物理一致的倾角参考，使策略能够精确跟踪期望航向\n- **解决的问题**：隐式学习倾角导致转向精度不足，物理引导显著提升了方向控制准确性\n\n### 创新点 4: 相位间轨迹引导过渡机制\n- **重要性**：使用Bezier曲线和球面线性插值规划关键身体的位姿轨迹，引导推动相与转向相之间的平滑切换\n- **解决的问题**：无显式过渡指导时策略难以探索新相位，容易陷入仅推动的局部最优\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性\n与现有SOTA方法的本质区别在于：\n- **显式物理建模**：显式建立并嵌入倾斜-转向约束方程，而非仅依赖黑箱学习\n- **相位分解学习**：将滑板任务分解为推动、转向和过渡三个相位，针对性设计奖励和策略\n- **轨迹引导过渡**：引入在线轨迹规划解决状态依赖的相位切换问题，而非仅依靠随机探索\n\n### 关键技术\n- **AMP对抗性学习**：使用LS-GAN判别器+梯度惩罚，从人类动作数据集学习类人推动风格\n- **倾角参考计算**：基于自行车模型推导 $\\gamma_{ref} = \\arcsin(\\frac{L\\Delta\\psi}{v\\Delta t \\tan\\lambda})$，建立偏航与倾角的解析映射\n- **Bezier轨迹规划**：n阶Bezier曲线规划位置，球面线性插值(slerp)规划姿态，确保过渡平滑\n- **系统辨识**：通过自由衰减振荡实验辨识滑板倾角刚度和阻尼系数，弥合sim-to-real gap\n\n### 理论支撑\n论文提供了倾斜-转向约束的详细推导，基于车辆动力学自行车模型建立了偏航率与倾角的解析关系，为物理引导策略提供了理论依据。\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/benchmark\n- **仿真平台**：MuJoCo + IsaacLab，80cm×20cm×12cm滑板模型\n- **物理平台**：Unitree G1人形机器人（23个可控自由度）\n- **测试场景**：室内/室外不同地面、多款滑板平台、外部扰动测试\n\n### 性能提升\n\n| 指标 | HUSKY | 最佳baseline | 提升幅度 |\n|------|-------|--------------|----------|\n| 成功率 (E_succ) | **100%** | 96.72% (w/o Tilt) | +3.28% |\n| 速度跟踪误差 (E_vel) | **0.056** | 0.102 (Gait-based) | -45% |\n| 偏航跟踪误差 (E_yaw) | **0.208** | 0.233 (w/o Tilt) | -10.7% |\n| 运动平滑度 (E_smth) | **0.033** | 0.043 (Gait-based) | -23% |\n| 接触误差 (E_contact) | **0.001** | 0.015 (Tracking-based) | -93% |\n\n### 消融实验结论\n- **AMP贡献**：相比Tracking-based和Gait-based，AMP显著提升成功率和动作自然度\n- **倾角引导贡献**：去除倾角引导后，偏航误差增加12%，证明物理引导的关键作用\n- **轨迹过渡贡献**：无过渡指导时接触错误高达39.4%，轨迹引导将其降至0.1%\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n- **视觉感知受限**：机载摄像头视野有限，无法可靠观察滑板和轮地交互，限制了在复杂环境中的感知反馈\n- **地形复杂度**：当前实验在相对简单的平坦地面进行，未涉及滑板公园等复杂地形\n- **板身参数敏感性**：系统辨识参数与实际物理板不匹配时会导致失败（如软板参数用于硬板）\n\n### 未来方向\n- 集成视觉状态估计，实现感知增强的滑板控制\n- 扩展到复杂地形和特技动作\n- 探索更鲁棒的sim-to-real迁移方法，减少对精确系统辨识的依赖\n\n### 可迁移性\n该框架的相位分解学习、物理引导策略和轨迹过渡机制具有高度通用性，可迁移至其他人形-动态平台交互任务（如轮式平衡车、独轮车等），以及任何需要离散接触相切换的欠驱动系统控制。\n\n## 6. 一句话总结\n\nHUSKY通过显式建模人形-滑板系统的倾斜-转向物理约束，结合AMP类人推动学习、物理感知倾角引导和轨迹规划相位过渡，首次在真实人形机器人上实现了稳定、灵活的滑板运动，解决了高动态欠驱动系统上混合接触相切换的核心难题。",
+  "method_summary": "# HUSKY 方法论详解：基于物理感知的人形机器人滑板控制系统\n\n---\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n人形滑板运动被形式化为一个**混合动力学系统**，包含两个周期性交替的阶段：\n\n- **推动阶段（Pushing Phase）**：人形机器人一只脚保持在滑板上维持身体平衡，另一只脚间歇性地接触地面产生推进力\n- **转向阶段（Steering Phase）**：双脚均保持在滑板上，通过身体倾斜诱导滑板转向\n\n### 1.2 强化学习问题构建\n\n采用**非对称 Actor-Critic 框架**进行策略训练：\n\n- **Actor 策略** $\\pi(\\mathbf{a}_t | \\mathbf{s}_t)$：仅观测本体感知信息（proprioceptive）\n- **Critic**：可访问额外的特权信息（privileged information）\n\n**状态空间**定义为：\n\n$$\n\n\\mathbf{o}_t^{\\text{prop}} = [\\mathbf{c}_t, \\boldsymbol{\\omega}_t, \\mathbf{g}_t, \\boldsymbol{\\theta}_t, \\dot{\\boldsymbol{\\theta}}_t, \\mathbf{a}_{\\text{\\text{t-1}}}, \\Phi]\n\n$$\n\n其中 $\\mathbf{c}_t = [v_{\\text{cmd}}, \\psi]$ 包含期望滑板速度 $v_{\\text{cmd}}$ 和航向目标 $\\psi$，$\\Phi = (t \\bmod H)/H \\in [0,1)$ 是表示周期的归一化变量。\n\n**动作空间**：$\\mathbf{a}_t \\in \\mathbb{R}^{23}$，对应 Unitree G1 人形机器人的 23 个可控自由度。\n\n**优化目标**：\n\n$$\n\nJ = \\mathbb{E}\\left[\\sum_{\\text{t=0}}^{T-1} \\beta^t r_t\\right]\n\n$$\n\n其中 $\\beta$ 为折扣因子，$r_t$ 为奖励函数。\n\n### 1.3 奖励函数\n\n总体奖励定义为：\n\n$$\n\nr_t = \\mathbb{I}^{\\text{push}} \\cdot r_t^{\\text{push}} + \\mathbb{I}^{\\text{steer}} \\cdot r_t^{\\text{steer}} + \\mathbb{I}^{\\text{trans}} \\cdot r_t^{\\text{trans}} + r_t^{\\text{reg}}\n\n$$\n\n其中 $\\mathbb{I}^{\\text{push}}, \\mathbb{I}^{\\text{steer}}, \\mathbb{I}^{\\text{trans}}$ 为二进制指示函数，表示当前接触相拓扑。\n\n---\n\n## 2. 技术方法\n\n### 2.1 人形-滑板系统建模\n\n#### 2.1.1 倾斜-转向约束\n\n滑板采用**简化运动学模型**保留关键特性，轮-地接触建模为**非完整约束**（非横向滑动）。利用卡车几何结构建立板倾角 $\\gamma$ 与卡车转向角 $\\sigma$ 的运动学耦合：\n\n$$\n\n\\tan \\sigma = \\tan \\lambda \\sin \\gamma\n\n$$\n\n其中 $\\lambda$ 是滑板的固定后倾角（rake angle），$\\sigma$ 是卡车转向角。该约束将板倾斜与卡车转向直接关联，捕捉人形驱动操纵的本质等式约束。\n\n#### 2.1.2 滑板倾斜动力学\n\n滑板倾斜由等效 PD 模型描述，通过系统辨识获得参数：\n- 扭转刚度 $k = I\\omega_n^2$\n- 阻尼系数 $d = 2\\zeta\\sqrt{kI}$\n\n通过对滑板进行自由衰减滚动响应测试，测量对数衰减率 $\\delta$ 和阻尼比 $\\zeta$：\n\n$$\n\n\\delta = \\ln\\frac{\\phi(t)}{\\phi(t+T)}, \\quad \\zeta = \\frac{\\delta}{\\sqrt{4\\pi^2 + \\delta^2}}\n\n$$\n\n### 2.2 对抗运动先验（AMP）推动策略\n\n#### 2.2.1 AMP 框架\n\n采用**AMP (Adversarial Motion Priors)** 学习人类风格的推动动作：\n\n- **判别器** $D_\\phi$：区分策略 rollout 与参考人类推动运动\n- **AMP 观测** $\\mathbf{o}_t^{\\text{amp}} = \\boldsymbol{\\theta}_t \\in \\mathbb{R}^{23}$（关节角度）\n- **运动窗口**：$\\tau_t = \\{\\mathbf{o}_{\\text{t-3}}^{\\text{amp}}, \\ldots, \\mathbf{o}_{t+1}^{\\text{amp}}\\}$，跨越 5 个时间步\n\n#### 2.2.2 判别器训练\n\n采用最小二乘损失并加入梯度惩罚：\n\n$$\n\n\\arg\\max_\\phi \\mathbb{E}_{\\text{\\tau\\sim\\mathcal{M}}}[(D_\\phi(\\tau)-1)^2] + \\mathbb{E}_{\\text{\\tau\\sim\\mathcal{P}}}[(D_\\phi(\\tau)+1)^2] + \\frac{\\alpha^d}{2}\\mathbb{E}_{\\text{\\tau\\sim\\mathcal{M}}}[||\\nabla_\\phi D_\\phi(\\tau)||_2^2]\n\n$$\n\n其中 $\\mathcal{M}$ 是人类运动数据集，$\\mathcal{P}$ 是当前策略的 rollout。\n\n#### 2.2.3 风格奖励\n\n将判别器输出映射为有界风格奖励：\n\n$$\n\nr^{\\text{style}}(s_t) = \\alpha \\cdot \\max\\left(0, 1 - \\frac{1}{4}(d-1)^2\\right)\n\n$$\n\n推动阶段总奖励：\n\n$$\n\nr_t^{\\text{push}} = r_t^{\\text{task}} + r_t^{\\text{style}}\n\n$$\n\n### 2.3 物理引导的航向转向策略\n\n#### 2.3.1 自行车模型近似\n\n采用车辆动力学中的**自行车模型**，滑板偏航率 $\\dot{\\psi}$ 为：\n\n$$\n\n\\dot{\\psi} = \\frac{v}{L}\\tan\\sigma\n\n$$\n\n结合倾斜-转向关系式(1)：\n\n$$\n\n\\dot{\\psi} = \\frac{v}{L}\\tan\\lambda\\sin\\gamma\n\n$$\n\n#### 2.3.2 物理引导的倾斜参考\n\n给定期望航向变化 $\\Delta\\psi = \\psi - \\psi_{\\text{board}}$ 和转向 horizon $\\Delta t$，假设恒定偏航率 $\\dot{\\psi} \\approx \\Delta\\psi / \\Delta t$，得到物理引导的倾斜参考：\n\n$$\n\n\\gamma_{\\text{ref}} = \\arcsin\\left(\\frac{L\\Delta\\psi}{v\\Delta t \\tan\\lambda}\\right)\n\n$$\n\n#### 2.3.3 倾斜奖励\n\n定义倾斜奖励引导策略学习物理一致的倾斜：\n\n$$\n\nr_{\\text{\\text{tilt}}} = \\exp\\left(-\\frac{||\\gamma - \\gamma_{\\text{\\text{ref}}}||^2}{\\sigma_\\gamma^2}\\right)\n\n$$\n\n结合航向跟踪奖励 $r_{\\text{heading}} = \\exp\\left(-(\\Delta\\psi)^2/\\sigma_\\psi^2\\right)$。\n\n### 2.4 相位转换的轨迹规划\n\n#### 2.4.1 关键刚体选择\n\n选择一组关键刚体 $\\kappa$，捕捉相位转换期间人形机器人的本质运动。\n\n#### 2.4.2 Bezier 曲线轨迹\n\n身体平移使用 **n 阶 Bezier 曲线** 规划：\n\n$$\n\np^\\kappa(t) = \\sum_{\\text{i=0}}^{n} \\binom{n}{i} (1-s)^{n-i} s^i p_i^\\kappa, \\quad s = \\frac{t - t_0}{t_f - t_0}\n\n$$\n\n其中 $p_0^\\kappa = p_{\\text{end}}^\\kappa$，$p_n^\\kappa = p_{\\text{ref}}^\\kappa$，中间控制点 $\\{p_i^\\kappa\\}_{i=1}^{n-1}$ 塑造轨迹形状。\n\n#### 2.4.3 四元数球面线性插值\n\n方向使用 **SLERP** 插值：\n\n$$\n\nq^\\kappa(t) = \\frac{\\sin((1-s)\\Omega)}{\\sin\\Omega}q_{\\text{\\text{end}}}^\\kappa + \\frac{\\sin(s\\Omega)}{\\sin\\Omega}q_{\\text{\\text{ref}}}^\\kappa\n\n$$\n\n其中 $\\Omega = \\arccos(\\langle q_{\\text{end}}^\\kappa, q_{\\text{ref}}^\\kappa \\rangle)$ 是四元数间的角距离。\n\n---\n\n## 3. 实现细节\n\n### 3.1 训练配置\n\n| 参数 | 值 |\n|------|-----|\n| 算法 | PPO (Proximal Policy Optimization) |\n| 并行环境数 | 4096 |\n| 每回合时长 | 20 秒 |\n| 训练随机种子 | 5 个 |\n| 回合评估数 | 1000 |\n\n### 3.2 网络架构\n\n- **Actor 网络**：MLP，观测本体感知信息\n- **Critic 网络**：MLP，额外观测特权信息（滑板状态、足部接触力）\n\n### 3.3 域随机化（Domain Randomization）\n\n| 参数 | 范围 |\n|------|------|\n| 机器人质心 | U(-2.5, 2.5) cm |\n| 滑板质心 | U(-2.5, 2.5) cm |\n| 默认根位置 | U(-2.0, 2.0) cm |\n| 默认关节位置 | U(-0.01, 0.01) rad |\n| 推动机器人基座 | U(-0.5, 0.5) m/s |\n| 机器人身体摩擦力 | U(0.3, 1.6) |\n| 滑板甲板摩擦力 | U(0.8, 2.0) |\n\n### 3.4 仿真环境\n\n- 物理引擎：MuJoCo\n- 训练框架：IsaacLab\n- 滑板尺寸：80cm × 20cm × 12cm\n\n### 3.5 真实部署\n\n- 机器人平台：Unitree G1\n- 控制频率：50 Hz\n- PD 控制器：500 Hz\n\n---\n\n## 4. 实验设置\n\n### 4.1 评估指标\n\n| 指标 | 定义 |\n|------|------|\n| 任务成功率 $E_{\\text{succ}}$ | 无终止情况下完成回合的百分比 |\n| 速度跟踪误差 $E_{\\text{vel}}$ | 推动阶段命令速度与实际滑板速度的平均绝对误差 |\n| 航向跟踪误差 $E_{\\text{yaw}}$ | 转向阶段航向误差的平均绝对值 |\n| 运动平滑度 $E_{\\text{smooth}}$ | 连续控制步骤间的关节角度变化聚合 |\n| 接触误差 $E_{\\text{contact}}$ | 脚步-滑板接触模式的每步违规 |\n\n### 4.2 基线方法\n\n**推动风格消融：**\n- **Tracking-based**：直接跟踪参考滑板运动\n- **Gait-based**：遵循固定步态 schedule 的推动\n\n**转向策略消融：**\n- **w/o Tilt Guidance**：隐式学习板倾角，无物理引导倾斜参考\n\n**转换机制消融：**\n- **AMP Transition**：使用相位特定参考运动，依靠风格奖励引导转换\n- **Translation-only**：仅引导平移运动，忽略方向对齐\n\n---\n\n## 5. 技术优势\n\n### 5.1 物理信息策略学习\n\n通过显式建模人形-滑板耦合动力学（倾斜-转向约束），策略能够利用物理先验进行高效学习，避免了在高维状态空间中盲目探索。\n\n### 5.2 AMP 实现自然推动\n\n对抗运动先验引导策略学习类人推动动作，避免了传统参考跟踪方法的僵硬行为，提高了动作的自然性和对不同环境的适应性。\n\n### 5.3 物理引导的精确转向\n\n通过自行车模型推导的倾斜参考，使策略能够精确调节航向，显著降低了航向跟踪误差。\n\n### 5.4 轨迹引导的平滑相位转换\n\nBezier 曲线和 SLERP 插值确保了相位间平滑的身体姿态过渡，避免了策略在探索新相位时的收敛到局部最优。\n\n### 5.5 稳健的 Sim-to-Real 迁移\n\n- 精确的滑板物理辨识（扭转刚度和阻尼）\n- 大范围的域随机化提高了策略鲁棒性\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 视觉感知受限\n\n当前系统未集成板载视觉感知，滑板和轮-地相互作用的观察受限，阻碍了感知驱动的反馈控制闭环。\n\n### 6.2 地形复杂度\n\n实验在相对简单的平坦地形上进行，人类滑板运动员通常在滑板公园等复杂环境中执行杂技动作。当前框架扩展到此类场景需要更丰富的运动先验和地形自适应控制策略。\n\n### 6.3 模型简化假设\n\n- 滑板采用简化运动学模型，未完全捕获悬架的复杂 compliance\n- 轮-地接触简化为非完整约束，忽略某些动态效应\n\n### 6.4 物理辨识敏感性\n\n实验表明，滑板物理参数不匹配会导致策略失效：\n- 将软板参数应用于硬板 → 无法完成上板\n- 将硬板参数应用于软板 → 转向时过度倾斜导致不稳定\n\n### 6.5 依赖人类运动数据\n\nAMP 方法需要高质量人类滑板推动运动数据集，数据采集和预处理成本较高。\n\n### 6.6 动作自由度限制\n\n实验使用 23 个可控自由度（不含腕部 3 DoF），可能限制了更精细的全身协调能力。\n\n---\n\n## 7. 总结\n\nHUSKY 通过以下创新实现了人形机器人滑板运动：\n\n1. **系统建模**：显式分析人形-滑板耦合，推导倾斜-转向等式约束\n2. **相位分解**：将任务分解为推动、转向和转换三个相位\n3. **AMP 推动**：利用对抗运动先验学习自然类人推动\n4. **物理转向**：基于自行车模型的倾斜参考实现精确航向控制\n5. **轨迹转换**：Bezier/SLERP 轨迹规划确保平滑相位过渡\n6. **Sim-to-Real**：物理辨识 + 域随机化实现稳健迁移\n\n该工作在动态足式机器人与动态平台交互领域取得了显著突破，验证了学习-based 全身控制在高动态、人-物紧耦合任务中的潜力。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 7,
+    "writing_quality": 8,
+    "relevance": 8,
+    "overall_score": 7.25,
+    "strengths": [
+      "创新性地解决人形机器人滑板这一高动态挑战性任务",
+      "将AMP学习与物理引导控制相结合的方法具有原创性",
+      "在Unitree G1平台上进行真实世界实验验证",
+      "清晰阐述非完整约束和耦合动力学的系统建模",
+      "框架整合了推动和转向行为的平滑过渡机制"
+    ],
+    "weaknesses": [
+      "缺乏与现有方法的详细对比实验",
+      "具体实现细节和技术细节披露有限",
+      "缺少消融实验验证各模块贡献",
+      "性能指标和定量结果描述不够具体",
+      "作为2026年论文，arXiv发表可能未经充分同行评审"
+    ],
+    "notes": "本文针对人形机器人滑板这一新颖且极具挑战性的任务，提出了结合学习与物理感知的整体控制框架。技术创新点明确，实验验证真实硬件平台展示了可行性，但在方法细节和对比实验方面可以进一步完善。整体而言是一篇水平较高的 robotics 论文。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "HUSKY: Humanoid Skateboarding System via Physics-Aware Whole-Body Control",
+      "authors": [
+        "Jinrui Han",
+        "Dewei Wang",
+        "Chenyun Zhang",
+        "Xinzhe Liu",
+        "Ping Luo",
+        "Chenjia Bai",
+        "Xuelong Li"
+      ],
+      "year": 2026,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2602.03205",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "While current humanoid whole-body control frameworks predominantly rely on the static environment assumptions, addressing tasks characterized by high dynamism and complex interactions presents a formidable challenge. In this paper, we address humanoid skateboarding, a highly challenging task requiring stable dynamic maneuvering on an underactuated wheeled platform. This integrated system is governed by non-holonomic constraints and tightly coupled human-object interactions. Successfully executing this task requires simultaneous mastery of hybrid contact dynamics and robust balance control on a mechanically coupled, dynamically unstable skateboard. To overcome the aforementioned challenges, we propose HUSKY, a learning-based framework that integrates humanoid-skateboard system modeling and physics-aware whole-body control. We first model the coupling relationship between board tilt and truck steering angles, enabling a principled analysis of system dynamics. Building upon this, HUSKY leverages Adversarial Motion Priors (AMP) to learn human-like pushing motions and employs a physics-guided, heading-oriented strategy for lean-to-steer behaviors. Moreover, a trajectory-guided mechanism ensures smooth and stable transitions between pushing and steering. Experimental results on the Unitree G1 humanoid platform demonstrate that our framework enables stable and agile maneuvering on skateboards in real-world scenarios. The project page is available on https://husky-humanoid.github.io/.",
+      "route_id": "0d533bae-5657-4777-b9df-0961e93f2377"
+    },
+    "markdown_stats": {
+      "lines": 491,
+      "words": 11674,
+      "headings": 31
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "0d533bae-5657-4777-b9df-0961e93f2377",
+  "paper_ref": "0d533bae-5657-4777-b9df-0961e93f2377",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

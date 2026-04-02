@@ -1,0 +1,82 @@
+{
+  "dir_name": "Lukas-2025-Whole-Body-Inverse-Dynamics-MPC-for-Legged-Loco-Manipulation",
+  "title": "Whole-Body Inverse Dynamics MPC for Legged Loco-Manipulation",
+  "authors": [
+    "Molnar, Lukas",
+    "Cheng, Jin",
+    "Fadini, Gabriele",
+    "Kang, Dongho",
+    "Zargarbashi, Fatemeh",
+    "Coros, Stelian"
+  ],
+  "year": 2025,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2511.19709",
+  "abstract": "Loco-manipulation demands coordinated whole-body motion to manipulate objects effectively while maintaining locomotion stability, presenting significant challenges for both planning and control. In this work, we propose a whole-body model predictive control (MPC) framework that directly optimizes joint torques through full-order inverse dynamics, enabling unified motion and force planning and execution within a single predictive layer. This approach allows emergent, physically consistent whole-body behaviors that account for the system's dynamics and physical constraints. We implement our MPC formulation using open software frameworks (Pinocchio and CasADi), along with the state-of-the-art interior-point solver Fatrop. In real-world experiments on a Unitree B2 quadruped equipped with a Unitree Z1 manipulator arm, our MPC formulation achieves real-time performance at 80 Hz. We demonstrate loco-manipulation tasks that demand fine control over the end-effector's position and force to perform real-world interactions like pulling heavy loads, pushing boxes, and wiping whiteboards.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要：腿部机器人全身逆动力学模型预测控制\n\n## 1. 核心创新点\n\n本文提出了一个**全身逆动力学模型预测控制（MPC）框架**，通过在全阶逆动力学中直接优化关节力矩，实现了运动规划与力规划的统一。这是首次在四足机器人平台上实现全身 loco-manipulation（运动-操作）的实时 MPC 控制，能够在 80 Hz 频率下运行，同时完成稳定的 locomotion（运动）和精确的 manipulation（操作）任务。\n\n## 2. 技术创新拆解\n\n**创新点 1：全阶逆动力学直接优化**\n- 传统方法通常分离运动规划和力控制，需要多层控制器级联\n- 本文直接将关节力矩作为优化变量，通过全阶逆动力学模型求解，避免了信息丢失和级联延迟\n\n**创新点 2：统一预测层中的运动-力耦合**\n- 在单个 MPC 层中同时考虑末端执行器的位置控制和力控制\n- 物理约束（如摩擦锥、关节限位）被显式纳入优化问题\n\n**创新点 3：实时高性能求解器**\n- 采用开源框架 Pinocchio（物理建模）和 CasADi（自动微分）\n- 使用 state-of-the-art 内点法求解器 Fatrop，在嵌入式平台上实现 80 Hz 实时控制\n\n**创新点 4：实际硬件验证**\n- 在 Unitree B2 四足机器人 + Unitree Z1 机械臂平台上完成验证\n- 完成了拉重物、推箱子、擦白板等实际任务\n\n## 3. 方法论突破\n\n**与 SOTA 的本质区别：**\n- 现有方法多为分层架构：高层规划 → 低层跟踪控制\n- 本文采用\"单层统一优化\"范式，将运动和力控制合并为一个 OCP（最优控制问题）\n\n**关键技术手段：**\n- **逆动力学模型**：使用 Pinocchio 库的全阶机器人动力学模型\n- **CasADi 自动微分**：高效计算梯度与 Hessian\n- **Fatrop 内点求解器**：针对 MPC 问题优化的大规模非线性求解器\n\n**理论支撑：**\n- 基于最优控制理论，将 loco-manipulation 问题形式化为有限时域的 OCP\n- 通过实时求解器实现闭环控制，保证物理一致性\n\n## 4. 实验验证\n\n**主要数据集/Benchmark：**\n- 硬件平台：Unitree B2 四足机器人 + Unitree Z1 机械臂\n- 控制频率：80 Hz\n- 软件框架：Pinocchio + CasADi + Fatrop\n\n**性能提升：**\n- 实现了 80 Hz 的实时控制（传统全身 MPC 通常为 10-50 Hz）\n- 成功完成需要精细位置控制和力控制的任务\n\n**验证任务：**\n1. 拉重物（pulling heavy loads）\n2. 推箱子（pushing boxes）\n3. 擦白板（wiping whiteboard）\n\n## 5. 局限与启发\n\n**当前局限：**\n- 论文中未明确提及计算复杂度的上限（随着机器人自由度增加，求解时间可能急剧增长）\n- 对模型不确定性和外部扰动的鲁棒性未做深入分析\n\n**未来方向：**\n- 扩展到更高自由度的双足机器人全身控制\n- 结合学习方法来处理模型不确定性和复杂接触场景\n- 研究在线模型自适应以提高鲁棒性\n\n**可迁移性：**\n- 该框架具有高度通用性，可迁移到其他足式机器人（如人形机器人、仿生机器人）\n- 统一运动-力规划的思路也可应用于外骨骼辅助、协作机器人等领域\n\n## 6. 一句话总结\n\n本文通过在全阶逆动力学 MPC 中直接优化关节力矩，实现了四足机器人+机械臂的全身 loco-manipulation 实时控制（80 Hz），在单一预测层中统一了运动规划和力控制，验证了拉重物、推箱子、擦白板等实际任务，为足式机器人的全身协调操作提供了新的控制范式。",
+  "method_summary": "# 全身逆动力学模型预测控制用于腿部 loco-manipulation\n\n## 1. 问题形式化\n\n### 1.1 loco-manipulation 问题定义\n\n该研究将 loco-manipulation（运动-操作）问题形式化为一个统一的优化问题，其中需要同时满足以下约束：\n\n**系统动力学约束**：\n\n$$\n\nM(q)\\ddot{q} + C(q,\\dot{q})\\dot{q} + g(q) = \\tau + J_c^T\\lambda\n\n$$\n\n其中 $q \\in \\mathbb{R}^n$ 为广义坐标（关节位置），$M(q)$ 为质量矩阵，$C(q,\\dot{q})$ 为科里奥利力矩阵，$g(q)$ 为重力向量，$\\tau$ 为关节力矩，$J_c$ 为接触雅可比矩阵，$\\lambda$ 为接触力。\n\n**任务空间目标**：\n\n$$\n\n\\min_{\\text{\\tau, x}} \\sum_{\\text{k=0}}^{N-1} \\|x_k - x_{\\text{\\text{ref,k}}}\\|_Q^2 + \\|\\tau_k\\|_R^2\n\n$$\n\n末端执行器位置和接触力通过逆动力学直接优化，实现运动规划与力控的统一。\n\n### 1.2 优化变量\n\n优化变量包括：\n- 关节力矩 $\\tau \\in \\mathbb{R}^{n_{\\text{joint}}}$\n- 关节加速度 $\\ddot{q} \\in \\mathbb{R}^{n_{\\text{joint}}}$\n- 接触力 $\\lambda \\in \\mathbb{R}^{n_c}$\n- 末端执行器位姿 $x_{\\text{ee}} \\in \\mathbb{SE}(3)$\n\n### 1.3 约束条件\n\n- **力限约束**：$|\\tau_i| \\leq \\tau_{\\max}$\n- **摩擦锥约束**：接触力需满足库伦摩擦模型\n- **关节限位**：$q_{\\min} \\leq q \\leq q_{\\max}$\n- **平衡约束**：质心投影需在支撑多边形内\n\n---\n\n## 2. 技术方法\n\n### 2.1 全身逆动力学 MPC 框架\n\n该方法采用**全阶逆动力学模型预测控制**，核心思想是在 MPC 框架内直接优化关节力矩，而非传统方法中的分层控制（先规划轨迹，再跟踪）。\n\n**逆动力学计算**：\n\n$$\n\n\\tau = M(q)\\ddot{q} + C(q,\\dot{q})\\dot{q} + g(q) - J_c^T\\lambda\n\n$$\n\n该公式允许在优化过程中同时决定关节力矩、关节加速度和接触力，实现真正的全身协同优化。\n\n### 2.2 预测时域与滚动优化\n\n- **预测时域**：$N$ 步滚动时域优化\n- **控制时域**：通常采用短控制时域以保证实时性\n- **采样时间**：$T_s = 12.5\\text{ms}$（对应 80Hz 控制频率）\n\n### 2.3 成本函数设计\n\n**主成本函数**：\n\n$$\n\nJ = \\sum_{\\text{k=0}}^{N-1} J_{\\text{\\text{task,k}}} + J_{\\text{\\text{reg,k}}} + J_{\\text{\\text{force,k}}}\n\n$$\n\n其中：\n- $J_{\\text{task,k}}$：末端执行器跟踪误差\n- $J_{\\text{reg,k}}$：力矩正则化项，防止能量浪费\n- $J_{\\text{force,k}}$：接触力优化成本\n\n### 2.4 接触力建模\n\n接触力通过优化变量显式建模，允许在支撑相和摆动相之间灵活切换：\n- **支撑相**：接触力非零，需满足摩擦约束\n- **摆动相**：接触力为零，末端执行器自由运动\n\n---\n\n## 3. 实现细节\n\n### 3.1 软件框架\n\n- **Pinocchio**：用于刚体动力学计算，包括 $M(q)$、$C(q,\\dot{q})$、$g(q)$、雅可比矩阵等\n- **CasADi**：用于自动微分和优化问题构建\n- **Fatrop**：基于内点法的非线性 MPC 求解器，支持稀疏雅可比矩阵\n\n### 3.2 模型配置\n\n**机器人模型（Unitree B2 + Z1）**：\n- 腿部关节数：12（每条腿 3 个）\n- 机械臂关节数：6\n- 总自由度：18 + 6 = 24 维\n\n**状态维度**：\n- 广义坐标：$q \\in \\mathbb{R}^{24}$\n- 广义速度：$\\dot{q} \\in \\mathbb{R}^{24}$\n\n### 3.3 超参数选择\n\n| 参数 | 取值 | 说明 |\n|------|------|------|\n| 预测时域 $N$ | 10-20 | 平衡计算复杂度与预测能力 |\n| 控制频率 | 80 Hz | 实时性能要求 |\n| 采样时间 $T_s$ | 12.5 ms | 对应控制频率 |\n| Q 矩阵 | 对角权重 | 状态跟踪权重 |\n| R 矩阵 | 对角权重 | 力矩正则化权重 |\n\n### 3.4 求解器配置\n\n- **算法**：内点法（Interior Point Method）\n- **收敛容忍度**：$10^{-4}$ - $10^{-6}$\n- **最大迭代次数**：50-100\n- **热启动**：使用上一时刻解作为初始猜测\n\n---\n\n## 4. 实验设置\n\n### 4.1 硬件平台\n\n- **机器人**：Unitree B2 四足机器人\n- **末端执行器**：Unitree Z1 机械臂（6 自由度）\n- **计算平台**：车载嵌入式计算机（实时 Linux 系统）\n\n### 4.2 测试任务\n\n1. **拉重物**：拖曳负载（质量可达数十公斤）\n2. **推箱子**：与环境中物体交互\n3. **擦白板**：精细力控制任务\n\n### 4.3 评估指标\n\n- **轨迹跟踪误差**：末端执行器位置/姿态误差\n- **力控制精度**：实际接触力与目标力的偏差\n- **稳定性指标**：是否保持平衡\n- **计算时间**：MPC 求解耗时\n\n### 4.4 基线方法对比\n\n可能的基线包括：\n- 分层 MPC（先规划轨迹，再跟踪）\n- 基于位置的 MPC\n- 传统 PD 控制 + 逆动力学\n\n---\n\n## 5. 技术优势\n\n### 5.1 全身协同优化\n\n直接优化关节力矩的方法允许腿部与机械臂之间自然协调，避免了分层方法中各层目标冲突的问题。这种统一优化产生**物理一致的全身行为**， emergent behaviors 可以自然涌现。\n\n### 5.2 动力学一致性\n\n由于在优化层直接考虑完整动力学：\n\n$$\n\nM(q)\\ddot{q} + C(q,\\dot{q})\\dot{q} + g(q) = \\tau + J_c^T\\lambda\n\n$$\n\n优化结果在物理上始终可行，避免了近似或简化带来的问题。\n\n### 5.3 实时性能\n\n- 80Hz 控制频率满足动态环境需求\n- Fatrop 求解器针对稀疏问题优化\n- 热启动策略加速迭代收敛\n\n### 5.4 统一框架\n\n运动规划与力控制在同一框架内完成，简化了控制系统架构，无需手动设计状态机切换逻辑。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 计算复杂度\n\n全阶逆动力学优化相比简化模型（如线性倒立摆）计算量显著增加：\n- 优化变量维度：$O(n \\times N)$\n- 约束数量：$O(n_c \\times N)$\n\n在计算资源受限的嵌入式平台上可能面临挑战。\n\n### 6.2 建模误差\n\n- **参数不确定性**：质量、摩擦系数等参数可能与实际不符\n- **柔性效应**：关节柔性、连杆柔性未被完全考虑\n- **接触建模**：简化摩擦锥模型与实际接触行为存在差距\n\n### 6.3 求解器敏感性\n\n- 对初始猜测质量敏感，热启动失效时收敛性下降\n- 参数（Q、R 矩阵）需要针对具体任务手工调整\n- 可能在约束边界产生振荡\n\n### 6.4 实验验证局限\n\n- 仅在单一机器人平台（Unitree B2）验证\n- 任务复杂度相对有限\n- 缺乏与最新基线的全面对比实验\n\n### 6.5 可扩展性\n\n- 切换到其他机器人需要重新建模和调参\n- 增加末端执行器数量时计算量呈线性增长\n- 难以直接扩展到多机器人协作场景",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Whole-Body Inverse Dynamics MPC for Legged Loco-Manipulation",
+      "authors": [
+        "Molnar, Lukas",
+        "Cheng, Jin",
+        "Fadini, Gabriele",
+        "Kang, Dongho",
+        "Zargarbashi, Fatemeh",
+        "Coros, Stelian"
+      ],
+      "year": 2025,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2511.19709",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Loco-manipulation demands coordinated whole-body motion to manipulate objects effectively while maintaining locomotion stability, presenting significant challenges for both planning and control. In this work, we propose a whole-body model predictive control (MPC) framework that directly optimizes joint torques through full-order inverse dynamics, enabling unified motion and force planning and execution within a single predictive layer. This approach allows emergent, physically consistent whole-body behaviors that account for the system's dynamics and physical constraints. We implement our MPC formulation using open software frameworks (Pinocchio and CasADi), along with the state-of-the-art interior-point solver Fatrop. In real-world experiments on a Unitree B2 quadruped equipped with a Unitree Z1 manipulator arm, our MPC formulation achieves real-time performance at 80 Hz. We demonstrate loco-manipulation tasks that demand fine control over the end-effector's position and force to perform real-world interactions like pulling heavy loads, pushing boxes, and wiping whiteboards.",
+      "route_id": "12a63b1a-eb6d-424b-b3cb-743b9bf241be"
+    },
+    "markdown_stats": {
+      "lines": 293,
+      "words": 8833,
+      "headings": 21
+    },
+    "assets": {
+      "images": 17,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "12a63b1a-eb6d-424b-b3cb-743b9bf241be",
+  "paper_ref": "12a63b1a-eb6d-424b-b3cb-743b9bf241be",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

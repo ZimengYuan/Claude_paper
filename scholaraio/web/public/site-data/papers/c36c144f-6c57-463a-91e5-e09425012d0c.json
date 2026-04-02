@@ -1,0 +1,79 @@
+{
+  "dir_name": "Xue-2025-A-Unified-and-General-Humanoid-Whole-Body-Controller-for-Fine-Grained-Locomotion-2",
+  "title": "A Unified and General Humanoid Whole-Body Controller for Fine-Grained Locomotion",
+  "authors": [
+    "Yufei Xue",
+    "Wentao Dong",
+    "Minghuan Liu",
+    "Weinan Zhang",
+    "Jiangmiao Pang"
+  ],
+  "year": 2025,
+  "journal": "Robotics: Science and Systems XXI",
+  "doi": "10.15607/rss.2025.xxi.067",
+  "abstract": "provide an in-depth analysis of how the various commands affect humanoid movement and offer insights into the relationships between these commands.To our knowledge, HUGWBC is the first humanoid whole-body controller that supports such versatile locomotion behaviors with high robustness and flexibility.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 8,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "A Unified and General Humanoid Whole-Body Controller for Fine-Grained Locomotion",
+      "authors": [
+        "Yufei Xue",
+        "Wentao Dong",
+        "Minghuan Liu",
+        "Weinan Zhang",
+        "Jiangmiao Pang"
+      ],
+      "year": 2025,
+      "journal": "Robotics: Science and Systems XXI",
+      "doi": "10.15607/rss.2025.xxi.067",
+      "paper_type": "proceedings-article",
+      "abstract": "provide an in-depth analysis of how the various commands affect humanoid movement and offer insights into the relationships between these commands.To our knowledge, HUGWBC is the first humanoid whole-body controller that supports such versatile locomotion behaviors with high robustness and flexibility.",
+      "route_id": "c36c144f-6c57-463a-91e5-e09425012d0c"
+    },
+    "markdown_stats": {
+      "lines": 476,
+      "words": 15033,
+      "headings": 36
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "c36c144f-6c57-463a-91e5-e09425012d0c",
+  "paper_ref": "c36c144f-6c57-463a-91e5-e09425012d0c",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

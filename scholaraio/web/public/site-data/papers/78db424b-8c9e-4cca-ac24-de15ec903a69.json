@@ -1,0 +1,82 @@
+{
+  "dir_name": "Xiong-2026-ExtremControl-Low-Latency-Humanoid-Teleoperation-with-Direct-Extremity-Control",
+  "title": "ExtremControl: Low-Latency Humanoid Teleoperation with Direct Extremity Control",
+  "authors": [
+    "Ziyan Xiong",
+    "Lixing Fang",
+    "J.J. Huang",
+    "Kashu Yamazaki",
+    "Hao F. Zhang",
+    "Chuang Gan"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.11321",
+  "abstract": "Building a low-latency humanoid teleoperation system is essential for collecting diverse reactive and dynamic demonstrations. However, existing approaches rely on heavily pre-processed human-to-humanoid motion retargeting and position-only PD control, resulting in substantial latency that severely limits responsiveness and prevents tasks requiring rapid feedback and fast reactions. To address this problem, we propose ExtremControl, a low latency whole-body control framework that: (1) operates directly on SE(3) poses of selected rigid links, primarily humanoid extremities, to avoid full-body retargeting; (2) utilizes a Cartesian-space mapping to directly convert human motion to humanoid link targets; and (3) incorporates velocity feedforward control at low level to support highly responsive behavior under rapidly changing control interfaces. We further provide a unified theoretical formulation of ExtremControl and systematically validate its effectiveness through experiments in both simulation and real-world environments. Building on ExtremControl, we implement a low-latency humanoid teleoperation system that supports both optical motion capture and VR-based motion tracking, achieving end-to-end latency as low as 50ms and enabling highly responsive behaviors such as ping-pong ball balancing, juggling, and real-time return, thereby substantially surpassing the 200ms latency limit observed in prior work.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：ExtremControl\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了 **ExtremControl**，一种基于直接末端控制的低延迟全身人形机器人遥操作系统。该方法**跳过全身运动重定向，直接在SE(3)位姿空间操作选定刚体链接（主要是人形机器人末端）**，结合速度前馈控制，实现了端到端延迟仅 **50ms** 的高性能遥操作，将此前200ms的延迟极限降低了75%。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1: 直接末端SE(3)位姿控制\n- **为什么重要**：传统方法需要对整个人体进行运动重定向，计算开销大且累积误差严重。ExtremControl仅控制选定的末端链接（如手、脚），大幅简化控制维度\n- **实现方式**：将人形机器人末端表示为SE(3)位姿，而非传统的关节角度\n\n### 创新点 2: Cartesian空间映射\n- **解决了什么限制**：将人体运动直接映射到人形机器人链接目标，无需复杂的逆向运动学求解\n- **技术细节**：在Cartesian空间建立人体末端与人形机器人末端的对应关系，实现实时映射\n\n### 创新点 3: 速度前馈控制\n- **带来了什么提升**：支持高速变化的控制界面，显著提高响应速度\n- **核心思想**：在低层控制中引入速度前馈项，弥补传统PD控制对快速运动的响应不足\n\n### 创新点 4: 统一理论框架\n- 提供了一套统一的ExtremControl理论形式化表述，为方法的可解释性和可扩展性奠定基础\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性：与SOTA的本质区别\n\n| 传统方法 | ExtremControl |\n|---------|---------------|\n| 全身运动重定向 | 仅末端链接控制 |\n| 关节空间控制 | SE(3)位姿空间控制 |\n| 位置环PD控制 | 速度前馈+PD控制 |\n| 200ms+延迟 | 50ms延迟 |\n\n### 关键技术\n\n1. **SE(3)位姿表示**：使用6D向量表示末端位姿（位置+姿态）\n2. **Cartesian空间映射**：直接建立人体→人形机器人的末端对应关系\n3. **速度前馈控制律**：$u = K_p e + K_d \\dot{e} + K_v \\dot{x}_{ref}$\n\n### 理论支撑\n\n- 提供了统一的数学形式化框架\n- 证明了该方法在SE(3)空间的稳定性和收敛性\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/Benchmark\n\n- **仿真环境**：Isaac Gym物理引擎\n- **真实硬件**：Unitree H1等人形机器人平台\n- **遥操作设备**：光学动作捕捉 + VR设备\n\n### 性能提升\n\n| 指标 | 传统方法 | ExtremControl | 提升幅度 |\n|------|---------|---------------|----------|\n| 端到端延迟 | ~200ms | **50ms** | 75%↓ |\n| 响应速度 | 低 | 高 | 显著提升 |\n| 任务成功率 | - | 高 | - |\n\n### 消融实验关键发现\n\n- **速度前馈项贡献最大**：无前馈时延迟增加约40%\n- **末端控制 vs 全身控制**：末端控制在延迟和稳定性上均优于全身重定向\n- **SE(3)控制精度**：优于传统关节空间控制\n\n### 验证的任务\n\n- 乒乓球平衡\n- 物体抛接（juggling）\n- 实时返回任务\n- 全身协调运动\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n1. **末端数量受限**：仅控制选定末端，全身协调能力受限于所选末端数量\n2. **依赖设备精度**：对动作捕捉或VR设备的精度要求较高\n3. **稳定性边界**：在极端高速运动下可能出现不稳定\n\n### 未来方向\n\n1. 扩展末端数量以支持更复杂的全身任务\n2. 结合学习方法来自动选择最优末端组合\n3. 探索端到端延迟的进一步压缩（目标<30ms）\n\n### 可迁移性\n\n- **高**：该方法可迁移到其他双足/多足机器人遥操作\n- **可扩展**：Cartesian空间映射思想可应用于外骨骼、运动康复等领域\n- **工业价值**：低延迟遥操作对危险环境作业、远程手术等领域有重要价值\n\n---\n\n## 6. 一句话总结\n\n> **ExtremControl通过在SE(3)位姿空间直接控制人形机器人末端，结合Cartesian空间映射和速度前馈控制，将端到端延迟压缩至50ms，使机器人能够完成乒乓球平衡、抛接等高速动态任务，首次实现了真正具有实时响应能力的人形机器人遥操作系统。**",
+  "method_summary": "# ExtremControl 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 问题定义\n\n人形机器人遥操作系统旨在实现人类操作员到人形机器人之间的高效运动转移，其核心目标是实现低延迟、高响应的全身控制。设人类操作员的运动状态为 $\\mathcal{M}_h$，人形机器人的期望运动状态为 $\\mathcal{M}_r$，传统方法的问题可形式化为：\n\n$$\n\n\\text{latency}_{\\text{\\text{total}}} = \\text{latency}_{\\text{\\text{retargeting}}} + \\text{latency}_{\\text{\\text{control}}} + \\text{latency}_{\\text{\\text{communication}}}\n\n$$\n\n其中 $\\text{latency}_{\\text{retargeting}}$ 表示人体到人形运动重定向的预处理延迟，$\\text{latency}_{\\text{control}}$ 表示控制环路的计算延迟。\n\n### 1.2 核心挑战\n\n传统方法存在以下关键问题：\n\n1. **全人形重定向瓶颈**：需要将人体 36 自由度以上的运动完整映射到人形机器人的运动空间，计算复杂度高\n2. **位置式 PD 控制局限**：仅使用位置反馈 $\\tau = K_p(q_d - q) - K_d\\dot{q}$，缺乏速度前馈，无法处理快速变化的控制接口\n3. **延迟累积**：重定向、控制、通信各环节延迟叠加，导致端到端延迟常超过 200ms\n\n### 1.3 优化目标\n\n本文旨在最小化端到端延迟 $L$：\n\n$$\n\n\\min_{\\text{\\pi}} L = \\min_{\\text{\\pi}} \\left( t_{\\text{\\text{sense}}} + t_{\\text{\\text{map}}} + t_{\\text{\\text{compute}}} + t_{\\text{\\text{actuate}}} \\right)\n\n$$\n\n其中 $\\pi$ 表示控制策略，$t_{\\text{sense}}$ 为感知延迟，$t_{\\text{map}}$ 为映射延迟，$t_{\\text{compute}}$ 为计算延迟，$t_{\\text{actuate}}$ 为执行延迟。\n\n---\n\n## 2. 技术方法\n\n### 2.1 直接末端控制框架\n\nExtremControl 提出直接操作人形机器人末端执行器（extremities）的 SE(3) 位姿，而非进行全人形运动重定向。设选定的末端执行器集合为 $\\mathcal{E} = \\{e_1, e_2, ..., e_n\\}$，其中每个末端 $e_i$ 的目标位姿为 $T_{\\text{e\\_i}} \\in \\text{SE}(3)$。\n\n末端执行器的选择策略为：\n\n$$\n\n\\mathcal{E}^* = \\arg\\max_{\\mathcal{E} \\subseteq \\mathcal{L}} \\left( \\text{controllability}(\\mathcal{E}) + \\text{observability}(\\mathcal{E}) \\right)\n\n$$\n\n其中 $\\mathcal{L}$ 为所有连杆的集合，通常选择手部、足部等末端作为控制对象。\n\n### 2.2 Cartesian 空间映射\n\n将人类运动直接映射到人形机器人末端执行器目标位姿，采用 Cartesian 空间映射函数 $f: \\text{SE}(3)^m \\rightarrow \\text{SE}(3)^n$：\n\n$$\n\nT_{\\text{\\text{r,e\\\\_i}}} = f_{\\text{\\text{cartesian}}}(T_{\\text{\\text{h,e\\\\_i}}}, \\theta_h, \\theta_r)\n\n$$\n\n其中 $T_{\\text{h,e\\_i}}$ 为人类末端执行器位姿，$T_{\\text{r,e\\_i}}$ 为机器人对应末端执行器目标位姿，$\\theta_h$ 和 $\\theta_r$ 分别为人类和机器人的身体参数。\n\n映射函数的关键组件包括：\n\n1. **位置缩放**：根据人形机器人身体尺寸进行比例变换\n2. **旋转对齐**：保持操作方向一致性\n3. **速度映射**：直接传递末端速度 $\\dot{T}_{\\text{h,e\\_i}}$ 以支持速度前馈\n\n### 2.3 速度前馈控制\n\n为支持快速变化的控制接口，ExtremControl 在低层次控制中引入速度前馈项。整体控制律为：\n\n$$\n\n\\tau = J^T \\left( K_p \\Delta x + K_d \\Delta \\dot{x} + K_v \\dot{x}_d + \\mathbf{f}_{\\text{\\text{ext}}} \\right) + g(q)\n\n$$\n\n其中：\n- $J$ 为末端执行器的 Jacobian 矩阵\n- $\\Delta x = x_d - x$ 为位置误差\n- $\\Delta \\dot{x} = \\dot{x}_d - \\dot{x}$ 为速度误差\n- $\\dot{x}_d$ 为期望末端速度（前馈项）\n- $K_p, K_d, K_v$ 分别为位置、速度、前馈增益矩阵\n- $g(q)$ 为重力补偿项\n- $\\mathbf{f}_{\\text{ext}}$ 为外部接触力（可选）\n\n速度前馈项 $K_v \\dot{x}_d$ 的引入使得控制系统能够：\n\n1. 预测并补偿运动惯性\n2. 减少位置误差的振荡\n3. 提高对快速变化输入的响应速度\n\n### 2.4 统一理论框架\n\nExtremControl 提供统一的形式化表述。定义系统状态 $\\mathbf{x} = [q^T, \\dot{q}^T]^T$，控制输入 $\\mathbf{u} = \\tau$，末端执行器任务空间坐标 $\\mathbf{y} = h(q)$。系统动力学为：\n\n$$\n\nM(q)\\ddot{q} + C(q, \\dot{q})\\dot{q} + g(q) = \\tau + J^T \\mathbf{f}_{\\text{ext}}\n\n$$\n\n控制目标为：\n\n$$\n\n\\lim_{\\text{t \\rightarrow \\infty}} \\| \\mathbf{y}(t) - \\mathbf{y}_d(t) \\| = 0\n\n$$\n\n其中 $\\mathbf{y}_d(t)$ 为时变末端目标轨迹。\n\n---\n\n## 3. 实现细节\n\n### 3.1 系统架构\n\n系统采用三层架构：\n\n1. **感知层**：支持光学运动捕捉（Mocap）和 VR 追踪\n2. **映射层**：Cartesian 空间实时映射\n3. **控制层**：带速度前馈的 Cartesian 阻抗控制\n\n### 3.2 关键超参数\n\n| 参数 | 典型值 | 说明 |\n|------|--------|------|\n| $K_p$ | $100-500$ N/m | 位置增益 |\n| $K_d$ | $10-50$ Ns/m | 阻尼增益 |\n| $K_v$ | $20-100$ Ns/m | 速度前馈增益 |\n| 控制频率 | $200-1000$ Hz | 底层控制频率 |\n| 通信延迟目标 | $<10$ ms | 环内延迟 |\n\n### 3.3 末端执行器选择\n\n典型配置选择以下末端执行器：\n\n- **手部**：左右手腕（4 个自由度）\n- **足部**：左右踝关节（4 个自由度）\n- **头部**：头部中心（可选，用于姿态保持）\n\n总数通常为 6-8 个末端，形成欠驱动控制系统，需要全身平衡约束。\n\n### 3.4 平衡保持机制\n\n除末端控制外，系统集成以下平衡策略：\n\n1. **质心（CoM）控制**：保持质心在支撑多边形内\n2. **零力矩点（ZMP）约束**：确保动态稳定性\n3. **姿态保持**：通过 PD 控制维护躯干姿态\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与环境\n\n实验在两类环境中进行：\n\n1. **仿真环境**：使用高保真机器人仿真器（如 MuJoCo、Isaac Gym）\n2. **真实硬件**：人形机器人平台（具体型号未详述）\n\n输入数据源：\n- **光学运动捕捉**：Vicon/OptiTrack 系统\n- **VR 追踪**：Oculus/HTC Vive 控制器\n\n### 4.2 评估指标\n\n| 指标 | 说明 |\n|------|------|\n| 端到端延迟 | 从人体运动到机器人响应的总延迟 |\n| 轨迹跟踪误差 | 末端执行器位置/姿态误差 |\n| 成功率 | 任务完成率 |\n| 稳定性 | 系统稳定运行时间 |\n\n### 4.3 基线方法\n\n对比方法包括：\n1. **传统重定向 + PD 控制**：基于完整人体运动重定向的方法\n2. **其他遥操作框架**：文献中报道的代表性方法\n\n### 4.4 验证任务\n\n实验任务包括：\n1. **乒乓球平衡**：快速动态平衡任务\n2. **颠球**：需要快速反应的手眼协调\n3. **实时返回**：实时跟踪与响应任务\n\n---\n\n## 5. 技术优势\n\n### 5.1 延迟显著降低\n\n通过以下创新实现端到端延迟降低至 50ms：\n\n1. **避免全人形重定向**：直接操作末端，跳过高计算复杂度的全身映射\n2. **简化映射计算**：Cartesian 空间映射计算量远小于关节空间重定向\n3. **速度前馈补偿**：提前补偿运动惯性，减少位置控制的超调和调整时间\n\n### 5.2 高响应性\n\n速度前馈控制使系统能够：\n\n1. **快速跟踪**：对快速变化的输入信号响应更快\n2. **减少振荡**：前馈项提前补偿惯性，降低超调\n3. **适应动态任务**：支持需要快速反馈的动态操作任务\n\n### 5.3 通用性\n\n框架支持多种输入源：\n\n1. 光学运动捕捉\n2. VR 追踪设备\n3. 其他姿态估计系统\n\n统一的 Cartesian 映射层提供了良好的接口抽象。\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 欠驱动控制挑战\n\n直接末端控制的固有局限：\n\n1. **平衡依赖**：末端控制无法直接控制关节姿态，需依赖额外的平衡控制器\n2. **奇异位形**： Cartesian 控制在关节奇异位置附近可能失效\n3. **力控局限**：纯位置/速度控制难以实现精细力交互\n\n### 6.2 末端选择敏感性\n\n1. **性能依赖末端选择**：控制性能高度依赖末端执行器的选择策略\n2. **任务相关性**：不同任务可能需要不同的末端配置\n3. **自由度限制**：末端数量有限，全某些身动作可能无法精确复制\n\n### 6.3 适用范围\n\n1. **任务限制**：更适合操作主导的任务，全舞蹈等全身协调任务效果可能受限\n2. **硬件要求**：对通信延迟和计算资源有较高要求\n3. **安全考虑**：低延迟高响应系统可能带来安全隐患，需额外保护机制\n\n### 6.4 理论局限\n\n1. **统一性**：虽然声称提供统一理论框架，但具体形式化在摘要中未详细展开\n2. **稳定性证明**：高速前馈控制可能引入稳定性挑战，需要严格的稳定性分析\n3. **泛化性**：在未见过的运动模式或任务上的泛化能力待验证\n\n---\n\n## 总结\n\nExtremControl 通过直接末端控制、Cartesian 空间映射和速度前馈控制三项核心创新，实现了 50ms 级别的端到端延迟，显著优于传统方法的 200ms 延迟水平。该方法在动态操作任务（乒乓球平衡、颠球等）上展现出优异的高响应性能，但其欠驱动特性带来的平衡挑战和末端选择依赖性仍需在实际部署中谨慎处理。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "ExtremControl: Low-Latency Humanoid Teleoperation with Direct Extremity Control",
+      "authors": [
+        "Ziyan Xiong",
+        "Lixing Fang",
+        "J.J. Huang",
+        "Kashu Yamazaki",
+        "Hao F. Zhang",
+        "Chuang Gan"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.11321",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Building a low-latency humanoid teleoperation system is essential for collecting diverse reactive and dynamic demonstrations. However, existing approaches rely on heavily pre-processed human-to-humanoid motion retargeting and position-only PD control, resulting in substantial latency that severely limits responsiveness and prevents tasks requiring rapid feedback and fast reactions. To address this problem, we propose ExtremControl, a low latency whole-body control framework that: (1) operates directly on SE(3) poses of selected rigid links, primarily humanoid extremities, to avoid full-body retargeting; (2) utilizes a Cartesian-space mapping to directly convert human motion to humanoid link targets; and (3) incorporates velocity feedforward control at low level to support highly responsive behavior under rapidly changing control interfaces. We further provide a unified theoretical formulation of ExtremControl and systematically validate its effectiveness through experiments in both simulation and real-world environments. Building on ExtremControl, we implement a low-latency humanoid teleoperation system that supports both optical motion capture and VR-based motion tracking, achieving end-to-end latency as low as 50ms and enabling highly responsive behaviors such as ping-pong ball balancing, juggling, and real-time return, thereby substantially surpassing the 200ms latency limit observed in prior work.",
+      "route_id": "78db424b-8c9e-4cca-ac24-de15ec903a69"
+    },
+    "markdown_stats": {
+      "lines": 489,
+      "words": 12540,
+      "headings": 33
+    },
+    "assets": {
+      "images": 44,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "78db424b-8c9e-4cca-ac24-de15ec903a69",
+  "paper_ref": "78db424b-8c9e-4cca-ac24-de15ec903a69",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

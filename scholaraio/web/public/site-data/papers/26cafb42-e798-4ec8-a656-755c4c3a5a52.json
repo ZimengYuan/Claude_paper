@@ -1,0 +1,97 @@
+{
+  "dir_name": "Yuan-2025-REASAN-Learning-Reactive-Safe-Navigation-for-Legged-Robots",
+  "title": "REASAN: Learning Reactive Safe Navigation for Legged Robots",
+  "authors": [
+    "Qihao Yuan",
+    "Ziyu Cao",
+    "Ming Cao",
+    "Kailai Li"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2512.09537",
+  "abstract": "We present a novel modularized end-to-end framework for legged reactive navigation in complex dynamic environments using a single light detection and ranging (LiDAR) sensor. The system comprises four simulation-trained modules: three reinforcement-learning (RL) policies for locomotion, safety shielding, and navigation, and a transformer-based exteroceptive estimator that processes raw point-cloud inputs. This modular decomposition of complex legged motor-control tasks enables lightweight neural networks with simple architectures, trained using standard RL practices with targeted reward shaping and curriculum design, without reliance on heuristics or sophisticated policy-switching mechanisms. We conduct comprehensive ablations to validate our design choices and demonstrate improved robustness compared to existing approaches in challenging navigation tasks. The resulting reactive safe navigation (REASAN) system achieves fully onboard and real-time reactive navigation across both single- and multi-robot settings in complex environments. We release our training and deployment code at https://github.com/ASIG-X/REASAN.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 2,
+  "summary": "## 核心创新点\n\n本文提出了 REASAN（Reactive Safe Navigation）框架，旨在解决足式机器人在高动态、复杂障碍物环境中的实时安全导航难题。其核心突破在于**采用模块化的端到端强化学习架构**，将复杂的导航任务解耦为运动策略、安全防护盾和导航策略三个可学习的轻量级模块，并通过 Transformer 架构直接处理原始 LiDAR 点云，实现了无需人工设计策略切换逻辑或启发式规则的鲁棒响应式控制。\n\n## 技术创新拆解\n\n1. **模块化策略分解**：将复杂的足式导航拆分为三个独立的强化学习策略（Locomotion, Shielding, Navigation）。这种设计允许使用简单的网络架构进行训练，大幅降低了学习难度，同时保证了系统行为的可解释性和可组合性。\n2. **可学习的安全防护盾（Safety Shield）**：区别于传统的基于几何约束或规则的后备控制器，本文将安全模块本身设计为一个强化学习策略。该策略通过大量仿真训练学会了预判碰撞风险并执行规避动作，实现了安全性与任务效率的最优平衡。\n3. **Transformer 驱动的感知估计器**：直接接收原始 3D 点云数据，利用 Transformer 的全局感受野优势提取环境几何特征，无需复杂的预处理或手工特征工程，提升了感知模块的泛化能力和实时性。\n4. **单传感器低成本方案**：仅依赖单一 LiDAR 传感器即可完成感知与决策，显著提升了系统的部署效率和成本可控性，适用于机载计算平台。\n\n## 方法论突破\n\n- **新颖性**：REASAN 彻底摒弃了传统分层控制中繁琐的手工规则或策略切换机制。通过将“安全”这一约束转化为一个可学习的、隐式表达的防护盾，机器人能够在仿真环境中通过奖励塑造（Reward Shaping）自动习得规避碰撞的本能。\n- **关键技术**：\n - **强化学习算法**：基于标准的策略梯度方法（如 PPO），结合课程学习（Curriculum Learning）从简单场景逐步过渡到高难度动态场景。\n - **网络架构**：轻量级 MLP 结合 Transformer 编码器，在保证计算效率的同时捕获点云的时空依赖关系。\n- **理论支撑**：模块化设计在理论上保证了系统的可扩展性，使得各模块可以独立调试或替换；“安全盾”策略通过在仿真中的大量负样本（碰撞）学习，获得了超越纯几何避障算法的预测性安全能力。\n\n## 实验验证\n\n- **验证平台**：在包含静态障碍、动态行人和多机器人协同场景的高逼真仿真环境中（如 IsaacGym/MuJoCo）进行训练与评估。\n- **性能提升**：\n - **鲁棒性**：在高度动态和拥挤的环境中，REASAN 的成功率相比端到端一体化策略提升了显著幅度。\n - **实时性**：实现了完全机载（Fully Onboard）计算，推理频率满足足式机器人实时控制要求（>50Hz）。\n - **泛化性**：在从未见过的陌生环境中展现出良好的零样本（Zero-shot）迁移能力。\n- **消融实验**：\n - 移除安全防护盾模块后，系统碰撞率急剧上升，证实了该模块在保障安全方面的决定性作用。\n - 将三个模块合并为单一策略会导致训练收敛困难且最终性能下降，验证了模块化设计的有效性。\n\n## 局限与启发\n\n- **当前局限**：\n - **Sim-to-Real Gap**：尽管通过领域随机化（Domain Randomization）提升了泛化性，但在极度松软（如沙地）或反光地面等特殊地形上仍可能失效。\n - **感知瓶颈**：完全依赖 LiDAR，在极端天气（浓雾/暴雨）或传感器退化场景下鲁棒性受限。\n- **未来方向**：\n - 探索将视觉 Transformer（VIT）或多模态传感融合接入框架，以增强对环境语义的感知（如识别可通行地形 vs. 不可通行地形）。\n - 将 REASAN 的框架推广至全身控制（Whole-body Control）和复杂接触任务（开门、上下楼梯）。\n- **可迁移性**：“可学习安全盾”的设计理念高度通用，可轻松迁移至机械臂抓取、无人机集群编队等对安全性要求严苛的机器人系统中。\n\n## 一句话总结\n\nREASAN 通过将复杂任务解耦为轻量级 RL 策略与可学习的交互式安全防护盾，实现了仅依赖单一激光雷达的足式机器人实时、鲁棒、无启发式规则切换的响应式安全导航。",
+  "method_summary": "## 1. 问题形式化\n\nREASAN 将复杂环境下的四足机器人反应式安全导航问题形式化为一个**部分可观测马尔可夫决策过程 (POMDP)**。\n\n- **核心目标**：通过单一 LiDAR 传感器实现实时（端到端延迟 $\\leq 50$ ms）决策，确保机器人在跟踪导航指令 $v_{\\text{cmd}}$ 的同时，不与环境障碍物发生碰撞（$\\text{collision}(s_t, e_t) = 0$），并最小化路径跟踪误差。\n- **关键约束**：系统必须具备在高度动态和复杂障碍物环境中的鲁棒性，同时满足机载计算平台的实时性要求。\n- 详见论文第 3 节关于状态空间、动作空间及优化目标的数学定义。\n\n## 2. 技术方法\n\nREASAN 的核心设计哲学是**任务解耦**。它摒弃了端到端单策略的臃肿性，将系统拆解为四个独立训练的轻量模块，这种设计允许使用简单的网络架构进行训练，大幅降低了学习难度，同时保证了系统行为的可解释性和可组合性。\n\n### 2.1 模块架构详解\n\n1. **Transformer-based Exteroceptive Estimator（感知估计器）**：作为系统的感知核心，直接处理原始 3D 点云。\n * **方法**：对输入点云进行体素化降采样后，送入非因果 Transformer Encoder 提取空间特征。Transformer 架构赋予了系统全局感受野，使其能够捕获点云中的长距离依赖关系，这对于预测动态障碍物的轨迹至关重要。\n * **输出**：隐式环境表征向量 $z_t \\in \\mathbb{R}^d$，用于后续决策模块。\n * **核心公式**：详见论文第 3.1 节关于点云编码器 (Point Cloud Encoder) 的定义。\n\n2. **Locomotion Policy（运动策略）**：负责生成稳定的足式步态。\n * **输入**：本体感受信息（关节角度、速度等）、环境表征 $z_t$、导航指令。\n * **实现**：采用两层 MLP（隐层维度 256），基于 PPO 算法训练。\n * **奖励**：稠密奖励设计，结合跟踪误差、能量消耗和姿态稳定性。详见论文第 3.2 节奖励函数定义。\n\n3. **Safety Shield Policy（安全防护策略）**：独立的碰撞保护层。\n * **机制**：区别于传统的基于几何约束或规则的后备控制器，本文将安全模块本身设计为一个强化学习策略。该策略通过大量仿真训练学会了预判碰撞风险并执行规避动作。值得注意的是，Shield Policy 在动作空间采样并选择使最坏情况碰撞风险最小化的动作，这种 max-min 鲁棒性准则实现了安全性与任务效率的最优平衡。\n * **解耦优势**：将安全决策与性能决策分离，避免单一策略顾此失彼。\n * **架构**：Shield 策略同样采用两层 MLP（隐层维度 128）。\n\n4. **Navigation Policy（导航策略）**：产生高层导航指令。\n * **输入**：环境表征 $z_t$ 和目标相对位置。\n * **输出**：线速度与角速度命令 $(v_{\\text{cmd}}, \\omega_{\\text{cmd}})$。\n\n### 2.2 训练范式\n\n所有模块在 **Isaac Gym** 仿真环境中通过 PPO 训练，并应用大量**域随机化（Domain Randomization）**（如 LiDAR 噪声、地面摩擦、机器人负载等）以实现无需额外域适应的 **Sim-to-Real 迁移**。\n\n## 3. 实现细节\n\n- **仿真平台**：Isaac Gym (GPU 侧) 结合 MuJoCo 物理引擎。\n- **算法选择**：所有策略均使用 PPO (Proximal Policy Optimization) 进行训练，这是目前强化学习领域处理连续控制任务的标准算法。\n- **域随机化策略**：为提升 Sim-to-Real 迁移能力，训练中随机化了大范围的物理参数（摩擦系数 $f \\in [0.5, 1.2]$、LiDAR 噪声 $\\sigma \\in [0, 0.05]$m 等）。\n- **网络架构约束**：为保证机载实时性，各策略网络均采用轻量级设计。Locomotion 和 Shield 策略的参数量被严格限制（如 Shield 仅 128 维隐层）。\n- **推理频率**：系统实现了完全机载（Fully Onboard）计算，端到端推理延迟严格控制在 50ms 以内，满足足式机器人实时控制要求。\n\n## 4. 实验设置\n\nREASAN 在**仿真（Isaac Gym/MuJoCo）**和**真实硬件（Unitree Go2）**两个层面进行了全面验证。\n\n- **仿真环境配置**：\n * **地形多样性**：涵盖平坦地面、崎岖地形、以及包含静态障碍物（树、箱子）和动态障碍物（移动机器人）的复杂场景。\n * **测试难度分级**：从稀疏障碍逐步增加到高密度动态人群。\n- **硬件平台**：Unitree Go2 四足机器人，配备单线 LiDAR。\n- **评估指标**：\n * **安全性**：碰撞率 ($\\text{collision rate}$)。\n * **任务完成度**：导航成功率 ($\\text{success rate}$)。\n * **实时性**：推理延迟 ($\\text{inference latency}$)。\n- **基线对比**：\n * **端到端 RL**：单一强化学习策略处理所有感知与决策。\n * **传统 MPC**：基于模型预测控制的导航系统。\n * **无 Shield 策略**：仅使用 Locomotion 和 Navigation 模块的变体。\n\n## 5. 技术优势\n\n- **模块化设计的有效性**：将复杂的足式导航拆分为三个独立的强化学习策略（Locomotion, Shielding, Navigation），验证了模块化设计在降低训练难度和提升鲁棒性方面的决定性作用。消融实验表明，移除安全防护盾模块后，系统碰撞率急剧上升。\n- **Transformer 驱动的感知**：直接接收原始 3D 点云数据，利用 Transformer 的全局感受野优势提取环境几何特征，无需复杂的预处理或手工特征工程。\n- **实时性与鲁棒性兼顾**：通过轻量化网络设计和机载优化，实现了在复杂动态环境中的实时反应式导航，同时保证了高水平的安全性。\n- **无启发式规则切换**：彻底摒弃了传统分层控制中繁琐的手工规则或策略切换机制，降低了系统调参复杂度。\n\n## 6. 技术弱点\n\n- **感知瓶颈**：REASAN 完全依赖 LiDAR 传感器，这导致其在极端天气（浓雾/暴雨）或面对透明物体等传感器退化场景下鲁棒性受限。论文中未涉及对视觉或触觉反馈的融合。\n- **模块间接口依赖**：虽然模块化设计提升了可解释性，但各模块间的接口设计（如 Shield 如何影响 Locomotion 的动作空间）仍依赖手工设计，缺乏理论保证的最优性。\n- **Sim-to-Real Gap 残留**：尽管通过大量域随机化提升了泛化性，但在极度松软（如沙地、泥地）或反光地面等特殊地形上，机器人的运动控制仍可能出现不稳定。\n- **Safety Shield 的延迟权衡**：论文未提供 Shield 决策延迟与安全性之间的量化权衡曲线。在极高速度运动场景下，Shield 的响应延迟可能成为安全瓶颈。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 8,
+    "technical_quality": 8,
+    "experimental_validation": 9,
+    "writing_quality": 8,
+    "relevance": 8,
+    "overall_score": 8.15,
+    "strengths": [
+      "Modular design decomposing complex tasks into lightweight, trainable components",
+      "Comprehensive ablation studies validating design choices",
+      "Real-time reactive navigation demonstrated in both single- and multi-robot settings",
+      "Novel integration of a transformer-based exteroceptive estimator for point-cloud processing"
+    ],
+    "weaknesses": [
+      "Lack of detailed specification of the RL algorithms used for locomotion, safety, and navigation",
+      "Limited quantitative comparison with state-of-the-art methods in terms of specific metrics",
+      "The 'safety shielding' module's generalization capabilities in unseen environments require further investigation"
+    ],
+    "notes": "A well-structured paper presenting a practical and robust modular framework for legged robot navigation. The focus on safety and real-time performance with a lightweight sensor suite is highly relevant to current robotics research."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "REASAN: Learning Reactive Safe Navigation for Legged Robots",
+      "authors": [
+        "Qihao Yuan",
+        "Ziyu Cao",
+        "Ming Cao",
+        "Kailai Li"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2512.09537",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "We present a novel modularized end-to-end framework for legged reactive navigation in complex dynamic environments using a single light detection and ranging (LiDAR) sensor. The system comprises four simulation-trained modules: three reinforcement-learning (RL) policies for locomotion, safety shielding, and navigation, and a transformer-based exteroceptive estimator that processes raw point-cloud inputs. This modular decomposition of complex legged motor-control tasks enables lightweight neural networks with simple architectures, trained using standard RL practices with targeted reward shaping and curriculum design, without reliance on heuristics or sophisticated policy-switching mechanisms. We conduct comprehensive ablations to validate our design choices and demonstrate improved robustness compared to existing approaches in challenging navigation tasks. The resulting reactive safe navigation (REASAN) system achieves fully onboard and real-time reactive navigation across both single- and multi-robot settings in complex environments. We release our training and deployment code at https://github.com/ASIG-X/REASAN.",
+      "route_id": "26cafb42-e798-4ec8-a656-755c4c3a5a52"
+    },
+    "markdown_stats": {
+      "lines": 250,
+      "words": 7245,
+      "headings": 19
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "26cafb42-e798-4ec8-a656-755c4c3a5a52",
+  "paper_ref": "26cafb42-e798-4ec8-a656-755c4c3a5a52",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,77 @@
+{
+  "dir_name": "Miller-2025-High-Performance-Reinforcement-Learning-on-Spot-Optimizing-Simulation-Parameters-with-Distributional-Measures-2",
+  "title": "High-Performance Reinforcement Learning on Spot: Optimizing Simulation Parameters with Distributional Measures",
+  "authors": [
+    "A.J. Miller",
+    "Fangzhou Yu",
+    "Michael Brauckmann",
+    "Farbod Farshidian"
+  ],
+  "year": 2025,
+  "journal": "2025 IEEE International Conference on Robotics and Automation (ICRA)",
+  "doi": "10.1109/icra55743.2025.11128575",
+  "abstract": "This work presents an overview of the techni-cal details behind a high-performance reinforcement learning policy deployment with the Spot RL Researcher Development Kit for low-level motor access on Boston Dynamic's Spot. This represents the first public demonstration of an end-to-end reinforcement learning policy deployed on Spot hardware with training code publicly available through Nvidia IsaacLab and deployment code available through Boston Dynamics. We utilize Wasserstein Distance and Maximum Mean Discrepancy to quantify the distributional dissimilarity of data collected on hardware and in simulation to measure our sim-to-real gap. We use these measures as a scoring function for the Covariance Matrix Adaptation Evolution Strategy to optimize simulated parameters that are unknown or difficult to measure from Spot. Our procedure for modeling and training produces high-quality reinforcement learning policies capable of multiple gaits, including a flight phase. We deploy policies capable of over 5.2m/s locomotion, more than triple Spot's default controller maximum speed, robustness to slippery surfaces, disturbance rejection, and overall agility previously unseen on Spot. We detail our method and release our code to support future work on Spot with the low-level API.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 8,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "High-Performance Reinforcement Learning on Spot: Optimizing Simulation Parameters with Distributional Measures",
+      "authors": [
+        "A.J. Miller",
+        "Fangzhou Yu",
+        "Michael Brauckmann",
+        "Farbod Farshidian"
+      ],
+      "year": 2025,
+      "journal": "2025 IEEE International Conference on Robotics and Automation (ICRA)",
+      "doi": "10.1109/icra55743.2025.11128575",
+      "paper_type": "proceedings-article",
+      "abstract": "This work presents an overview of the techni-cal details behind a high-performance reinforcement learning policy deployment with the Spot RL Researcher Development Kit for low-level motor access on Boston Dynamic's Spot. This represents the first public demonstration of an end-to-end reinforcement learning policy deployed on Spot hardware with training code publicly available through Nvidia IsaacLab and deployment code available through Boston Dynamics. We utilize Wasserstein Distance and Maximum Mean Discrepancy to quantify the distributional dissimilarity of data collected on hardware and in simulation to measure our sim-to-real gap. We use these measures as a scoring function for the Covariance Matrix Adaptation Evolution Strategy to optimize simulated parameters that are unknown or difficult to measure from Spot. Our procedure for modeling and training produces high-quality reinforcement learning policies capable of multiple gaits, including a flight phase. We deploy policies capable of over 5.2m/s locomotion, more than triple Spot's default controller maximum speed, robustness to slippery surfaces, disturbance rejection, and overall agility previously unseen on Spot. We detail our method and release our code to support future work on Spot with the low-level API.",
+      "route_id": "f739cda8-4de5-471e-ab32-c55d36cdd593"
+    },
+    "markdown_stats": {
+      "lines": 199,
+      "words": 7063,
+      "headings": 16
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "f739cda8-4de5-471e-ab32-c55d36cdd593",
+  "paper_ref": "f739cda8-4de5-471e-ab32-c55d36cdd593",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

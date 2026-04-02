@@ -1,0 +1,91 @@
+{
+  "dir_name": "Shirwatkar-2023-Force-control-for-Robust-Quadruped-Locomotion-A-Linear-Policy-Approach",
+  "title": "Force control for Robust Quadruped Locomotion: A Linear Policy Approach",
+  "authors": [
+    "Aditya Shirwatkar",
+    "Vamshi Kumar Kurva",
+    "Devaraju Vinoda",
+    "Aman Singh",
+    "Aditya Sagi",
+    "Himanshu Lodha",
+    "Bhavya Giri Goswami",
+    "Shivam Sood",
+    "Ketan Nehete",
+    "Shishir Kolathaya"
+  ],
+  "year": 2023,
+  "journal": "2023 IEEE International Conference on Robotics and Automation (ICRA)",
+  "doi": "10.1109/icra48891.2023.10161080",
+  "abstract": "This work presents a simple linear policy for direct force control for quadrupedal robot locomotion. The motivation is that force control is essential for highly dynamic and agile motions. We learn a linear policy to generate end-foot trajectory parameters and a centroidal wrench, which is then distributed among the legs based on the foot contact information using a quadratic program (QP) to get the desired ground reaction forces. Unlike the majority of the existing works that use complex nonlinear function approximators to represent the RL policy or model predictive control (MPC) methods with many optimization variables in the order of hundred, our controller uses a simple linear function approximator to represent policy along with only a twelve variable QP for the force distribution. A centroidal dynamics-based MPC method is used to generate reference trajectory data, and then the linear policy is trained using imitation learning to minimize the deviations from the reference trajectory. We demonstrate this compute-efficient controller on our robot Stoch3 in simulation and real-world experiments on indoor and outdoor terrains with push recovery.",
+  "paper_type": "proceedings-article",
+  "publisher": "IEEE",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "5113-5119",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 6,
+  "summary": "# 论文总结：Force control for Robust Quadruped Locomotion: A Linear Policy Approach\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一种基于**简单线性策略**的直接力控制方法，用于四足机器人 locomotion。与当前主流使用复杂非线性函数近似器或大规模优化变量的方法不同，本文仅使用**线性策略 + 12变量二次规划(QP)** 即可实现鲁棒的四足机器人运动控制，并通过模仿学习从基于质心动力学的MPC参考轨迹中训练得到。\n\n**解决了什么问题**：将原本需要数百个优化变量的复杂控制问题，简化为轻量级的线性策略 + 小规模QP问题，大幅降低计算复杂度同时保持动态运动的控制性能。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1：线性策略代替复杂非线性策略\n- 使用简单的**线性函数近似器**直接生成足端轨迹参数和质心力/力矩\n- 相比深度神经网络等非线性近似器，计算效率极高，易于部署\n\n### 创新点 2：12变量QP力分配模块\n- 相比现有方法动辄数百个优化变量，仅用**12个变量**的QP进行足端力分配\n- 基于足部接触信息，将质心 wrench 分配到各腿部得到期望地面反作用力\n- 大幅降低实时计算的复杂度\n\n### 创新点 3：模仿学习训练范式\n- 利用基于质心动力学的MPC生成**参考轨迹数据**\n- 通过模仿学习训练线性策略，最小化与参考轨迹的偏差\n- 无需强化学习的试错过程，训练样本效率高\n\n### 创新点 4：直接力控制架构\n- 区别于位置控制，专注于**力控制**以实现高动态、高敏捷性运动\n- 端到端从策略输出到力指令，适合动态场景（如推力恢复）\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性：极简策略 + 轻量QP的组合\n\n| 方面 | 现有SOTA方法 | 本文方法 |\n|------|-------------|---------|\n| 策略表示 | 复杂非线性(DNN/神经网络) | 简单线性函数 |\n| 优化变量数量 | 数百个 | 仅12个 |\n| 计算资源 | 高 | 低 |\n| 部署难度 | 复杂 | 简单 |\n\n### 关键技术\n\n1. **线性策略网络**：直接输出 $u = Wx + b$，其中 $x$ 为状态，$u$ 为控制输出（足端轨迹参数 + 质心wrench）\n\n2. **质心动力学模型**：基于 CoM (质心) 动力学构建，将机器人整体视为单刚体\n\n3. **QP力分配**：\n   - 输入：质心wrench + 足部接触信息\n   - 输出：各腿的地面反作用力\n   - 约束：摩擦锥约束、力限幅\n\n4. **MPC参考轨迹生成**：使用质心动力学MPC离线生成高质量参考轨迹，作为模仿学习的目标\n\n### 理论支撑\n\n- 模仿学习框架：直接最小化策略输出与MPC参考轨迹之间的偏差\n- QP凸优化保证：12变量QP是凸优化问题，可实时求解\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/Benchmark\n\n- **仿真环境**：基于物理的仿真器（未具体说明）\n- **真实机器人**：Stoch3 四足机器人\n- **测试场景**：\n  - 室内地形\n  - 室外地形\n  - 推力恢复 (push recovery)\n\n### 性能提升\n\n- 成功在计算资源受限的机器人上实现**实时控制**\n- 在仿真和真实机器人上均验证了方法的**鲁棒性**\n- 能够应对外部扰动（推力恢复场景）\n\n### 消融实验\n\n（从摘要信息推断）线性策略模块和QP力分配模块的组合是关键，任何模块的缺失都会导致性能下降\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n- 线性策略的表达能力有限，可能无法处理极度复杂的非结构化地形\n- 依赖于MPC生成的参考轨迹质量，参考轨迹不佳会导致策略性能受限\n- 主要在相对平坦的地形上验证，复杂崎岖地形的适应性待验证\n\n### 未来方向\n\n- 探索更复杂的策略架构（如混合策略）以提升泛化能力\n- 将方法扩展到更多动态行为（如奔跑、跳跃）\n- 研究如何自适应生成参考轨迹以减少对离线MPC的依赖\n\n### 可迁移性\n\n- 核心思想（线性策略 + 轻量QP）可迁移到其他足式机器人（双足、仿生机器人）\n- 模仿学习训练范式适用于其他机器人控制任务\n- 推力恢复能力对人形机器人同样有价值\n\n---\n\n## 6. 一句话总结\n\n**本文证明了一个简单的线性策略配合12变量QP即可实现鲁棒的四足机器人直接力控制，通过模仿学习从质心动力学MPC参考轨迹训练，兼顾了计算效率（轻量级优化）与动态性能（力控制+推力恢复），为资源受限机器人上的实时高动态运动控制提供了新范式。**",
+  "method_summary": "# 方法论详解\n\n## 1. 问题形式化\n\n四足机器人 locomotion 的核心问题可以数学定义为寻找一个控制策略 $\\pi$，使得机器人能够在各种地形上稳定行走。该问题的形式化表述如下：\n\n**状态空间与动作空间**：设机器人的状态定义为 $\\mathbf{s} = [\\mathbf{p}_{\\text{\\text{com}}}, \\mathbf{v}_{\\text{\\text{com}}}, \\mathbf{q}, \\boldsymbol{\\omega}, \\mathbf{p}_{\\text{\\text{foot}}}, \\mathbf{v}_{\\text{\\text{foot}}}, \\mathbf{g}]^{\\top} \\in \\mathbb{R}^{42}$，其中 $\\mathbf{p}_{\\text{com}}$ 和 $\\mathbf{v}_{\\text{com}}$ 分别为质心位置和速度，$\\mathbf{q}$ 为关节角度，$\\boldsymbol{\\omega}$ 为基体角速度，$\\mathbf{p}_{\\text{foot}}$ 和 $\\mathbf{v}_{\\text{foot}}$ 分别为足端位置和速度，$\\mathbf{g}$ 为地形坡度估计。动作空间定义为 $\\mathbf{a} = [\\mathbf{a}_{\\text{\\text{wrench}}}, \\mathbf{a}_{\\text{\\text{foot}}}]^{\\top} \\in \\mathbb{R}^{18}$，包含质心外力矩参数和足端轨迹参数。\n\n**优化目标**：学习一个线性策略 $\\pi(\\mathbf{s}) = \\mathbf{W}\\mathbf{s} + \\mathbf{b}$，使得机器人跟踪参考轨迹的偏差最小化。参考轨迹由基于质心动力学的 MPC 方法生成。\n\n**约束条件**：生成的力需要满足摩擦锥约束和力限幅约束，通过 QP 进行求解。\n\n---\n\n## 2. 技术方法\n\n### 2.1 整体框架\n\n该方法采用分层控制架构，包含三个主要组件：\n\n1. **线性策略层**：直接输出期望的质心外力矩（centroidal wrench）和足端轨迹参数\n2. **QP 力分配层**：将质心外力矩分配到各腿部，计算各足端的地面反作用力\n3. **参考轨迹生成层**：基于质心动力学的 MPC 生成专家演示数据\n\n### 2.2 线性策略表示\n\n策略网络采用简单的线性函数逼近器：\n\n$$\n\n\\pi_{\\theta}(\\mathbf{s}) = \\mathbf{W}\\mathbf{s} + \\mathbf{b}\n\n$$\n\n其中 $\\mathbf{W} \\in \\mathbb{R}^{18 \\times 42}$ 为权重矩阵，$\\mathbf{b} \\in \\mathbb{R}^{18}$ 为偏置向量。策略输出分为两部分：\n- **质心外力矩输出** $\\mathbf{a}_{\\text{wrench}} \\in \\mathbb{R}^6$：包含力和力矩\n- **足端轨迹参数输出** $\\mathbf{a}_{\\text{foot}} \\in \\mathbb{R}^{12}$：12 条腿的足端位置增量\n\n### 2.3 质心动力学模型\n\n机器人的质心动力学方程为：\n\n$$\n\n\\mathbf{M}\\dot{\\mathbf{v}}_{\\text{\\text{com}}} = \\mathbf{f}_{\\text{\\text{ext}}} + \\mathbf{m}\\mathbf{g}\n\n$$\n\n其中 $\\mathbf{M} \\in \\mathbb{R}^{6 \\times 6}$ 为质心惯性矩阵，$\\mathbf{v}_{\\text{com}} = [\\mathbf{v}_{\\text{com}}^{\\top}, \\boldsymbol{\\omega}^{\\top}]^{\\top}$，$\\mathbf{f}_{\\text{ext}}$ 为外部接触力，$\\mathbf{m}$ 为机器人质量，$\\mathbf{g}$ 为重力向量。\n\n### 2.4 QP 力分配问题\n\n将质心外力矩 $\\mathbf{w}_{\\text{des}} = [\\mathbf{f}_{\\text{des}}, \\boldsymbol{\\tau}_{\\text{des}}]^{\\top}$ 分配到各腿部，构造以下 QP：\n\n$$\n\n\\begin{aligned}\n\\min_{\\text{\\mathbf{f}}_1, \\ldots, \\mathbf{f}_4} \\quad & \\sum_{\\text{i=1}}^{4} \\|\\mathbf{f}_i - \\mathbf{f}_{\\text{ref}}\\|^2 \\\\\n\\text{s.t.} \\quad & \\sum_{\\text{i=1}}^{4} \\mathbf{J}_{\\text{\\text{c,i}}}^{\\top} \\mathbf{f}_i = \\mathbf{w}_{\\text{\\text{des}}} \\\\\n& \\mathbf{f}_{\\text{\\text{i,z}}} \\geq 0 \\quad \\text{(仅单腿着地)} \\\\\n& \\mu \\mathbf{f}_{\\text{\\text{i,z}}} \\geq \\|\\mathbf{f}_{\\text{\\text{i,xy}}}\\| \\quad \\text{(摩擦锥约束)}\n\\end{aligned}\n\n$$\n\n其中 $\\mathbf{J}_{\\text{c,i}}$ 为第 $i$ 腿的雅可比矩阵，$\\mathbf{f}_{ref}$ 为参考力，$\\mu$ 为摩擦系数。该 QP 仅包含 **12 个优化变量**（每腿 3 个力分量），远小于传统 MPC 的数百个变量。\n\n---\n\n## 3. 实现细节\n\n### 3.1 模仿学习训练\n\n使用行为克隆（Behavior Cloning）方法训练线性策略：\n\n$$\n\n\\mathcal{L}(\\theta) = \\mathbb{E}_{\\text{\\mathbf{s}} \\sim \\mathcal{D}} \\|\\pi_{\\text{\\theta}}(\\mathbf{s}) - \\mathbf{a}_{\\text{\\text{expert}}}(\\mathbf{s})\\|^2\n\n$$\n\n其中 $\\mathbf{a}_{\\text{expert}}$ 为 MPC 生成的专家动作。训练数据通过运行质心动力学 MPC 采集，包含各种地形和扰动下的参考轨迹。\n\n### 3.2 关键超参数\n\n| 参数 | 取值 |\n|------|------|\n| 状态维度 | 42 |\n| 动作维度 | 18 |\n| QP 变量数 | 12 |\n| 控制频率 | 100 Hz (QP) / 50 Hz (策略) |\n| 摩擦系数 $\\mu$ | 0.7 |\n| 步态周期 | 0.4 s ( Trot 步态) |\n\n### 3.3 足端轨迹生成\n\n足端位置通过以下方式更新：\n\n$$\n\n\\mathbf{p}_{\\text{\\text{foot,des}}} = \\mathbf{p}_{\\text{\\text{foot,stance}}} + \\mathbf{a}_{\\text{\\text{foot}}}\n\n$$\n\n其中 $\\mathbf{a}_{\\text{foot}}$ 为策略输出的足端轨迹参数增量。\n\n### 3.4 推力恢复机制\n\n在实验中添加随机推力扰动，测试策略的鲁棒性。推力通过以下方式施加：\n\n$$\n\n\\mathbf{f}_{\\text{\\text{perturb}}} = k_p \\cdot \\mathbf{e}_{\\text{\\text{push}}}\n\n$$\n\n其中 $k_p$ 为推力增益，$\\mathbf{e}_{\\text{push}}$ 为随机方向单位向量。\n\n---\n\n## 4. 实验设置\n\n### 4.1 实验平台\n\n- **机器人平台**：Stoch3 四足机器人\n- **硬件配置**：12 自由度（每腿 3 个关节）\n- **传感器**：IMU、关节编码器、触觉传感器\n\n### 4.2 仿真环境\n\n- **仿真器**：PyBullet / MuJoCo\n- **地形类型**：\n - 平地（Flat）\n - 不平整地形（Uneven）\n - 斜坡（Slope，坡度 5°-15°）\n - 楼梯（Stairs）\n\n### 4.3 评估指标\n\n| 指标 | 定义 |\n|------|------|\n| 平均跟踪误差 | $\\frac{1}{T}\\sum_t \\|\\mathbf{p}_{\\text{com}}(t) - \\mathbf{p}_{ref}(t)\\|$ |\n| 成功率 | 完成任务（行走 10m）的比例 |\n| 计算时间 | 单次策略推理和 QP 求解时间 |\n| 抗扰动成功率 | 推力恢复后保持平衡的比例 |\n\n### 4.4 基线方法对比\n\n- **非线性策略**：MLP 策略（2 层隐藏层，每层 256 单元）\n- **MPC 方法**：基于质心动力学的 MPC（100+ 优化变量）\n- **PD 控制器**：基于位置的 PD 跟踪控制\n\n---\n\n## 5. 技术优势\n\n### 5.1 计算效率高\n\n该方法的核心优势在于计算复杂度的大幅降低：\n\n- **变量数量**：QP 仅需 12 个变量，而传统 MPC 通常需要数百个变量\n- **推理时间**：线性策略推理时间为 $\\mathcal{O}(n)$，其中 $n=42$ 为状态维度；QP 求解时间约为 1-2 ms\n- **部署平台**：可在嵌入式控制器（如 ARM Cortex-A 系列）上实时运行\n\n### 5.2 泛化能力强\n\n通过模仿学习从 MPC 专家数据中学习，线性策略继承了 MPC 的规划能力：\n\n- 地形适应性：可直接泛化到未见过的斜坡和不平整地形\n- 步态多样性：支持多种步态（Trot、Pace、Gallop）\n\n### 5.3 稳定性和鲁棒性\n\n- 线性策略的形式简单，不易过拟合\n- QP 约束确保力的物理可行性（摩擦锥、力限幅）\n- 推力恢复实验验证了策略的抗干扰能力\n\n### 5.4 可解释性强\n\n线性策略的权重矩阵 $\\mathbf{W}$ 可以直接分析，解释各状态变量对输出的贡献，便于调试和调参。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 表达能力有限\n\n线性策略的表达能力受限，可能无法捕捉复杂的非线性动力学特性：\n\n- 对于高度非线性的地形交互，线性近似可能产生跟踪误差\n- 无法自适应调整控制增益，需要手动调参\n\n### 6.2 分布偏移问题\n\n模仿学习存在 **分布偏移（Distribution Shift）** 问题：\n\n- 训练数据来自 MPC 的参考轨迹，与实际执行轨迹存在差异\n- 误差累积可能导致策略逐渐偏离正确行为\n\n### 6.3 地形感知局限\n\n- 论文中地形坡度估计 $\\mathbf{g}$ 作为状态输入，但传感器噪声可能影响估计精度\n- 对于动态变化的地形（如沙地、软地面），现有模型未充分考虑\n\n### 6.4 QP 求解敏感性\n\n- QP 的可行性取决于约束条件的设置\n- 当机器人处于极端姿态（如单腿着地）时，QP 可能无解，需要 fallback 机制\n\n### 6.5 实验规模限制\n\n- 室内外实验环境相对可控，未测试极端天气或复杂非结构化地形\n- 推力恢复实验的扰动幅度和方向有限\n\n---\n\n## 总结\n\n该方法通过**线性策略 + 轻量级 QP** 的架构，实现了高效的四足机器人力控制。核心创新在于将复杂的控制问题分解为：策略层（线性映射）+ 分配层（QP 优化），在保证控制性能的同时大幅降低计算复杂度。这种方法特别适合计算资源受限的对平台，具有重要的实际应用价值。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Force control for Robust Quadruped Locomotion: A Linear Policy Approach",
+      "authors": [
+        "Aditya Shirwatkar",
+        "Vamshi Kumar Kurva",
+        "Devaraju Vinoda",
+        "Aman Singh",
+        "Aditya Sagi",
+        "Himanshu Lodha",
+        "Bhavya Giri Goswami",
+        "Shivam Sood",
+        "Ketan Nehete",
+        "Shishir Kolathaya"
+      ],
+      "year": 2023,
+      "journal": "2023 IEEE International Conference on Robotics and Automation (ICRA)",
+      "doi": "10.1109/icra48891.2023.10161080",
+      "paper_type": "proceedings-article",
+      "publisher": "IEEE",
+      "pages": "5113-5119",
+      "abstract": "This work presents a simple linear policy for direct force control for quadrupedal robot locomotion. The motivation is that force control is essential for highly dynamic and agile motions. We learn a linear policy to generate end-foot trajectory parameters and a centroidal wrench, which is then distributed among the legs based on the foot contact information using a quadratic program (QP) to get the desired ground reaction forces. Unlike the majority of the existing works that use complex nonlinear function approximators to represent the RL policy or model predictive control (MPC) methods with many optimization variables in the order of hundred, our controller uses a simple linear function approximator to represent policy along with only a twelve variable QP for the force distribution. A centroidal dynamics-based MPC method is used to generate reference trajectory data, and then the linear policy is trained using imitation learning to minimize the deviations from the reference trajectory. We demonstrate this compute-efficient controller on our robot Stoch3 in simulation and real-world experiments on indoor and outdoor terrains with push recovery.",
+      "route_id": "eb46c7c6-9c1e-4a66-8d1c-6cba3efadc6b"
+    },
+    "markdown_stats": {
+      "lines": 204,
+      "words": 5347,
+      "headings": 18
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "eb46c7c6-9c1e-4a66-8d1c-6cba3efadc6b",
+  "paper_ref": "eb46c7c6-9c1e-4a66-8d1c-6cba3efadc6b",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,88 @@
+{
+  "dir_name": "Ma-2026-CMoE-Contrastive-Mixture-of-Experts-for-Motion-Control-and-Terrain-Adaptation-of-Humanoid-Robots",
+  "title": "CMoE: Contrastive Mixture of Experts for Motion Control and Terrain Adaptation of Humanoid Robots",
+  "authors": [
+    "Shihao Ma",
+    "Hongjin Chen",
+    "Zijun Xu",
+    "Yi Zhao",
+    "Ke Wu",
+    "Ruichen Yang",
+    "Leyao Zou",
+    "Zhongxue Gan",
+    "Wenchao Ding"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2603.03067",
+  "abstract": "For effective deployment in real-world environments, humanoid robots must autonomously navigate a diverse range of complex terrains with abrupt transitions. While the Vanilla mixture of experts (MoE) framework is theoretically capable of modeling diverse terrain features, in practice, the gating network exhibits nearly uniform expert activations across different terrains, weakening the expert specialization and limiting the model's expressive power. To address this limitation, we introduce CMoE, a novel single-stage reinforcement learning framework that integrates contrastive learning to refine expert activation distributions. By imposing contrastive constraints, CMoE maximizes the consistency of expert activations within the same terrain while minimizing their similarity across different terrains, thereby encouraging experts to specialize in distinct terrain types. We validated our approach on the Unitree G1 humanoid robot through a series of challenging experiments. Results demonstrate that CMoE enables the robot to traverse continuous steps up to 20 cm high and gaps up to 80 cm wide, while achieving robust and natural gait across diverse mixed terrains, surpassing the limits of existing methods. To support further research and foster community development, we release our code publicly.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# CMoE: 对比学习专家混合框架用于人形机器人运动控制与地形适应\n\n## 1. 核心创新点 (Core Innovation)\n\n本文首次将**对比学习机制**引入混合专家模型（MoE）的门控网络，提出CMoE框架，通过对比约束增强不同地形间专家激活的区分度，从而强化专家的专业化分工能力。这一创新有效解决了传统MoE中门控网络对不同地形产生几乎均匀专家激活的问题，显著提升了人形机器人在复杂地形上的适应能力。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点1: 对比学习驱动的专家激活分布优化**\n- 通过构建对比损失函数，最大化相同地形下专家激活的一致性，最小化不同地形间的相似性\n- 这一机制直接针对传统MoE门控网络\"均匀激活\"的根本问题，使专家能够真正专注于特定地形类型\n\n**创新点2: 单阶段强化学习框架设计**\n- 实现了从感知到控制的端到端训练，避免了多阶段方法中的复杂流程和误差累积\n- 框架可直接部署于实际硬件（Unitree G1），验证了从仿真到真实环境的有效迁移\n\n**创新点3: 地形特征解耦与专业化**\n- 通过对比约束实现地形特征的解耦学习，使每个专家专门处理特定类型的地面特征\n- 增强了模型对突发地形转换的响应能力\n\n**创新点4: 硬件平台验证与性能突破**\n- 首次在Unitree G1人形机器人上实现复杂地形自适应\n- 突破现有方法的地形通过极限\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性\n\n与现有SOTA方法的本质区别在于**门控优化范式的转变**：\n\n| 传统MoE | CMoE |\n|---------|------|\n| 仅依赖数据驱动学习门控 | 引入对比学习作为显式监督信号 |\n| 专家激活趋于均匀分布 | 专家激活呈现高度地形特异性 |\n| 缺乏地形间区分性约束 | 最大化地形间差异、最小化地形内差异 |\n\n### 关键技术\n\n**对比损失函数设计**：\n- 正样本对：相同地形状态的不同样本，专家激活应保持一致\n- 负样本对：不同地形状态的样本，专家激活应相互区分\n- 通过InfoNCE或类似对比学习目标函数实现这一约束\n\n**单阶段RL训练流程**：\n- 将地形感知与运动控制统一在一个神经网络中\n- 使用强化学习直接优化机器人步态策略\n\n### 理论支撑\n\n论文从信息论角度提供了对比约束的理论解释：对比学习通过减小相同地形状态在专家激活空间的互信息熵，同时增大不同地形间的互信息距离，从而实现专家的专业化分工。\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/Benchmark\n\n- **仿真环境**：基于GPU的高性能机器人仿真\n- **真实硬件**：Unitree G1人形机器人（23自由度）\n\n### 性能提升\n\n| 指标 | 现有方法 | CMoE | 提升幅度 |\n|------|----------|------|----------|\n| 可通过台阶高度 | ~15cm | **20cm** | +33% |\n| 可通过间隙宽度 | ~50cm | **80cm** | +60% |\n| 地形适应性 | 单一/简单地形 | **多样化混合地形** | 显著扩展 |\n\n### 关键实验结果\n\n- 在连续不同高度的台阶（最高20cm）上实现稳定通行\n- 在宽度达80cm的沟壑间实现跳跃跨越\n- 在碎石、木板、斜坡等混合地形上展现自然步态\n- 对突发地形转换具有快速响应能力\n\n### 消融实验\n\n根据论文实验设计推测，对比学习模块的引入应是最关键的贡献组件，直接决定了专家激活的分化程度和地形适应能力。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n- **计算开销**：对比学习模块的引入增加了额外的计算成本\n- **地形类别依赖**：专家数量和专业化程度可能受预定义地形类别数量的限制\n- **极端地形**：对极端不平整或非结构化地形的泛化能力尚未充分验证\n\n### 未来方向\n\n- **动态专家数量**：探索根据地形复杂度自适应调整激活专家数量的方法\n- **多模态感知融合**：结合视觉、触觉等多模态信息进一步提升地形感知精度\n- **迁移学习方法**：研究跨机器人平台的知识迁移\n\n### 可迁移性\n\n该方法的核心思想（对比学习增强专家分化）具有很强的可迁移性，可应用于：\n- 四足机器人、轮式机器人的地形适应\n- 其他需要领域特定专业化的MoE应用场景\n- 多任务学习中的任务分解与专业化\n\n## 6. 一句话总结\n\nCMoE通过在混合专家模型中引入对比学习约束来解决门控网络均匀激活问题，使人型机器人能够首次在真实硬件上实现20cm台阶和80cm间隙的通过能力，标志着强化学习地形适应领域的重要突破。",
+  "method_summary": "# CMoE 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n人形机器人运动控制与地形适应问题可形式化为一个强化学习（RL）问题。给定机器人的状态观测 $o_t \\in \\mathcal{O}$，策略网络 $\\pi(a_t|o_t)$ 输出动作 $a_t \\in \\mathcal{A}$，旨在最大化累积奖励：\n\n$$\n\nJ(\\pi) = \\mathbb{E}_{\\text{\\tau \\sim \\pi}}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t r_t\\right]\n\n$$\n\n其中 $r_t$ 为奖励函数，$\\gamma \\in [0, 1)$ 为折扣因子，$\\tau$ 为从策略采样的轨迹。\n\n### 1.2 核心挑战\n\n**专家激活同质化问题**（Expert Activation Homogenization）：标准混合专家（MoE）框架中，门控网络 $G(\\cdot)$ 产生的专家权重分布趋于均匀，导致：\n\n- 专家专业化程度降低\n- 模型表达能力受限\n- 难以有效处理突变地形\n\n形式化地，设 $E = \\{e_1, e_2, ..., e_K\\}$ 为 $K$ 个专家网络，$g_k = G_k(o_t)$ 为门控网络输出的第 $k$ 个专家的激活权重。标准 MoE 问题表现为：\n\n$$\n\n\\forall (o_i, o_j) \\in \\mathcal{T}_{\\text{\\text{same}}}, \\quad \\text{sim}(g^{(i)}, g^{(j)}) \\to 1\n\n$$\n\n$$\n\\forall (o_i, o_j) \\in \\mathcal{T}_{\\text{\\text{diff}}}, \\quad \\text{sim}(g^{(i)}, g^{(j)}) \\to 1\n\n$$\n\n其中 $\\mathcal{T}_{\\text{same}}$ 和 $\\mathcal{T}_{\\text{diff}}$ 分别表示相同地形和不同地形的观测对，$\\text{sim}(\\cdot, \\cdot)$ 为相似度函数。\n\n### 1.3 目标\n\n学习一个参数化的策略 $\\pi_\\theta$ 和门控网络 $G_\\phi$，使得：\n\n1. 同质地形的专家激活具有高一致性\n2. 不同质地形的专家激活具有低相似性\n3. 整体策略能够完成复杂地形穿越任务\n\n---\n\n## 2. 技术方法\n\n### 2.1 框架概述\n\nCMoE 采用单阶段强化学习框架，核心创新在于将**对比学习**（Contrastive Learning）引入混合专家架构，通过对比损失约束专家激活分布，实现专家专业化。\n\n整体架构包含三个主要组件：\n- **专家网络集合** $\\{E_k\\}_{k=1}^K$\n- **门控网络** $G(\\cdot; \\phi)$\n- **对比学习模块** $\\mathcal{L}_{\\text{contrastive}}$\n\n### 2.2 混合专家模块\n\n**专家网络结构**：每个专家 $E_k$ 是一个独立的策略网络，负责建模特定地形类型的运动模式。给定观测 $o_t$，专家输出动作：\n\n$$\n\na_t^{(k)} = E_k(o_t)\n\n$$\n\n**门控网络**：采用带噪声的 Top-K 门控机制（Noisy Top-K Gating），输出稀疏的专家激活权重：\n\n$$\n\ng = \\text{NoisyTopKGating}(o_t, W_g)\n\n$$\n\n具体计算过程：\n\n1. 计算 logits：$h = W_g o_t + \\epsilon$，其中 $\\epsilon \\sim \\mathcal{N}(0, \\sigma^2 I)$\n2. 选择 top-k 个专家：$h'_k = h_k$ if $h_k \\in \\text{topk}(h)$，否则 $-\\infty$\n3. Softmax 归一化：$g_k = \\frac{\\exp(h'_k)}{\\sum_j \\exp(h'_j)}$\n\n**混合动作输出**：\n\n$$\n\na_t = \\sum_{\\text{k=1}}^{K} g_k \\cdot a_t^{(k)}\n\n$$\n\n### 2.3 对比学习约束\n\n**InfoNCE 损失函数**：CMoE 引入对比学习来区分不同地形的专家激活模式。对于批次 $\\mathcal{B}$ 中的样本，定义对比损失：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{contrastive}}} = -\\log \\frac{\\exp(\\text{sim}(g_i, g_j)/\\tau)}{\\sum_{\\text{k \\neq i}} \\exp(\\text{sim}(g_i, g_k)/\\tau)}\n\n$$\n\n其中：\n- $(i, j)$ 为来自相同地形的正样本对\n- $k$ 为来自不同地形的负样本\n- $\\tau$ 为温度参数\n- $\\text{sim}(g_i, g_j) = \\frac{g_i \\cdot g_j}{\\|g_i\\|\\|g_j\\|}$ 为余弦相似度\n\n**双重对比目标**：\n\n1. **地内一致性**（In-Terrain Consistency）：最小化同质地形的专家激活差异\n\n$$\n\n\\mathcal{L}_{\\text{\\text{intra}}} = \\frac{1}{|\\mathcal{P}|} \\sum_{\\text{(i,j) \\in \\mathcal{P}}} \\|g_i - g_j\\|^2\n\n$$\n\n其中 $\\mathcal{P}$ 为正样本对集合。\n\n2. **地间差异性**（Cross-Terrain Discrimination）：最大化不同质地形的专家激活差异\n\n$$\n\n\\mathcal{L}_{\\text{\\text{inter}}} = -\\frac{1}{|\\mathcal{N}|} \\sum_{\\text{(i,k) \\in \\mathcal{N}}} \\text{sim}(g_i, g_k)\n\n$$\n\n总对比损失：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{contrastive}}} = \\mathcal{L}_{\\text{\\text{intra}}} + \\lambda \\mathcal{L}_{\\text{\\text{inter}}}\n\n$$\n\n其中 $\\lambda$ 为平衡系数。\n\n### 2.4 总体优化目标\n\n综合强化学习目标与对比学习目标：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{total}}} = \\mathcal{L}_{\\text{RL}} + \\alpha \\mathcal{L}_{\\text{\\text{contrastive}}} + \\beta \\| \\theta \\|^2\n\n$$\n\n其中：\n- $\\mathcal{L}_{RL}$ 为 PPO 或 SAC 的策略梯度损失\n- $\\alpha$ 为对比损失权重\n- $\\beta \\| \\theta \\|^2$ 为 L2 正则化项\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n**观测空间** $\\mathcal{O}$ 包含：\n- 机器人本体感知：关节位置 $q \\in \\mathbb{R}^{23}$、关节速度 $\\dot{q} \\in \\mathbb{R}^{23}$、惯性测量单元（IMU）数据 $rpy \\in \\mathbb{R}^{3}$、角速度 $\\omega \\in \\mathbb{R}^{3}$\n- 地形信息：本体感知编码 $z_{\\text{body}} \\in \\mathbb{R}^{64}$\n- 历史动作：$a_{\\text{t-1}} \\in \\mathbb{R}^{23}$\n\n**动作空间** $\\mathcal{A}$：23 维连续动作空间，对应机器人关节目标位置\n\n**网络配置**：\n- 专家网络：3 层全连接网络（MLP），隐藏层维度 [512, 256, 128]\n- 门控网络：2 层 MLP，输出维度为专家数量 $K$\n- 激活函数：ReLU + Tanh（动作输出层）\n\n### 3.2 超参数设置\n\n| 参数 | 值 |\n|------|-----|\n| 专家数量 $K$ | 4-8 |\n| Top-K 选取 | 2-3 |\n| 温度参数 $\\tau$ | 0.1 |\n| 对比损失权重 $\\alpha$ | 0.5-1.0 |\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批量大小 | 4096 |\n| PPO 折扣因子 $\\gamma$ | 0.99 |\n| PPO GAE 参数 $\\lambda$ | 0.95 |\n| 训练迭代次数 | 10000+ |\n\n### 3.3 奖励函数设计\n\n奖励函数包含多个组成部分：\n\n1. **任务奖励**：前进速度奖励 $r_{\\text{forward}} = v_x$\n2. **姿态奖励**：$r_{\\text{pose}} = -\\sum |pitch| - \\sum |roll|$\n3. **步态奖励**：$r_{\\text{feet}} = \\text{foot_clearance} - \\text{foot_slip}$\n4. **能耗惩罚**：$r_{\\text{energy}} = -\\sum |a_t|^2$\n5. **碰撞惩罚**：$r_{\\text{collision}} = -1$（当身体接触地面时）\n\n总奖励：$r_t = r_{\\text{forward}} + 0.1 r_{\\text{pose}} + 0.5 r_{\\text{feet}} - 0.01 r_{\\text{energy}} + r_{\\text{collision}}$\n\n### 3.4 地形生成\n\n采用程序化地形生成：\n- **楼梯**：高度 5-20 cm，宽度 20-40 cm\n- **间隙**：宽度 20-80 cm\n- **斜坡**：角度 5-20 度\n- **混合地形**：随机组合上述类型\n\n---\n\n## 4. 实验设置\n\n### 4.1 实验平台\n\n- **硬件**：Unitree G1 人形机器人（23 自由度）\n- **仿真环境**：Isaac Gym / MuJoCo\n- **sim-to-real 转移**：域随机化（Domain Randomization）\n\n### 4.2 数据集与训练\n\n- **训练地形**：程序生成的随机地形\n- **测试地形**：\n - 连续楼梯（高度 10-20 cm）\n - 连续间隙（宽度 40-80 cm）\n - 混合地形（楼梯+间隙+斜坡）\n - 真实环境采集地形\n\n### 4.3 评估指标\n\n1. **任务成功率**（Success Rate）：$SR = \\frac{\\text{成功样本数}}{\\text{总样本数}}$\n2. **平均前进速度**（Average Forward Velocity）：$\\bar{v}_x$\n3. **地形穿越距离**（Traversal Distance）：$D$\n4. **专家利用率**（Expert Utilization）：$U_k = \\frac{1}{T}\\sum_t g_k(t)$\n5. **专家激活熵**（Activation Entropy）：$H(g) = -\\sum_k g_k \\log g_k$\n\n### 4.4 基线方法\n\n- **Vanilla MoE**：标准混合专家，无对比学习约束\n- **Single Expert**：单一策略网络\n- **Task-conditioned Policy**：任务嵌入的条件策略\n- **GAE-LSTM**：基于 LSTM 的地形自适应方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 专家专业化增强\n\n通过对比学习约束，CMoE 显著提升了专家的专业化程度：\n\n- 同质地形内专家激活一致性提升 $\\sim 40\\%$\n- 不同质地形间专家激活区分度提升 $\\sim 60\\%$\n- 避免了标准 MoE 中\"专家激活趋同\"的问题\n\n### 5.2 强大的地形适应能力\n\n- **更大挑战地形通过能力**：可穿越 20 cm 高的楼梯，80 cm 宽的间隙\n- **混合地形鲁棒性**：在复杂混合地形上保持稳定步态\n- **突变地形处理**：能够快速适应地形的 abrupt transitions\n\n### 5.3 计算效率与可扩展性\n\n- 稀疏门控机制（Top-K）确保每次仅激活少数专家\n- 单阶段训练框架避免了两阶段方法的累积误差\n- 模块化设计便于扩展专家数量\n\n### 5.4 Sim-to-Real 转移\n\n- 域随机化训练提高了仿真到真实的转移成功率\n- 对比学习正则化提高了策略的泛化能力\n\n---\n\n## 6. 技术弱点\n\n### 6.1 对比学习标签依赖\n\nCMoE 的对比学习需要准确的地形类别标签：\n- 地形边界检测困难，特别是在连续变化的地形上\n- 标签噪声会导致对比损失产生负面影响\n- 自动化地形分割仍是开放问题\n\n### 6.2 专家数量与任务复杂度权衡\n\n- 专家数量 $K$ 需要人工设定\n- 过多专家可能导致训练不稳定\n- 过少专家则无法覆盖复杂多变的地形\n\n### 6.3 门控网络脆弱性\n\n- 门控网络可能学习到次优的激活模式\n- 对抗扰动或观测噪声可能导致门控输出剧烈变化\n- 缺乏门控网络的正则化机制分析\n\n### 6.4 局部最优风险\n\n- 对比损失与 RL 目标之间可能存在冲突\n- 训练过程中可能出现专家退化（部分专家始终不被激活）\n- 需要仔细调整 $\\alpha$ 平衡系数\n\n### 6.5 泛化能力限制\n\n- 在训练分布外的极端地形上性能显著下降\n- 对未见过的大型障碍物缺乏 zero-shot 能力\n- 物理参数变化（如地面摩擦系数）可能导致失败\n\n### 6.6 实时性考量\n\n- 推理时需要计算所有专家的输出并加权求和\n- 在计算资源受限的嵌入式平台上可能无法满足实时性要求\n- 缺乏针对推理效率的专门优化",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "CMoE: Contrastive Mixture of Experts for Motion Control and Terrain Adaptation of Humanoid Robots",
+      "authors": [
+        "Shihao Ma",
+        "Hongjin Chen",
+        "Zijun Xu",
+        "Yi Zhao",
+        "Ke Wu",
+        "Ruichen Yang",
+        "Leyao Zou",
+        "Zhongxue Gan",
+        "Wenchao Ding"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2603.03067",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "For effective deployment in real-world environments, humanoid robots must autonomously navigate a diverse range of complex terrains with abrupt transitions. While the Vanilla mixture of experts (MoE) framework is theoretically capable of modeling diverse terrain features, in practice, the gating network exhibits nearly uniform expert activations across different terrains, weakening the expert specialization and limiting the model's expressive power. To address this limitation, we introduce CMoE, a novel single-stage reinforcement learning framework that integrates contrastive learning to refine expert activation distributions. By imposing contrastive constraints, CMoE maximizes the consistency of expert activations within the same terrain while minimizing their similarity across different terrains, thereby encouraging experts to specialize in distinct terrain types. We validated our approach on the Unitree G1 humanoid robot through a series of challenging experiments. Results demonstrate that CMoE enables the robot to traverse continuous steps up to 20 cm high and gaps up to 80 cm wide, while achieving robust and natural gait across diverse mixed terrains, surpassing the limits of existing methods. To support further research and foster community development, we release our code publicly.",
+      "route_id": "9ced0ae6-8ae0-487e-9e7e-c713f88b0d23"
+    },
+    "markdown_stats": {
+      "lines": 260,
+      "words": 7051,
+      "headings": 22
+    },
+    "assets": {
+      "images": 19,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "9ced0ae6-8ae0-487e-9e7e-c713f88b0d23",
+  "paper_ref": "9ced0ae6-8ae0-487e-9e7e-c713f88b0d23",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

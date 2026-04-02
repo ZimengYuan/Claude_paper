@@ -1,0 +1,95 @@
+{
+  "dir_name": "Gu-2024-Mamba-Linear-Time-Sequence-Modeling-with-Selective-State-Spaces",
+  "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+  "authors": [
+    "Albert Gu",
+    "Tri Dao"
+  ],
+  "year": 2024,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2312.00752",
+  "abstract": "Foundation models, now powering most of the exciting applications in deep learning, are almost universally based on the Transformer architecture and its core attention module. Many subquadratic-time architectures such as linear attention, gated convolution and recurrent models, and structured state space models (SSMs) have been developed to address Transformers' computational inefficiency on long sequences, but they have not performed as well as attention on important modalities such as language. We identify that a key weakness of such models is their inability to perform content-based reasoning, and make several improvements. First, simply letting the SSM parameters be functions of the input addresses their weakness with discrete modalities, allowing the model to selectively propagate or forget information along the sequence length dimension depending on the current token. Second, even though this change prevents the use of efficient convolutions, we design a hardware-aware parallel algorithm in recurrent mode. We integrate these selective SSMs into a simplified end-to-end neural network architecture without attention or even MLP blocks (Mamba). Mamba enjoys fast inference (5$\\times$ higher throughput than Transformers) and linear scaling in sequence length, and its performance improves on real data up to million-length sequences. As a general sequence model backbone, Mamba achieves state-of-the-art performance across several modalities such as language, audio, and genomics. On language modeling, our Mamba-3B model outperforms Transformers of the same size and matches Transformers twice its size, both in pretraining and downstream evaluation.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 961,
+  "summary": "# Mamba: 线性时间序列建模的选择性状态空间模型\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**选择性状态空间模型（Selective State Space Model, SSM）**，通过让SSM参数成为输入的函数，使模型能够根据当前token动态选择性地传播或遗忘信息。这一改进解决了SSM无法进行基于内容的推理的根本性弱点，使其在离散模态（尤其是语言）上首次达到与Transformer相当的性能，同时保持线性时间复杂度和更高的推理吞吐量。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点1: 选择性机制（Selection Mechanism）**\n- 核心思想：将SSM的Δ、B、C参数从静态变为输入依赖函数\n- 重要性：使模型能够根据内容动态决定保留或丢弃信息，解决了SSM在离散数据上的根本弱点\n- 实现：通过将参数与输入通过sigmoid和线性变换关联，实现token级别的选择性\n\n**创新点2: 硬件感知并行算法**\n- 背景：选择性机制破坏了SSM的高效卷积计算路径\n- 解决方案：设计了在递归模式下利用并行扫描（parallel scan）的硬件感知算法\n- 优势：在现代GPU上实现高效的计算，通过融合核（fused kernels）减少内存IO\n\n**创新点3: 简化架构设计**\n- 创新：构建了无注意力机制、无MLP块的端到端神经网络Mamba\n- 组成：仅包含选择性SSM块 + 归一化层 + 激活函数\n- 优势：减少计算开销和参数量的同时保持强大建模能力\n\n**创新点4: 状态空间模型的输入感知参数化**\n- 改进：引入基于输入的门控选择机制，允许模型在不同位置采取不同的计算路径\n- 效果：使SSM从\"静态过滤器\"转变为\"动态路由器\"\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性（与SOTA的本质区别）：**\n\n| 特性 | Transformer | 传统SSM | Mamba (选择性SSM) |\n|------|-------------|---------|------------------|\n| 计算复杂度 | O(N²) | O(N) | O(N) |\n| 内容选择性 | 完整注意力 | 无 | 动态选择 |\n| 推理效率 | 低 | 高 | 高 |\n| 长序列能力 | 有限 | 强 | 强 |\n\n**关键技术手段：**\n1. **选择性SSM层**：通过输入依赖的Δ参数控制信息 retention/firing rate，B和C参数决定如何组合输入与隐藏状态\n2. **硬件感知并行扫描**：在GPU上高效实现递归计算，避免卷积路径的O(N log N)开销\n3. **SSM架构整合**：将选择机制与现代神经网络组件（残差连接、归一化）深度整合\n\n**理论支撑：**\n- 基于状态空间模型的形式化框架，将序列建模表述为连续系统的离散化\n- 选择性机制的设计受到门控RNN和动态计算路径的启发\n- 线性缩放性可通过状态空间的线性递归结构严格证明\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集：**\n\n| 模态 | 数据集 |\n|------|--------|\n| 语言 | Pile (300B tokens), WikiText-103, PG-19 |\n| 音频 | LibriSpeech, SC-10 |\n| 基因组学 | DinoV2 genome |\n\n**性能提升（关键指标）：**\n\n- **推理吞吐量**：比同规模Transformer高5×\n- **序列长度**：在真实数据上达到百万长度序列\n- **语言建模（Pile）**：\n  - Mamba-3B vs Transformer-3B：困惑度更低（验证集）\n  - Mamba-3B vs Transformer-6B：性能相当\n- **下游任务**：在问答、摘要等任务上达到或超越Transformer\n\n**消融实验：**\n- 选择性机制贡献最大：移除后性能显著下降\n- 硬件感知优化：推理速度提升约2-3×\n- 简化架构（移除MLP）：对性能影响极小，但计算效率提升\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n1. **状态维度权衡**：选择性SSM需要更大的状态维度来存储上下文，增加了内存开销\n2. **模态适用性差异**：在视觉等连续信号上的提升不如语言显著\n3. **与attention的对比**：虽然推理高效，但在某些需要全局检索的任务上可能仍需attention的灵活性\n\n**未来方向：**\n1. 探索SSM与attention的混合架构\n2. 将选择性机制扩展到其他长序列模态（如视频、长文档）\n3. 优化更大规模模型的训练稳定性\n\n**可迁移性：**\n- 选择性机制可迁移到其他SSM变体\n- 硬件感知优化思路适用于其他递归模型\n- 简化架构设计对高效模型设计具有普遍参考价值\n\n## 6. 一句话总结\n\nMamba通过引入输入依赖的选择性机制，使状态空间模型首次在语言建模上实现与Transformer相当的性能，同时保持线性时间复杂度和5倍推理吞吐量提升，开创了无需注意力机制的高效大语言模型新范式。",
+  "method_summary": "# Mamba: 选择性状态空间的线性时间序列建模方法论分析\n\n---\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该论文旨在解决 Transformer 在长序列上的计算效率问题。给定一个长度为 $L$ 的输入序列 $\\mathbf{x} = (x_0, x_1, \\ldots, x_{\\text{L-1}})$，传统 Transformer 的自注意力机制具有 $O(L^2)$ 的时间和空间复杂度，这限制了其在长序列场景中的应用。\n\n**优化目标：** 设计一个序列模型，使其满足以下性质：\n\n- **线性时间复杂度**：计算复杂度随序列长度线性增长，即 $O(L)$\n- **推理效率**：推理时具有恒定的推理时间和内存占用（无需 KV 缓存）\n- **内容推理能力**：能够根据输入内容选择性地关注或忽略信息\n- **通用性**：在语言、音频、基因组等多种模态上实现高性能\n\n### 1.2 状态空间模型形式化\n\n该方法基于连续状态空间模型（Continuous State Space Model, SSM）进行建模。原始 SSM 定义为一个连续时间系统：\n\n$$\n\n\\mathbf{h}'(t) = \\mathbf{A}\\mathbf{h}(t) + \\mathbf{B}x(t), \\quad y(t) = \\mathbf{C}\\mathbf{h}(t)\n\n$$\n\n其中：\n- $\\mathbf{h}(t) \\in \\mathbb{R}^N$ 为隐状态向量\n- $x(t) \\in \\mathbb{R}$ 为标量输入\n- $\\mathbf{A} \\in \\mathbb{R}^{N \\times N}$ 为状态矩阵\n- $\\mathbf{B} \\in \\mathbb{R}^{N \\times 1}$ 为输入矩阵\n- $\\mathbf{C} \\in \\mathbb{R}^{1 \\times N}$ 为输出矩阵\n\n为处理离散序列，需要对连续系统进行**离散化**。本文采用零阶保持（Zero-Order Hold, ZOH）方法：\n\n$$\n\n\\mathbf{h}_t = \\overline{\\mathbf{A}}\\mathbf{h}_{\\text{\\text{t-1}}} + \\overline{\\mathbf{B}}x_t, \\quad y_t = \\mathbf{C}\\mathbf{h}_t\n\n$$\n\n其中离散化参数为：\n\n$$\n\n\\overline{\\mathbf{A}} = e^{\\mathbf{A}\\Delta}, \\quad \\overline{\\mathbf{B}} = (\\mathbf{A}^{-1}(e^{\\mathbf{A}\\Delta} - \\mathbf{I}) \\cdot \\mathbf{B})\\Delta\n\n$$\n\n这里 $\\Delta$ 表示时间步长。\n\n### 1.3 选择性机制的形式化\n\n传统 SSM 的核心局限性在于 $\\mathbf{A}, \\mathbf{B}, \\mathbf{C}, \\Delta$ 均为**可训练但与输入无关**的固定参数。这导致模型无法根据当前输入动态调整信息传播策略。\n\n**选择性机制（Selective Mechanism）** 将参数修改为输入的函数：\n\n$$\n\n\\mathbf{B}_t = \\text{Linear}_B(x_t), \\quad \\mathbf{C}_t = \\text{Linear}_C(x_t), \\quad \\Delta_t = \\text{Linear}_{\\text{\\Delta}}(x_t)\n\n$$\n\n这使得模型能够：\n- **选择性传播**：根据 $x_t$ 决定是否将当前信息整合到隐状态\n- **选择性遗忘**：动态调整历史信息的保留程度\n\n---\n\n## 2. 技术方法\n\n### 2.1 选择性状态空间层（Selective SSM Layer）\n\n该层是 Mamba 的核心组成部分。给定输入序列 $\\mathbf{x} \\in \\mathbb{R}^{L \\times d}$，选择性 SSM 的计算流程如下：\n\n**步骤 1：输入投影**\n\n$$\n\n\\mathbf{s} = \\text{Linear}_{\\text{1d}}(\\mathbf{x}) \\in \\mathbb{R}^{L \\times d}\n\n$$\n\n**步骤 2：参数生成**\n对于每个时间步 $t$，生成时间步长和投影参数：\n\n$$\n\n\\Delta_t = \\tau_{\\text{\\Delta}}(\\text{Linear}_{\\text{\\Delta}}(\\mathbf{s}_t)), \\quad \\mathbf{B}_t = \\text{Linear}_B(\\mathbf{s}_t), \\quad \\mathbf{C}_t = \\text{Linear}_C(\\mathbf{s}_t)\n\n$$\n\n其中 $\\tau_{\\Delta}$ 是 softplus 激活函数，用于确保 $\\Delta_t > 0$。\n\n**步骤 3：状态矩阵 $\\mathbf{A}$ 的生成**\n\n使用**HiPPO**（High-order Polynomial Projection Operator）初始化矩阵 $\\mathbf{A}$，该矩阵具有良好的长程依赖建模能力：\n\n$$\n\n\\mathbf{A}_{\\text{nk}} = \\begin{cases} \n(2n+1)^{1/2}(2k+1)^{1/2} & \\text{if } n > k \\\\\nn+1 & \\text{if } n = k \\\\\n0 & \\text{otherwise}\n\\end{cases}\n\n$$\n\n该矩阵被截断至大小 $N \\times N$（$N$ 为隐状态维度）。\n\n**步骤 4：SSM 离散化与扫描**\n\n对每个时间步进行离散化：\n\n$$\n\n\\overline{\\mathbf{A}}_t = e^{\\mathbf{A}\\Delta_t}, \\quad \\overline{\\mathbf{B}}_t = (\\mathbf{A}^{-1}(e^{\\mathbf{A}\\Delta_t} - \\mathbf{I}) \\cdot \\mathbf{B}_t)\\Delta_t\n\n$$\n\n然后执行**并行扫描**（Parallel Scan）计算隐状态：\n\n$$\n\n\\mathbf{h}_t = \\overline{\\mathbf{A}}_t \\mathbf{h}_{\\text{\\text{t-1}}} + \\overline{\\mathbf{B}}_t x_t\n\n$$\n\n**步骤 5：输出计算**\n\n$$\n\n\\mathbf{y}_t = \\mathbf{C}_t \\mathbf{h}_t\n\n$$\n\n### 2.2 硬件感知并行算法\n\n由于选择性机制使 $\\overline{\\mathbf{A}}_t$ 和 $\\overline{\\mathbf{B}}_t$ 变为输入依赖的，传统卷积方法不再适用。本文设计了基于**并行扫描**（Parallel Scan）的硬件感知算法：\n\n**并行扫描算法**：将递归计算转化为可并行执行的形式。给定二元结合运算符 $\\oplus$，定义：\n\n$$\n\na \\oplus b = (\\mathbf{A}_a \\mathbf{A}_b, \\mathbf{A}_b \\mathbf{b}_a + \\mathbf{b}_b)\n\n$$\n\n通过分块并行处理，该算法在 GPU 上实现高效计算。\n\n**CUDA 实现优化**：\n- 使用分块扫描（Blocked Scan）减少内存访问\n- 融合核函数（Fusion Kernel）减少数据传输\n- 动态分配共享内存\n\n### 2.3 Mamba 架构\n\nMamba 采用简化的端到端神经网络架构，其核心组件为**Mamba 块**：\n\n**架构流程：**\n1. **归一化层**：$\\mathbf{x}' = \\text{LayerNorm}(\\mathbf{x})$\n2. **选择性 SSM**：$\\mathbf{y} = \\text{SelectiveSSM}(\\mathbf{x}')$\n3. **门控机制**：$\\mathbf{g} = \\sigma(\\text{Linear}_g(\\mathbf{x}'))$\n4. **残差连接与门控**：$\\mathbf{out} = \\mathbf{x} \\cdot \\mathbf{g} + \\mathbf{y} \\cdot (1 - \\mathbf{g})$\n\n**关键设计特点**：\n- **无注意力机制**：完全移除自注意力模块\n- **无 MLP 块**：移除了传统 Transformer 中的前馈网络\n- **卷积自由**：在递归模式下运行，无需卷积核\n\n---\n\n## 3. 实现细节\n\n### 3.1 超参数配置\n\n| 参数 | 描述 | 典型值 |\n|------|------|--------|\n| $d_{\\text{model}}$ | 模型维度 | 256, 512, 1024, 2048 |\n| $N$ | SSM 隐状态维度 | 64, 128, 256 |\n| $L$ | 序列长度 | 训练时 512-4096，推理时可扩展至 1M |\n| $n\\_layers$ | 层数 | 12-64 |\n| $dropout$ | Dropout 比率 | 0.0-0.1 |\n\n### 3.2 训练配置\n\n- **优化器**：AdamW with $\\beta_1=0.9, \\beta_2=0.999$\n- **学习率**：采用余弦衰减调度，峰值学习率通常为 $1e^{-3}$ 至 $3e^{-3}$\n- **批处理大小**：通常为 32-128（序列级别）\n- **训练步数**：100K-500K 步\n- **混合精度**：使用 FP16/BF16 训练\n\n### 3.3 推理优化\n\n- **状态缓存**：在自回归生成时缓存 $\\mathbf{h}_t$，避免重复计算\n- **KV 缓存消除**：由于无注意力机制，无需存储 KV 缓存\n- **批处理推理**：支持批量并行推理\n\n### 3.4 初始化策略\n\n- **SSM 矩阵 $\\mathbf{A}$**：使用 HiPPO 初始化，确保良好的初始长程依赖\n- **投影矩阵**：使用 Kaiming 初始化\n- **时间步长 $\\Delta$**：初始化为可学习参数，范围 [0.001, 0.1]\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n**语言建模任务：**\n- **Pile**：一个大规模多样化文本数据集，包含 300B tokens\n- **RedPajama**：去重的 Pile 子集\n- **评估基准**：WikiText-103, PG-19, C4\n\n**音频建模任务：**\n- **Speech Commands**：语音命令识别\n- **LibriSpeech**：语音识别\n- **音频特征**：使用 mel 频谱图\n\n**基因组学任务：**\n- **Genomics**：DNA 序列分类\n- **启动子预测**：基因调控区域识别\n\n### 4.2 评估指标\n\n- **困惑度（Perplexity, PPL）**：$\\text{PPL} = \\exp(-\\frac{1}{N}\\sum_i \\log p(x_i))$\n- **比特每字符（Bits Per Character, BPC）**：$\\text{BPC} = \\log_2(\\text{PPL})$\n- **下游任务准确率**：分类任务的 top-1 准确率\n- **吞吐量（Throughput）**：tokens/秒\n- **内存占用**：峰值 GPU 内存\n\n### 4.3 基线方法\n\n- **Transformer**：标准 Transformer 基线\n- **LSTM/GRU**：传统循环神经网络\n- **Linear Attention**：线性注意力机制\n- **Gated Convolution**：门控卷积网络\n- **其他 SSM**：S4, S4ND, H3 等\n\n### 4.4 长序列评估\n\n- **序列长度**：测试 2K 到 1M tokens 的性能\n- **评估基准**：Passkey Retrieval, Induction Heads\n- **Memory Task**：合成长程依赖任务\n\n---\n\n## 5. 技术优势\n\n### 5.1 线性时间与空间复杂度\n\nMamba 的核心优势在于其计算复杂度与序列长度呈**线性关系**：\n\n- **时间复杂度**：$O(L \\cdot N \\cdot d)$，其中 $N \\ll L$\n- **空间复杂度**：$O(N \\cdot d)$，无需存储完整注意力矩阵\n- **推理内存**：恒定内存占用，不随序列长度增长\n\n### 5.2 选择性机制的内容推理能力\n\n相比传统 SSM，选择性机制实现了**输入依赖的信息筛选**：\n\n- **动态特征选择**：根据 $x_t$ 的语义内容决定信息保留策略\n- **长程依赖建模**：HiPPO 初始化确保良好的初始状态传递\n- **离散模态适应**：在语言、DNA 等离散模态上表现优异\n\n### 5.3 高推理吞吐量\n\n- **无 KV 缓存**：推理时无需存储注意力键值对\n- **状态复用**：隐状态可在时间步间复用\n- **5 倍吞吐量提升**：相比同规模 Transformer\n\n### 5.4 简化架构\n\n- **去除复杂模块**：移除注意力机制和 MLP 块\n- **更少参数**：相同模型大小下性能更优\n- **易于扩展**：架构简洁，易于堆叠和修改\n\n### 5.5 百万长度序列建模能力\n\n- **选择性遗忘**：可主动丢弃无关历史信息\n- **状态压缩**：有限状态维度自然压缩长程信息\n- **硬件优化**：并行扫描确保长序列计算效率\n\n---\n\n## 6. 技术弱点\n\n### 6.1 选择性机制的潜在问题\n\n- **梯度消失/爆炸**：输入依赖的参数可能导致梯度不稳定\n- **信息丢失风险**：过度选择性可能遗忘重要历史信息\n- **计算开销**：参数生成引入额外计算开销\n\n### 6.2 SSM 的理论基础局限\n\n- **连续时间近似**：离散化假设可能不完全适用于离散数据\n- **线性假设**：状态方程的线性特性限制非线性建模能力\n- **维度限制**：隐状态维度 $N$ 的选择需要权衡效率和性能\n\n### 6.3 架构局限性\n\n- **局部注意力缺失**：完全移除注意力可能导致局部模式捕获不足\n- **位置编码**：需要额外设计位置编码机制（如 RoPE）\n- **多模态融合**：相比 Transformer 的灵活性有所限制\n\n### 6.4 训练与部署挑战\n\n- **训练稳定性**：大规模训练可能面临收敛问题\n- **硬件依赖**：高度依赖 CUDA 的并行扫描实现\n- **泛化能力**：在某些特定任务上可能不如专门设计的模型\n\n### 6.5 与 Transformer 的比较局限\n\n- **生态系统**：Transformer 拥有更成熟的工具链\n- **指令微调**：RLHF 对话场景下的表现未经充分验证\n- **涌现能力**：大规模下的涌现性质尚不明确\n\n---\n\n## 总结\n\nMamba 通过引入选择性状态空间机制，成功实现了线性时间复杂度的序列建模，同时保留了内容推理能力。其核心创新在于将 SSM 参数变为输入函数，并配合硬件感知的并行扫描算法。在语言、音频、基因组等多种模态上，Mamba 展现了与 Transformer 相当甚至更优的性能，特别是在长序列场景下具有显著优势。然而，该方法在梯度稳定性、局部模式捕获和生态系统成熟度方面仍存在改进空间。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 9,
+    "technical_quality": 9,
+    "experimental_validation": 9,
+    "writing_quality": 8,
+    "relevance": 10,
+    "overall_score": 9.05,
+    "strengths": [
+      "引入选择机制到状态空间模型，解决了SSM无法进行基于内容推理的核心问题",
+      "架构简化创新：完全移除attention和MLP块，使用单一SSM块",
+      "硬件感知的并行算法设计，在recurrent模式下保持高效",
+      "在百万长度序列上验证性能，实验规模大且全面",
+      "语言建模性能优异：3B模型可匹配两倍大小的Transformer",
+      "吞吐量提升5倍，推理效率显著改进"
+    ],
+    "weaknesses": [
+      "选择机制的 theory 分析相对较少，可进一步深化",
+      "在某些特定任务上的性能对比可以更全面",
+      "与最新Transformer变体的对比可以更充分"
+    ],
+    "notes": "这是一篇极具影响力的论文，提出了Mamba架构这一重要创新。作者巧妙地将选择机制引入状态空间模型，解决了SSM长期以来的内容推理难题，同时简化了Transformer架构。实验验证充分，在语言、音频和基因组学等多个模态上展现出优异性能，特别是在长序列场景下。该工作为高效序列建模提供了新的思路，是近年来深度学习架构领域的重要突破。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+      "authors": [
+        "Albert Gu",
+        "Tri Dao"
+      ],
+      "year": 2024,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2312.00752",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Foundation models, now powering most of the exciting applications in deep learning, are almost universally based on the Transformer architecture and its core attention module. Many subquadratic-time architectures such as linear attention, gated convolution and recurrent models, and structured state space models (SSMs) have been developed to address Transformers' computational inefficiency on long sequences, but they have not performed as well as attention on important modalities such as language. We identify that a key weakness of such models is their inability to perform content-based reasoning, and make several improvements. First, simply letting the SSM parameters be functions of the input addresses their weakness with discrete modalities, allowing the model to selectively propagate or forget information along the sequence length dimension depending on the current token. Second, even though this change prevents the use of efficient convolutions, we design a hardware-aware parallel algorithm in recurrent mode. We integrate these selective SSMs into a simplified end-to-end neural network architecture without attention or even MLP blocks (Mamba). Mamba enjoys fast inference (5$\\times$ higher throughput than Transformers) and linear scaling in sequence length, and its performance improves on real data up to million-length sequences. As a general sequence model backbone, Mamba achieves state-of-the-art performance across several modalities such as language, audio, and genomics. On language modeling, our Mamba-3B model outperforms Transformers of the same size and matches Transformers twice its size, both in pretraining and downstream evaluation.",
+      "route_id": "d1fc92d9-4f81-4249-9865-0b0976c37343"
+    },
+    "markdown_stats": {
+      "lines": 901,
+      "words": 22556,
+      "headings": 63
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "d1fc92d9-4f81-4249-9865-0b0976c37343",
+  "paper_ref": "d1fc92d9-4f81-4249-9865-0b0976c37343",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

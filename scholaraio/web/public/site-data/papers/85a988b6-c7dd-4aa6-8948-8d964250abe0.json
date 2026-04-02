@@ -1,0 +1,82 @@
+{
+  "dir_name": "Tiwari-2022-Pose-NDF-Modeling-Human-Pose-Manifolds-with-Neural-Distance-Fields",
+  "title": "Pose-NDF: Modeling Human Pose Manifolds with Neural Distance Fields",
+  "authors": [
+    "Garvita Tiwari",
+    "Dimitrije Antic",
+    "J. E. Lenssen",
+    "N. Sarafianos",
+    "Tony Tung",
+    "Gerard Pons-Moll"
+  ],
+  "year": 2022,
+  "journal": "European Conference on Computer Vision",
+  "doi": "10.48550/arXiv.2207.13807",
+  "abstract": "We present Pose-NDF, a continuous model for plausible human poses based on neural distance fields (NDFs). Pose or motion priors are important for generating realistic new poses and for reconstructing accurate poses from noisy or partial observations. Pose-NDF learns a manifold of plausible poses as the zero level set of a neural implicit function, extending the idea of modeling implicit surfaces in 3D to the high-dimensional domain SO(3)^K, where a human pose is defined by a single data point, represented by K quaternions. The resulting high-dimensional implicit function can be differentiated with respect to the input poses and thus can be used to project arbitrary poses onto the manifold by using gradient descent on the set of 3-dimensional hyperspheres. In contrast to previous VAE-based human pose priors, which transform the pose space into a Gaussian distribution, we model the actual pose manifold, preserving the distances between poses. We demonstrate that PoseNDF outperforms existing state-of-the-art methods as a prior in various downstream tasks, ranging from denoising real-world human mocap data, pose recovery from occluded data to 3D pose reconstruction from images. Furthermore, we show that it can be used to generate more diverse poses by random sampling and projection than VAE-based methods.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 111,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Pose-NDF: Modeling Human Pose Manifolds with Neural Distance Fields",
+      "authors": [
+        "Garvita Tiwari",
+        "Dimitrije Antic",
+        "J. E. Lenssen",
+        "N. Sarafianos",
+        "Tony Tung",
+        "Gerard Pons-Moll"
+      ],
+      "year": 2022,
+      "journal": "European Conference on Computer Vision",
+      "doi": "10.48550/arXiv.2207.13807",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "We present Pose-NDF, a continuous model for plausible human poses based on neural distance fields (NDFs). Pose or motion priors are important for generating realistic new poses and for reconstructing accurate poses from noisy or partial observations. Pose-NDF learns a manifold of plausible poses as the zero level set of a neural implicit function, extending the idea of modeling implicit surfaces in 3D to the high-dimensional domain SO(3)^K, where a human pose is defined by a single data point, represented by K quaternions. The resulting high-dimensional implicit function can be differentiated with respect to the input poses and thus can be used to project arbitrary poses onto the manifold by using gradient descent on the set of 3-dimensional hyperspheres. In contrast to previous VAE-based human pose priors, which transform the pose space into a Gaussian distribution, we model the actual pose manifold, preserving the distances between poses. We demonstrate that PoseNDF outperforms existing state-of-the-art methods as a prior in various downstream tasks, ranging from denoising real-world human mocap data, pose recovery from occluded data to 3D pose reconstruction from images. Furthermore, we show that it can be used to generate more diverse poses by random sampling and projection than VAE-based methods.",
+      "route_id": "85a988b6-c7dd-4aa6-8948-8d964250abe0"
+    },
+    "markdown_stats": {
+      "lines": 280,
+      "words": 9773,
+      "headings": 17
+    },
+    "assets": {
+      "images": 21,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "85a988b6-c7dd-4aa6-8948-8d964250abe0",
+  "paper_ref": "85a988b6-c7dd-4aa6-8948-8d964250abe0",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

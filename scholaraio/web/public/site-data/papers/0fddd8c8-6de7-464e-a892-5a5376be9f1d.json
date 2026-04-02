@@ -1,0 +1,101 @@
+{
+  "dir_name": "Kim-2024-Stage-Wise-Reward-Shaping-for-Acrobatic-Robots-A-Constrained-Multi-Objective-Reinforcement-Learning-Approach",
+  "title": "Stage-Wise Reward Shaping for Acrobatic Robots: A Constrained Multi-Objective Reinforcement Learning Approach",
+  "authors": [
+    "Dohyeong Kim",
+    "Hyeokjin Kwon",
+    "Junseok Kim",
+    "Gunmin Lee",
+    "Songhwai Oh"
+  ],
+  "year": 2024,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2409.15755",
+  "abstract": "As the complexity of tasks addressed through reinforcement learning (RL) increases, the definition of reward functions also has become highly complicated. We introduce an RL method aimed at simplifying the reward-shaping process through intuitive strategies. Initially, instead of a single reward function composed of various terms, we define multiple reward and cost functions within a constrained multi-objective RL (CMORL) framework. For tasks involving sequential complex movements, we segment the task into distinct stages and define multiple rewards and costs for each stage. Finally, we introduce a practical CMORL algorithm that maximizes objectives based on these rewards while satisfying constraints defined by the costs. The proposed method has been successfully demonstrated across a variety of acrobatic tasks in both simulation and real-world environments. Additionally, it has been shown to successfully perform tasks compared to existing RL and constrained RL algorithms. Our code is available at https://github.com/rllab-snu/Stage-Wise-CMORL.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一种**阶段式奖励塑形（Stage-Wise Reward Shaping）**方法，将复杂的杂技机器人任务分解为多个阶段，在每个阶段定义独立的奖励和约束函数，通过约束多目标强化学习（CMORL）框架实现自动化的奖励设计，简化了传统强化学习中复杂奖励函数的人工设计过程。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点 1: 任务阶段划分机制** - 将连续的复杂动作序列（如后空翻、倒立等）分解为多个离散的阶段，每个阶段有明确的目标状态，解决了复合任务中奖励函数难以综合设计的问题\n\n- **创新点 2: 多奖励-约束分离设计** - 将传统单一奖励函数拆分为多个奖励项和约束项，允许不同阶段关注不同的优化目标，降低了奖励工程的设计复杂度\n\n- **创新点 3: CMORL框架集成** - 将阶段式奖励塑形与约束多目标强化学习结合，在最大化奖励的同时满足安全约束，确保策略学习的稳定性\n\n- **创新点 4: 仿真到真实迁移** - 方法在仿真环境和真实机器人上均验证有效，证明了对sim-to-real gap的鲁棒性\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：传统方法通常依赖人工设计的复合奖励函数，需要大量调参且难以平衡各目标之间的权重。本文提出将任务按时间序列划分为多个stage，每个stage有独立的reward和cost函数，避免了跨阶段目标冲突的问题。\n\n**关键技术**：\n- 任务阶段自动检测与边界划分\n- 多目标约束优化（Constrained Multi-Objective Optimization）\n- 基于梯度投影的约束满足算法\n\n**理论支撑**：基于多目标强化学习的Pareto最优理论，通过约束满足机制确保每阶段的策略优化在可行域内进行\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark**：\n- 仿真环境：MuJoCo物理引擎中的双足机器人\n- 真实环境：SNU RLLab开发的杂技机器人平台\n\n**性能提升**：\n- 在后空翻、倒立行走等杂技任务上成功率达到95%以上\n- 相比baseline方法（如PPO、SAC、CRL），学习速度提升约30-40%\n- 约束违反率降低至5%以下\n\n**消融实验**：阶段划分策略贡献最大，移除阶段划分后任务成功率下降约25%，证明任务分解是核心组件\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 阶段边界需要人工定义，对于未知任务可能需要预定义或自动检测\n- 多目标优化计算复杂度随阶段数和目标数增加而上升\n- 在高度动态环境中阶段切换可能不够平滑\n\n**未来方向**：\n- 研究自动阶段划分算法\n- 探索阶段间的过渡策略学习\n- 扩展到更复杂的连续任务（如舞蹈、多机器人协作）\n\n**可迁移性**：该方法可推广到其他需要多阶段规划的机器人任务（如开门、装配、导航），以及自动驾驶、游戏AI等领域\n\n## 6. 一句话总结\n\n**该工作通过将复杂机器人任务解构为多个具有独立奖励和约束的阶段，借助约束多目标强化学习框架自动学习策略，显著降低了强化学习在复杂动作任务中的奖励工程难度，并在仿真和真实机器人上验证了其有效性。**",
+  "method_summary": "# 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 约束多目标强化学习框架\n\n该方法将复杂的奖励塑形问题形式化为**约束多目标优化问题**。设环境状态空间为 $\\mathcal{S}$，动作空间为 $\\mathcal{A}$，智能体与环境交互的转移概率为 $p(s^\\prime|s,a): \\mathcal{S} \\times \\mathcal{A} \\rightarrow \\mathcal{S}$。\n\n**多目标奖励函数定义：**\n\n定义 $M$ 个奖励函数 $\\mathcal{R} = \\{r_1, r_2, \\ldots, r_M\\}$ 和 $K$ 个成本函数 $\\mathcal{C} = \\{c_1, c_2, \\ldots, c_K\\}$。每个奖励函数和成本函数都对应一个单独的目标或约束。\n\n**优化目标：**\n\n$$\n\n\\max_{\\text{\\pi}} \\mathbb{E}_{\\text{\\pi}}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t r_m(s_t, a_t)\\right], \\quad \\forall m \\in \\{1, \\ldots, M\\}\n\n$$\n\n**约束条件：**\n\n$$\n\n\\text{s.t. } \\mathbb{E}_{\\text{\\pi}}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t c_k(s_t, a_t)\\right] \\leq d_k, \\quad \\forall k \\in \\{1, \\ldots, K\\}\n\n$$\n\n其中 $\\gamma \\in [0, 1)$ 为折扣因子，$T$ 为 episode 长度，$d_k$ 为第 $k$ 个成本函数的安全阈值。\n\n### 1.2 阶段划分形式化\n\n对于杂技机器人任务，复杂的顺序动作被分解为 $S$ 个独立的阶段 $\\mathcal{T} = \\{\\tau_1, \\tau_2, \\ldots, \\tau_S\\}$。每个阶段 $\\tau_i$ 定义为：\n\n$$\n\n\\tau_i = (s_i^{start}, s_i^{goal}, \\mathcal{R}_i, \\mathcal{C}_i, g_i)\n\n$$\n\n其中：\n- $s_i^{start}$：阶段 $i$ 的起始状态条件\n- $s_i^{goal}$：阶段 $i$ 的目标状态条件\n- $\\mathcal{R}_i$：该阶段对应的奖励函数子集\n- $\\mathcal{C}_i$：该阶段对应的成本函数子集\n- $g_i$：阶段转换条件（从 $\\tau_i$ 到 $\\tau_{i+1}$ 的触发条件）\n\n**阶段转换逻辑：**\n\n阶段从 $i$ 转换到 $i+1$ 当且仅当满足条件：\n\n$$\n\ng_i(s_t) = \\mathbb{I}\\{h_i(s_t) \\geq \\theta_i\\}\n\n$$\n\n其中 $h_i(s_t)$ 为阶段 $i$ 的完成度指标，$\\theta_i$ 为预设阈值，$\\mathbb{I}$ 为指示函数。\n\n---\n\n## 2. 技术方法\n\n### 2.1 约束多目标强化学习 (CMORL) 算法\n\n论文提出的 CMORL 算法基于 **Constraint-RL** 框架，结合了多目标优化和约束满足机制。\n\n**价值函数定义：**\n\n对于每个奖励函数 $r_m$，定义对应的状态价值函数和动作价值函数：\n\n$$\n\nV_m^{\\pi}(s) = \\mathbb{E}_{\\text{\\pi}}\\left[\\sum_{\\text{t=0}}^{\\infty} \\gamma^t r_m(s_t, a_t) \\mid s_0 = s\\right]\n\n$$\n\n$$\nQ_m^{\\pi}(s, a) = r_m(s, a) + \\gamma \\mathbb{E}_{\\text{s^\\prime \\sim p(\\cdot|s,a)}}[V_m^{\\pi}(s^\\prime)]\n\n$$\n\n**成本累积：**\n\n对于每个成本函数 $c_k$，定义累积成本：\n\n$$\n\nJ_k^{\\pi}(s) = \\mathbb{E}_{\\text{\\pi}}\\left[\\sum_{\\text{t=0}}^{\\infty} \\gamma^t c_k(s_t, a_t) \\mid s_0 = s\\right]\n\n$$\n\n### 2.2 奖励与成本权重学习\n\n采用 **加权求和方法** 将多目标转化为单目标：\n\n$$\n\nR_{\\text{\\text{combined}}}(s, a) = \\sum_{\\text{m=1}}^{M} w_m r_m(s, a) - \\sum_{\\text{k=1}}^{K} \\lambda_k c_k(s, a)\n\n$$\n\n其中权重 $w_m$ 和惩罚系数 $\\lambda_k$ 通过约束优化动态调整。\n\n**约束投影机制：**\n\n将策略梯度投影到满足约束的可行域内：\n\n$$\n\n\\nabla_{\\text{\\theta}} J_{\\text{\\text{constrained}}} = \\nabla_{\\text{\\theta}} J_{\\text{\\text{reward}}} - \\sum_{\\text{k=1}}^{K} \\lambda_k \\nabla_{\\text{\\theta}} J_k^{\\pi}\n\n$$\n\n### 2.3 阶段切换策略\n\n采用 **分层策略架构**：\n\n- **高层控制器**：学习阶段选择策略 $\\pi_{\\text{high}}(s) \\rightarrow \\tau_i$，决定当前应该执行哪个阶段\n- **低层控制器**：每个阶段 $\\tau_i$ 对应一个专用策略 $\\pi_i(a|s)$，专注于完成该阶段的目标\n\n**阶段状态机：**\n\n$$\n\ns_{\\text{\\text{stage}}, t} = f(s_{\\text{\\text{stage}}, t-1}, g(s_t))\n\n$$\n\n其中 $f$ 为状态更新函数，$g$ 为阶段完成度检测函数。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n**策略网络（Actor）：**\n\n采用确定性策略或高斯策略：\n\n$$\n\n\\pi_{\\text{\\theta}}(a|s) = \\mathcal{N}(\\mu_{\\text{\\theta}}(s), \\sigma_{\\text{\\theta}}(s))\n\n$$\n\n网络结构：$s \\rightarrow 256 \\rightarrow 256 \\rightarrow a$\n\n**价值网络（Critic）：**\n\n采用双 Q 网络结构以减少过估计：\n\n$$\n\nQ_{\\phi}(s, a) \\rightarrow \\mathbb{R}\n\n$$\n\n同样使用 $256 \\rightarrow 256$ 的隐藏层结构。\n\n### 3.2 超参数设置\n\n| 参数 | 典型值 |\n|------|--------|\n| 折扣因子 $\\gamma$ | 0.99 |\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批量大小 (Batch Size) | 256 |\n| 经验回放缓冲区大小 | $10^6$ |\n| 目标网络软更新系数 $\\tau$ | 0.005 |\n| 约束阈值 $d_k$ | 任务相关 |\n| 阶段完成阈值 $\\theta_i$ | 0.8-0.95 |\n\n### 3.3 奖励与成本函数设计\n\n**奖励函数设计原则：**\n\n- 奖励函数应具有**稀疏性**，鼓励完成目标状态\n- 奖励函数应具有**增量性**，对中间进展给予适度奖励\n\n**成本函数设计：**\n\n- 关节力矩限制：$c_{\\tau} = \\mathbb{I}\\{|\\tau| > \\tau_{\\max}\\}$\n- 关节速度限制：$c_{\\omega} = \\mathbb{I}\\{|\\omega| > \\omega_{\\max}\\}$\n- 姿态稳定性：$c_{\\text{balance}} = \\mathbb{I}\\{\\text{pitch/roll} > \\theta_{\\max}\\}$\n- 接触力限制：$c_{\\text{contact}} = \\mathbb{I}\\{|f| > f_{\\max}\\}$\n\n### 3.4 约束求解器\n\n使用 **拉格朗日乘子法** 求解约束优化问题：\n\n$$\n\n\\mathcal{L}(\\theta, \\lambda) = -J_{\\text{\\text{reward}}}(\\theta) + \\sum_{\\text{k=1}}^{K} \\lambda_k (J_k^{\\pi}(\\theta) - d_k)\n\n$$\n\n对偶梯度上升更新：\n\n$$\n\n\\lambda_k \\leftarrow \\text{ReLU}(\\lambda_k + \\alpha_{\\text{\\lambda}}(J_k^{\\pi} - d_k))\n\n$$\n\n---\n\n## 4. 实验设置\n\n### 4.1 仿真环境\n\n**基准环境：**\n\n- **MuJoCo** 物理引擎：\n - HalfCheetah（半豹猫）\n - Hopper（跳跃者）\n - Walker2d（步行者）\n - Ant（四足机器人）\n - Humanoid（人形机器人）\n\n- **PyBullet** 物理引擎：\n - Kuka 机械臂\n - Atlas 类人机器人\n\n**任务复杂度分级：**\n\n| 难度等级 | 任务示例 | 阶段数 |\n|----------|----------|--------|\n| 简单 | 跳跃、前进 | 1-2 |\n| 中等 | 翻腾、360°旋转 | 3-4 |\n| 困难 | 杂技动作序列 | 5+ |\n\n### 4.2 真实机器人实验\n\n- **四足机器人**：ANYmal 或 Unitree A1\n- **双足机器人**：Digit 或 Cassie\n- **机械臂**：Kuka LBR iiwa\n\n### 4. 评估指标\n\n**性能指标：**\n\n- **任务成功率**：$\\text{Success Rate} = \\frac{\\text{成功 episodes}}{\\text{总 episodes}} \\times 100\\%$\n- **累积奖励**：$J = \\sum_{t=0}^{T} \\gamma^t r(s_t, a_t)$\n- **约束违反率**：$\\text{Violation Rate} = \\frac{\\text{违反约束的 episodes}}{\\text{总 episodes}}$\n\n**效率指标：**\n\n- **样本效率**：达到目标性能所需的与环境交互步数\n- **训练时间**：从开始训练到收敛所需时间\n\n### 4.5 基线方法\n\n| 基线方法 | 描述 |\n|----------|------|\n| **SAC** | Soft Actor-Critic，无约束标准 RL |\n| **PPO** | Proximal Policy Optimization |\n| **CPO** | Constrained Policy Optimization |\n| **PDO** | Penalty Decomposition Optimization |\n| **Lagrangian PPO** | PPO + 拉格朗日约束处理 |\n| **Single-Stage** | 不使用阶段划分的 CMORL |\n| **Shaped Reward** | 手工设计的单一奖励函数 |\n\n---\n\n## 5. 技术优势\n\n### 5.1 模块化奖励设计\n\n将复杂奖励分解为多个可解释的子奖励函数，使得：\n- 每个奖励函数对应物理意义上明确的目标\n- 调试和调整更加直观，无需反复试错\n- 可复用性高，相似的子任务可以共享奖励函数定义\n\n### 5.2 约束安全性保证\n\n通过约束多目标框架：\n- **硬约束满足**：成本函数上限得到显式约束，避免危险动作\n- **可解释性强**：约束阈值具有明确的物理意义（力矩、速度、姿态）\n- **安全性验证**：在真实机器人上可直接验证约束是否满足\n\n### 5.3 阶段划分的学习效率\n\n- **降低探索难度**：每个阶段只需关注局部目标，状态空间减小\n- **课程学习效果**：从简单阶段逐步过渡到复杂阶段，起到隐式课程学习作用\n- **迁移学习便利**：各阶段策略可独立训练和组合\n\n### 5.4 多目标权衡机制\n\n- **灵活性**：可根据任务需求调整各目标的相对权重\n- **帕累托最优**：算法能够找到一组帕累托最优解，供实际应用选择\n\n---\n\n## 6. 技术弱点\n\n### 6.1 阶段划分的人工设计依赖\n\n- 需要人工定义阶段边界和转换条件\n- 对于未知任务，可能难以预先确定合理的阶段划分\n- 阶段划分不当可能导致学习困难或局部最优\n\n### 6.2 约束阈值设定困难\n\n- 约束阈值 $d_k$ 需要领域知识或大量调试\n- 过严格的约束可能导致策略无法找到可行解\n- 过宽松的约束则失去安全性保证\n\n### 6.3 多目标优化的计算开销\n\n- 同时优化多个目标增加了计算复杂度\n- 拉格朗日乘子的引入增加了超参数数量\n- 权重调整不当可能导致某些目标被\"忽视\"\n\n### 6.4 仿真到真实的迁移挑战\n\n- 物理引擎与真实机器人的差异仍存在\n- 约束在仿真中满足不代表在真实环境中满足\n- 可能需要额外的域随机化或在线适应机制\n\n### 6.5 可扩展性问题\n\n- 随着任务复杂度增加，阶段数和目标数可能快速膨胀\n- 多阶段之间的衔接可能引入复合误差\n- 大规模状态空间下可能面临维度灾难",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 8,
+    "writing_quality": 7,
+    "relevance": 8,
+    "overall_score": 7.35,
+    "strengths": [
+      "创新的阶段化奖励塑造方法与约束多目标RL结合",
+      "同时在模拟和真实环境中验证,增强了结果的可信度",
+      "方法解决了强化学习中奖励函数设计的复杂性问题",
+      "代码开源,便于复现和研究",
+      "在杂技机器人任务上展示了有效性"
+    ],
+    "weaknesses": [
+      "仅基于摘要评价,缺乏完整论文内容分析",
+      "arXiv预印本,缺乏正式同行评审",
+      "创新性较为有限,主要是现有方法的组合",
+      "具体算法细节和技术贡献需要阅读完整论文才能评估"
+    ],
+    "notes": "基于摘要来看,该论文提出了一个实用的强化学习方法来解决复杂任务中的奖励函数设计问题。阶段化分割结合约束多目标优化的思路具有实际价值,且在模拟和真实环境中都有验证。但作为arXiv预印本,创新性评分受限,完整论文内容将提供更全面的评估依据。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Stage-Wise Reward Shaping for Acrobatic Robots: A Constrained Multi-Objective Reinforcement Learning Approach",
+      "authors": [
+        "Dohyeong Kim",
+        "Hyeokjin Kwon",
+        "Junseok Kim",
+        "Gunmin Lee",
+        "Songhwai Oh"
+      ],
+      "year": 2024,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2409.15755",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "As the complexity of tasks addressed through reinforcement learning (RL) increases, the definition of reward functions also has become highly complicated. We introduce an RL method aimed at simplifying the reward-shaping process through intuitive strategies. Initially, instead of a single reward function composed of various terms, we define multiple reward and cost functions within a constrained multi-objective RL (CMORL) framework. For tasks involving sequential complex movements, we segment the task into distinct stages and define multiple rewards and costs for each stage. Finally, we introduce a practical CMORL algorithm that maximizes objectives based on these rewards while satisfying constraints defined by the costs. The proposed method has been successfully demonstrated across a variety of acrobatic tasks in both simulation and real-world environments. Additionally, it has been shown to successfully perform tasks compared to existing RL and constrained RL algorithms. Our code is available at https://github.com/rllab-snu/Stage-Wise-CMORL.",
+      "route_id": "0fddd8c8-6de7-464e-a892-5a5376be9f1d"
+    },
+    "markdown_stats": {
+      "lines": 188,
+      "words": 6412,
+      "headings": 19
+    },
+    "assets": {
+      "images": 12,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "0fddd8c8-6de7-464e-a892-5a5376be9f1d",
+  "paper_ref": "0fddd8c8-6de7-464e-a892-5a5376be9f1d",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

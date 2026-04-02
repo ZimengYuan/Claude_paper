@@ -1,0 +1,81 @@
+{
+  "dir_name": "Zhang-2025-Natural-Humanoid-Robot-Locomotion-with-Generative-Motion-Prior-2",
+  "title": "Natural Humanoid Robot Locomotion with Generative Motion Prior",
+  "authors": [
+    "Haodong Zhang",
+    "Liang Zhang",
+    "Zhenghan Chen",
+    "Lu Chen",
+    "Yue Wang",
+    "Rong Xiong"
+  ],
+  "year": 2025,
+  "journal": "2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)",
+  "doi": "10.1109/iros60139.2025.11247682",
+  "abstract": "Natural and lifelike locomotion remains a fundamental challenge for humanoid robots to interact with human society. However, previous methods either neglect motion naturalness or rely on unstable and ambiguous style rewards. In this paper, we propose a novel Generative Motion Prior (GMP) that provides fine-grained motion-level supervision for the task of natural humanoid robot locomotion. To leverage natural human motions, we first employ whole-body motion retargeting to effectively transfer them to the robot. Subsequently, we train a generative model offline to predict future natural reference motions for the robot based on a conditional variational auto-encoder. During policy training, the generative motion prior serves as a frozen online motion generator, delivering precise and comprehensive supervision at the trajectory level, including joint angles and keypoint positions. The generative motion prior significantly enhances training stability and improves interpretability by offering detailed and dense guidance throughout the learning process. Experimental results in both simulation and real-world environments demonstrate that our method achieves superior motion naturalness compared to existing approaches. Project page can be found at https://sites.google.com/view/humanoid-gmp",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 8,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Natural Humanoid Robot Locomotion with Generative Motion Prior",
+      "authors": [
+        "Haodong Zhang",
+        "Liang Zhang",
+        "Zhenghan Chen",
+        "Lu Chen",
+        "Yue Wang",
+        "Rong Xiong"
+      ],
+      "year": 2025,
+      "journal": "2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)",
+      "doi": "10.1109/iros60139.2025.11247682",
+      "paper_type": "proceedings-article",
+      "abstract": "Natural and lifelike locomotion remains a fundamental challenge for humanoid robots to interact with human society. However, previous methods either neglect motion naturalness or rely on unstable and ambiguous style rewards. In this paper, we propose a novel Generative Motion Prior (GMP) that provides fine-grained motion-level supervision for the task of natural humanoid robot locomotion. To leverage natural human motions, we first employ whole-body motion retargeting to effectively transfer them to the robot. Subsequently, we train a generative model offline to predict future natural reference motions for the robot based on a conditional variational auto-encoder. During policy training, the generative motion prior serves as a frozen online motion generator, delivering precise and comprehensive supervision at the trajectory level, including joint angles and keypoint positions. The generative motion prior significantly enhances training stability and improves interpretability by offering detailed and dense guidance throughout the learning process. Experimental results in both simulation and real-world environments demonstrate that our method achieves superior motion naturalness compared to existing approaches. Project page can be found at https://sites.google.com/view/humanoid-gmp",
+      "route_id": "0702e663-5787-4cc2-ab83-f956a136b35c"
+    },
+    "markdown_stats": {
+      "lines": 245,
+      "words": 7071,
+      "headings": 18
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "0702e663-5787-4cc2-ab83-f956a136b35c",
+  "paper_ref": "0702e663-5787-4cc2-ab83-f956a136b35c",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

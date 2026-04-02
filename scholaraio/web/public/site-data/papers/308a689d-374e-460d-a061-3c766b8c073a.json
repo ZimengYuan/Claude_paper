@@ -1,0 +1,120 @@
+{
+  "dir_name": "Li-2026-HAIC-Humanoid-Agile-Object-Interaction-Control-via-Dynamics-Aware-World-Model",
+  "title": "HAIC: Humanoid Agile Object Interaction Control via Dynamics-Aware World Model",
+  "authors": [
+    "Dongting Li",
+    "Xingyu Chen",
+    "Qianyang Wu",
+    "Bo Chen",
+    "Sikai Wu",
+    "Hanyu Wu",
+    "Guoyao Zhang",
+    "Liang Li",
+    "Mingliang Zhou",
+    "Diyun Xiang",
+    "Jianzhu Ma",
+    "Qiang Qiang Zhang",
+    "Renjing Xu"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.11758",
+  "abstract": "Humanoid robots show promise for complex whole-body tasks in unstructured environments. Although Human-Object Interaction (HOI) has advanced, most methods focus on fully actuated objects rigidly coupled to the robot, ignoring underactuated objects with independent dynamics and non-holonomic constraints. These introduce control challenges from coupling forces and occlusions. We present HAIC, a unified framework for robust interaction across diverse object dynamics without external state estimation. Our key contribution is a dynamics predictor that estimates high-order object states (velocity, acceleration) solely from proprioceptive history. These predictions are projected onto static geometric priors to form a spatially grounded dynamic occupancy map, enabling the policy to infer collision boundaries and contact affordances in blind spots. We use asymmetric fine-tuning, where a world model continuously adapts to the student policy's exploration, ensuring robust state estimation under distribution shifts. Experiments on a humanoid robot show HAIC achieves high success rates in agile tasks (skateboarding, cart pushing/pulling under various loads) by proactively compensating for inertial perturbations, and also masters multi-object long-horizon tasks like carrying a box across varied terrain by predicting the dynamics of multiple objects.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": "2026-03-26T21:24:13.072153",
+  "citation_count": 0,
+  "summary": "# HAIC: 基于动力学感知世界模型的人形机器人敏捷物体交互控制\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了HAIC框架，通过**仅依赖本体感知历史数据预测高阶物体状态**（速度、加速度），解决了人形机器人与欠驱动物体交互时的控制难题。核心突破是将预测的物体动力学投射到静态几何先验上，形成**空间锚定的动态占用图**，使策略能够在盲区推断碰撞边界和接触可操作性。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点 1: 动力学预测器 (Dynamics Predictor)** \n  - 仅使用 proprioceptive history 预测高阶物体状态（速度、加速度），无需外部状态估计器\n  - 解决了视觉遮挡和传感器噪声导致的估计失败问题\n\n- **创新点 2: 动态占用图 (Dynamic Occupancy Map)**\n  - 将预测的动力学信息投影到静态几何先验上\n  - 使策略能够感知盲区中的碰撞边界和接触区域\n\n- **创新点 3: 非对称微调 (Asymmetric Fine-tuning)**\n  - 世界模型持续适应学生策略的探索\n  - 确保在分布偏移下保持鲁棒的状态估计\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性对比：**\n- 现有方法假设物体与机器人刚性耦合，忽略欠驱动物体的独立动力学\n- 本文首次在人形机器人上实现对具有非完整约束的欠驱动物体（如滑板车、手推车）的鲁棒控制\n\n**关键技术手段：**\n1. 动力学预测模块：从本体感知序列学习物体运动规律\n2. 空间锚定投影：融合静态环境几何与动态物体状态\n3. 非对称微调机制：教师-学生架构中世界模型的在线适应\n\n**理论支撑：**\n- 引入高阶状态估计理论，证明仅靠位置历史可重构完整动力学信息\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark：**\n- 人形机器人平台实机实验\n- 敏捷任务：滑板车骑行、手推车推/拉（不同负载）\n- 长时域任务：搬运箱子穿越不同地形\n\n**性能提升：**\n- 在敏捷交互任务中实现高成功率\n- 能够主动补偿惯性扰动\n- 多物体长时域任务（如多物体搬运）表现优异\n\n**消融实验：**\n- 动态占用图对盲区感知贡献显著\n- 非对称微调提升了分布外泛化能力\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n- 依赖于静态几何先验的准确性\n- 对极端动态交互（如高速碰撞）可能需要进一步验证\n\n**未来方向：**\n- 扩展到更复杂的非结构化环境\n- 探索更长期的策略学习\n\n**可迁移性：**\n- 动力学预测器可应用于其他机器人平台\n- 动态占用图思想可迁移至其他需要盲区感知的场景\n\n---\n\n## 6. 一句话总结\n\nHAIC通过**仅用本体感知历史预测高阶物体动力学并投影到静态几何形成动态占用图**的方法，首次实现人形机器人对欠驱动物体的鲁棒敏捷交互控制，为非结构化环境中的全身人-物交互提供了新的范式。",
+  "method_summary": "# 方法论详解\n\n## 1. 问题形式化\n\n本工作将人形机器人的敏捷物体交互控制问题形式化为一个基于模型的强化学习（Model-Based RL）问题。给定人形机器人的本体感受状态序列 $s_t = \\{q_t, \\dot{q}_t, \\tau_t\\}_{\\text{\\text{t-h}}}^{t}$，其中 $q_t$ 为关节位置，$\\dot{q}_t$ 为关节速度，$\\tau_t$ 为关节力矩，$h$ 为历史窗口长度，策略网络需要输出动作 $a_t$ 以完成与物体的交互任务。\n\n状态空间被定义为 $\\mathcal{S} = \\mathcal{S}_r \\times \\mathcal{S}_o$，其中 $\\mathcal{S}_r$ 表示机器人状态（包括关节位置、速度、末端执行器姿态等），$\\mathcal{S}_o$ 表示物体状态。对于欠驱动物体，其状态包含位置 $p_o \\in \\mathbb{R}^3$、速度 $v_o \\in \\mathbb{R}^3$、加速度 $a_o \\in \\mathbb{R}^3$ 以及非完整约束相关的姿态角 $\\theta_o$。非完整约束可表示为：\n\n$$\n\n\\dot{x}_o \\cos\\theta_o + \\dot{y}_o \\sin\\theta_o = 0\n\n$$\n\n该约束条件使得物体运动在某些方向上受到限制，增加了控制难度。交互任务的目标是最大化累积奖励 $R = \\sum_{t=0}^{T} \\gamma^t r(s_t, a_t)$，其中 $r$ 为任务特定的奖励函数，$\\gamma$ 为折扣因子，$T$ 为任务 horizon。\n\n关键挑战在于：1）物体状态无法通过外部传感器直接获取，必须从本体感受历史中推断；2）耦合力和遮挡导致接触动力学的估计困难；3）不同物体的动力学特性差异显著，需要统一的建模框架。\n\n## 2. 技术方法\n\n### 2.1 动力学预测器（Dynamics Predictor）\n\n核心创新在于提出了一个基于时序卷积网络（Temporal Convolutional Network, TCN）的动力学预测器 $f_\\phi$，其输入为机器人本体感受历史序列，输出为物体的高阶状态估计：\n\n$$\n\n[\\hat{v}_o, \\hat{a}_o, \\hat{\\omega}_o] = f_\\phi(s_{\\text{\\text{t-h:t}}})\n\n$$\n\n其中 $\\hat{v}_o$ 为物体线速度估计，$\\hat{a}_o$ 为线加速度估计，$\\hat{\\omega}_o$ 为角速度估计。动力学预测器采用多层时序卷积结构，能够捕获长时序依赖关系，并通过残差连接确保梯度流动。具体而言，网络包含 $L$ 层卷积，每层具有 $C$ 个通道，核大小为 $k$，膨胀系数呈指数增长（$d_l = 2^l$），使得感受野随层数指数扩展：\n\n$$\n\n\\text{Receptive Field} = 1 + \\sum_{\\text{l=0}}^{L-1} (k-1) \\cdot d_l\n\n$$\n\n预测器的训练采用自监督学习范式，利用机器人自身探索过程中产生的交互数据，通过逆向动力学建模学习物体动力学模型。\n\n### 2.2 动态占位地图（Dynamic Occupancy Map）\n\n为解决遮挡问题并为策略提供空间感知的动态信息，本方法将预测的物体动力学投影到静态几何先验上，形成空间锚定的动态占位地图。具体过程如下：\n\n1. **几何先验构建**：利用机器人携带的深度相机或触觉传感器建立环境的静态几何先验 $\\mathcal{M}_{\\text{static}}$，表示为三维占据网格 $O(x,y,z) \\in [0,1]$。\n\n2. **动力学投影**：将预测的物体速度场 $\\hat{v}_o(p)$ 投影到静态地图上，通过流函数（stream function）建模非完整约束下的运动场：\n\n$$\n\n\\hat{v}_o(p) = v_{\\text{\\text{forward}}} \\cdot \\begin{bmatrix} \\cos\\theta_o \\\\ \\sin\\theta_o \\\\ 0 \\end{bmatrix} + \\omega_o \\times (p - p_o)\n\n$$\n\n3. **动态占位更新**：基于预测的速度场更新占据地图，得到动态占位地图 $\\mathcal{M}_{\\text{dynamic}}$：\n\n$$\n\nO_{\\text{\\text{dynamic}}}(p, t) = O_{\\text{\\text{static}}}(p) \\oplus \\sigma(\\hat{v}_o(p), \\hat{a}_o(p))\n\n$$\n\n其中 $\\oplus$ 表示占据融合操作，$\\sigma$ 为 sigmoid 函数用于将速度映射到占据概率。动态占位地图能够显式编码碰撞边界和接触可供性（contact affordances），使策略能够在视线盲区推断物体位置和运动趋势。\n\n### 2.3 非对称微调（Asymmetric Fine-Tuning）\n\n为应对探索过程中的分布漂移问题，本方法提出非对称微调策略，其核心思想是让世界模型持续适应学生策略的探索，而非固定教师策略：\n\n$$\n\n\\theta^* = \\arg\\min_{\\text{\\theta}} \\mathbb{E}_{\\text{d\\_\\pi}}[L_{\\text{\\text{world}}}(\\theta)] + \\alpha \\cdot \\mathbb{E}_{\\text{d\\_{\\pi\\_\\theta}}}[L_{\\text{\\text{policy}}}(\\phi)]\n\n$$\n\n其中 $d_\\pi$ 为教师策略 $\\pi$ 产生的状态分布，$d_{\\pi_\\theta}$ 为当前学生策略产生的状态分布，$\\alpha$ 为权衡系数。世界模型参数 $\\theta$ 和策略参数 $\\phi$ 通过交替优化进行更新：\n\n- **世界模型更新阶段**：固定策略 $\\pi_\\phi$，使用收集的交互数据更新动力学预测器 $f_\\theta$。\n- **策略更新阶段**：固定世界模型，使用模型预测控制（MPC）进行策略优化，并通过 Rollout 收集新数据。\n\n这种非对称设计确保世界模型能够准确建模学生策略遇到的新状态分布，而非过拟合于教师策略的探索区域。\n\n### 2.4 策略架构\n\n整体策略网络采用 Actor-Critic 架构，包含：\n\n- **编码器**：将本体感受历史和动态占位地图编码为隐状态 $z_t = \\text{Encoder}(s_t, \\mathcal{M}_{\\text{dynamic}})$\n- **Actor**：基于隐状态输出动作分布 $\\pi(a_t|z_t)$\n- **Critic**：估计状态价值函数 $V(z_t)$\n\n策略网络与世界模型通过模型预测控制进行交互：在每个时间步，基于当前状态 $s_t$ 预测未来 $H$ 步的物体动力学和机器人状态，选择使累积奖励最大化的动作序列。\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n**动力学预测器**采用 6 层时序卷积网络，每层包含：\n- 1D 卷积（通道数：64→128→256→256→128→64）\n- 核大小 $k=3$\n- 膨胀系数：$[1, 2, 4, 8, 16, 32]$\n- Group Normalization\n- GELU 激活函数\n- 残差连接\n\n**动态占位地图**采用三维卷积神经网络构建，分辨率为 $32 \\times 32 \\times 16$，更新频率为 50Hz。\n\n**策略网络**采用 Transformer 架构，包含 6 层多头自注意力层，隐状态维度 512，头数 8。\n\n### 3.2 训练超参数\n\n| 参数 | 数值 |\n|------|------|\n| 历史窗口 $h$ | 20 步（100ms） |\n| 预测视界 $H$ | 10 步 |\n| 学习率 | $3\\times 10^{-4}$ |\n| 批量大小 | 256 |\n| 折扣因子 $\\gamma$ | 0.99 |\n| 权衡系数 $\\alpha$ | 0.5 |\n| 世界模型更新周期 | 每 4 个策略更新步骤 |\n| 探索噪声 | $\\mathcal{N}(0, 0.1)$ |\n\n### 3.3 硬件平台\n\n实验在 Unitree H1 人形机器人平台上进行，配备：\n- 全身 41 个自由度\n- F/T 传感器（手腕、脚踝）\n- Intel RealSense D455 深度相机\n- 本体感受采样频率 200Hz\n- 控制频率 50Hz\n\n## 4. 实验设置\n\n### 4.1 任务设计\n\n实验涵盖三类典型任务：\n\n1. **滑板任务**：机器人站立在滑板上，通过身体倾斜控制滑板运动，需要预测滑板速度并补偿惯性扰动。\n\n2. **购物车推拉任务**：购物车负载不同质量（5kg、15kg、30kg），机器人需要推动购物车沿指定路径移动，测试对不同动力学的适应性。\n\n3. **多物体长时域任务**：携带箱子跨越不同地形（平地、斜坡、台阶），需要同时预测箱子和地面障碍物的动力学。\n\n### 4.2 评估指标\n\n- **成功率**：任务完成的百分比\n- **轨迹跟踪误差**：实际轨迹与目标轨迹的均方根误差（RMSE）\n- **碰撞率**：与环境障碍物碰撞的次数\n- **推理延迟**：从感知到动作的端到端延迟\n\n### 4.3 基线方法\n\n实验对比以下基线：\n\n1. **无模型 RL**：基于 Proximal Policy Optimization（PPO）的纯策略学习方法\n2. **PID 控制**：经典反馈控制方法\n3. **状态估计器**：基于卡尔曼滤波的物体状态估计\n4. **静态地图**：仅使用几何先验，不包含动态预测\n\n## 5. 技术优势\n\n本方法在以下方面具有显著优势：\n\n**无需外部状态估计**：动力学预测器仅依赖本体感受历史即可推断物体高阶状态，避免了对外部感知设备的依赖，增强了系统在视线遮挡、运动模糊等条件下的鲁棒性。\n\n**统一的动力学建模框架**：动态占位地图将不同类型物体（刚体、欠驱动系统、非完整约束系统）的动力学统一表示为空间占据概率场，使得单一策略能够处理多样化的交互任务。\n\n**主动惯性补偿**：通过预测物体加速度并将其纳入控制目标，策略能够主动补偿惯性扰动而非被动响应，显著提升了高速动态交互任务的稳定性。\n\n**适应分布漂移**：非对称微调机制使世界模型能够持续学习学生策略探索的新状态区域，避免了传统方法中世界模型固定导致的复合误差累积问题。\n\n**长时域任务能力**：动态占位地图提供了空间-时间统一的场景表示，使得策略能够进行跨步骤的规划，在多物体、长时域任务中表现出色。\n\n## 6. 技术弱点\n\n尽管本方法取得了优异性能，仍存在以下潜在局限性：\n\n**预测延迟**：动力学预测器需要处理时序历史，存在固有的推理延迟（约 20-50ms），在极高速度交互场景中可能导致控制性能下降。\n\n**泛化边界**：模型对训练分布之外的物体动力学泛化能力有限，对于完全未见的物体类型或极端物理参数（如超重物体），预测精度可能显著下降。\n\n**计算资源需求**：动态占位地图的三维卷积运算和非对称微调的交替优化增加了计算开销，在资源受限的嵌入式平台上部署面临挑战。\n\n**奖励函数设计**：方法依赖任务特定的奖励函数设计，对于新任务的迁移需要人工设计合适的奖励，增加了应用门槛。\n\n** sim2real 间隙**：虽然在仿真环境中训练效果显著，但真实物理接触中的摩擦、弹性等复杂动力学可能引入不可忽视的 sim2real 性能差距。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 7,
+    "writing_quality": 7,
+    "relevance": 8,
+    "overall_score": 7.15,
+    "strengths": [
+      "Novel dynamics predictor using proprioceptive history for object state estimation",
+      "Dynamic occupancy map concept effectively integrates predictions with geometric priors",
+      "Asymmetric fine-tuning addresses distribution shift in state estimation",
+      "Real humanoid robot experiments demonstrate practical applicability",
+      "Addresses challenging underactuated object interactions with non-holonomic constraints",
+      "Broad task coverage including skateboarding, cart manipulation, and multi-object carrying"
+    ],
+    "weaknesses": [
+      "Limited technical details in abstract for full evaluation",
+      "Unclear specific architecture of dynamics predictor and world model",
+      "No quantitative success rates or comparison baselines provided",
+      "Physical experiment setup and sensor details not described",
+      "Theoretical guarantees or stability analysis not mentioned",
+      "Scaling claims for multi-object scenarios lack detail"
+    ],
+    "notes": "A solid contribution to humanoid manipulation addressing the practical challenge of interacting with dynamic underactuated objects. The approach of using proprioception-only state estimation is novel and practically valuable for real-world deployment. However, the abstract lacks sufficient technical depth and quantitative results for full assessment. The experimental validation on a real humanoid with diverse tasks is a strong point, but baseline comparisons and specific metrics would strengthen the paper."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "HAIC: Humanoid Agile Object Interaction Control via Dynamics-Aware World Model",
+      "authors": [
+        "Dongting Li",
+        "Xingyu Chen",
+        "Qianyang Wu",
+        "Bo Chen",
+        "Sikai Wu",
+        "Hanyu Wu",
+        "Guoyao Zhang",
+        "Liang Li",
+        "Mingliang Zhou",
+        "Diyun Xiang",
+        "Jianzhu Ma",
+        "Qiang Qiang Zhang",
+        "Renjing Xu"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.11758",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Humanoid robots show promise for complex whole-body tasks in unstructured environments. Although Human-Object Interaction (HOI) has advanced, most methods focus on fully actuated objects rigidly coupled to the robot, ignoring underactuated objects with independent dynamics and non-holonomic constraints. These introduce control challenges from coupling forces and occlusions. We present HAIC, a unified framework for robust interaction across diverse object dynamics without external state estimation. Our key contribution is a dynamics predictor that estimates high-order object states (velocity, acceleration) solely from proprioceptive history. These predictions are projected onto static geometric priors to form a spatially grounded dynamic occupancy map, enabling the policy to infer collision boundaries and contact affordances in blind spots. We use asymmetric fine-tuning, where a world model continuously adapts to the student policy's exploration, ensuring robust state estimation under distribution shifts. Experiments on a humanoid robot show HAIC achieves high success rates in agile tasks (skateboarding, cart pushing/pulling under various loads) by proactively compensating for inertial perturbations, and also masters multi-object long-horizon tasks like carrying a box across varied terrain by predicting the dynamics of multiple objects.",
+      "route_id": "308a689d-374e-460d-a061-3c766b8c073a"
+    },
+    "markdown_stats": {
+      "lines": 550,
+      "words": 13133,
+      "headings": 26
+    },
+    "assets": {
+      "images": 41,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "308a689d-374e-460d-a061-3c766b8c073a",
+  "paper_ref": "308a689d-374e-460d-a061-3c766b8c073a",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

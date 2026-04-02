@@ -1,0 +1,90 @@
+{
+  "dir_name": "Gu-2026-PDF-HR-Pose-Distance-Fields-for-Humanoid-Robots",
+  "title": "PDF-HR: Pose Distance Fields for Humanoid Robots",
+  "authors": [
+    "Yi Gu",
+    "Yukang Gao",
+    "Yang Zhou",
+    "Xingyu Chen",
+    "Yixiao Feng",
+    "Mingle Zhao",
+    "Yunyang Mo",
+    "Zhaorui Wang",
+    "Lixin Xu",
+    "Renjing Xu"
+  ],
+  "year": 2026,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2602.04851",
+  "abstract": "Pose and motion priors play a crucial role in humanoid robotics. Although such priors have been widely studied in human motion recovery (HMR) domain with a range of models, their adoption for humanoid robots remains limited, largely due to the scarcity of high-quality humanoid motion data. In this work, we introduce Pose Distance Fields for Humanoid Robots (PDF-HR), a lightweight prior that represents the robot pose distribution as a continuous and differentiable manifold. Given an arbitrary pose, PDF-HR predicts its distance to a large corpus of retargeted robot poses, yielding a smooth measure of pose plausibility that is well suited for optimization and control. PDF-HR can be integrated as a reward shaping term, a regularizer, or a standalone plausibility scorer across diverse pipelines. We evaluate PDF-HR on various humanoid tasks, including single-trajectory motion tracking, general motion tracking, style-based motion mimicry, and general motion retargeting. Experiments show that this plug-and-play prior consistently and substantially strengthens strong baselines. Code and models will be released.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "PDF-HR: Pose Distance Fields for Humanoid Robots",
+      "authors": [
+        "Yi Gu",
+        "Yukang Gao",
+        "Yang Zhou",
+        "Xingyu Chen",
+        "Yixiao Feng",
+        "Mingle Zhao",
+        "Yunyang Mo",
+        "Zhaorui Wang",
+        "Lixin Xu",
+        "Renjing Xu"
+      ],
+      "year": 2026,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2602.04851",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Pose and motion priors play a crucial role in humanoid robotics. Although such priors have been widely studied in human motion recovery (HMR) domain with a range of models, their adoption for humanoid robots remains limited, largely due to the scarcity of high-quality humanoid motion data. In this work, we introduce Pose Distance Fields for Humanoid Robots (PDF-HR), a lightweight prior that represents the robot pose distribution as a continuous and differentiable manifold. Given an arbitrary pose, PDF-HR predicts its distance to a large corpus of retargeted robot poses, yielding a smooth measure of pose plausibility that is well suited for optimization and control. PDF-HR can be integrated as a reward shaping term, a regularizer, or a standalone plausibility scorer across diverse pipelines. We evaluate PDF-HR on various humanoid tasks, including single-trajectory motion tracking, general motion tracking, style-based motion mimicry, and general motion retargeting. Experiments show that this plug-and-play prior consistently and substantially strengthens strong baselines. Code and models will be released.",
+      "route_id": "c6b43f73-e10e-4b5f-8345-44db93f51f8a"
+    },
+    "markdown_stats": {
+      "lines": 487,
+      "words": 14127,
+      "headings": 23
+    },
+    "assets": {
+      "images": 55,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "c6b43f73-e10e-4b5f-8345-44db93f51f8a",
+  "paper_ref": "c6b43f73-e10e-4b5f-8345-44db93f51f8a",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

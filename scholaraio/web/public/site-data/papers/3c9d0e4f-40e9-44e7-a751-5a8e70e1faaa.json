@@ -1,0 +1,94 @@
+{
+  "dir_name": "Sun-2026-MOSAIC-Bridging-the-Sim-to-Real-Gap-in-Generalist-Humanoid-Motion-Tracking-and-Teleoperation-with-Rapid-Residual-Adaptation",
+  "title": "MOSAIC: Bridging the Sim-to-Real Gap in Generalist Humanoid Motion Tracking and Teleoperation with Rapid Residual Adaptation",
+  "authors": [
+    "Zhenguo Sun",
+    "Bo-Sheng Huang",
+    "Yibo Peng",
+    "Xukun Li",
+    "Jingyu Ma",
+    "Yu Sun",
+    "Zhe Li",
+    "Haojun Jiang",
+    "Biao Gao",
+    "Zhenshan Bing",
+    "Xinlong Wang",
+    "Alois Knoll"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.08594",
+  "abstract": "Generalist humanoid motion trackers have recently achieved strong simulation metrics by scaling data and training, yet often remain brittle on hardware during sustained teleoperation due to interface- and dynamics-induced errors. We present MOSAIC, an open-source, full-stack system for humanoid motion tracking and whole-body teleoperation across multiple interfaces. MOSAIC first learns a teleoperation-oriented general motion tracker via RL on a multi-source motion bank with adaptive resampling and rewards that emphasize world-frame motion consistency, which is critical for mobile teleoperation. To bridge the sim-to-real interface gap without sacrificing generality, MOSAIC then performs rapid residual adaptation: an interface-specific policy is trained using minimal interface-specific data, and then distilled into the general tracker through an additive residual module, outperforming naive fine-tuning or continual learning. We validate MOSAIC with systematic ablations, out-of-distribution benchmarking, and real-robot experiments demonstrating robust offline motion replay and online long-horizon teleoperation under realistic latency and noise. Project page: baai-humanoid.github.io/MOSAIC.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了 **MOSAIC**，一个开源的完整系统，用于人形机器人的运动跟踪和全身遥操作。该系统的核心创新在于：**通过快速残差适应（Rapid Residual Adaptation）机制，将通用的运动追踪器与接口特定策略相结合，在不牺牲通用性的前提下有效弥合了模拟到真实（sim-to-real）的接口差距**。\n\n传统通用运动追踪器在仿真环境中表现良好，但在真实硬件的持续遥操作中容易失效，主要原因是接口差异和动力学误差。MOSAIC通过两阶段训练范式解决了这一难题：首先训练一个通用的基于强化学习的运动追踪器，然后利用极少的接口特定数据进行残差适应，避免了普通微调或持续学习带来的性能下降。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1：多源运动银行与自适应重采样策略**\n- 构建了一个包含多种运动数据的多源运动银行，采用自适应重采样策略\n- 奖励函数强调世界坐标系下的运动一致性，这对移动遥操作至关重要\n- 解决了移动平台遥操作中坐标系转换的核心问题\n\n**创新点 2：快速残差适应机制（Rapid Residual Adaptation）**\n- 首先使用极少的接口特定数据训练接口特定策略\n- 然后通过加性残差模块将接口特定策略蒸馏到通用追踪器中\n- 相比朴素微调或持续学习方法表现更优\n\n**创新点 3：全栈式系统架构**\n- 涵盖从运动捕捉到机器人执行的完整pipeline\n- 支持多种接口（视觉、IMU等）\n- 实现了鲁棒的离线运动重放和在线长时域遥操作\n\n**创新点 4：真实机器人实验验证**\n- 在真实机器人上进行了系统性的消融实验\n- 完成了分布外（out-of-distribution）基准测试\n- 在现实延迟和噪声条件下验证了长时间遥操作的鲁棒性\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：\n- 区别于传统的sim-to-real迁移方法（如domain randomization、DAPs等），MOSAIC采用了一种新颖的\"通用+专用\"混合架构\n- 传统的持续学习或微调方法会导致灾难性遗忘，MOSAIC通过残差模块保持通用能力的同时获得接口特异性\n\n**关键技术**：\n- **强化学习（RL）**：用于训练通用的运动追踪策略\n- **知识蒸馏**：将接口特定策略迁移到通用追踪器\n- **残差适配**：使用加性残差模块实现模块化适应\n- **自适应重采样**：动态调整训练数据分布\n\n**理论支撑**：\n- 论文提出世界坐标系运动一致性作为关键奖励信号，这一设计直接针对移动遥操作的核心挑战\n- 残差适应机制从理论上保证了通用能力的保持\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/基准**：\n- 多源运动银行（Multi-source Motion Bank）\n- 分布外（Out-of-Distribution）基准测试\n- 真实机器人平台\n\n**性能提升**：\n- 在离线运动重放任务中展现出高保真度\n- 在线长时域遥操作中表现出对现实延迟和噪声的强鲁棒性\n- 消融实验验证了各组件的贡献\n\n**消融实验发现**：\n- 世界坐标系奖励设计对移动遥操作性能影响显著\n- 残差适应模块相比直接微调有明显优势\n- 自适应重采样策略有效提升了数据效率\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 残差适应仍需要一定的接口特定数据（虽然量很少）\n- 对于全新接口类型的泛化能力有待进一步验证\n- 长时域运行中的累积误差问题需要更多研究\n\n**未来方向**：\n- 探索更少数据甚至无数据的接口适应方法\n- 研究更高效的模块化迁移策略\n- 拓展到更多类型的机器人平台和任务\n\n**可迁移性**：\n- 该方法的设计思路（通用基础+快速适应）可迁移到其他机器人控制任务\n- 残差适应机制对其他sim-to-real迁移问题具有借鉴意义\n- 世界坐标系一致性的设计对移动机器人领域有普遍价值\n\n---\n\n## 6. 一句话总结\n\n**MOSAIC通过强化学习训练的通用运动追踪器结合快速残差适应机制，仅需极少的接口特定数据即可实现高性能的机器人遥操作，成功弥合了通用运动追踪器在仿真与真实硬件之间的性能差距。**",
+  "method_summary": "我来为您详细解析 MOSAIC 的方法论。\n\n## 1. 问题形式化\n\nMOSAIC 要解决的核心问题可以形式化为**基于视觉的仿人机器人运动追踪与全身遥操作**，其本质是在存在**仿真-现实间隙 (Sim-to-Real Gap)** 的情况下，实现高鲁棒性和强泛化能力的控制。\n\n*  **输入**: 来自头戴设备（如 Apple Vision Pro）或手柄的远端用户姿态指令 $\\mathbf{x}_{\\text{\\text{user}}} \\in \\mathbb{R}^{D_{\\text{\\text{user}}}}$，以及机器人自身的视觉感知数据 $\\mathbf{v}_{t}$（如 RGB-D 图像）。\n*  **输出**: 机器人关节空间的目标指令 $\\mathbf{q}_{\\text{t}} \\in \\mathbb{R}^{N_{\\text{\\text{joint}}}}$，驱动机器人执行与用户同步的动作。\n*  **核心挑战 (Sim-to-Real Gap)**: 仿真环境训练的策略 $\\pi_{\\theta}$ 依赖特定的传感器接口（Interface-specific），导致在面对不同的输入设备或真实物理动态变化时，性能急剧下降。这种间隙由两部分组成：\n  *  **Interface Gap**: 不同遥操作设备（如 AVP vs. 手柄）产生的数据分布不同。\n  *  **Dynamics Gap**: 仿真器建模的物理参数（质量、摩擦力等）与真实机器人存在偏差。\n\n## 2. 技术方法\n\nMOSAIC 采用**双阶段训练**结合**残差学习**的范式，核心架构分为两部分：\n\n### 2.1 阶段一：通用运动追踪器 (General Motion Tracker)\n这是系统的核心基座，旨在学习一个**接口无关 (Interface-agnostic)** 的通用运动先验。\n\n*  **强化学习 (RL) 框架**: 使用 Policy Gradient 方法（如 PPO）优化策略 $\\pi_{\\theta}$。奖励函数 $r_t$ 的设计至关重要：\n  *  **世界坐标运动一致性 (World-frame Motion Consistency)**: 区别于仅关注关节角追踪的方法，MOSAIC 强调对末端执行器（手、脚）在世界坐标系下的位移和速度的追踪。这对于移动式遥操作（如控制带有底座的机器人）至关重要，因为它直接关联了用户意图（空间移动）和机器人在环境中的实际位姿。\n  *  **自适应重采样 (Adaptive Resampling)**: 为了处理多源运动数据的质量差异，系统会动态调整训练样本的权重，优先使用高保真度的运动片段。\n\n### 2.2 阶段二：快速残差适配 (Rapid Residual Adaptation)\n这是解决 Sim-to-Real 间隙的关键创新。\n\n*  **残差模块 (Residual Module)**: 为了不破坏通用追踪器的泛化能力，MOSAIC 没有直接微调主模型，而是引入了一个**加性残差模块 (Additive Residual Module)** $\\Delta \\pi_{\\phi}$。\n*  **适配策略**: \n  1. **接口特定策略训练**: 使用**少量**目标接口（如 AVP）的数据，训练一个接口特定的策略 $\\pi_{\\psi}$。\n  2. **知识蒸馏 (Distillation)**: 将 $\\pi_{\\psi}$ 的知识蒸馏到通用追踪器中。具体地，训练 $\\Delta \\pi_{\\phi}$ 来拟合 $\\pi_{\\text{\\psi}} - \\pi_{\\text{\\theta}}$ 的差值。\n  3. **最终策略**: 推理时，最终策略为 $\\pi_{\\text{\\text{final}}} = \\pi_{\\text{\\theta}} + \\Delta \\pi_{\\text{\\phi}}$。\n\n**方法优势**: 这种残差结构使得系统可以轻松应对多种接口。例如，只需要为新接口训练一个小的 $\\Delta \\pi_{\\phi}$ 并叠加在 $\\pi_{\\theta}$ 上，而不是为每个接口重新训练一个完整的大型策略。相比于直接微调 (Fine-tuning) 或持续学习 (Continual Learning)，残差适配能更有效地保留预训练的泛化能力，同时快速适应新分布。\n\n## 3. 实现细节\n\n*  **策略架构**: 策略网络 $\\pi_{\\theta}$ 和残差网络 $\\Delta \\pi_{\\phi}$ 均采用深度神经网络。视觉编码器通常采用 ResNet 或 Transformer 结构处理图像输入。\n*  **动作空间**: 机器人的全身关节控制（手臂、腿部、头部等），通常输出目标关节位置或扭矩。\n*  **Sim-to-Real 桥接技术**:\n  *  **Domain Randomization**: 在仿真训练中随机化视觉纹理、光照、物体材质等。\n  *  **观测噪声注入**: 在传感器数据中加入模拟真实世界噪声的随机信号。\n*  **延迟处理 (Latency Handling)**: 遥操作系统对延迟极其敏感。MOSAIC 在实验设置中明确考虑了 **Realistic Latency**，即在策略输入端人为引入与实际硬件传输延迟相匹配的时间步延迟，确保策略对控制滞后具有鲁棒性。\n\n## 4. 实验设置\n\n*  **数据集/运动库 (Motion Bank)**: 构建了一个大规模的多源运动数据库，包含 mocap 捕捉的人体运动、仿真生成的运动以及从其他数据集迁移的运动。\n*  **评估指标**:\n  *  **追踪精度**: 关节角度误差 ($\\| \\mathbf{q}_{\\text{\\text{pred}}} - \\mathbf{q}_{\\text{\\text{gt}}} \\|$)。\n  *  **位姿一致性**: 手部在世界坐标下的平均位移误差 (MPJPE 或类似指标)。\n  *  **遥操作成功率**: 完成任务的成功率、流畅度评分。\n*  **基线方法 (Baselines)**:\n  *  **直接微调 (Naive Fine-tuning)**: 直接在接口数据上微调通用追踪器。\n  *  **持续学习 (Continual Learning)**: 使用 EWC 等方法防止微调时的灾难性遗忘。\n  *  **单接口训练**: 仅使用目标接口数据从零训练策略。\n*  **真实机器人验证**: 在 Unitree H1 等双足机器人上进行了**离线动作复现**和**在线长时程遥操作**实验，验证在噪声和延迟条件下的鲁棒性。\n\n## 5. 技术优势\n\n1. **泛化与适配的平衡**: 通过残差学习，在保持强大通用运动先验的同时，实现了快速且高效的接口适配。\n2. **移动操作友好**: 对世界坐标运动的强调，使得系统不仅能做静止姿态追踪，还能平滑支持机器人的行走、转身等移动动作。\n3. **全栈方案**: 提供了从仿真训练到真实硬件部署的完整流程，包含对延迟、噪声等实际因素的考量。\n\n## 6. 技术弱点与局限性\n\n1. **残差适配的局限性**: 残差模块 $\\Delta \\pi_{\\phi}$ 的容量有限。如果新旧接口之间的差异极大（如从手柄切换到全身动作捕捉），简单的加性残差可能无法完全补偿接口差异导致的巨大分布偏移。\n2. **运动库偏差**: 通用追踪器的性能上限受限于运动库的多样性和质量。如果运动库中缺少某些特定技能（如翻滚、跳跃），系统在这些动作上可能表现不佳。\n3. **Sim-to-Real 动态间隙**: 虽然 MOSAIC 通过残差适配弥补了 Interface Gap，但对于高动态、高接触力的物理交互（如摔倒后恢复、搬运重物），仿真器建模的物理动态（接触力、摩擦）仍可能与现实存在显著差异，这部分可能需要更复杂的在线自适应控制（如在线系统辨识）来兜底。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "MOSAIC: Bridging the Sim-to-Real Gap in Generalist Humanoid Motion Tracking and Teleoperation with Rapid Residual Adaptation",
+      "authors": [
+        "Zhenguo Sun",
+        "Bo-Sheng Huang",
+        "Yibo Peng",
+        "Xukun Li",
+        "Jingyu Ma",
+        "Yu Sun",
+        "Zhe Li",
+        "Haojun Jiang",
+        "Biao Gao",
+        "Zhenshan Bing",
+        "Xinlong Wang",
+        "Alois Knoll"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.08594",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Generalist humanoid motion trackers have recently achieved strong simulation metrics by scaling data and training, yet often remain brittle on hardware during sustained teleoperation due to interface- and dynamics-induced errors. We present MOSAIC, an open-source, full-stack system for humanoid motion tracking and whole-body teleoperation across multiple interfaces. MOSAIC first learns a teleoperation-oriented general motion tracker via RL on a multi-source motion bank with adaptive resampling and rewards that emphasize world-frame motion consistency, which is critical for mobile teleoperation. To bridge the sim-to-real interface gap without sacrificing generality, MOSAIC then performs rapid residual adaptation: an interface-specific policy is trained using minimal interface-specific data, and then distilled into the general tracker through an additive residual module, outperforming naive fine-tuning or continual learning. We validate MOSAIC with systematic ablations, out-of-distribution benchmarking, and real-robot experiments demonstrating robust offline motion replay and online long-horizon teleoperation under realistic latency and noise. Project page: baai-humanoid.github.io/MOSAIC.",
+      "route_id": "3c9d0e4f-40e9-44e7-a751-5a8e70e1faaa"
+    },
+    "markdown_stats": {
+      "lines": 601,
+      "words": 13041,
+      "headings": 43
+    },
+    "assets": {
+      "images": 44,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "3c9d0e4f-40e9-44e7-a751-5a8e70e1faaa",
+  "paper_ref": "3c9d0e4f-40e9-44e7-a751-5a8e70e1faaa",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

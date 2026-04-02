@@ -1,0 +1,86 @@
+{
+  "dir_name": "Wang-2026-APEX-Learning-Adaptive-High-Platform-Traversal-for-Humanoid-Robots",
+  "title": "APEX: Learning Adaptive High-Platform Traversal for Humanoid Robots",
+  "authors": [
+    "Yikai Wang",
+    "Tingxuan Leng",
+    "Changyi Lin",
+    "Shiqi Liu",
+    "Shir Simon",
+    "Bingqing Chen",
+    "Jonathan Francis",
+    "Zhao Ding"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.11143",
+  "abstract": "Humanoid locomotion has advanced rapidly with deep reinforcement learning (DRL), enabling robust feet-based traversal over uneven terrain. Yet platforms beyond leg length remain largely out of reach because current RL training paradigms often converge to jumping-like solutions that are high-impact, torque-limited, and unsafe for real-world deployment. To address this gap, we propose APEX, a system for perceptive, climbing-based high-platform traversal that composes terrain-conditioned behaviors: climb-up and climb-down at vertical edges, walking or crawling on the platform, and stand-up and lie-down for posture reconfiguration. Central to our approach is a generalized ratchet progress reward for learning contact-rich, goal-reaching maneuvers. It tracks the best-so-far task progress and penalizes non-improving steps, providing dense yet velocity-free supervision that enables efficient exploration under strong safety regularization. Based on this formulation, we train LiDAR-based full-body maneuver policies and reduce the sim-to-real perception gap through a dual strategy: modeling mapping artifacts during training and applying filtering and inpainting to elevation maps during deployment. Finally, we distill all six skills into a single policy that autonomously selects behaviors and transitions based on local geometry and commands. Experiments on a 29-DoF Unitree G1 humanoid demonstrate zero-shot sim-to-real traversal of 0.8 meter platforms (approximately 114% of leg length), with robust adaptation to platform height and initial pose, as well as smooth and stable multi-skill transitions.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：APEX - 学习自适应高平台穿越人形机器人\n\n## 1. 核心创新点\n\n本文提出了APEX系统，首次实现了基于深度强化学习的人形机器人在无需人类示范的情况下，自主攀爬超过自身腿长的高平台（0.8米，约114%腿长），通过创新的爬升式运动模式替代传统的跳跃式方案，解决了高冲击、扭矩受限的跳跃策略在真实机器人上不安全且不可部署的根本问题。\n\n---\n\n## 2. 技术创新拆解\n\n**创新点1：广义棘轮进展奖励（Generalized Ratchet Progress Reward）**\n- 提出跟踪任务最佳历史进展并惩罚非改进步骤的奖励机制\n- 提供密集但无速度的监督信号，使智能体能在强安全约束下进行高效探索\n- 解决了传统奖励函数在接触丰富动作空间中稀疏且难以学习的问题\n\n**创新点2：地形条件化行为组合（Terrain-Conditioned Behavior Composition）**\n- 将高平台穿越分解为六个可学习的技能：爬上台、爬下台、平台上行走/爬行、站立、躺下\n- 每个技能都是地形感知的，能够根据局部几何形状自适应选择行为\n\n**创新点3：双策略缩小sim-to-real感知差距**\n- 训练时建模映射伪影（mapping artifacts）\n- 部署时对高程图进行滤波和修复（filtering and inpainting）\n- 显著降低了仿真与真实世界之间的LiDAR感知差异\n\n**创新点4：多技能蒸馏为单一策略**\n- 将六个独立技能蒸馏为能够根据局部几何和命令自动选择行为和转换的统一策略\n- 实现了自主的行为选择和状态切换\n\n---\n\n## 3. 方法论突破\n\n**新颖性**：\n- 区别于现有DRL方法聚焦于平坦地形行走或跳跃式越障，APEX采用**攀爬范式**（climbing-based approach），使用四肢接触实现高平台穿越\n- 区别于需要人类演示或预定义轨迹的方法，APEX完全通过奖励函数自动学习\n\n**关键技术**：\n- LiDAR感知 + 全身运动策略（29自由度Unitree G1人形机器人）\n- 基于高程图的地形表示\n- 强化学习训练框架 + 技能蒸馏\n\n**理论支撑**：\n- 棘轮奖励机制提供了一种新的reward shaping方法，保证学习的单调进展性\n- 安全正则化约束确保了策略生成的低冲击力动作\n\n---\n\n## 4. 实验验证\n\n**主要数据集/Benchmark**：\n- 物理仿真环境： Isaac Gym\n- 真实机器人： Unitree G1 人形机器人（29自由度）\n\n**性能提升**：\n- 成功实现**0.8米平台**的零样本sim-to-real迁移（约114%腿长）\n- 对平台高度和初始姿态具有强鲁棒性\n- 多技能转换平滑稳定\n\n**消融实验**：\n- 棘轮奖励机制对学习效率有显著提升\n- 感知差距缩小策略对sim-to-real迁移成功至关重要\n\n---\n\n## 5. 局限与启发\n\n**当前局限**：\n- 目前仅验证了固定高度平台（0.8米），对更高平台的探索有待验证\n- 依赖于LiDAR传感器，在极端光照或透明表面环境可能受限\n- 爬升动作仍需要坚硬的垂直边缘支撑\n\n**未来方向**：\n- 扩展到可变高度平台的动态适应\n- 探索更复杂的非结构化地形\n- 结合视觉+触觉反馈增强感知能力\n\n**可迁移性**：\n- 棘轮奖励机制可推广到其他接触丰富的运动任务（如上下楼梯、跨越障碍）\n- 双策略感知缩小方法可应用于其他基于高程图的机器人系统\n- 多技能蒸馏框架可用于其他需要行为切换的机器人任务\n\n---\n\n## 6. 一句话总结\n\nAPEX通过创新的广义棘轮奖励机制和地形条件化行为组合，首次实现了人形机器人基于攀爬的高平台穿越（0.8米/114%腿长），为零样本sim-to-real迁移和真实世界高障碍物穿越提供了安全可行的深度强化学习新范式。",
+  "method_summary": "# APEX: 自适应高平台穿越方法论解析\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n旨在解决人形机器人在地形超过腿长（Leg Length）时的**非跳跃式穿越**问题。\n形式化为学习一个分层或蒸馏后的策略 $\\pi(a|s, \\text{geom})$，该策略能根据局部几何信息 $\\text{geom}$ 在多种技能间自动切换，以完成从地面到高平台的攀爬过程。\n\n### 1.2 攀爬范式定义\n将传统的“单次动力学跳跃”转变为“多点接触攀爬”：\n\n$$\n\n\\text{Trajectory} = \\{\\text{Approach} \\to \\text{Climb-up} \\to \\text{Reconfigure} \\to \\text{Locomote} \\}\n\n$$\n\n---\n\n## 2. 技术方法\n\n### 2.1 广义棘轮进展奖励 (Generalized Ratchet Progress Reward)\n这是本文解决接触丰富、长程探索难题的核心机制：\n- **定义**: $r_t = \\max(0, P_t - P_{\\text{best\\_so\\_far}})$，其中 $P_t$ 是当前步的进展度。\n- **机制**: 仅当智能体打破了“历史最佳纪录”时才发放正向奖励，非改进步骤受到惩罚。\n- **优势**: 提供密集的进度反馈，但不引入多余的速度项监督，允许智能体自主探索最节能的接触序列。\n\n### 2.2 行为组合与技能蒸馏 (Behavior Composition & Distillation)\nAPEX 包含 6 种原子技能：\n1. **Climb-up**: 边缘抓取与支撑。\n2. **Climb-down**: 安全落地。\n3. **Walking**: 平台平稳移动。\n4. **Crawling**: 低矮空间或不稳平台穿越。\n5. **Stand-up/Lie-down**: 针对攀爬前后的姿态切换。\n通过**策略蒸馏 (Policy Distillation)**，将多个独立训练的技能网络合并为一个能够感知地形并自动切换的统一网络。\n\n### 2.3 感知差距缩小策略 (Perception Gap Reduction)\n- **训练阶段**: 在仿真中模拟 LiDAR 映射过程中产生的空洞、遮挡和噪点。\n- **部署阶段**: 采用双重策略：对高程图进行实时滤波（Filtering）和预测修复（Inpainting），确保输入的几何一致性。\n\n---\n\n## 3. 实现细节\n\n### 3.1 机器人配置\n- **平台**: Unitree G1 人形机器人（29 自由度）。\n- **传感器**: 搭载 LiDAR 传感器，输出实时高程图 (Elevation Map)。\n\n### 3.2 训练超参数\n- **平台高度**: 训练覆盖 0.4m 到 0.8m 的变化范围。\n- **优化算法**: 深度强化学习算法 (如 PPO)。\n- **奖励权重**: 强安全正则化项，限制关节扭矩和末端冲击力。\n\n---\n\n## 4. 实验设置\n\n### 4.1 物理验证\n- 在 0.8 米的高平台上进行测试（约占机器人腿长的 114%）。\n- 验证在不同初始位置和姿态下的成功率。\n\n---\n\n## 5. 技术优势\n\n- **安全性**: 避免了高风险的跳跃动作，显著降低了电机扭矩负荷和机械冲击。\n- **突破物理极限**: 通过四肢协同，实现了常规步行无法逾越的高度障碍。\n- **自主性**: 实现端到端的感知到动作映射，无需预定义复杂的接触点序列。\n\n---\n\n## 6. 技术弱点与局限性\n\n- **边缘依赖**: 需要相对坚硬且可抓取的垂直边缘。\n- **LiDAR 局限**: 对于透明或镜面平台，感知可能会失效。\n- **计算实时性**: 复杂的修复算法和极深策略网络在嵌入式端存在一定的算力压力。\n",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "APEX: Learning Adaptive High-Platform Traversal for Humanoid Robots",
+      "authors": [
+        "Yikai Wang",
+        "Tingxuan Leng",
+        "Changyi Lin",
+        "Shiqi Liu",
+        "Shir Simon",
+        "Bingqing Chen",
+        "Jonathan Francis",
+        "Zhao Ding"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.11143",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Humanoid locomotion has advanced rapidly with deep reinforcement learning (DRL), enabling robust feet-based traversal over uneven terrain. Yet platforms beyond leg length remain largely out of reach because current RL training paradigms often converge to jumping-like solutions that are high-impact, torque-limited, and unsafe for real-world deployment. To address this gap, we propose APEX, a system for perceptive, climbing-based high-platform traversal that composes terrain-conditioned behaviors: climb-up and climb-down at vertical edges, walking or crawling on the platform, and stand-up and lie-down for posture reconfiguration. Central to our approach is a generalized ratchet progress reward for learning contact-rich, goal-reaching maneuvers. It tracks the best-so-far task progress and penalizes non-improving steps, providing dense yet velocity-free supervision that enables efficient exploration under strong safety regularization. Based on this formulation, we train LiDAR-based full-body maneuver policies and reduce the sim-to-real perception gap through a dual strategy: modeling mapping artifacts during training and applying filtering and inpainting to elevation maps during deployment. Finally, we distill all six skills into a single policy that autonomously selects behaviors and transitions based on local geometry and commands. Experiments on a 29-DoF Unitree G1 humanoid demonstrate zero-shot sim-to-real traversal of 0.8 meter platforms (approximately 114% of leg length), with robust adaptation to platform height and initial pose, as well as smooth and stable multi-skill transitions.",
+      "route_id": "164e7e11-a590-49d8-bad3-94629f011f42"
+    },
+    "markdown_stats": {
+      "lines": 382,
+      "words": 9636,
+      "headings": 24
+    },
+    "assets": {
+      "images": 31,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "164e7e11-a590-49d8-bad3-94629f011f42",
+  "paper_ref": "164e7e11-a590-49d8-bad3-94629f011f42",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

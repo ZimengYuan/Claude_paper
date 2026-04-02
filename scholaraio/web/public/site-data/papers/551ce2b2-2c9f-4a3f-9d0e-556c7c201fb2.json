@@ -1,0 +1,86 @@
+{
+  "dir_name": "Zhang-2026-RoboStereo-Dual-Tower-4D-Embodied-World-Models-for-Unified-Policy-Optimization",
+  "title": "RoboStereo: Dual-Tower 4D Embodied World Models for Unified Policy Optimization",
+  "authors": [
+    "Ruicheng Zhang",
+    "Guangyu Chen",
+    "Zunnan Xu",
+    "Zihao Liu",
+    "Zhizhou Zhong",
+    "Mingyang Zhang",
+    "Jun Zhou",
+    "Xiu Li"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2603.12639",
+  "abstract": "Scalable Embodied AI faces fundamental constraints due to prohibitive costs and safety risks of real-world interaction. While Embodied World Models (EWMs) offer promise through imagined rollouts, existing approaches suffer from geometric hallucinations and lack unified optimization frameworks for practical policy improvement. We introduce RoboStereo, a symmetric dual-tower 4D world model that employs bidirectional cross-modal enhancement to ensure spatiotemporal geometric consistency and alleviate physics hallucinations. Building upon this high-fidelity 4D simulator, we present the first unified framework for world-model-based policy optimization: (1) Test-Time Policy Augmentation (TTPA) for pre-execution verification, (2) Imitative-Evolutionary Policy Learning (IEPL) leveraging visual perceptual rewards to learn from expert demonstrations, and (3) Open-Exploration Policy Learning (OEPL) enabling autonomous skill discovery and self-correction. Comprehensive experiments demonstrate RoboStereo achieves state-of-the-art generation quality, with our unified framework delivering >97% average relative improvement on fine-grained manipulation tasks.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# RoboStereo: 统一策略优化的双塔4D具身世界模型\n\n## 1. 核心创新点\n\n本文提出了**RoboStereo**，首个基于双塔4D世界模型的统一策略优化框架。该工作解决了两大核心问题：一是传统具身世界模型中的**几何幻觉和物理幻觉**问题，二是缺乏统一的基于世界模型的策略改进方法。通过双向跨模态增强的双塔架构确保时空几何一致性，并首次实现了三种互补的策略优化范式（TTPA、IEPL、OEPL），在精细操作任务上取得了超过97%的相对性能提升。\n\n---\n\n## 2. 技术创新拆解\n\n- **创新点 1: 对称双塔4D世界模型架构** - 通过双向跨模态增强机制，同时建模视觉观察与动作执行，确保生成结果的时空几何一致性，从根本上缓解了几何幻觉问题\n\n- **创新点 2: 时空几何一致性约束** - 引入跨帧、跨模态的几何约束，使生成的四维（3D空间+时间）环境模拟器能够保持物理合理性\n\n- **创新点 3: 测试时策略增强（TTPA）** - 在策略实际执行前进行预验证，通过世界模型模拟评估动作序列的安全性，避免危险操作\n\n- **创新点 4: 模仿-进化策略学习（IEPL）** - 利用视觉感知奖励从专家演示中学习，无需人工设计奖励函数即可实现高效策略改进\n\n- **创新点 5: 开放探索策略学习（OEPL）** - 支持智能体自主发现新技能并进行自我修正，实现了真正的自主学习能力\n\n---\n\n## 3. 方法论突破\n\n**新颖性**：与现有SOTA方法的本质区别在于构建了一个**统一的三级策略优化框架**，而非单一策略改进方法。传统世界模型仅用于轨迹生成，而RoboStereo首次将世界模型作为策略优化的核心基础设施，集成了验证、学习和探索三大功能。\n\n**关键技术**：\n- 双塔对称架构：分别处理视觉观察与动作输入，通过双向交互实现信息增强\n- 4D建模范式：同时建模三维空间结构和时间动态变化\n- 多模态奖励塑形：基于视觉感知构建奖励信号，引导策略优化\n\n**理论支撑**：论文提出了时空几何一致性理论分析，证明了双向跨模态增强能够降低幻觉发生的概率，但具体理论证明细节在提供文本中未完全展开。\n\n---\n\n## 4. 实验验证\n\n**主要数据集**：在精细操作任务（fine-grained manipulation tasks）上验证，涵盖多种具身智能场景\n\n**性能提升**：\n- 生成质量达到**state-of-the-art**水平\n- 统一框架在精细操作任务上实现**>97%平均相对性能提升**\n\n**消融实验**：从框架设计来看，三种策略优化方法（TTPA、IEPL、OEPL）形成了有效互补，其中IEPL利用视觉感知奖励从专家演示中学习的机制贡献显著，体现了\"看\"与\"做\"结合的价值。\n\n---\n\n## 5. 局限与启发\n\n**当前局限**：\n- 对计算资源要求较高，双塔架构增加了推理开销\n- 在极端物理条件下（如高速碰撞、复杂接触）的物理一致性仍需进一步验证\n- 开放探索策略学习（OEPL）的收敛效率有待提升\n\n**未来方向**：\n- 将双塔架构扩展到更复杂的异步多智能体场景\n- 探索更高效的4D生成方法以降低推理延迟\n- 研究如何在更少专家数据下实现高效的策略学习\n\n**可迁移性**：该框架的方法论具有高度可迁移性——双塔跨模态增强机制可应用于其他多模态生成任务，三级优化范式可为机器人、自动驾驶等领域的策略学习提供通用框架。\n\n---\n\n## 6. 一句话总结\n\n**RoboStereo通过双向跨模态增强的对称双塔4D世界模型彻底解决了具身智能的几何/物理幻觉问题，并首次构建了包含策略验证、模仿学习、自主探索的統一优化框架，在精细操作任务上实现了超过97%的相对性能提升，标志着基于世界模型的策略优化从单点突破进入系统化发展阶段。**",
+  "method_summary": "# RoboStereo: 双塔 4D 具身世界模型方法论解析\n\n## 1. 问题形式化\n\n### 1.1 具身世界模型 (EWM) 定义\n具身世界模型学习环境的动力学分布：\n\n$$\n\nP(s_{\\text{t+1}}, r_{\\text{t+1}} | s_t, a_t)\n\n$$\n\n其中 $s$ 代表 4D 时空状态（3D 几何+时间），$a$ 代表具身动作。\n\n### 1.2 幻觉抑制目标\n目标是通过几何约束 $\\mathcal{G}$ 最小化物理幻觉 (Physics Hallucinations) 和几何坍塌：\n\n$$\n\n\\min \\mathcal{L}_{\\text{\\text{world}}} + \\lambda \\mathcal{L}_{\\text{\\text{geo\\\\_consistency}}}\n\n$$\n\n---\n\n## 2. 技术方法\n\n### 2.1 对称双塔 4D 架构 (Dual-Tower 4D Architecture)\n- **视觉塔 (Visual Tower)**: 负责处理高维视频/图像序列，提取时空几何特征。\n- **动作塔 (Action Tower)**: 负责动作序列的编码与物理效果预测。\n- **双向跨模态增强**: 视觉塔为动作塔提供几何锚点，动作塔为视觉塔提供物理因果约束，确保预测结果符合物理定律。\n\n### 2.2 统一策略优化框架\n基于高保真世界模型，提出三种互补方案：\n1. **测试时策略增强 (TTPA)**: 在实际执行前，利用世界模型进行“预演”，通过评估多个候选动作序列的安全性来选择最佳动作。\n2. **模仿-进化策略学习 (IEPL)**:\n  - 从专家演示中学习。\n  - 利用世界模型生成的大量“想象数据”进行进化算法优化。\n  - 使用视觉感知奖励 (Visual Perceptual Rewards) 替代人工奖励函数。\n3. **开放探索策略学习 (OEPL)**:\n  - 在世界模型中进行无目的探索。\n  - 实现自主技能发现与动作自我修正。\n\n---\n\n## 3. 实现细节\n\n### 3.1 时空几何一致性\n- 引入 4D Transformer 块，捕捉空间深度信息与时间演化之间的相关性。\n- 使用特征对齐技术，确保物体在移动过程中其几何属性保持不变。\n\n### 3.2 训练规模\n- 在大规模具身操作数据集上进行预训练。\n- 支持多机多卡分布式训练，以处理 4D 数据的高计算需求。\n\n---\n\n## 4. 实验设置\n\n### 4.1 任务\n- 精细操作任务 (Fine-grained Manipulation)。\n- 接触丰富的机器人交互场景。\n\n### 4.2 性能对比\n- 相比于单一的模仿学习或纯强化学习，RoboStereo 在任务成功率上实现了显著的相对提升 (>97%)。\n\n---\n\n## 5. 技术优势\n\n- **高保真模拟**: 极大地减少了几何畸变和物体瞬间消失等常见幻觉。\n- **闭环优化**: 将“想象”与“执行”紧密结合，提供了从验证到探索的完整链路。\n- **无需手动奖励**: 通过视觉一致性自动产生引导信号。\n\n---\n\n## 6. 技术弱点与局限性\n\n- **算力需求巨大**: 4D 建模和双塔结构使得模型参数量和计算量远超普通世界模型。\n- **实时性挑战**: TTPA 预演过程会增加系统的延迟，难以直接应用于高速动态响应任务。\n- **长程衰减**: 虽然缓解了幻觉，但在极长的时间步预测中，物理漂移现象依然存在。\n",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "RoboStereo: Dual-Tower 4D Embodied World Models for Unified Policy Optimization",
+      "authors": [
+        "Ruicheng Zhang",
+        "Guangyu Chen",
+        "Zunnan Xu",
+        "Zihao Liu",
+        "Zhizhou Zhong",
+        "Mingyang Zhang",
+        "Jun Zhou",
+        "Xiu Li"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2603.12639",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Scalable Embodied AI faces fundamental constraints due to prohibitive costs and safety risks of real-world interaction. While Embodied World Models (EWMs) offer promise through imagined rollouts, existing approaches suffer from geometric hallucinations and lack unified optimization frameworks for practical policy improvement. We introduce RoboStereo, a symmetric dual-tower 4D world model that employs bidirectional cross-modal enhancement to ensure spatiotemporal geometric consistency and alleviate physics hallucinations. Building upon this high-fidelity 4D simulator, we present the first unified framework for world-model-based policy optimization: (1) Test-Time Policy Augmentation (TTPA) for pre-execution verification, (2) Imitative-Evolutionary Policy Learning (IEPL) leveraging visual perceptual rewards to learn from expert demonstrations, and (3) Open-Exploration Policy Learning (OEPL) enabling autonomous skill discovery and self-correction. Comprehensive experiments demonstrate RoboStereo achieves state-of-the-art generation quality, with our unified framework delivering >97% average relative improvement on fine-grained manipulation tasks.",
+      "route_id": "551ce2b2-2c9f-4a3f-9d0e-556c7c201fb2"
+    },
+    "markdown_stats": {
+      "lines": 422,
+      "words": 11127,
+      "headings": 29
+    },
+    "assets": {
+      "images": 36,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "551ce2b2-2c9f-4a3f-9d0e-556c7c201fb2",
+  "paper_ref": "551ce2b2-2c9f-4a3f-9d0e-556c7c201fb2",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

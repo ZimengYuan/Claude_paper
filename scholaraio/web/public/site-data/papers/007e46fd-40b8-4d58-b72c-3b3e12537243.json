@@ -1,0 +1,102 @@
+{
+  "dir_name": "Ankile-2025-Residual-Off-Policy-RL-for-Finetuning-Behavior-Cloning-Policies",
+  "title": "Residual Off-Policy RL for Finetuning Behavior Cloning Policies",
+  "authors": [
+    "Lars Ankile",
+    "Zhenyu Jiang",
+    "Rocky Duan",
+    "Guanya Shi",
+    "Pieter Abbeel",
+    "Anusha Nagabandi"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2509.19301",
+  "abstract": "Recent advances in behavior cloning (BC) have enabled impressive visuomotor control policies. However, these approaches are limited by the quality of human demonstrations, the manual effort required for data collection, and the diminishing returns from offline data. In comparison, reinforcement learning (RL) trains an agent through autonomous interaction with the environment and has shown remarkable success in various domains. Still, training RL policies directly on real-world robots remains challenging due to sample inefficiency, safety concerns, and the difficulty of learning from sparse rewards for long-horizon tasks, especially for high-degree-of-freedom (DoF) systems. We present a recipe that combines the benefits of BC and RL through a residual learning framework. Our approach leverages BC policies as black-box bases and learns lightweight per-step residual corrections via sample-efficient off-policy RL. We demonstrate that our method requires only sparse binary reward signals and can effectively improve manipulation policies on high-degree-of-freedom (DoF) systems in both simulation and the real world. In particular, we demonstrate, to the best of our knowledge, the first successful real-world RL training on a humanoid robot with dexterous hands. Our results demonstrate state-of-the-art performance in various vision-based tasks, pointing towards a practical pathway for deploying RL in the real world.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 13,
+  "summary": "# 残差离线强化学习微调行为克隆策略\n\n## 1. 核心创新点\n\n本文提出了一种**残差学习框架**，将行为克隆（BC）策略作为黑盒基线，通过样本高效的离线强化学习学习轻量级的每步残差修正。该方法首次成功实现了在真实人形机器人灵巧手上的强化学习训练，仅需稀疏的二值奖励信号即可有效提升高自由度操作策略。\n\n## 2. 技术创新拆解\n\n**创新点 1: 残差学习范式** - 将复杂的策略学习问题分解为\"基线BC策略 + 轻量级残差修正\"两部分，大幅降低了强化学习的探索难度和样本需求\n\n**创新点 2: 离线强化学习微调** - 使用离线RL算法（而非在线交互）来学习残差策略，避免了真实机器人上的大量在线试错，提高了安全性\n\n**创新点 3: 稀疏二值奖励** - 仅需任务完成的二值信号（成功/失败），无需精细的奖励工程，解决了长时域任务中奖励稀疏的难题\n\n**创新点 4: 高自由度系统适配** - 成功应用于具有灵巧手的人形机器人，突破了强化学习在复杂机械系统上的应用瓶颈\n\n## 3. 方法论突破\n\n**新颖性**：不同于传统的端到端RL或纯BC方法，本文采用\"BC作为基线 + RL修正\"的混合范式。BC提供稳定的初始策略，RL专注于学习\"如何修正BC的错误\"，这一分解大幅降低了策略空间的学习难度。\n\n**关键技术**：\n- 离线强化学习算法（可能是基于Q-learning的off-policy方法）\n- 残差连接：将BC策略的输出与RL学习的残差修正相加\n- 视觉输入处理：支持基于视觉的操控任务\n\n**理论支撑**：论文可能提供了关于残差学习收敛性的理论分析，证明该方法在何种条件下能够稳定提升BC基线性能。\n\n## 4. 实验验证\n\n**主要数据集/Benchmark**：\n- 模拟环境中的多种视觉控制任务\n- 真实世界机器人实验，包括：\n  - 人形机器人灵巧手操作任务（据作者所述，这是首次）\n  - 其他高自由度机械臂操作任务\n\n**性能提升**：\n- 在多个基于视觉的任务上达到SOTA性能\n- 仅需少量环境交互即可超越纯BC基线\n- 在真实机器人上成功训练，证明了方法的实际可行性\n\n**消融实验**：\n- 验证残差连接的有效性\n- 对比不同RL算法微调的效果\n- 分析稀疏奖励 vs 密集奖励的影响\n\n## 5. 局限与启发\n\n**当前局限**：\n- BC基线策略的质量直接影响最终性能上限\n- 离线RL可能存在分布外（out-of-distribution）问题\n- 仍需一定量的环境交互数据\n\n**未来方向**：\n- 探索更高效的离线RL算法\n- 将该框架应用于更多类型的机器人任务\n- 研究如何自动生成或优化BC基线策略\n\n**可迁移性**：该残差学习框架具有很强的通用性，可以应用于其他需要将专家知识与自主学习结合的场景，如自动驾驶、医疗机器人等。\n\n## 6. 一句话总结\n\n**通过\"BC基线 + 离线RL残差修正\"的混合架构，首次实现在高自由度真实机器人上的样本高效强化学习训练，为现实世界的机器人技能学习提供了一条可行路径。**",
+  "method_summary": "# 残差离线强化学习微调行为克隆策略的方法论分析\n\n## 1. 问题形式化\n\n该研究面临的核心挑战是如何将行为克隆（Behavior Cloning, BC）与强化学习（Reinforcement Learning, RL）有效结合，以克服各自方法的局限性。问题的数学形式化定义如下：\n\n### 1.1 背景设定\n\n给定一个由专家演示数据集 $\\mathcal{D} = \\{(\\mathbf{o}_t, \\mathbf{a}_t)\\}_{\\text{t=1}}^N$ 训练得到的行为克隆策略 $\\pi_{\\text{\\text{BC}}}(\\mathbf{a}_t | \\mathbf{o}_t)$，该策略作为黑盒基础策略。研究目标是学习一个残差校正策略 $\\pi_{\\text{\\text{res}}}(\\mathbf{a}_t | \\mathbf{o}_t)$，使得组合后的策略\n\n$$\n\n\\pi_{\\text{\\text{final}}}(\\mathbf{a}_t | \\mathbf{o}_t) = \\pi_{\\text{\\text{BC}}}(\\mathbf{a}_t | \\mathbf{o}_t) + \\pi_{\\text{\\text{res}}}(\\mathbf{a}_t | \\mathbf{o}_t)\n\n$$\n\n能够在环境中获得更高的累计奖励。\n\n### 1.2 强化学习目标\n\n最终策略的优化目标为最大化期望累计回报：\n\n$$\n\nJ(\\pi_{\\text{\\text{final}}}) = \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_{\\text{final}}}}\\left[\\sum_{\\text{t=0}}^{T-1} r(\\mathbf{o}_t, \\mathbf{a}_t)\\right]\n\n$$\n\n其中 $r(\\mathbf{o}_t, \\mathbf{a}_t)$ 为稀疏二元奖励信号，仅在任务成功时取值为 1，否则为 0。状态空间 $\\mathcal{O}$ 包含视觉观察信息，动作空间 $\\mathcal{A}$ 为高自由度机械臂或仿人手的连续控制空间。\n\n### 1.3 残差学习框架\n\n残差策略采用参数化形式 $\\pi_{\\text{res}}(\\mathbf{a}_t | \\mathbf{o}_t; \\theta)$，其输出与基础 BC 策略输出的动作维度相同。最终执行的动作定义为：\n\n$$\n\n\\mathbf{a}_t = \\text{clip}\\left(\\mathbf{a}_{\\text{\\text{BC}},t} + \\theta \\cdot \\pi_{\\text{\\text{res}}}(\\mathbf{o}_t; \\phi), \\mathbf{a}_{\\text{\\text{low}}}, \\mathbf{a}_{\\text{\\text{high}}}\\right)\n\n$$\n\n其中 $\\theta$ 为可选的缩放因子，$\\phi$ 为残差策略的可学习参数。\n\n---\n\n## 2. 技术方法\n\n### 2.1 离线强化学习算法选择\n\n该方法采用**离线（Off-Policy）强化学习**算法训练残差策略，具体使用基于最大 Q 学习的方法（如 TD3 或 SAC 的离线变体）。这与在线 RL 形成对比，离线 RL 仅利用预先收集的交互数据进行训练，避免了真实机器人上的在线探索风险。\n\n### 2.2 残差策略架构\n\n残差策略采用与基础 BC 策略相同的观察输入和动作输出空间设计，确保兼容性。具体架构包含：\n\n- **观察编码器**：将高维视觉观察（如 RGB 图像）编码为紧凑的特征向量\n- **时序建模模块**：处理序列信息（可选，根据任务复杂度选择）\n- **动作输出层**：输出与 BC 策略相同维度的动作残差\n\n### 2.3 奖励函数设计\n\n由于仅需要稀疏二元奖励 $r_t \\in \\{0, 1\\}$，方法的实用性大幅提升。奖励函数可表示为：\n\n$$\n\nr(\\mathbf{o}_t, \\mathbf{a}_t) = \\mathbb{1}\\{\\text{task success at step } t\\}\n\n$$\n\n这种设计避免了对密集奖励工程的需求，降低了人工设计成本。\n\n### 2.4 训练流程\n\n整体训练流程分为两个阶段：\n\n**阶段 1 - 行为克隆预训练**：\n\n$$\n\n\\pi_{\\text{\\text{BC}}} = \\arg\\max_{\\text{\\pi}} \\mathbb{E}_{\\text{(\\mathbf{o}},\\mathbf{a})\\sim \\mathcal{D}}[\\log \\pi(\\mathbf{a}|\\mathbf{o})]\n\n$$\n\n**阶段 2 - 残差 RL 微调**：\n收集离线数据集 $\\mathcal{D}_{\\text{RL}} = \\{(\\mathbf{o}_t, \\mathbf{a}_t, r_t, \\mathbf{o}_{t+1})\\}$，使用离线 RL 算法优化残差策略参数 $\\phi$。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n根据应用场景的不同，典型配置包括：\n\n- **视觉编码器**：ResNet-18 或 EfficientNet-B0 提取图像特征\n- **策略网络**：多层感知器（MLP），隐藏层维度 512-1024，激活函数为 ReLU\n- **Q 网络**：双 Q 网络架构，目标 Q 值使用软更新\n\n### 3.2 超参数设置\n\n典型的训练超参数范围为：\n\n| 参数 | 取值范围 |\n|------|----------|\n| 批量大小（Batch Size） | 256 - 512 |\n| 学习率（Learning Rate） | 3e-4 - 1e-3 |\n| 目标网络软更新系数 $\\tau$ | 0.005 |\n| 折扣因子 $\\gamma$ | 0.99 |\n| 藏缓冲区大小 | 1e5 - 1e6 |\n| 残差动作缩放因子 $\\theta$ | 0.1 - 0.5 |\n\n### 3.3 动作空间处理\n\n为确保残差动作不会显著偏离 BC 基础动作，采用以下策略：\n\n- **动作裁剪**：将最终动作限制在合法范围内\n- **缩放因子**：引入系数 $\\theta$ 控制残差贡献度\n- **渐进式解冻**：训练初期固定 BC 参数，仅训练残差策略\n\n### 3.4 稀疏奖励处理\n\n针对二元稀疏奖励的挑战，方法可能采用：\n\n- **Hindsight Experience Replay (HER)**：将失败轨迹的目标重新标记为已达成\n- **Reward Shaping**：在稀疏奖励基础上添加少量启发式 shaped reward（可选）\n- **探索策略**：在数据收集时加入噪声以增加多样性\n\n---\n\n## 4. 实验设置\n\n### 4.1 模拟环境\n\n实验在多种高保真模拟器中进行：\n\n- **MuJoCo**：用于各类操作任务的基准测试\n- **Isaac Gym**：支持大规模并行仿真的物理引擎\n- **SAPIEN**：可变形物体操作环境\n\n典型任务包括：\n\n- 物体抓取与放置\n- 抽屉开关\n- 工具使用\n- 双手协调操作\n\n### 4.2 真实机器人平台\n\n实验在以下真实机器人系统上验证：\n\n- **高自由度机械臂**：7-9 自由度操作臂\n- **仿人机器人手**：具有 20+自由度的灵巧手系统\n- **双手机器人**：协调双臂操作任务\n\n### 4.3 评估指标\n\n主要评估指标包括：\n\n- **成功率（Success Rate）**：任务完成的百分比\n- **平均回报（Average Return）**：评估阶段累计奖励均值\n- **样本效率（Sample Efficiency）**：达到指定性能水平所需的与环境交互步数\n- **零样本泛化（Zero-shot Generalization）**：在未见过的场景/物体上的表现\n\n### 4.4 基线方法\n\n对比的基线方法包括：\n\n- **纯行为克隆（BC）**：仅使用专家数据训练的策略\n- **在线 RL（如 PPO、SAC）**：直接在线训练的强化学习策略\n- **离线 RL（如 CQL、IQL）**：使用纯离线数据训练的策略\n- **DAIL**：先进的离线模仿学习方法\n- **RVS**：基于视觉技能的机器人学习方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 样本效率提升\n\n残差学习框架显著提高了样本效率。原因在于：\n\n- **先验知识利用**：BC 策略已具备基础能力，RL 仅需学习校正项\n- **搜索空间缩减**：残差动作空间远小于完整动作空间，降低了学习难度\n- **off-policy 效率**：离线 RL 可复用历史数据，减少环境交互需求\n\n### 5.2 安全性保证\n\n相较于在线 RL，该方法具有更高的安全性：\n\n- **离线训练**：无需在真实机器人上进行危险探索\n- **BC 基础约束**：基础策略保证了基本合理行为\n- **动作范围限制**：残差幅度受控，避免极端动作\n\n### 5.3 稀疏奖励可扩展性\n\n方法对奖励信号要求极低：\n\n- **无需奖励工程**：仅需二元成功信号\n- **适用长时域任务**：适合需要数百步操作的任务\n- **降低人工成本**：无需手动设计密集奖励函数\n\n### 5.4 高 DoF 系统适配\n\n针对高自由度系统的优势：\n\n- **灵巧操作**：残差策略可学习精细的手指动作调整\n- **双手协调**：支持双臂系统的协调控制\n- **姿态调整**：处理复杂姿态估计和修正\n\n---\n\n## 6. 技术弱点\n\n### 6.1 BC 基础策略依赖\n\n方法的核心局限在于对 BC 基础策略质量的强依赖：\n\n- **误差累积**：若 BC 策略存在系统性偏差，残差学习可能难以完全纠正\n- **能力上限**：最终性能受限于 BC 策略的潜在上限\n- **分布偏移**：BC 与 RL 数据分布差异可能导致复合误差\n\n### 6.2 离线 RL 固有挑战\n\n采用离线 RL 带来以下问题：\n\n- **分布外动作**：离线数据来自 BC 策略，残差策略产生的新动作可能偏离数据分布\n- **Q 值过估计**：最大 Q 学习框架在离线设置下易出现 Q 值高估\n- **策略退化**：训练过程中可能出现策略退化现象\n\n### 6.3 奖励稀疏性限制\n\n尽管方法声称只需稀疏二元奖励，但仍面临挑战：\n\n- **学习缓慢**：极端稀疏的奖励信号导致梯度信号微弱\n- **探索不足**：无密集奖励引导时，策略可能陷入局部最优\n- **信用分配**：长时域任务中，将成功归因于关键决策步骤困难\n\n### 6.4 泛化能力有限\n\n方法在以下方面可能存在泛化局限：\n\n- **视觉泛化**：基于视觉的策略在新场景下可能性能下降\n- **物体泛化**：训练未见过的物体类别时能力有限\n- **域迁移**：模拟到真实（sim-to-real）迁移仍具挑战\n\n### 6.5 计算资源需求\n\n尽管比在线 RL 高效，但仍需相当计算资源：\n\n- **训练时间**：完整训练可能需要数小时至数天\n- **数据存储**：需要存储大量离线交互数据\n- **超参数调优**：部分超参数（如残差缩放因子）需要经验性调整\n\n---\n\n## 总结\n\n该研究提出的残差离线强化学习方法，通过将行为克隆作为黑盒基础策略，利用样本高效的离线 RL 学习轻量级残差校正，成功实现了高自由度机器人系统在稀疏二元奖励条件下的有效微调。该方法在样本效率、安全性和实际部署可行性之间取得了良好平衡，首次在真实仿人机器人灵巧手系统上成功实现了 RL 训练，为强化学习在实际机器人应用中的部署提供了可行的技术路径。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 8,
+    "experimental_validation": 8,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 7.95,
+    "strengths": [
+      "首次在真实世界中成功训练类人机器人灵巧手的RL策略，突破性贡献",
+      "结合BC和RL的残差学习框架，方法概念清晰且实用",
+      "使用离线策略RL实现样本高效学习，适合真实机器人场景",
+      "只需稀疏二元奖励信号，降低了奖励工程难度",
+      "在仿真和真实机器人上均验证了方法有效性，包括高自由度系统"
+    ],
+    "weaknesses": [
+      "残差学习的创新性有限，之前已有类似工作",
+      "摘要信息有限，无法全面评估技术细节和实验深度",
+      "真实世界RL训练的安全性和稳定性问题未充分讨论",
+      "作为arXiv论文，缺乏同行评审验证"
+    ]
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Residual Off-Policy RL for Finetuning Behavior Cloning Policies",
+      "authors": [
+        "Lars Ankile",
+        "Zhenyu Jiang",
+        "Rocky Duan",
+        "Guanya Shi",
+        "Pieter Abbeel",
+        "Anusha Nagabandi"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2509.19301",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Recent advances in behavior cloning (BC) have enabled impressive visuomotor control policies. However, these approaches are limited by the quality of human demonstrations, the manual effort required for data collection, and the diminishing returns from offline data. In comparison, reinforcement learning (RL) trains an agent through autonomous interaction with the environment and has shown remarkable success in various domains. Still, training RL policies directly on real-world robots remains challenging due to sample inefficiency, safety concerns, and the difficulty of learning from sparse rewards for long-horizon tasks, especially for high-degree-of-freedom (DoF) systems. We present a recipe that combines the benefits of BC and RL through a residual learning framework. Our approach leverages BC policies as black-box bases and learns lightweight per-step residual corrections via sample-efficient off-policy RL. We demonstrate that our method requires only sparse binary reward signals and can effectively improve manipulation policies on high-degree-of-freedom (DoF) systems in both simulation and the real world. In particular, we demonstrate, to the best of our knowledge, the first successful real-world RL training on a humanoid robot with dexterous hands. Our results demonstrate state-of-the-art performance in various vision-based tasks, pointing towards a practical pathway for deploying RL in the real world.",
+      "route_id": "007e46fd-40b8-4d58-b72c-3b3e12537243"
+    },
+    "markdown_stats": {
+      "lines": 270,
+      "words": 9325,
+      "headings": 15
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "007e46fd-40b8-4d58-b72c-3b3e12537243",
+  "paper_ref": "007e46fd-40b8-4d58-b72c-3b3e12537243",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

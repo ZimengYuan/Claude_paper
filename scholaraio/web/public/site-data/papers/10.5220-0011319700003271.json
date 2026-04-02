@@ -1,0 +1,83 @@
+{
+  "dir_name": "Chenhui-2025-HAFO-Humanoid-Force-Adaptive-Control-for-Intense-",
+  "title": "HAFO: Humanoid Force-Adaptive Control for Intense External Force Interaction Environments",
+  "authors": [
+    "Dong, Chenhui",
+    "Xu, Haozhe",
+    "Feng, Wenhao",
+    "Wang, Zhipeng",
+    "Zhou, Yanmin",
+    "Zhao, Yifei",
+    "He, Bin"
+  ],
+  "year": 2025,
+  "journal": "arXiv (Cornell University)",
+  "doi": "",
+  "abstract": "Reinforcement learning controllers have made impressive progress in humanoid locomotion and light load manipulation. However, achieving robust and precise motion with strong force interaction remains a significant challenge. Based on the above limitations, this paper proposes HAFO, a dual-agent reinforcement learning control framework that simultaneously optimizes both a robust locomotion strategy and a precise upper-body manipulation strategy through coupled training under external force interaction environments. Simultaneously, we explicitly model the external pulling disturbances through a spring-damper system and achieve fine-grained force control by manipulating the virtual spring. During this process, the reinforcement-learning policy spontaneously generates disturbance-rejection response by exploiting environmental feedback. Moreover, HAFO employs an asymmetric Actor-Critic framework in which the Critic-network access to privileged spring-damping forces guides the actor-network to learn a generalizable, robust policy for resisting external disturbances. The experimental results demonstrate that HAFO achieves stable control of humanoid robot under various strong force interactions, showing remarkable performance in load tasks and ensuring stable robot operation under rope tension disturbances. Project website: hafo-robot.github.io.",
+  "paper_type": "article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "HAFO: Humanoid Force-Adaptive Control for Intense External Force Interaction Environments",
+      "authors": [
+        "Dong, Chenhui",
+        "Xu, Haozhe",
+        "Feng, Wenhao",
+        "Wang, Zhipeng",
+        "Zhou, Yanmin",
+        "Zhao, Yifei",
+        "He, Bin"
+      ],
+      "year": 2025,
+      "journal": "arXiv (Cornell University)",
+      "paper_type": "article",
+      "abstract": "Reinforcement learning controllers have made impressive progress in humanoid locomotion and light load manipulation. However, achieving robust and precise motion with strong force interaction remains a significant challenge. Based on the above limitations, this paper proposes HAFO, a dual-agent reinforcement learning control framework that simultaneously optimizes both a robust locomotion strategy and a precise upper-body manipulation strategy through coupled training under external force interaction environments. Simultaneously, we explicitly model the external pulling disturbances through a spring-damper system and achieve fine-grained force control by manipulating the virtual spring. During this process, the reinforcement-learning policy spontaneously generates disturbance-rejection response by exploiting environmental feedback. Moreover, HAFO employs an asymmetric Actor-Critic framework in which the Critic-network access to privileged spring-damping forces guides the actor-network to learn a generalizable, robust policy for resisting external disturbances. The experimental results demonstrate that HAFO achieves stable control of humanoid robot under various strong force interactions, showing remarkable performance in load tasks and ensuring stable robot operation under rope tension disturbances. Project website: hafo-robot.github.io."
+    },
+    "markdown_stats": {
+      "lines": 227,
+      "words": 6652,
+      "headings": 20
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "3abb03e4-2598-4865-8f5a-a850fd5a5470_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "10.5220-0011319700003271",
+  "paper_ref": "10.5220-0011319700003271",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

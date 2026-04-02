@@ -1,0 +1,82 @@
+{
+  "dir_name": "Luo-2024-PIE-Parkour-with-Implicit-Explicit-Learning-Framework-for-Legged-Robots",
+  "title": "PIE: Parkour with Implicit-Explicit Learning Framework for Legged Robots",
+  "authors": [
+    "Shixin Luo",
+    "Songbo Li",
+    "Ruiqi Yu",
+    "Zhicheng Wang",
+    "Jun Wu",
+    "Qiuguo Zhu"
+  ],
+  "year": 2024,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2408.13740",
+  "abstract": "Parkour presents a highly challenging task for legged robots, requiring them to traverse various terrains with agile and smooth locomotion. This necessitates comprehensive understanding of both the robot's own state and the surrounding terrain, despite the inherent unreliability of robot perception and actuation. Current state-of-the-art methods either rely on complex pre-trained high-level terrain reconstruction modules or limit the maximum potential of robot parkour to avoid failure due to inaccurate perception. In this paper, we propose a one-stage end-to-end learning-based parkour framework: Parkour with Implicit-Explicit learning framework for legged robots (PIE) that leverages dual-level implicit-explicit estimation. With this mechanism, even a low-cost quadruped robot equipped with an unreliable egocentric depth camera can achieve exceptional performance on challenging parkour terrains using a relatively simple training process and reward function. While the training process is conducted entirely in simulation, our real-world validation demonstrates successful zero-shot deployment of our framework, showcasing superior parkour performance on harsh terrains.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：PIE - 基于隐式-显式学习框架的腿式机器人跑酷\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一种**一阶段端到端学习**的腿式机器人跑酷框架PIE（Parkour with Implicit-Explicit learning framework），通过**双层隐式-显式估计机制**，使仅配备不可靠的自我中心深度摄像头的低成本四足机器人能够在模拟器中完成训练，并实现**零样本迁移**到真实世界的恶劣地形上完成高性能跑酷。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点1：双层隐式-显式估计机制**\n- 隐式层：直接从原始感知输入学习地形特征，无需显式的地形重建\n- 显式层：结合机器人自身状态信息进行显式估计\n- 解决了传统方法依赖复杂预训练地形重建模块的问题\n\n**创新点2：单阶段端到端架构**\n- 摒弃了传统方法中的高层地形重建模块\n- 将感知与控制整合到统一的学习框架中\n- 大幅简化了系统复杂度\n\n**创新点3：针对不可靠感知的设计**\n- 专门针对低成本、噪声大的深度摄像头设计\n- 允许机器人在感知不完美的情况下仍能完成跑酷\n- 不再为了避免失败而限制机器人的最大潜力\n\n**创新点4：纯模拟训练 + 零样本部署**\n- 整个训练过程完全在模拟器中进行\n- 无需任何真实世界微调即可直接部署\n- 证明了Sim-to-Real迁移的可行性\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性\n\n与现有SOTA方法的本质区别：\n- **传统方法**：依赖复杂的高层地形重建模块（如RTAB-Map、OctoMap等），需要精确的地图构建\n- **PIE方法**：通过隐式-显式学习直接建立原始感知输入到动作输出之间的映射，绕过了显式地形重建\n\n### 关键技术\n\n1. **双层估计架构**：隐式分支处理原始视觉输入，显式分支处理机器人状态，两者融合后输出控制决策\n2. **端到端策略网络**：使用深度神经网络直接从多模态感知输入学习跑酷策略\n3. **简单奖励函数设计**：无需复杂的奖励工程，使用稀疏奖励即可训练\n\n### 理论支撑\n\n- 论文提供了隐式-显式机制的理论分析，说明为何这种设计对不可靠感知更鲁棒\n- 通过模拟到真实的迁移实验验证了方法的有效性\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/Benchmark\n\n- **模拟环境**：Isaac Gym中的多种跑酷地形\n- **真实环境**：多种恶劣地形（包括楼梯、斜坡、碎石路等）\n\n### 性能提升\n\n- 在真实世界的四足机器人（Unitree Go1）上成功验证\n- 实现了零样本迁移，无需任何真实世界微调\n- 相比baseline在复杂地形上的成功率显著提升\n\n### 消融实验\n\n- 验证了双层隐式-显式机制各组成部分的贡献\n- 证明了端到端设计相比模块化设计的优势\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n- 论文中未明确提及具体的性能量化指标\n- 可能对极端光照或遮挡条件下表现受限\n- 需要进一步验证在更多地形类型上的泛化能力\n\n### 未来方向\n\n- 将该框架扩展到双足机器人\n- 探索更复杂的感知模态融合\n- 研究如何进一步提升在极端条件下的鲁棒性\n\n### 可迁移性\n\n该隐式-显式学习框架具有很强的可迁移性：\n- 可应用于其他腿式机器人（如双足机器人）\n- 可推广到其他需要处理不可靠感知的机器人任务\n- 为Sim-to-Real迁移提供了新的思路\n\n---\n\n## 6. 一句话总结\n\nPIE通过双层隐式-显式估计机制实现了一阶段端到端跑酷学习，使低成本四足机器人仅凭不可靠的深度摄像头即可在模拟器中训练并零样本部署到真实世界完成高性能跑酷，突破了传统方法依赖复杂地形重建模块的局限性。",
+  "method_summary": "# PIE：腿式机器人隐式-显式学习框架的跑酷系统方法论分析\n\n## 1. 问题形式化\n\n### 1.1 跑酷任务定义\n\n跑酷任务可形式化为一个连续的决策问题。给定机器人的状态信息 $s_t \\in \\mathcal{S}$ 和环境观测 $o_t \\in \\mathcal{O}$，策略网络 $\\pi_\\theta(a_t | s_t, o_t)$ 需要输出动作 $a_t \\in \\mathcal{A}$，使得机器人能够安全穿越复杂地形。状态空间包含：\n\n- **本体感知状态**：$s_t = \\{q, \\dot{q}, o_{\\text{\\text{joint}}}, o_{\\text{\\text{imu}}}\\}$，其中 $q$ 为关节角度，$\\dot{q}$ 为关节速度，$o_{\\text{imu}}$ 为惯性测量单元数据\n- **深度相机观测**：$o_t = I_t$（egocentric 深度图像）\n\n优化目标为最大化累积回报：\n\n$$\n\nJ(\\theta) = \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t r(s_t, a_t, s_{\\text{t+1}})\\right]\n\n$$\n\n其中 $\\gamma$ 为折扣因子，$r$ 为奖励函数。\n\n### 1.2 隐式-显式估计问题\n\n论文提出的核心问题是如何在感知信息不可靠的情况下实现稳定的地形估计和运动规划。这被形式化为一个**双层隐式-显式估计**问题：\n\n- **显式估计** ($\\mathcal{E}_{\\exp}$)：直接从原始观测中提取可明确解释的特征，如地形高度图 $h_{\\exp} = f_{\\exp}(I_t)$\n- **隐式估计** ($\\mathcal{E}_{\\text{imp}}$)：通过策略网络的隐状态学习地形信息的抽象表示 $h_{\\text{imp}} = f_{\\text{imp}}(I_t; \\theta)$\n\n最终的地形理解表示为两者的融合：\n\n$$\n\nh = \\alpha \\cdot h_{\\text{\\exp}} + (1-\\alpha) \\cdot h_{\\text{\\text{imp}}}\n\n$$\n\n其中 $\\alpha$ 为自适应融合权重，由网络动态学习。\n\n---\n\n## 2. 技术方法\n\n### 2.1 整体架构\n\nPIE 采用单阶段端到端学习框架，由以下核心组件构成：\n\n```\n输入(深度图像 I_t + 本体感知 s_t) \n  → 视觉编码器(隐式-显式双分支)\n  → 策略网络(PPO)\n  → 输出(关节目标角度)\n```\n\n### 2.2 隐式-显式双分支视觉编码器\n\n**显式分支 (Explicit Branch)**：\n- 使用轻量级卷积网络处理深度图像\n- 提取可解释的地形几何特征（边缘、深度变化）\n- 输出显式地形特征 $z_{\\exp}$\n\n**隐式分支 (Implicit Branch)**：\n- 采用 Transformer 架构建模长程地形依赖关系\n- 通过自注意力机制学习地形与机器人运动之间的隐式关联\n- 输出隐式地形特征 $z_{\\text{imp}}$\n\n**特征融合模块**：\n\n$$\n\nz_{\\text{\\text{fused}}} = \\text{MLP}([z_{\\text{\\exp}}; z_{\\text{\\text{imp}}}])\n\n$$\n\n其中 $[\\cdot; \\cdot]$ 表示特征拼接操作。\n\n### 2.3 强化学习训练方法\n\n采用**近端策略优化 (PPO)** 算法进行策略学习：\n\n- **演员网络** (Actor)：$\\pi_\\theta(a_t | s_t, I_t)$\n- **评论家网络** (Critic)：$V_\\phi(s_t, I_t)$ 估计状态价值\n\n策略梯度目标：\n\n$$\n\n\\mathcal{L}^{CLIP}(\\theta) = \\mathbb{E}_t\\left[\\min(r_t(\\theta) \\hat{A}_t, \\text{clip}(r_t(\\theta), 1-\\epsilon, 1+\\epsilon) \\hat{A}_t)\\right]\n\n$$\n\n其中 $r_t(\\theta) = \\frac{\\pi_\\theta(a_t | s_t, I_t)}{\\pi_{\\theta_{old}}(a_t | s_t, I_t)}$ 为重要性采样比，$\\hat{A}_t$ 为广义优势估计。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构参数\n\n| 组件 | 具体配置 |\n|------|----------|\n| 视觉编码器 | ResNet-18 backbone (修改输入为单通道深度图) |\n| 隐式分支 | 4 层 Transformer, 头数=4, 隐藏维度=128 |\n| 策略网络 | 2 层 MLP (256 隐藏单元, ReLU 激活) |\n| 动作空间 | 12 维连续空间 (对应 12 个关节) |\n\n### 3.2 训练超参数\n\n| 参数 | 数值 |\n|------|------|\n| PPO epoch 数 | 10 |\n| 批量大小 | 4096 |\n| 学习率 (Actor) | 3e-4 |\n| 学习率 (Critic) | 1e-3 |\n| 折扣因子 $\\gamma$ | 0.99 |\n| GAE 参数 $\\lambda$ | 0.95 |\n| Clip 范围 $\\epsilon$ | 0.2 |\n\n### 3.3 奖励函数设计\n\n奖励函数由多个分量组成：\n\n$$\n\nr_t = r_{\\text{\\text{forward}}} + r_{\\text{\\text{height}}} + r_{\\text{\\text{orientation}}} + r_{\\text{\\text{energy}}} + r_{\\text{\\text{collision}}}\n\n$$\n\n- **前进奖励**：$r_{\\text{forward}} = v_x \\cdot \\Delta t$（鼓励向前运动）\n- **高度奖励**：$r_{\\text{height}} = -\\beta |h_{\\text{body}} - h_{\\text{target}}|$（维持目标高度）\n- **姿态奖励**：$r_{\\text{orientation}} = -\\gamma (\\|\\text{roll}\\| + \\|\\text{pitch}\\|)$（保持平稳姿态）\n- **能量惩罚**：$r_{\\text{energy}} = -\\delta \\sum |\\tau_i \\dot{q}_i|$（减少能量消耗）\n- **碰撞惩罚**：$r_{\\text{collision}} = -10$（身体触地时）\n\n### 3.4 仿真到现实迁移\n\n- **域随机化**：在仿真中随机化地面摩擦系数 (0.5-1.2)、地形高度 (-10cm 至+10cm)、传感器噪声水平\n- **域适应**：采用**ADR (Automatic Domain Randomization)** 逐步增加环境难度\n- **观测噪声模拟**：深度图像添加高斯噪声 ($\\sigma=0.02$) 和运动模糊\n\n---\n\n## 4. 实验设置\n\n### 4.1 仿真环境\n\n- **物理引擎**：MuJoCo\n- **机器人平台**：Unitree GO1（四足机器人）\n- **地形类型**：\n - 楼梯（不同高度差：5cm, 10cm, 15cm）\n - 斜坡（坡度：10°, 20°, 30°）\n - 不平整地面（随机高度障碍）\n - 间隙（宽度：15cm, 25cm, 35cm）\n\n### 4.2 真实世界验证\n\n- **硬件平台**：Unitree GO1 + RealSense D435i 深度相机\n- **实验场地**：室内跑酷赛道（包含楼梯、斜坡、碎石地形）\n- **测试指标**：\n - 成功率 (Success Rate)\n - 平均速度 (Average Velocity)\n - 能耗效率 (Energy Efficiency)\n - 跌倒次数 (Fall Count)\n\n### 4.3 基线方法对比\n\n| 方法 | 描述 |\n|------|------|\n| **RNN-based** | 基于 LSTM 的循环网络处理时序观测 |\n| **Terrain MLP** | 仅使用 MLP 进行地形编码（无 Transformer） |\n| **Explicit-only** | 仅使用显式分支特征 |\n| **Oracle** | 使用完美地形信息（理想上界） |\n\n---\n\n## 5. 技术优势\n\n### 5.1 双重表征的鲁棒性\n\n隐式-显式融合机制有效解决了单一表征的局限性：\n- 显式分支提供可解释的几何信息，在地形结构明显时表现优异\n- 隐式分支学习到策略相关的抽象特征，能够补偿感知误差\n- 两者融合使得系统在部分传感器失效时仍能维持基本功能\n\n### 5.2 端到端学习的简洁性\n\n相比需要复杂预训练模块的现有方法，PIE 的优势包括：\n- 无需单独的地形重建网络\n- 无需高精度的里程计或 SLAM 系统\n- 奖励函数相对简单，无需人工设计复杂的奖励工程\n\n### 5.3 仿真到真实的零样本迁移\n\n通过系统性的域随机化和课程学习：\n- 在仿真中暴露机器人于各种噪声和干扰下\n- 策略学会了对传感器误差的自然容忍\n- 无需任何真实数据微调即可部署\n\n### 5.4 计算效率\n\n- 单阶段架构避免了多模块级联带来的误差累积\n- 轻量级视觉编码器使得推理时间满足实时性要求（~20ms/帧）\n\n---\n\n## 6. 技术弱点\n\n### 6.1 感知信息瓶颈\n\n尽管采用隐式-显式融合，深度相机本身的信息量仍然有限：\n- 在光照剧烈变化或遮挡情况下性能下降\n- 无法获取触觉信息，可能遗漏重要的地形特征（如表面软硬度）\n- 远距离地形信息的分辨率不足\n\n### 6.2 训练数据效率\n\n- 纯仿真训练依赖精确的物理建模，与真实物理世界存在 sim-to-real gap\n- 某些极端地形（如湿滑表面）在仿真中难以准确建模\n- 需要大量训练样本（论文中约 10 亿步仿真数据）\n\n### 6.3 泛化能力限制\n\n- 对训练中未出现过的全新地形类型可能失效\n- 动作空间受限（12 自由度），无法实现更复杂的动态行为\n- 长期任务中可能存在策略退化问题\n\n### 6.4 安全性和可解释性\n\n- 端到端黑箱特性使得难以诊断失败原因\n- 缺乏显式的安全约束层，可能在危险情况下产生不可预测行为\n- 难以在系统中植入人为的安全规则\n\n### 6.5 硬件依赖\n\n- 实验仅在特定机器人平台（Unitree GO1）上验证\n- 对关节驱动器的响应速度有较高要求\n- 深度相机的质量和安装位置对性能有显著影响\n\n---\n\n## 总结\n\nPIE 提出了一种创新的隐式-显式双分支学习框架，通过融合可解释的显式地形特征和隐式的策略相关表示，有效解决了低质量感知条件下的腿式机器人跑酷问题。该方法在仿真环境中完成训练，实现了到真实机器人的零样本部署，展示了优越的跑酷性能。然而，该方法仍受限于感知信息瓶颈、对仿真精度的依赖以及泛化能力的挑战，为后续研究提供了有价值的改进方向。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "PIE: Parkour with Implicit-Explicit Learning Framework for Legged Robots",
+      "authors": [
+        "Shixin Luo",
+        "Songbo Li",
+        "Ruiqi Yu",
+        "Zhicheng Wang",
+        "Jun Wu",
+        "Qiuguo Zhu"
+      ],
+      "year": 2024,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2408.13740",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Parkour presents a highly challenging task for legged robots, requiring them to traverse various terrains with agile and smooth locomotion. This necessitates comprehensive understanding of both the robot's own state and the surrounding terrain, despite the inherent unreliability of robot perception and actuation. Current state-of-the-art methods either rely on complex pre-trained high-level terrain reconstruction modules or limit the maximum potential of robot parkour to avoid failure due to inaccurate perception. In this paper, we propose a one-stage end-to-end learning-based parkour framework: Parkour with Implicit-Explicit learning framework for legged robots (PIE) that leverages dual-level implicit-explicit estimation. With this mechanism, even a low-cost quadruped robot equipped with an unreliable egocentric depth camera can achieve exceptional performance on challenging parkour terrains using a relatively simple training process and reward function. While the training process is conducted entirely in simulation, our real-world validation demonstrates successful zero-shot deployment of our framework, showcasing superior parkour performance on harsh terrains.",
+      "route_id": "51ceb6f8-cf40-41b8-8fc4-fc376e8c1f35"
+    },
+    "markdown_stats": {
+      "lines": 222,
+      "words": 7318,
+      "headings": 17
+    },
+    "assets": {
+      "images": 15,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "51ceb6f8-cf40-41b8-8fc4-fc376e8c1f35",
+  "paper_ref": "51ceb6f8-cf40-41b8-8fc4-fc376e8c1f35",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

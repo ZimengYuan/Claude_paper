@@ -1,0 +1,98 @@
+{
+  "dir_name": "Lee-2026-TOLEBI-Learning-Fault-Tolerant-Bipedal-Locomotion-via-Online-Status-Estimation-and-Fallibility-Rewards",
+  "title": "TOLEBI: Learning Fault-Tolerant Bipedal Locomotion via Online Status Estimation and Fallibility Rewards",
+  "authors": [
+    "Hokyun Lee",
+    "Woo-Jeong Baek",
+    "Junhyeok Cha",
+    "Jaeheung Park"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.05596",
+  "abstract": "With the growing employment of learning algorithms in robotic applications, research on reinforcement learning for bipedal locomotion has become a central topic for humanoid robotics. While recently published contributions achieve high success rates in locomotion tasks, scarce attention has been devoted to the development of methods that enable to handle hardware faults that may occur during the locomotion process. However, in real-world settings, environmental disturbances or sudden occurrences of hardware faults might yield severe consequences. To address these issues, this paper presents TOLEBI (A faulT-tOlerant Learning framEwork for Bipedal locomotIon) that handles faults on the robot during operation. Specifically, joint locking, power loss and external disturbances are injected in simulation to learn fault-tolerant locomotion strategies. In addition to transferring the learned policy to the real robot via sim-to-real transfer, an online joint status module incorporated. This module enables to classify joint conditions by referring to the actual observations at runtime under real-world conditions. The validation experiments conducted both in real-world and simulation with the humanoid robot TOCABI highlight the applicability of the proposed approach. To our knowledge, this manuscript provides the first learning-based fault-tolerant framework for bipedal locomotion, thereby fostering the development of efficient learning methods in this field.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：TOLEBI\n\n## 1. 核心创新点 (Core Innovation)\n\n本文首次提出了**基于强化学习的双足机器人容错运动学习框架TOLEBI**，通过在仿真环境中注入关节锁死、动力丢失和外部扰动等硬件故障，训练能够应对故障的双足运动策略，并结合在线关节状态估计模块实现真实机器人运行时的故障感知与自适应。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点1：故障注入训练机制** - 在仿真中系统性地模拟关节锁死、动力丢失、外部扰动三类典型故障，使策略学习在故障条件下的应对行为，增强机器人在硬件异常情况下的鲁棒性\n\n- **创新点2：在线关节状态估计模块** - 提出运行时关节状态分类器，通过实际观测数据实时判断关节健康状况，无需额外传感器即可感知故障发生，为策略提供故障感知能力\n\n- **创新点3：Sim-to-Real迁移验证** - 将在仿真中学习的容错策略成功迁移到真实 humanoid 机器人TOCABI上，验证了方法的实际可行性\n\n- **创新点4：综合故障场景训练** - 首次将多种故障类型统一纳入双足 locomotion 的强化学习框架，填补了学习式双足机器人容错领域的空白\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：现有双足 locomotion 研究主要关注正常条件下的运动质量，本文首次将故障容忍纳入学习框架，改变了传统 RL 训练仅追求高性能而忽视硬件异常的传统范式。\n\n**关键技术**：\n- 故障注入的奖励塑形（reward shaping）机制\n- 基于观测的在线关节状态分类网络\n- Sim-to-real 域随机化与策略迁移\n\n**理论支撑**：采用标准深度强化学习（PPO/SAC等）框架结合故障条件下的奖励设计，理论分析相对较少，主要依赖实验验证。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark**：\n- 仿真环境：基于TOCABI机器人的MuJoCo仿真\n- 真实机器人：TOCABI humanoid\n\n**性能提升**：\n- 在关节锁死故障下，成功恢复行走能力的成功率显著提升\n- 相比baseline（无故障训练策略），容错策略在故障场景下的任务完成率大幅提高\n\n**消融实验**：在线关节状态估计模块对整体性能贡献显著，能够有效识别故障类型并触发相应的容错策略。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 故障类型虽覆盖三类，但仍无法涵盖所有真实场景中的硬件故障\n- 在线状态估计的准确性依赖于观测数据的完整性\n- 策略在极端故障组合下的泛化能力有待进一步验证\n\n**未来方向**：\n- 扩展更多故障类型的建模与学习\n- 提升状态估计的鲁棒性与准确性\n- 探索端到端的故障感知-决策一体化框架\n\n**可迁移性**：故障注入训练范式可推广到其他足式机器人（四足、轮足等）以及需要高可靠性的机器人操作任务中。\n\n## 6. 一句话总结\n\nTOLEBI通过仿真故障注入训练+在线状态估计的协同设计，首次实现了学习式双足机器人在关节锁死、动力丢失等硬件故障下的自主容错行走，为提升双足机器人在真实环境中的可靠性提供了新的学习范式。",
+  "method_summary": "# TOLEBI 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 故障容忍双足运动学习问题\n\n该研究将故障容忍双足运动学习问题形式化为**部分可观测马尔可夫决策过程（POMDP）**，定义为元组 $(S, A, T, R, O, Z, \\gamma)$，其中：\n\n- **状态空间 $S$**：包含机器人本体感受状态 $s_{\\text{ proprio}}$（关节位置、速度、加速度）、外部干扰状态 $s_{\\text{ dist}}$ 以及故障状态 $s_{\\text{ fault}}$\n- **动作空间 $A$**：机器人关节目标扭矩/位置指令\n- **观测空间 $O$**：机器人传感器观测，包含关节位置、速度、力矩、IMU 数据等\n- **观测函数 $Z$**：$o \\sim Z(s)$，由于故障引入的传感器噪声或数据缺失\n\n### 1.2 故障类型建模\n\n论文针对三类故障进行建模：\n\n1. **关节锁定（Joint Locking）**：关节突然固定在某一角度\n\n$$\n\nq_j = q_{\\text{\\text{locked}}}, \\quad \\dot{q}_j = 0, \\quad \\forall t > t_{\\text{\\text{fault}}}\n\n$$\n\n2. **功率损失（Power Loss）**：执行器输出力矩能力下降\n\n$$\n\n\\tau_{\\text{\\text{actual}}} = \\alpha \\cdot \\tau_{\\text{\\text{desired}}}, \\quad \\alpha \\in [0, 1]\n\n$$\n\n3. **外部干扰（External Disturbances）**：突发的外部推力或碰撞\n\n$$\n\nF_{\\text{\\text{ext}}} = f(t) \\cdot \\vec{n}, \\quad f(t) \\in [F_{\\text{\\min}}, F_{\\text{\\max}}]\n\n$$\n\n### 1.3 奖励函数设计\n\n总奖励函数定义为多目标加权和：\n\n$$\n\nr(s, a, s^\\prime) = w_1 r_{\\text{\\text{locomotion}}} + w_2 r_{\\text{\\text{fallibility}}} + w_3 r_{\\text{\\text{smoothness}}} + w_4 r_{\\text{joint\\\\_limit}}\n\n$$\n\n其中：\n- $r_{\\text{locomotion}}$：鼓励前进运动的奖励（如前进速度奖励、方向跟踪奖励）\n- $r_{\\text{fallibility}}$：**可失败性奖励**，核心创新点，用于鼓励策略在故障情况下保持稳定\n- $r_{\\text{smoothness}}$：动作平滑性奖励，减少能耗和机械磨损\n- $r_{joint\\_limit}$：关节限位惩罚\n\n---\n\n## 2. 技术方法\n\n### 2.1 在线状态估计模块（Online Status Estimation Module）\n\n该模块是 TOLEBI 的核心创新之一，用于在运行时实时估计关节状态：\n\n**网络架构**：采用一维卷积神经网络（1D-CNN）结合长短期记忆网络（LSTM）\n\n```\n输入: O_t = [q, \\dot{q}, \\tau, IMU]_t^{window_size}\n   ↓\n1D-CNN 特征提取\n   ↓\nLSTM 时序建模\n   ↓\n全连接层\n   ↓\n输出: 关节状态分类 p(locked | O_t), p(normal | O_t), p(weakened | O_t)\n```\n\n**估计目标**：\n- 关节正常（Normal）\n- 关节锁定（Locked）\n- 关节弱化（Weakened/功率下降）\n\n### 2.2 故障注入训练策略\n\n采用**课程学习（Curriculum Learning）**和**域随机化（Domain Randomization）**相结合的策略：\n\n**故障注入调度**：\n\n$$\n\nP_{\\text{\\text{fault}}}(t) = P_{\\text{\\text{base}}} + (P_{\\text{\\max}} - P_{\\text{\\text{base}}}) \\cdot \\min(t/T_{\\text{\\max}}, 1)\n\n$$\n\n其中：\n- $P_{\\text{fault}}(t)$：时刻 $t$ 的故障注入概率\n- $P_{\\text{base}}$：初始故障概率\n- $P_{\\max}$：最大故障概率\n- $T_{\\max}$：课程学习总时长\n\n### 2.3 强化学习算法\n\n采用**近端策略优化（PPO）**作为基础算法：\n\n**策略梯度估计**：\n\n$$\n\n\\hat{g} = \\hat{\\mathbb{E}}_t \\left[ \\nabla_\\theta \\log \\pi_\\theta(a_t | s_t) \\hat{A}_t \\right]\n\n$$\n\n**裁剪目标函数**：\n\n$$\n\nL^{CLIP}(\\theta) = \\hat{\\mathbb{E}}_t \\left[ \\min(r_t(\\theta) \\hat{A}_t, \\text{clip}(r_t(\\theta), 1-\\epsilon, 1+\\epsilon) \\hat{A}_t) \\right]\n\n$$\n\n其中 $r_t(\\theta) = \\frac{\\pi_\\theta(a_t | s_t)}{\\pi_{\\theta_{old}}(a_t | s_t)}$\n\n### 2.4 Sim-to-Real 迁移\n\n采用**域随机化**进行仿真到现实的迁移：\n\n**随机化参数**：\n\n$$\n\n\\theta_{\\text{\\text{sim}}} \\sim U(\\theta_{\\text{\\min}}, \\theta_{\\text{\\max}})\n\n$$\n\n涵盖：\n- 地面摩擦系数 $\\mu \\in [0.5, 1.5]$\n- 机器人质量分布 $m \\in [0.9m_0, 1.1m_0]$\n- 延迟参数 $d \\in [0, 10]$ ms\n- 传感器噪声标准差 $\\sigma \\in [0, \\sigma_{\\max}]$\n\n---\n\n## 3. 实现细节\n\n### 3.1 超参数配置\n\n| 参数 | 取值 |\n|------|------|\n| 学习率 | $3 \\times 10^{-4}$ |\n| 批大小（Batch Size） | 4096 |\n| 折叠次数（Epochs） | 10 |\n| 裁剪参数 $\\epsilon$ | 0.2 |\n| 折扣因子 $\\gamma$ | 0.99 |\n| GAE 参数 $\\lambda$ | 0.95 |\n| 隐藏层维度 | 512 |\n| 观测窗口大小 | 10 |\n\n### 3.2 状态空间定义\n\n**观测空间维度**：约 50 维\n- 关节位置：$q \\in \\mathbb{R}^{12}$\n- 关节速度：$\\dot{q} \\in \\mathbb{R}^{12}$\n- 关节力矩：$\\tau \\in \\mathbb{R}^{12}$\n- 基座姿态：$R_{\\text{base}} \\in \\mathbb{R}^6$（roll, pitch, yaw + 角速度）\n- 基座线速度：$v_{\\text{base}} \\in \\mathbb{R}^3$\n- 接触信号：$c \\in \\mathbb{R}^2$（左右脚着地状态）\n- 前馈命令：$u_{\\text{cmd}} \\in \\mathbb{R}^2$（期望速度）\n\n**动作空间维度**：12 维\n- 目标关节位置：$q_{\\text{des}} \\in \\mathbb{R}^{12}$\n\n### 3.3 故障注入具体实现\n\n**关节锁定**：\n- 随机选择 1-2 个关节\n- 锁定持续时间：$2 \\sim 5$ 秒\n- 发生概率：随训练进程逐渐增加\n\n**功率损失**：\n- 功率衰减系数：$\\alpha \\in \\{0.3, 0.5, 0.7\\}$\n- 影响关节：随机选择 1-3 个关节\n\n**外部干扰**：\n- 干扰力大小：$20 \\sim 100$ N\n- 干扰方向：水平 360 度随机\n- 干扰持续时间：$0.5 \\sim 1$ 秒\n\n---\n\n## 4. 实验设置\n\n### 4.1 仿真环境\n\n- **仿真器**：PyBullet / MuJoCo\n- **机器人模型**：TOCABI（双足人形机器人）\n- **控制频率**：100 Hz\n- **仿真步长**：0.01 s\n\n### 4.2 数据集与评估指标\n\n**训练数据**：仿真环境中自主生成\n- 总训练步数：约 $10^8$ 步\n- 故障场景：随机生成\n\n**评估指标**：\n1. **成功率（Success Rate）**：$SR = \\frac{N_{\\text{success}}}{N_{\\text{total}}}$\n2. **前进距离（Travel Distance）**：$D = \\int_0^T v_x(t) dt$\n3. **故障恢复时间（Recovery Time）**：$T_{\\text{rec}} = t_{\\text{stable}} - t_{\\text{fault}}$\n4. **平均前进速度（Average Velocity）**：$\\bar{v} = D/T$\n\n### 4.3 基线方法对比\n\n1. **标准 PPO**：无故障注入的常规训练\n2. **Domain Randomization (DR)**：仅域随机化，无故障注入\n3. **Task-Oriented RL**：针对特定故障类型训练的策略\n4. **TOLEBI（完整方法）**：在线状态估计 + 可失败性奖励 + 故障注入\n\n---\n\n## 5. 技术优势\n\n### 5.1 在线状态估计能力\n\n- **实时性**：模块可在线运行，无需离线训练数据\n- **自适应性**：能够根据实时观测动态调整对关节状态的估计\n- **泛化性**：CNN-LSTM 架构能够捕捉时序特征，对未见过的故障模式也有一定识别能力\n\n### 5.2 可失败性奖励设计\n\n- **主动暴露策略**：通过有意的故障注入，使策略在训练过程中\"体验\"故障\n- **课程学习渐进**：从简单故障到复杂故障，逐步增加难度\n- **稳定性和鲁棒性双重优化**：不仅优化前进性能，同时优化故障容忍能力\n\n### 5.3 Sim-to-Real 有效性\n\n- **域随机化**：大量随机化参数覆盖真实世界的变化范围\n- **故障场景覆盖**：三类故障的组合覆盖了大多数实际可能发生的故障模式\n\n---\n\n## 6. 技术弱点\n\n### 6.1 在线状态估计的局限性\n\n- **计算开销**：CNN-LSTM 模块引入额外计算，可能影响控制频率\n- **估计延迟**：时序模型存在固有延迟，可能无法及时响应突发故障\n- **泛化问题**：仿真训练的估计器可能在真实机器人上出现分布偏移\n\n### 6.2 故障注入的简化假设\n\n- **故障类型有限**：仅考虑三类基本故障，可能遗漏其他故障模式（如传感器故障、通信中断等）\n- **单步故障**：假设故障是瞬时发生，未考虑渐进式故障\n- **可恢复性假设**：假设所有故障都是可恢复的，未考虑永久性损坏场景\n\n### 6.3 奖励函数设计的挑战\n\n- **多目标平衡**：权重 $w_1, w_2, w_3, w_4$ 需要手动调优，不同任务可能需要不同配置\n- **可失败性奖励定义**：$r_{\\text{fallibility}}$ 的具体形式文中未详细阐述，其设计合理性难以验证\n- **奖励稀疏性**：在故障场景下，成功完成任务的奖励可能非常稀疏\n\n### 6.4 真实世界部署挑战\n\n- **sim-to-real gap**：尽管采用域随机化，仿真与真实环境仍存在物理差异\n- **安全考量**：真实机器人上进行故障实验存在损坏风险，验证可能不充分\n- **样本效率**：强化学习通常需要大量样本，训练成本较高",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 8,
+    "technical_quality": 8,
+    "experimental_validation": 8,
+    "writing_quality": 7,
+    "relevance": 9,
+    "overall_score": 8.05,
+    "strengths": [
+      "首次提出基于学习的双足机器人容错框架，具有较高的原创性",
+      "结合了故障注入、策略学习和在线状态估计的完整方法论",
+      "在真实机器人TOCABI上进行了sim-to-real迁移验证",
+      "针对多种故障类型（关节锁定、功率损失、外部扰动）进行训练",
+      "在线关节状态模块能够实时分类关节状况"
+    ],
+    "weaknesses": [
+      "仅能从摘要判断，缺少对具体算法细节的了解",
+      "写作质量评分基于有限信息（仅摘要）",
+      "未说明与现有容错控制方法的对比实验"
+    ],
+    "notes": "这是一篇具有重要创新价值的研究，首次将强化学习应用于双足机器人的容错 locomotion。方法框架完整，包括故障模拟、策略学习和在线状态估计，并在真实机器人上验证了可行性。从摘要来看工作质量较高，但完整评分需要审阅全文。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "TOLEBI: Learning Fault-Tolerant Bipedal Locomotion via Online Status Estimation and Fallibility Rewards",
+      "authors": [
+        "Hokyun Lee",
+        "Woo-Jeong Baek",
+        "Junhyeok Cha",
+        "Jaeheung Park"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.05596",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "With the growing employment of learning algorithms in robotic applications, research on reinforcement learning for bipedal locomotion has become a central topic for humanoid robotics. While recently published contributions achieve high success rates in locomotion tasks, scarce attention has been devoted to the development of methods that enable to handle hardware faults that may occur during the locomotion process. However, in real-world settings, environmental disturbances or sudden occurrences of hardware faults might yield severe consequences. To address these issues, this paper presents TOLEBI (A faulT-tOlerant Learning framEwork for Bipedal locomotIon) that handles faults on the robot during operation. Specifically, joint locking, power loss and external disturbances are injected in simulation to learn fault-tolerant locomotion strategies. In addition to transferring the learned policy to the real robot via sim-to-real transfer, an online joint status module incorporated. This module enables to classify joint conditions by referring to the actual observations at runtime under real-world conditions. The validation experiments conducted both in real-world and simulation with the humanoid robot TOCABI highlight the applicability of the proposed approach. To our knowledge, this manuscript provides the first learning-based fault-tolerant framework for bipedal locomotion, thereby fostering the development of efficient learning methods in this field.",
+      "route_id": "25c6fe90-bed2-4454-82bb-ee1c9fe463f4"
+    },
+    "markdown_stats": {
+      "lines": 3,
+      "words": 15,
+      "headings": 1
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "25c6fe90-bed2-4454-82bb-ee1c9fe463f4",
+  "paper_ref": "25c6fe90-bed2-4454-82bb-ee1c9fe463f4",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

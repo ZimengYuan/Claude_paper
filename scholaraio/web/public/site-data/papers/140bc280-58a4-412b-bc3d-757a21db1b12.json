@@ -1,0 +1,79 @@
+{
+  "dir_name": "Huang-2025-Diffusion-Reward-Learning-Rewards-via-Conditional-Video-Diffusion",
+  "title": "Diffusion Reward: Learning Rewards via Conditional Video Diffusion",
+  "authors": [
+    "Tao Huang",
+    "Guangqi Jiang",
+    "Yanjie Ze",
+    "Huazhe Xu"
+  ],
+  "year": 2025,
+  "journal": "Lecture Notes in Computer Science",
+  "doi": "10.1007/978-3-031-72946-1_27",
+  "abstract": "Learning rewards from expert videos offers an affordable and effective solution to specify the intended behaviors for reinforcement learning (RL) tasks. In this work, we propose Diffusion Reward, a novel framework that learns rewards from expert videos via conditional video diffusion models for solving complex visual RL problems. Our key insight is that lower generative diversity is exhibited when conditioning diffusion on expert trajectories. Diffusion Reward is accordingly formalized by the negative of conditional entropy that encourages productive exploration of expert behaviors. We show the efficacy of our method over robotic manipulation tasks in both simulation platforms and the real world with visual input. Moreover, Diffusion Reward can even solve unseen tasks successfully and effectively, largely surpassing baseline methods. Project page and code: diffusion-reward.github.io. Keywords: Reward Learning from Videos · Robotic Manipulation · Visual Reinforcement Learning",
+  "paper_type": "book-chapter",
+  "publisher": "Springer Science+Business Media",
+  "issn": "0302-9743",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 9,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Diffusion Reward: Learning Rewards via Conditional Video Diffusion",
+      "authors": [
+        "Tao Huang",
+        "Guangqi Jiang",
+        "Yanjie Ze",
+        "Huazhe Xu"
+      ],
+      "year": 2025,
+      "journal": "Lecture Notes in Computer Science",
+      "doi": "10.1007/978-3-031-72946-1_27",
+      "paper_type": "book-chapter",
+      "publisher": "Springer Science+Business Media",
+      "issn": "0302-9743",
+      "abstract": "Learning rewards from expert videos offers an affordable and effective solution to specify the intended behaviors for reinforcement learning (RL) tasks. In this work, we propose Diffusion Reward, a novel framework that learns rewards from expert videos via conditional video diffusion models for solving complex visual RL problems. Our key insight is that lower generative diversity is exhibited when conditioning diffusion on expert trajectories. Diffusion Reward is accordingly formalized by the negative of conditional entropy that encourages productive exploration of expert behaviors. We show the efficacy of our method over robotic manipulation tasks in both simulation platforms and the real world with visual input. Moreover, Diffusion Reward can even solve unseen tasks successfully and effectively, largely surpassing baseline methods. Project page and code: diffusion-reward.github.io. Keywords: Reward Learning from Videos · Robotic Manipulation · Visual Reinforcement Learning",
+      "route_id": "140bc280-58a4-412b-bc3d-757a21db1b12"
+    },
+    "markdown_stats": {
+      "lines": 404,
+      "words": 11193,
+      "headings": 31
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "140bc280-58a4-412b-bc3d-757a21db1b12",
+  "paper_ref": "140bc280-58a4-412b-bc3d-757a21db1b12",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

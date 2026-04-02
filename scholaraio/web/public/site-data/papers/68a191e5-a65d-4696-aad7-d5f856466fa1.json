@@ -1,0 +1,76 @@
+{
+  "dir_name": "Ntagkas-2025-PGTT-Phase-Guided-Terrain-Traversal-for-Perceptive-Legged-Locomotion",
+  "title": "PGTT: Phase-Guided Terrain Traversal for Perceptive Legged Locomotion",
+  "authors": [
+    "Alexandros Ntagkas",
+    "C. Kiourt",
+    "Konstantinos I. Chatzilygeroudis"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2510.18348",
+  "abstract": "State-of-the-art perceptive Reinforcement Learning controllers for legged robots either (i) impose oscillator or IK-based gait priors that constrain the action space, add bias to the policy optimization and reduce adaptability across robot morphologies, or (ii) operate\"blind\", which struggle to anticipate hind-leg terrain, and are brittle to noise. In this paper, we propose Phase-Guided Terrain Traversal (PGTT), a perception-aware deep-RL approach that overcomes these limitations by enforcing gait structure purely through reward shaping, thereby reducing inductive bias in policy learning compared to oscillator/IK-conditioned action priors. PGTT encodes per-leg phase as a cubic Hermite spline that adapts swing height to local heightmap statistics and adds a swing-phase contact penalty, while the policy acts directly in joint space supporting morphology-agnostic deployment. Trained in MuJoCo (MJX) on procedurally generated stair-like terrains with curriculum and domain randomization, PGTT achieves the highest success under push disturbances (median +7.5% vs. the next best method) and on discrete obstacles (+9%), with comparable velocity tracking, and converging to an effective policy roughly 2x faster than strong end-to-end baselines. We validate PGTT on a Unitree Go2 using a real-time LiDAR elevation-to-heightmap pipeline, and we report preliminary results on ANYmal-C obtained with the same hyperparameters. These findings indicate that terrain-adaptive, phase-guided reward shaping is a simple and general mechanism for robust perceptive locomotion across platforms.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# PGTT: 相位引导的地形穿越用于感知式腿部运动\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**相位引导的地形穿越（PGTT）**，一种通过奖励塑造（reward shaping）而非动作先验来强制执行步态结构的感知式深度强化学习方法。该方法将每条腿的相位编码为**三次Hermite样条**，使摆动高度能够自适应局部高度图统计特性，同时添加摆动相位接触惩罚，突破了传统方法在动作空间约束和感知能力之间的权衡困境。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1: 纯奖励塑造的步态结构强制\n- **重要性**: 避免了振荡器或逆运动学（IK）-based的步态先验带来的动作空间约束和优化偏差\n- **效果**: 大幅降低了策略学习中的归纳偏置，增强了跨机器人形态的适应性\n\n### 创新点 2: 三次Hermite样条相位编码\n- **创新点**: 将每条腿的相位信息编码为自适应摆动高度的三次Hermite样条\n- **机制**: 摆动高度根据局部高度图统计特性动态调整，无需显式地形分类\n\n### 创新点 3: 摆动相位接触惩罚\n- **作用**: 在摆动阶段惩罚意外接触，促进正确的相位切换\n- **效果**: 增强了后腿地形感知的鲁棒性\n\n### 创新点 4: 直接关节空间策略输出\n- **创新点**: 策略直接在关节空间输出动作\n- **优势**: 支持形态无关（morphology-agnostic）的部署，验证了从Unitree Go2到ANYmal-C的直接迁移\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性本质区别\n\n| 现有SOTA方法 | PGTT方法 |\n|-------------|---------|\n| 振荡器/IK-based步态先验约束动作空间 | 通过奖励塑造隐式学习步态结构 |\n| 依赖显式地形分类器 | 自适应高度图统计特性 |\n| 跨形态迁移困难 | 形态无关的关节空间策略 |\n\n### 关键技术手段\n\n1. **感知式深度RL框架**: 融合LiDAR高程图作为状态输入\n2. **三次Hermite样条摆动轨迹**: 平滑且可微的相位-高度映射\n3. **课程学习+领域随机化**: 在程序生成的楼梯状地形上训练\n4. **MJX加速仿真**: 使用MuJoCo的JAX版本进行高效训练\n\n### 理论支撑\n\n- 奖励塑造理论: 通过精心设计的奖励函数隐式编码步态先验，比显式动作约束更灵活\n- 相位振荡器理论: 将生物启发的相位概念融入奖励函数\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/Benchmark\n\n- **仿真环境**: MuJoCo (MJX) 程序生成的楼梯状地形\n- **真实机器人**: Unitree Go2 (四足) + ANYmal-C (四足)\n- **传感器**: 实时LiDAR高程到高度图管道\n\n### 性能提升（量化指标）\n\n| 指标 | PGTT表现 | 提升幅度 |\n|-----|---------|---------|\n| 推力干扰下的成功率 | 最高 | **中位数 +7.5%** vs 次优方法 |\n| 离散障碍物通过率 | 最高 | **+9%** vs 次优方法 |\n| 速度跟踪精度 | 可比 | 与基线相当 |\n| 训练收敛速度 | 最快 | **2x** 快于强端到端基线 |\n\n### 消融实验发现\n\n- 三次Hermite样条相位编码对地形适应性贡献显著\n- 摆动相位接触惩罚提升了后腿地形感知能力\n- 纯奖励塑造相比动作先验方法收敛更快、更稳定\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n1. **地形类型**: 主要针对楼梯状地形优化，对平坦地形或极端不规则地形的泛化性待验证\n2. **计算成本**: 实时LiDAR高度图管道增加了计算负担\n3. **敏捷性**: 在极端扰动下的快速恢复能力可能受限\n\n### 未来方向\n\n1. **多形态迁移**: 扩展到双足或六足机器人\n2. **端到端感知**: 融合深度学习感知减少对精确高度图的依赖\n3. **动态地形**: 扩展到移动或变形地形\n\n### 可迁移性\n\n- **高**: 已在Unitree Go2和ANYmal-C上验证跨平台迁移能力\n- **潜力**: 关节空间策略设计天然适合不同形态的腿部机器人\n\n## 6. 一句话总结\n\nPGTT通过将步态相位编码为自适应三次Hermite样条并结合摆动相位接触惩罚的奖励塑造方法，在仅使用关节空间动作的情况下实现了比振荡器/IK先验方法更高的推力干扰鲁棒性（+7.5%）和障碍物通过率（+9%），同时训练收敛速度提升2倍，并成功从仿真迁移到Unitree Go2和ANYmal-C真实机器人，验证了地形自适应相位引导奖励塑造作为通用感知式运动框架的有效性。",
+  "method_summary": "基于对论文内容的详细阅读，以下是 PGTT 方法的详细技术分析：\n\n---\n\n## 1. 问题形式化\n\nPGTT 将感知式腿部运动控制问题形式化为**马尔可夫决策过程（MDP）**：\n\n- **状态空间** $\\mathcal{S}$：包含机器人基座状态（姿态角 $\\phi, \\theta, \\psi$、角速度 $\\omega$、投影重力方向）、关节状态（位置 $q$、速度 $\\dot{q}$）、前一时刻动作 $a_{\\text{t-1}}$，以及来自 LiDAR 的局部高度图 $H \\in \\mathbb{R}^{K \\times K}$\n \n- **动作空间** $\\mathcal{A}$：目标关节位置 $\\mathbf{q}^{des}$，策略直接在关节空间输出动作，支持形态无关部署\n\n- **目标**：学习一个随机策略 $\\pi(a_t | s_t)$，最大化累积奖励期望 $\\mathbb{E}\\left[\\sum_{\\text{t=0}}^{T} \\gamma^t r_t\\right]$\n\n**核心挑战**：\n1. 传统方法使用振荡器或 IK 约束动作空间，引入归纳偏置\n2. \"盲\"方法无法预测后腿地形，对噪声敏感\n\n---\n\n## 2. 技术方法\n\n### 2.1 核心思想\n\nPGTT 通过**奖励塑造（reward shaping）**而非动作先验来隐式强制步态结构，将每条腿的相位编码为**三次 Hermite 样条**，实现摆动高度自适应地形。\n\n### 2.2 三次 Hermite 样条相位编码\n\n每条腿 $l$ 的摆动高度 $h_l$ 由相位 $\\phi_l \\in [0, 1]$ 通过三次 Hermite 样条计算：\n\n$$\n\nh_l(\\phi_l) = (2\\phi_l^3 - 3\\phi_l^2 + 1)h_{\\text{\\text{start}}} + (\\phi_l^3 - 2\\phi_l^2 + \\phi_l)\\Delta h + (-2\\phi_l^3 + 3\\phi_l^2)h_{\\text{\\text{end}}} + (\\phi_l^3 - \\phi_l^2)\\Delta h_{\\text{\\text{end}}}\n\n$$\n\n其中 $h_{\\text{start}}$ 和 $h_{\\text{end}}$ 分别为摆动起止高度，$\\Delta h$ 和 $\\Delta h_{\\text{end}}$ 为控制切线的参数。该样条确保摆动轨迹平滑且可微。\n\n### 2.3 地形自适应摆动高度\n\n摆动高度根据局部高度图统计特性自适应调整：\n\n$$\n\nh_{\\text{\\text{target}}} = \\bar{h}_{\\text{\\text{local}}} + k \\cdot \\sigma_{\\text{\\text{local}}}\n\n$$\n\n其中 $\\bar{h}_{\\text{local}}$ 和 $\\sigma_{\\text{local}}$ 分别为足端前方局部高度图的均值和标准差，$k$ 为增益系数。这种自适应机制无需显式地形分类器。\n\n### 2.4 摆动相位接触惩罚\n\n在摆动阶段添加接触惩罚，促进正确的相位切换：\n\n$$\n\nr_{\\text{\\text{swing}}} = -\\lambda_{\\text{\\text{swing}}} \\cdot \\mathbb{I}_{\\text{\\text{swing}}} \\cdot \\mathbb{I}_{\\text{\\text{contact}}}\n\n$$\n\n其中 $\\mathbb{I}_{\\text{swing}}$ 为摆动阶段指示函数，$\\mathbb{I}_{\\text{contact}}$ 为足端接触指示函数。该惩罚增强了对后腿地形感知的鲁棒性。\n\n---\n\n## 3. 实现细节\n\n### 3.1 策略架构\n\n- **算法**：PPO（Proximal Policy Optimization）\n- **网络结构**：Actor-Critic 架构，多层感知机（MLP）\n- **状态编码**：高度图通过卷积层编码后与机器人状态拼接\n\n### 3.2 奖励函数设计\n\n总奖励为多项奖励的加权和：\n\n$$\n\nr = r_{\\text{\\text{velocity}}} + r_{\\text{\\text{orientation}}} + r_{\\text{joint\\\\_limits}} + r_{\\text{action\\\\_rate}} + r_{\\text{\\text{height}}} + r_{\\text{\\text{swing}}} + r_{\\text{\\text{contact}}}\n\n$$\n\n| 奖励项 | 形式 | 权重 |\n|--------|------|------|\n| 速度跟踪 $r_{\\text{velocity}}$ | $\\exp(-\\|\\dot{p}_{xy} - \\dot{p}_{xy}^{des}\\|_2^2 / \\sigma)$ | 高 |\n| 姿态稳定 $r_{\\text{orientation}}$ | $\\exp(-\\|\\theta\\|_2^2 / \\sigma)$ | 中 |\n| 关节限位 $r_{joint\\_limits}$ | 越界惩罚 | 高 |\n| 动作平滑 $r_{action\\_rate}$ | $\\exp(-\\|a_t - a_{\\text{t-1}}\\|_2^2 / \\sigma)$ | 中 |\n| 高度跟踪 $r_{\\text{height}}$ | 跟踪参考轨迹高度 | 中 |\n| 摆动惩罚 $r_{\\text{swing}}$ | 摆动相位接触惩罚 | 中 |\n| 接触惩罚 $r_{\\text{contact}}$ | 站立相意外腾空惩罚 | 低 |\n\n### 3.3 训练策略\n\n- **仿真环境**：MuJoCo（MJX 版本，基于 JAX）\n- **地形生成**：程序生成的楼梯状地形，包含不同高度和倾角\n- **课程学习**：从简单地形逐步过渡到复杂地形\n- **领域随机化**：机器人质量、摩擦系数、传感器噪声等\n\n### 3.4 超参数（典型值）\n\n| 参数 | 值 |\n|------|-----|\n| 学习率 | $3 \\times 10^{-4}$ |\n| 折扣因子 $\\gamma$ | 0.99 |\n| PPO clip $\\epsilon$ | 0.2 |\n| 隐层维度 | 256 |\n| 训练步数 | $2 \\times 10^8$ |\n| 批量大小 | 4096 |\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集/环境\n\n| 环境 | 描述 |\n|------|------|\n| 仿真 | MuJoCo MJX，程序生成楼梯状地形（高度 0.05m-0.25m，步长可变） |\n| 真实机器人 | Unitree Go2（四足） |\n| 验证平台 | ANYmal-C（四足，使用相同超参数） |\n| 传感器 | 实时 LiDAR 高度图管道 |\n\n### 4.2 评估指标\n\n- **成功率**：在推力干扰和离散障碍物下的成功穿越率\n- **速度跟踪误差**：实际速度与目标速度的均方根误差（RMSE）\n- **训练收敛速度**：达到相同性能水平所需的训练步数\n\n### 4.3 基线方法\n\n| 基线 | 描述 |\n|------|------|\n| SEIL | 端到端感知式 RL |\n| RBED | 振荡器-based 步态先验 |\n| 其他 SOTA | 无先验的纯 RL 方法 |\n\n---\n\n## 5. 技术优势\n\n1. **降低归纳偏置**：通过奖励塑造而非动作约束强制步态结构，给予策略更大的自由度\n2. **地形自适应**：三次 Hermite 样条根据局部高度图统计特性自动调整摆动高度\n3. **形态无关部署**：策略直接在关节空间输出动作，可跨不同机器人形态迁移\n4. **训练效率**：收敛速度比强端到端基线快约 2 倍\n5. **鲁棒性**：推力干扰下成功率中位数提升 7.5%，离散障碍物通过率提升 9%\n\n---\n\n## 6. 技术弱点\n\n1. **地形泛化性**：主要针对楼梯状地形优化，对平坦地形或极端不规则地形的泛化能力未充分验证\n2. **计算开销**：实时 LiDAR 高度图管道增加了感知延迟和计算负担\n3. **敏捷性局限**：在极端扰动下的快速恢复能力可能受限\n4. **地形类型假设**：依赖程序生成的楼梯状地形，对自然地形（如沙地、碎石）的适应性未知",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "PGTT: Phase-Guided Terrain Traversal for Perceptive Legged Locomotion",
+      "authors": [
+        "Alexandros Ntagkas",
+        "C. Kiourt",
+        "Konstantinos I. Chatzilygeroudis"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2510.18348",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "State-of-the-art perceptive Reinforcement Learning controllers for legged robots either (i) impose oscillator or IK-based gait priors that constrain the action space, add bias to the policy optimization and reduce adaptability across robot morphologies, or (ii) operate\"blind\", which struggle to anticipate hind-leg terrain, and are brittle to noise. In this paper, we propose Phase-Guided Terrain Traversal (PGTT), a perception-aware deep-RL approach that overcomes these limitations by enforcing gait structure purely through reward shaping, thereby reducing inductive bias in policy learning compared to oscillator/IK-conditioned action priors. PGTT encodes per-leg phase as a cubic Hermite spline that adapts swing height to local heightmap statistics and adds a swing-phase contact penalty, while the policy acts directly in joint space supporting morphology-agnostic deployment. Trained in MuJoCo (MJX) on procedurally generated stair-like terrains with curriculum and domain randomization, PGTT achieves the highest success under push disturbances (median +7.5% vs. the next best method) and on discrete obstacles (+9%), with comparable velocity tracking, and converging to an effective policy roughly 2x faster than strong end-to-end baselines. We validate PGTT on a Unitree Go2 using a real-time LiDAR elevation-to-heightmap pipeline, and we report preliminary results on ANYmal-C obtained with the same hyperparameters. These findings indicate that terrain-adaptive, phase-guided reward shaping is a simple and general mechanism for robust perceptive locomotion across platforms.",
+      "route_id": "68a191e5-a65d-4696-aad7-d5f856466fa1"
+    },
+    "markdown_stats": {
+      "lines": 313,
+      "words": 8000,
+      "headings": 22
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "68a191e5-a65d-4696-aad7-d5f856466fa1",
+  "paper_ref": "68a191e5-a65d-4696-aad7-d5f856466fa1",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

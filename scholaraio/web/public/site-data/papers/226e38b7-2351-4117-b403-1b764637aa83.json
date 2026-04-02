@@ -1,0 +1,80 @@
+{
+  "dir_name": "Wu-2025-Diffusing-States-and-Matching-Scores-A-New-Framework-for-Imitation-Learning",
+  "title": "Diffusing States and Matching Scores: A New Framework for Imitation Learning",
+  "authors": [
+    "Runzhe Wu",
+    "Yiding Chen",
+    "Gokul Swamy",
+    "Kianté Brantley",
+    "Wen Sun"
+  ],
+  "year": 2025,
+  "journal": "International Conference on Learning Representations",
+  "doi": "10.48550/arXiv.2410.13855",
+  "abstract": "Adversarial Imitation Learning is traditionally framed as a two-player zero-sum game between a learner and an adversarially chosen cost function, and can therefore be thought of as the sequential generalization of a Generative Adversarial Network (GAN). However, in recent years, diffusion models have emerged as a non-adversarial alternative to GANs that merely require training a score function via regression, yet produce generations of higher quality. In response, we investigate how to lift insights from diffusion modeling to the sequential setting. We propose diffusing states and performing score-matching along diffused states to measure the discrepancy between the expert's and learner's states. Thus, our approach only requires training score functions to predict noises via standard regression, making it significantly easier and more stable to train than adversarial methods. Theoretically, we prove first- and second-order instance-dependent bounds with linear scaling in the horizon, proving that our approach avoids the compounding errors that stymie offline approaches to imitation learning. Empirically, we show our approach outperforms both GAN-style imitation learning baselines and discriminator-free imitation learning baselines across various continuous control problems, including complex tasks like controlling humanoids to walk, sit, crawl, and navigate through obstacles.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 11,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Diffusing States and Matching Scores: A New Framework for Imitation Learning",
+      "authors": [
+        "Runzhe Wu",
+        "Yiding Chen",
+        "Gokul Swamy",
+        "Kianté Brantley",
+        "Wen Sun"
+      ],
+      "year": 2025,
+      "journal": "International Conference on Learning Representations",
+      "doi": "10.48550/arXiv.2410.13855",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Adversarial Imitation Learning is traditionally framed as a two-player zero-sum game between a learner and an adversarially chosen cost function, and can therefore be thought of as the sequential generalization of a Generative Adversarial Network (GAN). However, in recent years, diffusion models have emerged as a non-adversarial alternative to GANs that merely require training a score function via regression, yet produce generations of higher quality. In response, we investigate how to lift insights from diffusion modeling to the sequential setting. We propose diffusing states and performing score-matching along diffused states to measure the discrepancy between the expert's and learner's states. Thus, our approach only requires training score functions to predict noises via standard regression, making it significantly easier and more stable to train than adversarial methods. Theoretically, we prove first- and second-order instance-dependent bounds with linear scaling in the horizon, proving that our approach avoids the compounding errors that stymie offline approaches to imitation learning. Empirically, we show our approach outperforms both GAN-style imitation learning baselines and discriminator-free imitation learning baselines across various continuous control problems, including complex tasks like controlling humanoids to walk, sit, crawl, and navigate through obstacles.",
+      "route_id": "226e38b7-2351-4117-b403-1b764637aa83"
+    },
+    "markdown_stats": {
+      "lines": 742,
+      "words": 22622,
+      "headings": 30
+    },
+    "assets": {
+      "images": 57,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "226e38b7-2351-4117-b403-1b764637aa83",
+  "paper_ref": "226e38b7-2351-4117-b403-1b764637aa83",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

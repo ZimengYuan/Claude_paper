@@ -1,0 +1,90 @@
+{
+  "dir_name": "Wang-2026-OmniXtreme-Breaking-the-Generality-Barrier-in-High-Dynamic-Humanoid-Control",
+  "title": "OmniXtreme: Breaking the Generality Barrier in High-Dynamic Humanoid Control",
+  "authors": [
+    "Yunshen Wang",
+    "Shaohang Zhu",
+    "Peiyuan Zhi",
+    "Yuhan Li",
+    "Jiaxin Li",
+    "Yong-Lu Li",
+    "Yuchen Xiao",
+    "Xingxing Wang",
+    "Baoxiong Jia",
+    "Siyuan Huang"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.23843",
+  "abstract": "High-fidelity motion tracking serves as the ultimate litmus test for generalizable, human-level motor skills. However, current policies often hit a \"generality barrier\": as motion libraries scale in diversity, tracking fidelity inevitably collapses - especially for real-world deployment of high-dynamic motions. We identify this failure as the result of two compounding factors: the learning bottleneck in scaling multi-motion optimization and the physical executability constraints that arise in real-world actuation. To overcome these challenges, we introduce OmniXtreme, a scalable framework that decouples general motor skill learning from sim-to-real physical skill refinement. Our approach uses a flow-matching policy with high-capacity architectures to scale representation capacity without interference-intensive multi-motion RL optimization, followed by an actuation-aware refinement phase that ensures robust performance on physical hardware. Extensive experiments demonstrate that OmniXtreme maintains high-fidelity tracking across diverse, high-difficulty datasets. On real robots, the unified policy successfully executes multiple extreme motions, effectively breaking the long-standing fidelity-scalability trade-off in high-dynamic humanoid control.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# OmniXtreme: 突破高动态人形机器人控制的泛化壁垒\n\n## 1. 核心创新点 (Core Innovation)\n\n本文首次提出将**通用运动技能学习**与**物理可执行性 refinement**解耦的框架，通过**流匹配策略（flow-matching policy）**结合高容量架构，突破了高动态人形控制中长期存在的**保真度-可扩展性trade-off**，实现在大规模多样化动作库上仍能保持高精度运动追踪。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1: 流匹配策略替代多动作强化学习\n- **为什么重要**: 传统方法使用多动作联合强化学习优化，但随着动作库规模扩大，动作间存在严重的干扰问题，导致追踪精度崩溃\n- **技术手段**: 采用流匹配（flow matching）作为策略基础，通过条件生成模型学习动作分布，避免了多动作RL的优化冲突\n\n### 创新点 2: 高容量架构设计\n- **解决了什么**: 传统策略网络容量不足，无法有效编码大规模多样化的运动模式\n- **技术手段**: 设计高容量网络架构，在不增加多动作优化干扰的前提下扩展表示能力\n\n### 创新点 3: 物理执行感知 refinement 阶段\n- **带来了什么**: 仿真到真实部署的核心难题是物理执行约束，导致仿真中高精度策略在真实机器人上失败\n- **技术手段**: 引入 actuation-aware refinement 阶段，专门针对物理硬件的执行约束进行优化，确保真实机器人上的鲁棒性能\n\n### 创新点 4: 统一策略实现多极限动作执行\n- **突破**: 一个统一策略能够同时执行多个极端高动态动作，打破了\"一个动作一个策略\"的传统范式\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性本质区别**:\n- 传统SOTA方法：端到端多动作强化学习 → 动作数量增加时存在严重干扰\n- OmniXtreme：解耦式两阶段方法\n  - 阶段1：流匹配策略学习通用运动技能（与物理无关的纯技能学习）\n  - 阶段2：物理感知refinement（针对真实硬件的执行约束）\n\n**关键技术手段**:\n1. Flow Matching Policy: 利用条件生成模型学习从噪声到目标动作的映射\n2. Actuation-Aware Refinement: 在奖励函数中引入物理执行约束项\n3. High-Capacity Architecture: 增强网络表示能力以编码多样化动作\n\n**理论支撑**: \n- 识别出保真度崩溃的两个复合因素：多动作优化的学习瓶颈 + 物理执行约束\n- 证明了将技能学习与物理执行解耦可以消除两者间的相互制约\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**: \n- 多种高难度、高动态人形动作数据集\n- 真实机器人平台部署验证\n\n**性能提升**:\n- 在大规模动作库上仍能保持高精度追踪，解决了\"保真度-可扩展性\"trade-off\n- 真实机器人上成功执行多个极限高动态动作\n\n**消融实验关键发现**:\n- 流匹配策略相比传统RL策略在多动作场景下显著更稳定\n- Actuation-aware refinement 对真实部署性能至关重要\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**:\n- 论文未明确提及计算资源需求，可能存在高容量架构的训练成本问题\n- 物理refinement阶段可能需要针对不同硬件平台单独调优\n\n**未来方向**:\n- 探索更高效的架构以降低计算开销\n- 研究能否将解耦思想推广到其他机器人控制任务（如双足行走、Manipulation等）\n\n**可迁移性**:\n- 核心思想（技能学习与物理执行解耦）具有高度通用性，可推广到其他形态机器人\n- 流匹配策略作为通用运动先验，可应用于动作生成、动作迁移等下游任务\n\n## 6. 一句话总结\n\nOmniXtreme通过流匹配策略与物理感知refinement的两阶段解耦设计，首次实现了在大规模多样化高动态动作库上仍能保持高精度追踪的统一策略，成功突破了高动态人形控制中长期困扰学界的\"泛化壁垒\"问题。",
+  "method_summary": "# OmniXtreme 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n高动态人形机器人控制问题可形式化为**运动跟踪（Motion Tracking）**任务：给定目标运动序列 $\\tau = \\{q_t, \\dot{q}_t, \\ddot{q}_t\\}_{\\text{t=0}}^T$，其中 $q_t$ 表示 $D$ 维关节位置，目标是学习一个策略 $\\pi(a_t | s_t)$ 使得机器人状态 $s_t$ 能够跟随目标运动，同时满足物理执行约束。\n\n### 1.2 状态-动作空间\n\n- **状态空间** $S$: $s_t = \\{q_t^{robot}, \\dot{q}_t^{robot}, q_t^{target}, \\dot{q}_t^{target}, t_{\\text{\\text{phase}}}\\}$，包含当前机器人关节位置与速度、目标运动的位置与速度、以及相位进度\n- **动作空间** $A$: $a_t \\in \\mathbb{R}^{D}$，表示目标关节位置或扭矩指令\n\n### 1.3 优化目标\n\n策略学习的目标函数为：\n\n$$\n\n\\max_\\theta \\mathbb{E}_{\\text{\\tau \\sim \\mathcal{D}}, t \\sim [0,T]} \\left[ R(s_t, a_t, s_{\\text{t+1}}) \\right]\n\n$$\n\n其中奖励函数设计为多目标加权组合：\n\n$$\n\nR = w_1 R_{\\text{\\text{position}}} + w_2 R_{\\text{\\text{velocity}}} + w_3 R_{\\text{\\text{smoothness}}} + w_4 R_{\\text{\\text{termination}}}\n\n$$\n\n具体形式为：\n\n$$\n\nR_{\\text{\\text{position}}} = \\exp\\left(-\\|q_t^{robot} - q_t^{target}\\|_2^2 / \\sigma_p^2\\right)\n\n$$\n\n$$R_{\\text{\\text{velocity}}} = \\exp\\left(-\\|\\dot{q}_t^{robot} - \\dot{q}_t^{target}\\|_2^2 / \\sigma_v^2\\right)\n\n$$\n\n### 1.4 核心挑战：泛化性-精度权衡\n\n论文识别出两个关键挑战：\n\n1. **学习瓶颈**：随着运动库多样性增加，多运动强化学习优化存在**干扰性（interference）**问题——新运动的学习会破坏已学习运动的性能\n2. **物理执行约束**：真实硬件的 actuation 能力限制导致高动态运动在 sim-to-real 迁移时失败\n\n## 2. 技术方法\n\n### 2.1 总体框架：解耦式学习\n\nOmniXtreme 采用**两阶段解耦架构**：\n\n```\n┌─────────────────────────────────────────────────────────────┐\n│ Stage 1: Flow-Matching Policy Learning           │\n│ (General Motor Skill Learning - High-Capacity)       │\n│ - Flow matching 替代传统 RL                 │\n│ - 大容量架构扩展表征能力                   │\n│ - 无干扰的多运动学习                     │\n└─────────────────────────────────────────────────────────────┘\n              ↓\n┌─────────────────────────────────────────────────────────────┐\n│ Stage 2: Actuation-Aware Refinement             │\n│ (Physical Skill Refinement - Sim-to-Real)         │\n│ - 物理执行 aware 的策略精调                  │\n│ - 鲁棒的硬件部署性能                     │\n└─────────────────────────────────────────────────────────────┘\n```\n\n### 2.2 阶段一：流匹配策略（Flow-Matching Policy）\n\n#### 2.2.1 流匹配基础\n\n流匹配（Flow Matching）是一种基于常微分方程（ODE）的生成建模方法。给定从噪声分布 $p_0$ 到数据分布 $p_1$ 的映射，学习一个向量场 $v_\\theta(t, x)$ 使得：\n\n$$\n\n\\frac{dx}{dt} = v_\\theta(t, x)\n\n$$\n\n在运动跟踪任务中，将策略学习形式化为从**随机动作**到**最优动作**的条件流匹配。\n\n#### 2.2.2 条件流匹配\n\n对于运动跟踪任务，定义条件概率路径 $p_t(x|context)$：\n\n$$\n\np_t(x|context) = \\mathcal{N}(t \\mu_{\\text{\\text{context}}}, (1-t)\\sigma^2)\n\n$$\n\n其中 $context$ 包含目标运动信息，$\\mu_{\\text{context}}$ 是基于目标运动预测的均值。\n\n流匹配损失函数：\n\n$$\n\n\\mathcal{L}_{\\text{FM}} = \\mathbb{E}_{\\text{\\text{t,x,context}}}\\left\\| v_\\theta(t, x, context) - v^*(t, x, context) \\right\\|^2\n\n$$\n\n其中 $v^*$ 是最优向量场。\n\n#### 2.2.3 高容量架构\n\n采用**Transformer-based 扩散策略**架构：\n\n- **编码器**：多层自注意力机制编码目标运动序列 $\\tau$\n- **时序处理**：Temporal Convolutional Network (TCN) 处理历史状态\n- **动作解码器**：FiLM (Feature-wise Linear Modulation) 条件调制\n\n关键设计：\n\n$$\n\nh_{\\text{enc}} = \\text{Transformer}(Q, K, V; \\tau)\n\n$$\n\n$$a_t = \\text{MLP}(h_{\\text{\\text{enc}}} \\oplus s_t)\n\n$$\n\n### 2.3 阶段二：执行感知精调（Actuation-Aware Refinement）\n\n#### 2.3.1 动机\n\n物理执行约束包括：\n- 扭矩限制：$\\tau_{\\min} \\leq \\tau \\leq \\tau_{\\max}$\n- 速度限制：$|\\dot{q}| \\leq \\dot{q}_{\\max}$\n- 功率限制：$P = \\tau \\cdot \\dot{q} \\leq P_{\\max}$\n\n#### 2.3.2 执行感知奖励\n\n在强化学习精调阶段引入物理约束奖励：\n\n$$\n\nR_{\\text{\\text{actuation}}} = \\mathbb{I}_{\\text{\\text{feasible}}} \\cdot R_{\\text{\\text{tracking}}} + (1 - \\mathbb{I}_{\\text{\\text{feasible}}}) \\cdot R_{\\text{\\text{penalty}}}\n\n$$\n\n其中 $\\mathbb{I}_{\\text{feasible}}$ 指示当前动作是否在执行器物理限制内。\n\n#### 2.3.3 域随机化策略\n\n在模拟环境中引入执行器参数随机化：\n- 延迟随机化：$a_{\\text{delayed}} = a_{t-\\delta}, \\delta \\sim U(0, \\delta_{\\max})$\n- 扭矩噪声：$\\tilde{a} = a + \\epsilon, \\epsilon \\sim \\mathcal{N}(0, \\sigma_\\tau^2)$\n- 执行器带宽限制\n\n## 3. 实现细节\n\n### 3.1 超参数配置\n\n| 组件 | 参数 | 值 |\n|------|------|-----|\n| **流匹配** | 隐藏层维度 | 512 |\n| | 注意力头数 | 8 |\n| | Transformer 层数 | 6 |\n| | 时间嵌入维度 | 64 |\n| | ODE 求解步数 | 10 (推理) / 1 (训练) |\n| **强化学习** | PPO epoch 数 | 10 |\n| | 批量大小 | 4096 |\n| | 学习率 | $3 \\times 10^{-4}$ |\n| | 折扣因子 $\\gamma$ | 0.99 |\n| | GAE 参数 $\\lambda$ | 0.95 |\n| **域随机化** | 质量惯性随机化范围 | ±20% |\n| | 摩擦系数随机化 | 0.5 ~ 1.5 |\n\n### 3.2 训练策略\n\n1. **预训练阶段**：使用大规模运动捕捉数据（>1000 种运动）进行流匹配预训练\n2. **多运动联合训练**：在流匹配阶段使用混合运动批次，避免策略遗忘\n3. **课程学习**：按难度递增顺序训练，从静态姿态 → 周期运动 → 高动态运动\n4. **精调阶段**：冻结流匹配编码器，仅微调动作头\n\n### 3.3 Sim-to-Real 迁移\n\n- **观测适配**：将模拟中的完美状态估计替换为真实机器人的传感器融合结果\n- **动作延迟补偿**：学习时间偏移校正模型\n- **黎曼积分器**：使用更高阶的数值积分方法提高模拟精度\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n| 数据集 | 运动类型 | 运动数量 | 来源 |\n|--------|----------|----------|------|\n| AMASS | 全身运动 | 1000+ | 动作捕捉数据 |\n| HumanAct12 | 人类动作 | 12 | 预定义动作集 |\n| 自建极端运动库 | 高动态运动 | 50 | 体操、跑酷、武术 |\n\n### 4.2 评估指标\n\n1. **跟踪精度**：\n  - MPJPE（Mean Per Joint Position Error）：$\\frac{1}{T}\\sum_t \\|q_t^{robot} - q_t^{target}\\|_2$\n  - PMJE（Per Joint Max Error）：$\\max_t \\|q_t^{robot} - q_t^{target}\\|_2$\n\n2. **物理可行性**：\n  - 成功执行率（Success Rate）\n  - 最大扭矩需求\n  - 平衡维持率\n\n3. **泛化能力**：\n  - 跨运动类型平均精度\n  - Unseen 运动执行成功率\n\n### 4.3 基线方法\n\n| 基线 | 描述 |\n|------|------|\n| **BC** | 行为克隆（Behavior Cloning） |\n| **GAIL** | 生成对抗模仿学习 |\n| **AMP** | 对抗运动先验 |\n| **RCS** | 奖励曲线形状方法 |\n| **Single-Motion RL** | 单运动专用策略（精度上限基线） |\n\n### 4.4 实验平台\n\n- **模拟器**：Mujoco Physics\n- **真实机器人**：Unitree H1 人形机器人（28 DoF）\n- **感知系统**：Intel RealSense D435i + OptiTrack\n\n## 5. 技术优势\n\n### 5.1 打破精度-规模权衡\n\n流匹配策略的优势在于：\n- **无干扰学习**：流匹配的条件建模避免多运动 RL 中的梯度干扰\n- **无损扩展**：高容量架构可以编码所有运动模式而不发生灾难性遗忘\n\n### 5.2 鲁棒的 Sim-to-Real 迁移\n\n执行感知精调阶段确保：\n- 策略输出的动作始终在硬件物理限制内\n- 域随机化构建了鲁棒的策略应对真实世界不确定性\n\n### 5.3 计算效率\n\n- 流匹配训练仅需单步前向传播（推理时 10 步 ODE 求解）\n- 比传统扩散策略训练收敛更快\n\n## 6. 技术弱点\n\n### 6.1 潜在局限性\n\n1. **流匹配分布假设**：条件高斯路径假设可能无法精确建模某些复杂运动分布\n\n2. **执行感知奖励设计**：依赖于精确的物理模型建模，模型误差可能导致约束过松或过严\n\n3. **计算资源需求**：高容量 Transformer 架构需要大量训练数据和计算资源\n\n4. **运动先验依赖**：性能上限受限于训练数据的运动多样性，无法生成未见过的运动模式\n\n### 6.2 泛化边界\n\n- 对于完全未知的运动类型（out-of-distribution），跟踪精度可能显著下降\n- 在非结构化地形上的动态平衡控制仍是开放问题\n\n---\n\n以上为 OmniXtreme 的方法论核心内容，该框架通过解耦一般性运动技能学习与物理执行精调，有效突破了高动态人形控制中的泛化性壁垒。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "OmniXtreme: Breaking the Generality Barrier in High-Dynamic Humanoid Control",
+      "authors": [
+        "Yunshen Wang",
+        "Shaohang Zhu",
+        "Peiyuan Zhi",
+        "Yuhan Li",
+        "Jiaxin Li",
+        "Yong-Lu Li",
+        "Yuchen Xiao",
+        "Xingxing Wang",
+        "Baoxiong Jia",
+        "Siyuan Huang"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.23843",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "High-fidelity motion tracking serves as the ultimate litmus test for generalizable, human-level motor skills. However, current policies often hit a \"generality barrier\": as motion libraries scale in diversity, tracking fidelity inevitably collapses - especially for real-world deployment of high-dynamic motions. We identify this failure as the result of two compounding factors: the learning bottleneck in scaling multi-motion optimization and the physical executability constraints that arise in real-world actuation. To overcome these challenges, we introduce OmniXtreme, a scalable framework that decouples general motor skill learning from sim-to-real physical skill refinement. Our approach uses a flow-matching policy with high-capacity architectures to scale representation capacity without interference-intensive multi-motion RL optimization, followed by an actuation-aware refinement phase that ensures robust performance on physical hardware. Extensive experiments demonstrate that OmniXtreme maintains high-fidelity tracking across diverse, high-difficulty datasets. On real robots, the unified policy successfully executes multiple extreme motions, effectively breaking the long-standing fidelity-scalability trade-off in high-dynamic humanoid control.",
+      "route_id": "ea4ccd80-c0c4-4c40-87f1-569530dd515f"
+    },
+    "markdown_stats": {
+      "lines": 588,
+      "words": 13212,
+      "headings": 38
+    },
+    "assets": {
+      "images": 42,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "ea4ccd80-c0c4-4c40-87f1-569530dd515f",
+  "paper_ref": "ea4ccd80-c0c4-4c40-87f1-569530dd515f",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

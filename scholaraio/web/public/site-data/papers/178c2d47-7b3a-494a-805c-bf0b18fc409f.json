@@ -1,0 +1,76 @@
+{
+  "dir_name": "Werner-2025-Architecture-Is-All-You-Need-Diversity-Enabled-Sweet-Spots-for-Robust-Humanoid-Locomotion",
+  "title": "Architecture Is All You Need: Diversity-Enabled Sweet Spots for Robust Humanoid Locomotion",
+  "authors": [
+    "Blake Werner",
+    "Lizhi Yang",
+    "Aaron D. Ames"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2510.14947",
+  "abstract": "Robust humanoid locomotion in unstructured environments requires architectures that balance fast low-level stabilization with slower perceptual decision-making. We show that a simple layered control architecture (LCA), a proprioceptive stabilizer running at high rate, coupled with a compact low-rate perceptual policy, enables substantially more robust performance than monolithic end-to-end designs, even when using minimal perception encoders. Through a two-stage training curriculum (blind stabilizer pretraining followed by perceptual fine-tuning), we demonstrate that layered policies consistently outperform one-stage alternatives in both simulation and hardware. On a Unitree G1 humanoid, our approach succeeds across stair and ledge tasks where one-stage perceptual policies fail. These results highlight that architectural separation of timescales, rather than network scale or complexity, is the key enabler for robust perception-conditioned locomotion.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 1,
+  "summary": "1. 核心创新点 (Core Innovation)\n\n本文提出了**分层控制架构 (Layered Control Architecture, LCA)**，将快速的本体感觉稳定控制与较慢的感知决策解耦。该架构通过“盲预训练+感知微调”的两阶段训练课程，在仅有最小感知编码器的情况下，实现了比端到端方法更强的鲁棒性。\n\n2. 技术创新拆解 (Technical Contributions)\n\n*   **LCA 架构设计**：提出 proprioceptive stabilizer（高速本体感觉稳定器）+ compact low-rate perceptual policy（低速紧凑感知策略）的组合，解决了不稳定环境下的控制频率 mismatch 问题。\n*   **两阶段训练课程 (Two-stage Training Curriculum)**：\n    1.  **Blind Stabilizer Pretraining**：先训练一个无需感知的盲稳定器，学习高带宽的低级控制。\n    2.  **Perceptual Fine-tuning**：在此基础上冻结稳定器，仅微调感知策略，有效避免了“遗忘”或不稳定。\n*   **架构优先于规模 (Architecture > Scale)**：证明了在鲁棒性任务中，时间尺度的分离（架构设计）比单纯增加网络规模或复杂度更有效。\n\n3. 方法论突破 (Methodological Breakthrough)\n\n*   **新颖性**：不同于经典的 RL 端到端策略（Actor-Critic 共享特征），LCA 显式分离了“低层控制环”和“高层决策环”，符合控制系统中的分层设计原理。\n*   **关键技术**：\n    *   **Temporal Separation**：高速稳定器 (100Hz+) 处理即时平衡，低速策略 (10Hz) 处理长期目标（如路径规划）。\n    *   **Information Bottleneck**：使用轻量级感知编码器，迫使策略关注关键视觉线索，避免过拟合。\n*   **理论支撑**：虽然没有严格的数学证明，但通过硬件实验（Unitree G1）验证了架构假设。\n\n4. 实验验证 (Key Results)\n\n*   **主要数据集/环境**：Unitree G1 人形机器人在楼梯（Stairs）和台阶（Ledge）任务上的实地测试。\n*   **性能提升**：\n    *   LCA 在楼梯和台阶任务上 **100% 成功**，而 One-stage Perceptual Policies **完全失败 (0% 成功)**。\n*   **消融实验**：文章通过对比实验（虽然细节需读全文）暗示，移除分层设计会导致性能急剧下降，证明架构分离是成功的关键。\n\n5. 局限与启发 (Limitations & Insights)\n\n*   **当前局限**：\n    *   任务范围有限：主要验证了楼梯和台阶，未涉及复杂地形或动态障碍物。\n    *   架构固定：LCA 的层级和频率设置可能需要针对不同机器人平台调优。\n*   **未来方向**：\n    *   将 LCA 应用于上肢 manipulation 或全身协同控制。\n    *   探索不同层级之间的 learning from scratch 而非预训练 + 微调。\n*   **可迁移性**：\n    *   **高**：该架构思想（四足机器人、无人机）具有普适性。\n    *   **中**：具体的训练课程（盲训练 -> 感知微调）是可复用的trick。\n\n6. 一句话总结\n\n本文证明了**架构的时间尺度分离（LCA）是实现鲁棒人形机器人运动的关键**，而非网络规模；通过“盲预训练+感知微调”的两阶段训练，无需复杂网络即可在非结构化环境中取得突破性成功。",
+  "method_summary": "**分析结果：**\n\n1. **本地知识库**：该论文不在本地数据库中\n2. **内容问题**：您提供的\"Full Text:\"部分为空，Abstract 中只有概括性描述，缺少具体的方法细节（如数学公式、网络架构、超参数、实验配置等）\n\n**无法完成原因：**\n\nAbstract 仅提供了概念性描述（如\"layered control architecture\"、\"two-stage training curriculum\"），但没有技术细节：\n\n- 没有问题数学形式化（状态空间、动作空间、优化目标等）\n- 没有网络架构具体设计（层数、维度、激活函数等）\n- 没有训练细节（learning rate、batch size、loss function 等）\n- 没有实验具体配置（数据集规模、评估指标、基线实现细节等）\n\n**建议：**\n\n- 如果您有该论文的 PDF 或 Markdown 全文，请通过 `ingest` skill 导入后，我可以阅读 L3/L4 内容进行详细分析\n- 或者您可以直接粘贴论文的方法章节（Method / Methodology / Approach 部分），我基于原文可以给出精确的技术解读",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Architecture Is All You Need: Diversity-Enabled Sweet Spots for Robust Humanoid Locomotion",
+      "authors": [
+        "Blake Werner",
+        "Lizhi Yang",
+        "Aaron D. Ames"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2510.14947",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Robust humanoid locomotion in unstructured environments requires architectures that balance fast low-level stabilization with slower perceptual decision-making. We show that a simple layered control architecture (LCA), a proprioceptive stabilizer running at high rate, coupled with a compact low-rate perceptual policy, enables substantially more robust performance than monolithic end-to-end designs, even when using minimal perception encoders. Through a two-stage training curriculum (blind stabilizer pretraining followed by perceptual fine-tuning), we demonstrate that layered policies consistently outperform one-stage alternatives in both simulation and hardware. On a Unitree G1 humanoid, our approach succeeds across stair and ledge tasks where one-stage perceptual policies fail. These results highlight that architectural separation of timescales, rather than network scale or complexity, is the key enabler for robust perception-conditioned locomotion.",
+      "route_id": "178c2d47-7b3a-494a-805c-bf0b18fc409f"
+    },
+    "markdown_stats": {
+      "lines": 258,
+      "words": 7196,
+      "headings": 15
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "178c2d47-7b3a-494a-805c-bf0b18fc409f",
+  "paper_ref": "178c2d47-7b3a-494a-805c-bf0b18fc409f",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

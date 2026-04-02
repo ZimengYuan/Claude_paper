@@ -1,0 +1,79 @@
+{
+  "dir_name": "Thi-Ha-Nguyen-2026-Physically-Grounded-Goal-Imagination-Physics-Informed-Variational-Autoencoder-for-Self-supervised-Reinforcement-Learning",
+  "title": "Physically-Grounded Goal Imagination: Physics-Informed Variational Autoencoder for Self-supervised Reinforcement Learning",
+  "authors": [
+    "Lan Thi Ha Nguyen",
+    "Kien Ton Manh",
+    "Anh Do Duc",
+    "Nam Pham Hai"
+  ],
+  "year": 2026,
+  "journal": "Lecture Notes in Computer Science",
+  "doi": "10.1007/978-981-95-4957-3_34",
+  "abstract": "Self-supervised goal-conditioned reinforcement learning enables robots to autonomously acquire diverse skills without human supervision. However, a central challenge is the goal setting problem: robots must propose feasible and diverse goals that are achievable in their current environment. Existing methods like RIG (Visual Reinforcement Learning with Imagined Goals) use variational autoencoder (VAE) to generate goals in a learned latent space but have the limitation of producing physically implausible goals that hinder learning efficiency. We propose Physics-Informed RIG (PI-RIG), which integrates physical constraints directly into the VAE training process through a novel Enhanced Physics-Informed Variational Autoencoder (Enhanced $p ^ { 3 }$ -VAE), enabling the generation of physically consistent and achievable goals. Our key innovation is the explicit separation of the latent space into physics variables governing object dynamics and environmental factors capturing visual appearance, while enforcing physical consistency through differential equation constraints and conservation laws. This enables the generation of physically consistent and achievable goals that respect fundamental physical principles such as object permanence, collision constraints, and dynamic feasibility. Through extensive experiments, we demonstrate that this physics-informed goal generation significantly improves the quality of proposed goals, leading to more effective exploration and better skill acquisition in visual robotic manipulation tasks including reaching, pushing, and pick-and-place scenarios. Keywords: Goal-conditioned reinforcement learning · Self-supervised reinforcement learning · Physics-informed learning · Variational Autoencoder · Visual representation learning · Robotic manipulation",
+  "paper_type": "book-chapter",
+  "publisher": "Springer Science+Business Media",
+  "issn": "0302-9743",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Physically-Grounded Goal Imagination: Physics-Informed Variational Autoencoder for Self-supervised Reinforcement Learning",
+      "authors": [
+        "Lan Thi Ha Nguyen",
+        "Kien Ton Manh",
+        "Anh Do Duc",
+        "Nam Pham Hai"
+      ],
+      "year": 2026,
+      "journal": "Lecture Notes in Computer Science",
+      "doi": "10.1007/978-981-95-4957-3_34",
+      "paper_type": "book-chapter",
+      "publisher": "Springer Science+Business Media",
+      "issn": "0302-9743",
+      "abstract": "Self-supervised goal-conditioned reinforcement learning enables robots to autonomously acquire diverse skills without human supervision. However, a central challenge is the goal setting problem: robots must propose feasible and diverse goals that are achievable in their current environment. Existing methods like RIG (Visual Reinforcement Learning with Imagined Goals) use variational autoencoder (VAE) to generate goals in a learned latent space but have the limitation of producing physically implausible goals that hinder learning efficiency. We propose Physics-Informed RIG (PI-RIG), which integrates physical constraints directly into the VAE training process through a novel Enhanced Physics-Informed Variational Autoencoder (Enhanced $p ^ { 3 }$ -VAE), enabling the generation of physically consistent and achievable goals. Our key innovation is the explicit separation of the latent space into physics variables governing object dynamics and environmental factors capturing visual appearance, while enforcing physical consistency through differential equation constraints and conservation laws. This enables the generation of physically consistent and achievable goals that respect fundamental physical principles such as object permanence, collision constraints, and dynamic feasibility. Through extensive experiments, we demonstrate that this physics-informed goal generation significantly improves the quality of proposed goals, leading to more effective exploration and better skill acquisition in visual robotic manipulation tasks including reaching, pushing, and pick-and-place scenarios. Keywords: Goal-conditioned reinforcement learning · Self-supervised reinforcement learning · Physics-informed learning · Variational Autoencoder · Visual representation learning · Robotic manipulation",
+      "route_id": "010035b0-ed67-4b39-b875-ac113c945afb"
+    },
+    "markdown_stats": {
+      "lines": 259,
+      "words": 4809,
+      "headings": 21
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "010035b0-ed67-4b39-b875-ac113c945afb",
+  "paper_ref": "010035b0-ed67-4b39-b875-ac113c945afb",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

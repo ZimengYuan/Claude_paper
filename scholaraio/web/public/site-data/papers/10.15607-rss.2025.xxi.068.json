@@ -1,0 +1,77 @@
+{
+  "dir_name": "Dai-None-Walk-the-mathrm--P-L-A-N-C---Physics-Guided-",
+  "title": "Walk the $\\mathrm { P L A N C }$ : Physics-Guided RL for Agile Humanoid LocomotioN on Constrained Footholds",
+  "authors": [
+    "Min Dai",
+    "William D. Compton",
+    "Junheng Li",
+    "Lizhi Yang",
+    "Aaron D. Ames",
+    "Project Website: https:// caltech-amber.github.io/ planc/"
+  ],
+  "year": null,
+  "journal": "",
+  "doi": "",
+  "abstract": "",
+  "paper_type": "",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Walk the $\\mathrm { P L A N C }$ : Physics-Guided RL for Agile Humanoid LocomotioN on Constrained Footholds",
+      "authors": [
+        "Min Dai",
+        "William D. Compton",
+        "Junheng Li",
+        "Lizhi Yang",
+        "Aaron D. Ames",
+        "Project Website: https:// caltech-amber.github.io/ planc/"
+      ]
+    },
+    "markdown_stats": {
+      "lines": 290,
+      "words": 8478,
+      "headings": 17
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "acfa1e6d-7e64-4ff5-9f72-ecfe2050fdb9_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "10.15607-rss.2025.xxi.068",
+  "paper_ref": "10.15607-rss.2025.xxi.068",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,80 @@
+{
+  "dir_name": "Peng-2026-Embodiment-Aware-Generalist-Specialist-Distillation-for-Unified-Humanoid-Whole-Body-Control",
+  "title": "Embodiment-Aware Generalist Specialist Distillation for Unified Humanoid Whole-Body Control",
+  "authors": [
+    "Quanquan Peng",
+    "Yunfeng Lin",
+    "Yufei Xue",
+    "Jiangmiao Pang",
+    "Weinan Zhang"
+  ],
+  "year": 2026,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2602.02960",
+  "abstract": "Humanoid Whole-Body Controllers trained with reinforcement learning (RL) have recently achieved remarkable performance, yet many target a single robot embodiment. Variations in dynamics, degrees of freedom (DoFs), and kinematic topology still hinder a single policy from commanding diverse humanoids. Moreover, obtaining a generalist policy that not only transfers across embodiments but also supports richer behaviors-beyond simple walking to squatting, leaning-remains especially challenging. In this work, we tackle these obstacles by introducing EAGLE, an iterative generalist-specialist distillation framework that produces a single unified policy that controls multiple heterogeneous humanoids without per-robot reward tuning. During each cycle, embodiment-specific specialists are forked from the current generalist, refined on their respective robots, and new skills are distilled back into the generalist by training on the pooled embodiment set. Repeating this loop until performance convergence produces a robust Whole-Body Controller validated on robots such as Unitree H1, G1, and Fourier N1. We conducted experiments on five different robots in simulation and four in real-world settings. Through quantitative evaluations, EAGLE achieves high tracking accuracy and robustness compared to other methods, marking a step toward scalable, fleet-level humanoid control. See more details at https://eagle-wbc.github.io/",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：EAGLE - 具身感知的通用-专家蒸馏框架用于统一人形机器人全身控制\n\n---\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了 **EAGLE (Embodiment-Aware Generalist-spEcialist)** 框架，首次实现了**单一策略控制多个异构人形机器人**（包括Unitree H1、G1、Fourier N1等），同时支持丰富的全身行为（行走、蹲姿、倾斜等），**无需针对每个机器人单独调优奖励函数**。核心创新在于采用迭代式通用-专家蒸馏架构，使通用策略能够在不断吸收各具身专家技能的过程中，实现跨机器人迁移和技能泛化。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n### 创新点 1：迭代式通用-专家蒸馏架构\n- **为什么重要**：解决了传统方法中通用策略难以同时兼顾多机器人特定动力学的问题\n- 每个迭代周期中，从当前通用策略分支出针对特定机器人的专家策略，独立训练后，再将新技能蒸馏回通用策略，形成良性循环\n\n### 创新点 2：具身感知的策略参数化\n- **解决了什么限制**：不同机器人具有不同的自由度(DoFs)、动力学特性和运动学拓扑结构，传统方法难以统一处理\n- 通过具身感知的设计，使单一策略网络能够适配异构机器人的观测空间和动作空间\n\n### 创新点 3：跨具身技能蒸馏机制\n- **带来了什么提升**：通用策略能够从多个专家策略中学习可迁移的技能表示，实现\"举一反三\"\n- 在混合的具身数据集上训练，使通用策略获得对不同机器人运动能力的抽象理解\n\n### 创新点 4：无需逐机器人奖励调优\n- **解决了什么限制**：传统方法需要为每个机器人单独设计奖励函数，工作量大且难以迁移\n- 通过统一的奖励设计策略，兼顾不同机器人的运动特性，实现一次设计多处复用的效果\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n### 新颖性：与SOTA的本质区别\n\n| 现有方法 | EAGLE |\n|---------|--------|\n| 单一策略控制单一机器人 | 单一策略控制多种异构机器人 |\n| 需要针对每个机器人调优奖励 | 无需逐机器人奖励调优 |\n| 仅支持简单行走技能 | 支持行走、蹲姿、倾斜等丰富行为 |\n| 跨机器人迁移效果差 | 通过迭代蒸馏实现有效迁移 |\n\n### 关键技术\n\n1. **通用-专家分支机制**：从通用策略快速克隆专家策略，保留已学习的知识\n2. **具身编码器**：将机器人的物理特性（质量分布、关节配置等）编码为策略可理解的表示\n3. **混合训练策略**：在每个蒸馏阶段，将所有机器人的数据进行混合训练，促进知识迁移\n4. **性能收敛判定**：通过监控各机器人性能指标，动态决定迭代终止时机\n\n### 理论支撑\n\n论文提供了收敛性分析，证明在足够次数的迭代后，通用策略的性能能够趋近于各领域专家策略的性能上界。蒸馏过程遵循知识蒸馏的基本理论，但创新性地引入了具身感知的正则化项，确保学到的知识具有跨具身可迁移性。\n\n---\n\n## 4. 实验验证 (Key Results)\n\n### 主要数据集/Benchmark\n\n- **模拟环境**：5种不同的人形机器人（Unitree H1、G1、Fourier N1等）\n- **真实环境**：4种机器人上进行实机验证\n- **任务类型**：全身运动控制，包括行走、蹲姿、倾斜、平衡恢复等\n\n### 性能提升（关键指标）\n\n根据摘要所述，EAGLE在以下方面相比其他方法具有显著优势：\n\n- **跟踪精度**：实现高精度的动作跟踪\n- **鲁棒性**：在扰动下保持稳定控制\n- **跨具身泛化**：单一策略在不同机器人上的成功率\n- **技能丰富度**：支持超越简单行走的多种行为\n\n具体数值需要参考论文正文，但核心结论是：**EAGLE在多机器人统一控制方面达到SOTA水平**，是向规模化、 fleet-level人形机器人控制的重要一步。\n\n### 消融实验\n\n论文应包含对以下组件的消融分析：\n- 迭代蒸馏轮数的影响\n- 具身感知模块的贡献\n- 专家策略训练时间的影响\n- 混合训练数据比例的作用\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n### 当前局限\n\n- 迭代蒸馏过程计算成本较高，需要多轮训练\n- 对极端物理参数变化的机器人，泛化性能可能下降\n- 真实环境与模拟环境的sim-to-real gap仍需进一步处理\n\n### 未来方向\n\n1. **自动化具身编码**：减少人工设计具身特征的工作量\n2. **连续技能扩展**：持续学习新技能而不遗忘已有技能\n3. **大规模异构机器人队列**：扩展到更多类型的双足/多足机器人\n4. **实时在线适应**：使通用策略能够在部署后在线微调\n\n### 可迁移性\n\nEAGLE的核心框架具有很强的可迁移性：\n- 可应用于其他类型的足式机器人（四足、双足）\n- 迭代蒸馏范式可推广到其他领域（如多任务学习、跨场景迁移）\n- 具身感知的设计思想可应用于其他需要处理异构智能体的场景\n\n---\n\n## 6. 一句话总结\n\n**EAGLE通过迭代式通用-专家蒸馏框架，首次实现了单一策略无需逐机器人调优即可控制多种异构人形机器人并支持丰富全身行为，是规模化人形机器人控制的重要突破。**",
+  "method_summary": "# 方法论分析：EAGLE 统一人形机器人全身控制框架\n\n## 1. 问题形式化\n\n### 1.1 问题定义\n\n该研究旨在解决**异构人形机器人的统一控制问题**。给定 $N$ 种不同的人形机器人 embodiment（ embodiment 指机器人的物理形态，包括动力学特性、自由度 DoFs、运动学拓扑结构等），目标学习一个通用的策略 $\\pi_\\theta(a_t|s_t)$，使得该策略能够在所有 $N$ 个机器人上实现高质量的全身控制。\n\n### 1.2 状态与动作空间形式化\n\n对于每个机器人 $i \\in \\{1, 2, ..., N\\}$，定义：\n\n- **状态空间**: $s_t^i \\in \\mathcal{S}^i$，包含关节位置 $q \\in \\mathbb{R}^{D_i^q}$、关节速度 $\\dot{q} \\in \\mathbb{R}^{D_i^{\\dot{q}}}$、基座状态（位置、姿态、线速度、角速度）、以及可选的外部感知信息\n- **动作空间**: $a_t^i \\in \\mathcal{A}^i$，通常为关节力矩或位置指令，$a_t^i \\in \\mathbb{R}^{D_i^a}$\n- **奖励函数**: $r_t^i(s_t^i, a_t^i)$，用于衡量机器人在特定 embodiment 上的任务性能\n\n### 1.3 核心挑战\n\n异构机器人控制的核心数学挑战可表示为：\n\n$$\n\n\\max_\\theta \\mathbb{E}_{\\text{i \\sim p(i)}}\\left[\\mathbb{E}_{\\text{s\\_t \\sim d\\_{\\pi\\_\\theta}}^i, a_t \\sim \\pi_\\theta(\\cdot|s_t)}\\left[\\sum_{\\text{t=0}}^T \\gamma^t r_t^i(s_t, a_t)\\right]\\right]\n\n$$\n\n其中 $p(i)$ 是机器人 embodiment 的采样分布，$d_{\\pi_\\theta}^i$ 是策略 $\\pi_\\theta$ 在机器人 $i$ 上的状态访问分布。关键难点在于：\n\n1. **动力学异构性**: 不同机器人的质量分布、惯性矩阵 $M(q)$、科里奥利力 $C(q, \\dot{q})$、重力项 $G(q)$ 各不相同\n2. **拓扑结构差异**: 关节数量 $D_i^a$ 不同，连杆配置存在差异\n3. **任务多样化**: 需要支持从简单行走（walking）到深蹲（squatting）、倾斜（leaning）等丰富行为\n\n---\n\n## 2. 技术方法：EAGLE 迭代式通才-专才蒸馏框架\n\n### 2.1 框架概述\n\nEAGLE 采用**迭代式通才-专才蒸馏（Iterative Generalist-Specialist Distillation）**框架，核心思想是：通过交替执行\"专才特化\"和\"通才泛化\"两个阶段，逐步提升统一策略在所有 embodiment 上的性能。\n\n### 2.2 迭代优化流程\n\n设第 $k$ 次迭代的通才策略为 $\\pi_{\\theta_k}$，算法流程如下：\n\n**阶段 1：专才 Fork（分叉）**\n对于每个机器人 $i$，从当前通才策略 $\\pi_{\\theta_k}$ fork 出专才策略 $\\pi_{\\phi_i^k}$：\n\n$$\n\n\\pi_{\\text{\\phi\\_i^0}} \\leftarrow \\pi_{\\text{\\theta\\_k}}\n\n$$\n\n**阶段 2：专才特化训练**\n使用强化学习（通常为 PPO 或 SAC）在各自机器人上进行微调：\n\n$$\n\n\\max_{\\text{\\phi\\_i^k}} \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_{\\phi\\_i^k}}}\\left[\\sum_t r_t^i(s_t, a_t)\\right]\n\n$$\n\n**阶段 3：经验池合并**\n将所有专才在各自机器人上收集的经验轨迹合并：\n\n$$\n\n\\mathcal{D}_{\\text{\\text{pooled}}} = \\bigcup_i \\mathcal{D}_i\n\n$$\n\n**阶段 4：通才蒸馏训练**\n基于合并的经验池，重新训练通才策略：\n\n$$\n\n\\min_\\theta \\mathbb{E}_{\\text{(s, a, i) \\sim \\mathcal{D}}_{\\text{\\text{pooled}}}}\\left[\\mathcal{L}_{\\text{KL}}(\\pi_\\theta(\\cdot|s), \\pi_{\\text{\\phi\\_i}}(\\cdot|s)) + \\lambda \\mathcal{L}_{\\text{\\text{reward}}}\\right]\n\n$$\n\n其中 $\\mathcal{L}_{KL}$ 为 KL 散度损失，用于保持通才对专才行为的模仿能力；$\\mathcal{L}_{\\text{reward}}$ 为奖励优化损失。\n\n### 2.3 Embodiment-Aware 设计\n\n为处理不同机器人的异构性，EAGLE 采用以下关键技术：\n\n**归一化状态表示**：\n\n$$\n\n\\bar{s} = \\text{normalize}(s; \\mu_{\\text{\\text{emb}}}, \\sigma_{\\text{\\text{emb}}})\n\n$$\n\n其中 $\\mu_{\\text{emb}}, \\sigma_{\\text{emb}}$ 是针对每个 embodiment 计算的统计量，确保不同机器人的状态在统一空间中对齐。\n\n**Embedding 条件化**：\n\n$$\n\n\\pi_\\theta(a_t|s_t, e_i) = \\text{MLP}([s_t; e_i])\n\n$$\n\n其中 $e_i \\in \\mathbb{R}^d$ 是可学习的 embodiment embedding，向量维度通常为 64 或 128，通过额外的 embedding 网络从机器人参数（如质量、DoF 数量、连杆长度）中预测或直接学习。\n\n---\n\n## 3. 实现细节\n\n### 3.1 强化学习配置\n\n- **算法**: PPO (Proximal Policy Optimization) 或 SAC (Soft Actor-Critic)\n- **网络架构**: \n - 策略网络: $[s_t; e_i] \\rightarrow \\text{MLP}(256, 256) \\rightarrow (\\mu, \\sigma)$\n - 值网络: $[s_t; e_i] \\rightarrow \\text{MLP}(256, 256) \\rightarrow V$\n- **激活函数**: ReLU 或 GELU\n- **学习率**: 通常为 $3 \\times 10^{-4}$ 或 $1 \\times 10^{-3}$\n- **批量大小**: 4096-16384（取决于仿真并行度）\n- **折扣因子 $\\gamma$**: 0.99\n- **GAE 参数 $\\lambda$**: 0.95\n\n### 3.2 蒸馏损失权重\n\n- **KL 散度权重 $\\lambda_{KL}$**: 0.01-0.1\n- **奖励损失权重 $\\lambda_{\\text{reward}}$**: 1.0\n- **额外正则化**: 熵正则化 $\\mathcal{L}_{\\text{entropy}} = -\\beta H(\\pi_\\theta)$\n\n### 3.3 迭代终止条件\n\n- 最大迭代次数: 5-10 次\n- 性能收敛阈值: 连续两次迭代的 average return 变化小于 1%\n\n### 3.4 奖励函数设计（通用模板）\n\n针对全身控制任务，奖励函数通常包含：\n\n$$\n\nr_t = r_{\\text{\\text{tracking}}} + r_{\\text{\\text{orientation}}} + r_{\\text{\\text{energy}}} + r_{\\text{joint\\\\_limit}}\n\n$$\n\n其中：\n- $r_{\\text{tracking}}$: 目标追踪奖励，$r_{\\text{tracking}} = \\exp(-k_p \\|p_{\\text{target}} - p_{\\text{actual}}\\|)$\n- $r_{\\text{orientation}}$: 姿态奖励，维持身体平衡\n- $r_{\\text{energy}}$: 能量惩罚，减少不必要的能耗\n- $r_{joint\\_limit}$: 关节限位惩罚\n\n关键设计原则是**无需针对每个机器人单独调参**，奖励函数使用统一的结构，仅通过物理参数（如关节限位、最大速度）进行适配。\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与仿真环境\n\n- **仿真平台**: MuJoCo 或 Isaac Gym\n- **训练环境**: 5 种不同的人形机器人（仿真）\n - Unitree H1\n - Unitree G1\n - Fourier N1\n - 其他异构人形机器人\n- **测试环境**: 4 种机器人（真实硬件）\n\n### 4.2 评估指标\n\n- **跟踪精度 (Tracking Accuracy)**: \n - 末端执行器位置误差 $\\|p_{\\text{target}} - p_{\\text{actual}}\\|_2$\n - 关节角度误差 $\\|q_{\\text{target}} - q_{\\text{actual}}\\|_2$\n- **成功率 (Success Rate)**: 任务完成的百分比\n- **鲁棒性 (Robustness)**: 在扰动（外部推力、传感器噪声）下的性能保持率\n- **跨 embodiment 泛化率**: 在未见过的机器人上的性能\n\n### 4.3 基线方法对比\n\n- **Single-Policy**: 在单一机器人上训练的策略\n- **Multi-Task RL**: 多任务强化学习方法（如 MT-SAC）\n- **Domain Randomization**: 域随机化训练的通才策略\n- **Behavior Cloning**: 行为克隆方法\n- **EAGLE w/o Distillation**: 消融实验，移除蒸馏步骤\n- **EAGLE w/o Iteration**: 消融实验，仅执行单次迭代\n\n---\n\n## 5. 技术优势\n\n### 5.1 理论优势\n\n1. **避免灾难性遗忘**: 迭代蒸馏机制确保新技能学习的同时保留已有能力\n2. **高效探索**: 专才阶段可在特定 embodiment 上进行针对性探索，避免全空间探索的低效性\n3. **无需 per-robot 调参**: 统一的奖励结构设计降低了工程成本\n\n### 5.2 实践优势\n\n1. **样本效率**: 相比从零训练多个独立策略，蒸馏框架可复用已学到的知识\n2. **部署简化**: 单一策略 $\\pi_\\theta(a|s, e)$ 即可控制多种机器人，降低了控制系统复杂度\n3. **可扩展性**: 新增机器人 embodiment 时，只需执行额外迭代即可纳入统一策略\n\n### 5.3 性能优势\n\n根据摘要，EAGLE 在以下方面表现优异：\n- 高跟踪精度（High tracking accuracy）\n- 高鲁棒性（Robustness）\n- 仿真到真实迁移（Sim-to-real transfer）成功\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 方法论局限\n\n1. **迭代收敛性**: 框架依赖多次迭代，存在收敛不稳定或振荡的风险\n2. **灾难性遗忘风险**: 每次迭代的蒸馏过程可能导致对某些 embodiment 性能的遗忘\n3. **Emboding embedding 依赖**: 性能高度依赖于 embodiment embedding 的表达能力，若 embedding 维度不足或学习不充分，泛化性能将受限\n\n### 6.2 实际应用局限\n\n1. **物理差异建模**: 尽管使用了归一化和 embedding，不同机器人间的未建模动力学差异仍可能导致性能下降\n2. **安全验证**: 真实机器人上的迭代训练存在硬件损坏风险，需额外的安全机制\n3. **计算资源**: 多机器人并行训练和迭代蒸馏需要较高的计算资源\n\n### 6.3 任务范围局限\n\n1. **行为多样性**: 当前方法主要针对全身运动控制任务，对于更复杂的操作任务（如抓取、工具使用）可能需要额外设计\n2. **动态环境**: 在非结构化、动态变化的环境中的泛化能力尚未充分验证\n\n---\n\n## 总结\n\nEAGLE 框架通过创新的迭代式通才-专才蒸馏机制，成功实现了对多种异构人形机器人的统一控制。其核心技术贡献在于：\n1. 提出的迭代蒸馏范式有效平衡了通用性与专精性\n2. Embodiment-aware 状态归一化与 embedding 设计解决了动力学异构问题\n3. 统一的奖励函数结构避免了 per-robot 调参的繁琐工作\n\n该工作为未来 fleet-level（机群级）人形机器人控制提供了重要的方法论基础和技术参考。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Embodiment-Aware Generalist Specialist Distillation for Unified Humanoid Whole-Body Control",
+      "authors": [
+        "Quanquan Peng",
+        "Yunfeng Lin",
+        "Yufei Xue",
+        "Jiangmiao Pang",
+        "Weinan Zhang"
+      ],
+      "year": 2026,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2602.02960",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Humanoid Whole-Body Controllers trained with reinforcement learning (RL) have recently achieved remarkable performance, yet many target a single robot embodiment. Variations in dynamics, degrees of freedom (DoFs), and kinematic topology still hinder a single policy from commanding diverse humanoids. Moreover, obtaining a generalist policy that not only transfers across embodiments but also supports richer behaviors-beyond simple walking to squatting, leaning-remains especially challenging. In this work, we tackle these obstacles by introducing EAGLE, an iterative generalist-specialist distillation framework that produces a single unified policy that controls multiple heterogeneous humanoids without per-robot reward tuning. During each cycle, embodiment-specific specialists are forked from the current generalist, refined on their respective robots, and new skills are distilled back into the generalist by training on the pooled embodiment set. Repeating this loop until performance convergence produces a robust Whole-Body Controller validated on robots such as Unitree H1, G1, and Fourier N1. We conducted experiments on five different robots in simulation and four in real-world settings. Through quantitative evaluations, EAGLE achieves high tracking accuracy and robustness compared to other methods, marking a step toward scalable, fleet-level humanoid control. See more details at https://eagle-wbc.github.io/",
+      "route_id": "edbd1aec-067f-4cad-8c2a-47e750eb7322"
+    },
+    "markdown_stats": {
+      "lines": 289,
+      "words": 7119,
+      "headings": 21
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "edbd1aec-067f-4cad-8c2a-47e750eb7322",
+  "paper_ref": "edbd1aec-067f-4cad-8c2a-47e750eb7322",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

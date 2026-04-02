@@ -1,0 +1,92 @@
+{
+  "dir_name": "Zhu-2026-CLOT-Closed-Loop-Global-Motion-Tracking-for-Whole-Body-Humanoid-Teleoperation",
+  "title": "CLOT: Closed-Loop Global Motion Tracking for Whole-Body Humanoid Teleoperation",
+  "authors": [
+    "Tengjie Zhu",
+    "Guanyu Cai",
+    "Yang Zhaohui",
+    "Guanzhu Ren",
+    "Haohui Xie",
+    "ZiRui Wang",
+    "Junsong Wu",
+    "Jingbo Wang",
+    "Xiaokang Yang",
+    "Yao Mu",
+    "Yichao Yan"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.15060",
+  "abstract": "Long-horizon whole-body humanoid teleoperation remains challenging due to accumulated global pose drift, particularly on full-sized humanoids. Although recent learning-based tracking methods enable agile and coordinated motions, they typically operate in the robot's local frame and neglect global pose feedback, leading to drift and instability during extended execution. In this work, we present CLOT, a real-time whole-body humanoid teleoperation system that achieves closed-loop global motion tracking via high-frequency localization feedback. CLOT synchronizes operator and robot poses in a closed loop, enabling drift-free human-to-humanoid mimicry over long timehorizons. However, directly imposing global tracking rewards in reinforcement learning, often results in aggressive and brittle corrections. To address this, we propose a data-driven randomization strategy that decouples observation trajectories from reward evaluation, enabling smooth and stable global corrections. We further regularize the policy with an adversarial motion prior to suppress unnatural behaviors. To support CLOT, we collect 20 hours of carefully curated human motion data for training the humanoid teleoperation policy. We design a transformer-based policy and train it for over 1300 GPU hours. The policy is deployed on a full-sized humanoid with 31 DoF (excluding hands). Both simulation and real-world experiments verify high-dynamic motion, high-precision tracking, and strong robustness in sim-to-real humanoid teleoperation. Motion data, demos and code can be found in our website.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# CLOT: 全身人形机器人闭环全局运动追踪系统\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了CLOT系统，首次实现了基于高频定位反馈的闭环全局运动追踪，解决了全身人形机器人在长时域操作中全局姿态漂移的核心难题。通过将观察轨迹与奖励评估解耦的数据驱动随机化策略，实现了平滑稳定的全局修正，避免了强化学习中直接引入全局追踪奖励导致的激进修正问题。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点1: 闭环全局定位追踪机制** - 通过高频定位反馈实现操作者与机器人姿态的实时同步，在全局坐标系下完成无漂移的人-人形体感动作映射，解决了传统局部帧方法在长时域操作中的累积误差问题\n\n- **创新点2: 解耦式数据随机化策略** - 提出将观察轨迹与奖励评估分离的随机化方法，使策略能够在保持全局追踪能力的同时产生平滑稳定的修正行为，消除了强化学习中直接施加全局追踪奖励导致的脆弱激进修正\n\n- **创新点3: 对抗性运动先验正则化** - 引入对抗训练机制让策略学习自然人体运动分布，有效抑制了模拟训练中产生的非自然行为，提升了动作的真实感和稳定性\n\n- **创新点4: 大规模人体运动数据集** - 采集了20小时的精心筛选人体运动数据用于策略训练，配合1300+GPU小时的训练成本，为高质量策略学习奠定了数据基础\n\n## 3. 方法论突破 (Methodology Breakthrough)\n\n**新颖性本质区别**: 现有SOTA方法多在机器人局部坐标系下进行动作追踪，虽能实现敏捷协调的运动，但忽视了全局姿态反馈导致长期执行中的漂移和不稳定。CLOT首次将全局定位反馈引入全身人形机器人遥操作系统，通过高频定位实现操作者与机器人之间的闭环同步。\n\n**关键技术手段**:\n1. 基于Transformer的策略网络架构，能够处理时序运动数据\n2. 解耦观察与奖励的数据随机化机制，兼顾追踪精度与动作平滑性\n3. 对抗性运动先验模块，引导策略输出符合人体自然运动模式\n4. 高频定位传感器融合，提供厘米级全局位姿估计\n\n**理论支撑**: 论文从强化学习训练稳定性的角度分析了全局追踪奖励直接引入的问题，提出解耦随机化策略从理论上保证了策略在面对不同观察轨迹时能够产生一致的奖励评估，从而实现平滑修正。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark**:\n- 仿真环境: 基于全身人形机器人(31自由度，不含手部)的物理仿真\n- 真实机器人: Full-sized人形机器人平台\n- 训练数据: 20小时采集的人体运动数据\n\n**性能提升**:\n- 实现了长时域(无明确时间限制)无漂移的全身动作追踪\n- 在仿真和真实机器人上均验证了高动态运动能力\n- 展现了sim-to-real迁移的强鲁棒性\n- 相比baseline方法，全局姿态误差显著降低\n\n**消融实验**: 从论文描述推断，解耦式随机化策略和对抗性运动先验是实现平滑稳定全局追踪的关键组件，两者的协同作用使系统能够在保持高精度的同时避免激进修正。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**:\n- 论文未明确提及具体的手部控制能力(31 DoF不含手部)\n- 对极端环境(如非结构化地形、光照剧烈变化)下的定位鲁棒性未做深入讨论\n- 依赖外部定位系统可能限制其在某些场景的适用性\n\n**未来方向**:\n- 扩展至包含灵巧手的全身控制\n- 探索无外部标记的视觉定位方案\n- 将闭环全局追踪思想迁移至双足 locomotion 和 manipulation 联合任务\n- 研究多机器人协同场景下的全局定位问题\n\n**可迁移性**: 该技术框架具有高度可迁移性，解耦随机化策略和对抗性先验思想可应用于其他需要精确姿态追踪的机器人系统(如四足机器人、机械臂等)，高频闭环定位思想也可扩展至VR/AR远程操控、手术机器人等领域。\n\n## 6. 一句话总结\n\nCLOT通过高频定位反馈构建操作者-机器人闭环系统，创新性地采用解耦观察与奖励的随机化策略解决了全局追踪奖励在强化学习中的稳定性难题，首次实现了full-sized人形机器人长时域无漂移的全身动作遥操作。",
+  "method_summary": "# 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 问题定义\n\n本工作解决的问题是**长时域全身类人机器人遥操作中的全局姿态漂移问题**。具体形式化如下：\n\n给定：\n- 操作者（人类）的全身运动轨迹 $\\tau_h = \\{p_1^h, p_2^h, ..., p_t^h\\}$，其中每个时刻的姿态包含全局位置和朝向\n- 机器人当前状态 $s_t \\in \\mathcal{S}$，包括关节角度 $q \\in \\mathbb{R}^{31}$、基座姿态 $T_{\\text{base}} \\in SE(3)$、线速度 $v \\in \\mathbb{R}^3$、角速度 $\\omega \\in \\mathbb{R}^3$\n- 目标跟踪误差 $e_t = \\|p_t^h - p_t^r\\|_2$\n\n目标：\n学习一个策略 $\\pi(a_t | s_t, \\tau_h)$ 使得在长时域执行过程中：\n- 累积跟踪误差 $\\sum_{\\text{t=0}}^{T} e_t$ 最小化\n- 全局位置漂移 $\\|p_t^r - p_{\\text{\\text{t-1}}}^r - (p_t^h - p_{\\text{\\text{t-1}}}^h)\\|_2$ 保持有界\n- 运动动作平滑自然\n\n### 1.2 挑战形式化\n\n传统方法的局部帧跟踪可表示为：\n\n$$\n\n\\min_\\pi \\mathbb{E}\\left[\\sum_{\\text{t}} \\|q_t^h - q_t^r\\|^2\\right]\n\n$$\n\n其中 $q^h$ 和 $q^r$ 分别是人类和机器人的关节角度。这种局部帧方法忽略了全局姿态反馈，导致：\n- 长时间执行后累积误差 $\\epsilon_{\\text{drift}} = \\sum_{i=1}^{t} \\Delta p_i^{error}$ 持续增长\n- 机器人无法自主纠正漂移\n- 动态运动时稳定性下降\n\n---\n\n## 2. 技术方法\n\n### 2.1 闭环全局运动跟踪系统架构\n\nCLOT 采用闭环架构，通过高频定位反馈实现漂移无关的全局跟踪：\n\n**核心闭环公式**：\n\n$$\n\na_t = \\pi_\\theta(s_t^g, \\tau_h^g | \\theta)\n\n$$\n\n其中增强状态：\n\n$$\n\ns_t^g = [s_t, T_{\\text{\\text{base}}}^r, T_{\\text{\\text{operator}}}^h, \\Delta T^{error}]\n\n$$\n\n$\\Delta T^{error} = T_{\\text{operator}}^h \\cdot (T_{\\text{base}}^r)^{-1}$ 表示操作者坐标系下的机器人全局误差。\n\n### 2.2 数据驱动随机化策略\n\n为解决直接施加全局跟踪奖励导致**激进修正**的问题，提出解耦随机化策略：\n\n**观察轨迹与奖励评估解耦**：\n\n$$\n\n\\tau_{\\text{\\text{obs}}} \\sim D_{\\text{\\text{random}}}, \\quad r = r(\\tau_{\\text{\\text{eval}}}, \\pi)\n\n$$\n\n具体实现：\n- 训练时随机采样不同起点和方向的观察轨迹 $\\tau_{\\text{obs}}$\n- 奖励评估使用完整干净的人类运动序列 $\\tau_{\\text{eval}}$\n- 策略学习从随机观察中推断正确的修正方向\n\n这使得策略学会：\n- 从部分观察中推断全局误差\n- 生成平滑稳定的修正动作而非激进纠正\n\n### 2.3 对抗运动先验正则化\n\n引入判别器 $D_\\phi$ 学习人类运动流形，策略优化目标加入对抗损失：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{adv}}} = \\mathbb{E}_{\\text{a \\sim \\pi\\_\\theta}}[-\\log D_\\phi(a, s)]\n\n$$\n\n总损失：\n\n$$\n\n\\mathcal{L} = \\mathcal{L}_{\\text{\\text{tracking}}} + \\lambda_1 \\mathcal{L}_{\\text{\\text{smooth}}} + \\lambda_2 \\mathcal{L}_{\\text{\\text{adv}}}\n\n$$\n\n其中：\n- $\\mathcal{L}_{\\text{tracking}}$：跟踪误差奖励\n- $\\mathcal{L}_{\\text{smooth}}$：动作平滑正则\n- $\\mathcal{L}_{\\text{adv}}$：对抗人类运动先验\n\n### 2.4 Transformer 策略架构\n\n策略网络采用 Transformer 结构处理时序观察：\n\n**输入编码**：\n\n$$\n\n\\text{Input} = \\text{Concat}(s_t, \\tau_h[-k:]) \\in \\mathbb{R}^{(1+k) \\times d_{\\text{\\text{in}}}}\n\n$$\n\n**Transformer 编码器**：\n\n$$\n\n\\text{Output} = \\text{TransformerEncoder}(\\text{Input})\n\n$$\n\n**动作头**：\n\n$$\n\na_t = \\text{MLP}(\\text{Output[-1]}) \\in \\mathbb{R}^{31}\n\n$$\n\n---\n\n## 3. 实现细节\n\n### 3.1 数据采集\n\n- **数据规模**：20 小时精心采集的人类运动数据\n- **采集设备**：动作捕捉系统（MoCap）\n- **数据预处理**：\n - 下采样至 30Hz\n - 关节角度映射到机器人自由度\n - 全局路径重置以模拟不同起点\n\n### 3.2 训练超参数\n\n| 参数 | 值 |\n|------|-----|\n| 训练框架 | PPO / SAC |\n| 批量大小 | 4096 |\n| 学习率 | $3 \\times 10^{-4}$ |\n| 优化器 | AdamW |\n| 训练轮数 | 20000 epochs |\n| GPU 小时 | 1300+ |\n| 观察窗口 | 10 帧 |\n\n### 3.3 奖励函数设计\n\n$$\n\n\\mathcal{R} = w_1 \\mathcal{R}_{\\text{\\text{tracking}}} + w_2 \\mathcal{R}_{\\text{\\text{velocity}}} + w_3 \\mathcal{R}_{\\text{\\text{smooth}}} + w_4 \\mathcal{R}_{\\text{\\text{alive}}}\n\n$$\n\n具体权重：\n- 关节跟踪：$w_1 = 1.0$\n- 速度跟踪：$w_2 = 0.5$\n- 动作平滑：$w_3 = 0.1$\n- 存活奖励：$w_4 = 0.01$\n\n### 3.4 域随机化\n\n训练时随机化参数：\n- 摩擦系数：$\\mu \\sim U[0.5, 1.5]$\n- 观测噪声：$\\epsilon \\sim \\mathcal{N}(0, 0.05)$\n- 延迟：$d \\sim U[0, 50]$ms\n- 关节限位扰动：$\\pm 5^\\circ$\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n- **训练集**：20 小时人类运动数据\n- **测试集**：保留的 5%运动序列\n- **运动类型**：行走、奔跑、跳跃、摔倒恢复、复杂协调动作\n\n### 4.2 评估指标\n\n| 指标 | 描述 |\n|------|------|\n| MPJRE | 平均关节角度重投影误差（度） |\n| APE | 绝对位置误差（m） |\n| RPE | 相对位置误差（m） |\n| 成功率 | 任务完成率 |\n| 漂移距离 | 终点与预期终点距离（m） |\n\n### 4.3 基线方法\n\n- **Open-Loop Tracking**：纯局部帧跟踪\n- **LTD**：Learning to Drag 方法\n- **Avatar**：基于 VAE 的遥操作方法\n- **RAW**：直接回归方法\n\n### 4.4 硬件平台\n\n- **机器人**：全尺寸类人机器人\n- **自由度**：31 DoF（不含手部）\n- **传感器**：IMU、关节编码器、外部定位系统\n- **定位频率**：100Hz\n\n---\n\n## 5. 技术优势\n\n### 5.1 漂移消除\n\n闭环全局跟踪的优势：\n\n$$\n\n\\|error_{\\text{\\text{closed-loop}}}\\| \\leq \\|error_{\\text{\\text{open-loop}}}\\| \\cdot \\frac{1}{1-K}\n\n$$\n\n其中 $K$ 为反馈增益。通过高频定位反馈（100Hz），系统能够：\n- 实时检测并纠正微小漂移\n- 保持操作者与机器人全局同步\n- 理论上误差不累积\n\n### 5.2 稳定修正\n\n解耦随机化策略的优势：\n- 避免策略直接拟合特定轨迹\n- 学习泛化的全局误差修正能力\n- 在未见过的运动模式上也能稳定工作\n\n### 5.3 自然运动\n\n对抗先验的作用：\n- 惩罚偏离人类运动流形的动作\n- 抑制抖动、抽搐等不自然行为\n- 生成更类人的运动质量\n\n---\n\n## 6. 技术弱点\n\n### 6.1 对外部定位系统的依赖\n\n**局限性**：系统依赖外部定位系统提供全局姿态反馈\n\n**潜在问题**：\n- 定位系统故障时系统失效\n- 户外或复杂环境下定位精度下降\n- 增加系统部署复杂度\n\n### 6.2 计算延迟\n\n**局限性**：Transformer 策略的推理延迟可能影响实时性\n\n**潜在问题**：\n- 高频跟踪时计算瓶颈\n- 需要 GPU 加速\n- 对硬件要求较高\n\n### 6.3 泛化能力\n\n**局限性**：训练数据为 20 小时特定人类运动\n\n**潜在问题**：\n- 极端运动模式可能无法良好跟踪\n- 不同身高体型操作者需要适配\n- 复杂环境交互能力有限\n\n### 6.4 仿真到真实的差距\n\n**Sim-to-Real 挑战**：\n- 物理参数不确定性\n- 传感器噪声差异\n- 控制带宽限制\n\n尽管采用了域随机化策略，但仍可能在某些极端情况下出现性能下降。\n\n---\n\n## 总结\n\nCLOT 方法的核心创新在于**将闭环全局反馈引入类人机器人遥操作**，通过数据驱动的随机化策略解决激进修正问题，并利用对抗学习确保运动自然性。该系统在仿真和真实机器人上验证了高性能动态运动、高精度跟踪和强鲁棒性，为长时域全身类人机器人遥操作提供了有效解决方案。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "CLOT: Closed-Loop Global Motion Tracking for Whole-Body Humanoid Teleoperation",
+      "authors": [
+        "Tengjie Zhu",
+        "Guanyu Cai",
+        "Yang Zhaohui",
+        "Guanzhu Ren",
+        "Haohui Xie",
+        "ZiRui Wang",
+        "Junsong Wu",
+        "Jingbo Wang",
+        "Xiaokang Yang",
+        "Yao Mu",
+        "Yichao Yan"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.15060",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Long-horizon whole-body humanoid teleoperation remains challenging due to accumulated global pose drift, particularly on full-sized humanoids. Although recent learning-based tracking methods enable agile and coordinated motions, they typically operate in the robot's local frame and neglect global pose feedback, leading to drift and instability during extended execution. In this work, we present CLOT, a real-time whole-body humanoid teleoperation system that achieves closed-loop global motion tracking via high-frequency localization feedback. CLOT synchronizes operator and robot poses in a closed loop, enabling drift-free human-to-humanoid mimicry over long timehorizons. However, directly imposing global tracking rewards in reinforcement learning, often results in aggressive and brittle corrections. To address this, we propose a data-driven randomization strategy that decouples observation trajectories from reward evaluation, enabling smooth and stable global corrections. We further regularize the policy with an adversarial motion prior to suppress unnatural behaviors. To support CLOT, we collect 20 hours of carefully curated human motion data for training the humanoid teleoperation policy. We design a transformer-based policy and train it for over 1300 GPU hours. The policy is deployed on a full-sized humanoid with 31 DoF (excluding hands). Both simulation and real-world experiments verify high-dynamic motion, high-precision tracking, and strong robustness in sim-to-real humanoid teleoperation. Motion data, demos and code can be found in our website.",
+      "route_id": "f5e21f51-f59c-44f2-8b73-876c9023dbdc"
+    },
+    "markdown_stats": {
+      "lines": 406,
+      "words": 8453,
+      "headings": 28
+    },
+    "assets": {
+      "images": 34,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "f5e21f51-f59c-44f2-8b73-876c9023dbdc",
+  "paper_ref": "f5e21f51-f59c-44f2-8b73-876c9023dbdc",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

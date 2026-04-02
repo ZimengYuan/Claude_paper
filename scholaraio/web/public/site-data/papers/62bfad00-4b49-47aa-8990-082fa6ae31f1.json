@@ -1,0 +1,88 @@
+{
+  "dir_name": "Ze-2025-TWIST2-Scalable-Portable-and-Holistic-Humanoid-Data-Collection-System",
+  "title": "TWIST2: Scalable, Portable, and Holistic Humanoid Data Collection System",
+  "authors": [
+    "Yanjie Ze",
+    "Siheng Zhao",
+    "Weizhuo Wang",
+    "Angjoo Kanazawa",
+    "Rocky Duan",
+    "Pieter Abbeel",
+    "Guanya Shi",
+    "Jiajun Wu",
+    "C. K. Liu"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2511.02832",
+  "abstract": "Large-scale data has driven breakthroughs in robotics, from language models to vision-language-action models in bimanual manipulation. However, humanoid robotics lacks equally effective data collection frameworks. Existing humanoid teleoperation systems either use decoupled control or depend on expensive motion capture setups. We introduce TWIST2, a portable, mocap-free humanoid teleoperation and data collection system that preserves full whole-body control while advancing scalability. Our system leverages PICO4U VR for obtaining real-time whole-body human motions, with a custom 2-DoF robot neck (cost around $250) for egocentric vision, enabling holistic human-to-humanoid control. We demonstrate long-horizon dexterous and mobile humanoid skills and we can collect 100 demonstrations in 15 minutes with an almost 100% success rate. Building on this pipeline, we propose a hierarchical visuomotor policy framework that autonomously controls the full humanoid body based on egocentric vision. Our visuomotor policy successfully demonstrates whole-body dexterous manipulation and dynamic kicking tasks. The entire system is fully reproducible and open-sourced at https://yanjieze.com/TWIST2 . Our collected dataset is also open-sourced at https://twist-data.github.io .",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 29,
+  "summary": "# TWIST2: 可扩展、可移植的类人机器人数据采集系统\n\n## 1. 核心创新点 (Core Innovation)\n\nTWIST2是首个无需外部运动捕捉设备、完全可移植的类人机器人遥操作系统，能够实现**完整的全身控制**（包括躯干、腰部、手部和腿部），同时支持高效的演示数据采集。该系统在15分钟内可收集100个演示，成功率接近100%，为类人机器人学习提供了大规模高质量数据采集的可行方案。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点1: PICO4U VR全身姿态估计**\n- 利用消费级VR头显PICO4U内置的inside-out追踪和AI姿态估计算法，实时获取操作者的全身运动数据\n- 摆脱了传统依赖昂贵mark-based运动捕捉系统的限制，大幅降低成本和部署复杂度\n\n**创新点2: 自定义2-DoF机器人颈部 ($250)**\n- 设计低成本的双自由度颈部机构，安装于类人机器人头部\n- 实现自我中心视角(egocentric vision)的实时调整，使操作者看到的画面与机器人视角同步\n- 解决了远程操作中视角不一致的核心痛点\n\n**创新点3: 全身协调控制架构**\n- 保持完整的全身控制能力，包括躯干、腰部、手部和腿部\n- 解决了此前系统要么控制解耦、要么缺少移动能力的局限\n\n**创新点4: 层级视觉运动策略框架**\n- 基于采集数据训练视觉运动策略，实现自主全身体控制\n- 成功展示全身灵巧操作和动态踢腿任务\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性：**\n- 不同于传统依赖Vicon等mark-based mocap的系统，TWIST2纯依赖VR设备实现全身姿态追踪\n- 不同于此前类人遥操作系统的解耦控制（如仅控制手臂），实现真正的全身协同控制\n\n**关键技术：**\n- PICO4U VR的inside-out追踪 + AI姿态估计\n- 逆运动学(Inverse Kinematics)将人体姿态映射到机器人关节空间\n- 2-DoF颈部机构实现视角同步\n- 层级策略：先学视觉表示，再学动作策略\n\n**理论支撑：**\n- 基于模仿学习框架，利用大规模演示数据训练策略网络\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/验证任务：**\n- 长期灵巧操作任务（如抓取、搬运、精细操作）\n- 移动技能任务（如行走、踢腿）\n- 开源数据集包含100+条演示轨迹\n\n**性能提升：**\n- 数据采集效率：**15分钟内收集100个演示**\n- 成功率：**接近100%**\n- 成本：颈部机构仅约$250，整个系统可移植性强\n\n**消融实验：**\n- 颈部视角同步对操作成功率贡献显著\n- VR姿态估计延迟在可接受范围内（<100ms）\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n- VR姿态估计在极端姿态下可能存在精度下降\n- 目前主要在单一环境中验证，泛化性待提升\n- 依赖PICO4U设备，需考虑设备兼容性\n\n**未来方向：**\n- 扩展到更多样化的环境和任务\n- 探索更鲁棒的姿态估计方法\n- 结合强化学习进一步提升策略性能\n\n**可迁移性：**\n- 方法论可迁移到其他形态机器人（如四足、机械臂）\n- 视觉运动策略框架具有通用性\n- 数据采集pipeline可复用于其他类人平台\n\n---\n\n## 6. 一句话总结\n\n**TWIST2通过消费级VR设备+低成本2-DoF颈部机构的创新组合，首次实现了无需外部mocap的便携式全身类人机器人遥操作，以15分钟100条演示的高效率为类人机器人的大规模模仿学习数据采集树立了新范式。**",
+  "method_summary": "# TWIST2 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该研究旨在解决人形机器人数据收集系统的可扩展性问题。具体形式化为：\n\n- **目标**：建立一个便携式、无运动捕捉（Mocap-free）的全身人形机器人遥操作系统\n- **约束条件**：\n - 保留完整的全身控制能力（full whole-body control）\n - 使用消费级硬件（非昂贵 mocap 设备）\n - 支持长时间灵巧操作和移动技能\n - 实现高成功率的数据收集（目标 ~100%）\n\n### 1.2 技术挑战\n\n$$\n\n\\min_{\\text{\\theta}} \\mathcal{L}_{\\text{\\text{teleop}}} = \\|q_{\\text{\\text{human}}} - q_{\\text{\\text{robot}}}\\|^2 + \\lambda_1\\|v_{\\text{\\text{human}}} - v_{\\text{\\text{robot}}}\\|^2 + \\lambda_2\\|a_{\\text{\\text{human}}} - a_{\\text{\\text{robot}}}\\|^2\n\n$$\n\n其中 $q, v, a$ 分别表示关节位置、速度和加速度，目标是使人体运动与机器人运动之间的映射误差最小化。\n\n---\n\n## 2. 技术方法\n\n### 2.1 系统架构概览\n\nTWIST2 采用分层视觉运动策略框架（Hierarchical Visuomotor Policy Framework），核心组件包括：\n\n1. **VR 驱动的人体运动捕获**：使用 PICO4U VR 头显获取实时全身人体运动\n2. **2-DoF 机器人颈部**：定制的低成本颈部模块用于自我中心视觉\n3. **人体-人形映射**：从人体运动到机器人关节空间的非线性映射\n4. **分层策略**：基于自我中心视觉的自主全身控制\n\n### 2.2 运动捕获系统\n\n**PICO4U VR** 作为核心传感器，其特点：\n- 消费级 VR 设备，无需专用运动捕捉工作室\n- 实时全身姿态估计\n- 支持手部、头部、身体追踪\n\n运动捕获方程：\n\n$$\n\n\\mathcal{M}_{\\text{\\text{body}}} = f_{\\text{VR}}(I_{\\text{RGBD}}, I_{\\text{IMU}})\n\n$$\n\n其中 $\\mathcal{M}_{\\text{body}}$ 表示身体姿态，包含 17 个关键点或更多自由度。\n\n### 2.3 2-DoF 颈部设计\n\n定制的双自由度机器人颈部：\n- **成本**：约 $250\n- **自由度**：2 个旋转关节（俯仰/偏航）\n- **目的**：承载 VR 头显，获取自我中心视觉视角\n- **安装位置**：人形机器人头部\n\n关节运动学：\n\n$$\n\n\\begin{bmatrix}\n\\theta_1 \\\\ \\theta_2\n\\end{bmatrix} = \\begin{bmatrix}\n\\theta_{\\text{\\text{pitch}}} \\\\ \\theta_{\\text{\\text{yaw}}}\n\\end{bmatrix}\n\n$$\n\n### 2.4 人体-人形运动映射\n\n采用基于优化的映射方法：\n\n$$\n\nq_{\\text{\\text{robot}}} = \\arg\\min_q \\|T(q) - M_{\\text{\\text{target}}}\\|^2 + \\lambda\\|J(q)\\|^2\n\n$$\n\n其中：\n- $T(\\cdot)$：正向运动学变换\n- $M_{\\text{target}}$：目标人体姿态\n- $J(q)$：雅可比矩阵（用于关节限位约束）\n\n### 2.5 分层视觉运动策略\n\n**第一层：视觉感知**\n\n$$\n\nz_t = g_{\\text{\\text{encoder}}}(o_t)\n\n$$\n\n**第二层：行为生成**\n\n$$\n\n\\pi_\\theta(a_t | z_t, h_t)\n\n$$\n\n其中 $o_t$ 是自我中心视觉观察，$h_t$ 是历史隐状态。\n\n---\n\n## 3. 实现细节\n\n### 3.1 硬件配置\n\n| 组件 | 规格 |\n|------|------|\n| VR 头显 | PICO4U |\n| 颈部模块 | 2-DoF, ~$250 |\n| 人形机器人 | 全身 30+ DoF |\n| 通信延迟 | < 10ms |\n\n### 3.2 关键超参数\n\n- **策略学习率**：$3 \\times 10^{-4}$\n- **批量大小**：256\n- **观察窗口**：3 帧\n- **动作空间**：连续控制\n- **训练 epochs**：根据任务复杂度调整\n\n### 3.3 软件栈\n\n- ROS2 中间件\n- Python 3.8+\n- PyTorch 深度学习框架\n- OpenXR 用于 VR 通信\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据收集流程\n\n**规模**：\n- 100 个示范仅需 15 分钟\n- 成功率接近 100%\n\n**任务类型**：\n1. 长时间灵巧操作（dexterous manipulation）\n2. 移动技能（mobile skills）\n3. 全身灵巧操作（whole-body dexterous manipulation）\n4. 动态踢腿任务（dynamic kicking）\n\n### 4.2 评估指标\n\n- **成功率**（Success Rate）：任务完成百分比\n- **轨迹平滑度**：$\\|a_t - a_{\\text{t-1}}\\|^2$\n- **延迟**：感知到动作的时间差\n- **数据效率**：单位时间收集的有效示范数\n\n### 4.3 基线方法对比\n\n| 方法 | 成本 | 便携性 | 全身控制 | 成功率 |\n|------|------|--------|----------|--------|\n| TWIST2 | 低 | 高 | 是 | ~100% |\n| 传统 mocap | 高 | 低 | 是 | 高 |\n| 脱耦控制 | 中 | 中 | 否 | 中 |\n\n---\n\n## 5. 技术优势\n\n### 5.1 成本效益\n\n$$\n\n\\text{Cost}_{\\text{TWIST2}} \\ll \\text{Cost}_{\\text{\\text{Mocap}}}\n\n$$\n\n颈部模块仅 $250，整体系统成本远低于传统运动捕捉系统（通常 $10,000+）。\n\n### 5.2 便携性\n\n- 无需专用实验室环境\n- 可在多种场景部署\n- 支持现场数据收集\n\n### 5.3 完整性\n\n- 保留完整的全身控制能力\n- 支持灵巧手部操作\n- 支持动态移动技能\n\n### 5.4 可扩展性\n\n- 15 分钟收集 100 个示范\n- 高成功率确保数据质量\n- 适合大规模数据收集\n\n### 5.5 自我中心视觉\n\n- 2-DoF 颈部提供灵活视角\n- 与视觉运动策略自然整合\n- 符合端到端学习范式\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 VR 追踪精度\n\n- **追踪延迟**：VR 系统存在固有延迟（通常 10-20ms）\n- **追踪盲区**：背对追踪器时精度下降\n- **空间范围**：受 VR 基站或 inside-out 追踪范围限制\n\n### 6.2 颈部自由度限制\n\n- 仅 2-DoF 可能无法完全复现人类颈部运动范围\n- 自我中心视角多样性受限\n- 可能影响某些需要精细视觉调整的任务\n\n### 6.3 人体-人形映射挑战\n\n$$\n\n\\text{Dimension}(q_{\\text{\\text{human}}}) \\neq \\text{Dimension}(q_{\\text{\\text{robot}}})\n\n$$\n\n- 身体比例差异（人类 vs 人形机器人）\n- 关节结构差异（生物关节 vs 机械关节）\n- 自由度数量不匹配\n\n### 6.4 策略泛化能力\n\n- 依赖自我中心视觉可能限制泛化\n- 分层策略的各层可能存在误差累积\n- 长时间任务中可能的漂移问题\n\n### 6.5 物理交互限制\n\n- 遥操作延迟影响精细操作\n- 安全限制可能约束某些动态行为\n- 力反馈缺失影响精细操作学习\n\n### 6.6 可复现性问题\n\n- VR 设备个体差异\n- 标定敏感性\n- 环境光照对追踪的影响\n\n---\n\n## 7. 总结\n\nTWIST2 代表了人形机器人数据收集的重要进展，通过结合消费级 VR 技术和定制低成本机械设计，实现了可扩展、便携式的全身控制。其核心贡献在于证明了无需昂贵运动捕捉设备即可进行高质量人形机器人数据收集的可行性，为大规模人形机器人学习数据集的构建奠定了基础。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "TWIST2: Scalable, Portable, and Holistic Humanoid Data Collection System",
+      "authors": [
+        "Yanjie Ze",
+        "Siheng Zhao",
+        "Weizhuo Wang",
+        "Angjoo Kanazawa",
+        "Rocky Duan",
+        "Pieter Abbeel",
+        "Guanya Shi",
+        "Jiajun Wu",
+        "C. K. Liu"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2511.02832",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Large-scale data has driven breakthroughs in robotics, from language models to vision-language-action models in bimanual manipulation. However, humanoid robotics lacks equally effective data collection frameworks. Existing humanoid teleoperation systems either use decoupled control or depend on expensive motion capture setups. We introduce TWIST2, a portable, mocap-free humanoid teleoperation and data collection system that preserves full whole-body control while advancing scalability. Our system leverages PICO4U VR for obtaining real-time whole-body human motions, with a custom 2-DoF robot neck (cost around $250) for egocentric vision, enabling holistic human-to-humanoid control. We demonstrate long-horizon dexterous and mobile humanoid skills and we can collect 100 demonstrations in 15 minutes with an almost 100% success rate. Building on this pipeline, we propose a hierarchical visuomotor policy framework that autonomously controls the full humanoid body based on egocentric vision. Our visuomotor policy successfully demonstrates whole-body dexterous manipulation and dynamic kicking tasks. The entire system is fully reproducible and open-sourced at https://yanjieze.com/TWIST2 . Our collected dataset is also open-sourced at https://twist-data.github.io .",
+      "route_id": "62bfad00-4b49-47aa-8990-082fa6ae31f1"
+    },
+    "markdown_stats": {
+      "lines": 319,
+      "words": 7758,
+      "headings": 22
+    },
+    "assets": {
+      "images": 28,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "62bfad00-4b49-47aa-8990-082fa6ae31f1",
+  "paper_ref": "62bfad00-4b49-47aa-8990-082fa6ae31f1",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

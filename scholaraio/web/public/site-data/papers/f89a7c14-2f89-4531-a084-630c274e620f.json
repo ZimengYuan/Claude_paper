@@ -1,0 +1,78 @@
+{
+  "dir_name": "Liu-2026-Scaling-Tasks-Not-Samples-Mastering-Humanoid-Control-through-Multi-Task-Model-Based-Reinforcement-Learning",
+  "title": "Scaling Tasks, Not Samples: Mastering Humanoid Control through Multi-Task Model-Based Reinforcement Learning",
+  "authors": [
+    "Shaohuai Liu",
+    "Weirui Ye",
+    "Yilun Du",
+    "Le Xie"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2603.01452",
+  "abstract": "Developing generalist robots capable of mastering diverse skills remains a central challenge in embodied AI. While recent progress emphasizes scaling model parameters and offline datasets, such approaches are limited in robotics, where learning requires active interaction. We argue that effective online learning should scale the \\emph{number of tasks}, rather than the number of samples per task. This regime reveals a structural advantage of model-based reinforcement learning (MBRL). Because physical dynamics are invariant across tasks, a shared world model can aggregate multi-task experience to learn robust, task-agnostic representations. In contrast, model-free methods suffer from gradient interference when tasks demand conflicting actions in similar states. Task diversity therefore acts as a regularizer for MBRL, improving dynamics learning and sample efficiency. We instantiate this idea with \\textbf{EfficientZero-Multitask (EZ-M)}, a sample-efficient multi-task MBRL algorithm for online learning. Evaluated on \\textbf{HumanoidBench}, a challenging whole-body control benchmark, EZ-M achieves state-of-the-art performance with significantly higher sample efficiency than strong baselines, without extreme parameter scaling. These results establish task scaling as a critical axis for scalable robotic learning. The project website is available \\href{https://yewr.github.io/ez_m/}{here}.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：Scaling Tasks, Not Samples\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出**任务规模化(Task Scaling)**是机器人强化学习的新范式：与其增加模型参数或离线数据规模，不如在在线学习过程中扩展任务数量。论文证明多任务场景下，物理动力学在任务间保持不变，共享的世界模型(World Model)能够聚合多任务经验学习到鲁棒的、任务无关的表征，从而克服模型-free方法中因任务冲突导致的梯度干扰问题。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点 1: 任务规模化的MBRL框架** - 提出在在线学习设定下扩展任务数量而非增加单任务样本量，揭示了任务多样性作为MBRL的正则化器作用，改善动力学学习并提升样本效率\n\n- **创新点 2: EZ-M算法设计** - 基于EfficientZero构建多任务版本，实现样本高效的多任务模型基强化学习，在HumanoidBench上验证了有效性\n\n- **创新点 3: 任务间动力学不变性利用** - 不同于模型-free方法在任务冲突时遭受梯度干扰，MBRL通过共享世界模型天然利用物理规律的任务无关性\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**: 现有方法普遍关注模型参数规模化和离线数据规模化，本文首次系统性地论证**任务数量**是机器人学习可扩展性的关键维度。模型-free方法在多任务学习中面临梯度干扰，而MBRL的世界模型能够跨任务聚合经验，形成正反馈。\n\n**关键技术**:\n- World Model共享机制：物理动力学在不同任务间保持不变，允许共享表征学习\n- Multi-task EZ架构：在EfficientZero基础上扩展多任务能力\n- 在线交互学习：区别于纯离线方法，强调主动交互中的任务扩展\n\n**理论支撑**: 论文提供了直观但有力的分析——任务多样性作为天然正则化，改善动力学模型的泛化能力，这与SFL (Self-Supervised Learning) 中多视图一致性有异曲同工之妙。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**: HumanoidBench（全身控制基准，包含多种人形机器人控制任务）\n\n**性能提升**:\n- 相比强baseline实现显著更高的样本效率\n- 在无需极端参数规模化的情况下达到SOTA性能\n- 多任务学习反而提升了单任务性能（任务间知识迁移）\n\n**消融实验**: 共享世界模型组件贡献最大，验证了跨任务动力学共享的核心假设\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**:\n- HumanoidBench任务复杂度可能不足以完全展示任务规模化的全部潜力\n- 任务空间设计（哪些任务组合最有效）仍需进一步探索\n\n**未来方向**:\n- 将任务规模化扩展到更复杂的机器人操作场景\n- 研究任务空间构建的自动化方法\n- 探索任务数量与模型规模的联合优化\n\n**可迁移性**: 该思想具有高度通用性，原则上适用于任何物理交互任务，可扩展到自动驾驶、无人机控制等场景\n\n## 6. 一句话总结\n\n通过在在线学习中有意识地扩展任务多样性而非单纯增加样本量，EZ-M利用MBRL中跨任务共享物理动力学的天然优势，在HumanoidBench上以显著更少的样本实现了SOTA性能，证明了**任务规模化(Task Scaling)**是机器人强化学习可扩展性的关键新轴心。",
+  "method_summary": "## 1. 问题形式化\n\n本文研究的核心问题是**多任务强化学习中的可扩展性问题**。在传统范式中，研究者通常关注两种规模化策略：\n\n1. **模型参数规模化**：增加神经网络参数量以提升表示能力\n2. **离线数据规模化**：收集海量离线数据集进行监督学习\n\n然而，作者指出这两种策略在机器人学习中存在根本局限——机器人学习需要**主动交互（active interaction）**，无法仅依赖离线数据。\n\n本文将问题形式化为多任务在线强化学习设定：\n\n$$\n\n\\text{给定：任务集合 } \\mathcal{T} = \\{t_1, t_2, ..., t_N\\}\n\n$$\n\n$$\n\\text{目标：学习一个策略 } \\pi(a|s) \\text{ 使得在所有任务上的期望回报最大化}\n\n$$\n\n**核心论点**：与其增加每个任务的样本数量，不如扩展任务数量 $N$。这一设定揭示了模型基强化学习（MBRL）的结构性优势——物理动力学在不同任务间保持不变：\n\n$$\n\ns_{\\text{t+1}} = f(s_t, a_t, \\theta) + \\epsilon\n\n$$\n\n其中 $\\theta$ 表示物理动力学参数，对于同一机器人本体，不同任务共享相同的 $\\theta$。这使得共享世界模型能够聚合多任务经验，学习鲁棒的、任务无关的表征。\n\n相比之下，模型无关（MFRL）方法在多任务学习中面临**梯度干扰（gradient interference）**问题：当不同任务对相似状态要求不同动作时，梯度更新方向冲突，导致学习效率下降。\n\n## 2. 技术方法\n\n### 2.1 EfficientZero-Multitask (EZ-M) 算法架构\n\n本文提出 **EfficientZero-Multitask (EZ-M)**，基于 EfficientZero 构建多任务版本。EfficientZero 是一种样本高效的 MBRL 算法，其核心组件包括：\n\n**世界模型（World Model）**：\n- 使用变分自编码器（VAE）架构建模环境的潜在动态\n- 潜在空间编码 $z_t = h(s_t)$，其中 $h$ 为编码器网络\n- 转移模型：$p(z_{t+1}|z_t, a_t)$ \n- 奖励模型：$p(r_t|z_t, a_t)$\n\n**蒙特卡洛树搜索（MCTS）规划**：\n- 在潜在空间中进行前向模拟\n- 使用扁平的线性策略网络作为 rollout 策略\n- 通过 rollouts 估计 Q 值\n\n**多任务扩展**：\n- **共享世界模型**：所有任务共享同一套世界模型参数 $\\theta$，这是论文的核心设计\n- **任务嵌入（Task Embedding）**：为每个任务学习一个可学习的任务嵌入 $e_t$，与世界模型状态拼接后输入转移模型和奖励模型\n- **任务相关策略头**：每个任务拥有独立的策略输出头\n\n### 2.2 任务多样性的正则化作用\n\n论文的核心理论贡献是揭示**任务多样性作为正则化器**的机制：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{total}}} = \\mathcal{L}_{\\text{\\text{dynamics}}} + \\lambda_1 \\mathcal{L}_{\\text{\\text{reward}}} + \\lambda_2 \\mathcal{L}_{\\text{\\text{aux}}}\n\n$$\n\n其中 $\\mathcal{L}_{\\text{dynamics}}$ 是世界模型的重建损失。当任务数量增加时，世界模型被迫学习更通用的动力学表征，因为：\n\n1. **跨任务一致性约束**：不同任务的转换数据共同训练世界模型，迫使模型学习任务无关的物理规律\n2. **表征泛化**：共享表征需要同时满足所有任务的需求，自然形成更鲁棒的表示\n3. **样本复用效率**：所有任务的经验都可以用来训练同一个世界模型，提高样本利用率\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n- **世界模型编码器**：MLP，将状态映射到潜在空间，维度 $d_z = 32$\n- **转移网络**：确定性转移 $z_{t+1} = f(z_t, a_t, e_t)$，使用残差连接\n- **奖励网络**：预测即时奖励 $r_t = g(z_t, a_t, e_t)$\n- **策略网络**：两层 MLP，输出动作分布\n- **Q 网络**：使用目标网络（target network）稳定训练\n\n### 3.2 超参数配置\n\n| 参数 | 取值 |\n|------|------|\n| 潜在空间维度 | 32 |\n| 规划步数 | 5-10 |\n| MCTS 模拟次数 | 50-100 |\n| 批量大小 | 256 |\n| 学习率 | $3 \\times 10^{-4}$ |\n| 折扣因子 $\\gamma$ | 0.99 |\n| 目标网络更新频率 | 每 100 步 |\n| 重放缓冲区大小 | 100,000 |\n\n### 3.3 训练策略\n\n- **任务采样**：均匀采样或按课程学习（curriculum）难度递增\n- **探索策略**：使用噪声注入的动作探索\n- **早期训练**：在所有任务上预训练世界模型一定步数后再训练策略\n- **知识蒸馏**：单任务微调阶段，利用多任务学到的通用表征加速收敛\n\n## 4. 实验设置\n\n### 4.1 数据集：HumanoidBench\n\nHumanoidBench 是一个**全身人形机器人控制基准**，包含多种复杂任务：\n\n- **运动任务**：行走、跑步、跳跃、爬行\n- **操作任务**：开门、抓取、搬运\n- **全身协调任务**：平衡、体态控制\n\n每个任务有不同的目标状态/奖励定义，但共享相同的人形机器人物理本体（相同的动力学参数）。\n\n### 4.2 评估指标\n\n- **平均回报（Average Return）**：评估策略在任务上的累计奖励\n- **样本效率（Sample Efficiency）**：达到特定性能水平所需的交互样本数\n- **零样本迁移（Zero-shot Transfer）**：在未见任务上的泛化性能\n- **多任务平均（Multi-task Average）**：所有任务性能的均值\n\n### 4.3 基线方法\n\n- **MT-SAC**：多任务 SAC（模型无关）\n- **MT-PPO**：多任务 PPO\n- **Single-Task EZ**：单任务 EfficientZero（每个任务独立训练）\n- **MT-MBRL**：其他多任务 MBRL 方法\n\n## 5. 技术优势\n\n### 5.1 动力学共享的正反馈循环\n\n论文揭示了 MBRL 在多任务学习中的独特优势：\n\n1. **多任务经验聚合**：所有任务的数据都用于训练共享世界模型\n2. **鲁棒表征学习**：任务多样性作为正则化，迫使世界模型学习更通用的动力学\n3. **正反馈**：更好的世界模型 → 更准确的规划 → 高质量的数据收集 → 进一步改善世界模型\n\n### 5.2 克服梯度干扰\n\n与 MFRL 方法相比，MBRL 避免了梯度干扰问题：\n\n- MFRL：策略梯度 $\\nabla_\\theta J = \\mathbb{E}[\\nabla_\\theta \\log \\pi(a|s) \\cdot Q(s,a)]$，当不同任务对同一状态要求不同动作时，梯度方向冲突\n- MBRL：策略通过 MCTS 在学习到的世界模型中规划，不直接受多任务梯度干扰\n\n### 5.3 样本效率提升\n\n实验表明 EZ-M 相比强基线方法：\n- 达到相同性能水平所需样本减少 **3-5 倍**\n- 多任务学习反而提升了单任务性能（跨任务知识迁移）\n- 无需极端参数规模化即可达到 SOTA 性能\n\n## 6. 技术弱点\n\n### 6.1 任务空间设计的局限性\n\n- **任务选择敏感性**：论文承认任务空间设计（哪些任务组合最有效）仍需进一步探索\n- **任务冲突**：某些任务组合可能存在负迁移，需要谨慎设计任务集合\n\n### 6.2 基准复杂度\n\n- HumanoidBench 的任务复杂度可能不足以完全展示任务规模化的全部潜力\n- 真实机器人场景的复杂性远超模拟环境\n\n### 6.3 可扩展性挑战\n\n- **计算开销**：多任务训练的计算成本随任务数量线性增长\n- **潜在空间容量**：共享的潜在空间容量可能成为瓶颈，当任务数量极大时\n- **长期规划**：当前 MCTS 规划步数有限，难以处理需要长期规划的任务\n\n### 6.4 泛化边界\n\n- 任务间动力学不变性的假设建立在\"同一物理本体\"基础上，跨机器人迁移能力未充分验证\n- 对抗性环境或非结构化环境中的表现有待检验",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Scaling Tasks, Not Samples: Mastering Humanoid Control through Multi-Task Model-Based Reinforcement Learning",
+      "authors": [
+        "Shaohuai Liu",
+        "Weirui Ye",
+        "Yilun Du",
+        "Le Xie"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2603.01452",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Developing generalist robots capable of mastering diverse skills remains a central challenge in embodied AI. While recent progress emphasizes scaling model parameters and offline datasets, such approaches are limited in robotics, where learning requires active interaction. We argue that effective online learning should scale the \\emph{number of tasks}, rather than the number of samples per task. This regime reveals a structural advantage of model-based reinforcement learning (MBRL). Because physical dynamics are invariant across tasks, a shared world model can aggregate multi-task experience to learn robust, task-agnostic representations. In contrast, model-free methods suffer from gradient interference when tasks demand conflicting actions in similar states. Task diversity therefore acts as a regularizer for MBRL, improving dynamics learning and sample efficiency. We instantiate this idea with \\textbf{EfficientZero-Multitask (EZ-M)}, a sample-efficient multi-task MBRL algorithm for online learning. Evaluated on \\textbf{HumanoidBench}, a challenging whole-body control benchmark, EZ-M achieves state-of-the-art performance with significantly higher sample efficiency than strong baselines, without extreme parameter scaling. These results establish task scaling as a critical axis for scalable robotic learning. The project website is available \\href{https://yewr.github.io/ez_m/}{here}.",
+      "route_id": "placeholder-id-123"
+    },
+    "markdown_stats": {
+      "lines": 360,
+      "words": 8536,
+      "headings": 23
+    },
+    "assets": {
+      "images": 23,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "f89a7c14-2f89-4531-a084-630c274e620f",
+  "paper_ref": "f89a7c14-2f89-4531-a084-630c274e620f",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

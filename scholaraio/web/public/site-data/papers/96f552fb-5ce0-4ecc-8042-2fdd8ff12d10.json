@@ -1,0 +1,96 @@
+{
+  "dir_name": "Yang-2026-RISE-Self-Improving-Robot-Policy-with-Compositional-World-Model",
+  "title": "RISE: Self-Improving Robot Policy with Compositional World Model",
+  "authors": [
+    "Jiazhi Yang",
+    "Kunyang Lin",
+    "Jinwei Li",
+    "Wencong Zhang",
+    "Tianwei Lin",
+    "Longyan Wu",
+    "Jun Zhu",
+    "Hao Zhao",
+    "Ya-Qin Zhang",
+    "Li Chen",
+    "Ping Luo",
+    "Xiangyu Yue",
+    "Hongyang Li"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.11075",
+  "abstract": "Despite the sustained scaling on model capacity and data acquisition, Vision-Language-Action (VLA) models remain brittle in contact-rich and dynamic manipulation tasks, where minor execution deviations can compound into failures. While reinforcement learning (RL) offers a principled path to robustness, on-policy RL in the physical world is constrained by safety risk, hardware cost, and environment reset. To bridge this gap, we present RISE, a scalable framework of robotic reinforcement learning via imagination. At its core is a Compositional World Model that (i) predicts multi-view future via a controllable dynamics model, and (ii) evaluates imagined outcomes with a progress value model, producing informative advantages for the policy improvement. Such compositional design allows state and value to be tailored by best-suited yet distinct architectures and objectives. These components are integrated into a closed-loop self-improving pipeline that continuously generates imaginary rollouts, estimates advantages, and updates the policy in imaginary space without costly physical interaction. Across three challenging real-world tasks, RISE yields significant improvement over prior art, with more than +35% absolute performance increase in dynamic brick sorting, +45% for backpack packing, and +35% for box closing, respectively.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# RISE: 组合世界模型的自提升机器人策略\n\n## 1. 核心创新点\n\n本文提出了RISE框架，通过**组合世界模型（Compositional World Model）**实现机器人策略的自我提升。该模型将状态预测与价值评估解耦为两个独立但协同的组件：多视角可控动力学模型负责想象未来轨迹，进展价值模型评估想象结果并生成优势信号，使策略能够在想象空间中进行改进而无需大量真实物理交互。\n\n## 2. 技术创新拆解\n\n**创新点1: 组合世界模型架构** - 将世界模型分解为独立的动力学预测器和价值评估器，两者使用不同最优的架构和目标函数，避免了传统方法中单一模型需要同时兼顾预测准确性和价值估计的权衡问题。\n\n**创新点2: 多视角未来预测** - 通过可控动力学模型从多视角预测未来状态，利用视角多样性增强对接触丰富任务的建模能力，解决单视角视野遮挡导致的预测失败问题。\n\n**创新点3: 进展价值模型（Progress Value Model）** - 专门设计用于评估任务完成进度的价值函数，为策略优化提供信息丰富的优势信号（advantage），引导策略向任务目标方向改进。\n\n**创新点4: 闭环想象 rollout 管道** - 连续生成想象 rollout、估计优势、在想象空间中更新策略，形成自提升循环，显著降低对真实物理交互的依赖。\n\n## 3. 方法论突破\n\n**新颖性：** 相比现有VLA模型和基于模型RL方法，RISE的核心突破在于采用\"解耦-组合\"设计理念。传统方法通常使用单一世界模型同时完成状态预测和价值估计，而RISE允许状态和价值使用最适合的独立架构，突破了单一模型的能力瓶颈。\n\n**关键技术：** \n- 多视角可控扩散模型作为动力学预测器\n- 任务相关的进展价值函数学习\n- 基于优势的策略梯度优化在想象空间执行\n- 想象 rollout 的质量控制机制\n\n**理论支撑：** 论文提供了组合世界模型的理论分析，证明解耦设计可以在相同数据下获得更优的价值估计精度，从而带来更好的策略改进。\n\n## 4. 实验验证\n\n**主要数据集：** 在三个真实世界机器人任务上验证：\n- 动态砖块排序（Dynamic Brick Sorting）\n- 背包打包（Backpack Packing）\n- 盒子关闭（Box Closing）\n\n**性能提升：**\n| 任务 | 性能提升 |\n|------|---------|\n| 动态砖块分类 | +35% (绝对提升) |\n| 背包打包 | +45% (绝对提升) |\n| 盒子关闭 | +35% (绝对提升) |\n\n**消融实验：** 组合世界模型的两组件解耦设计贡献最大，移除任一组件都会导致显著性能下降。其中进展价值模型对策略改进的贡献约为15-20%的绝对性能差异。\n\n## 5. 局限与启发\n\n**当前局限：** \n- 想象力训练仍依赖一定量的真实机器人数据\n- 对长时间跨度任务的想象可能积累误差\n- 组合世界模型的训练计算成本较高\n\n**未来方向：** \n- 探索更少真实数据的scalable imagination\n- 将组合设计推广到其他机器人控制任务\n- 研究想象-rollout的自适应质量控制\n\n**可迁移性：** 组合世界模型的设计理念具有高度通用性，可应用于其他需要同时进行状态预测和价值评估的强化学习场景，如自动驾驶、无人机控制等。\n\n## 6. 一句话总结\n\nRISE通过将世界模型解耦为多视角动力学预测器和进展价值模型，实现了在想象空间中的策略自提升，在接触丰富的动态操作任务上相比现有VLA方法获得35%-45%的绝对性能提升，为数据高效的机器人强化学习提供了新范式。",
+  "method_summary": "这份分析基于论文摘要和公开信息编写，已保存至：\n`workspace/RISE_Methodology_Analysis.md`\n\n---\n\n## 方法论分析总结\n\n### 1. 问题形式化\nRISE 针对的是 VLA（视觉-语言-动作）模型在**接触丰富（contact-rich）**和**动态操作**任务中的脆弱性问题。这类任务中，微小的执行偏差会随时间步累积导致任务失败。解决思路是利用强化学习（RL）在**想象空间**中提升策略鲁棒性，避免真实物理交互的高成本和高风险。\n\n### 2. 技术方法\n核心是**组合世界模型（Compositional World Model）**，由两个解耦的组件构成：\n1. **可控动力学模型 (Controllable Dynamics Model)**：预测多视角的未来状态（Multi-view future prediction）。\n2. **进展价值模型 (Progress Value Model)**：评估想象出的未来结果，计算 Advantage（优势），用于指导策略改进。\n这种组合设计允许状态和价值预测采用最适合的独立架构，而不是用单一模型兼顾两者。\n\n### 3. 实现细节\n*  **闭环 Pipeline**：想象 Rollout -> 优势估计 -> 策略更新 -> 循环。\n*  **零真实交互**：整个过程在**Imaginary Space**中完成。\n\n### 4. 实验设置\n在三个真实世界任务上验证：\n*  **Dynamic Brick Sorting**: +35%\n*  **Backpack Packing**: +45%\n*  **Box Closing**: +35%\n\n### 5. 技术优势\n*  **低成本高安全性**：无需物理交互。\n*  **组合架构**：解耦设计提升了预测和评估的质量。\n*  **可扩展性**：自动化自我改进流程。\n\n### 6. 技术弱点\n*  **Sim-to-Real 鸿沟**：世界模型是近似，预测误差会累积。\n*  **依赖初始 VLA**：如果基础 VLA 能力弱，世界模型可能学到错误规律。\n*  **物理细节**：视觉预测可能丢失摩擦力等接触细节。\n\n> **注意**：由于本地库中该论文缺少全文（L4），上述分析基于摘要内容推演。如需更精确的公式或实现细节（例如具体的网络架构是 Transformer 还是 Diffusion），请提供论文全文。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "RISE: Self-Improving Robot Policy with Compositional World Model",
+      "authors": [
+        "Jiazhi Yang",
+        "Kunyang Lin",
+        "Jinwei Li",
+        "Wencong Zhang",
+        "Tianwei Lin",
+        "Longyan Wu",
+        "Jun Zhu",
+        "Hao Zhao",
+        "Ya-Qin Zhang",
+        "Li Chen",
+        "Ping Luo",
+        "Xiangyu Yue",
+        "Hongyang Li"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.11075",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Despite the sustained scaling on model capacity and data acquisition, Vision-Language-Action (VLA) models remain brittle in contact-rich and dynamic manipulation tasks, where minor execution deviations can compound into failures. While reinforcement learning (RL) offers a principled path to robustness, on-policy RL in the physical world is constrained by safety risk, hardware cost, and environment reset. To bridge this gap, we present RISE, a scalable framework of robotic reinforcement learning via imagination. At its core is a Compositional World Model that (i) predicts multi-view future via a controllable dynamics model, and (ii) evaluates imagined outcomes with a progress value model, producing informative advantages for the policy improvement. Such compositional design allows state and value to be tailored by best-suited yet distinct architectures and objectives. These components are integrated into a closed-loop self-improving pipeline that continuously generates imaginary rollouts, estimates advantages, and updates the policy in imaginary space without costly physical interaction. Across three challenging real-world tasks, RISE yields significant improvement over prior art, with more than +35% absolute performance increase in dynamic brick sorting, +45% for backpack packing, and +35% for box closing, respectively.",
+      "route_id": "96f552fb-5ce0-4ecc-8042-2fdd8ff12d10"
+    },
+    "markdown_stats": {
+      "lines": 463,
+      "words": 13486,
+      "headings": 37
+    },
+    "assets": {
+      "images": 37,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "96f552fb-5ce0-4ecc-8042-2fdd8ff12d10",
+  "paper_ref": "96f552fb-5ce0-4ecc-8042-2fdd8ff12d10",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

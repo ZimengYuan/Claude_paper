@@ -1,0 +1,90 @@
+{
+  "dir_name": "Cui-2024-Adapting-humanoid-locomotion-over-challenging-terr",
+  "title": "Adapting humanoid locomotion over challenging terrain via two-phase training",
+  "authors": [
+    "Wenhao Cui",
+    "Shengtao Li",
+    "Huaxing Huang",
+    "Bangyu Qin",
+    "Tianchu Zhang",
+    "Hanjinchao",
+    "Liang Zheng",
+    "Ziyang Tang",
+    "Chenxu Hu",
+    "Ning Yan",
+    "Jiahao Chen",
+    "Zheyuan Jiang"
+  ],
+  "year": 2024,
+  "journal": "",
+  "doi": "",
+  "abstract": "Humanoid robots are a key focus in robotics, with their capacity to navigate tough terrains being essential for many uses. While strides have been made, creating adaptable locomotion for complex environments is still tough. Recent progress in learning-based systems offers hope for robust legged locomotion, but challenges persist, such as tracking accuracy at high speeds and on uneven ground, and joint oscillations in actual robots. This paper proposes a novel training framework to address these challenges by employing a two-phase training paradigm with reinforcement learning. The proposed framework is further enhanced through the integration of command curriculum learning, refining the precision and adaptability of our approach. Additionally, we adapt DreamWaQ to our humanoid locomotion system and improve it to mitigate joint oscillations. Finally, we achieve the sim-to-real transfer of our method. A series of empirical results demonstrate the superior performance of our proposed method compared to state-of-the-art methods.",
+  "paper_type": "conference-paper",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Adapting humanoid locomotion over challenging terrain via two-phase training",
+      "authors": [
+        "Wenhao Cui",
+        "Shengtao Li",
+        "Huaxing Huang",
+        "Bangyu Qin",
+        "Tianchu Zhang",
+        "Hanjinchao",
+        "Liang Zheng",
+        "Ziyang Tang",
+        "Chenxu Hu",
+        "Ning Yan",
+        "Jiahao Chen",
+        "Zheyuan Jiang"
+      ],
+      "year": 2024,
+      "paper_type": "conference-paper",
+      "abstract": "Humanoid robots are a key focus in robotics, with their capacity to navigate tough terrains being essential for many uses. While strides have been made, creating adaptable locomotion for complex environments is still tough. Recent progress in learning-based systems offers hope for robust legged locomotion, but challenges persist, such as tracking accuracy at high speeds and on uneven ground, and joint oscillations in actual robots. This paper proposes a novel training framework to address these challenges by employing a two-phase training paradigm with reinforcement learning. The proposed framework is further enhanced through the integration of command curriculum learning, refining the precision and adaptability of our approach. Additionally, we adapt DreamWaQ to our humanoid locomotion system and improve it to mitigate joint oscillations. Finally, we achieve the sim-to-real transfer of our method. A series of empirical results demonstrate the superior performance of our proposed method compared to state-of-the-art methods."
+    },
+    "markdown_stats": {
+      "lines": 3,
+      "words": 12,
+      "headings": 1
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "cui-2024-adapting-humanoid-locomotion-over-challenging-terrain-via-two-phase-training-3",
+  "paper_ref": "Cui-2024-Adapting-humanoid-locomotion-over-challenging-terrain-via-two-phase-training-3",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

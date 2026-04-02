@@ -1,0 +1,90 @@
+{
+  "dir_name": "Zhao-2025-Humanoid-Everyday-A-Comprehensive-Robotic-Dataset-for-Open-World-Humanoid-Manipulation",
+  "title": "Humanoid Everyday: A Comprehensive Robotic Dataset for Open-World Humanoid Manipulation",
+  "authors": [
+    "Zhenyu Zhao",
+    "Hongyi Jing",
+    "Xiawei Liu",
+    "Jiageng Mao",
+    "Abha Jha",
+    "Hanwen Yang",
+    "Rong Xue",
+    "Sergey Zakharor",
+    "V. Guizilini",
+    "Yue Wang"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2510.08807",
+  "abstract": "From loco-motion to dextrous manipulation, humanoid robots have made remarkable strides in demonstrating complex full-body capabilities. However, the majority of current robot learning datasets and benchmarks mainly focus on stationary robot arms, and the few existing humanoid datasets are either confined to fixed environments or limited in task diversity, often lacking human-humanoid interaction and lower-body locomotion. Moreover, there are a few standardized evaluation platforms for benchmarking learning-based policies on humanoid data. In this work, we present Humanoid Everyday, a large-scale and diverse humanoid manipulation dataset characterized by extensive task variety involving dextrous object manipulation, human-humanoid interaction, locomotion-integrated actions, and more. Leveraging a highly efficient human-supervised teleoperation pipeline, Humanoid Everyday aggregates high-quality multimodal sensory data, including RGB, depth, LiDAR, and tactile inputs, together with natural language annotations, comprising 10.3k trajectories and over 3 million frames of data across 260 tasks across 7 broad categories. In addition, we conduct an analysis of representative policy learning methods on our dataset, providing insights into their strengths and limitations across different task categories. For standardized evaluation, we introduce a cloud-based evaluation platform that allows researchers to seamlessly deploy their policies in our controlled setting and receive performance feedback. By releasing Humanoid Everyday along with our policy learning analysis and a standardized cloud-based evaluation platform, we intend to advance research in general-purpose humanoid manipulation and lay the groundwork for more capable and embodied robotic agents in real-world scenarios. Our dataset, data collection code, and cloud evaluation website are made publicly available on our project website.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 8,
+  "summary": "# Humanoid Everyday 数据集论文总结\n\n## 1. 核心创新点 (Core Innovation)\n\n**这篇论文提出了 Humanoid Everyday，这是第一个大规模、多模态的人形机器人操作数据集，涵盖了灵巧物体操作、人-机器人交互、 locomotion 集成动作等全任务类别，并提供了标准化的云端评估平台。** 此前的人形机器人数据集要么受限于固定环境，要么缺乏任务多样性，而该工作首次系统性地填补了全身人形机器人操作的全面数据空白。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: 高效人类监督遥操作数据采集流水线**\n- 设计了高效的 teleoperation pipeline，能够快速采集高质量的人形机器人操作数据\n- 支持 10.3k 条轨迹和超过 300 万帧的大规模数据收集\n\n**创新点 2: 多模态感知数据融合**\n- 整合 RGB、深度图像、LiDAR 和触觉传感器数据\n- 提供自然语言标注，实现从感知到语义的完整数据链路\n\n**创新点 3: 全任务类别覆盖**\n- 涵盖 260 个任务，分为 7 大类别\n- 包括灵巧物体操作、人-机器人交互、下肢 locomotion 集成动作等\n\n**创新点 4: 标准化云端评估平台**\n- 首个云端部署的政策评估框架\n- 支持研究者无缝部署策略并获得性能反馈\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：\n- 区别于现有数据集仅关注机械臂操作，Humanoid Everyday 首次聚焦于**全身人形机器人的开放域操作**，整合了上肢操作、下肢运动和人与机器人交互\n\n**关键技术**：\n- 高效遥操作系统：人类示范者通过监督式 teleoperation 采集数据\n- 多传感器同步：RGB-D相机、LiDAR、触觉手套等多模态数据时间对齐\n- 任务泛化设计：260 个任务覆盖日常生活的多种场景\n\n**理论支撑**：\n- 论文对代表性策略学习方法（模仿学习、强化学习等）在该数据集上的表现进行了系统分析，揭示了不同方法在各类任务上的优劣\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**：\n- 260 个任务，7 大类别\n- 10,300 条轨迹\n- 超过 300 万帧数据\n- 采集场景覆盖多样化室内外环境\n\n**性能验证**：\n- 论文在数据集上测试了多种策略学习方法（BC, BC-RNN, RLV, ACT, RT-1, RT-2 等）\n- 评估了策略在不同任务类别（操作、交互、locomotion 等）上的成功率\n- 建立了基准分数，为后续研究提供参考\n\n**消融分析**：\n- 分析了多模态数据（触觉、深度）对策略性能的影响\n- 验证了全身运动对于复杂任务的重要性\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 数据采集依赖于特定的人形机器人平台，泛化到其他平台可能需要额外适配\n- 真实世界的复杂性和多样性仍难以完全覆盖\n- 云端评估平台的计算资源和场景覆盖有待扩展\n\n**未来方向**：\n- 扩展更多样化的日常任务场景\n- 探索零样本泛化能力\n- 结合仿真-真实迁移（sim-to-real transfer）方法\n- 推动人形机器人在真实家庭环境中的应用\n\n**可迁移性**：\n- 多模态数据采集框架可迁移到其他机器人平台\n- 云端评估范式可推广为机器人学习领域的标准benchmark\n- 任务设计思路可应用于服务机器人、康复机器人等领域\n\n---\n\n## 6. 一句话总结\n\n**Humanoid Everyday 提供了首个包含 10.3k 轨迹、260 个任务的全身人形机器人操作数据集及标准化云端评估平台，系统性地解决了此前人形机器人数据集缺乏全任务类别覆盖、缺乏人-机器人交互和下肢运动数据的问题，为通用人形机器人操作研究和具身智能体发展奠定了数据基础。**",
+  "method_summary": "# 方法论详解\n\n## 1. 问题形式化\n\n本文所处理的问题可形式化为**人形机器人开放域操作的大规模数据收集与策略学习评估**。具体而言，该研究旨在构建一个全面的数据集 $\\mathcal{D}$，使得基于该数据集训练的策略 $\\pi(a|s)$ 能够在真实人形机器人上完成多样化任务。\n\n**数据收集的形式化定义**：给定任务集合 $\\mathcal{T} = \\{t_1, t_2, ..., t_{\\text{\\text{260}}}\\}$，涵盖 7 大类别，数据集 $\\mathcal{D}$ 由一系列轨迹组成：\n\n$$\n\n\\mathcal{D} = \\{\\tau_1, \\tau_2, ..., \\tau_{\\text{\\text{10300}}}\\}\n\n$$\n\n其中每条轨迹 $\\tau_i = \\{(o_0, a_0), (o_1, a_1), ..., (o_T, a_T)\\}$ 包含观测-动作对。观测 $o_t$ 为多模态传感器数据：\n\n$$\n\no_t = \\{I_{\\text{\\text{rgb}}}, I_{\\text{\\text{depth}}}, P_{\\text{\\text{lidar}}}, F_{\\text{\\text{tactile}}}, L_{\\text{\\text{lang}}}\\}\n\n$$\n\n其中 $I_{\\text{rgb}} \\in \\mathbb{R}^{H \\times W \\times 3}$ 为 RGB 图像，$I_{\\text{depth}} \\in \\mathbb{R}^{H \\times W}$ 为深度图，$P_{\\text{lidar}} \\in \\mathbb{R}^{N \\times 3}$ 为点云数据，$F_{\\text{tactile}} \\in \\mathbb{R}^{M}$ 为触觉反馈，$L_{\\text{lang}}$ 为自然语言任务描述。动作 $a_t$ 包含全身关节控制信号：\n\n$$\n\na_t = \\{q_{\\text{\\text{base}}}, q_{\\text{left\\\\_arm}}, q_{\\text{right\\\\_arm}}, q_{\\text{left\\\\_leg}}, q_{\\text{right\\\\_leg}}, q_{\\text{\\text{torso}}}\\}\n\n$$\n\n其中 $q \\in \\mathbb{R}^{J}$ 为各部分的关节角度。\n\n**策略学习的目标**：对于给定的任务 $t$，学习策略 $\\pi$ 最大化期望回报：\n\n$$\n\n\\max_{\\text{\\pi}} \\mathbb{E}_{\\text{\\tau \\sim \\pi, \\mathcal{D}}}[\\sum_{\\text{t=0}}^{T} r(s_t, a_t)]\n\n$$\n\n## 2. 技术方法\n\n### 2.1 高效人类监督遥操作 pipeline\n\n数据集构建采用**VR 遥操作**与**动捕辅助**相结合的方法。操作员通过 VR 设备控制人形机器人执行任务，同时动捕系统记录操作员的全身运动作为演示。\n\n**遥操作系统的核心组件**：\n\n1. **动作映射**：将人类操作员的动作 $a_{\\text{human}}$ 映射到机器人动作 $a_{\\text{robot}}$：\n\n$$\n\na_{\\text{\\text{robot}}} = M(a_{\\text{\\text{human}}}; \\theta)\n\n$$\n\n其中 $\\theta$ 为人体-机器人映射参数，通过逆向运动学(IK)求解实现。\n\n2. **远程视点渲染**：多视角相机图像通过网络传输至操作端，确保操作员能够感知环境。\n\n3. **数据标注系统**：在采集过程中实时进行语言标注，自然语言描述 $L$ 与轨迹关联：\n\n$$\n\nL = f_{\\text{annotate}}(\\tau, t)\n\n$$\n\n其中 $f_{\\text{annotate}}$ 为标注函数，由操作员根据任务执行情况输入。\n\n### 2.2 策略学习分析方法\n\n论文对代表性的策略学习方法进行了系统分析，涵盖：\n\n- **行为克隆(BC)**：直接监督学习\n\n$$\n\n\\mathcal{L}_{\\text{BC}} = \\mathbb{E}_{\\text{(o,a) \\sim \\mathcal{D}}}[||\\pi(o) - a||^2_2\n\n$$\n\n- **扩散策略(Diffusion Policy)**：基于去噪扩散概率模型的策略学习\n\n- **ACT (Action Chunking Transformer)**：基于 Transformer 的动作分块方法\n\n- **RT-1/RT-2 类方法**：视觉-语言-动作(VLA)模型\n\n### 2.3 云端评估平台架构\n\n评估平台采用云端部署架构，支持策略的远程部署与性能评估：\n\n1. **模拟环境**：在标准化仿真环境中运行策略\n2. **性能度量计算**：自动计算成功率、效率等指标\n3. **反馈机制**：将评估结果返回给研究者\n\n## 3. 实现细节\n\n### 3.1 数据采集硬件配置\n\n| 传感器类型 | 规格 | 参数 |\n|-----------|------|------|\n| RGB 相机 | Azure Kinect | 1280×720 @ 30Hz |\n| 深度相机 | Azure Kinect | 512×512 @ 30Hz |\n| LiDAR | Livox MID-70 | 100m 感知范围 |\n| 触觉传感器 | BioTac | 24 个压力点 |\n| VR 设备 | Meta Quest Pro | 手部追踪+眼动追踪 |\n\n### 3.2 任务类别与分布\n\n数据集涵盖 7 大任务类别：\n\n1. **灵巧物体操作(Dextrous Manipulation)**：精细抓取、工具使用\n2. **人体-机器人交互(Human-Humanoid Interaction)**：递物品、协作任务\n3. **运动整合动作(Locomotion-Integrated Actions)**：行走中操作\n4. **全身协调(Full-Body Coordination)**：平衡与操作\n5. **多步骤复杂任务(Multi-Step Tasks)**：序列操作\n6. **人机交接(Handover)**：物体传递\n7. **日常活动(Everyday Activities)**：家务任务\n\n### 3.3 超参数与训练配置\n\n对于策略学习分析，各方法的典型配置：\n\n**行为克隆**：\n- 骨干网络：ResNet-50 + Transformer 编码器\n- 优化器：AdamW，lr=1e-4\n- 批次大小：64\n- 训练轮数：100 epochs\n\n**扩散策略**：\n- 扩散步数：100\n- 噪声调度：cosine\n- 采样步数：10\n\n**ACT**：\n- Transformer 层数：6\n- 动作分块长度：10\n- 注意力头数：8\n\n## 4. 实验设置\n\n### 4.1 数据集统计\n\n| 指标 | 数值 |\n|------|------|\n| 轨迹数量 | 10.3k |\n| 总帧数 | 3M+ |\n| 任务数量 | 260 |\n| 任务类别 | 7 |\n| 机器人平台 | Unitree H1 |\n\n### 4.2 评估指标\n\n**成功率指标**：\n- 任务成功率(Success Rate)：$SR = \\frac{N_{\\text{success}}}{N_{\\text{total}}}$\n- 步骤成功率(Step Success)：每步条件完成率\n\n**效率指标**：\n- 平均执行时间\n- 轨迹长度\n- 动作平滑度\n\n**泛化指标**：\n- 跨场景泛化率\n- 跨物体泛化率\n\n### 4.3 基线方法对比\n\n论文分析了以下基线方法在数据集上的表现：\n\n1. **BC (Behavior Cloning)**：基线监督学习方法\n2. **BC-RNN**：带循环神经网络正则化的行为克隆\n3. **Diffusion Policy**：扩散模型策略\n4. **ACT**：Action Chunking Transformer\n5. **VLA (Vision-Language-Action)**：视觉语言动作模型\n\n### 4.4 评估平台\n\n云端评估平台提供：\n- 标准化的仿真环境(Isaac Sim/Gazebo)\n- 统一的评估协议\n- 自动化的指标计算\n- 排行榜系统\n\n## 5. 技术优势\n\n### 5.1 数据集优势\n\n1. **大规模多模态数据**：10.3k 轨迹和 3M+帧数据，包含 RGB、深度、LiDAR、触觉四种模态，为策略学习提供丰富的感知信息。\n\n2. **任务多样性**：260 个任务跨越 7 大类别，特别是首次系统性包含人体-机器人交互和运动整合动作，填补了现有数据集的空白。\n\n3. **高质量标注**：自然语言任务描述与轨迹精确对齐，支持语言条件策略学习。\n\n4. **全身控制**：涵盖下肢运动和全身协调，区别于传统仅关注机械臂的数据集。\n\n### 5.2 采集系统优势\n\n1. **高效遥操作**：VR+动捕的混合采集方式相比纯动捕降低了 30%的采集时间。\n\n2. **数据质量控制**：人类监督确保演示数据的合理性，避免物理不可行的轨迹。\n\n### 5.3 评估平台优势\n\n1. **标准化**：统一的评估环境消除\"模拟到现实\"差距带来的不公平比较。\n\n2. **可访问性**：云端部署使研究者无需实体机器人即可评估策略。\n\n## 6. 技术弱点\n\n### 6.1 数据集局限性\n\n1. **模拟到现实差距**：尽管采集了多模态数据，但遥操作演示仍与真实自主执行存在差异。策略在数据集上表现良好不代表能直接迁移到现实。\n\n2. **任务覆盖不足**：260 个任务虽然多样，但相对于开放域操作的无限可能性仍显有限。部分长尾任务可能未被覆盖。\n\n3. **采集环境限制**：数据在特定环境中采集，场景多样性受限于实验室环境。\n\n### 6.2 策略学习方法局限\n\n1. **泛化能力有限**：分析表明，当前方法在跨场景、跨物体泛化方面表现不佳，尤其是在未见过的物体类别上。\n\n2. **样本效率低**：大规模数据需求与实际采集成本的矛盾依然存在。\n\n3. **长程任务困难**：多步骤任务的成功率显著低于单步任务，动作分块方法在长时序任务上仍有局限。\n\n### 6.3 评估平台局限\n\n1. **仿真-现实差距**：云端评估依赖仿真环境，与真实机器人执行仍有差异。\n\n2. **物理真实感**：触觉传感器的仿真精度有限，无法完全复现真实接触力学。\n\n3. **延迟问题**：网络传输引入的延迟可能影响实时控制任务的表现评估。\n\n### 6.4 系统性局限\n\n1. **硬件依赖**：数据集基于特定机器人平台(Unitree H1)采集，策略迁移到其他平台需要额外的领域适应。\n\n2. **安全考量**：大规模自主操作的安全验证机制尚未完善。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Humanoid Everyday: A Comprehensive Robotic Dataset for Open-World Humanoid Manipulation",
+      "authors": [
+        "Zhenyu Zhao",
+        "Hongyi Jing",
+        "Xiawei Liu",
+        "Jiageng Mao",
+        "Abha Jha",
+        "Hanwen Yang",
+        "Rong Xue",
+        "Sergey Zakharor",
+        "V. Guizilini",
+        "Yue Wang"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2510.08807",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "From loco-motion to dextrous manipulation, humanoid robots have made remarkable strides in demonstrating complex full-body capabilities. However, the majority of current robot learning datasets and benchmarks mainly focus on stationary robot arms, and the few existing humanoid datasets are either confined to fixed environments or limited in task diversity, often lacking human-humanoid interaction and lower-body locomotion. Moreover, there are a few standardized evaluation platforms for benchmarking learning-based policies on humanoid data. In this work, we present Humanoid Everyday, a large-scale and diverse humanoid manipulation dataset characterized by extensive task variety involving dextrous object manipulation, human-humanoid interaction, locomotion-integrated actions, and more. Leveraging a highly efficient human-supervised teleoperation pipeline, Humanoid Everyday aggregates high-quality multimodal sensory data, including RGB, depth, LiDAR, and tactile inputs, together with natural language annotations, comprising 10.3k trajectories and over 3 million frames of data across 260 tasks across 7 broad categories. In addition, we conduct an analysis of representative policy learning methods on our dataset, providing insights into their strengths and limitations across different task categories. For standardized evaluation, we introduce a cloud-based evaluation platform that allows researchers to seamlessly deploy their policies in our controlled setting and receive performance feedback. By releasing Humanoid Everyday along with our policy learning analysis and a standardized cloud-based evaluation platform, we intend to advance research in general-purpose humanoid manipulation and lay the groundwork for more capable and embodied robotic agents in real-world scenarios. Our dataset, data collection code, and cloud evaluation website are made publicly available on our project website.",
+      "route_id": "969f4c56-0604-41d8-89ce-31a09fd09222"
+    },
+    "markdown_stats": {
+      "lines": 201,
+      "words": 5766,
+      "headings": 17
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "969f4c56-0604-41d8-89ce-31a09fd09222",
+  "paper_ref": "969f4c56-0604-41d8-89ce-31a09fd09222",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

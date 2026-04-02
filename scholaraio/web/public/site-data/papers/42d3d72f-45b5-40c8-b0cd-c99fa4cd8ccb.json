@@ -1,0 +1,83 @@
+{
+  "dir_name": "Romualdi-2024-Online-DNN-driven-Nonlinear-MPC-for-Stylistic-Humanoid-Robot-Walking-with-Step-Adjustment-2",
+  "title": "Online DNN-driven Nonlinear MPC for Stylistic Humanoid Robot Walking with Step Adjustment",
+  "authors": [
+    "Giulio Romualdi",
+    "Paolo Maria Viceconte",
+    "Lorenzo Moretti",
+    "Ines Sorrentino",
+    "Stefano Dafarra",
+    "Silvio Traversaro",
+    "Daniele Pucci"
+  ],
+  "year": 2024,
+  "journal": "2024 IEEE-RAS 23rd International Conference on Humanoid Robots (Humanoids)",
+  "doi": "10.1109/humanoids58906.2024.10769894",
+  "abstract": "This paper presents a three-layered architecture that enables stylistic locomotion with online contact location adjustment. Our method combines an autoregressive Deep Neural Network (DNN) acting as a trajectory generation layer with a model-based trajectory adjustment and trajectory control layers. The DNN produces centroidal and postural references serving as an initial guess and regularizer for the other layers. Being the DNN trained on human motion capture data, the resulting robot motion exhibits locomotion patterns, resembling a human walking style. The trajectory adjustment layer utilizes non-linear optimization to ensure dynamically feasible center of mass (CoM) motion while addressing step adjustments. We compare two implementations of the trajectory adjustment layer: one as a receding horizon planner (RHP) and the other as a model predictive controller (MPC). To enhance MPC performance, we introduce a Kalman filter to reduce measurement noise. The filter parameters are automatically tuned with a Genetic Algorithm. Experimental results on the ergoCub humanoid robot demonstrate the system’s ability to prevent falls, replicate human walking styles, and withstand disturbances up to 68 Newton.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 4,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Online DNN-driven Nonlinear MPC for Stylistic Humanoid Robot Walking with Step Adjustment",
+      "authors": [
+        "Giulio Romualdi",
+        "Paolo Maria Viceconte",
+        "Lorenzo Moretti",
+        "Ines Sorrentino",
+        "Stefano Dafarra",
+        "Silvio Traversaro",
+        "Daniele Pucci"
+      ],
+      "year": 2024,
+      "journal": "2024 IEEE-RAS 23rd International Conference on Humanoid Robots (Humanoids)",
+      "doi": "10.1109/humanoids58906.2024.10769894",
+      "paper_type": "proceedings-article",
+      "abstract": "This paper presents a three-layered architecture that enables stylistic locomotion with online contact location adjustment. Our method combines an autoregressive Deep Neural Network (DNN) acting as a trajectory generation layer with a model-based trajectory adjustment and trajectory control layers. The DNN produces centroidal and postural references serving as an initial guess and regularizer for the other layers. Being the DNN trained on human motion capture data, the resulting robot motion exhibits locomotion patterns, resembling a human walking style. The trajectory adjustment layer utilizes non-linear optimization to ensure dynamically feasible center of mass (CoM) motion while addressing step adjustments. We compare two implementations of the trajectory adjustment layer: one as a receding horizon planner (RHP) and the other as a model predictive controller (MPC). To enhance MPC performance, we introduce a Kalman filter to reduce measurement noise. The filter parameters are automatically tuned with a Genetic Algorithm. Experimental results on the ergoCub humanoid robot demonstrate the system’s ability to prevent falls, replicate human walking styles, and withstand disturbances up to 68 Newton.",
+      "route_id": "42d3d72f-45b5-40c8-b0cd-c99fa4cd8ccb"
+    },
+    "markdown_stats": {
+      "lines": 300,
+      "words": 9585,
+      "headings": 19
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "42d3d72f-45b5-40c8-b0cd-c99fa4cd8ccb",
+  "paper_ref": "42d3d72f-45b5-40c8-b0cd-c99fa4cd8ccb",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

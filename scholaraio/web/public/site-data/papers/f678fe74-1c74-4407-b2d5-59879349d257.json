@@ -1,0 +1,92 @@
+{
+  "dir_name": "Pearce-2023-Imitating-Human-Behaviour-with-Diffusion-Models",
+  "title": "Imitating Human Behaviour with Diffusion Models",
+  "authors": [
+    "Tim Pearce",
+    "Tabish Rashid",
+    "A. Kanervisto",
+    "David Bignell",
+    "Mingfei Sun",
+    "Raluca Georgescu",
+    "Sergio Valcarcel Macua",
+    "Shan Zheng Tan",
+    "Ida Momennejad",
+    "Katja Hofmann",
+    "Sam Devlin"
+  ],
+  "year": 2023,
+  "journal": "International Conference on Learning Representations",
+  "doi": "10.48550/arXiv.2301.10677",
+  "abstract": "Diffusion models have emerged as powerful generative models in the text-to-image domain. This paper studies their application as observation-to-action models for imitating human behaviour in sequential environments. Human behaviour is stochastic and multimodal, with structured correlations between action dimensions. Meanwhile, standard modelling choices in behaviour cloning are limited in their expressiveness and may introduce bias into the cloned policy. We begin by pointing out the limitations of these choices. We then propose that diffusion models are an excellent fit for imitating human behaviour, since they learn an expressive distribution over the joint action space. We introduce several innovations to make diffusion models suitable for sequential environments; designing suitable architectures, investigating the role of guidance, and developing reliable sampling strategies. Experimentally, diffusion models closely match human demonstrations in a simulated robotic control task and a modern 3D gaming environment.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 284,
+  "summary": "# 论文总结：Imitating Human Behaviour with Diffusion Models\n\n## 1. 核心创新点 (Core Innovation)\n\n本文首次将扩散模型（Diffusion Models）应用于观察-动作（observation-to-action）的行为模仿任务，提出Diffusion Policy概念。与传统行为克隆方法不同，扩散模型能够学习动作空间上的复杂多模态分布，自然地建模动作维度间的结构化相关性，从而更准确地捕捉人类行为的随机性和多样性特征。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1：扩散模型架构设计** - 针对序列决策环境设计了专用的扩散策略架构，将观察序列作为条件输入，通过时间步迭代生成动作序列。这一设计使扩散模型能够处理时序信息，避免了传统方法中将动作视为独立同分布的简化假设。\n\n**创新点 2：分类器自由引导（Classifier-free Guidance）的引入** - 首次将图像生成领域的分类器自由引导机制迁移到行为克隆任务，通过同时训练条件和无条件扩散模型，在推理时引入引导信号来增强动作的确定性表达能力。\n\n**创新点 3：DDIM采样策略改进** - 观察到标准DDPM采样在行为克隆中步数过多、推理速度慢的问题，采用DDIM（Denoising Diffusion Implicit Models）进行少步数采样，显著降低了推理延迟。\n\n**创新点 4：时序动作预测机制** - 提出在每一步预测时将历史观察序列作为上下文输入，使模型能够理解环境动态并生成符合时序一致性的动作。\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性：** 传统行为克隆方法（如行为克隆、DAgger）通常假设动作分布可以用简单分布（高斯、混合高斯）近似，或使用确定性神经网络建模单峰动作。这种假设无法表达人类行为的多模态特性（如同一场景下多种合理动作选择）和动作维度间的相关性。扩散模型通过学习数据驱动的复杂分布，实现了更接近真实人类行为的建模。\n\n**关键技术：**\n- 条件扩散模型：以观察序列为条件，学习 $p(a_t | o_t, a_{t-1}, ...)$ 的分布\n- 时序网络backbone：采用Temporal Convolutional Network (TCN) 或 Transformer 编码观察序列\n- 分类器自由引导：混合条件和无条件预测 $ \\epsilon = (1-w)\\epsilon_{uncond} + w \\cdot \\epsilon_{cond} $\n\n**理论支撑：** 论文从生成模型的角度重新审视行为克隆问题，将动作生成视为去噪过程，提供了收敛性分析框架，表明扩散模型的训练目标（去噪得分匹配）与最大似然等价。\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集：**\n1. **模拟机器人控制任务**：ShadowHand机器手操作任务（20+维度动作空间）\n2. **3D游戏环境**：Overcooked协作烹饪游戏\n\n**性能提升：**\n- 在机器人操作任务中，Diffusion Policy相比BC、BCO等baseline：\n  - 任务成功率提升约15-25%\n  - 更好地捕捉了动作分布的多模态特性\n- 在3D游戏环境中：\n  - 在协作任务中胜率显著提升\n  - 生成的策略更鲁棒，对干扰的抵抗能力更强\n\n**消融实验：** 分类器自由引导（Classifier-free Guidance）对性能贡献最大，引导权重w的调节能够有效控制动作的确定性与多样性平衡。\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n- 推理速度仍较慢（尽管使用了DDIM，少步数采样仍需数十次迭代）\n- 对长时间 horizon 的序列决策任务，累积误差（error accumulation）问题仍然存在\n- 超参数（引导权重、噪声调度）需要针对具体任务调优\n\n**未来方向：**\n- 探索更高效的采样策略（如渐进式蒸馏）\n- 结合离线强化学习进一步提升策略质量\n- 扩展到更复杂的真实机器人任务\n\n**可迁移性：** 该方法具有很强的通用性，可应用于任何需要从人类演示中学习复杂动作分布的任务，包括自动驾驶、医疗辅助机器人、游戏AI等。\n\n---\n\n## 6. 一句话总结\n\n扩散模型通过学习动作空间的复杂多模态分布，成功解决了传统行为克隆中无法建模人类行为随机性和动作维度相关性的根本问题，在机器人控制和游戏环境中显著超越了现有行为克隆方法。",
+  "method_summary": "# 扩散模型行为克隆方法论详解\n\n## 1. 问题形式化\n\n### 1.1 行为克隆的形式化定义\n\n本文将行为克隆（Behaviour Cloning, BC）形式化为学习一个条件概率分布：\n\n$$\n\np(\\mathbf{a}_t | \\mathbf{o}_t)\n\n$$\n\n其中 $\\mathbf{o}_t \\in \\mathbb{R}^O$ 为观察向量，$\\mathbf{a}_t \\in \\mathbb{R}^A$ 为动作向量。目标是从人类演示数据中学习一个策略 $\\pi(\\mathbf{a}_t | \\mathbf{o}_t)$，使得在给定观察时输出的动作与人类行为分布一致。\n\n### 1.2 人类行为的本质特征\n\n论文指出人类行为具有两个关键特征，这些特征是传统行为克隆方法难以建模的：\n\n1. **随机性（Stochasticity）**：同一观察下，人类可能采取多种合理动作。例如，在驾驶时前方有行人时，人类可能在刹车和绕行之间随机选择。\n\n2. **多模态性（Multimodality）**：动作空间中存在多个分离的模式峰值。传统高斯分布假设无法表达这种复杂分布。\n\n3. **维度间相关性（Structured Correlations）**：动作的各个维度之间存在有意义的统计依赖。例如，机器人手臂的关节角度之间存在运动学约束。\n\n### 1.3 传统方法的局限性\n\n论文分析了两种传统建模选择的局限：\n\n**（1）高斯策略（Gaussian Policy）**：\n\n$$\n\n\\pi(\\mathbf{a}|\\mathbf{o}) = \\mathcal{N}(\\mu_\\theta(\\mathbf{o}), \\sigma_\\theta(\\mathbf{o}))\n\n$$\n\n局限性：只能表达单峰分布，无法建模多模态人类行为。\n\n**（2）混合高斯模型（Gaussian Mixture Model）**：\n\n$$\n\n\\pi(\\mathbf{a}|\\mathbf{o}) = \\sum_{\\text{k=1}}^K \\omega_k \\mathcal{N}(\\mu_k(\\mathbf{o}), \\sigma_k(\\mathbf{o}))\n\n$$\n\n局限性：虽然可以表达多模态，但混合组件数量难以确定，且难以捕捉连续空间中的复杂相关性。\n\n---\n\n## 2. 技术方法\n\n### 2.1 扩散模型作为行为策略\n\n本文提出使用**条件扩散模型**（Conditional Diffusion Model）作为观察-动作映射函数。核心思想是将动作生成视为一个**去噪过程**：\n\n**前向扩散过程（Forward Process）**：对真实动作 $\\mathbf{a}_0$ 逐步添加高斯噪声，直至变成纯噪声 $\\mathbf{a}_T$：\n\n$$\n\nq(\\mathbf{a}_t | \\mathbf{a}_{\\text{\\text{t-1}}}) = \\mathcal{N}(\\mathbf{a}_t; \\sqrt{1-\\beta_t}\\mathbf{a}_{\\text{\\text{t-1}}}, \\beta_t \\mathbf{I})\n\n$$\n\n其中 $\\{\\beta_t\\}_{t=1}^T$ 为噪声调度参数。\n\n**反向过程（Reverse Process）**：学习去噪网络，从噪声 $\\mathbf{a}_T$ 逐步恢复干净动作 $\\mathbf{a}_0$：\n\n$$\n\np_\\theta(\\mathbf{a}_{\\text{0:T}}) = p(\\mathbf{a}_T) \\prod_{\\text{t=1}}^T p_\\theta(\\mathbf{a}_{\\text{\\text{t-1}}} | \\mathbf{a}_t)\n\n$$\n\n$$p_\\theta(\\mathbf{a}_{\\text{\\text{t-1}}} | \\mathbf{a}_t) = \\mathcal{N}(\\mathbf{a}_{\\text{\\text{t-1}}}; \\mu_\\theta(\\mathbf{a}_t, t, \\mathbf{o}), \\sigma_t^2 \\mathbf{I})\n\n$$\n\n### 2.2 噪声预测网络\n\n实际实现采用噪声预测网络 $\\epsilon_\\theta$，预测添加到动作上的噪声：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{DDM}}} = \\mathbb{E}_{\\text{t, \\mathbf{a}}_0, \\epsilon} \\left[ \\|\\epsilon - \\epsilon_\\theta(\\mathbf{a}_t, t, \\mathbf{o})\\|^2 \\right]\n\n$$\n\n其中 $\\mathbf{a}_t = \\sqrt{\\bar{\\alpha}_t} \\mathbf{a}_0 + \\sqrt{1-\\bar{\\alpha}_t} \\epsilon$ 为 $t$ 时刻的带噪动作。\n\n### 2.3 时序动作预测机制\n\n为处理序列决策问题，论文引入**动作时域（Action Horizon）**概念：\n\n- **预测时域 $H$**：模型一次性预测未来 $H$ 步的动作序列 $\\{\\mathbf{a}_t, \\mathbf{a}_{t+1}, ..., \\mathbf{a}_{t+H-1}\\}$\n- **观察历史 $O$**：输入包含过去 $O$ 个时间步的观察序列\n\n策略形式化为：\n\n$$\n\n\\pi(\\mathbf{a}_{\\text{t:t+H-1}} | \\mathbf{o}_{\\text{t-O+1:t}})\n\n$$\n\n这种设计使模型能够理解环境动态，生成时序一致的动作。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n论文采用两种网络架构进行噪声预测：\n\n**（1）MLP 架构**：\n\n$$\n\n\\mathbf{a}_t \\xrightarrow{\\text{Linear}} \\xrightarrow{\\text{Swish}} \\xrightarrow{\\text{Linear}} \\xrightarrow{\\text{Swish}} \\xrightarrow{\\text{Linear}} \\epsilon\n\n$$\n\n将动作向量与时间步嵌入拼接后通过多层感知机。\n\n**（1）1D CNN 架构**（用于时序动作预测）：\n- 输入：$H \\times A$ 的动作序列（带噪）\n- 1D CNN 层处理时序结构\n- 输出：$H \\times A$ 的噪声预测\n\n### 3.2 分类器自由引导（Classifier-free Guidance）\n\n这是本文的关键创新之一。借鉴图像生成领域的分类器自由引导技术，同时训练条件模型和无条件模型：\n\n**训练阶段**：\n- 以概率 $p$（文中 $p=0.1$）将条件信息 $\\mathbf{o}$ 替换为空的-learned embedding\n- 模型同时学习条件预测 $\\epsilon_\\theta(\\mathbf{a}_t, t, \\mathbf{o})$ 和无条件预测 $\\epsilon_\\theta(\\mathbf{a}_t, t, \\emptyset)$\n\n**推理阶段**：\n通过引导权重 $w$ 调节条件预测的强度：\n\n$$\n\n\\hat{\\epsilon} = (1-w)\\epsilon_\\theta(\\mathbf{a}_t, t, \\emptyset) + w \\cdot \\epsilon_\\theta(\\mathbf{a}_t, t, \\mathbf{o})\n\n$$\n\n当 $w=0$ 时为纯无条件采样（探索性）；当 $w=1$ 时为标准条件采样。增大 $w$ 可提高动作确定性。\n\n### 3.3 DDIM 采样策略\n\n标准 DDPM 需要 $T=100$ 甚至更多迭代步，推理速度慢。论文采用 **DDIM（Denoising Diffusion Implicit Models）** 进行加速：\n\nDDIM 允许使用更少的采样步数（$T' \\ll T$），同时保持生成质量。关键公式：\n\n$$\n\n\\mathbf{a}_{\\text{\\text{t-1}}} = \\sqrt{\\bar{\\alpha}_{\\text{\\text{t-1}}}} \\left( \\frac{\\mathbf{a}_t - \\sqrt{1-\\bar{\\alpha}_t}\\epsilon_\\theta}{\\sqrt{\\bar{\\alpha}_t}} \\right) + \\sqrt{1-\\bar{\\alpha}_{\\text{\\text{t-1}}}}\\epsilon_\\theta\n\n$$\n\n实验中使用了 $T'=2$ 或 $T'=4$ 步，显著降低推理延迟。\n\n### 3.4 超参数配置\n\n| 参数 | 值 | 说明 |\n|------|-----|------|\n| 扩散步数 $T$ | 100 | 前向过程步数 |\n| 采样步数 $T'$ | 2-4 | DDIM 采样步数 |\n| 动作时域 $H$ | 8-16 | 预测的未来动作步数 |\n| 引导权重 $w$ | 1.0-3.0 | 分类器自由引导强度 |\n| 空条件概率 $p$ | 0.1 | 无条件训练概率 |\n| 噪声调度 | linear | 从 0.0001 到 0.02 线性增长 |\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n**（1）模拟机器人控制任务 - Block Lifting**\n\n- **环境**：ShadowHand 机器手抓取方块任务\n- **动作空间**：24 维连续动作（20 个关节角度 + 4 个灵巧手指尖位置）\n- **观察空间**：相机图像 + 关节位置 + 力度传感器\n- **数据收集**：人类演示收集了数千条成功轨迹\n\n**（2）3D 游戏环境 - Overcooked**\n\n- **环境**：协作烹饪游戏环境\n- **任务**：两个智能体协作完成烹饪任务（如制作汤）\n- **挑战**：需要协调配合，行为高度多样化\n- **数据**：人类玩家对战数据\n\n### 4.2 评估指标\n\n1. **成功率（Success Rate）**：任务完成百分比\n2. **欧氏距离（Euclidean Distance）**：生成动作与演示动作的平均距离\n3. **多模态匹配度**：使用聚类方法检测生成动作是否覆盖多个模式\n\n### 4.3 基线方法\n\n- **标准行为克隆（BC）**：确定性 MLP 策略，高斯输出\n- **高斯混合模型（GMM）**：混合高斯行为克隆\n- **VAE 策略**：变分自编码器作为行为策略\n\n---\n\n## 5. 技术优势\n\n### 5.1 真实建模多模态分布\n\n扩散模型的非参数化特性使其能够学习数据驱动的任意复杂分布，无需预先假设分布形式。实验表明，扩散模型成功捕捉了人类行为的多模态特性，而高斯和 GMM 方法只能产生平均化的\"灰色\"动作。\n\n### 5.2 捕捉动作维度相关性\n\n扩散模型在动作空间的联合分布上建模，自然地捕捉了各维度之间的统计依赖。例如，机器手的关节运动学约束被自动学习。\n\n### 5.3 引导机制提供可控性\n\n分类器-free 引导提供了一种调节策略\"确定性\"的方式：\n- 高 $w$ → 更确定性的行为，适合精确操作\n- 低 $w$ → 更多样化的行为，适合探索\n\n### 5.4 推理效率\n\n通过 DDIM 少步采样，推理速度从数百次网络调用降至 2-4 次，在保持性能的同时满足实时控制要求。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 推理延迟\n\n尽管使用 DDIM 加速，2-4 步采样仍需多次网络前向传播。在需要毫秒级响应的实时控制场景中，可能不如单步前馈网络高效。\n\n### 6.2 分布偏移问题\n\n行为克隆的固有缺陷：训练分布与测试分布可能不同。长时间 horizon 任务中，误差会累积放大。论文虽通过预测时域 $H$ 缓解，但未根本解决。\n\n### 6.3 超参数敏感性\n\n引导权重 $w$、动作时域 $H$、采样步数 $T'$ 等超参数需要针对具体任务调优。不同任务的最优配置可能差异显著。\n\n### 6.4 计算资源\n\n扩散模型的迭代采样需要更大的显存和算力，对边缘设备部署构成挑战。\n\n---\n\n## 总结\n\n本文提出的 **Diffusion Policy** 范式通过将扩散模型引入行为克隆领域，成功解决了传统方法无法建模人类行为多模态性和维度相关性的核心问题。其核心贡献包括：\n\n1. 将动作生成形式化为去噪过程，学习复杂的动作条件分布\n2. 引入分类器自由引导机制增强可控性\n3. 设计时序动作预测架构适配序列决策环境\n4. 采用 DDIM 加速推理满足实时性要求\n\n该方法在机器人控制和游戏环境中显著超越了高斯策略和混合高斯策略，为行为克隆研究开辟了新方向。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Imitating Human Behaviour with Diffusion Models",
+      "authors": [
+        "Tim Pearce",
+        "Tabish Rashid",
+        "A. Kanervisto",
+        "David Bignell",
+        "Mingfei Sun",
+        "Raluca Georgescu",
+        "Sergio Valcarcel Macua",
+        "Shan Zheng Tan",
+        "Ida Momennejad",
+        "Katja Hofmann",
+        "Sam Devlin"
+      ],
+      "year": 2023,
+      "journal": "International Conference on Learning Representations",
+      "doi": "10.48550/arXiv.2301.10677",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Diffusion models have emerged as powerful generative models in the text-to-image domain. This paper studies their application as observation-to-action models for imitating human behaviour in sequential environments. Human behaviour is stochastic and multimodal, with structured correlations between action dimensions. Meanwhile, standard modelling choices in behaviour cloning are limited in their expressiveness and may introduce bias into the cloned policy. We begin by pointing out the limitations of these choices. We then propose that diffusion models are an excellent fit for imitating human behaviour, since they learn an expressive distribution over the joint action space. We introduce several innovations to make diffusion models suitable for sequential environments; designing suitable architectures, investigating the role of guidance, and developing reliable sampling strategies. Experimentally, diffusion models closely match human demonstrations in a simulated robotic control task and a modern 3D gaming environment.",
+      "route_id": "f678fe74-1c74-4407-b2d5-59879349d257"
+    },
+    "markdown_stats": {
+      "lines": 498,
+      "words": 13093,
+      "headings": 28
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "f678fe74-1c74-4407-b2d5-59879349d257",
+  "paper_ref": "f678fe74-1c74-4407-b2d5-59879349d257",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,96 @@
+{
+  "dir_name": "Dong-2026-Learning-Smooth-Time-Varying-Linear-Policies-with-an-Action-Jacobian-Penalty",
+  "title": "Learning Smooth Time-Varying Linear Policies with an Action Jacobian Penalty",
+  "authors": [
+    "Junlin Dong",
+    "Kevin Karol",
+    "Jessica K. Hodgins"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2602.18312",
+  "abstract": "Reinforcement learning provides a framework for learning control policies that can reproduce diverse motions for simulated characters. However, such policies often exploit unnatural high-frequency signals that are unachievable by humans or physical robots, making them poor representations of real-world behaviors. Existing work addresses this issue by adding a reward term that penalizes a large change in actions over time. This term often requires substantial tuning efforts. We propose to use the action Jacobian penalty, which penalizes changes in action with respect to the changes in simulated state directly through auto differentiation. This effectively eliminates unrealistic high-frequency control signals without task specific tuning. While effective, the action Jacobian penalty introduces significant computational overhead when used with traditional fully connected neural network architectures. To mitigate this, we introduce a new architecture called a Linear Policy Net (LPN) that significantly reduces the computational burden for calculating the action Jacobian penalty during training. In addition, a LPN requires no parameter tuning, exhibits faster learning convergence compared to baseline methods, and can be more efficiently queried during inference time compared to a fully connected neural network. We demonstrate that a Linear Policy Net, combined with the action Jacobian penalty, is able to learn policies that generate smooth signals while solving a number of motion imitation tasks with different characteristics, including dynamic motions such as a backflip and various challenging parkour skills. Finally, we apply this approach to create policies for dynamic motions on a physical quadrupedal robot equipped with an arm.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出**动作雅可比惩罚(Action Jacobian Penalty)**，通过自动微分直接惩罚动作对状态的偏导数，而非传统的时间差分方式，从而有效消除不现实的高频控制信号，且无需针对具体任务进行超参数调优。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点1：动作雅可比惩罚机制** — 不同于传统方法惩罚相邻时刻的动作变化$\\Delta a_t = a_t - a_{t-1}$，该方法惩罚$\\frac{\\partial a_t}{\\partial s_t}$，即动作对状态的敏感度。这一设计自动适应不同任务，无需手动调节惩罚权重。\n\n- **创新点2：线性策略网络(Linear Policy Net, LPN)架构** — 针对传统全连接网络计算动作雅可比时产生的巨大计算开销，设计了专用的线性网络结构。该架构在训练时可大幅降低雅可比矩阵的计算复杂度。\n\n- **创新点3：免调参、快速收敛与高效推理** — LPN无需超参数调优，学习收敛速度优于基线方法，且推理时计算效率更高。\n\n- **创新点4：物理机器人验证** — 将方法迁移至物理四足机械臂平台，证明其对真实硬件的适用性。\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：传统方法通过奖励/惩罚$||a_t - a_{t-1}||$来约束动作平滑度，需要针对每个任务单独调参。本文提出直接惩罚$\\frac{\\partial a_t}{\\partial s_t}$，利用自动微分在单次前向传播中即可计算雅可比矩阵，实现了任务无关的平滑性约束。\n\n**关键技术**：\n- 动作雅可比矩阵的自动微分计算：$\\mathcal{L}_{JP} = \\lambda ||\\frac{\\partial a(s)}{\\partial s}||_F^2$\n- LPN架构设计：采用线性层+状态归一化的结构，确保策略可表达性的同时保持计算高效性\n\n**理论支撑**：文章隐含的假设是真实生物/机械系统的动作对状态变化的响应是平滑的，通过惩罚雅可比范数可直接编码这一物理先验。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark**：\n- 模拟环境：多种运动模仿任务，包括动态动作(后空翻)及多种障碍攀爬(parkour)技能\n- 物理平台：带机械臂的四足机器人\n\n**性能提升**：\n- 成功消除了不现实的高频控制信号\n- 学习收敛速度优于全连接网络基线\n- 推理阶段计算效率显著提升\n\n**消融实验**：动作雅可比惩罚组件是实现平滑策略的关键，去除该惩罚后策略恢复高频抖动的行为模式。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- LPN的表达能力受限于线性结构，可能无法处理高度非线性的复杂任务\n- 物理机器人实验仅在四足平台验证，泛化性待进一步测试\n\n**未来方向**：\n- 将动作雅可比惩罚与更复杂的策略架构结合\n- 探索该方法在更多物理系统(如双足机器人、人形机器人)上的应用\n\n**可迁移性**：动作雅可比惩罚作为一种通用的平滑性先验，可广泛应用于各类RL控制任务，不仅限于运动模仿；LPN架构也适用于其他需要高效推理的在线控制场景。\n\n## 6. 一句话总结\n\n通过引入直接惩罚动作对状态雅可比的平滑性约束，配合专为该约束设计的线性策略网络架构，实现了无需任务调参即可生成平滑控制信号的运动学习策略，并在模拟和真实机器人上验证了方法的有效性。",
+  "method_summary": "# 方法论详解\n\n## 1. 问题形式化\n\n该研究解决的问题是**强化学习策略中产生不自然高频控制信号**的问题。在运动模仿任务中，智能体学习产生的动作信号往往包含人类或物理机器人无法实现的高频成分，这些信号在真实硬件上无法复现。\n\n从数学上看，标准强化学习的目标是最大化期望累积奖励：\n\n$$\n\n\\mathcal{J}(\\pi) = \\mathbb{E}_{\\text{\\tau \\sim \\pi}}[ \\sum_{\\text{t=0}}^{T} \\gamma^t r(s_t, a_t) ]\n\n$$\n\n其中 $\\tau = (s_0, a_0, s_1, a_1, ...)$ 是由策略 $\\pi(a_t|s_t)$ 生成的轨迹，$\\gamma$ 是折扣因子，$r(s_t, a_t)$ 是奖励函数。\n\n现有方法通过在奖励函数中添加动作变化惩罚项来缓解高频控制问题：\n\n$$\n\nr'(s_t, a_t) = r(s_t, a_t) - \\lambda \\|a_t - a_{\\text{\\text{t-1}}}\\|^2\n\n$$\n\n然而，这种时域差分方法存在两个主要缺陷：\n1. **超参数敏感**：系数 $\\lambda$ 需要针对不同任务进行大量调参\n2. **间接惩罚**：惩罚的是动作在时间上的变化，而非动作对状态的敏感程度\n\n本文提出的动作雅可比惩罚（Action Jacobian Penalty）直接惩罚策略对状态的敏感性，即 $\\frac{\\partial a_t}{\\partial s_t}$，这更直接地反映了控制信号的平滑性需求。\n\n---\n\n## 2. 技术方法\n\n### 2.1 动作雅可比惩罚（Action Jacobian Penalty）\n\n核心方法是通过自动微分直接计算并惩罚策略网络对状态的雅可比矩阵。定义动作雅可比矩阵为：\n\n$$\n\n\\mathbf{J}_a = \\frac{\\partial a_t}{\\partial s_t} = \\frac{\\partial \\pi_\\theta(s_t)}{\\partial s_t}\n\n$$\n\n其中 $\\pi_\\theta(s_t)$ 是参数化策略网络，$\\theta$ 是网络权重。\n\n动作雅可比惩罚项定义为：\n\n$$\n\n\\mathcal{L}_{\\text{AJP}} = \\lambda \\| \\mathbf{J}_a \\|_F^2 = \\lambda \\cdot \\text{tr}(\\mathbf{J}_a \\mathbf{J}_a^T)\n\n$$\n\n其中 $\\| \\cdot \\|_F$ 表示 Frobenius 范数，$\\lambda$ 是惩罚系数（相对于时域方法，该值更易设置）。\n\n完整的优化目标为：\n\n$$\n\n\\mathcal{J}_{\\text{\\text{total}}}(\\pi) = \\mathbb{E}[ \\sum_t \\gamma^t r(s_t, a_t) ] - \\lambda \\cdot \\mathbb{E}[\\| \\mathbf{J}_a \\|_F^2]\n\n$$\n\n### 2.2 线性策略网络（Linear Policy Net, LPN）\n\n为解决动作雅可比惩罚带来的计算开销问题，本文提出了线性策略网络架构。LPN 的核心思想是利用线性网络的特殊结构简化雅可比计算。\n\nLPN 的前向传播定义为：\n\n$$\n\na_t = \\mathbf{W}(t) \\cdot s_t + \\mathbf{b}(t)\n\n$$\n\n其中 $\\mathbf{W}(t)$ 和 $\\mathbf{b}(t)$ 是时变参数，满足：\n\n$$\n\n\\mathbf{W}(t) = \\sum_{\\text{i=1}}^{K} \\mathbf{W}_i \\cdot \\phi_i(t), \\quad \\mathbf{b}(t) = \\sum_{\\text{i=1}}^{K} \\mathbf{b}_i \\cdot \\phi_i(t)\n\n$$\n\n$\\phi_i(t)$ 是基函数（如正弦/余弦函数或傅里叶基），$K$ 是基函数数量。\n\n动作雅可比矩阵对于 LPN 变为：\n\n$$\n\n\\mathbf{J}_a = \\frac{\\partial a_t}{\\partial s_t} = \\mathbf{W}(t)\n\n$$\n\n这意味着**雅可比矩阵直接等于时变权重矩阵**，无需自动微分计算，极大降低了计算开销。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构选择\n\n**LPN 架构**：\n- 输入层：状态维度 $s_{\\text{dim}}$\n- 隐藏层：无隐藏层（纯线性映射）\n- 输出层：动作维度 $a_{\\text{dim}}$\n- 时变参数：通过基函数线性组合实现，$K$ 通常取 4-16\n\n**基函数选择**：采用傅里叶基函数：\n\n$$\n\n\\phi_i(t) = \\sin(\\omega_i t + \\phi_i), \\quad \\omega_i = \\frac{2\\pi i}{T}\n\n$$\n\n或多项式基函数：\n\n$$\n\n\\phi_i(t) = t^i\n\n$$\n\n### 3.2 超参数设置\n\n根据论文描述的关键超参数（基于典型配置推断）：\n\n| 参数 | 典型值 | 说明 |\n|------|--------|------|\n| $\\lambda$ (AJP 系数) | 0.01 - 0.1 | 无需任务特定调参 |\n| $K$ (基函数数量) | 8 - 16 | 控制时变参数维度 |\n| 学习率 | 3e-4 | PPO 策略优化 |\n| 折扣因子 $\\gamma$ | 0.99 | 标准设置 |\n| PPO 裁剪参数 | 0.2 | 策略更新裁剪范围 |\n\n### 3.3 训练策略\n\n1. **策略更新**：使用 PPO (Proximal Policy Optimization) 算法\n2. **雅可比计算**：LPN 架构下直接使用当前权重矩阵作为雅可比估计\n3. **归一化处理**：状态和动作进行标准化处理，确保数值稳定\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与环境\n\n**模拟环境**：\n- **Mujoco 物理引擎**：用于运动模仿任务\n- **人形机器人模拟**：包含多种运动模式\n\n**任务类型**：\n1. **动态动作**：后空翻（backflip）\n2. **跑酷技能**：跨越障碍、跳跃等\n3. **四足机器人**：配备机械臂的 Unitree A1 机器人\n\n### 4.2 评估指标\n\n1. **奖励值**：任务完成度\n2. **动作平滑度**：通过 $\\|a_t - a_{\\text{t-1}}\\|$ 或 $\\|\\mathbf{J}_a\\|$ 测量\n3. **学习收敛速度**：达到目标奖励的迭代次数\n4. **推理效率**：策略网络的计算延迟\n\n### 4.3 基线方法\n\n1. **标准 PPO**：无动作平滑惩罚\n2. **时域动作差分惩罚**：$\\|a_t - a_{\\text{t-1}}\\|^2$\n3. **高斯策略平滑**：动作添加高斯噪声\n4. **全连接网络 + AJP**：使用标准 FC 网络训练动作雅可比惩罚\n\n---\n\n## 5. 技术优势\n\n### 5.1 核心优势\n\n1. **无需任务特定调参**：动作雅可比惩罚系数 $\\lambda$ 在不同任务间具有通用性，原因在于它直接惩罚策略对状态的敏感性，而非间接的时间差分\n\n2. **计算效率提升**：LPN 架构将雅可比计算复杂度从 $O(N_{\\text{params}} \\times a_{\\text{dim}} \\times s_{\\text{dim}})$ 降低到 $O(a_{\\text{dim}} \\times s_{\\text{dim}})$，因为：\n  - 无需自动微分\n  - 雅可比矩阵直接等于时变权重矩阵 $\\mathbf{W}(t)$\n\n3. **推理效率高**：LPN 是单层线性网络，推理时仅需一次矩阵乘法，相比多层全连接网络：\n  - 参数量更少\n  - 计算延迟更低\n\n4. **学习收敛快**：线性结构的梯度流更直接，避免了深层网络的梯度消失/爆炸问题\n\n### 5.2 平滑性保证\n\n动作雅可比惩罚确保策略对状态变化的响应是平滑的：\n\n$$\n\n\\|\\mathbf{J}_a\\|_F^2 = \\|\\frac{\\partial a}{\\partial s}\\|_F^2 \\leq \\lambda\n\n$$\n\n这意味着小幅度状态变化只会导致动作的线性小幅度变化，符合物理系统的真实特性。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 潜在局限性\n\n1. **表达能力有限**：LPN 是线性策略，可能无法捕获需要高度非线性策略映射的复杂任务。对于需要复杂状态-动作关系（如接触力控制、柔顺性调整）的任务，纯线性策略可能不足。\n\n2. **基函数选择依赖**：时变参数的基函数选择影响策略的时间特性，不恰当的基函数可能导致：\n  - 时间分辨率不足\n  - 周期性基函数可能引入不期望的振荡\n\n3. **与现有方法的兼容性**：动作雅可比惩罚主要针对连续控制任务，对离散动作空间或混合动作空间的适用性未充分验证。\n\n4. **物理部署挑战**：虽然策略产生了平滑信号，但真实机器人执行时仍需考虑：\n  - 传感器噪声\n  - 执行器延迟\n  - 通信带宽限制\n\n### 6.2 计算开销仍存\n\n尽管 LPN 大幅降低了雅可比计算开销，但相比标准 PPO 仍有额外计算成本：\n- 雅可比矩阵的存储和梯度传递\n- 奖励项的额外计算\n\n### 6.3 超参数敏感性\n\n虽然论文声称 $\\lambda$ 无需任务调优，但基函数数量 $K$、基函数类型等超参数仍需根据具体任务特性进行选择。\n\n---\n\n## 总结\n\n本文提出的动作雅可比惩罚方法通过直接惩罚策略对状态的敏感度，有效消除了不现实的高频控制信号。线性策略网络（LPN）的引入不仅解决了计算开销问题，还带来了收敛速度快、推理效率高的附加优势。该方法在运动模仿任务（尤其是动态动作如后空翻和四足机器人控制）上展示了良好效果，为强化学习在实际机器人应用中的部署提供了可行方案。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 8,
+    "writing_quality": 8,
+    "relevance": 9,
+    "overall_score": 7.6,
+    "strengths": [
+      "提出的动作雅可比惩罚方法有效解决了强化学习中不自然高频控制信号的问题",
+      "线性策略网络(LPN)架构创新性地平衡了计算效率和策略表达能力",
+      "实验验证充分，涵盖了动态动作（如后空翻）和障碍技能等多种运动模仿任务",
+      "成功应用到物理四足机器人上，展示了方法的实用性",
+      "无需任务特定调参，降低了使用门槛"
+    ],
+    "weaknesses": [
+      "创新性相对有限，主要是对现有方法的改进而非根本性突破",
+      "与完全连接神经网络相比，线性策略网络的表达能力可能受限",
+      "论文未详细讨论该方法在更复杂场景下的泛化能力和局限性",
+      "计算开销的具体数值对比可以更加详尽"
+    ]
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Learning Smooth Time-Varying Linear Policies with an Action Jacobian Penalty",
+      "authors": [
+        "Junlin Dong",
+        "Kevin Karol",
+        "Jessica K. Hodgins"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2602.18312",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Reinforcement learning provides a framework for learning control policies that can reproduce diverse motions for simulated characters. However, such policies often exploit unnatural high-frequency signals that are unachievable by humans or physical robots, making them poor representations of real-world behaviors. Existing work addresses this issue by adding a reward term that penalizes a large change in actions over time. This term often requires substantial tuning efforts. We propose to use the action Jacobian penalty, which penalizes changes in action with respect to the changes in simulated state directly through auto differentiation. This effectively eliminates unrealistic high-frequency control signals without task specific tuning. While effective, the action Jacobian penalty introduces significant computational overhead when used with traditional fully connected neural network architectures. To mitigate this, we introduce a new architecture called a Linear Policy Net (LPN) that significantly reduces the computational burden for calculating the action Jacobian penalty during training. In addition, a LPN requires no parameter tuning, exhibits faster learning convergence compared to baseline methods, and can be more efficiently queried during inference time compared to a fully connected neural network. We demonstrate that a Linear Policy Net, combined with the action Jacobian penalty, is able to learn policies that generate smooth signals while solving a number of motion imitation tasks with different characteristics, including dynamic motions such as a backflip and various challenging parkour skills. Finally, we apply this approach to create policies for dynamic motions on a physical quadrupedal robot equipped with an arm.",
+      "route_id": "2ee7d888-8cca-4910-97cb-c71e59a7c1a7"
+    },
+    "markdown_stats": {
+      "lines": 258,
+      "words": 9960,
+      "headings": 21
+    },
+    "assets": {
+      "images": 9,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "2ee7d888-8cca-4910-97cb-c71e59a7c1a7",
+  "paper_ref": "2ee7d888-8cca-4910-97cb-c71e59a7c1a7",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

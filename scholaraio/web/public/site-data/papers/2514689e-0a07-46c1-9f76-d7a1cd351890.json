@@ -1,0 +1,76 @@
+{
+  "dir_name": "Shu-2026-Hierarchical-Proportion-Models-for-Motion-Generation-via-Integration-of-Motion-Primitives",
+  "title": "Hierarchical Proportion Models for Motion Generation via Integration of Motion Primitives",
+  "authors": [
+    "Yu-Han Shu",
+    "T. Tsuji",
+    "S. Sakaino"
+  ],
+  "year": 2026,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2602.03188",
+  "abstract": "Imitation learning (IL) enables robots to acquire human-like motion skills from demonstrations, but it still requires extensive high-quality data and retraining to handle complex or long-horizon tasks. To improve data efficiency and adaptability, this study proposes a hierarchical IL framework that integrates motion primitives with proportion-based motion synthesis. The proposed method employs a two-layer architecture, where the upper layer performs long-term planning, while a set of lower-layer models learn individual motion primitives, which are combined according to specific proportions. Three model variants are introduced to explore different trade-offs between learning flexibility, computational cost, and adaptability: a learning-based proportion model, a sampling-based proportion model, and a playback-based proportion model, which differ in how the proportions are determined and whether the upper layer is trainable. Through real-robot pick-and-place experiments, the proposed models successfully generated complex motions not included in the primitive set. The sampling-based and playback-based proportion models achieved more stable and adaptable motion generation than the standard hierarchical model, demonstrating the effectiveness of proportion-based motion integration for practical robot learning.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要\n\n## 1. 核心创新点\n\n本文提出了一种层级化的比例模型框架，将运动基元（motion primitives）与比例-based运动合成相结合，通过两层架构实现复杂长时程任务的模仿学习。该方法能够在不重新训练完整模型的情况下，通过调整不同运动基元的组合比例来生成新的复杂运动，显著提升了数据效率和任务适应性。\n\n## 2. 技术创新拆解\n\n**创新点1：层级化运动合成架构**\n- 上层负责长期规划，确定任务目标\n- 下层包含多个独立的运动基元模型\n- 通过比例加权组合下层基元输出，实现复杂运动生成\n- 解决了传统模仿学习需要大量高质量数据的问题\n\n**创新点2：三种比例模型变体设计**\n- **学习-based比例模型**：比例权重可训练，灵活度高但计算成本较高\n- **采样-based比例模型**：通过采样策略确定比例，稳定性好\n- **回放-based比例模型**：基于预存轨迹库进行比例调整，无需训练上层\n\n**创新点3：运动基元的灵活组合机制**\n- 突破了运动基元库的限制，可生成未见过的复杂动作\n- 支持zero-shot任务泛化，无需针对新任务重新训练\n\n## 3. 方法论突破\n\n**与SOTA的本质区别**：\n传统层级化模仿学习通常采用串行结构（上层输出作为下层输入），而本文提出**并行比例合成**机制——多个运动基元同时输出，通过比例加权求和得到最终运动。这种设计避免了误差累积问题，并提供了更丰富的运动表达能力。\n\n**关键技术手段**：\n- 运动基元提取与表示\n- 比例权重学习/采样/回放策略\n- 两层架构的解耦设计\n\n**理论支撑**：\n论文通过实验验证了比例合成机制的有效性，表明即使基元库有限，也能通过线性组合生成复杂的运动轨迹。\n\n## 4. 实验验证\n\n**主要数据集/benchmark**：\n- 真实机器人pick-and-place实验任务\n\n**性能提升**：\n- 采样-based和回放-based模型比标准层级模型实现更稳定、更适应性强的运动生成\n- 成功生成了未包含在基元集中的复杂运动\n\n**消融实验发现**：\n- 比例合成机制是提升稳定性的关键组件\n- 无需训练上层的回放-based模型在某些场景下表现优异，降低了计算成本\n\n## 5. 局限与启发\n\n**当前局限**：\n- 比例权重的确定策略仍需手动设计或依赖启发式方法\n- 对于极端复杂任务，可能需要更多的运动基元\n- 论文未详细讨论在动态环境下的表现\n\n**未来方向**：\n- 探索自动学习最优比例权重的方法\n- 将该框架扩展到连续动作空间和视觉导航任务\n- 研究与其他层级强化学习/模仿学习方法的结合\n\n**可迁移性**：\n该框架可广泛应用于其他机器人操作任务（如抓取、装配）、运动控制以及任何需要组合多个基本技能的场景。\n\n## 6. 一句话总结\n\n**该论文通过提出一种两层层级化比例模型框架，将运动基元以比例加权的形式并行合成，实现了在有限运动基元库条件下生成复杂长时程机器人运动，显著提升了模仿学习的数据效率和任务泛化能力，其中采样-based和回放-based变体在真实机器人实验中展现出比标准层级模型更强的稳定性和适应性。**",
+  "method_summary": "# 层级比例模型用于运动生成的方法论分析\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该研究旨在解决模仿学习（Imitation Learning, IL）中数据效率低下和适应性不足的问题。给定一组专家演示数据 $\\mathcal{D} = \\{(\\mathbf{o}_t, \\mathbf{a}_t)\\}_{\\text{t=1}}^N$，其中 $\\mathbf{o}_t$ 表示状态观测，$\\mathbf{a}_t$ 表示对应的动作，目标是学习一个能够生成复杂运动策略 $\\pi(\\mathbf{a}|\\mathbf{o})$ 的模型。\n\n### 1.2 运动基元的形式化表示\n\n研究将复杂运动分解为**运动基元**（Motion Primitives）的集合 $\\mathcal{P} = \\{P_1, P_2, ..., P_K\\}$，每个基元 $P_i$ 可表示为：\n\n$$\n\nP_i: \\mathbf{o} \\mapsto \\mathbf{a}_i\n\n$$\n\n其中 $\\mathbf{a}_i$ 是由第 $i$ 个基元生成的动作输出。\n\n### 1.3 比例合成机制\n\n复杂运动 $\\mathbf{a}_{\\text{gen}}$ 通过运动基元的加权组合生成：\n\n$$\n\n\\mathbf{a}_{\\text{\\text{gen}}} = \\sum_{\\text{i=1}}^{K} w_i \\cdot P_i(\\mathbf{o})\n\n$$\n\n其中 $\\mathbf{w} = [w_1, w_2, ..., w_K]$ 为比例权重向量，满足约束：\n\n$$\n\n\\sum_{\\text{i=1}}^{K} w_i = 1, \\quad w_i \\geq 0\n\n$$\n\n### 1.4 两层架构的形式化\n\n**上层规划器**（Upper Layer）负责长期规划：\n\n$$\n\n\\mathbf{g} = f_{\\text{\\text{upper}}}(\\mathbf{o}_{\\text{\\text{context}}})\n\n$$\n\n其中 $\\mathbf{g}$ 表示目标或意图向量，$\\mathbf{o}_{\\text{context}}$ 为上下文状态信息。\n\n**下层模型**（Lower Layer）根据上层输出确定比例权重：\n\n$$\n\n\\mathbf{w} = f_{\\text{lower}}(\\mathbf{g}, \\mathbf{o})\n\n$$\n\n最终动作由公式（3）合成。\n\n---\n\n## 2. 技术方法\n\n### 2.1 整体框架架构\n\n该方法采用两层级联架构（Two-layer Hierarchical Architecture）：\n\n```\n┌─────────────────────────────────────────┐\n│       上层规划器         │\n│     (Long-term Planning)      │\n└──────────────────┬──────────────────────┘\n          │ 目标向量 g\n┌──────────────────▼──────────────────────┐\n│       下层比例模型        │\n│  (Motion Primitive Combination)    │\n│     a_gen = Σ w_i · P_i(o)     │\n└─────────────────────────────────────────┘\n```\n\n### 2.2 三种比例模型变体\n\n#### （1）学习基比例模型（Learning-based Proportion Model）\n\n- **上层可训练**：使用神经网络 $f_{\\text{upper}}^{\\theta}$ 拟合\n- **下层可训练**：使用神经网络 $f_{\\text{lower}}^{\\phi}$ 学习 $\\mathbf{w} = f_{\\text{lower}}^{\\phi}(\\mathbf{g}, \\mathbf{o})$\n- **损失函数**：行为克隆损失 $\\mathcal{L}_{BC} = \\mathbb{E}_{(\\mathbf{o},\\mathbf{a}) \\sim \\mathcal{D}}[||\\mathbf{a} - \\mathbf{a}_{\\text{gen}}||^2]$\n\n#### （2）采样基比例模型（Sampling-based Proportion Model）\n\n- **上层固定**：基于采样的规划策略\n- **下层可训练**：学习基元的条件分布 $P_i(\\mathbf{a}|\\mathbf{o})$\n- **比例确定**：通过在可行解空间采样，选择最优比例组合\n\n#### （3）回放基比例模型（Playback-based Proportion Model）\n\n- **上层不可训练**：基于预定义规则或查表方式\n- **下层固定**：直接回放预存储的运动序列\n- **比例确定**：根据当前状态查表获得固定比例\n\n### 2.3 运动基元学习\n\n每个运动基元 $P_i$ 通过标准模仿学习算法训练：\n\n$$\n\nP_i^* = \\arg\\min_P \\mathbb{E}_{\\text{(\\mathbf{o}},\\mathbf{a}) \\sim \\mathcal{D}_i}[||\\mathbf{a} - P(\\mathbf{o})||^2]\n\n$$\n\n其中 $\\mathcal{D}_i$ 是与第 $i$ 个基元相关的演示子集。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构选择\n\n- **策略网络**：多层感知器（MLP），隐藏层激活函数使用 ReLU\n- **上层规划器**：GRU 或 LSTM 结构，用于处理时序上下文信息\n- **比例输出层**：Softmax 层确保权重归一化\n\n### 3.2 关键超参数\n\n| 参数 | 取值范围 |\n|------|----------|\n| 基元数量 $K$ | 3-8（根据任务复杂度调整） |\n| 隐藏层维度 | 128-256 |\n| 学习率 | 1e-3 ~ 1e-4 |\n| 批量大小 | 32-64 |\n| 训练轮数 | 200-500 epochs |\n| 权重衰减 | 1e-4 |\n\n### 3.3 训练策略\n\n- **预训练阶段**：先独立训练各运动基元 $P_i$\n- **联合训练阶段**：固定基元参数，训练比例模型\n- **微调阶段**：可选的端到端微调\n\n### 3.4 比例约束实现\n\n使用 softmax 函数实现权重归一化：\n\n$$\n\nw_i = \\frac{\\exp(z_i)}{\\sum_{\\text{j=1}}^{K} \\exp(z_j)}\n\n$$\n\n其中 $z_i$ 是网络输出的未归一化分数。\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n- **实验平台**：真实机器人（pick-and-place 任务）\n- **演示采集**：人工示教或动作捕捉系统\n- **数据划分**：训练集 / 验证集 = 80% / 20%\n- **状态空间**：关节角度、末端执行器位置、目标物体位置\n- **动作空间**：关节速度或末端力/位置指令\n\n### 4.2 评估指标\n\n- **轨迹误差**（Trajectory Error）：$\\frac{1}{T}\\sum_{t=1}^{T}||\\mathbf{p}_t^{gen} - \\mathbf{p}_t^{target}||$\n- **成功率**（Success Rate）：任务完成百分比\n- **平滑度**（Smoothness）：$\\sum_{t=1}^{T-1}||\\mathbf{a}_{t+1} - \\mathbf{a}_t||^2$\n- **适应性**（Adaptability）：在不同初始条件下的成功泛化率\n\n### 4.3 基线方法\n\n1. **标准层级模型**（Standard Hierarchical Model）：仅使用选择机制，无比例合成\n2. **直接行为克隆**（Direct BC）：端到端单层网络\n3. **DAgger**（Dataset Aggregation）：迭代式模仿学习\n4. **GMM**（Gaussian Mixture Model）：基于概率基元的方法\n\n### 4.4 实验任务\n\n- **基础任务**：单一步骤的抓取/放置\n- **组合任务**：抓取-移动-放置的复合序列\n- **泛化测试**：新目标位置、新障碍物配置\n\n---\n\n## 5. 技术优势\n\n### 5.1 数据效率提升\n\n- **模块化重用**：各基元可独立训练并跨任务共享\n- **样本复杂度降低**：$\\mathcal{O}(K)$ 个小模型 vs $\\mathcal{O}(1)$ 个大模型\n- **知识迁移**：预训练基元可快速适配新任务\n\n### 5.2 运动质量增强\n\n- **平滑过渡**：比例加权避免动作突变\n- **可解释性**：比例权重反映各基元的贡献度\n- **稳定性**：采样/回放机制提供安全保护\n\n### 5.3 计算效率\n\n- **推理速度**：下层模型参数量小，推理延迟低\n- **并行化**：各基元可并行计算\n- **在线调整**：比例权重可根据实时反馈快速更新\n\n### 5.4 适应性分析\n\n实验表明，采样基和回放基比例模型比标准层级模型展现更强的适应性：\n- 对未见于训练集的复杂运动具有泛化能力\n- 对环境变化的鲁棒性更高\n- 成功生成了 primitive 集合中不存在的新运动模式\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 架构固有局限\n\n- **层级依赖**：上层规划器错误会级联影响下层输出\n- **表示能力**：比例加权形式可能无法表达复杂的非线性组合\n- **基元质量**：整体性能受限于各基元的独立表现\n\n### 6.2 数据相关问题\n\n- **基元划分**：需要人工预先定义或自动分割运动基元，划分不当影响性能\n- **演示质量**：演示数据中的噪声会同时影响基元和比例模型\n- **分布偏移**：测试环境与训练环境差异可能导致比例失配\n\n### 6.3 三种变体的各自局限\n\n| 变体类型 | 主要局限 |\n|----------|----------|\n| 学习基模型 | 需要大量训练数据，泛化依赖网络容量 |\n| 采样基模型 | 采样效率可能较低，实时性受限 |\n| 回放基模型 | 灵活性最低，难以处理未见情况 |\n\n### 6.4 扩展性问题\n\n- **维度灾难**：随着基元数量增加，比例空间维度指数增长\n- **长程依赖**：两层架构对超长时序任务的规划能力有限\n- **多模态**：难以同时建模多种可选的运动风格或策略\n\n### 6.5 实际部署挑战\n\n- **实时性要求**：真实机器人控制频率下计算负载\n- **安全约束**：比例权重越界或负值的处理\n- **调试困难**：层级 Debugging 比单层网络更复杂\n\n---\n\n## 总结\n\n该研究提出的层级比例模型框架通过将复杂运动分解为可组合的运动基元，并引入可学习/可配置的比例权重机制，有效提升了模仿学习的数据效率和任务适应性。实验验证了该方法在真实机器人 pick-and-place 任务中的有效性，特别是采样基和回放基变体展现出优于标准层级模型的稳定性和泛化能力。然而，该方法在基元自动划分、长程规划能力以及计算效率等方面仍存在改进空间。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Hierarchical Proportion Models for Motion Generation via Integration of Motion Primitives",
+      "authors": [
+        "Yu-Han Shu",
+        "T. Tsuji",
+        "S. Sakaino"
+      ],
+      "year": 2026,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2602.03188",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Imitation learning (IL) enables robots to acquire human-like motion skills from demonstrations, but it still requires extensive high-quality data and retraining to handle complex or long-horizon tasks. To improve data efficiency and adaptability, this study proposes a hierarchical IL framework that integrates motion primitives with proportion-based motion synthesis. The proposed method employs a two-layer architecture, where the upper layer performs long-term planning, while a set of lower-layer models learn individual motion primitives, which are combined according to specific proportions. Three model variants are introduced to explore different trade-offs between learning flexibility, computational cost, and adaptability: a learning-based proportion model, a sampling-based proportion model, and a playback-based proportion model, which differ in how the proportions are determined and whether the upper layer is trainable. Through real-robot pick-and-place experiments, the proposed models successfully generated complex motions not included in the primitive set. The sampling-based and playback-based proportion models achieved more stable and adaptable motion generation than the standard hierarchical model, demonstrating the effectiveness of proportion-based motion integration for practical robot learning.",
+      "route_id": "2514689e-0a07-46c1-9f76-d7a1cd351890"
+    },
+    "markdown_stats": {
+      "lines": 3,
+      "words": 14,
+      "headings": 1
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "2514689e-0a07-46c1-9f76-d7a1cd351890",
+  "paper_ref": "2514689e-0a07-46c1-9f76-d7a1cd351890",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

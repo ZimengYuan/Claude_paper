@@ -1,0 +1,88 @@
+{
+  "dir_name": "Levy-2026-Simulation-Distillation-Pretraining-World-Models-in-Simulation-for-Rapid-Real-World-Adaptation",
+  "title": "Simulation Distillation: Pretraining World Models in Simulation for Rapid Real-World Adaptation",
+  "authors": [
+    "Jacob Levy",
+    "Tyler Westenbroek",
+    "Kevin Huang",
+    "Fernando Palafox",
+    "Patrick Yin",
+    "Shayegan Omidshafiei",
+    "Dong-Ki Kim",
+    "Abhishek Gupta",
+    "David Fridovich-Keil"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arxiv.2603.15759",
+  "abstract": "Simulation-to-real transfer remains a central challenge in robotics, as mismatches between simulated and real-world dynamics often lead to failures. While reinforcement learning offers a principled mechanism for adaptation, existing sim-to-real finetuning methods struggle with exploration and long-horizon credit assignment in the low-data regimes typical of real-world robotics. We introduce Simulation Distillation (SimDist), a sim-to-real framework that distills structural priors from a simulator into a latent world model and enables rapid real-world adaptation via online planning and supervised dynamics finetuning. By transferring reward and value models directly from simulation, SimDist provides dense planning signals from raw perception without requiring value learning during deployment. As a result, real-world adaptation reduces to short-horizon system identification, avoiding long-horizon credit assignment and enabling fast, stable improvement. Across precise manipulation and quadruped locomotion tasks, SimDist substantially outperforms prior methods in data efficiency, stability, and final performance. Project website and code: https://sim-dist.github.io/",
+  "paper_type": "webpage",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Simulation Distillation: Pretraining World Models in Simulation for Rapid Real-World Adaptation",
+      "authors": [
+        "Jacob Levy",
+        "Tyler Westenbroek",
+        "Kevin Huang",
+        "Fernando Palafox",
+        "Patrick Yin",
+        "Shayegan Omidshafiei",
+        "Dong-Ki Kim",
+        "Abhishek Gupta",
+        "David Fridovich-Keil"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arxiv.2603.15759",
+      "paper_type": "webpage",
+      "publisher": "Cornell University",
+      "abstract": "Simulation-to-real transfer remains a central challenge in robotics, as mismatches between simulated and real-world dynamics often lead to failures. While reinforcement learning offers a principled mechanism for adaptation, existing sim-to-real finetuning methods struggle with exploration and long-horizon credit assignment in the low-data regimes typical of real-world robotics. We introduce Simulation Distillation (SimDist), a sim-to-real framework that distills structural priors from a simulator into a latent world model and enables rapid real-world adaptation via online planning and supervised dynamics finetuning. By transferring reward and value models directly from simulation, SimDist provides dense planning signals from raw perception without requiring value learning during deployment. As a result, real-world adaptation reduces to short-horizon system identification, avoiding long-horizon credit assignment and enabling fast, stable improvement. Across precise manipulation and quadruped locomotion tasks, SimDist substantially outperforms prior methods in data efficiency, stability, and final performance. Project website and code: https://sim-dist.github.io/",
+      "route_id": "dd7bf0fd-ac42-42e8-80e0-1016224f3412"
+    },
+    "markdown_stats": {
+      "lines": 372,
+      "words": 11713,
+      "headings": 26
+    },
+    "assets": {
+      "images": 21,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "dd7bf0fd-ac42-42e8-80e0-1016224f3412",
+  "paper_ref": "dd7bf0fd-ac42-42e8-80e0-1016224f3412",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

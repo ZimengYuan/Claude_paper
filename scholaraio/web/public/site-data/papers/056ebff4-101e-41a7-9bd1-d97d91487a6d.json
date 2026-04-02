@@ -1,0 +1,86 @@
+{
+  "dir_name": "Zhang-2026-PhysMoDPO-Physically-Plausible-Humanoid-Motion-with-Preference-Optimization",
+  "title": "PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization",
+  "authors": [
+    "Yangsong Zhang",
+    "Anujith Muraleedharan",
+    "Rikhat Akizhanov",
+    "Abdul Ahad Butt",
+    "Gül Varol",
+    "Pascal Fua",
+    "Fabio Pizzati",
+    "Ivan Laptev"
+  ],
+  "year": 2026,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2603.13228",
+  "abstract": "Recent progress in text-conditioned human motion generation has been largely driven by diffusion models trained on large-scale human motion data. Building on this progress, recent methods attempt to transfer such models for character animation and real robot control by applying a Whole-Body Controller (WBC) that converts diffusion-generated motions into executable trajectories. While WBC trajectories become compliant with physics, they may expose substantial deviations from original motion. To address this issue, we here propose PhysMoDPO, a Direct Preference Optimization framework. Unlike prior work that relies on hand-crafted physics-aware heuristics such as foot-sliding penalties, we integrate WBC into our training pipeline and optimize diffusion model such that the output of WBC becomes compliant both with physics and original text instructions. To train PhysMoDPO we deploy physics-based and task-specific rewards and use them to assign preference to synthesized trajectories. Our extensive experiments on text-to-motion and spatial control tasks demonstrate consistent improvements of PhysMoDPO in both physical realism and task-related metrics on simulated robots. Moreover, we demonstrate that PhysMoDPO results in significant improvements when applied to zero-shot motion transfer in simulation and for real-world deployment on a G1 humanoid robot.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文摘要：PhysMoDPO\n\n## 核心创新点\n\n本文提出了 PhysMoDPO，一种将直接偏好优化（DPO）与物理仿真相结合的框架，通过将全身控制器（WBC）集成到扩散模型的训练流程中，优化生成动作使其同时满足物理可行性和文本指令要求，解决了以往方法中物理约束与原始动作保真度之间的权衡问题。\n\n---\n\n## 技术创新拆解\n\n**创新点 1：WBC 集成到训练pipeline** — 将全身控制器作为可微分模块嵌入扩散模型训练过程，使模型能够学习输出可直接被WBC执行的轨迹，而非事后补救式地添加物理约束。\n\n**创新点 2：基于物理和任务的奖励机制** — 设计了物理合规性奖励和任务相关奖励，用于为合成轨迹分配偏好标签，从而引导扩散模型优化方向。\n\n**创新点 3：直接偏好优化框架** — 摆脱了传统的手工物理启发式惩罚（如脚步滑移惩罚），采用偏好学习范式自动发现最优动作策略。\n\n**创新点 4：零样本迁移与真实机器人部署** — 实现了从模拟到真实G1人形机器人的零样本动作迁移，验证了方法的泛化能力。\n\n---\n\n## 方法论突破\n\n**新颖性：** 区别于现有方法仅在推理阶段应用WBC或手动设计物理惩罚项，PhysMoDPO 首次将WBC引入训练信号生成过程，通过偏好优化端到端地学习物理兼容的动作生成策略。\n\n**关键技术：** \n- 可微分的全身控制器（WBC）模块\n- 基于 DPO 的奖励模型训练\n- 物理仿真环境（Isaac Gym/MuJoCo）\n\n**理论支撑：** 使用偏好优化的理论框架，将物理约束和任务性能转化为排序偏好信号，通过对比学习优化策略。\n\n---\n\n## 实验验证\n\n**主要数据集/任务：**\n- 文本到动作生成任务\n- 空间控制任务\n- G1 人形机器人模拟与真实部署\n\n**性能提升（关键指标）：**\n- 物理真实性指标显著改善\n- 任务相关指标（动作准确度、轨迹跟踪误差）明显提升\n- 消融实验表明 WBC 集成模块贡献最大\n\n---\n\n## 局限与启发\n\n**当前局限：**\n- 偏好数据的生成依赖仿真环境，可能存在 sim-to-real 差距\n- 对于复杂、长时间的任务序列，WBC 累积误差可能累积\n\n**未来方向：**\n- 扩展到更复杂的任务和更多样化的机器人平台\n- 探索更高效的偏好数据采集方法\n\n**可迁移性：** 该方法具有较高的通用性，可推广到其他需要物理约束的生成任务（如动物运动、机械臂操作等）。\n\n---\n\n## 一句话总结\n\nPhysMoDPO 通过将全身控制器集成到扩散模型的直接偏好优化训练中，实现了物理可行性与文本指令遵循的联合优化，是首个能够在端到端训练中同时满足物理约束和任务要求的文本驱动人形动作生成方法。",
+  "method_summary": "# PhysMoDPO 方法论详细解析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n该方法旨在解决文本条件人体运动生成中的物理可行性问题。给定文本描述 $c$（如\"向前走并挥手\"），目标是生成物理上可行的全身运动序列 $x$，使其同时满足：\n\n- **文本对齐性**：生成的运动与文本描述语义一致\n- **物理可行性**：运动满足物理约束（无穿模、无脚滑、平衡保持）\n- **任务完成度**：在特定任务场景下能够完成预定目标\n\n### 1.2 数学框架\n\n设 $\\mathcal{D}$ 为大规模人体运动数据集，其中每个样本包含运动序列 $x \\in \\mathbb{R}^{T \\times D}$（$T$ 为帧数，$D$ 为运动维度）和对应的文本描述 $c$。传统扩散模型通过学习逆向过程 $p_\\theta(x_{\\text{0:T}}|c)$ 来生成运动。\n\n核心问题可形式化为约束优化：\n\n$$\n\n\\max_{\\text{\\theta}} \\mathbb{E}_{\\text{x \\sim p\\_\\theta(\\cdot|c)}} [\\text{Utility}(x, c)] \\quad \\text{s.t.} \\quad \\text{Physics}(x) = \\text{True}\n\n$$\n\n其中 $\\text{Utility}$ 衡量运动质量，$\\text{Physics}$ 为物理可行性谓词。\n\n### 1.3 WBC 映射问题\n\nWBC（Whole-Body Controller）将高层运动命令 $u$ 转换为低层关节控制：\n\n$$\n\n\\tau_{\\text{\\text{WBC}}} = \\text{WBC}(q, \\dot{q}, \\ddot{q}_{\\text{\\text{des}}}, u)\n\n$$\n\n其中 $q, \\dot{q}, \\ddot{q}$ 分别为关节位置、速度、加速度，$\\ddot{q}_{\\text{des}}$ 为期望加速度。WBC 输出需满足物理动力学约束：\n\n$$\n\nM(q)\\ddot{q} + C(q, \\dot{q})\\dot{q} + G(q) = \\tau_{\\text{WBC}}\n\n$$\n\n其中 $M$ 为质量矩阵，$C$ 为科里奥利力矩阵，$G$ 为重力向量。\n\n### 1.4 DPO 偏好优化形式化\n\n将物理合规性融入训练后，问题转化为偏好优化。给定三元组 $(x_1, x_2, c)$，其中 $x_1, x_2$ 为两个不同的运动生成结果，偏好标签 $y \\in \\{0,1\\}$ 表示哪个更优。DPO 优化目标：\n\n$$\n\n\\mathcal{L}_{\\text{\\text{DPO}}}(\\theta) = -\\mathbb{E}_{\\text{(x\\_1,x\\_2,c,y)\\sim\\mathcal{D}}_p} \\left[ \\log \\sigma\\left(y \\cdot (\\log \\pi_\\theta(x_1|c) - \\log \\pi_\\theta(x_2|c))\\right) \\right]\n\n$$\n\n其中 $\\sigma$ 为 sigmoid 函数，$\\pi_\\theta$ 为策略模型。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization",
+      "authors": [
+        "Yangsong Zhang",
+        "Anujith Muraleedharan",
+        "Rikhat Akizhanov",
+        "Abdul Ahad Butt",
+        "Gül Varol",
+        "Pascal Fua",
+        "Fabio Pizzati",
+        "Ivan Laptev"
+      ],
+      "year": 2026,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2603.13228",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Recent progress in text-conditioned human motion generation has been largely driven by diffusion models trained on large-scale human motion data. Building on this progress, recent methods attempt to transfer such models for character animation and real robot control by applying a Whole-Body Controller (WBC) that converts diffusion-generated motions into executable trajectories. While WBC trajectories become compliant with physics, they may expose substantial deviations from original motion. To address this issue, we here propose PhysMoDPO, a Direct Preference Optimization framework. Unlike prior work that relies on hand-crafted physics-aware heuristics such as foot-sliding penalties, we integrate WBC into our training pipeline and optimize diffusion model such that the output of WBC becomes compliant both with physics and original text instructions. To train PhysMoDPO we deploy physics-based and task-specific rewards and use them to assign preference to synthesized trajectories. Our extensive experiments on text-to-motion and spatial control tasks demonstrate consistent improvements of PhysMoDPO in both physical realism and task-related metrics on simulated robots. Moreover, we demonstrate that PhysMoDPO results in significant improvements when applied to zero-shot motion transfer in simulation and for real-world deployment on a G1 humanoid robot.",
+      "route_id": "056ebff4-101e-41a7-9bd1-d97d91487a6d"
+    },
+    "markdown_stats": {
+      "lines": 331,
+      "words": 9936,
+      "headings": 18
+    },
+    "assets": {
+      "images": 30,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "056ebff4-101e-41a7-9bd1-d97d91487a6d",
+  "paper_ref": "056ebff4-101e-41a7-9bd1-d97d91487a6d",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

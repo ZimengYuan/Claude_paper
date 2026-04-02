@@ -1,0 +1,85 @@
+{
+  "dir_name": "Wang-2025-MoRE-Mixture-of-Residual-Experts-for-Humanoid-Lif",
+  "title": "MoRE: Mixture of Residual Experts for Humanoid Lifelike Gaits Learning on Complex Terrains",
+  "authors": [
+    "Dewei Wang",
+    "Xinmiao Wang",
+    "Xinzhe Liu",
+    "Jiyuan Shi",
+    "Yingnan Zhao",
+    "Chenjia Bai",
+    "Xuelong Li"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2506.08840",
+  "abstract": "Humanoid robots have demonstrated robust locomotion capabilities using Reinforcement Learning (RL)-based approaches. Further, to obtain human-like behaviors, existing methods integrate human motion-tracking or motion prior in the RL framework. However, these methods are limited in flat terrains with proprioception only, restricting their abilities to traverse challenging terrains with human-like gaits. In this work, we propose a novel framework using a mixture of latent residual experts with multi-discriminators to train an RL policy, which is capable of traversing complex terrains in controllable lifelike gaits with exteroception. Our two-stage training pipeline first teaches the policy to traverse complex terrains using a depth camera, and then enables gait-commanded switching between human-like gait patterns. We also design gait rewards to adjust human-like behaviors like robot base height. Simulation and real-world experiments demonstrate that our framework exhibits exceptional performance in traversing complex terrains, and achieves seamless transitions between multiple human-like gait patterns.",
+  "paper_type": "JournalArticle",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "MoRE: Mixture of Residual Experts for Humanoid Lifelike Gaits Learning on Complex Terrains",
+      "authors": [
+        "Dewei Wang",
+        "Xinmiao Wang",
+        "Xinzhe Liu",
+        "Jiyuan Shi",
+        "Yingnan Zhao",
+        "Chenjia Bai",
+        "Xuelong Li"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2506.08840",
+      "paper_type": "JournalArticle",
+      "abstract": "Humanoid robots have demonstrated robust locomotion capabilities using Reinforcement Learning (RL)-based approaches. Further, to obtain human-like behaviors, existing methods integrate human motion-tracking or motion prior in the RL framework. However, these methods are limited in flat terrains with proprioception only, restricting their abilities to traverse challenging terrains with human-like gaits. In this work, we propose a novel framework using a mixture of latent residual experts with multi-discriminators to train an RL policy, which is capable of traversing complex terrains in controllable lifelike gaits with exteroception. Our two-stage training pipeline first teaches the policy to traverse complex terrains using a depth camera, and then enables gait-commanded switching between human-like gait patterns. We also design gait rewards to adjust human-like behaviors like robot base height. Simulation and real-world experiments demonstrate that our framework exhibits exceptional performance in traversing complex terrains, and achieves seamless transitions between multiple human-like gait patterns.",
+      "route_id": "c6874636-9a0a-46fe-bbab-0429a3365750"
+    },
+    "markdown_stats": {
+      "lines": 215,
+      "words": 8149,
+      "headings": 16
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": true,
+      "content_lists": [
+        "e0ee2bfc-fd2c-461e-a879-992acdf3060b_content_list.json"
+      ]
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "10.1109-icdm59182.2024.00085",
+  "paper_ref": "10.1109-icdm59182.2024.00085",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

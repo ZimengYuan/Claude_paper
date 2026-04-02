@@ -1,0 +1,105 @@
+{
+  "dir_name": "Aberman-2020-Unpaired-motion-style-transfer-from-video-to-animation",
+  "title": "Unpaired motion style transfer from video to animation",
+  "authors": [
+    "Kfir Aberman",
+    "Yijia Weng",
+    "Dani Lischinski",
+    "Daniel Cohen-Or",
+    "Baoquan Chen"
+  ],
+  "year": 2020,
+  "journal": "ACM Transactions on Graphics",
+  "doi": "10.1145/3386569.3392469",
+  "abstract": "Transferring the motion style from one animation clip to another, while preserving the motion content of the latter, has been a long-standing problem in character animation. Most existing data-driven approaches are supervised and rely on paired data, where motions with the same content are performed in different styles. In addition, these approaches are limited to transfer of styles that were seen during training. In this paper, we present a novel data-driven framework for motion style transfer, which learns from an unpaired collection of motions with style labels, and enables transferring motion styles not observed during training. Furthermore, our framework is able to extract motion styles directly from videos, bypassing 3D reconstruction, and apply them to the 3D input motion. Our style transfer network encodes motions into two latent codes, for content and for style, each of which plays a different role in the decoding (synthesis) process. While the content code is decoded into the output motion by several temporal convolutional layers, the style code modifies deep features via temporally invariant adaptive instance normalization (AdaIN). Moreover, while the content code is encoded from 3D joint rotations, we learn a common embedding for style from either 3D or 2D joint positions, enabling style extraction from videos. Our results are comparable to the state-of-the-art, despite not requiring paired training data, and outperform other methods when transferring previously unseen styles. To our knowledge, we are the first to demonstrate style transfer directly from videos to 3D animations - an ability which enables one to extend the set of style examples far beyond motions captured by MoCap systems.",
+  "paper_type": "journal-article",
+  "publisher": "Association for Computing Machinery (ACM)",
+  "issn": "0730-0301",
+  "volume": "39",
+  "issue": "4",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": "2026-03-26T17:02:32.505499",
+  "citation_count": 188,
+  "summary": "# 论文摘要\n\n## 1. 核心创新点 (Core Innovation)\n\n本文首次提出了**无需配对训练数据即可从视频中提取运动风格并直接应用到3D动画**的框架。该方法通过解耦内容和风格表示，利用时间不变的自适应实例归一化（AdaIN）机制实现风格迁移，并能处理训练中未见过的全新风格。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点1: 时间不变AdaIN机制** - 将图像风格迁移中的AdaIN操作应用于运动序列，通过修改深度特征的通道均值和方差来注入风格，同时保持时间信号形状不变，从而保留运动内容。\n\n**创新点2: 联合2D-3D风格嵌入空间** - 设计了3D运动编码器和2D投影编码器，通过联合嵌入损失鼓励两者映射到同一风格代码，实现从普通视频中提取风格而无需3D重建。\n\n**创新点3: 无配对训练范式** - 采用内容一致性损失（当内容与风格输入相同时应重构原始运动）和多类别对抗损失，无需配对数据即可学习风格迁移。\n\n**创新点4: 未见风格泛化能力** - 网络学习通用的风格提取器，能够从少量甚至单一样本中提取风格属性，并泛化到训练中未观察过的风格。\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**: 区别于传统方法需要配对数据（同一动作不同风格的成对样本），本文仅需要带有风格标签的非配对运动序列即可训练。核心思路是将运动解耦为内容码（从3D关节旋转编码）和风格码（从关节位置编码），两者通过不同机制作用于生成过程。\n\n**关键技术**:\n- **内容编码器**: temporal CNN + instance normalization (去除风格信息)\n- **风格编码器**: 3D/2D双分支结构，输出固定维度风格码\n- **AdaIN解码器**: 风格码通过MLP生成仿射参数，修改特征的通道统计量\n- **多风格判别器**: 同时处理|S|个风格类别的对抗任务\n\n**理论支撑**: 论文证明AdaIN等价于对卷积核的有效权重进行动态调整，IN层移除源风格，AdaIN层注入目标风格，实现了风格的模块化迁移。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**:\n- Dataset A: 8种风格的运动序列（Xia et al. 2015）\n- Dataset B: 16种风格的运动序列（新采集）\n\n**性能提升**:\n- 在未见风格迁移任务上显著优于现有方法\n- 视频到3D动画的风格迁移（此前无其他方法可实现）\n- 内容-风格解耦质量：步行运动的内容码可降维至单一相位参数（保留97.4%变化）\n\n**消融实验**:\n- triplet loss使风格聚类更紧密\n- 联合嵌入损失确保2D/3D风格码映射到同一空间\n- 内容一致性损失保证相同风格输入时的重构能力\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**:\n- 当训练风格数量较少时，对未见风格的泛化能力受限\n- 全局速度/足部接触时序属于内容还是风格存在定义模糊（如僵尸步态）\n- 需要预先定义风格类别标签\n\n**未来方向**:\n- 无监督风格发现（无需预定义风格标签）\n- 端到端的视频风格提取与3D重建联合优化\n- 更精细的时空风格解耦\n\n**可迁移性**: AdaIN机制可推广至其他序列生成任务（如音频/舞蹈风格迁移）；2D-3D联合嵌入思想适用于其他跨模态任务。\n\n## 6. 一句话总结\n\n本文提出了基于时间不变AdaIN的运动风格迁移框架，首次实现了从普通视频直接提取风格并应用于3D动画的能力，同时支持无配对训练和未见风格泛化，为运动风格迁移领域树立了新的技术标杆。",
+  "method_summary": "# 未配对动作风格迁移方法论分析\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n该方法解决**动作风格迁移**问题：给定一段内容动作 $\\mathbf{m}^s$（具有源风格 $s$）和一段风格参考动作 $\\mathbf{n}^t$（具有目标风格 $t$），生成一段新动作 $\\tilde{\\mathbf{m}}^t$，该动作保留原始内容但呈现目标风格。\n\n形式化表达为条件翻译模型：\n\n$$\n\n\\tilde{\\mathbf{m}}^t = G(\\mathbf{m}^s | \\mathbf{n}^t)\n\n$$\n\n其中 $G$ 为条件生成器，$\\mathbf{m}^s$ 提供内容信息，$\\mathbf{n}^t$ 提供风格信息。\n\n### 1.2 关键约束条件\n\n- **无配对训练数据**：训练集中不要求相同内容的动作对，仅需动作标签\n- **支持未见过的风格**：训练后可泛化到训练时未出现的风格类型\n- **视频风格提取**：可直接从 2D 视频中提取风格，无需 3D 重建\n\n### 1.3 动作表示\n\n- 内容输入 $\\mathbf{m}^s \\in \\mathbb{R}^{T \\times 4J}$：使用单位四元数表示的关节旋转（$J$ 为关节数）\n- 风格输入 $\\mathbf{n}^t \\in \\mathbb{R}^{T \\times 3J}$：使用 3D 关节位置\n- 输出 $\\tilde{\\mathbf{m}}^t$：使用关节旋转表示，便于直接生成标准动画文件\n\n## 2. 技术方法\n\n### 2.1 整体框架架构\n\n框架包含三个核心组件：\n\n1. **内容编码器 $E_C$**：从内容动作中提取时间内容代码 $\\mathbf{z}_c$\n2. **风格编码器 $E_S$**：从风格参考中提取时间不变的风格代码 $\\mathbf{z}_s$\n3. **解码器 $F$**：结合内容代码与风格代码生成目标动作\n\n整体函数关系：\n\n$$\n\n\\tilde{\\mathbf{m}}^t = G(\\mathbf{m}^s | \\mathbf{n}^t) = F(E_C(\\mathbf{m}^s) | E_S(\\mathbf{n}^t))\n\n$$\n\n### 2.2 内容编码器（Content Encoder）\n\n结构组成：\n- 多个时间 1D 卷积层（提取时序特征）\n- 多个残差块（映射到潜在空间）\n\n**关键设计**：使用**实例归一化（Instance Normalization, IN）**层，有效去除风格信息：\n\n$$\n\n\\text{IN}(\\mathbf{x}) = \\gamma \\cdot \\frac{\\mathbf{x} - \\mu}{\\sqrt{\\sigma^2 + \\epsilon}} + \\beta\n\n$$\n\n其中 $\\mu$ 和 $\\sigma^2$ 分别为每个通道的均值和方差，$\\gamma$ 和 $\\beta$ 为可学习参数。IN 层使得输出内容代码不包含风格属性。\n\n### 2.3 风格编码器（Style Encoder）\n\n支持两种输入模式：\n\n1. **3D 风格编码器 $E_S^{3D}$**：处理 3D 关节位置\n2. **2D 风格编码器 $E_S^{2D}$**：处理 2D 投影（从视频提取）\n\n**联合嵌入学习**：通过损失函数约束，使相同风格的 3D 和 2D 输入映射到同一风格代码 $\\mathbf{z}_s$：\n\n$$\n\n\\mathbf{z}_s = \\frac{1}{2}(E_S^{3D}(\\mathbf{n}^t) + E_S^{2D}(P(\\mathbf{n}^t; \\mathcal{P})))\n\n$$\n\n其中 $P$ 为弱透视投影算子，$\\mathcal{P}$ 包含尺度 $s$ 和欧拉角 $(v^{pitch}, v^{yaw}, v^{roll})$。\n\n### 2.4 解码器与 AdaIN 机制\n\n解码器结构：\n- 多个带 AdaIN 的残差块\n- 卷积层进行时间上采样\n\n**自适应实例归一化（AdaIN）**是核心创新：\n\n$$\n\n\\text{AdaIN}(\\mathbf{f}, \\mathbf{z}_s) = \\gamma(\\mathbf{z}_s) \\cdot \\frac{\\mathbf{f} - \\mu(\\mathbf{f})}{\\sqrt{\\sigma^2(\\mathbf{f}) + \\epsilon}} + \\beta(\\mathbf{z}_s)\n\n$$\n\n其中 $\\gamma(\\mathbf{z}_s)$ 和 $\\beta(\\mathbf{z}_s)$ 由多层感知机（MLP）从风格代码预测得到。\n\n**时间不变性**：AdaIN 的仿射变换仅修改特征的**二阶统计量**（均值和方差），不改变时序信号的形状，从而保留动作内容。\n\n### 2.5 多风格判别器\n\n采用多类别判别器架构，同时处理 $|S|$ 种风格：\n- 判别器输出 $|S|$ 个值，每个对应一种风格\n- 对真实动作：期望第 $i$ 个输出为 1\n- 对生成动作：期望第 $t$ 个输出为 0\n\n## 3. 实现细节\n\n### 3.1 网络架构参数\n\n**内容编码器**：\n- 输入：$\\mathbb{R}^{T \\times 4J}$（四元数旋转）\n- 卷积核大小：3×1（时间×通道）\n- 残差块数：4\n\n**风格编码器**：\n- 输出：固定维度向量（与输入序列长度无关）\n- MLP：将风格代码映射到 AdaIN 参数\n\n**解码器**：\n- AdaIN 层数：4\n- 上采样因子：4×（将低分辨率特征映射到原始时间长度）\n\n### 3.2 损失函数权重\n\n最终损失：\n\n$$\n\n\\mathcal{L} = \\mathcal{L}_{\\text{\\text{con}}} + \\alpha_{\\text{\\text{adv}}}\\mathcal{L}_{\\text{\\text{adv}}} + \\alpha_{\\text{\\text{reg}}}\\mathcal{L}_{\\text{\\text{reg}}} + \\alpha_{\\text{\\text{joint}}}\\mathcal{L}_{\\text{\\text{joint}}} + \\alpha_{\\text{\\text{trip}}}\\mathcal{L}_{\\text{\\text{trip}}}\n\n$$\n\n权重设置：\n- $\\alpha_{\\text{adv}} = 1$\n- $\\alpha_{\\text{reg}} = 0.5$\n- $\\alpha_{\\text{joint}} = 0.3$\n- $\\alpha_{\\text{trip}} = 0.3$\n\n### 3.3 训练细节\n\n- **优化器**：Adam\n- **训练时长**：约 8 小时（数据集 A），16 小时（数据集 B）\n- **GPU**：NVIDIA GeForce GTX Titan Xp (12GB)\n- **框架**：PyTorch\n\n### 3.4 后处理技术\n\n**全局速度调整**：\n- 计算速度因子：$V = \\frac{1}{T}\\sum_{\\tau=1}^{T}\\max_{j \\in J}\\{v^j(\\tau)\\}$\n- 时间轴扭曲因子：$V^{sty}/V^{con}$\n\n**足部接触修正**：\n- 从内容输入提取足部接触标签\n- 应用 IK 修正输出姿态\n- 解决足部滑动问题\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n**数据集 A**（Xia et al., 2015）：\n- 8 种风格标签\n- 约 1500 个动作序列\n- 序列长度：$T=32$ 帧，重叠 $T/4$\n\n**数据集 B**（新采集）：\n- 16 种不同风格\n- 约 10500 个动作序列\n- 同一角色执行各种动作\n\n数据划分：90%训练，10%测试\n\n### 4.2 评估方式\n\n- 训练时排除特定风格，测试该未见过风格的迁移效果\n- 视频风格提取实验：使用 3 秒视频作为唯一风格参考\n\n### 4.3 定性评估\n\n- t-SNE 可视化风格代码聚类\n- PCA 可视化内容代码分布\n- 人类主观评估动作质量\n\n## 5. 技术优势\n\n### 5.1 无需配对数据\n\n- 通过内容一致性损失实现：相同风格的内容+风格输入应重建原动作\n- 对抗性损失驱动风格转换，无需显式配对\n\n### 5.2 支持未见过的风格\n\n- 风格作为潜在空间中的连续向量表示，非离散标签\n- AdaIN 机制学习通用的风格提取器，可泛化到新风格\n\n### 5.3 视频风格提取\n\n- 联合嵌入空间使 2D 和 3D 表示共享同一风格代码\n- 无需 3D 重建，直接从视频提取风格\n\n### 5.4 风格与内容的解耦\n\n- IN 层去除源风格信息\n- AdaIN 层仅修改二阶统计量，保留动作时序结构\n\n## 6. 技术弱点与局限性\n\n### 6.1 风格泛化能力受限\n\n- 当训练风格数量较少时（如数据集 A 仅 8 种风格），网络可能过拟合到已有风格\n- 未见过风格的属性只能从视觉相似的已有风格中借用\n\n### 6.2 足部接触假设\n\n- 当前方法假设足部接触时间属于内容而非风格\n- 对于僵尸拖行脚步等风格不适用\n\n### 6.3 全局速度处理\n\n- 采用启发式方法进行速度调整，缺乏理论保证\n- 单参考片段难以准确推断速度属性\n\n### 6.4 内容表示局限\n\n- 使用固定长度窗口（$T=32$），对长序列需要滑动处理\n- 关节旋转表示可能导致四元数不连续问题（虽然实际输出较平滑）\n\n### 6.5 训练数据依赖\n\n- 仍需大量风格标注数据\n- 对于极端罕见的风格类型，提取效果可能不佳",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 8,
+    "technical_quality": 8,
+    "experimental_validation": 8,
+    "writing_quality": 8,
+    "relevance": 6,
+    "overall_score": 8,
+    "strengths": [
+      "Novel unpaired learning framework eliminates need for paired training data",
+      "First work to demonstrate style transfer directly from 2D videos to 3D animations",
+      "Elegant use of AdaIN for motion style modification",
+      "Enables transfer of unseen styles not present during training",
+      "Well-designed architecture separating content and style encoders",
+      "Strong experimental results comparable to state-of-the-art supervised methods"
+    ],
+    "weaknesses": [
+      "Limited quantitative evaluation metrics",
+      "Quality of video-based style extraction depends heavily on pose estimation accuracy",
+      "Style transfer from video may lose subtle stylistic details present in 2D",
+      "No ablation study on key architectural components"
+    ],
+    "notes": "Significant contribution to motion style transfer field. Solves key limitations of prior supervised approaches by enabling unpaired training and zero-shot style transfer. The ability to extract style directly from videos greatly expands practical applicability. Technical approach is sound though experimental validation could be more comprehensive."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Unpaired motion style transfer from video to animation",
+      "authors": [
+        "Kfir Aberman",
+        "Yijia Weng",
+        "Dani Lischinski",
+        "Daniel Cohen-Or",
+        "Baoquan Chen"
+      ],
+      "year": 2020,
+      "journal": "ACM Transactions on Graphics",
+      "doi": "10.1145/3386569.3392469",
+      "paper_type": "journal-article",
+      "publisher": "Association for Computing Machinery (ACM)",
+      "issn": "0730-0301",
+      "volume": "39",
+      "issue": "4",
+      "abstract": "Transferring the motion style from one animation clip to another, while preserving the motion content of the latter, has been a long-standing problem in character animation. Most existing data-driven approaches are supervised and rely on paired data, where motions with the same content are performed in different styles. In addition, these approaches are limited to transfer of styles that were seen during training. In this paper, we present a novel data-driven framework for motion style transfer, which learns from an unpaired collection of motions with style labels, and enables transferring motion styles not observed during training. Furthermore, our framework is able to extract motion styles directly from videos, bypassing 3D reconstruction, and apply them to the 3D input motion. Our style transfer network encodes motions into two latent codes, for content and for style, each of which plays a different role in the decoding (synthesis) process. While the content code is decoded into the output motion by several temporal convolutional layers, the style code modifies deep features via temporally invariant adaptive instance normalization (AdaIN). Moreover, while the content code is encoded from 3D joint rotations, we learn a common embedding for style from either 3D or 2D joint positions, enabling style extraction from videos. Our results are comparable to the state-of-the-art, despite not requiring paired training data, and outperform other methods when transferring previously unseen styles. To our knowledge, we are the first to demonstrate style transfer directly from videos to 3D animations - an ability which enables one to extend the set of style examples far beyond motions captured by MoCap systems.",
+      "route_id": "88124378-47f3-4cbd-972a-d586ee2527d6"
+    },
+    "markdown_stats": {
+      "lines": 400,
+      "words": 12349,
+      "headings": 21
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "88124378-47f3-4cbd-972a-d586ee2527d6",
+  "paper_ref": "88124378-47f3-4cbd-972a-d586ee2527d6",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

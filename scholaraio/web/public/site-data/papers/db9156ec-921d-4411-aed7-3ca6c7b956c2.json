@@ -1,0 +1,83 @@
+{
+  "dir_name": "Luo-2024-PIE-Parkour-With-Implicit-Explicit-Learning-Framework-for-Legged-Robots",
+  "title": "PIE: Parkour With Implicit-Explicit Learning Framework for Legged Robots",
+  "authors": [
+    "Shixin Luo",
+    "Songbo Li",
+    "Ruiqi Yu",
+    "Zhicheng Wang",
+    "Jun Wu",
+    "Qiuguo Zhu"
+  ],
+  "year": 2024,
+  "journal": "IEEE Robotics and Automation Letters",
+  "doi": "10.1109/lra.2024.3459797",
+  "abstract": "Parkour presents a highly challenging task for legged robots, requiring them to traverse various terrains with agile and smooth locomotion. This necessitates comprehensive understanding of both the robot's own state and the surrounding terrain, despite the inherent unreliability of robot perception and actuation. Current state-of-the-art methods either rely on complex pre-trained high-level terrain reconstruction modules or limit the maximum potential of robot parkour to avoid failure due to inaccurate perception. In this paper, we propose a one-stage end-to-end learning-based parkour framework: Parkour with Implicit-Explicit learning framework for legged robots (PIE) that leverages dual-level implicit-explicit estimation. With this mechanism, even a low-cost quadruped robot equipped with an unreliable egocentric depth camera can achieve exceptional performance on challenging parkour terrains using a relatively simple training process and reward function. While the training process is conducted entirely in simulation, our real-world validation demonstrates successful zero-shot deployment of our framework, showcasing superior parkour performance on harsh terrains.",
+  "paper_type": "journal-article",
+  "publisher": "Institute of Electrical and Electronics Engineers",
+  "issn": "2377-3766",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 47,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "PIE: Parkour With Implicit-Explicit Learning Framework for Legged Robots",
+      "authors": [
+        "Shixin Luo",
+        "Songbo Li",
+        "Ruiqi Yu",
+        "Zhicheng Wang",
+        "Jun Wu",
+        "Qiuguo Zhu"
+      ],
+      "year": 2024,
+      "journal": "IEEE Robotics and Automation Letters",
+      "doi": "10.1109/lra.2024.3459797",
+      "paper_type": "journal-article",
+      "publisher": "Institute of Electrical and Electronics Engineers",
+      "issn": "2377-3766",
+      "abstract": "Parkour presents a highly challenging task for legged robots, requiring them to traverse various terrains with agile and smooth locomotion. This necessitates comprehensive understanding of both the robot's own state and the surrounding terrain, despite the inherent unreliability of robot perception and actuation. Current state-of-the-art methods either rely on complex pre-trained high-level terrain reconstruction modules or limit the maximum potential of robot parkour to avoid failure due to inaccurate perception. In this paper, we propose a one-stage end-to-end learning-based parkour framework: Parkour with Implicit-Explicit learning framework for legged robots (PIE) that leverages dual-level implicit-explicit estimation. With this mechanism, even a low-cost quadruped robot equipped with an unreliable egocentric depth camera can achieve exceptional performance on challenging parkour terrains using a relatively simple training process and reward function. While the training process is conducted entirely in simulation, our real-world validation demonstrates successful zero-shot deployment of our framework, showcasing superior parkour performance on harsh terrains.",
+      "route_id": "db9156ec-921d-4411-aed7-3ca6c7b956c2"
+    },
+    "markdown_stats": {
+      "lines": 222,
+      "words": 7318,
+      "headings": 17
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "db9156ec-921d-4411-aed7-3ca6c7b956c2",
+  "paper_ref": "db9156ec-921d-4411-aed7-3ca6c7b956c2",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

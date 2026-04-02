@@ -1,0 +1,83 @@
+{
+  "dir_name": "Yin-None-UniTracker-Learning-Universal-Whole-Body-Motion-T",
+  "title": "UniTracker: Learning Universal Whole-Body Motion Tracker for Humanoid Robots",
+  "authors": [
+    "Kangning Yin",
+    "Weishuai Zeng",
+    "Ke Fan",
+    "Minyue Dai",
+    "Zirui Wang",
+    "Qiang Zhang",
+    "Zheng Tian",
+    "Jingbo Wang",
+    "Jiangmiao Pang",
+    "Weinan Zhang"
+  ],
+  "year": null,
+  "journal": "",
+  "doi": "",
+  "abstract": "",
+  "paper_type": "",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "UniTracker: Learning Universal Whole-Body Motion Tracker for Humanoid Robots",
+      "authors": [
+        "Kangning Yin",
+        "Weishuai Zeng",
+        "Ke Fan",
+        "Minyue Dai",
+        "Zirui Wang",
+        "Qiang Zhang",
+        "Zheng Tian",
+        "Jingbo Wang",
+        "Jiangmiao Pang",
+        "Weinan Zhang"
+      ]
+    },
+    "markdown_stats": {
+      "lines": 203,
+      "words": 7454,
+      "headings": 18
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "yin---2025---unitracker-learning-universal-whole-body-motion-tracker-for-humanoid-robots",
+  "paper_ref": "Yin 等 - 2025 - UniTracker Learning Universal Whole-Body Motion Tracker for Humanoid Robots",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

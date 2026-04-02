@@ -1,0 +1,84 @@
+{
+  "dir_name": "Ci-2022-GFPose-Learning-3D-Human-Pose-Prior-with-Gradient-Fields",
+  "title": "GFPose: Learning 3D Human Pose Prior with Gradient Fields",
+  "authors": [
+    "Hai Ci",
+    "Mingdong Wu",
+    "Wentao Zhu",
+    "Xiaoxuan Ma",
+    "Hao Dong",
+    "Fangwei Zhong",
+    "Yizhou Wang"
+  ],
+  "year": 2022,
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2212.08641",
+  "abstract": "Learning 3D human pose prior is essential to human-centered AI. Here, we present GFPose, a versatile framework to model plausible 3D human poses for various applications. At the core of GFPose is a time-dependent score network, which estimates the gradient on each body joint and progressively denoises the perturbed 3D human pose to match a given task specification. During the denoising process, GFPose implicitly incorporates pose priors in gradients and unifies various discriminative and generative tasks in an elegant framework. Despite the simplicity, GFPose demonstrates great potential in several downstream tasks. Our experiments empirically show that 1) as a multi-hypothesis pose estimator, GFPose outperforms existing SOTAs by 20% on Human3.6M dataset. 2) as a single-hypothesis pose estimator, GFPose achieves comparable results to deterministic SOTAs, even with a vanilla backbone. 3) GFPose is able to produce diverse and realistic samples in pose denoising, completion and generation tasks. Project page https://sites.google.com/view/gfpose/",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "GFPose: Learning 3D Human Pose Prior with Gradient Fields",
+      "authors": [
+        "Hai Ci",
+        "Mingdong Wu",
+        "Wentao Zhu",
+        "Xiaoxuan Ma",
+        "Hao Dong",
+        "Fangwei Zhong",
+        "Yizhou Wang"
+      ],
+      "year": 2022,
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2212.08641",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Learning 3D human pose prior is essential to human-centered AI. Here, we present GFPose, a versatile framework to model plausible 3D human poses for various applications. At the core of GFPose is a time-dependent score network, which estimates the gradient on each body joint and progressively denoises the perturbed 3D human pose to match a given task specification. During the denoising process, GFPose implicitly incorporates pose priors in gradients and unifies various discriminative and generative tasks in an elegant framework. Despite the simplicity, GFPose demonstrates great potential in several downstream tasks. Our experiments empirically show that 1) as a multi-hypothesis pose estimator, GFPose outperforms existing SOTAs by 20% on Human3.6M dataset. 2) as a single-hypothesis pose estimator, GFPose achieves comparable results to deterministic SOTAs, even with a vanilla backbone. 3) GFPose is able to produce diverse and realistic samples in pose denoising, completion and generation tasks. Project page https://sites.google.com/view/gfpose/",
+      "route_id": "86264dc5-23de-4929-918c-15b1c7aae38d"
+    },
+    "markdown_stats": {
+      "lines": 429,
+      "words": 13071,
+      "headings": 33
+    },
+    "assets": {
+      "images": 37,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "86264dc5-23de-4929-918c-15b1c7aae38d",
+  "paper_ref": "86264dc5-23de-4929-918c-15b1c7aae38d",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

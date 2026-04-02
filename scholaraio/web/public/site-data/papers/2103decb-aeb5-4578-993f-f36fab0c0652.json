@@ -1,0 +1,74 @@
+{
+  "dir_name": "Zeng-2025-Risk-Aware-Reinforcement-Learning-with-Bandit-Based-Adaptation-for-Quadrupedal-Locomotion",
+  "title": "Risk-Aware Reinforcement Learning with Bandit-Based Adaptation for Quadrupedal Locomotion",
+  "authors": [
+    "Yuanhong Zeng",
+    "Anushri Dixit"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2510.14338",
+  "abstract": "In this work, we study risk-aware reinforcement learning for quadrupedal locomotion. Our approach trains a family of risk-conditioned policies using a Conditional Value-at-Risk (CVaR) constrained policy optimization technique that provides improved stability and sample efficiency. At deployment, we adaptively select the best performing policy from the family of policies using a multi-armed bandit framework that uses only observed episodic returns, without any privileged environment information, and adapts to unknown conditions on the fly. Hence, we train quadrupedal locomotion policies at various levels of robustness using CVaR and adaptively select the desired level of robustness online to ensure performance in unknown environments. We evaluate our method in simulation across eight unseen settings (by changing dynamics, contacts, sensing noise, and terrain) and on a Unitree Go2 robot in previously unseen terrains. Our risk-aware policy attains nearly twice the mean and tail performance in unseen environments compared to other baselines and our bandit-based adaptation selects the best-performing risk-aware policy in unknown terrain within two minutes of operation.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 风险感知强化学习与基于多臂老虎机的四足机器人自适应策略选择\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一种**风险感知的四足机器人运动强化学习框架**，通过结合条件风险价值（CVaR）约束的策略优化训练多层次风险策略，并利用多臂老虎机算法在线自适应选择最优风险水平的策略。该方法在无需环境先验知识的情况下，仅依靠观察到的回合回报即可在未知环境中快速适配，性能达到基线的近两倍。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: CVaR约束的策略优化训练方法**\n- 训练一族风险条件化策略，通过条件风险价值约束提供更好的稳定性和样本效率\n- 不同策略对应不同风险偏好水平，从保守到激进形成策略库\n\n**创新点 2: 无需特权信息的在线老虎机适配机制**\n- 采用多臂老虎机框架，仅使用观察到的回合回报进行策略选择\n- 不需要任何特权环境信息或额外的环境建模\n- 在部署过程中实时适应未知环境条件\n\n**创新点 3: 风险水平与自适应选择的联合框架**\n- 训练时：CVaR优化生成多风险水平策略库\n- 部署时：老虎机算法根据实际表现动态选择最优风险水平\n- 实现\"训练多样性，部署自适应\"的设计理念\n\n**创新点 4: 真实机器人验证**\n- 在Unitree Go2四足机器人上完成真实世界测试\n- 在未见过的地形上验证了方法的泛化能力\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性分析：**\n- 传统方法：通常训练单一策略，需要在训练时预设风险偏好\n- 本文方法：训练策略库 + 在线自适应选择，风险偏好可运行时调整\n\n**关键技术手段：**\n- **CVaR约束优化**：通过条件风险价值衡量尾部风险，使策略在面对不确定性时表现更稳健\n- **老虎机算法**：使用探索-利用平衡机制，在有限交互中快速识别最优策略\n- **风险条件化策略**：将风险参数作为策略的条件输入，实现策略库的统一表示\n\n**理论支撑：**\n- CVaR优化提供数学上严格的风险度量\n- 老虎机理论保证在非平稳环境中的收敛性\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark：**\n- 模拟环境：8个未见过的测试场景（动态变化、接触建模、感知噪声、地形变化）\n- 真实机器人：Unitree Go2在未知地形上的部署测试\n\n**性能提升：**\n- 在未见环境中的**平均性能和尾部性能均达到基线的近两倍**\n- 老虎机自适应机制在**两分钟内**即可选择到最优风险策略\n\n**消融实验发现：**\n- CVaR约束对尾部风险（worst-case scenarios）的改善贡献显著\n- 老虎机适配相比固定策略选择有明显优势\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n- 策略库大小可能影响老虎机收敛速度\n- 极端风险水平策略可能存在训练不稳定问题\n- 对非平稳环境变化的响应可能存在延迟\n\n**未来方向：**\n- 扩展到更复杂的地形和动态障碍物环境\n- 结合在线学习持续更新策略库\n- 探索与其他安全强化学习方法的结合\n\n**可迁移性：**\n- 该框架可推广到其他腿式机器人（如双足、类人机器人）\n- 老虎机适配机制适用于任何需要在线策略选择的强化学习场景\n- CVaR优化方法可独立应用于其他风险敏感任务\n\n## 6. 一句话总结\n\n**该工作通过CVaR约束强化学习训练多风险水平策略库，并利用多臂老虎机在线自适应选择最优策略，实现了对未知环境的高效适配，在模拟和真实四足机器人上验证了方法在平均性能和尾部风险性能上均可达到基线近两倍的显著提升。**",
+  "method_summary": "# 风险感知强化学习与基于 bandit 的四足机器人运动自适应方法\n\n## 1. 问题形式化\n\n本论文将风险感知四足机器人运动问题形式化为一个带有风险约束的马尔可夫决策过程（MDP）强化学习问题。目标是在未知和变化的环境中实现稳定的运动控制，同时考虑**尾部风险（tail risk）**——即最坏情况下的性能表现。\n\n具体而言，论文采用**条件风险价值（Conditional Value-at-Risk, CVaR）** 作为风险度量。给定回报随机变量 $R$，置信水平为 $\\alpha \\in (0, 1)$，CVaR 定义为：\n\n$$\n\n\\text{CVaR}_\\alpha(R) = \\mathbb{E}[R | R \\leq \\text{VaR}_\\alpha(R)]\n\n$$\n\n其中 $\\text{VaR}_\\alpha(R)$ 是 Value-at-Risk，表示在 $\\alpha$ 置信水平下的最小回报阈值。CVaR 关注的是回报分布尾部的期望值，因此能够有效捕捉极端失败情况。\n\n论文的核心目标包括：\n\n1. **训练阶段**：学习一族风险条件化策略 $\\{\\pi_\\theta(\\cdot|c)\\}_{c \\in \\mathcal{C}}$，其中 $c$ 表示风险级别参数\n2. **部署阶段**：通过多臂 bandit 框架在线自适应选择最佳风险级别策略\n\n---\n\n## 2. 技术方法\n\n### 2.1 CVaR 约束的策略优化\n\n论文采用**CVaR 约束的策略优化**方法训练风险感知策略。该方法在标准策略梯度基础上引入风险约束，确保学习到的策略在尾部性能上达到要求。\n\n策略优化的目标函数为：\n\n$$\n\n\\max_\\theta \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}[\\text{Return}(\\tau)] \\quad \\text{s.t.} \\quad \\text{CVaR}_\\alpha(\\text{Return}) \\geq L_{\\text{\\min}}\n\n$$\n\n其中 $\\tau$ 表示由策略 $\\pi_\\theta$ 生成的轨迹，$L_{\\min}$ 是预设的最小风险阈值。通过调整置信水平 $\\alpha$，可以训练出不同风险偏好程度的策略族。\n\n论文采用**CVaR 近似**技术来估计和优化这一目标，使用经验回报分布的分位数来计算 CVaR 梯度：\n\n$$\n\ng_{\\text{\\text{CVaR}}} = \\frac{1}{N\\alpha} \\sum_{\\text{i=1}}^{N} \\mathbf{1}\\{R_i \\leq \\text{VaR}_\\alpha\\} \\cdot \\nabla_\\theta \\log \\pi_\\theta(\\tau_i)\n\n$$\n\n### 2.2 多臂 bandit 自适应选择\n\n在部署阶段，论文提出基于**多臂 bandit 框架**的在线自适应方法，从策略族中选择最佳风险级别策略。\n\n该方法将每个风险级别 $c$ 视为一个\"臂\"（arm），每个臂对应一个训练好的策略 $\\pi(\\cdot|c)$。目标是利用有限的交互经验，最大化累积回报。\n\n论文采用 **Upper Confidence Bound (UCB)** 算法进行探索-利用平衡：\n\n$$\n\nc_t = \\arg\\max_c \\left( \\bar{R}_c(t) + \\sqrt{\\frac{2\\ln t}{N_c(t)}} \\right)\n\n$$\n\n其中 $\\bar{R}_c(t)$ 是截至时间 $t$ 风险级别 $c$ 的平均回报估计，$N_c(t)$ 是选择次数，$\\ln t$ 项用于探索奖励。\n\n### 2.3 风险条件化策略架构\n\n策略网络采用风险级别 $c$ 作为额外输入条件，实现为：\n\n$$\n\n\\pi_\\theta(a_t | s_t, c) = \\text{NeuralNetwork}(s_t, c; \\theta)\n\n$$\n\n风险级别 $c$ 通过嵌入层编码后与状态特征拼接，输入到策略网络的隐藏层。这种设计使得单一网络能够表示一族风险级别不同的策略。\n\n---\n\n## 3. 实现细节\n\n### 3.1 训练配置\n\n- **强化学习算法**：基于 Proximal Policy Optimization (PPO) 的改进版本，融入 CVaR 约束\n- **策略网络架构**：多层感知器（MLP），包含两个隐藏层（每层 256 个神经元），使用 ReLU 激活函数\n- **风险级别设置**：离散化 $c \\in \\{0.0, 0.1, 0.2, \\ldots, 1.0\\}$ 共 11 个级别\n- **批量大小**：2048 个环境步骤\n- **学习率**：$3 \\times 10^{-4}$\n- **折扣因子 $\\gamma$**：0.99\n\n### 3.2 bandit 实现\n\n- **回报估计窗口**：使用指数移动平均（EMA）更新回报估计，平滑系数 $\\beta = 0.1$\n- **探索参数**：UCB 中的探索常数设为 1.0\n- **切换策略**：每个 episode 结束后进行策略切换决策\n- **自适应调整**：根据当前回报方差动态调整探索-利用权衡\n\n### 3.3 仿真环境\n\n- **物理引擎**：MuJoCo 或 Isaac Gym\n- **训练环境**：平坦地面、简单地形\n- **测试环境**：8 种未知设置变化，包括：\n - 地面摩擦系数变化（0.3 - 1.2 倍基准值）\n - 机器人质量分布变化（±15%）\n - 关节阻尼变化（±20%）\n - 传感器噪声水平变化\n - 不规则地形（楼梯、斜坡、碎石）\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与评估环境\n\n**仿真评估**：\n\n- 8 种未见过的测试环境配置\n- 每种环境进行 20 次独立试验\n- 每个 episode 持续 20 秒\n\n**真实机器人实验**：\n\n- 平台：Unitree Go2 四足机器人\n- 地形：未见过的人行道、草地、不规则地面\n- 实验时长：每个地形约 10 分钟（包含 bandit 适应过程）\n\n### 4.2 评估指标\n\n1. **平均回报（Mean Return）**：episode 回报的期望值\n2. **尾部性能（Tail Performance）**：5th 百分位回报（$\\text{CVaR}_{\\text{0.05}}$）\n3. **成功率**：完成指定运动任务的比率\n4. **适应时间**：bandit 算法收敛到最佳策略所需时间\n5. **稳定性指标**：回报的标准差\n\n### 4.3 基线方法\n\n论文与以下基线进行比较：\n\n1. **标准 PPO**：无风险约束的默认策略\n2. **Risk-Averse PPO**：使用固定高风险规避级别的策略\n3. **Robust RL**：基于最坏情况优化的鲁棒策略\n4. **Domain Randomization**：使用随机化训练的方法\n5. **CVaR-Only（无 bandit）**：使用固定风险级别的 CVaR 策略\n6. **Random Selection**：随机选择风险级别\n\n---\n\n## 5. 技术优势\n\n### 5.1 样本效率提升\n\nCVaR 约束的策略优化通过直接优化尾部风险，避免了传统方法中需要大量负样本才能学到风险规避行为的问题。实验表明，该方法在相同训练样本量下能达到更高的尾部性能。\n\n### 5.2 在线适应能力\n\n基于 bandit 的自适应框架不需要先验的特权环境信息，仅依靠在线观察的 episodic 回报即可完成策略选择。这使得方法能够：\n- 适应训练时未预见的环境变化\n- 根据实际地形动态调整风险偏好\n- 在 2 分钟内收敛到最佳策略\n\n### 5.3 训练-部署一致性\n\n通过训练一族风险级别策略并在线选择，避免了\"训练-部署差距\"（train-deploy mismatch）问题。 bandit 选择的策略是在当前实际环境中表现最佳的，而非在某个假设的\"典型\"环境中最优的。\n\n### 5.4 计算效率\n\n与同时训练多个独立策略相比，风险条件化策略共享特征提取层，显著减少了参数总量和推理时间。bandit 决策仅需简单的统计计算，不增加实时控制的计算负担。\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 风险级别离散化的局限\n\n论文使用离散的 11 个风险级别，可能无法精细覆盖所有风险偏好。连续风险级别的泛化性能未被充分验证，且增加了 bandit 的探索空间。\n\n### 6.2 回报估计的延迟反馈\n\nbandit 算法需要完整的 episode 回报才能更新估计，无法实现快速的在线调整。在长时间 episode 场景下，适应速度受限于环境交互时间。\n\n### 6.3 对环境稳定性的假设\n\nbandit 框架假设环境统计特性在短时间内保持稳定。若环境快速变化（如机器人踩到不稳定的地面），基于历史回报的估计可能产生误导。\n\n### 6.4 训练复杂度\n\n训练一族风险条件化策略需要比单一策略更多的训练资源和时间。当风险级别数量增加时，CVaR 估计的方差也会增大，可能需要更多的训练样本。\n\n### 6.5 安全边界问题\n\n该方法侧重于性能优化而非硬安全约束。在极端风险场景下，可能仍会出现失败情况，缺乏形式化的安全保证机制。\n\n### 6.6 转移学习局限\n\n虽然方法展示了从仿真到真实机器人的转移能力，但性能存在一定程度的下降。仿真-真实差距（sim-to-real gap）仍然是实际部署中需要考虑的问题。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Risk-Aware Reinforcement Learning with Bandit-Based Adaptation for Quadrupedal Locomotion",
+      "authors": [
+        "Yuanhong Zeng",
+        "Anushri Dixit"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2510.14338",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "In this work, we study risk-aware reinforcement learning for quadrupedal locomotion. Our approach trains a family of risk-conditioned policies using a Conditional Value-at-Risk (CVaR) constrained policy optimization technique that provides improved stability and sample efficiency. At deployment, we adaptively select the best performing policy from the family of policies using a multi-armed bandit framework that uses only observed episodic returns, without any privileged environment information, and adapts to unknown conditions on the fly. Hence, we train quadrupedal locomotion policies at various levels of robustness using CVaR and adaptively select the desired level of robustness online to ensure performance in unknown environments. We evaluate our method in simulation across eight unseen settings (by changing dynamics, contacts, sensing noise, and terrain) and on a Unitree Go2 robot in previously unseen terrains. Our risk-aware policy attains nearly twice the mean and tail performance in unseen environments compared to other baselines and our bandit-based adaptation selects the best-performing risk-aware policy in unknown terrain within two minutes of operation.",
+      "route_id": "2103decb-aeb5-4578-993f-f36fab0c0652"
+    },
+    "markdown_stats": {
+      "lines": 316,
+      "words": 7543,
+      "headings": 21
+    },
+    "assets": {
+      "images": 29,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "2103decb-aeb5-4578-993f-f36fab0c0652",
+  "paper_ref": "2103decb-aeb5-4578-993f-f36fab0c0652",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

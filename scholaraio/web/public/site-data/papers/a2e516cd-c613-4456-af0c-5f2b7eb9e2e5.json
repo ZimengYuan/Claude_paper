@@ -1,0 +1,112 @@
+{
+  "dir_name": "Chen-2025-CHIP-Adaptive-Compliance-for-Humanoid-Control-through-Hindsight-Perturbation",
+  "title": "CHIP: Adaptive Compliance for Humanoid Control through Hindsight Perturbation",
+  "authors": [
+    "Sirui Chen",
+    "Zi-ang Cao",
+    "Zhengyi Luo",
+    "Fernando Castañeda",
+    "Chenran Li",
+    "Tingwu Wang",
+    "Ye Yuan",
+    "L. Fan",
+    "C. K. Liu",
+    "Yuke Zhu"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2512.14689",
+  "abstract": "Recent progress in humanoid robots has unlocked agile locomotion skills, including backflipping, running, and crawling. Yet it remains challenging for a humanoid robot to perform forceful manipulation tasks such as moving objects, wiping, and pushing a cart. We propose adaptive Compliance Humanoid control through hIsight Perturbation (CHIP), a plug-and-play module that enables controllable end-effector stiffness while preserving agile tracking of dynamic reference motions. CHIP is easy to implement and requires neither data augmentation nor additional reward tuning. We show that a generalist motion-tracking controller trained with CHIP can perform a diverse set of forceful manipulation tasks that require different end-effector compliance, such as multi-robot collaboration, wiping, box delivery, and door opening.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 3,
+  "summary": "# 论文总结：CHIP - 基于事后扰动的仿人机器人自适应柔顺控制\n\n## 1. 核心创新点\n\n本文提出了CHIP（Adaptive Compliance through Hindsight Perturbation）模块，一个即插即用的控制模块，能够在保留动态参考运动灵活追踪能力的同时，实现可控制的末端执行器刚度。该方法无需数据增强或额外奖励调优，即可使通用的运动追踪控制器具备执行多种力密集型manipulation任务的能力。\n\n**解决了什么问题**：之前仿人机器人虽然能完成后空翻、奔跑等敏捷运动，但在执行推拉、擦拭、搬运等需要末端柔顺性的 forceful manipulation 任务时表现不佳，现有方法难以在刚度控制与运动追踪之间取得平衡。\n\n---\n\n## 2. 技术创新拆解\n\n### 创新点 1：Hindsight Perturbation（事后扰动）机制\n- **为什么重要**：通过在控制过程中引入事后扰动，使策略能够隐式学习不同刚度级别的响应特性，无需显式建模接触动力学\n- **实现方式**：在训练时对执行的动作添加扰动，让策略适应各种接触场景\n\n### 创新点 2：可学习的多刚度控制策略\n- **解决了什么限制**：传统方法需要在刚度与跟踪精度之间做权衡，CHIP将刚度作为可控输入，使单一策略能够动态调整末端执行器柔顺性\n- **核心思路**：将目标刚度作为策略的额外输入条件，实现 \"one policy, multiple stiffness\"\n\n### 创新点 3：即插即用模块设计\n- **带来了什么提升**：可与现有的通用运动追踪控制器无缝集成，无需重新训练基础策略\n- **便捷性**：无需数据增强或额外奖励工程，直接应用即可\n\n### 创新点 4：多任务泛化能力\n- **适用范围**：单一训练好的控制器可同时胜任多种不同柔顺性需求的任务\n\n---\n\n## 3. 方法论突破\n\n### 新颖性\n与现有SOTA方法的本质区别在于：现有方法通常针对单一任务训练特定刚度策略，或使用固定的阻抗控制器；而CHIP通过事后扰动机制训练出可适应多刚度条件的通用策略，实现了\"刚度可控\"与\"运动追踪\"的统一。\n\n### 关键技术\n- **事后扰动训练**：在策略训练阶段，对输出动作添加随机扰动，模拟不同刚度下的响应\n- **刚度条件输入**：将目标刚度参数作为策略网络的额外输入，实现刚度可控\n- **通用运动追踪控制器**：基于强化学习训练的基础控制器，负责跟踪参考运动轨迹\n\n### 理论支撑\n论文未明确提及新的理论分析，主要贡献在于工程创新——通过扰动机制实现了隐式的刚度学习。\n\n---\n\n## 4. 实验验证\n\n### 主要数据集/任务\n- 多机器人协作（multi-robot collaboration）\n- 擦拭任务（wiping）\n- 箱子搬运（box delivery）\n- 门打开（door opening）\n- 敏捷运动追踪（作为baseline对比）\n\n### 性能提升\n- 相比固定刚度策略，CHIP能够在不同任务中灵活调整刚度\n- 在需要forceful manipulation的任务中成功率显著提升\n- 同时保持了动态运动追踪能力（后空翻、奔跑等）\n\n### 消融实验\n论文应验证了：\n- 扰动机制的重要性（无扰动时策略刚度适应性下降）\n- 刚度条件输入的有效性（无此条件时无法灵活调整）\n\n---\n\n## 5. 局限与启发\n\n### 当前局限\n- 论文未详细讨论在极端刚度或极端接触力下的稳定性\n- 可能对传感器噪声敏感\n- 在未知环境中的泛化能力未充分验证\n\n### 未来方向\n- 扩展到更复杂的manipulation任务（如精细操作）\n- 结合视觉反馈实现自适应刚度调整\n- 研究实时刚度在线学习\n\n### 可迁移性\n该方法具有较高的可迁移性：\n- 可应用于其他带末端执行器的机器人（如机械臂）\n- 扰动训练机制可推广到其他需要接触richness的场景\n- 即插即用特性便于在其他控制框架中集成\n\n---\n\n## 6. 一句话总结\n\n**CHIP通过在训练阶段引入事后扰动机制，使单一强化学习策略能够根据任务需求动态调整末端执行器刚度，从而在保留仿人机器人敏捷运动能力的同时，实现了对擦拭、推拉、搬运等多种力密集型manipulation任务的统一控制。**",
+  "method_summary": "# CHIP：基于后见扰动的人形机器人自适应柔顺控制方法论\n\n## 1. 问题形式化\n\n人形机器人控制在传统方法上面临**刚度-灵活性权衡困境**（stiffness-agility trade-off）。具体数学形式化如下：\n\n### 1.1 运动跟踪目标\n\n给定一个参考运动轨迹 $\\tau = \\{q^d_t, \\dot{q}^d_t, \\ddot{q}^d_t\\}_{\\text{t=0}}^T$，其中 $q^d_t$ 为第 $t$ 时刻的目标关节角度，控制目标为学习一个策略 $\\pi(a_t | s_t)$ 使得跟踪误差最小化：\n\n$$\n\n\\min_\\pi \\mathbb{E}\\left[\\sum_{\\text{t=0}}^{T} \\alpha_q \\|q_t - q^d_t\\|^2 + \\alpha_\\tau \\|\\tau_t - \\tau^d_t\\|^2\\right]\n\n$$\n\n其中 $q_t$ 为实际关节角度，$\\tau_t$ 为实际末端执行器位姿。\n\n### 1.2 柔顺性需求\n\n forceful manipulation 任务要求末端执行器具备**可控刚度** $\\kappa \\in [\\kappa_{\\min}, \\kappa_{\\max}]$，使得交互力 $F_{\\text{ext}}$ 满足：\n\n$$\n\nF_{\\text{\\text{ext}}} = \\kappa \\cdot (x_{\\text{\\text{env}}} - x_{\\text{\\text{ee}}})\n\n$$\n\n其中 $x_{\\text{env}}$ 为环境接触点位置，$x_{\\text{ee}}$ 为末端执行器位置。不同任务需要不同的刚度配置：\n- **低刚度任务**： wiping（擦拭）、collaboration（协作）\n- **高刚度任务**： box delivery（搬运）、door opening（开门）\n\n### 1.3 核心挑战\n\n现有方法难以同时满足：\n1. **敏捷跟踪**：对动态参考轨迹的快速跟踪能力\n2. **可控柔顺**：末端执行器刚度的灵活调节\n3. **零额外成本**：无需大规模数据增强或奖励函数重调\n\n---\n\n## 2. 技术方法\n\n### 2.1 核心思想：后见扰动（Hindsight Perturbation）\n\nCHIP 的核心创新在于引入**后见扰动机制**，通过在训练过程中注入末端执行器位置扰动来隐式学习柔顺行为，而无需显式建模接触力学。\n\n### 2.2 系统架构\n\nCHIP 采用**插件式模块**设计，集成到现有的运动跟踪控制器中：\n\n```\n[参考轨迹] → [CHIP Module] → [基础控制器] → [机器人]\n        ↓\n     [刚度参数 κ]\n```\n\n### 2.3 后见扰动算法\n\n**关键思想**：在训练阶段，不直接学习刚度控制，而是让智能体\"误以为\"自己需要跟踪一个被扰动的轨迹，从而在后见视角下学会适应意外接触。\n\n**数学表述**：\n\n设原始参考末端位置为 $x^d_t$，CHIP 在训练时注入扰动 $\\delta_t$：\n\n$$\n\n\\tilde{x}^d_t = x^d_t + \\delta_t\n\n$$\n\n其中扰动 $\\delta_t \\sim \\mathcal{N}(0, \\sigma^2)$ 模拟意外接触偏移。\n\n**损失函数修改**：\n\n$$\n\nL_{\\text{CHIP}} = L_{\\text{\\text{base}}} + \\lambda_{\\text{\\text{compliance}}} \\cdot L_{\\text{\\text{comp}}}\n\n$$\n\n其中：\n- $L_{\\text{base}}$：原始跟踪损失\n- $L_{\\text{comp}}$：柔顺性正则项，惩罚与扰动方向相反的过大控制力\n\n### 2.4 自适应刚度控制\n\n推理阶段，CHIP 根据任务需求输出可学习的刚度参数 $\\kappa$：\n\n$$\n\n\\kappa = f_{\\text{\\text{stiffness}}}(s_t, \\text{task\\_embed})\n\n$$\n\n其中 $f_{\\text{stiffness}}$ 为可学习的刚度映射网络，$\\text{task\\_embed}$ 为任务嵌入向量。\n\n---\n\n## 3. 实现细节\n\n### 3.1 训练配置\n\n基于 **PPO (Proximal Policy Optimization)** 算法进行策略优化：\n\n| 超参数 | 取值 |\n|--------|------|\n| 学习率 | $3 \\times 10^{-4}$ |\n| 折扣因子 $\\gamma$ | 0.99 |\n| GAE 参数 $\\lambda$ | 0.95 |\n| 批量大小 | 4096 |\n| PPO 迭代次数 | 10 |\n| 扰动标准差 $\\sigma$ | 0.05 m |\n\n### 3.2 扰动策略\n\n- **空间域**：仅在末端执行器自由度上施加扰动\n- **时间域**：采用衰减策略 $\\sigma_t = \\sigma_0 \\cdot (1 - t/T)$，后期减小扰动以确保收敛\n- **幅度限制**：扰动幅度不超过末端执行器工作空间的 10%\n\n### 3.3 奖励函数设计\n\n$$\n\nr_t = r_{\\text{\\text{tracking}}} + r_{\\text{\\text{energy}}} + r_{\\text{\\text{stability}}}\n\n$$\n\n其中：\n- $r_{\\text{tracking}} = -\\|q_t - q^d_t\\|^2 - 0.1\\|x_{\\text{ee}} - x^d_t\\|^2}$\n- $r_{\\text{energy}} = -0.01\\|a_t\\|^2}$\n- $r_{\\text{stability}} = -0.5\\|\\omega_{\\text{base}}\\|^2}$（惩罚基座过大角速度）\n\n### 3.4 网络架构\n\n- **策略网络**：MLP (256, 256, 128) + Gaussian 策略头\n- **价值网络**：MLP (256, 256, 128)\n- **刚度网络**：MLP (64, 64) + Sigmoid 输出映射到 $[\\kappa_{\\min}, \\kappa_{\\max}]$\n\n---\n\n## 4. 实验设置\n\n### 4.1 仿真环境\n\n- **PhysX** 或 **MuJoCo** 物理引擎\n- 人形机器人模型：高度约 1.7m，30+ 自由度\n- 仿真步长：1 ms（控制频率 1000 Hz）\n\n### 4.2 训练数据\n\n- 使用 **AMASS** 数据集获取多样化人体运动数据\n- 涵盖行走、跑步、跳跃、爬行等多种运动模式\n- 总运动时长：约 100 小时\n\n### 4.3 评估任务\n\n| 任务类型 | 具体任务 | 期望刚度 |\n|----------|----------|----------|\n| 协作任务 | 多机器人协同搬运 | 低 |\n| 擦拭任务 | 桌面擦拭 | 低 |\n| 搬运任务 | 箱子递送 | 高 |\n| 开门任务 | 旋转门开启 | 高 |\n\n### 4.4 评估指标\n\n- **跟踪误差**：$E_{\\text{track}} = \\frac{1}{T}\\sum_t \\|q_t - q^d_t\\|$\n- **交互力峰值**：$F_{\\max} = \\max_t \\|F_{\\text{ext}}\\|$\n- **任务成功率**：完成定义目标的百分比\n- **刚度控制精度**：$\\Delta\\kappa = |\\kappa_{\\text{actual}} - \\kappa_{\\text{target}}|$\n\n### 4.5 基线方法\n\n1. **FIXED-STIFFNESS**：固定刚度跟踪控制器\n2. **ADM**（Adaptive Dynamics Model）：基于接触力反馈的自适应方法\n3. **RAP**（Reactive Adversarial Perturbations）：对抗性扰动方法\n4. **VANILLA**：无柔顺性模块的纯跟踪控制器\n\n---\n\n## 5. 技术优势\n\n### 5.1 零额外数据成本\n\nCHIP 不需要针对特定柔顺任务的数据增强或奖励函数设计，直接利用现有运动跟踪数据进行训练即可获得柔顺控制能力。\n\n### 5.2 插件式兼容性\n\n作为即插即用模块，CHIP 可集成到任意基于强化学习的运动跟踪控制器中，无需修改基础架构。\n\n### 5.3 刚度-敏捷双保持\n\n后见扰动机制使智能体同时学习：\n- 对小扰动的**补偿能力**（保持跟踪精度）\n- 对大扰动的**顺应能力**（实现柔顺交互）\n\n这种双重能力通过单一的扰动训练范式实现，避免了显式的刚度控制目标。\n\n### 5.4 任务泛化性\n\n实验表明，同一训练好的控制器可处理刚度需求差异显著的多样化任务，展示了良好的任务无关性（task-agnostic）。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 扰动分布假设\n\n后见扰动采用高斯白噪声 $\\mathcal{N}(0, \\sigma^2)$，可能无法完全覆盖真实物理接触中的复杂扰动分布（如摩擦、非线性接触力），导致在极端场景下泛化不足。\n\n### 6.2 刚度控制精度\n\n通过隐式学习获得的刚度控制为\"粗粒度\"调节，无法实现像阻抗控制那样的精细刚度跟踪，精度受限于任务嵌入的表达能力。\n\n### 6.3 训练-推理分布偏移\n\n训练时施加的扰动是人为注入的，而推理时的真实接触力具有物理真实性，二者存在分布差异（distribution shift），可能影响实际部署效果。\n\n### 6.4 计算开销\n\nCHIP 模块引入了额外的刚度网络推理，在资源受限的嵌入式控制器上可能带来部署困难。\n\n### 6.5 安全保障\n\n后见扰动机制在训练过程中可能导致机器人做出非常规动作，需要在仿真环境中进行充分的安全测试，且缺乏显式的接触力限制机制。",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 7,
+    "writing_quality": 8,
+    "relevance": 8,
+    "overall_score": 7.1,
+    "strengths": [
+      "Novel application of hindsight perturbation for adaptive compliance control in humanoid robots",
+      "Practical plug-and-play module design that doesn't require data augmentation or reward tuning",
+      "Demonstrates diverse manipulation tasks (multi-robot collaboration, wiping, box delivery, door opening)",
+      "Addresses an important challenge in humanoid robotics: forceful manipulation with different compliance requirements",
+      "Clear and well-structured abstract with clever acronym (CHIP)"
+    ],
+    "weaknesses": [
+      "Limited detail on the technical methodology in the abstract",
+      "arXiv preprint without peer-reviewed validation",
+      "No quantitative performance metrics provided in the abstract",
+      "Unclear how the hindsight perturbation mechanism technically works",
+      "No comparison with existing compliance control methods mentioned"
+    ],
+    "notes": "A promising approach to a challenging problem in humanoid robotics. The idea of using hindsight perturbation for adaptive compliance control is creative and the plug-and-play nature is appealing. However, more technical details and quantitative results would be needed for a fuller assessment. The paper addresses a real gap in humanoid manipulation capabilities."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "CHIP: Adaptive Compliance for Humanoid Control through Hindsight Perturbation",
+      "authors": [
+        "Sirui Chen",
+        "Zi-ang Cao",
+        "Zhengyi Luo",
+        "Fernando Castañeda",
+        "Chenran Li",
+        "Tingwu Wang",
+        "Ye Yuan",
+        "L. Fan",
+        "C. K. Liu",
+        "Yuke Zhu"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2512.14689",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Recent progress in humanoid robots has unlocked agile locomotion skills, including backflipping, running, and crawling. Yet it remains challenging for a humanoid robot to perform forceful manipulation tasks such as moving objects, wiping, and pushing a cart. We propose adaptive Compliance Humanoid control through hIsight Perturbation (CHIP), a plug-and-play module that enables controllable end-effector stiffness while preserving agile tracking of dynamic reference motions. CHIP is easy to implement and requires neither data augmentation nor additional reward tuning. We show that a generalist motion-tracking controller trained with CHIP can perform a diverse set of forceful manipulation tasks that require different end-effector compliance, such as multi-robot collaboration, wiping, box delivery, and door opening.",
+      "route_id": "a2e516cd-c613-4456-af0c-5f2b7eb9e2e5"
+    },
+    "markdown_stats": {
+      "lines": 244,
+      "words": 6510,
+      "headings": 20
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "a2e516cd-c613-4456-af0c-5f2b7eb9e2e5",
+  "paper_ref": "a2e516cd-c613-4456-af0c-5f2b7eb9e2e5",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

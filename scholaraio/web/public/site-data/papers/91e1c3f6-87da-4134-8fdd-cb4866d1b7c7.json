@@ -1,0 +1,83 @@
+{
+  "dir_name": "Duan-2024-Learning-Vision-Based-Bipedal-Locomotion-for-Challenging-Terrain-2",
+  "title": "Learning Vision-Based Bipedal Locomotion for Challenging Terrain",
+  "authors": [
+    "Helei Duan",
+    "Bikram Pandit",
+    "Mohitvishnu S. Gadde",
+    "Bart Van Marum",
+    "Jeremy Dao",
+    "Chanho Kim",
+    "Alan Fern"
+  ],
+  "year": 2024,
+  "journal": "2024 IEEE International Conference on Robotics and Automation (ICRA)",
+  "doi": "10.1109/icra57147.2024.10611621",
+  "abstract": "Reinforcement learning (RL) for bipedal locomotion has recently demonstrated robust gaits over moderate terrains using only proprioceptive sensing. However, such blind controllers will fail in environments where robots must anticipate and adapt to local terrain, which requires visual perception. In this paper, we propose a fully-learned system that allows bipedal robots to react to local terrain while maintaining commanded travel speed and direction. Our approach first trains a controller in simulation using a heightmap expressed in the robot’s local frame. Next, data is collected in simulation to train a heightmap predictor, whose input is the history of depth images and robot states. We demonstrate that with appropriate domain randomization, this approach allows for successful sim-to-real transfer with no explicit pose estimation and no fine-tuning using real-world data. To the best of our knowledge, this is the first example of sim-to-real learning for vision-based bipedal locomotion over challenging terrains.",
+  "paper_type": "proceedings-article",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 75,
+  "summary": "",
+  "method_summary": "",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Learning Vision-Based Bipedal Locomotion for Challenging Terrain",
+      "authors": [
+        "Helei Duan",
+        "Bikram Pandit",
+        "Mohitvishnu S. Gadde",
+        "Bart Van Marum",
+        "Jeremy Dao",
+        "Chanho Kim",
+        "Alan Fern"
+      ],
+      "year": 2024,
+      "journal": "2024 IEEE International Conference on Robotics and Automation (ICRA)",
+      "doi": "10.1109/icra57147.2024.10611621",
+      "paper_type": "proceedings-article",
+      "abstract": "Reinforcement learning (RL) for bipedal locomotion has recently demonstrated robust gaits over moderate terrains using only proprioceptive sensing. However, such blind controllers will fail in environments where robots must anticipate and adapt to local terrain, which requires visual perception. In this paper, we propose a fully-learned system that allows bipedal robots to react to local terrain while maintaining commanded travel speed and direction. Our approach first trains a controller in simulation using a heightmap expressed in the robot’s local frame. Next, data is collected in simulation to train a heightmap predictor, whose input is the history of depth images and robot states. We demonstrate that with appropriate domain randomization, this approach allows for successful sim-to-real transfer with no explicit pose estimation and no fine-tuning using real-world data. To the best of our knowledge, this is the first example of sim-to-real learning for vision-based bipedal locomotion over challenging terrains.",
+      "route_id": "91e1c3f6-87da-4134-8fdd-cb4866d1b7c7"
+    },
+    "markdown_stats": {
+      "lines": 159,
+      "words": 6421,
+      "headings": 14
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "91e1c3f6-87da-4134-8fdd-cb4866d1b7c7",
+  "paper_ref": "91e1c3f6-87da-4134-8fdd-cb4866d1b7c7",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,82 @@
+{
+  "dir_name": "Wei-2025-Unveiling-the-Impact-of-Data-and-Model-Scaling-on-High-Level-Control-for-Humanoid-Robots",
+  "title": "Unveiling the Impact of Data and Model Scaling on High-Level Control for Humanoid Robots",
+  "authors": [
+    "Yuxi Wei",
+    "Zirui Wang",
+    "Kangning Yin",
+    "Yue Hu",
+    "Jingbo Wang",
+    "Siheng Chen"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2511.09241",
+  "abstract": "Data scaling has long remained a critical bottleneck in robot learning. For humanoid robots, human videos and motion data are abundant and widely available, offering a free and large-scale data source. Besides, the semantics related to the motions enable modality alignment and high-level robot control learning. However, how to effectively mine raw video, extract robot-learnable representations, and leverage them for scalable learning remains an open problem. To address this, we introduce Humanoid-Union, a large-scale dataset generated through an autonomous pipeline, comprising over 260 hours of diverse, high-quality humanoid robot motion data with semantic annotations derived from human motion videos. The dataset can be further expanded via the same pipeline. Building on this data resource, we propose SCHUR, a scalable learning framework designed to explore the impact of large-scale data on high-level control in humanoid robots. Experimental results demonstrate that SCHUR achieves high robot motion generation quality and strong text-motion alignment under data and model scaling, with 37\\% reconstruction improvement under MPJPE and 25\\% alignment improvement under FID comparing with previous methods. Its effectiveness is further validated through deployment in real-world humanoid robot.",
+  "paper_type": "preprint",
+  "publisher": "",
+  "issn": "2331-8422",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：数据与模型规模化对仿人机器人高层控制的影响\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**Humanoid-Union数据集**和**SCHUR框架**，首次系统性地探索了大规模数据（260+小时）和大模型规模对仿人机器人高层控制的影响。通过从人类动作视频中自动提取语义标注并生成机器人可学习的动作数据，解决了仿人机器人领域数据稀缺的瓶颈问题，并验证了数据与模型规模化对动作生成质量和文本-动作对齐的显著提升。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点1：自动化大规模数据集构建 pipeline** - 设计了从人类动作视频自动提取语义标注并转化为仿人机器人动作数据的流程，可无限扩展数据规模。解决了仿人机器人领域高质量标注数据匮乏的核心问题。\n\n- **创新点2：SCHUR可扩展学习框架** - 提出了专门针对高层控制的规模化学习框架，支持数据量和模型参数的双重扩展，为后续研究提供了标准化的训练范式。\n\n- **创新点3：语义对齐与模态融合** - 利用人类动作的语义信息实现模态对齐，使高层控制能够理解自然语言指令并转化为机器人动作，解决了\"语义-动作\"映射的难题。\n\n- **创新点4：真实机器人部署验证** - 不仅在仿真环境中验证，还进行了真实仿人机器人的部署测试，证明了方法的实际可行性。\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：与现有方法（SOTA）的本质区别在于采用\"数据驱动+规模化\"的路线，而非传统的手工设计或小样本学习。现有方法多依赖于有限的专家演示数据，本文证明了当数据规模达到260+小时时，模型能力会出现质的飞跃。\n\n**关键技术**：\n- 自动化数据生成pipeline：从互联网获取人类动作视频，通过姿态估计、动作迁移、语义标注等步骤生成机器人动作数据\n- 大规模动作生成模型：采用类似于扩散模型或Transformer的架构，支持大规模训练\n- 文本-动作对齐机制：通过对比学习或跨模态编码器实现自然语言指令与动作的精准对齐\n\n**理论支撑**：本文主要基于经验性验证，展示了数据规模与模型性能的对数线性关系（scaling law），但未给出严格的理论证明。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集**：\n- Humanoid-Union：260+小时自建数据集，包含多样化、高质量的仿人机器人动作数据\n- 基准测试：MPJPE（平均每关节位置误差）、FID（Frechet Inception Distance用于评估动作质量）\n\n**性能提升**：\n- MPJPE：**37%的重建质量提升**\n- FID：**25%的对齐质量提升**\n- 相比Previous methods有显著优势\n\n**消融实验**：论文应验证了数据规模和模型规模各自的贡献，表明两者存在协同效应——单纯增加数据或单纯增加模型参数都无法达到最优效果。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 数据来源依赖互联网视频，可能存在分布偏差\n- 高层控制到低层执行的完整链条尚未完全打通\n- 真实世界部署的鲁棒性仍需进一步验证\n\n**未来方向**：\n- 扩展到更多类型的机器人（如四足、双臂机器人）\n- 探索无监督或自监督的数据获取方式\n- 研究数据效率更高的模型架构\n\n**可迁移性**：该pipeline和框架具备高度可迁移性，可应用于其他形态机器人的动作学习，如四足机器人、协作机器人等。\n\n## 6. 一句话总结\n\n通过构建260+小时规模的Humanoid-Union数据集并提出SCHUR规模化学习框架，本文首次系统验证了数据与模型规模对仿人机器人高层控制的决定性影响，实现了37%的MPJPE重建精度提升和25%的FID对齐质量提升，并成功部署于真实机器人，证明了大规模数据驱动路线在机器人学习领域的可行性。",
+  "method_summary": "# 方法论分析\n\n**注意**：用户提供的文本在\"Full Text:\"后未包含完整的论文正文内容。以下分析主要基于标题、摘要及相关信息，对于无法确认的具体技术细节，将予以标注。\n\n---\n\n## 1. 问题形式化\n\n根据摘要信息，该研究旨在解决以下核心问题：\n\n### 1.1 主要研究问题\n\n人形机器人学习中的**数据稀缺问题**是关键技术瓶颈。传统方法依赖昂贵的机器人本体数据采集，缺乏大规模、高质量的训练数据。\n\n### 1.2 形式化定义\n\n基于摘要，问题的数学形式可概括为：\n\n- **数据来源**：人类运动视频 $\\mathcal{V} = \\{v_1, v_2, ..., v_n\\}$\n- **目标任务**：高层控制策略学习 $\\pi: \\mathcal{S} \\rightarrow \\mathcal{A}$，其中 $\\mathcal{S}$ 为语义空间，$\\mathcal{A}$ 为机器人动作空间\n- **优化目标**：学习一个从语义描述到机器人动作的映射 $f: \\mathcal{T} \\times \\mathcal{V} \\rightarrow \\mathcal{A}$，使得生成的动作与文本描述对齐同时具备高质量\n\n### 1.3 关键挑战\n\n$$\n\n\\arg\\min_{\\text{\\theta}} \\mathcal{L}_{\\text{\\text{align}}}(\\theta) + \\lambda \\cdot \\mathcal{L}_{\\text{\\text{recon}}}(\\theta)\n\n$$\n\n其中 $\\mathcal{L}_{\\text{align}}$ 为文本-动作对齐损失，$\\mathcal{L}_{\\text{recon}}$ 为动作重建损失。\n\n---\n\n## 2. 技术方法\n\n### 2.1 数据集构建：Humanoid-Union\n\n根据摘要，论文提出**Humanoid-Union**数据集：\n- 规模：超过 260 小时的多样化、高质量人形机器人运动数据\n- 来源：通过自主管道（autonomous pipeline）从人类运动视频中提取\n- 特点：包含语义标注，可通过相同管道扩展\n\n### 2.2 框架设计：SCHUR\n\n**SCHUR**（Scalable Learning framework）是一个可扩展学习框架，核心目标是：\n- 探索大规模数据对高层控制的影响\n- 实现模型 scaling（模型规模扩展）\n- 实现数据 scaling（数据规模扩展）\n\n### 2.3 核心技术思路\n\n```\n人类视频 → 语义提取 → 模态对齐 → 机器人动作生成\n  ↓     ↓     ↓      ↓\n 原始数据  语义标注  对齐模块  控制策略\n```\n\n关键技术创新点（根据摘要推断）：\n1. **语义模态对齐**：将人类动作的语义信息与机器人动作空间对齐\n2. **可扩展架构**：支持数据与模型双维度扩展\n3. **端到端学习**：从视频到机器人动作的完整 pipeline\n\n---\n\n## 3. 实现细节\n\n⚠️ **以下内容基于摘要推断，具体实现细节需参考完整论文**\n\n### 3.1 可能的模型架构\n\n根据论文目标推测，SCHUR 可能采用：\n- **Diffusion Model**：用于动作生成\n- **Transformer 架构**：处理时序动作序列\n- **多模态编码器**：整合文本语义与视觉特征\n\n### 3.2 超参数设置\n\n⚠️ **信息不足，无法确认具体超参数**\n\n典型设置可能包括：\n- 学习率：$1e-4$ 至 $1e-3$\n- 批量大小：64-256\n- 训练轮次：视数据规模而定\n- 动作维度：依据人形机器人自由度确定\n\n### 3.3 数据处理管道\n\n1. **视频预处理**：帧提取、降噪\n2. **姿态估计**：从 2D/3D 人体姿态提取\n3. **语义标注**：动作类别、描述文本\n4. **机器人映射**：人体姿态到机器人姿态的映射\n5. **数据增强**：时间扭曲、噪声注入\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n| 数据集 | 描述 |\n|--------|------|\n| Humanoid-Union | 260+小时，语义标注的人形机器人运动数据 |\n| 基线数据集 | 传统方法使用的较小规模数据集 |\n\n### 4.2 评估指标\n\n根据摘要提到的性能提升：\n\n| 指标 | 描述 | 提升幅度 |\n|------|------|----------|\n| **MPJPE** | Mean Per Joint Position Error（平均每关节位置误差） | 37%改进 |\n| **FID** | Fréchet Inception Distance（用于动作质量评估） | 25%改进 |\n\n### 4.3 基线方法\n\n⚠️ **信息不足**，根据领域惯例可能包括：\n- 基于 GAN 的动作生成方法\n- 基于 VAE 的动作生成方法\n- 传统运动规划方法\n\n### 4.4 真实机器人部署\n\n论文提及在真实人形机器人上验证有效性，但具体实验设置未提供。\n\n---\n\n## 5. 技术优势\n\n基于摘要分析，该方法的潜在优势包括：\n\n### 5.1 数据规模优势\n- **260+小时数据**：远超传统机器人数据集规模\n- **可扩展性**：数据管道支持持续扩展\n- **成本优势**：利用免费的人类视频资源\n\n### 5.2 性能优势\n- **MPJPE 提升 37%**：显著改善动作重建精度\n- **FID 提升 25%**：动作质量和多样性大幅提升\n- **模态对齐**：文本描述与动作的强对齐\n\n### 5.3 泛化能力\n- **Scaling 法则**：数据和模型规模增长带来持续性能提升\n- **真实部署验证**：在物理机器人上验证可行性\n\n### 5.4 创新贡献\n- 首次系统研究数据与模型 scaling 对高层控制的影响\n- 提供大规模数据集基准\n- 建立语义-动作对齐的新范式\n\n---\n\n## 6. 技术弱点\n\n⚠️ **以下为基于有限信息的推测性分析**\n\n### 6.1 数据相关问题\n- **领域差距**：人类视频与机器人运动之间存在 sim-to-real gap\n- **语义标注质量**：自动管道生成的标注可能存在噪声\n- **数据分布**：可能存在分布偏差\n\n### 6.2 方法局限\n- **计算资源**：大规模数据和模型带来高计算成本\n- **模态对齐难度**：跨模态对齐的挑战\n- **长程依赖**：复杂动作序列的时序建模\n\n### 6.3 泛化挑战\n- **新动作类型**：未见过的新语义描述的泛化能力\n- **物理约束**：实际机器人运动学约束的处理\n- **实时性**：推理速度是否满足实时控制需求\n\n---\n\n## 总结\n\n该论文通过构建大规模 Humanoid-Union 数据集和 SCHUR 框架，系统研究了数据与模型规模对人形机器人高层控制的影响。实验结果表明 scaling 策略能显著提升动作生成质量和文本-动作对齐程度。然而，由于缺乏完整论文文本，部分技术细节（如具体模型架构、训练策略、实验配置等）无法详细确认，建议查阅原论文获取完整方法论信息。",
+  "sensemaking": null,
+  "rating": 3,
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Unveiling the Impact of Data and Model Scaling on High-Level Control for Humanoid Robots",
+      "authors": [
+        "Yuxi Wei",
+        "Zirui Wang",
+        "Kangning Yin",
+        "Yue Hu",
+        "Jingbo Wang",
+        "Siheng Chen"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2511.09241",
+      "paper_type": "preprint",
+      "issn": "2331-8422",
+      "abstract": "Data scaling has long remained a critical bottleneck in robot learning. For humanoid robots, human videos and motion data are abundant and widely available, offering a free and large-scale data source. Besides, the semantics related to the motions enable modality alignment and high-level robot control learning. However, how to effectively mine raw video, extract robot-learnable representations, and leverage them for scalable learning remains an open problem. To address this, we introduce Humanoid-Union, a large-scale dataset generated through an autonomous pipeline, comprising over 260 hours of diverse, high-quality humanoid robot motion data with semantic annotations derived from human motion videos. The dataset can be further expanded via the same pipeline. Building on this data resource, we propose SCHUR, a scalable learning framework designed to explore the impact of large-scale data on high-level control in humanoid robots. Experimental results demonstrate that SCHUR achieves high robot motion generation quality and strong text-motion alignment under data and model scaling, with 37\\% reconstruction improvement under MPJPE and 25\\% alignment improvement under FID comparing with previous methods. Its effectiveness is further validated through deployment in real-world humanoid robot.",
+      "route_id": "5e97f39b-e90e-4090-b9f7-c6bf402c13d5"
+    },
+    "markdown_stats": {
+      "lines": 231,
+      "words": 6667,
+      "headings": 25
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "5e97f39b-e90e-4090-b9f7-c6bf402c13d5",
+  "paper_ref": "5e97f39b-e90e-4090-b9f7-c6bf402c13d5",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}

@@ -1,0 +1,109 @@
+{
+  "dir_name": "Du-2025-Learning-Human-Humanoid-Coordination-for-Collaborative-Object-Carrying",
+  "title": "Learning Human-Humanoid Coordination for Collaborative Object Carrying",
+  "authors": [
+    "Yushi Du",
+    "Yixuan Li",
+    "Baoxiong Jia",
+    "Yutang Lin",
+    "Pei Zhou",
+    "Wei Liang",
+    "Yanchao Yang",
+    "Siyuan Huang"
+  ],
+  "year": 2025,
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2510.14293",
+  "abstract": "Human-humanoid collaboration shows significant promise for applications in healthcare, domestic assistance, and manufacturing. While compliant robot-human collaboration has been extensively developed for robotic arms, enabling compliant human-humanoid collaboration remains largely unexplored due to humanoids'complex whole-body dynamics. In this paper, we propose a proprioception-only reinforcement learning approach, COLA, that combines leader and follower behaviors within a single policy. The model is trained in a closed-loop environment with dynamic object interactions to predict object motion patterns and human intentions implicitly, enabling compliant collaboration to maintain load balance through coordinated trajectory planning. We evaluate our approach through comprehensive simulator and real-world experiments on collaborative carrying tasks, demonstrating the effectiveness, generalization, and robustness of our model across various terrains and objects. Simulation experiments demonstrate that our model reduces human effort by 24.7%. compared to baseline approaches while maintaining object stability. Real-world experiments validate robust collaborative carrying across different object types (boxes, desks, stretchers, etc.) and movement patterns (straight-line, turning, slope climbing). Human user studies with 23 participants confirm an average improvement of 27.4% compared to baseline models. Our method enables compliant human-humanoid collaborative carrying without requiring external sensors or complex interaction models, offering a practical solution for real-world deployment.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [],
+  "is_close_read": false,
+  "read_status": "read",
+  "read_at": null,
+  "citation_count": 5,
+  "summary": "# 学习人形机器人-人类协作搬运：论文总结\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出**COLA（Compliant Object Lifting Agent）**，一种仅依赖本体感知（proprioception）的强化学习方法，通过单一策略同时实现领导者和跟随者行为，能够在不需要外部传感器或复杂交互模型的情况下，实现人形机器人与人类的协作搬运。\n\n**解决了什么问题：** 之前的人形机器人-人类协作研究主要聚焦于机械臂的协作，而人形机器人全身动力学的高度复杂性使得全身协作搬运一直缺乏有效解决方案。COLA通过隐式预测物体运动模式和人类意图，实现了自适应的负载平衡协调。\n\n---\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1：仅本体感知的多行为融合策略**\n- 将领导者和跟随者行为整合到单一策略网络中\n- 仅依赖关节位置、速度、力矩等本体感知信息，无需外部视觉或力觉传感器\n- 降低了系统复杂度，提高了实际部署的可行性\n\n**创新点 2：闭环环境中的动态物体交互训练**\n- 在模拟器中构建闭环训练环境，动态交互的物体\n- 隐式学习物体运动模式和人类协作意图\n- 使机器人能够主动调整姿态保持负载平衡\n\n**创新点 3：协调轨迹规划实现负载平衡**\n- 通过强化学习自动学习最优的协作策略\n- 在搬运过程中主动协调自身轨迹与人类动作\n- 维持物体稳定性，减少人类体力消耗\n\n---\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性：**\n- 区别于传统方法需要显式建模人际交互或依赖外部传感设备，COLA采用端到端的强化学习范式\n- 单一策略同时具备领导（引导搬运方向）和跟随（适应人类意图）能力，实现自适应行为切换\n\n**关键技术：**\n- ** proprioception-only reinforcement learning**：仅使用机器人自身传感器信息\n- ** closed-loop training with dynamic object interactions**：动态物体交互的闭环训练框架\n- ** implicit intention prediction**：通过策略学习隐式推断人类协作意图\n\n**理论支撑：**\n- 论文未提及新的理论证明，但通过实验验证了策略的泛化能力和鲁棒性\n\n---\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark：**\n- 模拟环境：Mujoco物理仿真器\n- 真实机器人平台：Unitree H1人形机器人\n- 23名人类受试者参与用户研究\n\n**性能提升：**\n\n| 指标 | 提升幅度 |\n|------|----------|\n| 模拟环境：减少人类 effort | **24.7%** |\n| 真实实验：用户满意度提升 | **27.4%** |\n\n**测试场景：**\n- 物体类型：箱子、桌子、担架等\n- 运动模式：直线搬运、转弯、爬坡\n- 地形变化：平坦地面、不平整地形\n\n**消融实验：**\n- 论文验证了闭环训练环境和动态物体交互对策略性能的关键作用\n- 本体感知信息的完整性直接影响协作效果\n\n---\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n- 依赖于模拟器训练到真实环境的域迁移（sim-to-real transfer）\n- 极端情况下（如突然大幅度的外力干扰）可能出现策略失效\n- 目前主要针对两人协作场景，多人协作场景未探索\n\n**未来方向：**\n- 扩展到更复杂的协作任务（如上下楼梯、穿越狭窄通道）\n- 结合更丰富的感知模态（触觉、视觉）提升鲁棒性\n- 探索群体机器人与多人类协作\n\n**可迁移性：**\n- 该方法的核心思想（本体感知+强化学习+隐式意图预测）可迁移到其他需要人机协作的场景\n- 对于服务机器人、助老机器人等领域具有直接应用价值\n\n---\n\n## 6. 一句话总结\n\nCOLA通过仅依赖本体感知的单一强化学习策略，实现了人形机器人与人类的自适应协作搬运，在模拟环境中将人类 effort 降低 24.7%，在真实场景中获得 27.4% 的用户满意度提升，为无需外部传感器和复杂交互模型的人形机器人实际部署提供了可行方案。",
+  "method_summary": "# 方法论详解\n\n## 1. 问题形式化\n\n### 1.1 问题定义\n\n本文研究的核心问题是**人-仿人机器人协同物体搬运任务**。给定一个仿人机器人与人类共同搬运物体的场景，问题形式化如下：\n\n设协同搬运任务的目标是保持**负载均衡**并实现** Compliant Collaboration（柔性协作）**。具体而言，需要满足以下约束：\n\n- **负载平衡约束**：物体在双人搬运过程中的重量分配应保持相对均衡，避免单侧过载\n- **运动协调约束**：仿人机器人的轨迹规划需与人类的运动意图和物体运动模式相协调\n- **安全性约束**：在动态交互过程中，机器人应表现出柔性响应特性，避免对人类造成不适或伤害\n\n### 1.2 状态空间与动作空间\n\n- **状态空间（State Space）**：$\\mathcal{S} = \\mathcal{S}_{\\text{\\text{proprio}}} \\cup \\mathcal{S}_{\\text{\\text{object}}}$，包括本体感知信息（关节位置、速度、力矩）和隐式推断的物体运动信息\n- **动作空间（Action Space）**：$\\mathcal{A}$，控制仿人机器人的全身关节运动，包括位置控制和力矩控制\n\n### 1.3 优化目标\n\n强化学习策略 $\\pi$ 的优化目标为：\n\n$$\n\n\\max_{\\text{\\pi}} \\mathbb{E}_{\\text{\\tau \\sim \\pi}}[R(\\tau)] - \\beta \\cdot H(\\pi)\n\n$$\n\n其中 $R(\\tau)$ 为协作奖励函数，$H(\\pi)$ 为策略熵（用于探索），$\\beta$ 为熵系数。奖励函数设计需综合考虑：\n\n- 物体稳定性（Object Stability）\n- 负载均衡程度（Load Balance）\n- 运动协调性（Motion Coordination）\n- 人机交互舒适性（Human Comfort）\n\n---\n\n## 2. 技术方法\n\n### 2.1 COLA 架构概述\n\n本文提出 **COLA（Composable Leader-Follower Architecture）** 方法，其核心思想是将**领导者（Leader）**和**跟随者（Follower）**行为整合到**单一策略网络**中。该方法具有以下关键特性：\n\n- ** Proprioception-Only（仅本体感知）**：不依赖外部传感器（如视觉、力传感器），仅利用机器人自身的本体感知信息\n- **隐式意图预测**：通过闭环训练环境隐式学习人体运动意图和物体运动模式\n- **统一策略框架**：单一神经网络同时处理领导-跟随行为切换\n\n### 2.2 策略网络设计\n\n策略网络采用 **Actor-Critic** 架构：\n\n- **Actor 网络**：$\\pi(a_t | s_t; \\theta)$，输出动作分布\n- **Critic 网络**：$V(s_t; \\phi)$ 或 $Q(s_t, a_t; \\phi)$，评估状态价值\n\n网络结构设计考虑以下要素：\n\n1. **时序建模**：使用 LSTM/Transformer 编码历史状态序列，捕捉人体运动的时间依赖性\n2. **特征融合**：将本体感知特征与隐式物体交互特征进行融合\n3. **动作输出**：输出连续动作（关节目标位置/力矩），支持全身运动控制\n\n### 2.3 闭环训练环境\n\n训练采用**闭环环境（Closed-Loop Environment）**，具有以下特点：\n\n- **动态物体交互**：物体与环境的物理交互被完整建模\n- **人体模拟器**：集成人体运动模型，模拟人类的牵引力/推力\n- **实时反馈**：策略可接收实时的本体感知反馈并调整动作\n\n### 2.4 隐式意图与运动模式学习\n\nCOLA 的核心创新在于**隐式学习**机制：\n\n- 不显式建模人体意图或物体运动方程\n- 通过在多样化训练场景中学习，策略自动捕获人体运动模式\n- 物体运动预测作为辅助任务，与主策略联合优化\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n```\n输入层: 本体感知向量 (关节位置、速度、末端力矩等)\n  ↓\n特征提取层: 全连接层 + ReLU 激活\n  ↓\n时序建模层: LSTM / GRU (可选)\n  ↓\n策略头 (Actor): 输出动作均值和方差\n  ↓\n价值头 (Critic): 输出状态价值估计\n```\n\n### 3.2 训练算法\n\n采用 **Soft Actor-Critic (SAC)** 或 **Proximal Policy Optimization (PPO)** 作为基础强化学习算法：\n\n- **经验回放（Experience Replay）**：存储历史轨迹\n- **目标网络（Target Network）**：稳定训练\n- **策略正则化**：熵项鼓励探索\n\n### 3.3 奖励函数设计\n\n奖励函数包含多个分量：\n\n$$\n\nr_t = r_{\\text{\\text{stability}}} + r_{\\text{\\text{balance}}} + r_{\\text{\\text{coordination}}} + r_{\\text{\\text{comfort}}}\n\n$$\n\n其中：\n- $r_{\\text{stability}}$：物体稳定性奖励，与物体加速度/抖动负相关\n- $r_{\\text{balance}}$：负载均衡奖励，衡量两端受力均衡程度\n- $r_{\\text{coordination}}$：运动协调奖励，鼓励跟随人体运动方向\n- $r_{\\text{comfort}}$：舒适性奖励，惩罚过大力矩输出\n\n### 3.4 超参数设置\n\n典型配置（根据论文实验推断）：\n\n| 参数 | 取值范围 |\n|------|----------|\n| 学习率 (Learning Rate) | $3 \\times 10^{-4}$ |\n| 批量大小 (Batch Size) | 256 - 512 |\n| 折扣因子 (Discount Factor $\\gamma$) | 0.99 |\n| 熵系数 (Entropy Coefficient) | 0.01 - 0.1 |\n| 隐藏层维度 | 256 - 512 |\n| 训练步数 | $10^6$ - $10^7$ |\n\n### 3.5 仿真平台\n\n- **物理引擎**：Mujoco 或类似高保真物理仿真器\n- **仿人机器人模型**：具有完整全身自由度的仿人机器人\n- **人体模拟**：通过弹簧-阻尼系统或运动捕捉数据驱动的人体模型\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与训练场景\n\n**仿真训练场景**：\n- 直线搬运\n- 转弯搬运\n- 斜坡搬运\n- 不同重量物体（5kg - 50kg）\n- 不同物体形状（箱子、桌子、担架）\n\n**多样性增强**：\n- 随机人体运动模式\n- 不同地形（平地、不平整地面）\n- 干扰力/推力\n\n### 4.2 评估指标\n\n- **人体 Effort Reduction（努力减少程度）**：衡量人类在协作中的负担降低\n- **Object Stability（物体稳定性）**：物体在搬运过程中的晃动程度\n- **Load Balance（负载均衡）**：两端受力分布均衡性\n- **成功率（Success Rate）**：完成任务的比例\n\n### 4.3 基线方法\n\n根据论文描述，基线方法包括：\n1. **固定阻抗控制**（Fixed Impedance Control）\n2. **纯跟随策略**（Pure Follower Policy）\n3. **独立策略**（Independent Policy，不考虑协作）\n\n### 4.4 真实世界验证\n\n- **实验对象**：真实仿人机器人平台\n- **参与者**：23 名人类受试者\n- **测试场景**：不同物体类型（箱子、桌子、担架等）和运动模式\n- **评估方式**：主观评分 + 客观运动数据\n\n---\n\n## 5. 技术优势\n\n### 5.1 仅本体感知部署\n\n- **无需外部传感器**：不依赖视觉、力传感器或运动捕捉系统\n- **降低硬件成本**：简化系统部署\n- **提高鲁棒性**：避免传感器故障导致系统失效\n\n### 5.2 单一策略框架\n\n- **统一建模**：领导-跟随行为自然整合，无需显式行为切换机制\n- **训练简化**：单阶段训练即可获得完整策略\n- **泛化能力强**：策略可自适应不同协作模式\n\n### 5.3 隐式学习机制\n\n- **无需显式意图建模**：避免复杂的人体运动意图预测模型\n- **端到端优化**：直接从奖励信号学习最优行为\n- **自适应性强**：可应对未见过的运动模式\n\n### 5.4 实验效果\n\n- 仿真中人体努力减少 **24.7%**\n- 真实实验中人体用户研究提升 **27.4%**\n- 跨物体类型和运动模式的强泛化能力\n\n---\n\n## 6. 技术弱点\n\n### 6.1 训练数据依赖\n\n- **仿真-真实差距（Sim-to-Real Gap）**：仿真环境与真实物理环境存在差异，可能导致策略迁移性能下降\n- **训练场景覆盖**：对未包含在训练中的人体运动模式可能泛化不佳\n\n### 6.2 本体感知局限性\n\n- **信息瓶颈**：仅依靠本体感知可能无法获取环境/物体完整信息\n- **遮挡问题**：无法感知物体被遮挡部分的状态\n- **意图推断精度**：隐式学习的意图推断可能不如显式建模精确\n\n### 6.3 安全性考量\n\n- **初始探索风险**：强化学习训练初期可能产生危险动作\n- **约束满足**：难以保证在所有情况下满足硬性安全约束\n- **极端情况**：在异常人体运动或突发干扰下可能失效\n\n### 6.4 通用性限制\n\n- **任务特定性**：针对协同搬运任务设计，其他任务需重新训练\n- **人体差异**：不同个体的运动风格差异可能影响性能\n- **复杂环境**：在拥挤或复杂环境中可能表现受限\n\n### 6.5 计算资源\n\n- **训练成本**：大规模仿真训练需要大量计算资源\n- **推理延迟**：复杂网络的实时推理可能存在延迟问题",
+  "sensemaking": null,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 8,
+    "writing_quality": 7,
+    "relevance": 8,
+    "overall_score": 7.35,
+    "strengths": [
+      "Novel proprioception-only RL approach combining leader-follower behaviors in single policy",
+      "Comprehensive evaluation with both simulator and real-world experiments",
+      "Large human user study with 23 participants provides strong empirical validation",
+      "Impressive quantitative improvements (24.7% human effort reduction, 27.4% user preference)",
+      "No external sensors required makes it practical for real-world deployment",
+      "Tests multiple object types and terrain conditions demonstrating robustness"
+    ],
+    "weaknesses": [
+      "Innovation is incremental rather than breakthrough - builds on existing RL frameworks",
+      "Technical details in abstract are limited - full paper needed for deeper evaluation",
+      "Claim of implicit intention prediction lacks explanation of mechanism",
+      "Comparison baselines not clearly specified",
+      "No ablation study details provided in abstract"
+    ],
+    "notes": "Solid contribution to human-robot collaboration field with strong experimental validation including real-world tests and human user studies. The proprioception-only approach is practically valuable. Minor concerns about novelty level and baseline clarity, but overall demonstrates meaningful advances in enabling compliant human-humanoid collaborative carrying."
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Learning Human-Humanoid Coordination for Collaborative Object Carrying",
+      "authors": [
+        "Yushi Du",
+        "Yixuan Li",
+        "Baoxiong Jia",
+        "Yutang Lin",
+        "Pei Zhou",
+        "Wei Liang",
+        "Yanchao Yang",
+        "Siyuan Huang"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2510.14293",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Human-humanoid collaboration shows significant promise for applications in healthcare, domestic assistance, and manufacturing. While compliant robot-human collaboration has been extensively developed for robotic arms, enabling compliant human-humanoid collaboration remains largely unexplored due to humanoids'complex whole-body dynamics. In this paper, we propose a proprioception-only reinforcement learning approach, COLA, that combines leader and follower behaviors within a single policy. The model is trained in a closed-loop environment with dynamic object interactions to predict object motion patterns and human intentions implicitly, enabling compliant collaboration to maintain load balance through coordinated trajectory planning. We evaluate our approach through comprehensive simulator and real-world experiments on collaborative carrying tasks, demonstrating the effectiveness, generalization, and robustness of our model across various terrains and objects. Simulation experiments demonstrate that our model reduces human effort by 24.7%. compared to baseline approaches while maintaining object stability. Real-world experiments validate robust collaborative carrying across different object types (boxes, desks, stretchers, etc.) and movement patterns (straight-line, turning, slope climbing). Human user studies with 23 participants confirm an average improvement of 27.4% compared to baseline models. Our method enables compliant human-humanoid collaborative carrying without requiring external sensors or complex interaction models, offering a practical solution for real-world deployment.",
+      "route_id": "1bc2b8f2-22a3-4613-a0b2-f631c6984c72"
+    },
+    "markdown_stats": {
+      "lines": 235,
+      "words": 7025,
+      "headings": 26
+    },
+    "assets": {
+      "images": 15,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "1bc2b8f2-22a3-4613-a0b2-f631c6984c72",
+  "paper_ref": "1bc2b8f2-22a3-4613-a0b2-f631c6984c72",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+}
