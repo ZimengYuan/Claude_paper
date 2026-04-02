@@ -1,4 +1,8 @@
-# 方向二：超长 PDF 入库——MinerU 页数限制下的自动切分与拼接
+---
+layout: doc
+title: 方向二：超长 PDF 入库——MinerU 页数限制下的自动切分与拼接
+permalink: /docs/project-analysis/02-long-pdf-splitting/
+---
 
 ## 问题分析
 

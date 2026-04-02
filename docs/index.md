@@ -1,4 +1,8 @@
-# ScholarAIO
+---
+layout: doc
+title: 文档首页
+permalink: /docs/
+---
 
 **Scholar All-In-One** — a local academic literature explorer powered by AI.
 
@@ -23,7 +27,20 @@ pip install -e ".[full]"
 scholaraio setup
 ```
 
-See [Installation](getting-started/installation.md) for detailed instructions.
+See [Installation]({{ '/docs/getting-started/installation/' | relative_url }}) for detailed instructions.
+
+## Documentation Map
+
+- [Installation]({{ '/docs/getting-started/installation/' | relative_url }})
+- [Configuration]({{ '/docs/getting-started/configuration/' | relative_url }})
+- [Search & Browse]({{ '/docs/guide/search/' | relative_url }})
+- [Paper Ingestion]({{ '/docs/guide/ingestion/' | relative_url }})
+- [Academic Writing]({{ '/docs/guide/writing/' | relative_url }})
+- [API Reference]({{ '/docs/api/' | relative_url }})
+- [Code Map]({{ '/docs/architecture/' | relative_url }})
+- [Project Analysis: Explore Enhancement]({{ '/docs/project-analysis/01-explore-enhancement/' | relative_url }})
+- [Project Analysis: Long PDF Splitting]({{ '/docs/project-analysis/02-long-pdf-splitting/' | relative_url }})
+- [Project Analysis: General Document Ingestion]({{ '/docs/project-analysis/03-general-document-ingestion/' | relative_url }})
 
 ## Three Usage Modes
 

@@ -1,4 +1,8 @@
-# Paper Ingestion
+---
+layout: doc
+title: Paper Ingestion
+permalink: /docs/guide/ingestion/
+---
 
 ## Quick Ingest
 

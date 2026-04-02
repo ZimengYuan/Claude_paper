@@ -1,4 +1,8 @@
-# Installation
+---
+layout: doc
+title: Installation
+permalink: /docs/getting-started/installation/
+---
 
 ## Requirements
 

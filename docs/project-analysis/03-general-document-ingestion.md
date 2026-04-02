@@ -1,4 +1,8 @@
-# 方向三：普通文档入库流程——非论文 PDF/Markdown 的检索化处理
+---
+layout: doc
+title: 方向三：普通文档入库流程——非论文 PDF/Markdown 的检索化处理
+permalink: /docs/project-analysis/03-general-document-ingestion/
+---
 
 ## 问题分析
 

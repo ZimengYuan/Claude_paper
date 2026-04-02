@@ -20,7 +20,6 @@ exclude:
   - .vscode/
   - data/
   - delta-research/
-  - docs/
   - hooks/
   - memory/
   - reports/
@@ -43,7 +42,6 @@ exclude:
   - config.yaml
   - config.local.yaml
   - config.local.example.yaml
-  - mkdocs.yml
   - pyproject.toml
   - web_service.log
   - "*.json"

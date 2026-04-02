@@ -1,4 +1,8 @@
-# 方向一：Explore 模块能力增强与泛用性提升
+---
+layout: doc
+title: 方向一：Explore 模块能力增强与泛用性提升
+permalink: /docs/project-analysis/01-explore-enhancement/
+---
 
 ## 现状分析
 

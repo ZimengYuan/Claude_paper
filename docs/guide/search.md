@@ -1,4 +1,8 @@
-# Search & Browse
+---
+layout: doc
+title: Search & Browse
+permalink: /docs/guide/search/
+---
 
 ScholarAIO provides multiple search modes to find papers in your knowledge base.
 

@@ -17,6 +17,16 @@ build/
 .pytest_cache/
 .vscode/
 
+# Jekyll
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Frontend generated artifacts
+scholaraio/web/node_modules/
+scholaraio/web/.nuxt/
+scholaraio/web/.output/
+
 # SQLite temp files
 *.db-journal
 

@@ -1,4 +1,8 @@
-# Configuration
+---
+layout: doc
+title: Configuration
+permalink: /docs/getting-started/configuration/
+---
 
 ScholarAIO uses two config files:
 

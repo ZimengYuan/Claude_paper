@@ -1,4 +1,8 @@
-# Academic Writing
+---
+layout: doc
+title: Academic Writing
+permalink: /docs/guide/writing/
+---
 
 ScholarAIO includes several agent skills to assist with academic writing. These work best through Claude Code's natural language interface.
 

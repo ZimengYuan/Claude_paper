@@ -1,0 +1,30 @@
+---
+layout: default
+---
+
+<div style="display:grid;grid-template-columns:minmax(220px,260px) minmax(0,1fr);gap:24px;align-items:start;">
+  <aside style="background:#fbfcfe;border:1px solid #e6ebf2;border-radius:16px;padding:18px;position:sticky;top:20px;">
+    <div style="font-weight:700;margin-bottom:12px;">文档导航</div>
+    <div class="meta" style="margin-bottom:12px;">旧站内容已迁移到 Jekyll 页面。</div>
+    <nav style="display:flex;flex-direction:column;gap:8px;">
+      <a href="{{ '/docs/' | relative_url }}">文档首页</a>
+      <a href="{{ '/docs/getting-started/installation/' | relative_url }}">安装</a>
+      <a href="{{ '/docs/getting-started/configuration/' | relative_url }}">配置</a>
+      <a href="{{ '/docs/guide/search/' | relative_url }}">搜索与浏览</a>
+      <a href="{{ '/docs/guide/ingestion/' | relative_url }}">入库流程</a>
+      <a href="{{ '/docs/guide/writing/' | relative_url }}">写作工作流</a>
+      <a href="{{ '/docs/api/' | relative_url }}">API 参考</a>
+      <a href="{{ '/docs/contributing/' | relative_url }}">贡献指南</a>
+      <a href="{{ '/docs/changelog/' | relative_url }}">更新日志</a>
+      <a href="{{ '/docs/architecture/' | relative_url }}">代码地图</a>
+      <a href="{{ '/docs/project-analysis/01-explore-enhancement/' | relative_url }}">Explore 增强</a>
+      <a href="{{ '/docs/project-analysis/02-long-pdf-splitting/' | relative_url }}">长 PDF 切分</a>
+      <a href="{{ '/docs/project-analysis/03-general-document-ingestion/' | relative_url }}">普通文档入库</a>
+    </nav>
+  </aside>
+
+  <article>
+    <h1>{{ page.title }}</h1>
+    {{ content }}
+  </article>
+</div>
