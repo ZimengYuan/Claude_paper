@@ -4,26 +4,14 @@
       <div>
         <h1 class="text-2xl font-bold text-gray-900">Research Graph</h1>
         <p class="mt-1 text-sm text-gray-500">
-          Switch between citation paths, paper structure maps, and topic clusters.
+          Static citation, structure, and topic graph snapshots exported from the local library.
         </p>
       </div>
-      <div class="flex flex-wrap gap-3">
-        <button
-          v-if="filters.mode === 'topic'"
-          class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
-          :disabled="buildingTopicGraph"
-          @click="buildTopicGraph"
-        >
-          {{ buildingTopicGraph ? 'Building...' : 'Build Topic Model' }}
-        </button>
-        <button
-          class="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300"
-          :disabled="loading"
-          @click="loadGraph"
-        >
-          {{ loading ? 'Loading...' : 'Update Graph' }}
-        </button>
-      </div>
+      <div class="text-xs text-gray-500">GitHub Pages read-only mode</div>
+    </div>
+
+    <div class="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+      图谱页面现在只读取预计算快照，不再支持在线构建 topic model、paper scope 临时查询或重新拉取后端数据。
     </div>
 
     <div v-if="errorMessage" class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -41,7 +29,7 @@
             <div class="h-12 w-12 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600"></div>
           </div>
           <div v-else-if="nodeCount === 0" class="flex h-[800px] items-center justify-center text-center text-sm text-gray-500">
-            No graph data available for this scope.
+            No graph data available for this snapshot scope.
           </div>
           <div v-else ref="graphContainer" class="h-[800px] w-full"></div>
         </div>
@@ -55,10 +43,9 @@
       </ClientOnly>
 
       <div class="space-y-4">
-        <!-- Control Panel -->
         <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-          <h2 class="text-sm font-semibold text-gray-900 mb-4">Graph Controls</h2>
-          
+          <h2 class="mb-4 text-sm font-semibold text-gray-900">Graph Controls</h2>
+
           <div class="space-y-4">
             <label class="block text-sm font-medium text-gray-700">
               <span class="mb-1 block">Mode</span>
@@ -74,7 +61,6 @@
               <select v-model="filters.scope" class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50">
                 <option value="library">Library</option>
                 <option value="project">Project</option>
-                <option value="paper">Paper</option>
               </select>
             </label>
 
@@ -90,66 +76,9 @@
                 </option>
               </select>
             </label>
-
-            <label v-if="filters.scope === 'paper'" class="block text-sm font-medium text-gray-700">
-              <span class="mb-1 block">Paper Ref</span>
-              <input
-                v-model.trim="filters.paperRef"
-                type="text"
-                class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50"
-                placeholder="dir_name / UUID / DOI"
-              >
-            </label>
-
-            <div class="grid grid-cols-2 gap-3">
-              <label class="block text-sm font-medium text-gray-700" :class="{ 'opacity-50': filters.mode !== 'structure' }">
-                <span class="mb-1 block">Min Shared</span>
-                <input
-                  v-model.number="filters.minShared"
-                  type="number"
-                  min="1"
-                  max="20"
-                  class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50"
-                  :disabled="filters.mode !== 'structure'"
-                >
-              </label>
-
-              <label class="block text-sm font-medium text-gray-700">
-                <span class="mb-1 block">Max Nodes</span>
-                <input
-                  v-model.number="filters.maxNodes"
-                  type="number"
-                  min="5"
-                  max="300"
-                  class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50"
-                >
-              </label>
-            </div>
-            
-            <div v-if="filters.mode === 'structure'" class="rounded-lg border border-slate-200 bg-slate-50 p-3 mt-2 text-xs">
-              <div class="flex items-center justify-between mb-2">
-                <span class="font-medium text-slate-700">Edge Threshold</span>
-                <span class="font-bold text-slate-900">{{ thresholdDisplay }}</span>
-              </div>
-              <input
-                v-model.number="structureThreshold"
-                type="range"
-                class="w-full accent-slate-700 mb-2"
-                :min="thresholdBounds.min"
-                :max="thresholdBounds.max"
-                :step="thresholdBounds.step"
-                :disabled="thresholdBounds.max <= 0"
-              >
-              <button
-                class="w-full rounded border border-slate-300 bg-white py-1 px-2 text-center text-slate-600 hover:bg-slate-100 disabled:opacity-50"
-                :disabled="thresholdBounds.max <= 0"
-                @click="resetThreshold"
-              >
-                Reset to Show All
-              </button>
-            </div>
           </div>
         </div>
+
         <div class="grid grid-cols-2 gap-3">
           <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
             <div class="text-2xl font-semibold text-gray-900">{{ nodeCount }}</div>
@@ -172,43 +101,12 @@
         <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
           <h2 class="text-sm font-semibold text-gray-900">Legend</h2>
           <div class="mt-3 space-y-2 text-sm text-gray-600">
-            <template v-if="filters.mode === 'citation'">
-              <div class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-red-700"></span>Center paper</div>
-              <div class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-blue-600"></span>Referenced paper</div>
-              <div class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-emerald-600"></span>Citing paper</div>
-              <div class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-amber-500"></span>External DOI node</div>
-            </template>
-            <template v-else-if="filters.mode === 'structure'">
-              <div class="flex items-center gap-2"><span class="h-3 w-3 rounded-full border-2 border-red-800" :style="{ backgroundColor: '#cbd5e1' }"></span>Center paper</div>
-              <div class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-slate-400"></span>Singleton / weakly connected paper</div>
-              <div class="flex items-center gap-2"><span class="h-3 w-3 rounded-full" :style="{ backgroundColor: communitySwatch(1, 4) }"></span>Community-colored paper</div>
-              <div class="flex items-center gap-2"><span class="inline-block h-[2px] w-5 bg-blue-600"></span>Direct citation relation</div>
-              <div class="flex items-center gap-2"><span class="inline-block h-[2px] w-5 border-t-2 border-dashed border-green-600"></span>Shared-reference relation</div>
-            </template>
-            <template v-else>
-              <div class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-amber-600"></span>Center topic</div>
-              <div class="flex items-center gap-2"><span class="h-3 w-3 rounded-full" :style="{ backgroundColor: topicSwatch(1) }"></span>Topic cluster</div>
-              <div class="flex items-center gap-2"><span class="inline-block h-[2px] w-5 bg-amber-600"></span>Topic similarity</div>
-            </template>
+            <div class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-sky-600"></span>Paper node</div>
+            <div class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-amber-500"></span>External DOI node</div>
+            <div class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-purple-600"></span>Topic node</div>
           </div>
           <div class="mt-4 border-t border-gray-100 pt-3 text-xs text-gray-500">
             Edge mix: {{ edgeSummary }}
-          </div>
-          <div v-if="filters.mode === 'structure'" class="mt-4 border-t border-gray-100 pt-3">
-            <div class="text-xs font-medium uppercase tracking-wide text-gray-500">Communities</div>
-            <div v-if="communitySummary.length" class="mt-2 flex flex-wrap gap-2">
-              <span
-                v-for="community in communitySummary.slice(0, 8)"
-                :key="community.label"
-                class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs text-gray-700"
-              >
-                <span class="h-2.5 w-2.5 rounded-full" :style="{ backgroundColor: community.color }"></span>
-                {{ community.label }} ({{ community.size }})
-              </span>
-            </div>
-            <div v-else class="mt-2 text-xs text-gray-500">
-              Communities appear once the visible structure graph contains connected papers.
-            </div>
           </div>
         </div>
 
@@ -216,7 +114,7 @@
           <div class="flex items-center justify-between gap-3">
             <h2 class="text-sm font-semibold text-gray-900">Selected Node</h2>
             <button
-              v-if="selectedNode && selectedNode.paper_ref"
+              v-if="selectedNode && selectedNode.route_id"
               class="rounded-md border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 transition hover:bg-gray-50"
               @click="openSelectedPaper"
             >
@@ -229,9 +127,9 @@
               <div class="text-xs uppercase tracking-wide text-gray-500">Title</div>
               <div class="mt-1 font-medium text-gray-900">{{ selectedNode.title || selectedNode.label }}</div>
             </div>
-            <div v-if="selectedNode.role || selectedRoles.length">
+            <div v-if="selectedRoles.length">
               <div class="text-xs uppercase tracking-wide text-gray-500">Role</div>
-              <div class="mt-1">{{ selectedRoles.join(', ') || selectedNode.role }}</div>
+              <div class="mt-1">{{ selectedRoles.join(', ') }}</div>
             </div>
             <div v-if="selectedNode.keywords && selectedNode.keywords.length">
               <div class="text-xs uppercase tracking-wide text-gray-500">Keywords</div>
@@ -244,10 +142,6 @@
                   {{ keyword }}
                 </span>
               </div>
-            </div>
-            <div v-if="selectedNode.community_label">
-              <div class="text-xs uppercase tracking-wide text-gray-500">Community</div>
-              <div class="mt-1">{{ selectedNode.community_label }}<span v-if="selectedNode.community_size"> · {{ selectedNode.community_size }} papers</span></div>
             </div>
             <div v-if="selectedNode.first_author || selectedNode.year">
               <div class="text-xs uppercase tracking-wide text-gray-500">Authors / Year</div>
@@ -285,9 +179,9 @@
               <div class="mt-2 space-y-2">
                 <button
                   v-for="paper in selectedNode.representative_papers.slice(0, 5)"
-                  :key="paper.paper_ref || paper.paper_id"
+                  :key="paper.route_id || paper.paper_id || paper.title"
                   class="block w-full rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-left text-xs text-gray-700 transition hover:bg-gray-100"
-                  @click="openRepresentativePaper(paper.paper_ref)"
+                  @click="openRepresentativePaper(paper.route_id || paper.paper_ref)"
                 >
                   {{ paper.year || '?' }} · {{ paper.title }}
                 </button>
@@ -306,28 +200,15 @@
 
 <script setup>
 import * as d3 from 'd3'
-import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue'
 
-const COMMUNITY_COLORS = [
-  '#0f766e',
-  '#0369a1',
-  '#4338ca',
-  '#b45309',
-  '#be123c',
-  '#166534',
-  '#7c3aed',
-  '#1d4ed8',
-  '#9a3412',
-  '#047857'
-]
+const { fetchJson } = useStaticSiteData()
 
 const graphContainer = ref(null)
 const loading = ref(false)
-const buildingTopicGraph = ref(false)
 const errorMessage = ref('')
 const selectedNode = ref(null)
+const graphManifest = ref(null)
 const projects = ref([])
-const structureThreshold = ref(0)
 const graphData = ref({
   mode: 'citation',
   scope: 'library',
@@ -338,373 +219,125 @@ const graphData = ref({
     edges: 0,
     papers: 0,
     external: 0,
-    edge_types: {}
+    topics: 0,
+    edge_types: {},
   },
-  truncated: false,
-  hidden_nodes: 0,
-  message: ''
+  message: '',
 })
 
 const filters = reactive({
   mode: 'citation',
   scope: 'library',
   project: '',
-  paperRef: '',
-  minShared: 2,
-  maxNodes: 80
 })
 
-function nodeRoles(node) {
-  if (!node) {
-    return []
-  }
-  if (Array.isArray(node.roles) && node.roles.length) {
-    return node.roles
-  }
-  if (node.role) {
-    return [node.role]
-  }
-  if (node.type === 'external') {
-    return ['external']
-  }
-  if (node.type === 'topic') {
-    return ['topic']
-  }
-  return ['paper']
-}
-
-function edgeTypeSummary(edges) {
-  const summary = {}
-  edges.forEach((edge) => {
-    if (edge.type === 'structure' && Array.isArray(edge.relations) && edge.relations.length) {
-      edge.relations.forEach((relation) => {
-        summary[relation] = (summary[relation] || 0) + 1
-      })
-      return
-    }
-    const key = edge.type || 'edge'
-    summary[key] = (summary[key] || 0) + 1
-  })
-  return summary
-}
-
-function communitySwatch(index, size) {
-  if (!index || size <= 1) {
-    return '#94a3b8'
-  }
-  return COMMUNITY_COLORS[(index - 1) % COMMUNITY_COLORS.length]
-}
-
-function detectStructureCommunities(nodes, edges) {
-  const nodeIds = nodes.map((node) => node.id)
-  if (!nodeIds.length) {
-    return { nodes: [], communities: [] }
-  }
-
-  const adjacency = new Map(nodeIds.map((id) => [id, []]))
-  edges.forEach((edge) => {
-    const source = typeof edge.source === 'object' ? edge.source.id : edge.source
-    const target = typeof edge.target === 'object' ? edge.target.id : edge.target
-    if (!adjacency.has(source) || !adjacency.has(target)) {
-      return
-    }
-    const weight = Number(edge.weight || 1)
-    adjacency.get(source).push({ id: target, weight })
-    adjacency.get(target).push({ id: source, weight })
-  })
-
-  const labels = {}
-  nodeIds.forEach((id) => {
-    labels[id] = id
-  })
-
-  const orderedIds = [...nodeIds].sort((a, b) => {
-    const degreeDelta = adjacency.get(b).length - adjacency.get(a).length
-    if (degreeDelta !== 0) {
-      return degreeDelta
-    }
-    return String(a).localeCompare(String(b))
-  })
-
-  for (let step = 0; step < 12; step += 1) {
-    let changed = false
-    orderedIds.forEach((id) => {
-      const neighbors = adjacency.get(id) || []
-      if (!neighbors.length) {
-        return
-      }
-      const scores = {}
-      neighbors.forEach((neighbor) => {
-        const label = labels[neighbor.id]
-        scores[label] = (scores[label] || 0) + neighbor.weight
-      })
-      const winner = Object.entries(scores).sort((a, b) => {
-        const scoreDelta = b[1] - a[1]
-        if (scoreDelta !== 0) {
-          return scoreDelta
-        }
-        return String(a[0]).localeCompare(String(b[0]))
-      })[0]
-      if (winner && winner[0] !== labels[id]) {
-        labels[id] = winner[0]
-        changed = true
-      }
-    })
-    if (!changed) {
-      break
-    }
-  }
-
-  const groups = new Map()
-  nodeIds.forEach((id) => {
-    const label = labels[id]
-    if (!groups.has(label)) {
-      groups.set(label, [])
-    }
-    groups.get(label).push(id)
-  })
-
-  const orderedGroups = [...groups.values()].sort((a, b) => {
-    const sizeDelta = b.length - a.length
-    if (sizeDelta !== 0) {
-      return sizeDelta
-    }
-    return String(a[0]).localeCompare(String(b[0]))
-  })
-
-  const idToCommunity = {}
-  const communities = orderedGroups.map((members, index) => {
-    const communityId = index + 1
-    const label = `C${communityId}`
-    members.forEach((member) => {
-      idToCommunity[member] = {
-        id: communityId,
-        label,
-        size: members.length,
-        color: communitySwatch(communityId, members.length)
-      }
-    })
-    return {
-      id: communityId,
-      label,
-      size: members.length,
-      color: communitySwatch(communityId, members.length)
-    }
-  })
-
-  const communityNodes = nodes.map((node) => {
-    const community = idToCommunity[node.id]
-    return {
-      ...node,
-      community_id: community ? community.id : null,
-      community_label: community ? community.label : '',
-      community_size: community ? community.size : 0,
-      community_color: community ? community.color : '#94a3b8'
-    }
-  })
-
-  return { nodes: communityNodes, communities }
-}
-
-function buildDisplayPayload(nodes, edges, extra = {}) {
-  const paperNodes = nodes.filter((node) => node.type === 'paper').length
-  const topicPaperCount = nodes
-    .filter((node) => node.type === 'topic')
-    .reduce((sum, node) => sum + Number(node.paper_count || 0), 0)
-
-  return {
-    nodes,
-    edges,
-    stats: {
-      nodes: nodes.length,
-      edges: edges.length,
-      papers: topicPaperCount > 0 ? topicPaperCount : paperNodes,
-      external: nodes.filter((node) => node.type === 'external').length,
-      topics: nodes.filter((node) => node.type === 'topic').length,
-      edge_types: edgeTypeSummary(edges)
-    },
-    communities: extra.communities || [],
-    hidden_edges: extra.hiddenEdges || 0
-  }
-}
-
-const thresholdBounds = computed(() => {
-  if (graphData.value.mode !== 'structure') {
-    return { min: 0, max: 0, step: 0.5 }
-  }
-  const rawEdges = Array.isArray(graphData.value.edges) ? graphData.value.edges : []
-  let maxWeight = 0
-  rawEdges.forEach((edge) => {
-    maxWeight = Math.max(maxWeight, Number(edge.weight || 0))
-  })
-  return {
-    min: 0,
-    max: Math.max(0, Math.ceil(maxWeight * 2) / 2),
-    step: 0.5
-  }
-})
-
-const thresholdDisplay = computed(() => {
-  if (filters.mode !== 'structure') {
-    return 'n/a'
-  }
-  return structureThreshold.value <= 0 ? 'All' : structureThreshold.value.toFixed(1)
-})
-
-const displayGraph = computed(() => {
-  const rawNodes = Array.isArray(graphData.value.nodes)
-    ? graphData.value.nodes.map((node) => ({ ...node }))
-    : []
-  const rawEdges = Array.isArray(graphData.value.edges)
-    ? graphData.value.edges.map((edge) => ({ ...edge }))
-    : []
-
-  if (graphData.value.mode !== 'structure') {
-    return buildDisplayPayload(rawNodes, rawEdges)
-  }
-
-  const threshold = Number(structureThreshold.value || 0)
-  const keptEdges = rawEdges.filter((edge) => Number(edge.weight || 0) >= threshold)
-  const keepIds = new Set()
-  keptEdges.forEach((edge) => {
-    keepIds.add(edge.source)
-    keepIds.add(edge.target)
-  })
-  rawNodes.forEach((node) => {
-    if (nodeRoles(node).includes('center')) {
-      keepIds.add(node.id)
-    }
-  })
-
-  const keptNodes = rawNodes.filter((node) => keepIds.has(node.id))
-  const communityResult = detectStructureCommunities(keptNodes, keptEdges)
-  return buildDisplayPayload(communityResult.nodes, keptEdges, {
-    communities: communityResult.communities,
-    hiddenEdges: Math.max(0, rawEdges.length - keptEdges.length)
-  })
-})
-
-const nodeCount = computed(() => displayGraph.value.stats.nodes || 0)
-const edgeCount = computed(() => displayGraph.value.stats.edges || 0)
+const displayGraph = computed(() => graphData.value)
+const nodeCount = computed(() => displayGraph.value.stats.nodes || displayGraph.value.nodes.length || 0)
+const edgeCount = computed(() => displayGraph.value.stats.edges || displayGraph.value.edges.length || 0)
 const paperCount = computed(() => displayGraph.value.stats.papers || 0)
-const externalCount = computed(() => displayGraph.value.stats.external || 0)
-const topicCount = computed(() => displayGraph.value.stats.topics || 0)
-const communitySummary = computed(() => displayGraph.value.communities || [])
-const communityCount = computed(() => communitySummary.value.filter((community) => community.size > 1).length || communitySummary.value.length)
-const auxiliaryStatLabel = computed(() => {
-  if (filters.mode === 'structure') return 'Communities'
-  if (filters.mode === 'topic') return 'Topics'
-  return 'External'
+const selectedRoles = computed(() => {
+  if (!selectedNode.value) return []
+  if (Array.isArray(selectedNode.value.roles) && selectedNode.value.roles.length) return selectedNode.value.roles
+  if (selectedNode.value.role) return [selectedNode.value.role]
+  return []
 })
-const auxiliaryStatValue = computed(() => {
-  if (filters.mode === 'structure') return communityCount.value
-  if (filters.mode === 'topic') return topicCount.value
-  return externalCount.value
-})
-
-const infoMessage = computed(() => {
-  const parts = []
-  if (graphData.value.message) {
-    parts.push(graphData.value.message)
-  }
-  if (graphData.value.truncated && graphData.value.hidden_nodes) {
-    parts.push(`Hidden ${graphData.value.hidden_nodes} nodes to keep the graph readable.`)
-  }
-  if (graphData.value.mode === 'structure' && displayGraph.value.hidden_edges) {
-    parts.push(`Threshold hides ${displayGraph.value.hidden_edges} weaker edges.`)
-  }
-  return parts.join(' ')
-})
-
+const infoMessage = computed(() => displayGraph.value.message || '')
 const edgeSummary = computed(() => {
   const edgeTypes = displayGraph.value.stats.edge_types || {}
-  const parts = []
-  Object.keys(edgeTypes).sort().forEach((key) => {
-    parts.push(`${key}: ${edgeTypes[key]}`)
-  })
-  return parts.length ? parts.join(' · ') : 'No edges'
+  const entries = Object.entries(edgeTypes)
+  if (entries.length === 0) return 'No visible edges'
+  return entries.map(([type, count]) => `${type}: ${count}`).join(' · ')
 })
-
-const selectedRoles = computed(() => {
-  if (!selectedNode.value) {
-    return []
-  }
-  const roles = selectedNode.value.roles
-  if (Array.isArray(roles) && roles.length) {
-    return roles
-  }
-  return selectedNode.value.role ? [selectedNode.value.role] : []
+const auxiliaryStatLabel = computed(() => displayGraph.value.mode === 'topic' ? 'Topics' : 'External')
+const auxiliaryStatValue = computed(() => {
+  if (displayGraph.value.mode === 'topic') return displayGraph.value.stats.topics || 0
+  return displayGraph.value.stats.external || 0
 })
-
-function topicSwatch(topicId) {
-  if (!Number.isFinite(Number(topicId))) {
-    return '#9ca3af'
-  }
-  return COMMUNITY_COLORS[Math.abs(Number(topicId)) % COMMUNITY_COLORS.length]
-}
 
 function nodeColor(node) {
-  if (graphData.value.mode === 'structure') {
-    return node.community_color || communitySwatch(node.community_id, node.community_size)
-  }
-  if (graphData.value.mode === 'topic') {
-    if (nodeRoles(node).includes('center')) return '#b45309'
-    return topicSwatch(node.topic_id)
-  }
-  const roles = nodeRoles(node)
-  if (roles.includes('center')) return '#b91c1c'
-  if (node.type === 'external') return '#d97706'
-  if (roles.includes('reference')) return '#2563eb'
-  if (roles.includes('citer') || roles.includes('shared')) return '#059669'
-  return '#475569'
-}
-
-function nodeStroke(node) {
-  if (nodeRoles(node).includes('center')) {
-    return '#7f1d1d'
-  }
-  return '#ffffff'
-}
-
-function nodeStrokeWidth(node) {
-  return nodeRoles(node).includes('center') ? 3 : 2
+  if (node.type === 'topic') return '#7c3aed'
+  if (node.type === 'external') return '#f59e0b'
+  if ((node.roles || []).includes('center') || node.role === 'center') return '#dc2626'
+  return '#0284c7'
 }
 
 function nodeRadius(node) {
-  if (graphData.value.mode === 'topic') {
-    const count = Number(node.paper_count || 0)
-    return Math.max(12, Math.min(26, 12 + Math.sqrt(count || 0) * 2))
-  }
-  if (nodeRoles(node).includes('center')) return 16
+  if (node.type === 'topic') return 16
   if (node.type === 'external') return 9
-  const cite = Number(node.citation_count || 0)
-  return Math.max(8, Math.min(18, 8 + Math.sqrt(cite || 0)))
+  return 11
 }
 
 function edgeColor(edge) {
-  if (edge.type === 'cites') return '#64748b'
-  if (edge.type === 'topic_similarity') return '#b45309'
-  const relations = Array.isArray(edge.relations) ? edge.relations : []
-  if (relations.includes('direct_citation') && relations.includes('shared_refs')) return '#c2410c'
-  if (relations.includes('direct_citation')) return '#2563eb'
-  if (relations.includes('shared_refs')) return '#16a34a'
-  return '#64748b'
+  if (edge.type === 'topic_similarity') return '#8b5cf6'
+  if (edge.type === 'shared' || edge.type === 'structure') return '#10b981'
+  if (edge.type === 'cites' || edge.type === 'cited_by') return '#2563eb'
+  return '#94a3b8'
 }
 
 function edgeWidth(edge) {
-  const weight = Number(edge.weight || 1)
-  if (edge.type === 'topic_similarity') {
-    return Math.max(1.5, Math.min(5, 1 + weight * 4))
-  }
-  return Math.max(1.5, Math.min(5, 1 + weight * 0.6))
+  const weight = Number(edge.weight || edge.shared_refs || edge.similarity || 1)
+  return Math.max(1.5, Math.min(4, weight))
 }
 
 function edgeDash(edge) {
-  const relations = Array.isArray(edge.relations) ? edge.relations : []
-  if (edge.type === 'structure' && relations.includes('shared_refs') && !relations.includes('direct_citation')) {
-    return '5 4'
-  }
+  if (edge.type === 'shared' || edge.type === 'structure') return '6 4'
   return null
+}
+
+async function loadGraphManifest() {
+  const data = await fetchJson('graphs/index.json')
+  graphManifest.value = data
+  projects.value = Array.isArray(data?.projects)
+    ? data.projects.map((project) => ({
+        name: project.name,
+        slug: project.slug,
+        paper_count: project.paper_count,
+      }))
+    : []
+
+  if (!filters.project && projects.value.length) {
+    filters.project = projects.value[0].name
+  }
+}
+
+function resolveGraphPath() {
+  if (!graphManifest.value) return ''
+  if (filters.scope === 'library') {
+    return graphManifest.value.library?.[filters.mode] || ''
+  }
+
+  const match = (graphManifest.value.projects || []).find((project) => project.name === filters.project)
+  return match?.files?.[filters.mode] || ''
+}
+
+async function loadGraph() {
+  const relativePath = resolveGraphPath()
+  if (!relativePath) {
+    graphData.value = {
+      mode: filters.mode,
+      scope: filters.scope,
+      nodes: [],
+      edges: [],
+      stats: { nodes: 0, edges: 0, papers: 0, external: 0, topics: 0, edge_types: {} },
+      message: filters.scope === 'project' ? 'Select a project to view its graph snapshot.' : 'Graph snapshot not available.',
+    }
+    return
+  }
+
+  loading.value = true
+  errorMessage.value = ''
+  try {
+    const data = await fetchJson(relativePath)
+    graphData.value = data
+    syncSelectedNode()
+    await nextTick()
+    renderGraph()
+  } catch (error) {
+    console.error('Failed to load graph snapshot:', error)
+    errorMessage.value = 'Failed to load static graph snapshot.'
+  } finally {
+    loading.value = false
+  }
 }
 
 function syncSelectedNode() {
@@ -720,146 +353,18 @@ function syncSelectedNode() {
       return
     }
   }
-  selectedNode.value = nodes.find((node) => nodeRoles(node).includes('center')) || nodes[0] || null
-}
-
-function resetThreshold() {
-  structureThreshold.value = 0
-}
-
-async function loadProjects() {
-  try {
-    const response = await fetch('/api/projects')
-    if (!response.ok) {
-      throw new Error(`Failed to load projects: ${response.status}`)
-    }
-    const data = await response.json()
-    projects.value = Array.isArray(data) ? data : []
-    if (!filters.project && projects.value.length) {
-      filters.project = projects.value[0].name
-    }
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-function buildGraphQuery() {
-  const query = new URLSearchParams()
-  query.set('mode', filters.mode)
-  query.set('scope', filters.scope)
-  query.set('max_nodes', String(filters.maxNodes || 80))
-  if (filters.mode === 'structure') {
-    query.set('min_shared', String(filters.minShared || 2))
-  }
-  if (filters.scope === 'project' && filters.project) {
-    query.set('project', filters.project)
-  }
-  if (filters.scope === 'paper' && filters.paperRef) {
-    query.set('paper_ref', filters.paperRef)
-  }
-  return query.toString()
-}
-
-function normalizeThreshold() {
-  if (graphData.value.mode !== 'structure') {
-    structureThreshold.value = 0
-    return
-  }
-  if (structureThreshold.value > thresholdBounds.value.max) {
-    structureThreshold.value = thresholdBounds.value.max
-  }
-  if (structureThreshold.value < thresholdBounds.value.min) {
-    structureThreshold.value = thresholdBounds.value.min
-  }
-}
-
-async function buildTopicGraph() {
-  if (filters.mode !== 'topic') {
-    return
-  }
-  if (filters.scope === 'project' && !filters.project) {
-    errorMessage.value = 'Select a project first.'
-    return
-  }
-  if (filters.scope === 'paper' && !filters.paperRef) {
-    errorMessage.value = 'Enter a paper reference first.'
-    return
-  }
-
-  buildingTopicGraph.value = true
-  errorMessage.value = ''
-  try {
-    const response = await fetch('/api/graph/build', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        mode: filters.mode,
-        scope: filters.scope,
-        project: filters.project,
-        paper_ref: filters.paperRef,
-        min_shared: filters.minShared,
-        max_nodes: filters.maxNodes
-      })
-    })
-    const data = await response.json()
-    if (!response.ok) {
-      throw new Error((data && data.statusMessage) || `Failed to build topic graph (${response.status})`)
-    }
-    graphData.value = data.graph || graphData.value
-    normalizeThreshold()
-    syncSelectedNode()
-    await nextTick()
-    renderGraph()
-  } catch (error) {
-    errorMessage.value = (error && error.message) || 'Failed to build topic graph'
-  } finally {
-    buildingTopicGraph.value = false
-  }
-}
-
-async function loadGraph() {
-  if (filters.scope === 'project' && !filters.project) {
-    errorMessage.value = 'Select a project first.'
-    return
-  }
-  if (filters.scope === 'paper' && !filters.paperRef) {
-    errorMessage.value = 'Enter a paper reference first.'
-    return
-  }
-
-  loading.value = true
-  errorMessage.value = ''
-  try {
-    const response = await fetch(`/api/graph?${buildGraphQuery()}`)
-    const data = await response.json()
-    if (!response.ok) {
-      throw new Error((data && data.statusMessage) || `Failed to load graph (${response.status})`)
-    }
-    graphData.value = data || graphData.value
-    normalizeThreshold()
-    syncSelectedNode()
-    await nextTick()
-    renderGraph()
-  } catch (error) {
-    errorMessage.value = (error && error.message) || 'Failed to load graph'
-  } finally {
-    loading.value = false
-  }
+  selectedNode.value = nodes.find((node) => (node.roles || []).includes('center') || node.role === 'center') || nodes[0]
 }
 
 function renderGraph() {
-  if (!graphContainer.value) {
-    return
-  }
+  if (!graphContainer.value) return
 
-  const nodes = displayGraph.value.nodes.map((node) => ({ ...node }))
-  const edges = displayGraph.value.edges.map((edge) => ({ ...edge }))
+  const nodes = (displayGraph.value.nodes || []).map((node) => ({ ...node }))
+  const edges = (displayGraph.value.edges || []).map((edge) => ({ ...edge }))
   const container = graphContainer.value
   container.innerHTML = ''
 
-  if (!nodes.length) {
-    return
-  }
+  if (!nodes.length) return
 
   const width = container.clientWidth || 900
   const height = container.clientHeight || 680
@@ -885,7 +390,6 @@ function renderGraph() {
     .attr('fill', '#64748b')
 
   const root = svg.append('g')
-
   svg.call(
     d3.zoom()
       .scaleExtent([0.2, 4])
@@ -895,7 +399,7 @@ function renderGraph() {
   )
 
   const simulation = d3.forceSimulation(nodes)
-    .force('link', d3.forceLink(edges).id((d) => d.id).distance((d) => d.type === 'cites' ? 120 : 95))
+    .force('link', d3.forceLink(edges).id((d) => d.id).distance((d) => d.type === 'topic_similarity' ? 140 : 110))
     .force('charge', d3.forceManyBody().strength(-280))
     .force('center', d3.forceCenter(width / 2, height / 2))
     .force('collision', d3.forceCollide().radius((d) => nodeRadius(d) + 18))
@@ -926,8 +430,8 @@ function renderGraph() {
   node.append('circle')
     .attr('r', (d) => nodeRadius(d))
     .attr('fill', (d) => nodeColor(d))
-    .attr('stroke', (d) => nodeStroke(d))
-    .attr('stroke-width', (d) => nodeStrokeWidth(d))
+    .attr('stroke', '#ffffff')
+    .attr('stroke-width', 2)
 
   node.append('text')
     .text((d) => {
@@ -980,17 +484,13 @@ function renderGraph() {
 }
 
 function openSelectedPaper() {
-  if (!selectedNode.value || !selectedNode.value.paper_ref) {
-    return
-  }
-  navigateTo(`/paper/${encodeURIComponent(selectedNode.value.paper_ref)}`)
+  if (!selectedNode.value?.route_id) return
+  navigateTo(`/paper/${selectedNode.value.route_id}`)
 }
 
-function openRepresentativePaper(paperRef) {
-  if (!paperRef) {
-    return
-  }
-  navigateTo(`/paper/${encodeURIComponent(paperRef)}`)
+function openRepresentativePaper(routeId) {
+  if (!routeId) return
+  navigateTo(`/paper/${routeId}`)
 }
 
 watch(() => filters.scope, (scope) => {
@@ -999,20 +499,18 @@ watch(() => filters.scope, (scope) => {
   }
 })
 
-watch(() => filters.mode, (mode) => {
-  if (mode !== 'structure') {
-    structureThreshold.value = 0
-  }
-})
-
-watch(structureThreshold, async () => {
-  syncSelectedNode()
-  await nextTick()
-  renderGraph()
-})
+watch(() => [filters.mode, filters.scope, filters.project], async () => {
+  if (filters.scope === 'project' && !filters.project) return
+  await loadGraph()
+}, { deep: true })
 
 onMounted(async () => {
-  await loadProjects()
-  await loadGraph()
+  try {
+    await loadGraphManifest()
+    await loadGraph()
+  } catch (error) {
+    console.error('Failed to initialize graph snapshot:', error)
+    errorMessage.value = 'Failed to initialize graph snapshot.'
+  }
 })
 </script>

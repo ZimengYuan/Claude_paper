@@ -1,0 +1,73 @@
+name: Nuxt Static Library Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ScholarAIO
+        run: pip install -e ".[full]"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: scholaraio/web/package-lock.json
+
+      - name: Install web dependencies
+        working-directory: scholaraio/web
+        run: npm ci
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v4
+
+      - name: Export static snapshot data
+        run: scholaraio web --export-only --output-dir scholaraio/web/public/site-data
+
+      - name: Generate static Nuxt site
+        working-directory: scholaraio/web
+        run: npm run generate
+        env:
+          NUXT_APP_BASE_URL: "${{ steps.pages.outputs.base_path }}/"
+
+      - name: Add .nojekyll
+        run: touch scholaraio/web/.output/public/.nojekyll
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: scholaraio/web/.output/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

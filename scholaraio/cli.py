@@ -941,11 +941,25 @@ def cmd_web(args: argparse.Namespace, cfg) -> None:
     import subprocess
     import sys
 
+    from scholaraio.web_static import export_static_site_data
+
     web_dir = Path(__file__).parent / "web"
+    static_data_dir = Path(args.output_dir) if getattr(args, "output_dir", None) else (web_dir / "public" / "site-data")
 
     if not web_dir.exists():
         ui(f"错误：网页目录不存在: {web_dir}")
         sys.exit(1)
+
+    if getattr(args, "skip_export", False) is False or getattr(args, "export_only", False):
+        ui("导出静态网页快照数据...")
+        result = export_static_site_data(cfg, static_data_dir)
+        ui(
+            f"静态快照已导出：{result['papers_exported']} 篇详情，"
+            f"{result['library_cards']} 篇 Library 卡片，{result['projects']} 个项目"
+        )
+        if getattr(args, "export_only", False):
+            ui(f"输出目录：{result['output_dir']}")
+            return
 
     ui(f"启动网页服务在端口 {args.port}...")
     ui(f"访问 http://localhost:{args.port}")
@@ -3035,6 +3049,9 @@ def main() -> None:
     p_web = sub.add_parser("web", help="启动网页 UI")
     p_web.set_defaults(func=cmd_web)
     p_web.add_argument("--port", type=int, default=5815, help="端口号（默认 5815）")
+    p_web.add_argument("--export-only", action="store_true", help="只导出静态站点数据，不启动 Nuxt")
+    p_web.add_argument("--skip-export", action="store_true", help="跳过导出，直接启动 Nuxt（仅调试用）")
+    p_web.add_argument("--output-dir", default=None, help="静态站点数据输出目录（默认 scholaraio/web/public/site-data）")
 
     args = parser.parse_args()
     cfg = load_config()

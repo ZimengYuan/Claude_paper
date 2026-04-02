@@ -8,8 +8,16 @@
       <div class="mx-auto h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
     </div>
 
+    <div v-else-if="errorMessage" class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+      {{ errorMessage }}
+    </div>
+
     <div v-else-if="paper" class="grid grid-cols-1 gap-8 lg:grid-cols-3">
       <div class="space-y-6 lg:col-span-2">
+        <div class="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          这是 GitHub Pages 上的只读快照页面。收藏、标签编辑、已读状态修改和写入 Knowledge 的操作已移除。
+        </div>
+
         <div>
           <div class="flex flex-wrap items-start justify-between gap-3">
             <div>
@@ -17,17 +25,21 @@
               <p class="mt-2 text-gray-600">{{ paper.authors?.join(', ') }}</p>
               <p class="mt-1 text-sm text-gray-500">{{ paper.year }} · {{ paper.journal }}</p>
             </div>
-            <span
-              class="rounded-full border px-3 py-1 text-xs font-medium"
-              :class="paper.is_close_read ? 'border-amber-200 bg-amber-50 text-amber-700' : 'border-gray-200 bg-gray-50 text-gray-500'"
-            >
-              {{ paper.is_close_read ? '已收藏 / 精读' : '未收藏' }}
-            </span>
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="rounded-full border px-3 py-1 text-xs font-medium"
+                :class="paper.is_close_read ? 'border-amber-200 bg-amber-50 text-amber-700' : 'border-gray-200 bg-gray-50 text-gray-500'"
+              >
+                {{ paper.is_close_read ? '精读快照' : '普通快照' }}
+              </span>
+              <span class="rounded-full border px-3 py-1 text-xs font-medium" :class="readStatusClass(paper.read_status)">
+                {{ paper.read_status === 'read' ? '已读' : '未读' }}
+              </span>
+            </div>
           </div>
         </div>
 
         <section class="rounded-xl border border-gray-200 bg-white shadow-sm">
-          <!-- Tab bar -->
           <div class="flex border-b border-gray-200">
             <button
               v-for="tab in contentTabs"
@@ -46,21 +58,17 @@
             </button>
           </div>
 
-          <!-- Tab panels -->
           <div class="p-5">
-            <!-- Summary -->
             <div v-if="activeTab === 'summary'">
               <div v-if="summary" class="markdown-body prose max-w-none" v-html="renderMarkdown(summary)"></div>
               <p v-else class="text-sm text-gray-500">No summary found for this paper.</p>
             </div>
 
-            <!-- Method -->
             <div v-if="activeTab === 'method'">
               <div v-if="method" class="markdown-body prose max-w-none" v-html="renderMarkdown(method)"></div>
               <p v-else class="text-sm text-gray-500">No method summary found for this paper.</p>
             </div>
 
-            <!-- Sensemaking -->
             <div v-if="activeTab === 'sensemaking'">
               <div v-if="hasSensemaking" class="space-y-4">
                 <div class="grid gap-3 md:grid-cols-2">
@@ -110,7 +118,7 @@
               </div>
 
               <p v-else class="text-sm text-gray-500">
-                这篇论文还没有生成 sensemaking 结果。点击右侧“收藏论文”后，会按精读流程进入生成队列。
+                这篇论文在当前静态快照里还没有 sensemaking 内容。
               </p>
             </div>
           </div>
@@ -119,38 +127,20 @@
 
       <div class="lg:col-span-1">
         <div class="mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <div class="flex items-start justify-between gap-3">
-            <h3 class="font-semibold text-gray-900">Status</h3>
-            <span
-              class="rounded-full border px-2 py-0.5 text-xs"
-              :class="paper.is_close_read ? 'border-amber-200 bg-amber-50 text-amber-700' : 'border-gray-200 bg-gray-50 text-gray-500'"
-            >
-              {{ paper.is_close_read ? '精读中' : '未收藏' }}
-            </span>
-          </div>
-
-          <button
-            class="mt-4 w-full rounded-md px-3 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60"
-            :class="paper.is_close_read ? 'bg-amber-100 text-amber-800 hover:bg-amber-200' : 'bg-amber-500 text-white hover:bg-amber-600'"
-            :disabled="closeReadLoading"
-            @click="toggleCloseRead"
-          >
-            {{ closeReadLoading ? 'Updating...' : (paper.is_close_read ? '取消收藏' : '收藏论文') }}
-          </button>
-
-          <p v-if="closeReadMessage" class="mt-3 text-xs" :class="closeReadMessageClass">
-            {{ closeReadMessage }}
-          </p>
-
-          <div class="mt-4 border-t border-gray-100 pt-4">
-            <label class="mb-2 block text-sm font-medium text-gray-700">Read Status</label>
-            <button
-              class="w-full rounded-md px-3 py-2 text-sm font-medium transition-colors"
-              :class="readStatus === 'read' ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-              @click="readStatus = readStatus === 'read' ? 'unread' : 'read'; updateStatus()"
-            >
-              {{ readStatus === 'read' ? '已读 ✓' : '未读' }}
-            </button>
+          <h3 class="font-semibold text-gray-900">Snapshot Status</h3>
+          <div class="mt-4 space-y-3 text-sm">
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500">Read Status</span>
+              <span class="font-medium text-gray-900">{{ paper.read_status === 'read' ? '已读' : '未读' }}</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500">Close Read</span>
+              <span class="font-medium text-gray-900">{{ paper.is_close_read ? '是' : '否' }}</span>
+            </div>
+            <div v-if="paper.read_at" class="flex items-center justify-between">
+              <span class="text-gray-500">Read At</span>
+              <span class="font-medium text-gray-900">{{ paper.read_at }}</span>
+            </div>
           </div>
         </div>
 
@@ -186,37 +176,16 @@
 
         <div class="mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
           <h3 class="mb-3 font-semibold text-gray-900">Tags</h3>
-          <div class="mb-3 flex flex-wrap gap-2">
+          <div v-if="paper.tags?.length" class="flex flex-wrap gap-2">
             <span
               v-for="tag in paper.tags"
               :key="tag"
-              class="flex items-center rounded bg-gray-100 px-2 py-1 text-sm text-gray-600"
+              class="rounded bg-gray-100 px-2 py-1 text-sm text-gray-600"
             >
               {{ tag }}
-              <button class="ml-1 text-gray-400 hover:text-red-500" @click="removeTag(tag)">×</button>
             </span>
           </div>
-          <div class="flex gap-2">
-            <input
-              v-model="newTag"
-              type="text"
-              placeholder="Add tag..."
-              class="flex-1 rounded-md border border-gray-300 px-2 py-1 text-sm"
-              @keyup.enter="addTag"
-            />
-            <button class="rounded-md bg-blue-600 px-3 py-1 text-sm text-white" @click="addTag">Add</button>
-          </div>
-        </div>
-
-        <div class="mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <h3 class="mb-3 font-semibold text-gray-900">Knowledge</h3>
-          <button
-            class="w-full rounded-md bg-green-600 px-3 py-2 text-sm text-white hover:bg-green-700 disabled:opacity-50"
-            :disabled="addingToKnowledge || summary === ''"
-            @click="addToKnowledge"
-          >
-            {{ addingToKnowledge ? 'Adding...' : 'Add Summary to Knowledge' }}
-          </button>
+          <p v-else class="text-sm text-gray-500">No tags recorded in this snapshot.</p>
         </div>
 
         <div v-if="parsedSource" class="mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
@@ -271,19 +240,15 @@
 import { marked } from 'marked'
 import katex from 'katex'
 
+const { fetchJson } = useStaticSiteData()
 const route = useRoute()
-const paperId = computed(() => decodeURIComponent(route.params.id))
+const paperId = computed(() => String(route.params.id || '').trim())
 
 const loading = ref(true)
+const errorMessage = ref('')
 const paper = ref(null)
 const summary = ref('')
 const method = ref('')
-const readStatus = ref('unread')
-const newTag = ref('')
-const addingToKnowledge = ref(false)
-const closeReadLoading = ref(false)
-const closeReadMessage = ref('')
-const closeReadMessageTone = ref('info')
 const activeTab = ref('summary')
 
 const contentTabs = computed(() => [
@@ -294,34 +259,10 @@ const contentTabs = computed(() => [
 
 const goBack = () => navigateTo('/')
 
-const fetchJson = async (url, options = undefined) => {
-  const response = await fetch(url, options)
-  const contentType = response.headers.get('content-type') || ''
-  const payload = contentType.includes('application/json') ? await response.json() : await response.text()
-
-  if (response.ok === false) {
-    const message = typeof payload === 'object' && payload !== null
-      ? payload.message || payload.statusMessage
-      : ''
-    throw new Error(message || `Request failed (${response.status})`)
-  }
-
-  return payload
-}
-
 const applyPaperPayload = (payload) => {
   paper.value = payload
-  readStatus.value = payload.read_status || 'unread'
   summary.value = payload.summary || ''
   method.value = payload.method_summary || ''
-}
-
-const syncTagState = (result, fallbackTags) => {
-  if (paper.value == null) return
-  paper.value.tags = Array.isArray(result?.tags) ? result.tags : fallbackTags
-  paper.value.is_close_read = typeof result?.is_close_read === 'boolean'
-    ? result.is_close_read
-    : (paper.value.tags || []).includes('精读')
 }
 
 const ratingClass = (score) => {
@@ -337,16 +278,18 @@ const materialClass = (enabled) => {
     : 'border-gray-200 bg-gray-50 text-gray-400'
 }
 
-const closeReadMessageClass = computed(() => {
-  return closeReadMessageTone.value === 'success' ? 'text-green-600' : 'text-gray-500'
-})
+const readStatusClass = (status) => {
+  return status === 'read'
+    ? 'border-green-200 bg-green-50 text-green-700'
+    : 'border-gray-200 bg-gray-50 text-gray-500'
+}
 
 const parsedSource = computed(() => paper.value?.parsed_source || null)
 const hasSensemaking = computed(() => Boolean(paper.value?.sensemaking))
 const parsedFieldEntries = computed(() => {
   return Object.entries(parsedSource.value?.recognized_fields || {}).map(([key, value]) => ({
     key,
-    value: Array.isArray(value) ? value.join(', ') : String(value)
+    value: Array.isArray(value) ? value.join(', ') : String(value),
   }))
 })
 
@@ -354,7 +297,7 @@ const sensemakingShiftEntries = computed(() => {
   const reconstruction = paper.value?.sensemaking?.act3_reconstruction || {}
   return [
     { label: 'Before', value: reconstruction.before },
-    { label: 'After', value: reconstruction.after }
+    { label: 'After', value: reconstruction.after },
   ].filter((entry) => keepValue(entry.value))
 })
 
@@ -368,7 +311,7 @@ const sensemakingProbes = computed(() => {
 })
 
 function keepValue(value) {
-  return value === null || value === undefined || value === '' ? false : true
+  return value !== null && value !== undefined && value !== ''
 }
 
 const metadataEntries = computed(() => {
@@ -383,7 +326,7 @@ const metadataEntries = computed(() => {
     { label: 'Issue', value: paper.value.issue },
     { label: 'Pages', value: paper.value.pages },
     { label: 'DOI', value: paper.value.doi },
-    { label: 'Citations', value: paper.value.citation_count }
+    { label: 'Citations', value: paper.value.citation_count },
   ].filter((entry) => keepValue(entry.value))
 })
 
@@ -395,127 +338,27 @@ const ratingEntries = computed(() => {
     { label: '技术质量', value: rating.technical_quality },
     { label: '实验验证', value: rating.experimental_validation },
     { label: '写作质量', value: rating.writing_quality },
-    { label: '相关性', value: rating.relevance }
+    { label: '相关性', value: rating.relevance },
   ].filter((entry) => keepValue(entry.value))
 })
 
 const overallRatingText = computed(() => {
   const score = paper.value?.rating?.overall_score
   if (score == null) return 'n/a'
-  return String(Number(score).toFixed(1)) + '/10'
+  return `${Number(score).toFixed(1)}/10`
 })
 
 const loadPaper = async () => {
+  loading.value = true
+  errorMessage.value = ''
   try {
-    const encodedId = encodeURIComponent(paperId.value)
-    const payload = await fetchJson('/api/papers/' + encodedId)
+    const payload = await fetchJson(`papers/${paperId.value}.json`)
     applyPaperPayload(payload)
   } catch (error) {
-    console.error('Failed to load paper:', error)
+    console.error('Failed to load paper snapshot:', error)
+    errorMessage.value = 'Failed to load this paper from the static snapshot.'
   } finally {
     loading.value = false
-  }
-}
-
-const updateStatus = async () => {
-  try {
-    const encodedId = encodeURIComponent(paperId.value)
-    await fetchJson('/api/papers/' + encodedId + '/status', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: readStatus.value })
-    })
-  } catch (error) {
-    console.error('Failed to update status:', error)
-  }
-}
-
-const addTag = async () => {
-  if (newTag.value.trim() === '' || paper.value == null) return
-  try {
-    const encodedId = encodeURIComponent(paperId.value)
-    const nextTags = [...(paper.value.tags || []), newTag.value.trim()]
-    const result = await fetchJson('/api/papers/' + encodedId + '/tags', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tags: nextTags })
-    })
-    syncTagState(result, nextTags)
-    newTag.value = ''
-  } catch (error) {
-    console.error('Failed to add tag:', error)
-  }
-}
-
-const removeTag = async (tag) => {
-  if (paper.value == null) return
-  try {
-    const encodedId = encodeURIComponent(paperId.value)
-    const nextTags = (paper.value.tags || []).filter((item) => item !== tag)
-    const result = await fetchJson('/api/papers/' + encodedId + '/tags', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tags: nextTags })
-    })
-    syncTagState(result, nextTags)
-  } catch (error) {
-    console.error('Failed to remove tag:', error)
-  }
-}
-
-const toggleCloseRead = async () => {
-  if (paper.value == null) return
-  closeReadLoading.value = true
-  closeReadMessage.value = ''
-
-  try {
-    const enabled = !paper.value.is_close_read
-    const encodedId = encodeURIComponent(paperId.value)
-    const result = await fetchJson('/api/papers/' + encodedId + '/close-read', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ enabled })
-    })
-
-    syncTagState(result, enabled
-      ? [...new Set([...(paper.value.tags || []), '精读'])]
-      : (paper.value.tags || []).filter((tag) => tag !== '精读'))
-
-    closeReadMessageTone.value = 'success'
-    closeReadMessage.value = enabled
-      ? (result.task_id
-        ? '已加入精读，后台开始生成 summary / method / rating / sensemaking。'
-        : '已加入精读。')
-      : '已取消收藏，这篇论文不再标记为精读。'
-  } catch (error) {
-    console.error('Failed to update close-read state:', error)
-    closeReadMessageTone.value = 'info'
-    closeReadMessage.value = '更新收藏状态失败，请稍后重试。'
-  } finally {
-    closeReadLoading.value = false
-  }
-}
-
-const addToKnowledge = async () => {
-  if (summary.value === '') return
-  addingToKnowledge.value = true
-  try {
-    await fetchJson('/api/knowledge/from-paper', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        paperId: paperId.value,
-        title: paper.value?.title,
-        summary: summary.value,
-        category: 'paper-summary'
-      })
-    })
-    alert('Added to knowledge base')
-  } catch (error) {
-    console.error('Failed to add to knowledge:', error)
-    alert('Failed to add to knowledge')
-  } finally {
-    addingToKnowledge.value = false
   }
 }
 
@@ -526,10 +369,10 @@ const renderMathFragment = (formula, displayMode, fallback) => {
   try {
     const rendered = katex.renderToString(trimmed, {
       displayMode,
-      throwOnError: false
+      throwOnError: false,
     })
     return displayMode ? `<div class="math-display">${rendered}</div>` : rendered
-  } catch (error) {
+  } catch {
     return fallback
   }
 }
@@ -584,7 +427,7 @@ const protectInlineDollarMath = (text, replacements) => {
     replacements.push({
       token,
       displayMode: false,
-      html: renderMathFragment(formula, false, `$${rawFormula}$`)
+      html: renderMathFragment(formula, false, `$${rawFormula}$`),
     })
     output += token
     index = endIndex + 1
@@ -600,7 +443,7 @@ const protectMathExpressions = (text) => {
     replacements.push({
       token,
       displayMode,
-      html: renderMathFragment(formula, displayMode, fallback)
+      html: renderMathFragment(formula, displayMode, fallback),
     })
     return token
   }

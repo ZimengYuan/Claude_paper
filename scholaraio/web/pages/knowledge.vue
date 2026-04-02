@@ -2,31 +2,33 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-6">
       <h1 class="text-2xl font-bold text-gray-900">Knowledge Base</h1>
-      <p class="mt-1 text-sm text-gray-500">Cross-paper notes and insights</p>
+      <p class="mt-1 text-sm text-gray-500">Cross-paper notes and insights from the exported snapshot</p>
+    </div>
+
+    <div class="mb-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+      GitHub Pages 版本仅支持浏览和搜索已导出的知识笔记，新增笔记与从论文写回 Knowledge 的功能已移除。
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <!-- Knowledge Content -->
       <div class="lg:col-span-2">
-        <!-- Search -->
         <div class="mb-4">
           <input
             v-model="searchQuery"
             type="text"
             placeholder="Search knowledge base..."
             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-            @input="debouncedSearch"
           />
         </div>
 
-        <!-- Loading -->
         <div v-if="loading" class="text-center py-12">
           <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
         </div>
 
-        <!-- Knowledge Content -->
+        <div v-else-if="errorMessage" class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {{ errorMessage }}
+        </div>
+
         <div v-else class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <!-- Tabs -->
           <div class="flex border-b border-gray-200 bg-slate-50">
             <button
               v-for="cat in ['All', 'General', 'Research', 'Method', 'Review']"
@@ -41,12 +43,7 @@
 
           <div class="p-6">
             <div v-if="searchResults.length > 0">
-              <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <span class="text-blue-600">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </span>
-                Search Results
-              </h3>
+              <h3 class="font-semibold text-gray-900 mb-4">Search Results</h3>
               <div class="space-y-4">
                 <div v-for="(result, i) in searchResults" :key="i" class="bg-gray-50 border border-gray-100 rounded-lg p-4 transition hover:shadow-md">
                   <p class="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2">{{ result.section }}</p>
@@ -69,47 +66,23 @@
                 <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
               </div>
               <p class="text-gray-900 font-medium">No knowledge notes found here.</p>
-              <p class="text-sm text-gray-500 mt-1">Add a new note using the form on the right.</p>
+              <p class="text-sm text-gray-500 mt-1">Current GitHub Pages snapshot only shows previously exported notes.</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Add Note Form -->
-      <div class="lg:col-span-1">
+      <div class="lg:col-span-1 space-y-4">
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <h3 class="font-semibold text-gray-900 mb-3">Add Note</h3>
-          <div class="space-y-3">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-              <select v-model="newNote.category" class="w-full border border-gray-300 rounded-md py-2 px-3">
-                <option value="general">General</option>
-                <option value="research">Research</option>
-                <option value="method">Method</option>
-                <option value="review">Review</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Note</label>
-              <textarea
-                v-model="newNote.content"
-                rows="6"
-                class="w-full border border-gray-300 rounded-md py-2 px-3"
-                placeholder="Write your note..."
-              ></textarea>
-            </div>
-            <button
-              @click="addNote"
-              :disabled="!newNote.content.trim()"
-              class="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Add Note
-            </button>
+          <h3 class="font-semibold text-gray-900 mb-3">Snapshot Info</h3>
+          <div class="space-y-2 text-sm text-gray-600">
+            <p>Notes are exported from the local knowledge base at build time.</p>
+            <p>Search runs in the browser on the static snapshot.</p>
+            <p>Write actions are disabled on GitHub Pages.</p>
           </div>
         </div>
 
-        <!-- Tags -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mt-4">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
           <h3 class="font-semibold text-gray-900 mb-3">Registered Tags</h3>
           <div v-if="tags.length > 0" class="flex flex-wrap gap-2">
             <span
@@ -129,12 +102,14 @@
 </template>
 
 <script setup>
+const { fetchJson } = useStaticSiteData()
+
 const searchQuery = ref('')
 const content = ref('')
 const loading = ref(true)
-const searchResults = ref([])
 const tags = ref([])
 const activeCategory = ref('All')
+const errorMessage = ref('')
 
 const parsedNotes = computed(() => {
   if (!content.value) return []
@@ -144,7 +119,7 @@ const parsedNotes = computed(() => {
   let currentCategory = 'General'
   for (const section of sections) {
     if (!section.trim()) continue
-    
+
     let sectionContent = section
     const match = section.match(/^## (General|Research|Method|Review)\s*\n/i)
     if (match) {
@@ -157,7 +132,7 @@ const parsedNotes = computed(() => {
       if (item.trim()) {
         notes.push({
           category: currentCategory,
-          content: item.trim()
+          content: item.trim(),
         })
       }
     }
@@ -167,81 +142,32 @@ const parsedNotes = computed(() => {
 
 const filteredNotes = computed(() => {
   if (activeCategory.value === 'All') return parsedNotes.value
-  return parsedNotes.value.filter(n => n.category.toLowerCase() === activeCategory.value.toLowerCase())
+  return parsedNotes.value.filter((note) => note.category.toLowerCase() === activeCategory.value.toLowerCase())
+})
+
+const searchResults = computed(() => {
+  const query = searchQuery.value.trim().toLowerCase()
+  if (!query) return []
+
+  return parsedNotes.value
+    .filter((note) => {
+      const haystack = [note.category, note.content].join(' ').toLowerCase()
+      return haystack.includes(query)
+    })
+    .map((note) => ({
+      section: note.category,
+      content: note.content,
+    }))
 })
 
 const getCategoryColor = (cat) => {
   const map = {
-    'general': 'text-gray-600',
-    'research': 'text-emerald-600',
-    'method': 'text-blue-600',
-    'review': 'text-purple-600'
+    general: 'text-gray-600',
+    research: 'text-emerald-600',
+    method: 'text-blue-600',
+    review: 'text-purple-600',
   }
-  return map[cat.toLowerCase()] || 'text-gray-600'
-}
-
-const newNote = ref({
-  category: 'general',
-  content: ''
-})
-
-let searchTimeout = null
-const debouncedSearch = () => {
-  clearTimeout(searchTimeout)
-  searchTimeout = setTimeout(() => {
-    searchKnowledge()
-  }, 300)
-}
-
-const loadKnowledge = async () => {
-  try {
-    const res = await fetch('/api/knowledge')
-    content.value = await res.text()
-  } catch (e) {
-    console.error('Failed to load knowledge:', e)
-  } finally {
-    loading.value = false
-  }
-}
-
-const searchKnowledge = async () => {
-  if (!searchQuery.value.trim()) {
-    searchResults.value = []
-    return
-  }
-  try {
-    const res = await fetch(`/api/knowledge/search?q=${encodeURIComponent(searchQuery.value)}`)
-    const data = await res.json()
-    searchResults.value = data.results || []
-  } catch (e) {
-    console.error('Failed to search knowledge:', e)
-  }
-}
-
-const addNote = async () => {
-  try {
-    await fetch('/api/knowledge', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        note: newNote.value.content,
-        category: newNote.value.category
-      })
-    })
-    newNote.value.content = ''
-    await loadKnowledge()
-  } catch (e) {
-    console.error('Failed to add note:', e)
-  }
-}
-
-const loadTags = async () => {
-  try {
-    const res = await fetch('/api/tags')
-    tags.value = await res.json()
-  } catch (e) {
-    console.error('Failed to load tags:', e)
-  }
+  return map[String(cat || '').toLowerCase()] || 'text-gray-600'
 }
 
 const renderMarkdown = (text) => {
@@ -257,8 +183,22 @@ const renderMarkdown = (text) => {
     .replace(/\n/gim, '<br>')
 }
 
+const loadKnowledgeSnapshot = async () => {
+  loading.value = true
+  errorMessage.value = ''
+  try {
+    const data = await fetchJson('knowledge.json')
+    content.value = data?.content || ''
+    tags.value = Array.isArray(data?.tags) ? data.tags : []
+  } catch (error) {
+    console.error('Failed to load knowledge snapshot:', error)
+    errorMessage.value = 'Failed to load static knowledge snapshot.'
+  } finally {
+    loading.value = false
+  }
+}
+
 onMounted(() => {
-  loadKnowledge()
-  loadTags()
+  loadKnowledgeSnapshot()
 })
 </script>

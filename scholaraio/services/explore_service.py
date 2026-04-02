@@ -92,6 +92,13 @@ def _best_citation(value: Any) -> int:
     return 0
 
 
+def _safe_year(value: Any) -> int:
+    try:
+        return int(value or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
 def _paper_brief_from_meta(paper_dir: Path, meta: dict[str, Any]) -> dict[str, Any]:
     paper_ref = str(meta.get('id') or paper_dir.name)
     return {
@@ -260,7 +267,7 @@ def _sample_papers(cards: list[dict[str, Any]], *, limit: int = 12) -> list[dict
         cards,
         key=lambda paper: (
             -(int(paper.get('cited_by_count') or 0)),
-            -(int(paper.get('year') or 0)),
+            -_safe_year(paper.get('year')),
             paper.get('title') or paper.get('paper_ref') or '',
         ),
     )
@@ -271,7 +278,7 @@ def _recent_papers_sample(cards: list[dict[str, Any]], *, limit: int = 8) -> lis
     ranked = sorted(
         cards,
         key=lambda paper: (
-            -(int(paper.get('year') or 0)),
+            -_safe_year(paper.get('year')),
             -(int(paper.get('cited_by_count') or 0)),
             paper.get('title') or paper.get('paper_ref') or '',
         ),
