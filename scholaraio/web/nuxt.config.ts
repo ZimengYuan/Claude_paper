@@ -3,19 +3,33 @@ import path from 'node:path'
 
 function loadPrerenderRoutes() {
   const manifestPath = path.resolve(process.cwd(), 'public/site-data/manifest.json')
+  const todoCardsPath = path.resolve(process.cwd(), 'public/site-data/todo-cards.json')
   const baseRoutes = ['/', '/explore', '/knowledge', '/graph']
 
-  if (!existsSync(manifestPath)) {
-    return baseRoutes
+  const routes = [...baseRoutes]
+
+  if (existsSync(manifestPath)) {
+    try {
+      const manifest = JSON.parse(readFileSync(manifestPath, 'utf-8'))
+      const paperRoutes = Array.isArray(manifest.paper_routes) ? manifest.paper_routes : []
+      routes.push(...paperRoutes)
+    } catch {}
   }
 
-  try {
-    const manifest = JSON.parse(readFileSync(manifestPath, 'utf-8'))
-    const paperRoutes = Array.isArray(manifest.paper_routes) ? manifest.paper_routes : []
-    return [...new Set([...baseRoutes, ...paperRoutes])]
-  } catch {
-    return baseRoutes
+  if (existsSync(todoCardsPath)) {
+    try {
+      const todoCards = JSON.parse(readFileSync(todoCardsPath, 'utf-8'))
+      const todoRoutes = Array.isArray(todoCards.cards)
+        ? todoCards.cards
+            .map((card: { route_id?: string }) => card.route_id)
+            .filter(Boolean)
+            .map((routeId: string) => `/todo/${routeId}`)
+        : []
+      routes.push(...todoRoutes)
+    } catch {}
   }
+
+  return [...new Set(routes)]
 }
 
 const prerenderRoutes = loadPrerenderRoutes()

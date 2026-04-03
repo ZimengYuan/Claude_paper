@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "core_innovation",
+    "technical_contributions",
+    "methodological_breakthrough",
+    "key_results",
+    "limitations",
+    "one_line_summary"
+  ],
+  "properties": {
+    "core_innovation": {
+      "type": "string"
+    },
+    "technical_contributions": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title", "body"],
+        "properties": {
+          "title": { "type": "string" },
+          "body": { "type": "string" }
+        }
+      }
+    },
+    "methodological_breakthrough": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["novelty", "key_technique", "theory"],
+      "properties": {
+        "novelty": { "type": "string" },
+        "key_technique": { "type": "string" },
+        "theory": { "type": "string" }
+      }
+    },
+    "key_results": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["benchmarks", "improvements", "ablation"],
+      "properties": {
+        "benchmarks": { "type": "string" },
+        "improvements": { "type": "string" },
+        "ablation": { "type": "string" }
+      }
+    },
+    "limitations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current", "future", "transferability"],
+      "properties": {
+        "current": { "type": "string" },
+        "future": { "type": "string" },
+        "transferability": { "type": "string" }
+      }
+    },
+    "one_line_summary": {
+      "type": "string"
+    }
+  }
+}

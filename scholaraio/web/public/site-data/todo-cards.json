@@ -1,0 +1,665 @@
+{
+  "version": 1,
+  "generated_at": "2026-04-03T15:24:55+00:00",
+  "collection": {
+    "key": "RECF7KND",
+    "name": "Todo",
+    "count": 160
+  },
+  "cards": [
+    {
+      "route_id": "bd480aa8-bbbd-491f-9bf7-b24918266b76",
+      "paper_id": "bd480aa8-bbbd-491f-9bf7-b24918266b76",
+      "dir_name": "Jenelten-2024-DTC-Deep-Tracking-Control",
+      "title": "DTC: Deep Tracking Control",
+      "authors": [
+        "Fabian Jenelten",
+        "Junzhe He",
+        "Farbod Farshidian",
+        "Marco Hutter"
+      ],
+      "year": 2024,
+      "journal": "Science Robotics",
+      "venue": "Science Robotics",
+      "doi": "10.1126/scirobotics.adh5401",
+      "read_status": "read",
+      "collection_name": "Todo",
+      "collection_key": "RECF7KND",
+      "collection_index": 0,
+      "generated_with_model": "gpt-5.4-mini",
+      "generated_at": "2026-04-03T15:21:11+00:00",
+      "core_innovation": "把轨迹优化器（TAMOLS/MPC）产生的在线最优落脚点与关节目标，直接作为深度策略的训练参考和部署输入，形成一个“模型规划 + 深度跟踪”的混合控制器：规划器负责给出可解释的足迹与全局几何，策略负责在噪声、漂移和接触不确定下做闭环跟踪与恢复。",
+      "technical_contributions": [
+        {
+          "title": "Planner-guided reference learning",
+          "body": "训练时不再依赖离线专家数据，而是让优化器在仿真中持续生成参考运动。策略学习的是从局部感知和规划片段中重建最优足迹意图，因此能零样本切换到未见过的轨迹优化器。"
+        },
+        {
+          "title": "Compact, planner-aware observation design",
+          "body": "策略只看平面落脚点、触地点的目标关节位置、接触状态、相位剩余时间、参考速度和一条沿当前脚到目标脚的高度扫描线，不直接暴露完整基座轨迹。这样既保留了足迹信息，又降低了对地图漂移和规划器细节的敏感性；同时用解析 IK 生成目标关节位姿，减少了策略自己学习逆运动学的负担。"
+        },
+        {
+          "title": "Consistency and robustness shaping",
+          "body": "通过奖励相邻两次优化结果的一致性，避免 RL 学出“懒惰不动”的局部最优；再结合异步 actor-critic、域随机化、外力/摩擦扰动和地形课程，强化了在滑地、软地和感知缺失场景中的恢复能力。"
+        },
+        {
+          "title": "MPC-style deployment with planner-in-the-loop",
+          "body": "训练时把优化器放在较低频率的触地点更新节奏上，部署时则以最高可行频率滚动更新，并在 TAMOLS 与更复杂的 baseline-to-2 之间无缝切换，证明该跟踪策略并不绑定单一规划器。"
+        }
+      ],
+      "methodological_breakthrough": {
+        "novelty": "把“轨迹优化产生的最优落脚点”从专家示范提升为可在线生成、可反复跟踪的参考信号，让深度策略学习的是最优规划的闭环追踪，而不是某条固定轨迹的模仿。",
+        "key_technique": "PPO + asymmetric actor-critic + planner 输出（foothold / desired joint positions / contact schedule / reference twist）+ 线性高度扫描 + 一致性奖励 + 域随机化 + 优化器在线重规划。",
+        "theory": "作者实际上是在把腿式运动拆成两层：高层用 TO 解决稀疏地形上的离散几何规划，低层用 RL 把规划意图映射为鲁棒闭环控制；planner 输出相当于一个低维、可迁移的“意图表征”，缓解了稀疏奖励和探索困难。"
+      },
+      "key_results": {
+        "benchmarks": "与 TAMOLS（baseline-to-1）、非线性 MPC（baseline-to-2）、teacher/student RL（baseline-rl-1）和纯 RL（baseline-rl-2）对比；还用重训版 baseline-rl-3 做了地形泛化与消融。",
+        "improvements": "真实机器人上，平地落脚跟踪达到厘米级，平均误差约 2.3 cm；在窄平台上完成 360° 转身并稳定下台；用 baseline-to-2 时可爬 0.48 m 箱体，比 baseline-rl-1 高 50%、比 baseline-rl-2 高 380%；在仿真障碍跑酷上比 TAMOLS 快 20%；在小间隙、长梁、连续四个 0.6 m 间隙和多种 stepping stones 场景中表现出接近 100% 的成功率，并且对滑地/软地的鲁棒性明显优于模型式基线。",
+        "ablation": "把优化器更新频率从 1 Hz 提到 50 Hz，失败率下降 7.11%，成功率提升 4.25%；加入“触地点的目标关节位置”显著加快收敛并提升 foothold reward；在 dense terrains 上可接近重训的 baseline-rl-3，但在 sparse terrains 上优势更大；地图漂移会让跟踪误差近似线性上升，说明性能对 planner 质量和更新频率仍有依赖。"
+      },
+      "limitations": {
+        "current": "训练代价很高（4096 并行机器人、两周、约 23 年等效优化轨迹）；系统依赖固定的 trotting gait 和较好的高层规划器，TAMOLS 版本还受简化 kinodynamics 约束，在更高障碍上会犹豫；作者也承认样本效率并没有明显超过类似的统一 RL 方法。",
+        "future": "下一步值得让策略直接调 contact schedule 或规划器代价函数，并引入更强的解析 IK 先验、离线轨迹缓冲或更精确的 TO，从而提升样本效率、动作多样性和上限性能。",
+        "transferability": "对未见过的规划器有零样本迁移能力，但前提是步态和足迹模式大体相近；如果新的规划器生成的落脚分布、接触时序或地形拓扑明显偏离训练分布，性能会退化。"
+      },
+      "one_line_summary": "DTC 用“轨迹优化器当老师、深度策略当跟踪器”的混合架构，把稀疏地形上的精准落脚和复杂环境中的鲁棒恢复统一到一个可跨规划器迁移的腿式控制框架里。",
+      "search_text": "DTC: Deep Tracking Control\nFabian Jenelten Junzhe He Farbod Farshidian Marco Hutter\n2024\nScience Robotics\n10.1126/scirobotics.adh5401\n把轨迹优化器（TAMOLS/MPC）产生的在线最优落脚点与关节目标，直接作为深度策略的训练参考和部署输入，形成一个“模型规划 + 深度跟踪”的混合控制器：规划器负责给出可解释的足迹与全局几何，策略负责在噪声、漂移和接触不确定下做闭环跟踪与恢复。\nPlanner-guided reference learning Compact, planner-aware observation design Consistency and robustness shaping MPC-style deployment with planner-in-the-loop\n训练时不再依赖离线专家数据，而是让优化器在仿真中持续生成参考运动。策略学习的是从局部感知和规划片段中重建最优足迹意图，因此能零样本切换到未见过的轨迹优化器。 策略只看平面落脚点、触地点的目标关节位置、接触状态、相位剩余时间、参考速度和一条沿当前脚到目标脚的高度扫描线，不直接暴露完整基座轨迹。这样既保留了足迹信息，又降低了对地图漂移和规划器细节的敏感性；同时用解析 IK 生成目标关节位姿，减少了策略自己学习逆运动学的负担。 通过奖励相邻两次优化结果的一致性，避免 RL 学出“懒惰不动”的局部最优；再结合异步 actor-critic、域随机化、外力/摩擦扰动和地形课程，强化了在滑地、软地和感知缺失场景中的恢复能力。 训练时把优化器放在较低频率的触地点更新节奏上，部署时则以最高可行频率滚动更新，并在 TAMOLS 与更复杂的 baseline-to-2 之间无缝切换，证明该跟踪策略并不绑定单一规划器。\n把“轨迹优化产生的最优落脚点”从专家示范提升为可在线生成、可反复跟踪的参考信号，让深度策略学习的是最优规划的闭环追踪，而不是某条固定轨迹的模仿。\nPPO + asymmetric actor-critic + planner 输出（foothold / desired joint positions / contact schedule / reference twist）+ 线性高度扫描 + 一致性奖励 + 域随机化 + 优化器在线重规划。\n作者实际上是在把腿式运动拆成两层：高层用 TO 解决稀疏地形上的离散几何规划，低层用 RL 把规划意图映射为鲁棒闭环控制；planner 输出相当于一个低维、可迁移的“意图表征”，缓解了稀疏奖励和探索困难。\n与 TAMOLS（baseline-to-1）、非线性 MPC（baseline-to-2）、teacher/student RL（baseline-rl-1）和纯 RL（baseline-rl-2）对比；还用重训版 baseline-rl-3 做了地形泛化与消融。\n真实机器人上，平地落脚跟踪达到厘米级，平均误差约 2.3 cm；在窄平台上完成 360° 转身并稳定下台；用 baseline-to-2 时可爬 0.48 m 箱体，比 baseline-rl-1 高 50%、比 baseline-rl-2 高 380%；在仿真障碍跑酷上比 TAMOLS 快 20%；在小间隙、长梁、连续四个 0.6 m 间隙和多种 stepping stones 场景中表现出接近 100% 的成功率，并且对滑地/软地的鲁棒性明显优于模型式基线。\n把优化器更新频率从 1 Hz 提到 50 Hz，失败率下降 7.11%，成功率提升 4.25%；加入“触地点的目标关节位置”显著加快收敛并提升 foothold reward；在 dense terrains 上可接近重训的 baseline-rl-3，但在 sparse terrains 上优势更大；地图漂移会让跟踪误差近似线性上升，说明性能对 planner 质量和更新频率仍有依赖。\n训练代价很高（4096 并行机器人、两周、约 23 年等效优化轨迹）；系统依赖固定的 trotting gait 和较好的高层规划器，TAMOLS 版本还受简化 kinodynamics 约束，在更高障碍上会犹豫；作者也承认样本效率并没有明显超过类似的统一 RL 方法。\n下一步值得让策略直接调 contact schedule 或规划器代价函数，并引入更强的解析 IK 先验、离线轨迹缓冲或更精确的 TO，从而提升样本效率、动作多样性和上限性能。\n对未见过的规划器有零样本迁移能力，但前提是步态和足迹模式大体相近；如果新的规划器生成的落脚分布、接触时序或地形拓扑明显偏离训练分布，性能会退化。\nDTC 用“轨迹优化器当老师、深度策略当跟踪器”的混合架构，把稀疏地形上的精准落脚和复杂环境中的鲁棒恢复统一到一个可跨规划器迁移的腿式控制框架里。"
+    },
+    {
+      "route_id": "95488d6e-88ed-4877-afb2-459b61ad92c1",
+      "paper_id": "95488d6e-88ed-4877-afb2-459b61ad92c1",
+      "dir_name": "Wang-2023-Diffusion-Policies-as-an-Expressive-Policy-Class-for-Offline-Reinforcement-Learning",
+      "title": "Diffusion Policies as an Expressive Policy Class for Offline Reinforcement Learning",
+      "authors": [
+        "Zhendong Wang",
+        "Jonathan J. Hunt",
+        "Mingyuan Zhou"
+      ],
+      "year": 2023,
+      "journal": "International Conference on Learning Representations",
+      "venue": "International Conference on Learning Representations",
+      "doi": "10.48550/arXiv.2208.06193",
+      "read_status": "read",
+      "collection_name": "Todo",
+      "collection_key": "RECF7KND",
+      "collection_index": 1,
+      "generated_with_model": "gpt-5.4-mini",
+      "generated_at": "2026-04-03T15:20:55+00:00",
+      "core_innovation": "把离线RL中的策略类从常见的Gaussian/CVAE换成条件扩散模型，并把“贴近行为数据分布”和“朝高Q动作改进”合并到同一个训练目标里；它强调传统行为克隆正则之所以常失效，不只是因为约束太强，更因为低表达策略类会把行为分布拟合错，反而误导后续策略改进。",
+      "technical_contributions": [
+        {
+          "title": "条件扩散策略表示",
+          "body": "用状态作条件、动作为生成目标，通过反向扩散链表示策略分布。相比单峰Gaussian和常见CVAE，它更能拟合离线数据中的多峰、偏斜和动作维度相关性，也不需要显式估计行为策略密度。"
+        },
+        {
+          "title": "扩散BC与Q-learning联合优化",
+          "body": "总目标由扩散行为克隆损失 L_d 和 Q值最大化项 L_q 组成，Q梯度可穿过整个反向扩散链回传。这样策略改进不是训练后再加约束，而是在生成过程中直接被高Q动作引导。"
+        },
+        {
+          "title": "多模态玩具例子验证机制",
+          "body": "2D bandit实验说明：Gaussian、CVAE、MMD/Tanh-Gaussian 会在多峰行为分布上产生错误的高密度区域，导致正则化失真；Diffusion-QL 能保留所有行为模式，并最终收敛到高奖励模态。"
+        },
+        {
+          "title": "D4RL系统实证与消融",
+          "body": "在Gym、AntMaze、Adroit、Kitchen四类任务上做了大规模对比，并通过BC-Diffusion、BCQ-Diffusion、CVAE-QL等消融，把“策略表达能力”和“Q指导”两部分贡献分离出来。"
+        }
+      ],
+      "methodological_breakthrough": {
+        "novelty": "把扩散模型从“生成器/模仿器”推进为离线RL里可直接优化的策略类。",
+        "key_technique": "在反向扩散采样链中对生成动作施加Q值最大化梯度，同时保留扩散式行为克隆正则，形成单阶段、端到端训练的 Diffusion-QL。",
+        "theory": "论文的核心直觉是：如果行为分布被一个高表达生成模型准确刻画，那么行为克隆正则就能提供可靠的支持集约束，再在这个可行域内做Q搜索，会比先拟合低容量BC模型再单独约束更稳。"
+      },
+      "key_results": {
+        "benchmarks": "D4RL四个域：Gym、AntMaze、Adroit、Kitchen。论文报告的离线模型选择均值约为88.0、69.6、65.1、69.0；若允许少量在线评估做模型选择，还可进一步升到89.3、75.4、68.3、71.6。",
+        "improvements": "整体上优于BC、BCQ、BEAR、TD3+BC、CQL、IQL、Diffuser、Decision Transformer等多数基线，尤其在多峰行为、稀疏奖励和窄演示分布场景更明显；但不是每个单任务都绝对第一。",
+        "ablation": "BC-Diffusion > BC-CVAE 说明扩散策略更会拟合行为分布；BCQ-Diffusion > BCQ-CVAE 说明更好的行为模型会直接改善后续策略改进；CVAE-QL明显较差，说明没有强表达策略时，单纯Q指导容易失真；N=5是速度与效果的折中点。"
+      },
+      "limitations": {
+        "current": "反向采样需要N步迭代，作者指出推理比一步前馈策略慢约4-5倍；训练对N和η较敏感，AntMaze上波动更大；离线模型选择主要依赖L_d这种间接指标。",
+        "future": "作者建议结合更快的扩散采样、蒸馏或ODE求解器来降延迟，也可把训练好的扩散策略压缩成更简单的前馈策略，并改进完全离线的模型选择。",
+        "transferability": "对动作维度中等、行为数据多峰或窄支持的离线控制任务最合适；如果任务要求极低延迟、或数据质量很差、分布极度稀疏，扩散推理成本和正则化偏差会更突出。"
+      },
+      "one_line_summary": "Diffusion-QL把条件扩散模型作为离线RL的高表达策略类，在扩散式行为克隆约束内直接注入Q-learning改进，显著提升了D4RL上的多模态和稀疏奖励任务表现，但代价是更慢的动作推理。",
+      "search_text": "Diffusion Policies as an Expressive Policy Class for Offline Reinforcement Learning\nZhendong Wang Jonathan J. Hunt Mingyuan Zhou\n2023\nInternational Conference on Learning Representations\n10.48550/arXiv.2208.06193\n把离线RL中的策略类从常见的Gaussian/CVAE换成条件扩散模型，并把“贴近行为数据分布”和“朝高Q动作改进”合并到同一个训练目标里；它强调传统行为克隆正则之所以常失效，不只是因为约束太强，更因为低表达策略类会把行为分布拟合错，反而误导后续策略改进。\n条件扩散策略表示 扩散BC与Q-learning联合优化 多模态玩具例子验证机制 D4RL系统实证与消融\n用状态作条件、动作为生成目标，通过反向扩散链表示策略分布。相比单峰Gaussian和常见CVAE，它更能拟合离线数据中的多峰、偏斜和动作维度相关性，也不需要显式估计行为策略密度。 总目标由扩散行为克隆损失 L_d 和 Q值最大化项 L_q 组成，Q梯度可穿过整个反向扩散链回传。这样策略改进不是训练后再加约束，而是在生成过程中直接被高Q动作引导。 2D bandit实验说明：Gaussian、CVAE、MMD/Tanh-Gaussian 会在多峰行为分布上产生错误的高密度区域，导致正则化失真；Diffusion-QL 能保留所有行为模式，并最终收敛到高奖励模态。 在Gym、AntMaze、Adroit、Kitchen四类任务上做了大规模对比，并通过BC-Diffusion、BCQ-Diffusion、CVAE-QL等消融，把“策略表达能力”和“Q指导”两部分贡献分离出来。\n把扩散模型从“生成器/模仿器”推进为离线RL里可直接优化的策略类。\n在反向扩散采样链中对生成动作施加Q值最大化梯度，同时保留扩散式行为克隆正则，形成单阶段、端到端训练的 Diffusion-QL。\n论文的核心直觉是：如果行为分布被一个高表达生成模型准确刻画，那么行为克隆正则就能提供可靠的支持集约束，再在这个可行域内做Q搜索，会比先拟合低容量BC模型再单独约束更稳。\nD4RL四个域：Gym、AntMaze、Adroit、Kitchen。论文报告的离线模型选择均值约为88.0、69.6、65.1、69.0；若允许少量在线评估做模型选择，还可进一步升到89.3、75.4、68.3、71.6。\n整体上优于BC、BCQ、BEAR、TD3+BC、CQL、IQL、Diffuser、Decision Transformer等多数基线，尤其在多峰行为、稀疏奖励和窄演示分布场景更明显；但不是每个单任务都绝对第一。\nBC-Diffusion > BC-CVAE 说明扩散策略更会拟合行为分布；BCQ-Diffusion > BCQ-CVAE 说明更好的行为模型会直接改善后续策略改进；CVAE-QL明显较差，说明没有强表达策略时，单纯Q指导容易失真；N=5是速度与效果的折中点。\n反向采样需要N步迭代，作者指出推理比一步前馈策略慢约4-5倍；训练对N和η较敏感，AntMaze上波动更大；离线模型选择主要依赖L_d这种间接指标。\n作者建议结合更快的扩散采样、蒸馏或ODE求解器来降延迟，也可把训练好的扩散策略压缩成更简单的前馈策略，并改进完全离线的模型选择。\n对动作维度中等、行为数据多峰或窄支持的离线控制任务最合适；如果任务要求极低延迟、或数据质量很差、分布极度稀疏，扩散推理成本和正则化偏差会更突出。\nDiffusion-QL把条件扩散模型作为离线RL的高表达策略类，在扩散式行为克隆约束内直接注入Q-learning改进，显著提升了D4RL上的多模态和稀疏奖励任务表现，但代价是更慢的动作推理。"
+    },
+    {
+      "route_id": "f678fe74-1c74-4407-b2d5-59879349d257",
+      "paper_id": "f678fe74-1c74-4407-b2d5-59879349d257",
+      "dir_name": "Pearce-2023-Imitating-Human-Behaviour-with-Diffusion-Models",
+      "title": "Imitating Human Behaviour with Diffusion Models",
+      "authors": [
+        "Tim Pearce",
+        "Tabish Rashid",
+        "A. Kanervisto",
+        "David Bignell",
+        "Mingfei Sun",
+        "Raluca Georgescu",
+        "Sergio Valcarcel Macua",
+        "Shan Zheng Tan",
+        "Ida Momennejad",
+        "Katja Hofmann",
+        "Sam Devlin"
+      ],
+      "year": 2023,
+      "journal": "International Conference on Learning Representations",
+      "venue": "International Conference on Learning Representations",
+      "doi": "10.48550/arXiv.2301.10677",
+      "read_status": "read",
+      "collection_name": "Todo",
+      "collection_key": "RECF7KND",
+      "collection_index": 2,
+      "generated_with_model": "gpt-5.4-mini",
+      "generated_at": "2026-04-03T15:21:46+00:00",
+      "core_innovation": "把 diffusion model 直接用于 imitation learning，学习 observation-to-action 的联合分布 p(a|o)，而不是把连续动作压成均值、独立分类或有限簇，从而更好地覆盖人类示范中的多峰性、随机性和动作维度相关性。",
+      "technical_contributions": [
+        {
+          "title": "形式化指出传统 BC 的表达偏差",
+          "body": "系统比较了 MSE、逐维离散化、K-Means、K-Means+Residual 的局限：要么输出平均动作，要么忽略动作维度之间的耦合，要么强依赖 K 值并引入量化误差。"
+        },
+        {
+          "title": "提出 observation-to-action diffusion BC",
+          "body": "用条件 DDPM 学习 epsilon(o, a_tau, tau)，直接生成动作向量；观测编码与去噪网络解耦，支持连续动作、混合动作和带历史的顺序输入。"
+        },
+        {
+          "title": "面向顺序环境的架构设计",
+          "body": "提出 Basic MLP、MLP Sieve、Transformer 三种结构，实验证明通常是 Basic MLP < MLP Sieve < Transformer，但更强的结构会带来更慢的采样。"
+        },
+        {
+          "title": "提出更可靠的采样策略",
+          "body": "Diffusion-X 通过在末段继续去噪把样本推向更高概率区域；Diffusion-KDE 通过多次采样后用 KDE 选样，减少坏动作并提升任务完成率。"
+        }
+      ],
+      "methodological_breakthrough": {
+        "novelty": "不是把扩散模型照搬到图像任务，而是把它改造成适合行为克隆的动作生成器，专门处理 sequential environment 里的人类示范分布。",
+        "key_technique": "用条件去噪过程建模完整动作分布，并通过分离式观测编码器、轻量去噪器、Diffusion-X 和 Diffusion-KDE 把生成质量和采样稳定性兼顾起来。",
+        "theory": "论文的核心判断是：行为克隆真正要学的是 p(a|o) 的完整联合分布，而不是单点最优解；传统 MSE/离散化/K-Means 都会把多峰分布压扁。CFG 在这里还会偏向最大化 p(o|a)，所以可能把采样推向更少见、而不是更高概率的轨迹。"
+      },
+      "key_results": {
+        "benchmarks": "Toy claw machine；模拟厨房机器人控制（566 条轨迹，9 维连续动作）；CSGO aim-train（45,000 个样本，280x150 RGB，连续+离散混合动作）。",
+        "improvements": "厨房任务中，Diffusion 系列在任务完成率和 Wasserstein 距离上整体优于 MSE、Discretised、K-Means、K-Means+Residual 和 EBM；Transformer 版的 Tasks>=4 达到 0.77/0.88/0.89（BC/X/KDE），Human 为 0.98，而 K-Means+Residual Transformer 只有 0.34。CSGO 中 Diffusion-X 在 CNN/ResNet18 编码下的 game score 达到 17.3/24.0，优于 MSE、离散化和 K-Means+Residual。",
+        "ablation": "架构通常呈现 Basic MLP < MLP Sieve < Transformer 的趋势；采样上通常是 Diffusion-KDE 在完成率上最好，Diffusion-X 次之，但 KDE 往往以更低的 coverage 换取更高的 density。CFG 实验非常明确：w 从 0 增加到 8 时，Tasks>=4 从 0.63 掉到 0.08，说明 guidance 在该问题上是有害的。"
+      },
+      "limitations": {
+        "current": "推理速度明显慢于 MSE/离散化等基线，且引入了更多超参数；方法主要建模单步动作分布，还没有解决跨环境 timestep 的长期依赖；Diffusion-KDE 和强采样策略会有多样性下降、coverage 变差的问题。",
+        "future": "需要更快的采样器、更稳健的条件机制，以及 trajectory-level 或 hierarchical 的扩散建模，才能进一步处理长时序依赖和更高维真实任务。",
+        "transferability": "论文已经证明它能从纯连续动作扩展到混合连续/离散动作，并能直接吃像素输入；但证据主要来自厨房和 CSGO 两类环境，向更复杂真实世界任务的泛化仍需更多验证。"
+      },
+      "one_line_summary": "这篇论文证明了：对于人类示范这种天然多峰、动作维度强相关的模仿学习问题，条件扩散模型比 MSE/离散化/K-Means 类 BC 更接近真正的分布学习，但代价是更慢、更敏感的采样与更复杂的工程调参。",
+      "search_text": "Imitating Human Behaviour with Diffusion Models\nTim Pearce Tabish Rashid A. Kanervisto David Bignell Mingfei Sun Raluca Georgescu Sergio Valcarcel Macua Shan Zheng Tan Ida Momennejad Katja Hofmann Sam Devlin\n2023\nInternational Conference on Learning Representations\n10.48550/arXiv.2301.10677\n把 diffusion model 直接用于 imitation learning，学习 observation-to-action 的联合分布 p(a|o)，而不是把连续动作压成均值、独立分类或有限簇，从而更好地覆盖人类示范中的多峰性、随机性和动作维度相关性。\n形式化指出传统 BC 的表达偏差 提出 observation-to-action diffusion BC 面向顺序环境的架构设计 提出更可靠的采样策略\n系统比较了 MSE、逐维离散化、K-Means、K-Means+Residual 的局限：要么输出平均动作，要么忽略动作维度之间的耦合，要么强依赖 K 值并引入量化误差。 用条件 DDPM 学习 epsilon(o, a_tau, tau)，直接生成动作向量；观测编码与去噪网络解耦，支持连续动作、混合动作和带历史的顺序输入。 提出 Basic MLP、MLP Sieve、Transformer 三种结构，实验证明通常是 Basic MLP < MLP Sieve < Transformer，但更强的结构会带来更慢的采样。 Diffusion-X 通过在末段继续去噪把样本推向更高概率区域；Diffusion-KDE 通过多次采样后用 KDE 选样，减少坏动作并提升任务完成率。\n不是把扩散模型照搬到图像任务，而是把它改造成适合行为克隆的动作生成器，专门处理 sequential environment 里的人类示范分布。\n用条件去噪过程建模完整动作分布，并通过分离式观测编码器、轻量去噪器、Diffusion-X 和 Diffusion-KDE 把生成质量和采样稳定性兼顾起来。\n论文的核心判断是：行为克隆真正要学的是 p(a|o) 的完整联合分布，而不是单点最优解；传统 MSE/离散化/K-Means 都会把多峰分布压扁。CFG 在这里还会偏向最大化 p(o|a)，所以可能把采样推向更少见、而不是更高概率的轨迹。\nToy claw machine；模拟厨房机器人控制（566 条轨迹，9 维连续动作）；CSGO aim-train（45,000 个样本，280x150 RGB，连续+离散混合动作）。\n厨房任务中，Diffusion 系列在任务完成率和 Wasserstein 距离上整体优于 MSE、Discretised、K-Means、K-Means+Residual 和 EBM；Transformer 版的 Tasks>=4 达到 0.77/0.88/0.89（BC/X/KDE），Human 为 0.98，而 K-Means+Residual Transformer 只有 0.34。CSGO 中 Diffusion-X 在 CNN/ResNet18 编码下的 game score 达到 17.3/24.0，优于 MSE、离散化和 K-Means+Residual。\n架构通常呈现 Basic MLP < MLP Sieve < Transformer 的趋势；采样上通常是 Diffusion-KDE 在完成率上最好，Diffusion-X 次之，但 KDE 往往以更低的 coverage 换取更高的 density。CFG 实验非常明确：w 从 0 增加到 8 时，Tasks>=4 从 0.63 掉到 0.08，说明 guidance 在该问题上是有害的。\n推理速度明显慢于 MSE/离散化等基线，且引入了更多超参数；方法主要建模单步动作分布，还没有解决跨环境 timestep 的长期依赖；Diffusion-KDE 和强采样策略会有多样性下降、coverage 变差的问题。\n需要更快的采样器、更稳健的条件机制，以及 trajectory-level 或 hierarchical 的扩散建模，才能进一步处理长时序依赖和更高维真实任务。\n论文已经证明它能从纯连续动作扩展到混合连续/离散动作，并能直接吃像素输入；但证据主要来自厨房和 CSGO 两类环境，向更复杂真实世界任务的泛化仍需更多验证。\n这篇论文证明了：对于人类示范这种天然多峰、动作维度强相关的模仿学习问题，条件扩散模型比 MSE/离散化/K-Means 类 BC 更接近真正的分布学习，但代价是更慢、更敏感的采样与更复杂的工程调参。"
+    },
+    {
+      "route_id": "f3411563-81e6-4f4d-b28f-bb36510d6bf6",
+      "paper_id": "f3411563-81e6-4f4d-b28f-bb36510d6bf6",
+      "dir_name": "Robine-2023-Transformer-based-World-Models-Are-Happy-With-100k-Interactions",
+      "title": "Transformer-based World Models Are Happy With 100k Interactions",
+      "authors": [
+        "Jan Robine",
+        "Marc Hoftmann",
+        "Tobias Uelwer",
+        "S. Harmeling"
+      ],
+      "year": 2023,
+      "journal": "International Conference on Learning Representations",
+      "venue": "International Conference on Learning Representations",
+      "doi": "10.48550/arXiv.2303.07109",
+      "read_status": "read",
+      "collection_name": "Todo",
+      "collection_key": "RECF7KND",
+      "collection_index": 3,
+      "generated_with_model": "gpt-5.4-mini",
+      "generated_at": "2026-04-03T15:22:19+00:00",
+      "core_innovation": "提出 TWM：一种基于 Transformer-XL 的自回归 world model，把离散潜状态 z、动作 a 和奖励 r 一起建模，并把预测到的奖励反馈回模型；训练时用 transformer 捕捉长程依赖，推理时只保留编码器 + actor，因此兼顾样本效率和执行效率。",
+      "technical_contributions": [
+        {
+          "title": "Transformer-XL 动力学建模",
+          "body": "用 causal Transformer-XL 替代 RNN 作为 world model 的骨干，输入为 z/a/r 三种模态的线性嵌入，利用相对位置编码和记忆缓存学习长时依赖，而不是把历史压缩进单一 recurrent state。"
+        },
+        {
+          "title": "奖励反馈机制",
+          "body": "将已产生/预测的 reward 再送回 transformer，让模型显式利用自身奖励轨迹；作者在消融中证明这能提升多个游戏的表现。"
+        },
+        {
+          "title": "平衡交叉熵损失",
+          "body": "把 DreamerV2 风格的 balanced KL 拆成显式的 cross-entropy + entropy regularizer，便于分别控制 encoder 与 latent predictor 的约束强度，稳定潜空间训练。"
+        },
+        {
+          "title": "阈值化熵正则",
+          "body": "把 actor entropy 归一化后做 hinge-style 约束，只在熵低于阈值时惩罚，从而更稳定地维持探索强度，减少熵塌缩或发散。},{"
+        }
+      ],
+      "methodological_breakthrough": {
+        "novelty": "把 Atari 100k 上的 world model 从 recurrent latent dynamics 推进到 Transformer-XL 式序列建模，并把 reward 作为输入模态显式回流到动态模型中。",
+        "key_technique": "causal Transformer-XL over modality-specific embeddings (z,a,r) + reward feedback + balanced CE + thresholded entropy + recency sampling + latent imagination actor-critic。",
+        "theory": "核心假设是：直接访问过去的 latent 和 reward 比 RNN 的压缩记忆更能保留可用信息，因此更适合建模复杂、稀疏回报的环境；同时对非平稳数据用 recent oversampling、对探索用熵下限约束，可以让 world model 和 policy 更稳定地协同训练。"
+      },
+      "key_results": {
+        "benchmarks": "在 Atari 100k benchmark 的 26 个游戏上评估，和 SimPLe、DER、CURL、DrQ(ε)、SPR 等方法比较。",
+        "improvements": "TWM 的 human-normalized mean 达到 0.956，median 达到 0.505，显著优于 SPR 的 0.616/0.396 和 SimPLe 的 0.332/0.134；在 50K interactions 时已超过此前样本高效方法的最终水平，25K 时就已超过 SimPLe 的均值表现。",
+        "ablation": "消融显示：balanced sampling 明显改善 dynamics loss 和最终得分；去掉 reward 输入会掉点；历史长度从 16 降到 4 会变差；policy 输入 [z,h] 虽然有时训练中更快，但最终更慢且通常不更好；阈值化熵正则能稳定熵并提升回报。"
+      },
+      "limitations": {
+        "current": "实验主要局限在 Atari 100k 这类离散视觉控制任务；每个游戏只跑 5 个 seeds，置信区间仍偏宽；个别游戏上 TWM 仍不如最强 baseline；而且 mean 很高但 median 只有 0.505，说明提升并不均匀，训练成本也仍明显高于纯 model-free 方法。",
+        "future": "需要在连续控制、更复杂视觉任务和更长 horizon 场景上验证，并进一步减少对 τ、Γ、ℓ 等超参数的敏感性；如果能改善探索和 world model 鲁棒性，收益可能会更大。",
+        "transferability": "世界模型 + latent imagination 的思想具有较强可迁移性，但当前实现强依赖 Atari 的离散动作、frame stacking 和像素输入设定，直接迁移到其他任务时大概率需要重配 observation encoder 和训练超参。"
+      },
+      "one_line_summary": "这是一个用 Transformer-XL 做自回归 world model、并结合奖励反馈与平衡采样来提升 Atari 100k 样本效率的 RL 方法，核心贡献是更强的长程建模和推理时更低的额外开销。",
+      "search_text": "Transformer-based World Models Are Happy With 100k Interactions\nJan Robine Marc Hoftmann Tobias Uelwer S. Harmeling\n2023\nInternational Conference on Learning Representations\n10.48550/arXiv.2303.07109\n提出 TWM：一种基于 Transformer-XL 的自回归 world model，把离散潜状态 z、动作 a 和奖励 r 一起建模，并把预测到的奖励反馈回模型；训练时用 transformer 捕捉长程依赖，推理时只保留编码器 + actor，因此兼顾样本效率和执行效率。\nTransformer-XL 动力学建模 奖励反馈机制 平衡交叉熵损失 阈值化熵正则\n用 causal Transformer-XL 替代 RNN 作为 world model 的骨干，输入为 z/a/r 三种模态的线性嵌入，利用相对位置编码和记忆缓存学习长时依赖，而不是把历史压缩进单一 recurrent state。 将已产生/预测的 reward 再送回 transformer，让模型显式利用自身奖励轨迹；作者在消融中证明这能提升多个游戏的表现。 把 DreamerV2 风格的 balanced KL 拆成显式的 cross-entropy + entropy regularizer，便于分别控制 encoder 与 latent predictor 的约束强度，稳定潜空间训练。 把 actor entropy 归一化后做 hinge-style 约束，只在熵低于阈值时惩罚，从而更稳定地维持探索强度，减少熵塌缩或发散。},{\n把 Atari 100k 上的 world model 从 recurrent latent dynamics 推进到 Transformer-XL 式序列建模，并把 reward 作为输入模态显式回流到动态模型中。\ncausal Transformer-XL over modality-specific embeddings (z,a,r) + reward feedback + balanced CE + thresholded entropy + recency sampling + latent imagination actor-critic。\n核心假设是：直接访问过去的 latent 和 reward 比 RNN 的压缩记忆更能保留可用信息，因此更适合建模复杂、稀疏回报的环境；同时对非平稳数据用 recent oversampling、对探索用熵下限约束，可以让 world model 和 policy 更稳定地协同训练。\n在 Atari 100k benchmark 的 26 个游戏上评估，和 SimPLe、DER、CURL、DrQ(ε)、SPR 等方法比较。\nTWM 的 human-normalized mean 达到 0.956，median 达到 0.505，显著优于 SPR 的 0.616/0.396 和 SimPLe 的 0.332/0.134；在 50K interactions 时已超过此前样本高效方法的最终水平，25K 时就已超过 SimPLe 的均值表现。\n消融显示：balanced sampling 明显改善 dynamics loss 和最终得分；去掉 reward 输入会掉点；历史长度从 16 降到 4 会变差；policy 输入 [z,h] 虽然有时训练中更快，但最终更慢且通常不更好；阈值化熵正则能稳定熵并提升回报。\n实验主要局限在 Atari 100k 这类离散视觉控制任务；每个游戏只跑 5 个 seeds，置信区间仍偏宽；个别游戏上 TWM 仍不如最强 baseline；而且 mean 很高但 median 只有 0.505，说明提升并不均匀，训练成本也仍明显高于纯 model-free 方法。\n需要在连续控制、更复杂视觉任务和更长 horizon 场景上验证，并进一步减少对 τ、Γ、ℓ 等超参数的敏感性；如果能改善探索和 world model 鲁棒性，收益可能会更大。\n世界模型 + latent imagination 的思想具有较强可迁移性，但当前实现强依赖 Atari 的离散动作、frame stacking 和像素输入设定，直接迁移到其他任务时大概率需要重配 observation encoder 和训练超参。\n这是一个用 Transformer-XL 做自回归 world model、并结合奖励反馈与平衡采样来提升 Atari 100k 样本效率的 RL 方法，核心贡献是更强的长程建模和推理时更低的额外开销。"
+    },
+    {
+      "route_id": "fcb3c30e-9989-4912-b22f-8df8517e8998",
+      "paper_id": "fcb3c30e-9989-4912-b22f-8df8517e8998",
+      "dir_name": "Chen-2022-TransDreamer-Reinforcement-Learning-with-Transformer-World-Models",
+      "title": "TransDreamer: Reinforcement Learning with Transformer World Models",
+      "authors": [
+        "Chang Chen",
+        "Jaesik Yoon",
+        "Yifu Wu",
+        "Sungjin Ahn"
+      ],
+      "year": 2022,
+      "journal": "arXiv (Cornell University)",
+      "venue": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2202.09481",
+      "read_status": "read",
+      "collection_name": "Todo",
+      "collection_key": "RECF7KND",
+      "collection_index": 4,
+      "generated_with_model": "gpt-5.4-mini",
+      "generated_at": "2026-04-03T15:22:03+00:00",
+      "core_innovation": "提出了 TransDreamer：把 Dreamer 的 RNN world model 改造成基于 Transformer 的随机状态空间模型（TSSM），并通过把后验从 q(z_t|h_t,x_t) 简化为 q(z_t|x_t) 来消除训练时的循环依赖，从而实现可并行训练、但又能在想象 rollout 时自回归展开的 transformer-based MBRL 框架。",
+      "technical_contributions": [
+        {
+          "title": "Transformer State-Space Model (TSSM)",
+          "body": "用 Transformer 作为确定性状态更新器 h_t=f(z_{1:t-1},a_{1:t-1})，直接访问历史 latent 和动作，替代 RSSM 中的 RNN 隐状态传播；同时保留随机 latent z_t，以支持世界模型中的不确定性建模和多未来想象。"
+        },
+        {
+          "title": "Myopic posterior 设计",
+          "body": "将 representation posterior 近似为 q(z_t|x_t)，去掉对 h_t 的条件依赖，避免“输出再作为输入”的顺序耦合，使所有时间步的后验编码可并行计算，这是 TSSM 能训练的关键。"
+        },
+        {
+          "title": "共享 world model 的 transformer RL 训练方式",
+          "body": "在 Dreamer 式 imagination policy learning 中共享同一个 transformer world model，并固定世界模型参数，仅训练 actor-critic；作者报告这样比直接端到端训练 transformer policy 更稳定。"
+        },
+        {
+          "title": "面向长时记忆任务的实验设计",
+          "body": "构造了 2D/3D Hidden Order Discovery 任务，专门考察多步骤记忆、顺序推理和长程依赖；同时用 DMC/Atari 做短期记忆 sanity check，形成从强记忆到弱记忆的完整验证链。"
+        }
+      ],
+      "methodological_breakthrough": {
+        "novelty": "把 Transformer 以“随机状态空间模型”的形式真正落到 model-based RL 中，而不是仅仅把 RL 改写成 sequence modeling；核心突破是同时满足直接访问历史、训练并行化、可自回归想象和随机 latent 四个要求。",
+        "key_technique": "用 Transformer 生成确定性状态 h_t，并用独立的 posterior q(z_t|x_t) 逐时刻编码随机状态，再通过 p(z_t|h_t) 进行 rollout；训练目标是带 reward/discount 预测项的 ELBO。",
+        "theory": "作者的基本假设是：历史信息主要由 deterministic transformer state 承担，因此 posterior 不必再显式编码历史上下文；只要 h_t 足够强，myopic posterior 仍能逼近 RSSM 的表示能力，同时换来并行训练与更强的长程依赖建模。"
+      },
+      "key_results": {
+        "benchmarks": "在 2D/3D Hidden Order Discovery 上，TransDreamer 一致优于 DreamerV2；例如 2D 4-ball 成功率 23% vs 7%，3D 4-ball dense 18% vs 10%，5-ball dense 4% vs 0%。在 DMC 和 Atari 上，两者最终性能大体可比，但 TransDreamer 收敛通常更慢。",
+        "improvements": "世界模型层面，TransDreamer 在 3D 5-ball dense 的图像预测前景 MSE 和非零奖励预测准确率上都优于 DreamerV2，且 context 越长优势越明显，说明 Transformer 更能利用长历史上下文。",
+        "ablation": "文中明确做了几个关键对照：去掉 h_t 条件后的 myopic posterior 版本 Dreamer 仍可接近原版，支持作者的建模假设；优先回放对稀疏奖励任务有帮助；在简单 DMC/Atari 上 Transformer 不占优、且更慢，说明它的收益主要来自长程记忆场景。"
+      },
+      "limitations": {
+        "current": "训练和推理的计算/显存开销更高，所以不能像 Dreamer 一样从 replay buffer 中所有状态都做 imagination，作者改为只采样较小子集 K；这说明方法对资源更敏感。",
+        "future": "实验主要集中在自建 Hidden Order Discovery、部分 DMC/Atari，以及定性世界模型分析，离更复杂、更通用的长时序环境还有距离；作者也明确提出需要在 Crafter 之类更复杂任务上验证。",
+        "transferability": "对短期记忆或近因依赖足够的任务，Transformer 并不天然更优，反而可能更慢；此外，q(z_t|x_t) 的 myopic 近似在需要强历史推断的部分 POMDP 场景中可能成为性能瓶颈。"
+      },
+      "one_line_summary": "这篇论文把 Dreamer 的 RSSM 系统性替换为可并行训练的随机 Transformer 世界模型，证明了 Transformer 在长程记忆型视觉控制里能显著优于 RNN 版 Dreamer，但在简单任务上并没有普遍优势。",
+      "search_text": "TransDreamer: Reinforcement Learning with Transformer World Models\nChang Chen Jaesik Yoon Yifu Wu Sungjin Ahn\n2022\narXiv (Cornell University)\n10.48550/arXiv.2202.09481\n提出了 TransDreamer：把 Dreamer 的 RNN world model 改造成基于 Transformer 的随机状态空间模型（TSSM），并通过把后验从 q(z_t|h_t,x_t) 简化为 q(z_t|x_t) 来消除训练时的循环依赖，从而实现可并行训练、但又能在想象 rollout 时自回归展开的 transformer-based MBRL 框架。\nTransformer State-Space Model (TSSM) Myopic posterior 设计 共享 world model 的 transformer RL 训练方式 面向长时记忆任务的实验设计\n用 Transformer 作为确定性状态更新器 h_t=f(z_{1:t-1},a_{1:t-1})，直接访问历史 latent 和动作，替代 RSSM 中的 RNN 隐状态传播；同时保留随机 latent z_t，以支持世界模型中的不确定性建模和多未来想象。 将 representation posterior 近似为 q(z_t|x_t)，去掉对 h_t 的条件依赖，避免“输出再作为输入”的顺序耦合，使所有时间步的后验编码可并行计算，这是 TSSM 能训练的关键。 在 Dreamer 式 imagination policy learning 中共享同一个 transformer world model，并固定世界模型参数，仅训练 actor-critic；作者报告这样比直接端到端训练 transformer policy 更稳定。 构造了 2D/3D Hidden Order Discovery 任务，专门考察多步骤记忆、顺序推理和长程依赖；同时用 DMC/Atari 做短期记忆 sanity check，形成从强记忆到弱记忆的完整验证链。\n把 Transformer 以“随机状态空间模型”的形式真正落到 model-based RL 中，而不是仅仅把 RL 改写成 sequence modeling；核心突破是同时满足直接访问历史、训练并行化、可自回归想象和随机 latent 四个要求。\n用 Transformer 生成确定性状态 h_t，并用独立的 posterior q(z_t|x_t) 逐时刻编码随机状态，再通过 p(z_t|h_t) 进行 rollout；训练目标是带 reward/discount 预测项的 ELBO。\n作者的基本假设是：历史信息主要由 deterministic transformer state 承担，因此 posterior 不必再显式编码历史上下文；只要 h_t 足够强，myopic posterior 仍能逼近 RSSM 的表示能力，同时换来并行训练与更强的长程依赖建模。\n在 2D/3D Hidden Order Discovery 上，TransDreamer 一致优于 DreamerV2；例如 2D 4-ball 成功率 23% vs 7%，3D 4-ball dense 18% vs 10%，5-ball dense 4% vs 0%。在 DMC 和 Atari 上，两者最终性能大体可比，但 TransDreamer 收敛通常更慢。\n世界模型层面，TransDreamer 在 3D 5-ball dense 的图像预测前景 MSE 和非零奖励预测准确率上都优于 DreamerV2，且 context 越长优势越明显，说明 Transformer 更能利用长历史上下文。\n文中明确做了几个关键对照：去掉 h_t 条件后的 myopic posterior 版本 Dreamer 仍可接近原版，支持作者的建模假设；优先回放对稀疏奖励任务有帮助；在简单 DMC/Atari 上 Transformer 不占优、且更慢，说明它的收益主要来自长程记忆场景。\n训练和推理的计算/显存开销更高，所以不能像 Dreamer 一样从 replay buffer 中所有状态都做 imagination，作者改为只采样较小子集 K；这说明方法对资源更敏感。\n实验主要集中在自建 Hidden Order Discovery、部分 DMC/Atari，以及定性世界模型分析，离更复杂、更通用的长时序环境还有距离；作者也明确提出需要在 Crafter 之类更复杂任务上验证。\n对短期记忆或近因依赖足够的任务，Transformer 并不天然更优，反而可能更慢；此外，q(z_t|x_t) 的 myopic 近似在需要强历史推断的部分 POMDP 场景中可能成为性能瓶颈。\n这篇论文把 Dreamer 的 RSSM 系统性替换为可并行训练的随机 Transformer 世界模型，证明了 Transformer 在长程记忆型视觉控制里能显著优于 RNN 版 Dreamer，但在简单任务上并没有普遍优势。"
+    },
+    {
+      "route_id": "8b55fbab-8467-47d5-aa7a-4a2b1d1377ef",
+      "paper_id": "8b55fbab-8467-47d5-aa7a-4a2b1d1377ef",
+      "dir_name": "Elsayed-2024-Streaming-Deep-Reinforcement-Learning-Finally-Works",
+      "title": "Streaming Deep Reinforcement Learning Finally Works",
+      "authors": [
+        "Mohamed Elsayed",
+        "G. Vasan",
+        "A. Mahmood"
+      ],
+      "year": 2024,
+      "journal": "arXiv.org",
+      "venue": "arXiv.org",
+      "doi": "10.48550/arXiv.2410.14606",
+      "read_status": "read",
+      "collection_name": "Todo",
+      "collection_key": "RECF7KND",
+      "collection_index": 5,
+      "generated_with_model": "gpt-5.4-mini",
+      "generated_at": "2026-04-03T15:23:19+00:00",
+      "core_innovation": "作者提出 stream-x 这一套面向真正流式在线交互的深度RL方法，把问题重点从“样本不能复用导致样本低效”转到“单样本更新会引发优化失稳”。它在不使用 replay buffer、batch update 和 target network 的前提下，结合 eligibility traces、SparseInit、LayerNorm、在线观测/奖励归一化，以及受 overshooting 约束的 ObGD 优化器，使 stream TD / Q / AC 在多个控制和预测任务上稳定可学。",
+      "technical_contributions": [
+        {
+          "title": "提出 stream barrier",
+          "body": "把深度RL在严格 streaming 设定下的失败现象系统化为 stream barrier，并在 MuJoCo、DM Control、Atari 等任务上展示经典 streaming 方法和 batch 方法的 batch-size=1 版本都会显著不稳定甚至崩溃。"
+        },
+        {
+          "title": "构建 stream-x 算法族",
+          "body": "给出 stream TD(lambda)、stream Q(lambda)、stream SARSA(lambda)、stream AC(lambda) 等在线算法，依靠 eligibility traces 在一步更新中保留多步信用分配，不依赖 replay buffer、target network 或批量采样。"
+        },
+        {
+          "title": "ObGD 步长控制",
+          "body": "从有效步长 effective step size 出发推导 overshooting 约束，用近似上界替代额外前向/反向传播，形成可在线工作的 Overshooting-bounded Gradient Descent，并可扩展到 RMSProp/Adam 风格版本。"
+        },
+        {
+          "title": "稳定化表示与输入尺度",
+          "body": "通过去掉可学习仿射参数的 LayerNorm、Welford 在线均值方差、奖励缩放和 SparseInit，控制非平稳输入、pre-activation 分布和梯度尺度。},{"
+        }
+      ],
+      "methodological_breakthrough": {
+        "novelty": "不是单纯再做一个深度RL算法，而是把流式学习的核心难题定义为稳定的在线优化问题，并给出一套能够跨算法复用的稳定化配方。",
+        "key_technique": "ObGD + eligibility traces + LayerNorm + SparseInit + 在线数据归一化；其中 ObGD 用有效步长上界抑制单样本更新的过冲，eligibility traces 提升信用分配，归一化和稀疏初始化减少非平稳和干扰。",
+        "theory": "基于局部线性近似和有效步长分析，把 TD/AC 更新写成可检测的 overshooting 条件，并借助 Welford 在线统计和层归一化把激活与输入尺度维持在稳定范围。"
+      },
+      "key_results": {
+        "benchmarks": "MuJoCo Gym 连续控制、DM Control Suite（尤其 Dog）、Atari 2600、MinAtar、ETTm2 电力变压器温度预测。",
+        "improvements": "stream AC(0.8) 在 MuJoCo/DM Control 上比 PPO1 和 SAC1 更稳定、更高样本效率，并在 Dog 环境优于 PPO 和 SAC，作者声称达到该环境上的最佳 model-free 表现；stream Q(0.8) 在 Atari 上 9 个游戏超过 DQN、6 个落后，整体与 DQN 竞争且优于 DQN1；stream TD(0.8) 在 ETTm2 上能持续逼近真实未来回报，说明流式预测也可行。",
+        "ablation": "去掉 ObGD 的损失最大，很多任务直接无法继续提升；去掉 LayerNorm 或观测/奖励归一化会显著恶化甚至失稳；SparseInit 主要改善收敛速度；eligibility traces 能提升 stream AC，但若没有足够稳健的步长控制，在 classic AC 中反而会放大不稳定。"
+      },
+      "limitations": {
+        "current": "这是一篇 arXiv 预印本，整体更偏经验性和系统整合，缺少严格的收敛性或泛化性证明；很多组件（LayerNorm、归一化、eligibility traces、SparseInit、步长自适应）本身都不是新发明，真正的新意主要在组合方式和 ObGD 的统一稳定化；ObGD 依赖局部线性和有效步长上界近似，遇到更强非线性、稀疏奖励或更长时序时可能失效。",
+        "future": "值得继续把这套框架扩展到更广的 off-policy 方法、模型式 RL、部分可观测场景和持续学习任务，并与 RNN/RTRL、重要性采样、更强自适应步长策略结合。",
+        "transferability": "对资源受限、低延迟、隐私敏感或无法保存历史样本的场景很有潜力，但在更复杂的真实世界任务上是否仍能保持同样的稳定性和样本效率，尚未充分验证。"
+      },
+      "one_line_summary": "这篇论文的结论是：深度RL并不天然不适合流式在线学习，真正的瓶颈是更新不稳定；通过一套统一的稳定化技术，stream TD/Q/AC 可以在多个基准上接近甚至超过传统 batch RL。",
+      "search_text": "Streaming Deep Reinforcement Learning Finally Works\nMohamed Elsayed G. Vasan A. Mahmood\n2024\narXiv.org\n10.48550/arXiv.2410.14606\n作者提出 stream-x 这一套面向真正流式在线交互的深度RL方法，把问题重点从“样本不能复用导致样本低效”转到“单样本更新会引发优化失稳”。它在不使用 replay buffer、batch update 和 target network 的前提下，结合 eligibility traces、SparseInit、LayerNorm、在线观测/奖励归一化，以及受 overshooting 约束的 ObGD 优化器，使 stream TD / Q / AC 在多个控制和预测任务上稳定可学。\n提出 stream barrier 构建 stream-x 算法族 ObGD 步长控制 稳定化表示与输入尺度\n把深度RL在严格 streaming 设定下的失败现象系统化为 stream barrier，并在 MuJoCo、DM Control、Atari 等任务上展示经典 streaming 方法和 batch 方法的 batch-size=1 版本都会显著不稳定甚至崩溃。 给出 stream TD(lambda)、stream Q(lambda)、stream SARSA(lambda)、stream AC(lambda) 等在线算法，依靠 eligibility traces 在一步更新中保留多步信用分配，不依赖 replay buffer、target network 或批量采样。 从有效步长 effective step size 出发推导 overshooting 约束，用近似上界替代额外前向/反向传播，形成可在线工作的 Overshooting-bounded Gradient Descent，并可扩展到 RMSProp/Adam 风格版本。 通过去掉可学习仿射参数的 LayerNorm、Welford 在线均值方差、奖励缩放和 SparseInit，控制非平稳输入、pre-activation 分布和梯度尺度。},{\n不是单纯再做一个深度RL算法，而是把流式学习的核心难题定义为稳定的在线优化问题，并给出一套能够跨算法复用的稳定化配方。\nObGD + eligibility traces + LayerNorm + SparseInit + 在线数据归一化；其中 ObGD 用有效步长上界抑制单样本更新的过冲，eligibility traces 提升信用分配，归一化和稀疏初始化减少非平稳和干扰。\n基于局部线性近似和有效步长分析，把 TD/AC 更新写成可检测的 overshooting 条件，并借助 Welford 在线统计和层归一化把激活与输入尺度维持在稳定范围。\nMuJoCo Gym 连续控制、DM Control Suite（尤其 Dog）、Atari 2600、MinAtar、ETTm2 电力变压器温度预测。\nstream AC(0.8) 在 MuJoCo/DM Control 上比 PPO1 和 SAC1 更稳定、更高样本效率，并在 Dog 环境优于 PPO 和 SAC，作者声称达到该环境上的最佳 model-free 表现；stream Q(0.8) 在 Atari 上 9 个游戏超过 DQN、6 个落后，整体与 DQN 竞争且优于 DQN1；stream TD(0.8) 在 ETTm2 上能持续逼近真实未来回报，说明流式预测也可行。\n去掉 ObGD 的损失最大，很多任务直接无法继续提升；去掉 LayerNorm 或观测/奖励归一化会显著恶化甚至失稳；SparseInit 主要改善收敛速度；eligibility traces 能提升 stream AC，但若没有足够稳健的步长控制，在 classic AC 中反而会放大不稳定。\n这是一篇 arXiv 预印本，整体更偏经验性和系统整合，缺少严格的收敛性或泛化性证明；很多组件（LayerNorm、归一化、eligibility traces、SparseInit、步长自适应）本身都不是新发明，真正的新意主要在组合方式和 ObGD 的统一稳定化；ObGD 依赖局部线性和有效步长上界近似，遇到更强非线性、稀疏奖励或更长时序时可能失效。\n值得继续把这套框架扩展到更广的 off-policy 方法、模型式 RL、部分可观测场景和持续学习任务，并与 RNN/RTRL、重要性采样、更强自适应步长策略结合。\n对资源受限、低延迟、隐私敏感或无法保存历史样本的场景很有潜力，但在更复杂的真实世界任务上是否仍能保持同样的稳定性和样本效率，尚未充分验证。\n这篇论文的结论是：深度RL并不天然不适合流式在线学习，真正的瓶颈是更新不稳定；通过一套统一的稳定化技术，stream TD/Q/AC 可以在多个基准上接近甚至超过传统 batch RL。"
+    },
+    {
+      "route_id": "b7cfa715-e774-4567-8009-a4781cebdc58",
+      "paper_id": "b7cfa715-e774-4567-8009-a4781cebdc58",
+      "dir_name": "de-Lima-2024-Humanoid-Robot-Motion-Planning-Approaches-a-Survey",
+      "title": "Humanoid Robot Motion Planning Approaches: a Survey",
+      "authors": [
+        "Carolina Rutili de Lima",
+        "Said G. Khan",
+        "Muhammad Tufail",
+        "Syed H. Shah",
+        "Marcos R. O. A. Maximo"
+      ],
+      "year": 2024,
+      "journal": "Journal of Intelligent &amp; Robotic Systems",
+      "venue": "Journal of Intelligent &amp; Robotic Systems",
+      "doi": "10.1007/s10846-024-02117-z",
+      "read_status": "read",
+      "collection_name": "Todo",
+      "collection_key": "RECF7KND",
+      "collection_index": 6,
+      "generated_with_model": "gpt-5.4-mini",
+      "generated_at": "2026-04-03T15:22:52+00:00",
+      "core_innovation": "不是提出新算法，而是为人形机器人运动规划建立了一个可比较的综述框架：按“人类启发/行为克隆、倒立摆、运动学约束、AI技术”四类归纳文献，并用效率、鲁棒性、可扩展性、适应性四个维度统一评价代表性工作。",
+      "technical_contributions": [
+        {
+          "title": "四类方法学分类",
+          "body": "把人形机器人运动规划文献系统归为四条主线，覆盖步态、全身运动、平衡恢复、抓取/操控和实时重规划等问题，便于横向比较不同方法的侧重点。"
+        },
+        {
+          "title": "统一的四指标评价",
+          "body": "为每篇代表性论文给出效率、鲁棒性、可扩展性、适应性的定性评级，形成表格化对照，增强了综述的可读性和比较性。"
+        },
+        {
+          "title": "分层问题框架",
+          "body": "将任务规划、路径规划、轨迹规划、关节空间控制和动态稳定约束放在同一框架下解释，强调人形机器人运动规划本质上是多层约束优化问题。"
+        },
+        {
+          "title": "趋势与空白提炼",
+          "body": "从文献中总结出AI/强化学习方法的上升趋势，同时指出逆运动学复杂、实时性不足、真实机器人迁移有限等核心瓶颈。"
+        }
+      ],
+      "methodological_breakthrough": {
+        "novelty": "综述层面的创新，而不是算法层面的创新：用统一分类和统一评分把分散的研究组织成一个可复用的比较框架。",
+        "key_technique": "按方法类别分组，再结合仿真/实机验证状态，对代表性论文做High/Medium/Low的四维定性评价，并用表格汇总。",
+        "theory": "人形机器人运动规划不是单纯找路径，而是在高维空间中同时满足动力学稳定、运动学约束、安全交互和实时响应；不同方法对应效率、鲁棒性、可扩展性与适应性的不同权衡。"
+      },
+      "key_results": {
+        "benchmarks": "综述了四大类代表性工作：行为克隆/人类启发、倒立摆/稳定控制、运动学约束、AI驱动规划；主要比较依据是表1-8中的代表论文集合，而不是单一标准数据集。",
+        "improvements": "作者的横向评价显示：行为克隆和AI方法通常在适应性上更强；倒立摆与运动学约束方法在稳定性和鲁棒性上更突出；但多数方法的可扩展性仍偏中等，说明泛化到复杂环境和不同机器人平台仍有压力。",
+        "ablation": "没有传统意义上的消融实验。文章的“对比分析”来自文献分组和定性评分，缺少统一量化基准、评分权重和统计检验，因此更像结构化综述而不是可复现实验研究。"
+      },
+      "limitations": {
+        "current": "这是定性综述，评分标准较粗，缺少公开的量化打分规则和权重设计；不少结论依赖作者主观判断，且很多被评论文主要停留在仿真验证。",
+        "future": "需要更统一的benchmark、更充分的真实机器人实验、更强的在线/实时全身规划能力，以及把任务规划与运动规划更深度耦合的统一框架；同时还需要更轻量、可解释、可迁移的学习方法。",
+        "transferability": "对人形机器人、类人上肢规划、步态与平衡控制的研究很有参考价值，但对其他机器人平台只能迁移其综述框架，不能直接迁移具体方法；对低算力嵌入式平台的适用性也有限。"
+      },
+      "one_line_summary": "这篇综述把人形机器人运动规划系统地分成四类方法并用四个维度做横向评价，核心结论是现有方法各有所长，但统一、轻量、可实时部署的通用框架仍未出现。",
+      "search_text": "Humanoid Robot Motion Planning Approaches: a Survey\nCarolina Rutili de Lima Said G. Khan Muhammad Tufail Syed H. Shah Marcos R. O. A. Maximo\n2024\nJournal of Intelligent &amp; Robotic Systems\n10.1007/s10846-024-02117-z\n不是提出新算法，而是为人形机器人运动规划建立了一个可比较的综述框架：按“人类启发/行为克隆、倒立摆、运动学约束、AI技术”四类归纳文献，并用效率、鲁棒性、可扩展性、适应性四个维度统一评价代表性工作。\n四类方法学分类 统一的四指标评价 分层问题框架 趋势与空白提炼\n把人形机器人运动规划文献系统归为四条主线，覆盖步态、全身运动、平衡恢复、抓取/操控和实时重规划等问题，便于横向比较不同方法的侧重点。 为每篇代表性论文给出效率、鲁棒性、可扩展性、适应性的定性评级，形成表格化对照，增强了综述的可读性和比较性。 将任务规划、路径规划、轨迹规划、关节空间控制和动态稳定约束放在同一框架下解释，强调人形机器人运动规划本质上是多层约束优化问题。 从文献中总结出AI/强化学习方法的上升趋势，同时指出逆运动学复杂、实时性不足、真实机器人迁移有限等核心瓶颈。\n综述层面的创新，而不是算法层面的创新：用统一分类和统一评分把分散的研究组织成一个可复用的比较框架。\n按方法类别分组，再结合仿真/实机验证状态，对代表性论文做High/Medium/Low的四维定性评价，并用表格汇总。\n人形机器人运动规划不是单纯找路径，而是在高维空间中同时满足动力学稳定、运动学约束、安全交互和实时响应；不同方法对应效率、鲁棒性、可扩展性与适应性的不同权衡。\n综述了四大类代表性工作：行为克隆/人类启发、倒立摆/稳定控制、运动学约束、AI驱动规划；主要比较依据是表1-8中的代表论文集合，而不是单一标准数据集。\n作者的横向评价显示：行为克隆和AI方法通常在适应性上更强；倒立摆与运动学约束方法在稳定性和鲁棒性上更突出；但多数方法的可扩展性仍偏中等，说明泛化到复杂环境和不同机器人平台仍有压力。\n没有传统意义上的消融实验。文章的“对比分析”来自文献分组和定性评分，缺少统一量化基准、评分权重和统计检验，因此更像结构化综述而不是可复现实验研究。\n这是定性综述，评分标准较粗，缺少公开的量化打分规则和权重设计；不少结论依赖作者主观判断，且很多被评论文主要停留在仿真验证。\n需要更统一的benchmark、更充分的真实机器人实验、更强的在线/实时全身规划能力，以及把任务规划与运动规划更深度耦合的统一框架；同时还需要更轻量、可解释、可迁移的学习方法。\n对人形机器人、类人上肢规划、步态与平衡控制的研究很有参考价值，但对其他机器人平台只能迁移其综述框架，不能直接迁移具体方法；对低算力嵌入式平台的适用性也有限。\n这篇综述把人形机器人运动规划系统地分成四类方法并用四个维度做横向评价，核心结论是现有方法各有所长，但统一、轻量、可实时部署的通用框架仍未出现。"
+    },
+    {
+      "route_id": "cbbf95f3-1ec0-4db1-92f0-85914a88348b",
+      "paper_id": "cbbf95f3-1ec0-4db1-92f0-85914a88348b",
+      "dir_name": "Zhang-2025-Distillation-PPO-A-Novel-Two-Stage-Reinforcement-Learning-Framework-for-Humanoid-Robot-Perceptive-Locomotion",
+      "title": "Distillation-PPO: A Novel Two-Stage Reinforcement Learning Framework for Humanoid Robot Perceptive Locomotion",
+      "authors": [
+        "Qiang Zhang",
+        "Gang Han",
+        "Jingkai Sun",
+        "Wen Zhao",
+        "Chenghao Sun",
+        "Jiahang Cao",
+        "Jiaxu Wang",
+        "Yijie Guo",
+        "Renjing Xu"
+      ],
+      "year": 2025,
+      "journal": "ArXiv.org",
+      "venue": "ArXiv.org",
+      "doi": "10.48550/arXiv.2503.08299",
+      "read_status": "read",
+      "collection_name": "Todo",
+      "collection_key": "RECF7KND",
+      "collection_index": 7,
+      "generated_with_model": "gpt-5.4-mini",
+      "generated_at": "2026-04-03T15:23:45+00:00",
+      "core_innovation": "提出 Distillation-PPO（D-PPO）两阶段感知行走框架：先在完全可观测 MDP 中训练教师策略，再在部分可观测 POMDP 中把教师蒸馏损失当作正则项，与 PPO 联合优化学生策略，从而同时保留教师的稳定监督和 RL 的持续探索能力。",
+      "technical_contributions": [
+        {
+          "title": "两阶段 teacher-student 训练",
+          "body": "教师阶段使用精确的 scan dots 和历史状态在仿真中训练；学生阶段引入噪声感知、域随机化和教师监督，并用教师/学生对称结构与参数继承来初始化，从而降低训练不稳定性。"
+        },
+        {
+          "title": "感知到控制的输入管线",
+          "body": "把 LiDAR-IMU 里程计、深度相机点云和地形重建统一到 elevation map，再采样成 441 维 scan dots；同时处理腿部遮挡，并用 Kalman filter 更新栅格高度，增强复杂地形感知。"
+        },
+        {
+          "title": "面向人形步态的奖励设计",
+          "body": "结合周期奖励、命令跟踪奖励和一组正则化奖励，约束关节极限、速度、加速度、姿态和扭矩，目标是兼顾步态自然性、稳定性和 sim-to-real 鲁棒性。"
+        },
+        {
+          "title": "真实机器人验证",
+          "body": "在 Tiangong 人形机器人上验证高台、斜坡、楼梯、沟壑和不规则地形，展示了从仿真到实机的迁移能力，而不仅是仿真中的回报提升。"
+        }
+      ],
+      "methodological_breakthrough": {
+        "novelty": "从文中看，这更像是把已有的蒸馏/DAgger 思路与 PPO 做系统化组合，而不是重新发明一个全新的 RL 算法；创新点主要在于把蒸馏限制成正则项，让 student 仍然可以在 POMDP 中继续优化。",
+        "key_technique": "总损失 = 蒸馏损失（教师动作与学生动作的 MSE）+ PPO clipped objective。教师负责提供低方差监督，PPO 负责继续探索和提升上限；再配合噪声感知、历史状态编码和域随机化。",
+        "theory": "作者的核心理论主张是：纯蒸馏会把学生封闭在教师上限内，纯 RL 在 POMDP 中又难训练且不稳定；两者叠加后，教师提供收敛方向，RL 负责突破上限。"
+      },
+      "key_results": {
+        "benchmarks": "实验在单张 RTX 4090 上、Isaac Gym 4096 并行环境中完成；实机在 Tiangong 上测试了高台、楼梯、斜坡、沟壑和复杂不规则地形。文中没有给出统一公开 benchmark 的数值表。",
+        "improvements": "作者声称 D-PPO 比 only distillation 和 only RL 训练更快、更稳定，控制性能更好，噪声鲁棒性和实机泛化也更强；但正文主要是定性图示和总结性比较，数值增益不充分。",
+        "ablation": "Table II 只有三组定性对比：only distillation = 易训练/一般控制/更差鲁棒性；only RL = 难训练/一般控制/中等鲁棒性；D-PPO = 易训练/更好控制/更好鲁棒性。没有看到对 alpha、beta、噪声强度、奖励项的细粒度消融。"
+      },
+      "limitations": {
+        "current": "当前证据偏定性，缺少标准化数值指标、统计显著性和更强基线的统一对照；方法创新更多是工程整合，理论新意中等，且对教师质量和感知质量比较敏感。",
+        "future": "需要补充更完整的量化评估、失败案例、长期实机运行数据，以及对噪声水平、奖励权重、地形难度和 teacher 质量的系统敏感性分析。",
+        "transferability": "框架原则上可迁移到其他 legged robots，但它依赖 elevation map/scan dots、LIO 和较可靠的教师策略；对传感器配置、机体结构和控制接口差异较大的平台，仍需重新调参与适配。"
+      },
+      "one_line_summary": "这是一篇把教师蒸馏和 PPO 结合起来做人形机器人感知行走的实用型两阶段框架论文，核心价值在于更稳、更容易从仿真落到实机，但目前定量证据和消融还不够强。",
+      "search_text": "Distillation-PPO: A Novel Two-Stage Reinforcement Learning Framework for Humanoid Robot Perceptive Locomotion\nQiang Zhang Gang Han Jingkai Sun Wen Zhao Chenghao Sun Jiahang Cao Jiaxu Wang Yijie Guo Renjing Xu\n2025\nArXiv.org\n10.48550/arXiv.2503.08299\n提出 Distillation-PPO（D-PPO）两阶段感知行走框架：先在完全可观测 MDP 中训练教师策略，再在部分可观测 POMDP 中把教师蒸馏损失当作正则项，与 PPO 联合优化学生策略，从而同时保留教师的稳定监督和 RL 的持续探索能力。\n两阶段 teacher-student 训练 感知到控制的输入管线 面向人形步态的奖励设计 真实机器人验证\n教师阶段使用精确的 scan dots 和历史状态在仿真中训练；学生阶段引入噪声感知、域随机化和教师监督，并用教师/学生对称结构与参数继承来初始化，从而降低训练不稳定性。 把 LiDAR-IMU 里程计、深度相机点云和地形重建统一到 elevation map，再采样成 441 维 scan dots；同时处理腿部遮挡，并用 Kalman filter 更新栅格高度，增强复杂地形感知。 结合周期奖励、命令跟踪奖励和一组正则化奖励，约束关节极限、速度、加速度、姿态和扭矩，目标是兼顾步态自然性、稳定性和 sim-to-real 鲁棒性。 在 Tiangong 人形机器人上验证高台、斜坡、楼梯、沟壑和不规则地形，展示了从仿真到实机的迁移能力，而不仅是仿真中的回报提升。\n从文中看，这更像是把已有的蒸馏/DAgger 思路与 PPO 做系统化组合，而不是重新发明一个全新的 RL 算法；创新点主要在于把蒸馏限制成正则项，让 student 仍然可以在 POMDP 中继续优化。\n总损失 = 蒸馏损失（教师动作与学生动作的 MSE）+ PPO clipped objective。教师负责提供低方差监督，PPO 负责继续探索和提升上限；再配合噪声感知、历史状态编码和域随机化。\n作者的核心理论主张是：纯蒸馏会把学生封闭在教师上限内，纯 RL 在 POMDP 中又难训练且不稳定；两者叠加后，教师提供收敛方向，RL 负责突破上限。\n实验在单张 RTX 4090 上、Isaac Gym 4096 并行环境中完成；实机在 Tiangong 上测试了高台、楼梯、斜坡、沟壑和复杂不规则地形。文中没有给出统一公开 benchmark 的数值表。\n作者声称 D-PPO 比 only distillation 和 only RL 训练更快、更稳定，控制性能更好，噪声鲁棒性和实机泛化也更强；但正文主要是定性图示和总结性比较，数值增益不充分。\nTable II 只有三组定性对比：only distillation = 易训练/一般控制/更差鲁棒性；only RL = 难训练/一般控制/中等鲁棒性；D-PPO = 易训练/更好控制/更好鲁棒性。没有看到对 alpha、beta、噪声强度、奖励项的细粒度消融。\n当前证据偏定性，缺少标准化数值指标、统计显著性和更强基线的统一对照；方法创新更多是工程整合，理论新意中等，且对教师质量和感知质量比较敏感。\n需要补充更完整的量化评估、失败案例、长期实机运行数据，以及对噪声水平、奖励权重、地形难度和 teacher 质量的系统敏感性分析。\n框架原则上可迁移到其他 legged robots，但它依赖 elevation map/scan dots、LIO 和较可靠的教师策略；对传感器配置、机体结构和控制接口差异较大的平台，仍需重新调参与适配。\n这是一篇把教师蒸馏和 PPO 结合起来做人形机器人感知行走的实用型两阶段框架论文，核心价值在于更稳、更容易从仿真落到实机，但目前定量证据和消融还不够强。"
+    },
+    {
+      "route_id": "594bbec9-78a3-4803-84ea-f055993b26a4",
+      "paper_id": "594bbec9-78a3-4803-84ea-f055993b26a4",
+      "dir_name": "Ren-2025-VB-Com-Learning-Vision-Blind-Composite-Humanoid-Locomotion-Against-Deficient-Perception",
+      "title": "VB-Com: Learning Vision-Blind Composite Humanoid Locomotion Against Deficient Perception",
+      "authors": [
+        "Junli Ren",
+        "Tao Huang",
+        "Huayi Wang",
+        "Zirui Wang",
+        "Qingwei Ben",
+        "Jiangmiao Pang",
+        "Ping Luo"
+      ],
+      "year": 2025,
+      "journal": "arXiv.org",
+      "venue": "arXiv.org",
+      "doi": "10.48550/arXiv.2502.14814",
+      "read_status": "read",
+      "collection_name": "Todo",
+      "collection_key": "RECF7KND",
+      "collection_index": 8,
+      "generated_with_model": "gpt-5.4-mini",
+      "generated_at": "2026-04-03T15:24:21+00:00",
+      "core_innovation": "把人形机器人在感知失真下的行走，从单一视觉策略改成视觉策略和盲策略的在线组合问题：先分别训练两套策略，再用只依赖本体感觉的回报估计器判断何时切换，从而在动态障碍、遮挡和噪声高度图下保持可恢复性。",
+      "technical_contributions": [
+        {
+          "title": "双策略共训",
+          "body": "在同一动作空间和奖励空间下，分别训练 perceptive vision policy 和 proprioception-only blind policy，使两者都能处理 gaps、hurdles 和 obstacles，并在部署时互为备份。"
+        },
+        {
+          "title": "本体感觉回报估计",
+          "body": "提出基于历史本体感觉序列的 return estimator，使用 TD 和 lambda-return 估计当前状态下各策略未来回报，避免依赖视觉或 privileged state，因此可以直接上硬件。"
+        },
+        {
+          "title": "保守门控切换",
+          "body": "用估计回报比较来做策略选择，并加入 switch period T、阈值 G_th、视觉回报平滑窗口和高关节速度抑制，减少错误切换和危险动作抖动。"
+        },
+        {
+          "title": "单阶段可部署训练",
+          "body": "通过速度估计器与 perception noise 和 domain randomization，把可部署训练压成单阶段流程，减少额外 belief encoder 或二阶段训练的复杂度。"
+        }
+      ],
+      "methodological_breakthrough": {
+        "novelty": "不是继续强化视觉感知，而是把 perception failure 显式转成 policy selection 问题：先训练两个互补技能，再用回报估计做组合。实现上比纯贪心切换更保守。",
+        "key_technique": "用历史本体感觉序列预测各策略在一个 switch window 内的累计回报，先比较 vision 和 blind 的估计回报，再结合阈值 G_th、滑动平滑和高关节速度禁切规则决定动作来源。",
+        "theory": "在共享状态、动作和奖励空间下，近似比较候选策略的长期回报可以选择更优动作；当视觉观测偏离训练分布时，盲策略通常给出更高的回报估计，因此能够接管并恢复稳定行走。"
+      },
+      "key_results": {
+        "benchmarks": "仿真在 Unitree G1/H1 上做 gaps、hurdles、obstacles 三类地形，并注入 Gaussian、shifting 和 floating 噪声，最高到 100%。真实机器人上也验证了静态障碍、动态障碍以及把 heightmap 置零的极端感知失真。",
+        "improvements": "在 100% 噪声下，VB-Com 的 goal completion 为 84.81%，vision-only 只有 48.71%，noisy perceptive 为 80.52%；在 0%-70% 噪声区间，VB-Com 基本维持在 82%-84% completion，碰撞保持在约 1.5%-2.6%。它在真实 G1/H1 上也能在障碍突然出现时快速切到盲策略，避免 vision-only 的延迟反应。",
+        "ablation": "阈值很关键：去掉 G_th 后 completion 直接掉到 48.48%，collision 升到 6.24%。回报估计器方面，1-step 和 5-step 明显不够，MC-based 也弱于 TD 版本，50-100 step 区间最好，说明切换窗口的长期回报建模是核心。"
+      },
+      "limitations": {
+        "current": "上限受训练地形覆盖限制，未见过的 gap 仍可能失败；回报估计器只能通过本体感觉间接判断视觉失真，通常是动作已受影响后再切换，不是完全前瞻式。作为 arXiv 预印本，目前还缺少更大范围任务和更系统的失败模式分析。",
+        "future": "可以进一步加入更多子策略或显式的感知质量检测器，扩展到更复杂的动态或可变形地形，并降低对阈值和 switch period 手工调参的敏感性。",
+        "transferability": "最适合迁移到动作空间相近、并且有可靠本体感觉 fallback 的其他 legged 或 humanoid 平台；如果任务需要不同技能原语、没有安全盲策略，或更依赖语义理解而不是几何地形信息，迁移性会明显下降。"
+      },
+      "one_line_summary": "VB-Com 用本体感觉驱动的回报估计在视觉策略和盲策略之间在线切换，让人形机器人在感知失真、动态障碍和遮挡下仍能稳定行走。",
+      "search_text": "VB-Com: Learning Vision-Blind Composite Humanoid Locomotion Against Deficient Perception\nJunli Ren Tao Huang Huayi Wang Zirui Wang Qingwei Ben Jiangmiao Pang Ping Luo\n2025\narXiv.org\n10.48550/arXiv.2502.14814\n把人形机器人在感知失真下的行走，从单一视觉策略改成视觉策略和盲策略的在线组合问题：先分别训练两套策略，再用只依赖本体感觉的回报估计器判断何时切换，从而在动态障碍、遮挡和噪声高度图下保持可恢复性。\n双策略共训 本体感觉回报估计 保守门控切换 单阶段可部署训练\n在同一动作空间和奖励空间下，分别训练 perceptive vision policy 和 proprioception-only blind policy，使两者都能处理 gaps、hurdles 和 obstacles，并在部署时互为备份。 提出基于历史本体感觉序列的 return estimator，使用 TD 和 lambda-return 估计当前状态下各策略未来回报，避免依赖视觉或 privileged state，因此可以直接上硬件。 用估计回报比较来做策略选择，并加入 switch period T、阈值 G_th、视觉回报平滑窗口和高关节速度抑制，减少错误切换和危险动作抖动。 通过速度估计器与 perception noise 和 domain randomization，把可部署训练压成单阶段流程，减少额外 belief encoder 或二阶段训练的复杂度。\n不是继续强化视觉感知，而是把 perception failure 显式转成 policy selection 问题：先训练两个互补技能，再用回报估计做组合。实现上比纯贪心切换更保守。\n用历史本体感觉序列预测各策略在一个 switch window 内的累计回报，先比较 vision 和 blind 的估计回报，再结合阈值 G_th、滑动平滑和高关节速度禁切规则决定动作来源。\n在共享状态、动作和奖励空间下，近似比较候选策略的长期回报可以选择更优动作；当视觉观测偏离训练分布时，盲策略通常给出更高的回报估计，因此能够接管并恢复稳定行走。\n仿真在 Unitree G1/H1 上做 gaps、hurdles、obstacles 三类地形，并注入 Gaussian、shifting 和 floating 噪声，最高到 100%。真实机器人上也验证了静态障碍、动态障碍以及把 heightmap 置零的极端感知失真。\n在 100% 噪声下，VB-Com 的 goal completion 为 84.81%，vision-only 只有 48.71%，noisy perceptive 为 80.52%；在 0%-70% 噪声区间，VB-Com 基本维持在 82%-84% completion，碰撞保持在约 1.5%-2.6%。它在真实 G1/H1 上也能在障碍突然出现时快速切到盲策略，避免 vision-only 的延迟反应。\n阈值很关键：去掉 G_th 后 completion 直接掉到 48.48%，collision 升到 6.24%。回报估计器方面，1-step 和 5-step 明显不够，MC-based 也弱于 TD 版本，50-100 step 区间最好，说明切换窗口的长期回报建模是核心。\n上限受训练地形覆盖限制，未见过的 gap 仍可能失败；回报估计器只能通过本体感觉间接判断视觉失真，通常是动作已受影响后再切换，不是完全前瞻式。作为 arXiv 预印本，目前还缺少更大范围任务和更系统的失败模式分析。\n可以进一步加入更多子策略或显式的感知质量检测器，扩展到更复杂的动态或可变形地形，并降低对阈值和 switch period 手工调参的敏感性。\n最适合迁移到动作空间相近、并且有可靠本体感觉 fallback 的其他 legged 或 humanoid 平台；如果任务需要不同技能原语、没有安全盲策略，或更依赖语义理解而不是几何地形信息，迁移性会明显下降。\nVB-Com 用本体感觉驱动的回报估计在视觉策略和盲策略之间在线切换，让人形机器人在感知失真、动态障碍和遮挡下仍能稳定行走。"
+    },
+    {
+      "route_id": "c53b83ae-2eb0-4de9-b207-d24c848f30f8",
+      "paper_id": "c53b83ae-2eb0-4de9-b207-d24c848f30f8",
+      "dir_name": "Ha-2025-Learning-based-legged-locomotion-State-of-the-art-and-future-perspectives",
+      "title": "Learning-based legged locomotion: State of the art and future perspectives",
+      "authors": [
+        "Sehoon Ha",
+        "Joonho Lee",
+        "Michiel van de Panne",
+        "Zhaoming Xie",
+        "Wenhao Yu",
+        "Majid Khadiv"
+      ],
+      "year": 2025,
+      "journal": "The International Journal of Robotics Research",
+      "venue": "The International Journal of Robotics Research",
+      "doi": "10.1177/02783649241312698",
+      "read_status": "read",
+      "collection_name": "Todo",
+      "collection_key": "RECF7KND",
+      "collection_index": 9,
+      "generated_with_model": "gpt-5.4-mini",
+      "generated_at": "2026-04-03T15:24:20+00:00",
+      "core_innovation": "这篇综述不是提出单一新算法，而是把学习式腿足运动整理成一张可操作的全景地图：从硬件演化、仿真器、MDP设计、学习框架、sim-to-real迁移，到四足/双足/轮腿/全身协同与社会影响，系统解释了为什么近年的进展来自“系统工程 + 学习算法”的共同推进。",
+      "technical_contributions": [
+        {
+          "title": "全链路历史脉络梳理",
+          "body": "回顾了腿足运动从早期反馈控制、模板模型、CPG，到深度强化学习和大规模并行仿真的演化，并把四足与双足的发展放在同一条技术谱系中讨论，帮助读者快速建立时代背景。"
+        },
+        {
+          "title": "用MDP统一拆解 locomotion 设计",
+          "body": "把学习式运动控制拆成 dynamics、observation、reward、action 四个核心部件，明确每一项设计选择对训练稳定性、样本效率、可迁移性的影响，避免只盯着算法名字而忽略任务建模。"
+        },
+        {
+          "title": "系统总结学习框架",
+          "body": "对 end-to-end、curriculum learning、hierarchical learning、privileged learning 做了分类，并给出各自适用场景：简单任务可直接端到端，复杂任务更依赖课程、分层与特权信息蒸馏。"
+        },
+        {
+          "title": "给出 sim-to-real 的四条主线",
+          "body": "将真实部署中的主要手段归纳为 good system design、system identification、domain randomization、domain adaptation，强调现实中成功的关键往往不是单点 trick，而是多种迁移策略的组合。"
+        }
+      ],
+      "methodological_breakthrough": {
+        "novelty": "这篇文章的创新点在于，它没有把学习式腿足运动当作纯算法问题，而是用“硬件-仿真-MDP-迁移-混合控制”的分层框架，把一个快速膨胀的领域重新组织成可教学、可检索、可决策的研究路线图。",
+        "key_technique": "核心方法是分层 taxonomy：先按系统层面划分硬件与仿真，再按 MDP 元素划分状态/奖励/动作，再按训练范式划分端到端、课程、层次化、特权学习，最后按迁移与混合控制总结实机落地路径。",
+        "theory": "隐含理论判断是：腿足运动的性能上限并不由 RL 算法单独决定，而是由 embodiment、观测可用性、奖励设计、动作参数化、接触建模和迁移策略共同决定；学习方法与模型控制是互补关系，不是互斥关系。"
+      },
+      "key_results": {
+        "benchmarks": "本综述没有提出新的实验基准；它汇总了代表性任务和场景，包括四足粗糙地形、跑酷、stepping stones、双足行走、轮腿导航、loco-manipulation 等，并指出 PPO/TRPO + GPU 仿真 + proprioceptive hardware 已成为近年的主流组合。",
+        "improvements": "文献层面的主要结论是：低成本高带宽的 proprioceptive actuators、Isaac Gym/MuJoCo/MJX 等高吞吐仿真、privileged learning、domain randomization/adaptation、课程学习和层次化策略，共同推动了从实验室 demo 到真机鲁棒行为的跃迁。",
+        "ablation": "本文没有做新的消融实验；它主要做定性对比，例如 PD 动作 vs torque action、当前观测 vs 历史观测、显式地图 vs 原始视觉、端到端 vs 分层、刚性接触 vs 顺应接触，并据此总结工程取舍。"
+      },
+      "limitations": {
+        "current": "作为综述，它没有新的理论保证、统一 benchmark 或量化比较；部分结论依赖文献选择和启发式统计，例如用 Google Scholar 搜索估算仿真器使用率，存在一定偏差。",
+        "future": "后续更需要可复现的跨机器人基准、更严格的安全约束验证、对 sim-to-real 误差来源的量化分析，以及把 foundation models 真正接到低层 locomotion 控制上。",
+        "transferability": "文中的框架对四足、双足、轮腿以及部分 loco-manipulation 具有较强迁移性，但对超软环境、极端接触场景或非典型运动方式，仍需要重新设计状态、奖励和接触模型。"
+      },
+      "one_line_summary": "一篇适合快速建立全局图景的高质量综述：它清楚说明学习式腿足运动的关键不在某个更强 RL 算法，而在硬件、仿真、MDP 设计与 sim-to-real 体系的协同进化。",
+      "search_text": "Learning-based legged locomotion: State of the art and future perspectives\nSehoon Ha Joonho Lee Michiel van de Panne Zhaoming Xie Wenhao Yu Majid Khadiv\n2025\nThe International Journal of Robotics Research\n10.1177/02783649241312698\n这篇综述不是提出单一新算法，而是把学习式腿足运动整理成一张可操作的全景地图：从硬件演化、仿真器、MDP设计、学习框架、sim-to-real迁移，到四足/双足/轮腿/全身协同与社会影响，系统解释了为什么近年的进展来自“系统工程 + 学习算法”的共同推进。\n全链路历史脉络梳理 用MDP统一拆解 locomotion 设计 系统总结学习框架 给出 sim-to-real 的四条主线\n回顾了腿足运动从早期反馈控制、模板模型、CPG，到深度强化学习和大规模并行仿真的演化，并把四足与双足的发展放在同一条技术谱系中讨论，帮助读者快速建立时代背景。 把学习式运动控制拆成 dynamics、observation、reward、action 四个核心部件，明确每一项设计选择对训练稳定性、样本效率、可迁移性的影响，避免只盯着算法名字而忽略任务建模。 对 end-to-end、curriculum learning、hierarchical learning、privileged learning 做了分类，并给出各自适用场景：简单任务可直接端到端，复杂任务更依赖课程、分层与特权信息蒸馏。 将真实部署中的主要手段归纳为 good system design、system identification、domain randomization、domain adaptation，强调现实中成功的关键往往不是单点 trick，而是多种迁移策略的组合。\n这篇文章的创新点在于，它没有把学习式腿足运动当作纯算法问题，而是用“硬件-仿真-MDP-迁移-混合控制”的分层框架，把一个快速膨胀的领域重新组织成可教学、可检索、可决策的研究路线图。\n核心方法是分层 taxonomy：先按系统层面划分硬件与仿真，再按 MDP 元素划分状态/奖励/动作，再按训练范式划分端到端、课程、层次化、特权学习，最后按迁移与混合控制总结实机落地路径。\n隐含理论判断是：腿足运动的性能上限并不由 RL 算法单独决定，而是由 embodiment、观测可用性、奖励设计、动作参数化、接触建模和迁移策略共同决定；学习方法与模型控制是互补关系，不是互斥关系。\n本综述没有提出新的实验基准；它汇总了代表性任务和场景，包括四足粗糙地形、跑酷、stepping stones、双足行走、轮腿导航、loco-manipulation 等，并指出 PPO/TRPO + GPU 仿真 + proprioceptive hardware 已成为近年的主流组合。\n文献层面的主要结论是：低成本高带宽的 proprioceptive actuators、Isaac Gym/MuJoCo/MJX 等高吞吐仿真、privileged learning、domain randomization/adaptation、课程学习和层次化策略，共同推动了从实验室 demo 到真机鲁棒行为的跃迁。\n本文没有做新的消融实验；它主要做定性对比，例如 PD 动作 vs torque action、当前观测 vs 历史观测、显式地图 vs 原始视觉、端到端 vs 分层、刚性接触 vs 顺应接触，并据此总结工程取舍。\n作为综述，它没有新的理论保证、统一 benchmark 或量化比较；部分结论依赖文献选择和启发式统计，例如用 Google Scholar 搜索估算仿真器使用率，存在一定偏差。\n后续更需要可复现的跨机器人基准、更严格的安全约束验证、对 sim-to-real 误差来源的量化分析，以及把 foundation models 真正接到低层 locomotion 控制上。\n文中的框架对四足、双足、轮腿以及部分 loco-manipulation 具有较强迁移性，但对超软环境、极端接触场景或非典型运动方式，仍需要重新设计状态、奖励和接触模型。\n一篇适合快速建立全局图景的高质量综述：它清楚说明学习式腿足运动的关键不在某个更强 RL 算法，而在硬件、仿真、MDP 设计与 sim-to-real 体系的协同进化。"
+    },
+    {
+      "route_id": "12a6e3ec-40cd-4847-a16f-d9cdb16b6f71",
+      "paper_id": "12a6e3ec-40cd-4847-a16f-d9cdb16b6f71",
+      "dir_name": "Messikommer-2025-Student-Informed-Teacher-Training",
+      "title": "Student-Informed Teacher Training",
+      "authors": [
+        "Nico Messikommer",
+        "Jiaxu Xing",
+        "Elie Aljalbout",
+        "Davide Scaramuzza"
+      ],
+      "year": 2025,
+      "journal": "International Conference on Learning Representations",
+      "venue": "International Conference on Learning Representations",
+      "doi": "10.48550/arXiv.2412.09149",
+      "read_status": "read",
+      "collection_name": "Todo",
+      "collection_key": "RECF7KND",
+      "collection_index": 10,
+      "generated_with_model": "gpt-5.4-mini",
+      "generated_at": "2026-04-03T15:24:55+00:00",
+      "core_innovation": "把 privileged imitation learning 从“让学生追教师”改成“让教师先考虑学生能不能模仿”。论文用 teacher-student 性能上界来改写教师目标，在 PPO 里同时加入学生-教师动作差异惩罚和教师参数的 KL 反向梯度，并配合代理学生、共享动作解码器和对齐阶段，让教师主动学出更“可模仿”的行为。",
+      "technical_contributions": [
+        {
+          "title": "基于性能上界的教师目标重写",
+          "body": "将 imitation learning 的性能差距上界显式嵌入教师优化目标，用 teacher-student 动作分歧近似上界项，从而把“可被学生复现”变成教师训练时的直接优化信号，而不是训练完教师后再被动蒸馏给学生。"
+        },
+        {
+          "title": "Proxy student 免渲染估计",
+          "body": "引入 proxy student \u0007hat{F}_S，在教师观测空间上预测学生动作，避免教师每一步都渲染昂贵的学生图像观测；这样教师在 rollout 阶段就能近似估计自己与学生的 mismatch。"
+        },
+        {
+          "title": "共享动作解码器与特征对齐",
+          "body": "教师、学生和 proxy student 共享动作解码器 A，只让 encoder 分别适配各自观测，再在 alignment phase 用 paired teacher/student 观测做 L1 特征对齐，既增强表示共享，又减少学生完全学歪的风险。"
+        },
+        {
+          "title": "三阶段交替训练流程",
+          "body": "提出 rollout、policy update、alignment 三个交替阶段：rollout 中把 teacher-student KL 作为奖励惩罚，policy update 中把 KL gradient 直接并入 teacher 的 PPO 更新，alignment 中冻结 teacher，只更新 student 和 proxy student 的表示对齐。"
+        }
+      ],
+      "methodological_breakthrough": {
+        "novelty": "真正的创新点不是再做一个 student distillation，而是把教师本身变成“学生感知的教师”。教师优化时不只追求任务回报，还要显式考虑学生观测受限带来的可模仿性约束。",
+        "key_technique": "proxy student + rollout KL penalty + PPO 中的 KL-div gradient + shared decoder + teacher/student/proxy 的分阶段特征对齐。",
+        "theory": "论文借用 imitation learning 的性能上界 J(\\pi_T)-J(\\pi_S) 与 teacher-state 分布下的动作差异项，把学生-教师 KL 作为可微近似项。直观上，教师要最大化任务回报 R，同时最小化学生在教师访问状态上的预测偏差，从而降低 teacher-student 的性能 gap。"
+      },
+      "key_results": {
+        "benchmarks": "三类任务：Color Maze、vision-based quadrotor obstacle avoidance、vision-based drawer opening。对比基线包括 BC、DAgger、HLRL、DWBC、COSIL，以及去掉对齐项的 Ours。",
+        "improvements": "Color Maze 中，带方法的 teacher 会避开学生看不懂的 maze，学生在全部测试轨迹都能到达目标，而 BC/DAgger/无对齐版本都失败或明显更差。Quadrotor 任务上，w Align (Ours) 的 success rate 为 0.46±0.04，高于 w/o Align 的 0.38±0.11，也高于 DWBC 0.35、HLRL 0.31、COSIL 0.30、DAgger 0.08 和 BC 0.05。Manipulation 任务上，w Align (Ours) 达到 0.88±0.07，高于 w/o Align 的 0.61±0.18，并显著优于 DWBC 0.63、HLRL 0.61、COSIL 0.56、DAgger 0.34 和 BC 0.16。感知意识指标也明显改善：速度方向角从 63.2° 降到 32.2°，视野中的障碍物数从 2.61 提升到 3.51。",
+        "ablation": "消融显示 KL gradient 和 shared action decoder 都很关键；去掉 penalty 或 KL gradient、或去掉 shared decoder 都会明显掉点。Manipulation 上，去掉 penalty / w/o KL-Grad 只有 0.47±0.37，w/o Penalty / w KL-Grad 为 0.74±0.08，w/o shared decoder 为 0.62±0.27。对 \\u03bb_1 也较稳健，0.025 时达到 0.95±0.03 的最高成功率。"
+      },
+      "limitations": {
+        "current": "方法依赖 teacher/student 的配对观测子集和额外的 proxy/alignment 流程，训练复杂度比 BC/DAgger 高；proxy student 只是近似估计，若 student 观测极弱、噪声大或时序依赖很强，KL 估计可能不稳。实验主要在仿真中的机器人导航、飞行和操控任务上完成，缺少真实硬件验证。",
+        "future": "后续可以做真实机器人验证、减少配对观测需求、把 proxy student 做得更稳健，或者把 feature 对齐扩展到不确定性建模、离线数据、更多学生模态和多学生设置。",
+        "transferability": "对任何存在 privileged teacher + partial-observation student 的模仿学习场景都很适用，尤其是导航、操控、无人机和驾驶；但若任务没有明确 teacher-student 配对、观测差距极端大，或需要更复杂的长时序记忆与离散决策，迁移时要重新设计 proxy 与对齐机制。"
+      },
+      "one_line_summary": "这篇论文的核心结论是：不要只让学生模仿老师，而要反过来让老师学会生成“学生也能学会”的行为，从而显著缓解信息不对称带来的 imitation gap。",
+      "search_text": "Student-Informed Teacher Training\nNico Messikommer Jiaxu Xing Elie Aljalbout Davide Scaramuzza\n2025\nInternational Conference on Learning Representations\n10.48550/arXiv.2412.09149\n把 privileged imitation learning 从“让学生追教师”改成“让教师先考虑学生能不能模仿”。论文用 teacher-student 性能上界来改写教师目标，在 PPO 里同时加入学生-教师动作差异惩罚和教师参数的 KL 反向梯度，并配合代理学生、共享动作解码器和对齐阶段，让教师主动学出更“可模仿”的行为。\n基于性能上界的教师目标重写 Proxy student 免渲染估计 共享动作解码器与特征对齐 三阶段交替训练流程\n将 imitation learning 的性能差距上界显式嵌入教师优化目标，用 teacher-student 动作分歧近似上界项，从而把“可被学生复现”变成教师训练时的直接优化信号，而不是训练完教师后再被动蒸馏给学生。 引入 proxy student \u0007hat{F}_S，在教师观测空间上预测学生动作，避免教师每一步都渲染昂贵的学生图像观测；这样教师在 rollout 阶段就能近似估计自己与学生的 mismatch。 教师、学生和 proxy student 共享动作解码器 A，只让 encoder 分别适配各自观测，再在 alignment phase 用 paired teacher/student 观测做 L1 特征对齐，既增强表示共享，又减少学生完全学歪的风险。 提出 rollout、policy update、alignment 三个交替阶段：rollout 中把 teacher-student KL 作为奖励惩罚，policy update 中把 KL gradient 直接并入 teacher 的 PPO 更新，alignment 中冻结 teacher，只更新 student 和 proxy student 的表示对齐。\n真正的创新点不是再做一个 student distillation，而是把教师本身变成“学生感知的教师”。教师优化时不只追求任务回报，还要显式考虑学生观测受限带来的可模仿性约束。\nproxy student + rollout KL penalty + PPO 中的 KL-div gradient + shared decoder + teacher/student/proxy 的分阶段特征对齐。\n论文借用 imitation learning 的性能上界 J(\\pi_T)-J(\\pi_S) 与 teacher-state 分布下的动作差异项，把学生-教师 KL 作为可微近似项。直观上，教师要最大化任务回报 R，同时最小化学生在教师访问状态上的预测偏差，从而降低 teacher-student 的性能 gap。\n三类任务：Color Maze、vision-based quadrotor obstacle avoidance、vision-based drawer opening。对比基线包括 BC、DAgger、HLRL、DWBC、COSIL，以及去掉对齐项的 Ours。\nColor Maze 中，带方法的 teacher 会避开学生看不懂的 maze，学生在全部测试轨迹都能到达目标，而 BC/DAgger/无对齐版本都失败或明显更差。Quadrotor 任务上，w Align (Ours) 的 success rate 为 0.46±0.04，高于 w/o Align 的 0.38±0.11，也高于 DWBC 0.35、HLRL 0.31、COSIL 0.30、DAgger 0.08 和 BC 0.05。Manipulation 任务上，w Align (Ours) 达到 0.88±0.07，高于 w/o Align 的 0.61±0.18，并显著优于 DWBC 0.63、HLRL 0.61、COSIL 0.56、DAgger 0.34 和 BC 0.16。感知意识指标也明显改善：速度方向角从 63.2° 降到 32.2°，视野中的障碍物数从 2.61 提升到 3.51。\n消融显示 KL gradient 和 shared action decoder 都很关键；去掉 penalty 或 KL gradient、或去掉 shared decoder 都会明显掉点。Manipulation 上，去掉 penalty / w/o KL-Grad 只有 0.47±0.37，w/o Penalty / w KL-Grad 为 0.74±0.08，w/o shared decoder 为 0.62±0.27。对 \\u03bb_1 也较稳健，0.025 时达到 0.95±0.03 的最高成功率。\n方法依赖 teacher/student 的配对观测子集和额外的 proxy/alignment 流程，训练复杂度比 BC/DAgger 高；proxy student 只是近似估计，若 student 观测极弱、噪声大或时序依赖很强，KL 估计可能不稳。实验主要在仿真中的机器人导航、飞行和操控任务上完成，缺少真实硬件验证。\n后续可以做真实机器人验证、减少配对观测需求、把 proxy student 做得更稳健，或者把 feature 对齐扩展到不确定性建模、离线数据、更多学生模态和多学生设置。\n对任何存在 privileged teacher + partial-observation student 的模仿学习场景都很适用，尤其是导航、操控、无人机和驾驶；但若任务没有明确 teacher-student 配对、观测差距极端大，或需要更复杂的长时序记忆与离散决策，迁移时要重新设计 proxy 与对齐机制。\n这篇论文的核心结论是：不要只让学生模仿老师，而要反过来让老师学会生成“学生也能学会”的行为，从而显著缓解信息不对称带来的 imitation gap。"
+    }
+  ]
+}
