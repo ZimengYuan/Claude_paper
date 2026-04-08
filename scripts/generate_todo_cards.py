@@ -7,9 +7,7 @@ import argparse
 import configparser
 import json
 import re
-import subprocess
 import sys
-import tempfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -24,6 +22,7 @@ if str(ROOT) not in sys.path:
 
 from scholaraio.config import load_config
 from scholaraio.generate import _get_paper_content
+from scholaraio.metrics import call_llm
 from scholaraio.papers import read_meta
 from scholaraio.sources.zotero import parse_zotero_local
 
@@ -33,7 +32,6 @@ TODO_COLLECTION_NAME = "Todo"
 OUTPUT_PATH = ROOT / "scholaraio/web/public/site-data/todo-cards.json"
 MANIFEST_PATH = ROOT / "scholaraio/web/public/site-data/manifest.json"
 PAPER_DETAIL_DIR = ROOT / "scholaraio/web/public/site-data/papers"
-SCHEMA_PATH = ROOT / "scripts/todo_card.schema.json"
 
 CARD_SYSTEM_PROMPT = """请以顶级AI研究者的视角,对这篇论文进行快速泛读分析,提取最核心的创新点。请按以下结构输出:
 (注意排版，不同点之间区分清楚！)
@@ -175,6 +173,7 @@ def _match_todo_papers() -> list[MatchedTodoPaper]:
             title_map.setdefault(title_key, []).append(row)
 
     matched: list[MatchedTodoPaper] = []
+    unmatched_titles: list[str] = []
     for index, record in enumerate(records):
         row: dict[str, Any] | None = None
         doi_key = _norm(record.doi)
@@ -200,10 +199,14 @@ def _match_todo_papers() -> list[MatchedTodoPaper]:
                 row = best_row
 
         if row is None:
-            raise RuntimeError(f"未能为 Todo 条目匹配本地论文: {record.title}")
+            unmatched_titles.append(record.title)
+            continue
 
         detail = detail_cache[row["route_id"]]
         paper_dir = ROOT / "data/papers" / row["dir_name"]
+        if not paper_dir.exists() or not (paper_dir / "meta.json").exists():
+            unmatched_titles.append(f"{record.title} [missing local dir: {row['dir_name']}]")
+            continue
         meta = read_meta(paper_dir)
         matched.append(
             MatchedTodoPaper(
@@ -221,6 +224,16 @@ def _match_todo_papers() -> list[MatchedTodoPaper]:
                 read_status=meta.get("read_status") or detail.get("read_status") or "unread",
             )
         )
+
+    if unmatched_titles:
+        print(
+            f"[WARN] {len(unmatched_titles)} 条 Todo 未匹配到本地论文，已跳过。",
+            flush=True,
+        )
+        for title in unmatched_titles[:10]:
+            print(f"  - {title}", flush=True)
+        if len(unmatched_titles) > 10:
+            print(f"  ... 其余 {len(unmatched_titles) - 10} 条省略", flush=True)
 
     return matched
 
@@ -240,7 +253,61 @@ def _build_prompt(paper_dir: Path) -> str:
     )
 
 
-def _parse_codex_json(text: str) -> dict[str, Any]:
+def _truncate(text: str, n: int = 280) -> str:
+    s = re.sub(r"\s+", " ", str(text or "")).strip()
+    if len(s) <= n:
+        return s
+    return s[: n - 1].rstrip() + "…"
+
+
+def _split_sentences(text: str) -> list[str]:
+    raw = re.split(r"(?<=[。！？.!?])\s+|\n+", str(text or ""))
+    return [re.sub(r"\s+", " ", t).strip() for t in raw if t and t.strip()]
+
+
+def _build_fallback_body(content: dict[str, Any], *, err: Exception | None = None) -> dict[str, Any]:
+    abstract = str(content.get("l2") or "").strip()
+    conclusion = str(content.get("l3") or "").strip()
+
+    abs_sents = _split_sentences(abstract)
+    con_sents = _split_sentences(conclusion)
+
+    core = abs_sents[0] if abs_sents else _truncate(abstract, 220)
+    c1 = con_sents[0] if con_sents else (abs_sents[1] if len(abs_sents) > 1 else _truncate(abstract, 180))
+    c2 = con_sents[1] if len(con_sents) > 1 else (abs_sents[2] if len(abs_sents) > 2 else _truncate(conclusion or abstract, 180))
+
+    marker = "（自动兜底生成：模型调用失败）"
+    if err is not None:
+        marker = f"（自动兜底生成：{_truncate(str(err), 80)}）"
+
+    return _normalize_card_body(
+        {
+            "core_innovation": _truncate(core, 280),
+            "technical_contributions": [
+                {"title": "创新点 1", "body": _truncate(c1, 240)},
+                {"title": "创新点 2", "body": _truncate(c2, 240)},
+            ],
+            "methodological_breakthrough": {
+                "novelty": _truncate(con_sents[0] if con_sents else abstract, 240),
+                "key_technique": _truncate(abs_sents[0] if abs_sents else abstract, 240),
+                "theory": _truncate((con_sents[2] if len(con_sents) > 2 else "论文正文未提供明确理论证明细节。"), 240),
+            },
+            "key_results": {
+                "benchmarks": _truncate((con_sents[0] if con_sents else "详见论文实验章节。"), 220),
+                "improvements": _truncate((con_sents[1] if len(con_sents) > 1 else "详见论文指标对比表。"), 220),
+                "ablation": _truncate((con_sents[2] if len(con_sents) > 2 else "详见论文消融实验。"), 220),
+            },
+            "limitations": {
+                "current": _truncate((con_sents[-2] if len(con_sents) >= 2 else "局限性需结合全文进一步验证。"), 220),
+                "future": _truncate((con_sents[-1] if con_sents else "未来工作方向需结合作者讨论章节。"), 220),
+                "transferability": "该方法在相近机器人控制/策略学习任务中具备潜在迁移性，需按任务重新验证。",
+            },
+            "one_line_summary": _truncate(f"{core} {marker}", 260),
+        }
+    )
+
+
+def _parse_model_json(text: str) -> dict[str, Any]:
     candidate = text.strip()
     if candidate.startswith("```"):
         candidate = re.sub(r"^```[a-zA-Z0-9_-]*\n", "", candidate)
@@ -299,43 +366,26 @@ def _normalize_card_body(payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _run_codex(prompt: str, *, model: str, timeout: int) -> dict[str, Any]:
-    with tempfile.NamedTemporaryFile("w+", suffix=".json", delete=False, encoding="utf-8") as output_file:
-        output_path = Path(output_file.name)
-
-    cmd = [
-        "codex",
-        "exec",
-        "--skip-git-repo-check",
-        "--ephemeral",
-        "--sandbox",
-        "read-only",
-        "--model",
-        model,
-        "--output-schema",
-        str(SCHEMA_PATH),
-        "-o",
-        str(output_path),
-        "-",
-    ]
-
+def _run_model(prompt: str, cfg, *, model: str, timeout: int) -> dict[str, Any]:
+    backend = str(getattr(cfg.llm, "backend", "") or "").lower()
+    should_override_model = backend not in {"gemini-mcp", "codex-mcp"}
+    prev_model = cfg.llm.model
+    if should_override_model:
+        cfg.llm.model = model
     try:
-        result = subprocess.run(
-            cmd,
-            input=prompt,
-            text=True,
-            capture_output=True,
+        result = call_llm(
+            prompt=prompt,
+            config=cfg,
+            system=CARD_SYSTEM_PROMPT,
+            json_mode=True,
+            max_tokens=4000,
             timeout=timeout,
-            check=False,
+            purpose="todo.cards",
         )
-        if result.returncode != 0:
-            raise RuntimeError(
-                f"codex exec failed (exit={result.returncode}):\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}"
-            )
-        raw = output_path.read_text(encoding="utf-8")
-        return _normalize_card_body(_parse_codex_json(raw))
+        return _normalize_card_body(_parse_model_json(result.content))
     finally:
-        output_path.unlink(missing_ok=True)
+        if should_override_model:
+            cfg.llm.model = prev_model
 
 
 def _load_existing_cards() -> dict[str, dict[str, Any]]:
@@ -418,8 +468,25 @@ def _write_payload(items: list[MatchedTodoPaper], cards_by_route: dict[str, dict
 
 def _generate_one(item: MatchedTodoPaper, cfg, *, model: str, timeout: int) -> dict[str, Any]:
     paper_dir = cfg.papers_dir / item.dir_name
-    prompt = _build_prompt(paper_dir)
-    generated = _run_codex(prompt, model=model, timeout=timeout)
+    content = _get_paper_content(paper_dir, max_l4_chars=10**9)
+    prompt = (
+        "以下是论文的完整输入，请基于完整输入进行快速泛读分析。\n\n"
+        f"标题: {content['l1'].get('title', '')}\n"
+        f"作者: {', '.join(content['l1'].get('authors', []))}\n"
+        f"年份: {content['l1'].get('year', '')}\n"
+        f"期刊/会议: {content['l1'].get('journal', '')}\n"
+        f"DOI: {content['l1'].get('doi', '')}\n\n"
+        f"摘要:\n{content['l2']}\n\n"
+        f"结论:\n{content['l3']}\n\n"
+        f"正文全文:\n{content['l4']}\n"
+    )
+
+    try:
+        generated = _run_model(prompt, cfg, model=model, timeout=timeout)
+    except Exception as exc:
+        print(f"[WARN] 模型调用失败，改用本地兜底生成: {item.route_id} :: {exc}", flush=True)
+        generated = _build_fallback_body(content, err=exc)
+
     return {
         "route_id": item.route_id,
         "paper_id": item.paper_id,
@@ -445,9 +512,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Generate Todo summary cards for the static Library page.")
     parser.add_argument("--force", action="store_true", help="Regenerate existing cards instead of reusing them.")
     parser.add_argument("--limit", type=int, default=0, help="Only process the first N Todo papers (0 means all).")
-    parser.add_argument("--workers", type=int, default=4, help="Number of concurrent codex generations.")
-    parser.add_argument("--model", default="gpt-5.4-mini", help="Codex model name.")
-    parser.add_argument("--timeout", type=int, default=900, help="Per-paper codex timeout in seconds.")
+    parser.add_argument("--workers", type=int, default=4, help="Number of concurrent generations.")
+    parser.add_argument("--model", default="gpt-5.4-mini", help="Model name.")
+    parser.add_argument("--timeout", type=int, default=900, help="Per-paper generation timeout in seconds.")
     args = parser.parse_args()
 
     cfg = load_config()
