@@ -885,6 +885,8 @@ watch(() => [
 })
 
 onMounted(async () => {
+  await navigateTo('/explore', { replace: true })
+  return
   try {
     await loadGraphManifest()
     await loadGraph()

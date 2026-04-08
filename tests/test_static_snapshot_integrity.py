@@ -67,11 +67,13 @@ def test_nuxt_prerender_without_knowledge_base_route() -> None:
     root = _root()
     config = (root / 'scholaraio' / 'web' / 'nuxt.config.ts').read_text(encoding='utf-8')
     assert "'/knowledge'" not in config
-    assert "const baseRoutes = ['/', '/explore']" in config
+    assert "const baseRoutes = ['/', '/explore', '/graph']" in config
 
 
 def test_graph_route_redirected_to_explore() -> None:
     root = _root()
     config = (root / 'scholaraio' / 'web' / 'nuxt.config.ts').read_text(encoding='utf-8')
+    graph_page = (root / 'scholaraio' / 'web' / 'pages' / 'graph.vue').read_text(encoding='utf-8')
     assert "'/graph': { redirect: '/explore' }" in config
     assert "'/graph/**': { redirect: '/explore' }" in config
+    assert "navigateTo('/explore'" in graph_page
