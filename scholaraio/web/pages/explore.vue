@@ -91,6 +91,61 @@
 
         <div class="p-5 sm:p-6">
           <div v-if="exploreTab === 'trends'">
+            <div class="mb-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <article class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4">
+                <div class="text-xs uppercase tracking-wide text-slate-500">Read Progress</div>
+                <div class="mt-2 text-2xl font-semibold text-slate-900">{{ formatPercent(readStats.readRate) }}</div>
+                <p class="mt-1 text-xs text-slate-500">{{ formatCount(readStats.read) }} read / {{ formatCount(readStats.total) }} total</p>
+              </article>
+              <article class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4">
+                <div class="text-xs uppercase tracking-wide text-slate-500">Backlog</div>
+                <div class="mt-2 text-2xl font-semibold text-slate-900">{{ formatCount(readStats.unread) }}</div>
+                <p class="mt-1 text-xs text-slate-500">unread papers</p>
+              </article>
+              <article class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4">
+                <div class="text-xs uppercase tracking-wide text-slate-500">Missing DOI</div>
+                <div class="mt-2 text-2xl font-semibold text-slate-900">{{ formatCount(dataQualityStats.missingDoi) }}</div>
+                <p class="mt-1 text-xs text-slate-500">{{ formatPercent(dataQualityStats.missingDoiRate) }} of library</p>
+              </article>
+              <article class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4">
+                <div class="text-xs uppercase tracking-wide text-slate-500">Missing Abstract</div>
+                <div class="mt-2 text-2xl font-semibold text-slate-900">{{ formatCount(dataQualityStats.missingAbstract) }}</div>
+                <p class="mt-1 text-xs text-slate-500">quality watch</p>
+              </article>
+            </div>
+
+            <div class="mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <h3 class="text-base font-semibold text-slate-900">Topic Filter & Trend Window</h3>
+                  <p class="mt-1 text-xs text-slate-500">点击主题即可联动到 Papers 和建议阅读队列。</p>
+                </div>
+                <div class="inline-flex rounded-full border border-slate-200 bg-white p-1 text-xs">
+                  <button class="rounded-full px-3 py-1.5" :class="trendWindowYears === 1 ? 'bg-slate-900 text-white' : 'text-slate-600'" @click="trendWindowYears = 1">1y</button>
+                  <button class="rounded-full px-3 py-1.5" :class="trendWindowYears === 3 ? 'bg-slate-900 text-white' : 'text-slate-600'" @click="trendWindowYears = 3">3y</button>
+                  <button class="rounded-full px-3 py-1.5" :class="trendWindowYears === 5 ? 'bg-slate-900 text-white' : 'text-slate-600'" @click="trendWindowYears = 5">5y</button>
+                </div>
+              </div>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <button
+                  class="rounded-full border px-3 py-1 text-xs transition"
+                  :class="selectedTopic ? 'border-slate-200 bg-white text-slate-700' : 'border-blue-500 bg-blue-50 text-blue-700'"
+                  @click="selectedTopic = ''"
+                >
+                  All topics
+                </button>
+                <button
+                  v-for="topic in topTopicChips"
+                  :key="topic"
+                  class="rounded-full border px-3 py-1 text-xs transition"
+                  :class="selectedTopic === topic ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100'"
+                  @click="selectedTopic = topic"
+                >
+                  {{ topic }}
+                </button>
+              </div>
+            </div>
+
             <div class="grid gap-4 xl:grid-cols-[minmax(0,1.3fr),minmax(0,0.7fr)]">
               <div>
                 <h3 class="text-base font-semibold text-slate-900">Trend Highlights</h3>
@@ -154,6 +209,34 @@
                     </div>
                   </div>
                 </div>
+
+                <div class="mt-6 rounded-2xl border border-slate-200 p-4">
+                  <div class="flex items-center justify-between gap-3">
+                    <h4 class="text-sm font-semibold text-slate-900">Topic Heat Timeline</h4>
+                    <span class="text-xs text-slate-500">{{ fullYearRange.length ? (fullYearRange[0] + ' - ' + fullYearRange[fullYearRange.length - 1]) : 'n/a' }}</span>
+                  </div>
+                  <div v-if="keywordYearRows.length" class="mt-4 space-y-3">
+                    <div v-for="row in keywordYearRows" :key="row.topic" class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
+                      <div class="mb-2 flex items-center justify-between gap-3">
+                        <button class="truncate text-left text-xs font-medium text-slate-700 hover:text-blue-700" @click="selectedTopic = row.topic">{{ row.topic }}</button>
+                        <span class="text-[11px] text-slate-500">{{ row.total }}</span>
+                      </div>
+                      <div class="flex h-10 items-end gap-1">
+                        <div
+                          v-for="bar in row.bars"
+                          :key="bar.year"
+                          class="group relative w-full rounded-t bg-blue-300"
+                          :style="{ height: bar.height }"
+                        >
+                          <span class="pointer-events-none absolute -top-7 left-1/2 hidden -translate-x-1/2 whitespace-nowrap rounded bg-slate-800 px-1.5 py-0.5 text-[10px] text-white group-hover:block">
+                            {{ bar.year }} · {{ bar.count }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-else class="mt-4 text-sm text-slate-500">Not enough paper metadata to build topic timeline.</div>
+                </div>
               </div>
 
               <div>
@@ -197,6 +280,74 @@
                 <div v-else class="mt-4 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm leading-6 text-slate-600">
                   当前主库还没有 topic model。
                 </div>
+
+                <div class="mt-5 rounded-2xl border border-slate-200 p-4">
+                  <h4 class="text-sm font-semibold text-slate-900">Rising Topics</h4>
+                  <div v-if="risingTopics.length" class="mt-3 space-y-2">
+                    <button
+                      v-for="item in risingTopics"
+                      :key="item.topic"
+                      class="flex w-full items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-left text-xs hover:bg-white"
+                      @click="selectedTopic = item.topic"
+                    >
+                      <span class="truncate text-slate-700">{{ item.topic }}</span>
+                      <span class="shrink-0 font-medium text-emerald-700">+{{ item.momentum.toFixed(1) }}</span>
+                    </button>
+                  </div>
+                  <div v-else class="mt-3 text-sm text-slate-500">No rising signal yet.</div>
+                </div>
+
+                <div class="mt-4 rounded-2xl border border-slate-200 p-4">
+                  <h4 class="text-sm font-semibold text-slate-900">Cooling Topics</h4>
+                  <div v-if="fadingTopics.length" class="mt-3 space-y-2">
+                    <button
+                      v-for="item in fadingTopics"
+                      :key="item.topic"
+                      class="flex w-full items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-left text-xs hover:bg-white"
+                      @click="selectedTopic = item.topic"
+                    >
+                      <span class="truncate text-slate-700">{{ item.topic }}</span>
+                      <span class="shrink-0 font-medium text-amber-700">{{ item.momentum.toFixed(1) }}</span>
+                    </button>
+                  </div>
+                  <div v-else class="mt-3 text-sm text-slate-500">No cooling signal yet.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 grid gap-4 lg:grid-cols-2">
+              <div class="rounded-2xl border border-slate-200 p-4">
+                <h4 class="text-sm font-semibold text-slate-900">Representative Milestones (by year)</h4>
+                <p class="mt-1 text-xs text-slate-500">每年选引用最高代表作，可快速复盘技术演化路径。</p>
+                <div v-if="representativeTimeline.length" class="mt-4 space-y-2">
+                  <button
+                    v-for="item in representativeTimeline"
+                    :key="item.year + '-' + (item.paper.route_id || item.paper.paper_id || item.paper.title)"
+                    class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-left hover:bg-white"
+                    @click="openPaperRef(item.paper.route_id || item.paper.paper_ref)"
+                  >
+                    <div class="text-[11px] text-slate-500">{{ item.year }} · {{ formatCount(item.citation) }} cites</div>
+                    <div class="mt-1 line-clamp-2 text-sm font-medium text-slate-800">{{ item.paper.title }}</div>
+                  </button>
+                </div>
+                <div v-else class="mt-3 text-sm text-slate-500">No yearly milestones available.</div>
+              </div>
+
+              <div class="rounded-2xl border border-slate-200 p-4">
+                <h4 class="text-sm font-semibold text-slate-900">Action Queue · Priority 10</h4>
+                <p class="mt-1 text-xs text-slate-500">未读论文按“趋势动量 + 引用影响 + 近年性”综合排序。</p>
+                <div v-if="priorityReadingQueue.length" class="mt-4 space-y-2">
+                  <button
+                    v-for="(paper, idx) in priorityReadingQueue"
+                    :key="paper.route_id || paper.paper_id || idx"
+                    class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-left hover:bg-white"
+                    @click="openPaperRef(paper.route_id || paper.paper_id)"
+                  >
+                    <div class="text-[11px] text-slate-500">#{{ idx + 1 }} · {{ paper.year || '?' }} · {{ (paper._priorityScore || 0).toFixed(1) }}</div>
+                    <div class="mt-1 line-clamp-2 text-sm font-medium text-slate-800">{{ paper.title }}</div>
+                  </button>
+                </div>
+                <div v-else class="mt-3 text-sm text-slate-500">All papers are read or queue unavailable.</div>
               </div>
             </div>
           </div>
@@ -207,6 +358,7 @@
                 <h3 class="text-base font-semibold text-slate-900">Representative Papers</h3>
                 <p class="mt-1 text-xs text-slate-500">从“高引用代表作”和“近年论文”两个视角观察当前主库的技术重心。</p>
                 <p class="mt-1 text-xs text-slate-400">显示 {{ displayedResults.length }} / {{ paperResultTotal }}</p>
+                <p v-if="selectedTopic" class="mt-1 text-xs text-blue-600">Topic filter: {{ selectedTopic }}</p>
               </div>
               <div class="inline-flex rounded-full border border-slate-200 bg-slate-50 p-1 text-sm">
                 <button class="rounded-full px-4 py-2 transition" :class="paperView === 'top' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'" @click="paperView = 'top'">
@@ -313,6 +465,7 @@ const { fetchJson } = useStaticSiteData()
 const router = useRouter()
 
 const selectedLibrary = ref(null)
+const libraryPapers = ref([])
 const loading = ref(true)
 const errorMessage = ref('')
 const paperView = ref('top')
@@ -321,6 +474,8 @@ const exploreTab = ref('trends')
 const roadmap = ref('')
 const activeTopicId = ref(null)
 const activeRoadmapSection = ref(0)
+const trendWindowYears = ref(3)
+const selectedTopic = ref('')
 
 const exploreTabs = [
   { key: 'trends', label: 'Trends & Topics' },
@@ -349,10 +504,232 @@ const trendHighlights = computed(() => trendOverview.value.trend_highlights || [
 const topPapers = computed(() => selectedLibrary.value?.papers_sample || [])
 const recentPapers = computed(() => trendOverview.value.recent_papers_sample || [])
 const allPaperResults = computed(() => paperView.value === 'recent' ? recentPapers.value : topPapers.value)
-const paperResultTotal = computed(() => allPaperResults.value.length)
-const displayedResults = computed(() => allPaperResults.value.slice(0, visiblePaperCount.value))
+
+const STOPWORDS = new Set([
+  'the', 'and', 'for', 'with', 'from', 'into', 'towards', 'toward', 'based', 'using', 'via', 'under', 'over',
+  'in', 'on', 'of', 'to', 'a', 'an', 'is', 'are', 'by', 'as', 'be', 'or', 'at', 'we', 'our', 'their', 'this',
+  'that', 'these', 'those', 'can', 'may', 'new', 'toward', 'study', 'learning', 'model', 'models', 'robot', 'robots',
+])
+
+function normalizeTopicToken(token) {
+  const value = String(token || '').toLowerCase().trim()
+  if (!value) return ''
+  if (value === 'rl') return 'reinforcement learning'
+  if (value === 'offline rl') return 'offline reinforcement learning'
+  if (value === 'vla') return 'vision-language-action'
+  if (value === 'wbc') return 'whole-body control'
+  if (value === 'mpc') return 'model predictive control'
+  return value
+}
+
+function extractPaperTopics(paper) {
+  const tags = Array.isArray(paper?.tags) ? paper.tags : []
+  const title = String(paper?.title || '').toLowerCase()
+  const abstract = String(paper?.abstract || '').toLowerCase().slice(0, 1200)
+  const text = `${title} ${abstract}`
+  const bucket = new Set(tags.map((tag) => normalizeTopicToken(tag)).filter(Boolean))
+
+  const phraseRules = [
+    ['reinforcement learning', /reinforcement learning|\brl\b/],
+    ['offline reinforcement learning', /offline reinforcement learning|offline rl/],
+    ['diffusion', /diffusion|denoising/],
+    ['world model', /world model|world-model/],
+    ['humanoid', /humanoid/],
+    ['legged locomotion', /legged|quadruped|locomotion/],
+    ['loco-manipulation', /loco-?manipulation/],
+    ['imitation learning', /imitation learning|behavior cloning/],
+    ['model predictive control', /model predictive control|\bmpc\b/],
+    ['vision-language-action', /vision-language-action|\bvla\b/],
+    ['transformer', /transformer|attention/],
+    ['teleoperation', /teleoperation|teleop/],
+  ]
+
+  for (const [name, rule] of phraseRules) {
+    if (rule.test(text)) bucket.add(name)
+  }
+
+  const tokens = (title.match(/[a-z][a-z0-9-]{3,}/g) || [])
+    .map((token) => normalizeTopicToken(token))
+    .filter((token) => token && !STOPWORDS.has(token) && token.length <= 24)
+  for (const token of tokens.slice(0, 12)) {
+    bucket.add(token)
+  }
+
+  return [...bucket]
+}
+
+function paperContainsTopic(paper, topic) {
+  const key = normalizeTopicToken(topic)
+  if (!key) return true
+  const topics = extractPaperTopics(paper)
+  return topics.some((topicName) => topicName.includes(key) || key.includes(topicName))
+}
+
+const filteredPaperResults = computed(() => {
+  if (!selectedTopic.value) return allPaperResults.value
+  return allPaperResults.value.filter((paper) => paperContainsTopic(paper, selectedTopic.value))
+})
+
+const paperResultTotal = computed(() => filteredPaperResults.value.length)
+const displayedResults = computed(() => filteredPaperResults.value.slice(0, visiblePaperCount.value))
+
+const fullYearRange = computed(() => {
+  const years = libraryPapers.value
+    .map((paper) => Number(paper?.year || 0))
+    .filter((year) => Number.isFinite(year) && year > 1900)
+    .sort((a, b) => a - b)
+  if (!years.length) return []
+  return [...new Set(years)]
+})
+
+const keywordYearRows = computed(() => {
+  const years = fullYearRange.value
+  if (!years.length) return []
+
+  const table = new Map()
+  for (const paper of libraryPapers.value) {
+    const year = Number(paper?.year || 0)
+    if (!Number.isFinite(year) || year <= 1900) continue
+    const topics = extractPaperTopics(paper)
+    for (const topic of topics) {
+      if (!topic) continue
+      if (!table.has(topic)) {
+        table.set(topic, { topic, total: 0, yearly: new Map() })
+      }
+      const row = table.get(topic)
+      row.total += 1
+      row.yearly.set(year, (row.yearly.get(year) || 0) + 1)
+    }
+  }
+
+  const maxCell = Math.max(1, ...[...table.values()].map((row) => Math.max(0, ...years.map((y) => row.yearly.get(y) || 0))))
+
+  return [...table.values()]
+    .filter((row) => row.total >= 4)
+    .sort((a, b) => b.total - a.total)
+    .slice(0, 14)
+    .map((row) => ({
+      topic: row.topic,
+      total: row.total,
+      bars: years.map((year) => {
+        const count = row.yearly.get(year) || 0
+        return {
+          year,
+          count,
+          height: `${Math.max(8, Math.round((count / maxCell) * 100))}%`,
+        }
+      }),
+    }))
+})
+
+const topTopicChips = computed(() => keywordYearRows.value.slice(0, 10).map((item) => item.topic))
+
+const topicMomentumRows = computed(() => {
+  const years = fullYearRange.value
+  if (!years.length) return []
+  const maxYear = years[years.length - 1]
+  const win = Number(trendWindowYears.value || 3)
+  const recentStart = maxYear - win + 1
+
+  return keywordYearRows.value.map((row) => {
+    const recent = row.bars.filter((item) => item.year >= recentStart).reduce((sum, item) => sum + item.count, 0)
+    const past = row.bars.filter((item) => item.year < recentStart).reduce((sum, item) => sum + item.count, 0)
+    const recentAvg = recent / Math.max(1, win)
+    const pastAvg = past / Math.max(1, years.length - win)
+    return {
+      topic: row.topic,
+      total: row.total,
+      recent,
+      past,
+      momentum: Number((recentAvg - pastAvg).toFixed(2)),
+    }
+  })
+})
+
+const risingTopics = computed(() => topicMomentumRows.value
+  .filter((item) => item.recent >= 2)
+  .sort((a, b) => b.momentum - a.momentum)
+  .slice(0, 6)
+)
+
+const fadingTopics = computed(() => topicMomentumRows.value
+  .filter((item) => item.past >= 2)
+  .sort((a, b) => a.momentum - b.momentum)
+  .slice(0, 6)
+)
+
+const readStats = computed(() => {
+  const total = libraryPapers.value.length
+  const read = libraryPapers.value.filter((paper) => ['read', 'done'].includes(String(paper?.read_status || '').toLowerCase())).length
+  const reading = libraryPapers.value.filter((paper) => String(paper?.read_status || '').toLowerCase() === 'reading').length
+  const unread = Math.max(0, total - read - reading)
+  return {
+    total,
+    read,
+    reading,
+    unread,
+    readRate: total ? read / total : 0,
+  }
+})
+
+const dataQualityStats = computed(() => {
+  const papers = libraryPapers.value
+  const total = papers.length || 1
+  const missingDoi = papers.filter((paper) => !String(paper?.doi || '').trim()).length
+  const missingYear = papers.filter((paper) => !Number(paper?.year || 0)).length
+  const missingAbstract = papers.filter((paper) => !String(paper?.abstract || '').trim()).length
+  return {
+    missingDoi,
+    missingYear,
+    missingAbstract,
+    missingDoiRate: missingDoi / total,
+  }
+})
+
+const representativeTimeline = computed(() => {
+  const map = new Map()
+  for (const paper of libraryPapers.value) {
+    if (selectedTopic.value && !paperContainsTopic(paper, selectedTopic.value)) continue
+    const year = Number(paper?.year || 0)
+    if (!Number.isFinite(year) || year <= 1900) continue
+    const citation = Number(paper?.citation_count || paper?.cited_by_count || 0)
+    const existing = map.get(year)
+    if (!existing || citation > existing.citation) {
+      map.set(year, { year, paper, citation })
+    }
+  }
+  return [...map.values()]
+    .sort((a, b) => b.year - a.year)
+    .slice(0, 12)
+})
+
+const priorityReadingQueue = computed(() => {
+  const rising = new Set(risingTopics.value.slice(0, 4).map((item) => item.topic))
+  const maxYear = fullYearRange.value[fullYearRange.value.length - 1] || new Date().getFullYear()
+
+  const candidates = libraryPapers.value
+    .filter((paper) => {
+      const status = String(paper?.read_status || '').toLowerCase()
+      return status !== 'read' && status !== 'done'
+    })
+    .map((paper) => {
+      const citation = Number(paper?.citation_count || paper?.cited_by_count || 0)
+      const year = Number(paper?.year || 0)
+      const topics = extractPaperTopics(paper)
+      const trendHit = topics.some((topic) => rising.has(topic))
+      const score = Math.log10(citation + 1) * 3 + Math.max(0, year - (maxYear - 5)) * 0.7 + (trendHit ? 2 : 0)
+      return { ...paper, _priorityScore: score }
+    })
+    .sort((a, b) => b._priorityScore - a._priorityScore)
+
+  return candidates.slice(0, 10)
+})
 
 watch(paperView, () => {
+  visiblePaperCount.value = 12
+})
+
+watch(selectedTopic, () => {
   visiblePaperCount.value = 12
 })
 
@@ -484,8 +861,13 @@ const loadExploreSnapshot = async () => {
   loading.value = true
   errorMessage.value = ''
   try {
-    const data = await fetchJson('explore/current-library.json')
+    const [data, library] = await Promise.all([
+      fetchJson('explore/current-library.json'),
+      fetchJson('library.json').catch(() => ({ papers: [] })),
+    ])
+
     selectedLibrary.value = data
+    libraryPapers.value = Array.isArray(library?.papers) ? library.papers : []
     roadmap.value = data?.roadmap || ''
     if (topicOverview.value.length > 0) {
       activeTopicId.value = topicOverview.value[0].topic_id
