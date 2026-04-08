@@ -209,6 +209,7 @@ const loading = ref(false)
 const errorMessage = ref('')
 const selectedNode = ref(null)
 const graphManifest = ref(null)
+const libraryPapers = ref([])
 const nodeLimit = ref(500)
 const nodeQuery = ref('')
 const graphData = ref({
@@ -334,6 +335,138 @@ function edgeDash(edge) {
   return null
 }
 
+async function loadLibrarySnapshot() {
+  if (libraryPapers.value.length) return
+  try {
+    const payload = await fetchJson('library.json')
+    const papers = Array.isArray(payload?.papers) ? payload.papers : []
+    libraryPapers.value = papers
+  } catch (error) {
+    console.error('Failed to load library snapshot for fallback graph:', error)
+    libraryPapers.value = []
+  }
+}
+
+function normalizePaperNode(paper, index) {
+  const id = String(paper.route_id || paper.paper_id || paper.doi || `paper-${index}`)
+  return {
+    id,
+    type: 'paper',
+    label: paper.title || id,
+    title: paper.title || id,
+    route_id: paper.route_id || paper.paper_id || '',
+    doi: paper.doi || '',
+    first_author: Array.isArray(paper.authors) && paper.authors.length ? paper.authors[0] : '',
+    year: paper.year || null,
+    citation_count: Number(paper.citation_count || 0),
+    degree: 0,
+    tags: Array.isArray(paper.tags) ? paper.tags : [],
+    keywords: Array.isArray(paper.tags) ? paper.tags : [],
+    roles: [],
+  }
+}
+
+function addDegree(nodesById, edge) {
+  const source = nodesById.get(edge.source)
+  const target = nodesById.get(edge.target)
+  if (source) source.degree = Number(source.degree || 0) + 1
+  if (target) target.degree = Number(target.degree || 0) + 1
+}
+
+function buildFallbackGraph(mode) {
+  const papers = libraryPapers.value.slice(0, 1500)
+  const nodes = papers.map((paper, index) => normalizePaperNode(paper, index))
+  const edges = []
+  const nodesById = new Map(nodes.map((node) => [node.id, node]))
+
+  if (mode === 'topic') {
+    const topicMap = new Map()
+    for (const node of nodes) {
+      const tags = Array.isArray(node.tags) ? node.tags.slice(0, 4) : []
+      for (const tag of tags) {
+        const topicId = `topic:${String(tag).trim().toLowerCase()}`
+        if (!topicMap.has(topicId)) {
+          topicMap.set(topicId, {
+            id: topicId,
+            type: 'topic',
+            label: String(tag),
+            title: String(tag),
+            degree: 0,
+            keywords: [],
+            tags: [],
+          })
+        }
+        const edge = { source: node.id, target: topicId, type: 'topic_similarity', directed: false, weight: 1 }
+        edges.push(edge)
+      }
+    }
+    nodes.push(...topicMap.values())
+  } else if (mode === 'structure') {
+    const venueMap = new Map()
+    for (const node of nodes) {
+      const venue = String(node.title && papers.find((p) => (p.route_id || p.paper_id || p.doi) === node.id)?.journal || '').trim()
+      if (!venue) continue
+      const venueId = `venue:${venue.toLowerCase()}`
+      if (!venueMap.has(venueId)) {
+        venueMap.set(venueId, {
+          id: venueId,
+          type: 'topic',
+          label: venue,
+          title: venue,
+          degree: 0,
+          keywords: [],
+          tags: [],
+        })
+      }
+      edges.push({ source: node.id, target: venueId, type: 'structure', directed: false, weight: 1 })
+    }
+    nodes.push(...venueMap.values())
+  } else {
+    const byYear = new Map()
+    for (const node of nodes) {
+      const key = String(node.year || 'unknown')
+      if (!byYear.has(key)) byYear.set(key, [])
+      byYear.get(key).push(node)
+    }
+    for (const bucket of byYear.values()) {
+      bucket.sort((a, b) => Number(b.citation_count || 0) - Number(a.citation_count || 0))
+      const top = bucket.slice(0, 20)
+      for (let i = 1; i < top.length; i++) {
+        edges.push({ source: top[i - 1].id, target: top[i].id, type: 'cites', directed: false, weight: 1 })
+      }
+    }
+  }
+
+  for (const edge of edges) {
+    addDegree(nodesById, edge)
+  }
+
+  const paperCount = nodes.filter((node) => node.type === 'paper').length
+  const topicCount = nodes.filter((node) => node.type === 'topic').length
+
+  const edgeTypes = {}
+  for (const edge of edges) {
+    const key = edge.type || 'unknown'
+    edgeTypes[key] = (edgeTypes[key] || 0) + 1
+  }
+
+  return {
+    mode,
+    scope: 'library',
+    nodes,
+    edges,
+    stats: {
+      nodes: nodes.length,
+      edges: edges.length,
+      papers: paperCount,
+      external: 0,
+      topics: topicCount,
+      edge_types: edgeTypes,
+    },
+    message: 'Using fallback graph generated from library snapshot.',
+  }
+}
+
 async function loadGraphManifest() {
   const data = await fetchJson('graphs/index.json')
   graphManifest.value = data
@@ -347,6 +480,15 @@ function resolveGraphPath() {
 async function loadGraph() {
   const relativePath = resolveGraphPath()
   if (!relativePath) {
+    await loadLibrarySnapshot()
+    if (libraryPapers.value.length) {
+      graphData.value = buildFallbackGraph(filters.mode)
+      syncSelectedNode()
+      await nextTick()
+      renderGraph()
+      return
+    }
+
     graphData.value = {
       mode: filters.mode,
       nodes: [],
@@ -361,12 +503,30 @@ async function loadGraph() {
   errorMessage.value = ''
   try {
     const data = await fetchJson(relativePath)
-    graphData.value = data
+    if (Array.isArray(data?.nodes) && data.nodes.length > 0) {
+      graphData.value = data
+    } else {
+      await loadLibrarySnapshot()
+      graphData.value = libraryPapers.value.length
+        ? buildFallbackGraph(filters.mode)
+        : {
+            ...data,
+            message: data?.message || 'Graph snapshot is empty.',
+          }
+    }
     syncSelectedNode()
     await nextTick()
     renderGraph()
   } catch (error) {
     console.error('Failed to load graph snapshot:', error)
+    await loadLibrarySnapshot()
+    if (libraryPapers.value.length) {
+      graphData.value = buildFallbackGraph(filters.mode)
+      syncSelectedNode()
+      await nextTick()
+      renderGraph()
+      return
+    }
     errorMessage.value = 'Failed to load static graph snapshot.'
   } finally {
     loading.value = false
