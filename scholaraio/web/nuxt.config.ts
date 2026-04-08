@@ -4,7 +4,7 @@ import path from 'node:path'
 function loadPrerenderRoutes() {
   const manifestPath = path.resolve(process.cwd(), 'public/site-data/manifest.json')
   const todoCardsPath = path.resolve(process.cwd(), 'public/site-data/todo-cards.json')
-  const baseRoutes = ['/', '/explore', '/knowledge', '/graph']
+  const baseRoutes = ['/', '/explore', '/graph']
 
   const routes = [...baseRoutes]
 

@@ -11,7 +11,6 @@
             <div class="ml-6 flex flex-wrap gap-2 md:ml-10 md:space-x-4">
               <NuxtLink to="/" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100" :class="{ 'bg-gray-100': route.path === '/' }">Library</NuxtLink>
               <NuxtLink to="/explore" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100" :class="{ 'bg-gray-100': route.path.startsWith('/explore') }">Explore</NuxtLink>
-              <NuxtLink to="/knowledge" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100" :class="{ 'bg-gray-100': route.path === '/knowledge' }">Knowledge</NuxtLink>
               <NuxtLink to="/graph" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100" :class="{ 'bg-gray-100': route.path === '/graph' }">Graph</NuxtLink>
             </div>
           </div>

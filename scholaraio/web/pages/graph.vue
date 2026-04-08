@@ -11,7 +11,7 @@
     </div>
 
     <div class="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-      图谱页面现在只读取预计算快照，不再支持在线构建 topic model、paper scope 临时查询或重新拉取后端数据。
+      图谱页面只读取全库（all papers）预计算快照，不再支持在线构建 topic model 或后端实时查询。
     </div>
 
     <div v-if="errorMessage" class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -57,25 +57,26 @@
             </label>
 
             <label class="block text-sm font-medium text-gray-700">
-              <span class="mb-1 block">Scope</span>
-              <select v-model="filters.scope" class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50">
-                <option value="library">Library</option>
-                <option value="project">Project</option>
+              <span class="mb-1 block">Visible Nodes</span>
+              <select v-model.number="nodeLimit" class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50">
+                <option :value="200">Top 200</option>
+                <option :value="500">Top 500</option>
+                <option :value="1000">Top 1000</option>
+                <option :value="0">All</option>
               </select>
             </label>
 
-            <label v-if="filters.scope === 'project'" class="block text-sm font-medium text-gray-700">
-              <span class="mb-1 block">Project</span>
-              <select
-                v-model="filters.project"
+            <label class="block text-sm font-medium text-gray-700">
+              <span class="mb-1 block">Find Node</span>
+              <input
+                v-model="nodeQuery"
+                type="text"
+                placeholder="title / keyword / doi"
                 class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50"
-              >
-                <option value="">{{ projects.length ? 'Select a project' : 'No projects' }}</option>
-                <option v-for="project in projects" :key="project.name" :value="project.name">
-                  {{ project.name }} ({{ project.paper_count }})
-                </option>
-              </select>
+              />
             </label>
+
+            <p class="text-xs text-gray-500">当前模式始终基于全库文献图谱；节点数限制仅用于前端加速渲染。</p>
           </div>
         </div>
 
@@ -208,10 +209,10 @@ const loading = ref(false)
 const errorMessage = ref('')
 const selectedNode = ref(null)
 const graphManifest = ref(null)
-const projects = ref([])
+const nodeLimit = ref(500)
+const nodeQuery = ref('')
 const graphData = ref({
   mode: 'citation',
-  scope: 'library',
   nodes: [],
   edges: [],
   stats: {
@@ -227,14 +228,57 @@ const graphData = ref({
 
 const filters = reactive({
   mode: 'citation',
-  scope: 'library',
-  project: '',
 })
 
-const displayGraph = computed(() => graphData.value)
-const nodeCount = computed(() => displayGraph.value.stats.nodes || displayGraph.value.nodes.length || 0)
-const edgeCount = computed(() => displayGraph.value.stats.edges || displayGraph.value.edges.length || 0)
-const paperCount = computed(() => displayGraph.value.stats.papers || 0)
+const normalizedNodeQuery = computed(() => nodeQuery.value.trim().toLowerCase())
+
+function nodeRank(node) {
+  const degree = Number(node.degree || 0)
+  const cites = Number(node.citation_count || 0)
+  const roleBonus = (Array.isArray(node.roles) && node.roles.includes('center')) || node.role === 'center' ? 10000 : 0
+  return roleBonus + degree * 10 + cites
+}
+
+const displayGraph = computed(() => {
+  const baseNodes = Array.isArray(graphData.value.nodes) ? graphData.value.nodes : []
+  const baseEdges = Array.isArray(graphData.value.edges) ? graphData.value.edges : []
+
+  let visibleNodes = [...baseNodes]
+  const query = normalizedNodeQuery.value
+  if (query) {
+    visibleNodes = visibleNodes.filter((node) => {
+      const haystack = [
+        node.title,
+        node.label,
+        node.doi,
+        node.first_author,
+        ...(Array.isArray(node.keywords) ? node.keywords : []),
+        ...(Array.isArray(node.tags) ? node.tags : []),
+      ].join(' ').toLowerCase()
+      return haystack.includes(query)
+    })
+  }
+
+  const limit = Number(nodeLimit.value || 0)
+  if (limit > 0 && visibleNodes.length > limit) {
+    visibleNodes = visibleNodes
+      .sort((a, b) => nodeRank(b) - nodeRank(a))
+      .slice(0, limit)
+  }
+
+  const visibleIds = new Set(visibleNodes.map((node) => node.id))
+  const visibleEdges = baseEdges.filter((edge) => visibleIds.has(edge.source) && visibleIds.has(edge.target))
+
+  return {
+    ...graphData.value,
+    nodes: visibleNodes,
+    edges: visibleEdges,
+  }
+})
+
+const nodeCount = computed(() => displayGraph.value.nodes.length || 0)
+const edgeCount = computed(() => displayGraph.value.edges.length || 0)
+const paperCount = computed(() => displayGraph.value.nodes.filter((node) => node.type !== 'external' && node.type !== 'topic').length)
 const selectedRoles = computed(() => {
   if (!selectedNode.value) return []
   if (Array.isArray(selectedNode.value.roles) && selectedNode.value.roles.length) return selectedNode.value.roles
@@ -243,15 +287,21 @@ const selectedRoles = computed(() => {
 })
 const infoMessage = computed(() => displayGraph.value.message || '')
 const edgeSummary = computed(() => {
-  const edgeTypes = displayGraph.value.stats.edge_types || {}
-  const entries = Object.entries(edgeTypes)
+  const counter = new Map()
+  for (const edge of displayGraph.value.edges || []) {
+    const key = edge.type || 'unknown'
+    counter.set(key, (counter.get(key) || 0) + 1)
+  }
+  const entries = Array.from(counter.entries())
   if (entries.length === 0) return 'No visible edges'
   return entries.map(([type, count]) => `${type}: ${count}`).join(' · ')
 })
 const auxiliaryStatLabel = computed(() => displayGraph.value.mode === 'topic' ? 'Topics' : 'External')
 const auxiliaryStatValue = computed(() => {
-  if (displayGraph.value.mode === 'topic') return displayGraph.value.stats.topics || 0
-  return displayGraph.value.stats.external || 0
+  if (displayGraph.value.mode === 'topic') {
+    return displayGraph.value.nodes.filter((node) => node.type === 'topic').length
+  }
+  return displayGraph.value.nodes.filter((node) => node.type === 'external').length
 })
 
 function nodeColor(node) {
@@ -287,27 +337,11 @@ function edgeDash(edge) {
 async function loadGraphManifest() {
   const data = await fetchJson('graphs/index.json')
   graphManifest.value = data
-  projects.value = Array.isArray(data?.projects)
-    ? data.projects.map((project) => ({
-        name: project.name,
-        slug: project.slug,
-        paper_count: project.paper_count,
-      }))
-    : []
-
-  if (!filters.project && projects.value.length) {
-    filters.project = projects.value[0].name
-  }
 }
 
 function resolveGraphPath() {
   if (!graphManifest.value) return ''
-  if (filters.scope === 'library') {
-    return graphManifest.value.library?.[filters.mode] || ''
-  }
-
-  const match = (graphManifest.value.projects || []).find((project) => project.name === filters.project)
-  return match?.files?.[filters.mode] || ''
+  return graphManifest.value.library?.[filters.mode] || ''
 }
 
 async function loadGraph() {
@@ -315,11 +349,10 @@ async function loadGraph() {
   if (!relativePath) {
     graphData.value = {
       mode: filters.mode,
-      scope: filters.scope,
       nodes: [],
       edges: [],
       stats: { nodes: 0, edges: 0, papers: 0, external: 0, topics: 0, edge_types: {} },
-      message: filters.scope === 'project' ? 'Select a project to view its graph snapshot.' : 'Graph snapshot not available.',
+      message: 'Graph snapshot not available.',
     }
     return
   }
@@ -493,16 +526,15 @@ function openRepresentativePaper(routeId) {
   navigateTo(`/paper/${routeId}`)
 }
 
-watch(() => filters.scope, (scope) => {
-  if (scope === 'project' && !filters.project && projects.value.length) {
-    filters.project = projects.value[0].name
-  }
+watch(() => filters.mode, async () => {
+  await loadGraph()
 })
 
-watch(() => [filters.mode, filters.scope, filters.project], async () => {
-  if (filters.scope === 'project' && !filters.project) return
-  await loadGraph()
-}, { deep: true })
+watch(() => [nodeLimit.value, normalizedNodeQuery.value], async () => {
+  syncSelectedNode()
+  await nextTick()
+  renderGraph()
+})
 
 onMounted(async () => {
   try {
