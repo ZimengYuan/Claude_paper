@@ -6,22 +6,12 @@
         <div class="mt-3 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div class="max-w-3xl">
             <h1 class="text-3xl font-semibold tracking-tight">Library Trend Desk</h1>
-            <p class="mt-3 text-sm leading-6 text-slate-200">
-              这里展示的是当前本地文献库导出的静态趋势快照。所有统计、主题摘要和 roadmap 都来自构建时刻的 `data/papers/` 与 `data/topic_model/`。
-            </p>
+            <p class="mt-3 text-sm leading-6 text-slate-200">用于快速查看论文库结构、趋势与优先阅读建议。</p>
           </div>
-          <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            <div class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3 backdrop-blur">
-              <div class="text-xs uppercase tracking-wide text-slate-300">Scope</div>
-              <div class="mt-2 text-sm font-medium">{{ selectedLibrary?.title || 'Current Library' }}</div>
-            </div>
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-1">
             <div class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3 backdrop-blur">
               <div class="text-xs uppercase tracking-wide text-slate-300">Papers</div>
               <div class="mt-2 text-2xl font-semibold">{{ formatCount(selectedLibrary?.count || 0) }}</div>
-            </div>
-            <div class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3 backdrop-blur">
-              <div class="text-xs uppercase tracking-wide text-slate-300">Roadmap</div>
-              <div class="mt-2 text-sm font-medium">{{ roadmapStatusLabel }}</div>
             </div>
           </div>
         </div>
@@ -49,9 +39,7 @@
               <span>Fetched {{ formatDateTime(selectedLibrary.fetched_at) }}</span>
             </div>
             <h2 class="mt-3 text-2xl font-semibold tracking-tight text-slate-900">{{ selectedLibrary.title || selectedLibrary.name }}</h2>
-            <p class="mt-2 text-sm leading-6 text-slate-600">
-              下面的统计、主题和代表论文全部来自导出时刻的本地主库快照，不依赖线上数据库，也不会在浏览器里触发新的分析任务。
-            </p>
+            <p class="mt-2 text-sm leading-6 text-slate-600">可在本页直接查看统计、趋势与代表论文。</p>
           </div>
           <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
             <div class="text-xs uppercase tracking-wide text-slate-500">Current Scope</div>
@@ -426,32 +414,6 @@
             </div>
           </div>
 
-          <div v-if="exploreTab === 'roadmap'">
-            <div>
-              <h3 class="text-lg font-semibold text-slate-900">Library Evolution & Future Trends</h3>
-              <p class="mt-1 text-xs leading-5 text-slate-500">这里只展示构建时已经缓存下来的 roadmap；Pages 站点本身不会重新生成。</p>
-            </div>
-
-            <div v-if="roadmap" class="mt-6">
-              <div v-if="roadmapSections.length > 1" class="flex flex-wrap gap-1 border-b border-slate-200 pb-1">
-                <button
-                  v-for="(section, idx) in roadmapSections"
-                  :key="idx"
-                  class="rounded-t-lg px-3 py-1.5 text-xs font-medium transition-colors"
-                  :class="activeRoadmapSection === idx
-                    ? 'bg-slate-100 text-slate-900'
-                    : 'text-slate-500 hover:text-slate-700'"
-                  @click="activeRoadmapSection = idx"
-                >
-                  {{ section.title }}
-                </button>
-              </div>
-              <div class="roadmap-content prose prose-slate mt-4 max-w-none" @click="handleRoadmapClick" v-html="activeRoadmapHtml"></div>
-            </div>
-            <div v-else class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-8 text-sm leading-6 text-slate-600">
-              roadmap 还没有在本地快照中生成。你可以先通过趋势摘要、主题结构和代表论文判断当前主库的技术重心。
-            </div>
-          </div>
         </div>
       </section>
     </template>
@@ -459,7 +421,6 @@
 </template>
 
 <script setup>
-import { marked } from 'marked'
 
 const { fetchJson } = useStaticSiteData()
 const router = useRouter()
@@ -471,16 +432,13 @@ const errorMessage = ref('')
 const paperView = ref('top')
 const visiblePaperCount = ref(12)
 const exploreTab = ref('trends')
-const roadmap = ref('')
 const activeTopicId = ref(null)
-const activeRoadmapSection = ref(0)
 const trendWindowYears = ref(3)
 const selectedTopic = ref('')
 
 const exploreTabs = [
   { key: 'trends', label: 'Trends & Topics' },
   { key: 'papers', label: 'Papers' },
-  { key: 'roadmap', label: 'Roadmap' },
 ]
 
 const activeTopic = computed(() => {
@@ -762,50 +720,6 @@ const overviewCards = computed(() => {
   ]
 })
 
-const roadmapStatusLabel = computed(() => {
-  if (roadmap.value) return 'Loaded'
-  if (selectedLibrary.value?.has_topics) return 'No cached roadmap'
-  return 'Needs topics'
-})
-
-const normalizedRoadmap = computed(() => normalizeRoadmapMarkdown(roadmap.value))
-
-const roadmapSections = computed(() => {
-  const source = normalizedRoadmap.value
-  if (!source) return []
-  const parts = source.split(/^## /m)
-  const intro = parts[0].trim()
-  const sections = []
-  if (intro && !parts[1]) {
-    sections.push({ title: 'Overview', body: intro })
-    return sections
-  }
-  for (let i = 1; i < parts.length; i++) {
-    const chunk = parts[i]
-    const newlineIdx = chunk.indexOf('\n')
-    const title = newlineIdx >= 0 ? chunk.slice(0, newlineIdx).replace(/---\s*$/, '').trim() : chunk.trim()
-    const body = newlineIdx >= 0 ? chunk.slice(newlineIdx + 1).replace(/\n---\s*$/, '').trim() : ''
-    if (title) sections.push({ title, body: body || '' })
-  }
-  if (intro && sections.length) {
-    sections.unshift({ title: 'Overview', body: intro })
-  }
-  return sections
-})
-
-function renderRoadmapHtml(md) {
-  if (!md) return ''
-  const html = marked.parse(md, { gfm: true, breaks: true })
-  return html.replace(/<a href="paper_id:([^"]+)">([^<]+)<\/a>/g, (match, id, text) => {
-    return `<span class="paper-link cursor-pointer text-blue-600 hover:underline font-medium" data-paper-id="${id}">${text}</span>`
-  })
-}
-
-const activeRoadmapHtml = computed(() => {
-  const section = roadmapSections.value[activeRoadmapSection.value]
-  if (!section) return ''
-  return renderRoadmapHtml(section.body)
-})
 
 function formatCount(value) {
   return new Intl.NumberFormat('en-US').format(Number(value || 0))
@@ -829,16 +743,6 @@ function formatDateTime(value) {
   return date.toLocaleString()
 }
 
-function normalizeRoadmapMarkdown(value) {
-  const source = String(value || '').replace(/\r\n/g, '\n').trim()
-  if (source === '') return ''
-
-  return source
-    .replace(/^生成失败:\s*(.+)$/gm, '> 当前方向生成失败：$1')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim()
-}
-
 function openPaperRef(paperRef) {
   const value = String(paperRef || '').trim()
   if (!value) return
@@ -847,14 +751,6 @@ function openPaperRef(paperRef) {
     return
   }
   router.push(`/paper/${value}`)
-}
-
-function handleRoadmapClick(event) {
-  const target = event.target
-  if (target.classList.contains('paper-link')) {
-    const paperId = target.getAttribute('data-paper-id')
-    openPaperRef(paperId)
-  }
 }
 
 const loadExploreSnapshot = async () => {
@@ -868,7 +764,6 @@ const loadExploreSnapshot = async () => {
 
     selectedLibrary.value = data
     libraryPapers.value = Array.isArray(library?.papers) ? library.papers : []
-    roadmap.value = data?.roadmap || ''
     if (topicOverview.value.length > 0) {
       activeTopicId.value = topicOverview.value[0].topic_id
     }
