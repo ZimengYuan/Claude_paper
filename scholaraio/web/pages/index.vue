@@ -5,7 +5,6 @@
       <h1 class="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Todo Reading Cards</h1>
       <p class="mt-3 max-w-3xl text-sm leading-7 text-slate-200 sm:text-base">
         这里只保留 Zotero <code class="rounded bg-white/10 px-1.5 py-0.5 text-blue-100">Todo</code> collection 的阅读卡片。
-        首页展示预览，点进二级卡片页再看完整总结；原来那 306 个旧 Library 卡片和 summary / method 展示已经移除。
       </p>
       <div class="mt-5 flex flex-wrap gap-3 text-sm text-blue-100">
         <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5">
@@ -278,12 +277,12 @@ const filteredTodoCards = computed(() => {
     })
   }
 
-  if (Number.isFinite(Number(yearFrom.value))) {
+  if (yearFrom.value !== null && yearFrom.value !== '' && Number.isFinite(Number(yearFrom.value))) {
     const minYear = Number(yearFrom.value)
     result = result.filter((card) => Number(card.year || 0) >= minYear)
   }
 
-  if (Number.isFinite(Number(yearTo.value))) {
+  if (yearTo.value !== null && yearTo.value !== '' && Number.isFinite(Number(yearTo.value))) {
     const maxYear = Number(yearTo.value)
     result = result.filter((card) => Number(card.year || 0) <= maxYear)
   }
