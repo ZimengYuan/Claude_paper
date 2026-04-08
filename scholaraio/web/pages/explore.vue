@@ -206,6 +206,7 @@
               <div>
                 <h3 class="text-base font-semibold text-slate-900">Representative Papers</h3>
                 <p class="mt-1 text-xs text-slate-500">从“高引用代表作”和“近年论文”两个视角观察当前主库的技术重心。</p>
+                <p class="mt-1 text-xs text-slate-400">显示 {{ displayedResults.length }} / {{ paperResultTotal }}</p>
               </div>
               <div class="inline-flex rounded-full border border-slate-200 bg-slate-50 p-1 text-sm">
                 <button class="rounded-full px-4 py-2 transition" :class="paperView === 'top' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'" @click="paperView = 'top'">
@@ -254,6 +255,23 @@
                 </div>
               </article>
             </div>
+
+            <div v-if="paperResultTotal > 12" class="mt-4 flex flex-wrap gap-2">
+              <button
+                class="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                :disabled="displayedResults.length >= paperResultTotal"
+                @click="visiblePaperCount = Math.min(visiblePaperCount + 12, paperResultTotal)"
+              >
+                加载更多
+              </button>
+              <button
+                class="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                :disabled="visiblePaperCount <= 12"
+                @click="visiblePaperCount = 12"
+              >
+                收起
+              </button>
+            </div>
           </div>
 
           <div v-if="exploreTab === 'roadmap'">
@@ -298,6 +316,7 @@ const selectedLibrary = ref(null)
 const loading = ref(true)
 const errorMessage = ref('')
 const paperView = ref('top')
+const visiblePaperCount = ref(12)
 const exploreTab = ref('trends')
 const roadmap = ref('')
 const activeTopicId = ref(null)
@@ -329,7 +348,13 @@ const topJournals = computed(() => trendOverview.value.top_journals || [])
 const trendHighlights = computed(() => trendOverview.value.trend_highlights || [])
 const topPapers = computed(() => selectedLibrary.value?.papers_sample || [])
 const recentPapers = computed(() => trendOverview.value.recent_papers_sample || [])
-const displayedResults = computed(() => paperView.value === 'recent' ? recentPapers.value : topPapers.value)
+const allPaperResults = computed(() => paperView.value === 'recent' ? recentPapers.value : topPapers.value)
+const paperResultTotal = computed(() => allPaperResults.value.length)
+const displayedResults = computed(() => allPaperResults.value.slice(0, visiblePaperCount.value))
+
+watch(paperView, () => {
+  visiblePaperCount.value = 12
+})
 
 const yearDistribution = computed(() => {
   const rows = trendOverview.value.year_distribution || []

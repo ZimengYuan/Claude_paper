@@ -13,6 +13,25 @@
         >
           {{ resolvedReadStatus === 'read' ? '标记未读' : '标记已读' }}
         </button>
+        <button
+          class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+          @click="exportReadStatuses"
+        >
+          导出已读状态
+        </button>
+        <button
+          class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+          @click="triggerImportStatuses"
+        >
+          导入已读状态
+        </button>
+        <input
+          ref="importStatusesInput"
+          type="file"
+          accept="application/json"
+          class="hidden"
+          @change="handleImportStatuses"
+        />
         <a
           v-if="card"
           class="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
@@ -135,6 +154,7 @@ const loading = ref(true)
 const errorMessage = ref('')
 const card = ref(null)
 const localReadStatuses = ref({})
+const importStatusesInput = ref(null)
 
 const resolvedReadStatus = computed(() => {
   if (!card.value) return 'unread'
@@ -202,6 +222,54 @@ const toggleReadStatus = () => {
     [card.value.route_id]: nextStatus,
   }
   persistReadStatuses()
+}
+
+const exportReadStatuses = () => {
+  if (!import.meta.client) return
+  const payload = {
+    version: 1,
+    exported_at: new Date().toISOString(),
+    statuses: localReadStatuses.value,
+  }
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `todo-read-statuses-${new Date().toISOString().slice(0, 10)}.json`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+const triggerImportStatuses = () => {
+  importStatusesInput.value?.click()
+}
+
+const handleImportStatuses = async (event) => {
+  const input = event.target
+  const file = input?.files?.[0]
+  if (!file) return
+
+  try {
+    const text = await file.text()
+    const parsed = JSON.parse(text)
+    const statuses = parsed?.statuses && typeof parsed.statuses === 'object' ? parsed.statuses : parsed
+    if (!statuses || typeof statuses !== 'object') return
+
+    const normalized = {}
+    for (const [routeId, value] of Object.entries(statuses)) {
+      if (value === 'read' || value === 'unread') normalized[routeId] = value
+    }
+
+    localReadStatuses.value = {
+      ...localReadStatuses.value,
+      ...normalized,
+    }
+    persistReadStatuses()
+  } catch (error) {
+    console.error('Failed to import read statuses:', error)
+  } finally {
+    input.value = ''
+  }
 }
 
 const loadCard = async () => {

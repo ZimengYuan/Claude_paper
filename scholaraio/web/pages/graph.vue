@@ -29,7 +29,7 @@
             <div class="h-12 w-12 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600"></div>
           </div>
           <div v-else-if="nodeCount === 0" class="flex h-[800px] items-center justify-center text-center text-sm text-gray-500">
-            No graph data available for this snapshot scope.
+            No graph data available for this snapshot.
           </div>
           <div v-else ref="graphContainer" class="h-[800px] w-full"></div>
         </div>
@@ -75,6 +75,38 @@
                 class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50"
               />
             </label>
+
+            <div>
+              <span class="mb-2 block text-sm font-medium text-gray-700">Edge Types</span>
+              <div class="grid grid-cols-2 gap-2 text-xs text-gray-700">
+                <label class="inline-flex items-center gap-2 rounded-md border border-gray-200 px-2 py-1.5">
+                  <input v-model="edgeTypeFilters.cites" type="checkbox" /> cites
+                </label>
+                <label class="inline-flex items-center gap-2 rounded-md border border-gray-200 px-2 py-1.5">
+                  <input v-model="edgeTypeFilters.cited_by" type="checkbox" /> cited_by
+                </label>
+                <label class="inline-flex items-center gap-2 rounded-md border border-gray-200 px-2 py-1.5">
+                  <input v-model="edgeTypeFilters.structure" type="checkbox" /> structure
+                </label>
+                <label class="inline-flex items-center gap-2 rounded-md border border-gray-200 px-2 py-1.5">
+                  <input v-model="edgeTypeFilters.shared" type="checkbox" /> shared
+                </label>
+                <label class="inline-flex items-center gap-2 rounded-md border border-gray-200 px-2 py-1.5">
+                  <input v-model="edgeTypeFilters.topic_similarity" type="checkbox" /> topic_similarity
+                </label>
+                <label class="inline-flex items-center gap-2 rounded-md border border-gray-200 px-2 py-1.5">
+                  <input v-model="edgeTypeFilters.unknown" type="checkbox" /> unknown
+                </label>
+              </div>
+            </div>
+
+            <button
+              class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              :disabled="!selectedNode"
+              @click="focusNeighborsOnly = !focusNeighborsOnly"
+            >
+              {{ focusNeighborsOnly ? '取消聚焦邻居' : '聚焦当前节点邻居' }}
+            </button>
 
             <p class="text-xs text-gray-500">当前模式始终基于全库文献图谱；节点数限制仅用于前端加速渲染。</p>
           </div>
@@ -188,6 +220,20 @@
                 </button>
               </div>
             </div>
+
+            <div v-if="selectedEdgeBreakdown.length">
+              <div class="text-xs uppercase tracking-wide text-gray-500">Connected Edges</div>
+              <div class="mt-2 space-y-1.5">
+                <div
+                  v-for="item in selectedEdgeBreakdown"
+                  :key="item.type"
+                  class="rounded-md border border-gray-200 bg-gray-50 px-2.5 py-2 text-xs text-gray-700"
+                >
+                  <div class="font-medium">{{ item.type }} · {{ item.count }}</div>
+                  <div class="mt-1 text-gray-500">{{ edgeTypeExplanation(item.type) }}</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div v-else class="mt-3 text-sm text-gray-500">
@@ -210,8 +256,17 @@ const errorMessage = ref('')
 const selectedNode = ref(null)
 const graphManifest = ref(null)
 const libraryPapers = ref([])
-const nodeLimit = ref(500)
+const nodeLimit = ref(200)
 const nodeQuery = ref('')
+const focusNeighborsOnly = ref(false)
+const edgeTypeFilters = reactive({
+  cites: true,
+  cited_by: true,
+  structure: true,
+  shared: true,
+  topic_similarity: true,
+  unknown: true,
+})
 const graphData = ref({
   mode: 'citation',
   nodes: [],
@@ -232,6 +287,20 @@ const filters = reactive({
 })
 
 const normalizedNodeQuery = computed(() => nodeQuery.value.trim().toLowerCase())
+
+function edgeEndpointId(value) {
+  if (value == null) return ''
+  if (typeof value === 'object') return String(value.id || '')
+  return String(value)
+}
+
+const allowedEdgeTypes = computed(() => {
+  const allowed = new Set()
+  for (const [type, enabled] of Object.entries(edgeTypeFilters)) {
+    if (enabled) allowed.add(type)
+  }
+  return allowed
+})
 
 function nodeRank(node) {
   const degree = Number(node.degree || 0)
@@ -268,7 +337,32 @@ const displayGraph = computed(() => {
   }
 
   const visibleIds = new Set(visibleNodes.map((node) => node.id))
-  const visibleEdges = baseEdges.filter((edge) => visibleIds.has(edge.source) && visibleIds.has(edge.target))
+  let visibleEdges = baseEdges.filter((edge) => {
+    const edgeType = String(edge.type || 'unknown')
+    const sourceId = edgeEndpointId(edge.source)
+    const targetId = edgeEndpointId(edge.target)
+    return allowedEdgeTypes.value.has(edgeType) && visibleIds.has(sourceId) && visibleIds.has(targetId)
+  })
+
+  if (focusNeighborsOnly.value && selectedNode.value?.id) {
+    const centerId = String(selectedNode.value.id)
+    const neighborIds = new Set([centerId])
+    for (const edge of visibleEdges) {
+      const sourceId = edgeEndpointId(edge.source)
+      const targetId = edgeEndpointId(edge.target)
+      if (sourceId === centerId || targetId === centerId) {
+        neighborIds.add(sourceId)
+        neighborIds.add(targetId)
+      }
+    }
+    visibleNodes = visibleNodes.filter((node) => neighborIds.has(String(node.id)))
+    const neighborSet = new Set(visibleNodes.map((node) => String(node.id)))
+    visibleEdges = visibleEdges.filter((edge) => {
+      const sourceId = edgeEndpointId(edge.source)
+      const targetId = edgeEndpointId(edge.target)
+      return neighborSet.has(sourceId) && neighborSet.has(targetId)
+    })
+  }
 
   return {
     ...graphData.value,
@@ -305,6 +399,22 @@ const auxiliaryStatValue = computed(() => {
   return displayGraph.value.nodes.filter((node) => node.type === 'external').length
 })
 
+const selectedEdgeBreakdown = computed(() => {
+  if (!selectedNode.value?.id) return []
+  const centerId = String(selectedNode.value.id)
+  const counter = new Map()
+  for (const edge of displayGraph.value.edges || []) {
+    const sourceId = edgeEndpointId(edge.source)
+    const targetId = edgeEndpointId(edge.target)
+    if (sourceId !== centerId && targetId !== centerId) continue
+    const key = String(edge.type || 'unknown')
+    counter.set(key, (counter.get(key) || 0) + 1)
+  }
+  return Array.from(counter.entries())
+    .map(([type, count]) => ({ type, count }))
+    .sort((a, b) => b.count - a.count)
+})
+
 function nodeColor(node) {
   if (node.type === 'topic') return '#7c3aed'
   if (node.type === 'external') return '#f59e0b'
@@ -333,6 +443,18 @@ function edgeWidth(edge) {
 function edgeDash(edge) {
   if (edge.type === 'shared' || edge.type === 'structure') return '6 4'
   return null
+}
+
+function edgeTypeExplanation(type) {
+  const map = {
+    cites: '论文之间的引用或同年近邻关系。',
+    cited_by: '被引用方向关系（若快照中存在）。',
+    structure: '论文与结构节点（如 venue）之间的关联。',
+    shared: '共享参考文献或结构相似连接。',
+    topic_similarity: '论文与主题标签之间的关联。',
+    unknown: '快照中未标注明确类型的边。',
+  }
+  return map[type] || map.unknown
 }
 
 async function loadLibrarySnapshot() {
@@ -691,6 +813,21 @@ watch(() => filters.mode, async () => {
 })
 
 watch(() => [nodeLimit.value, normalizedNodeQuery.value], async () => {
+  syncSelectedNode()
+  await nextTick()
+  renderGraph()
+})
+
+watch(() => [
+  edgeTypeFilters.cites,
+  edgeTypeFilters.cited_by,
+  edgeTypeFilters.structure,
+  edgeTypeFilters.shared,
+  edgeTypeFilters.topic_similarity,
+  edgeTypeFilters.unknown,
+  focusNeighborsOnly.value,
+  selectedNode.value?.id,
+], async () => {
   syncSelectedNode()
   await nextTick()
   renderGraph()

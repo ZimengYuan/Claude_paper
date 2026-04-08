@@ -17,7 +17,8 @@
       </div>
     </div>
 
-    <div class="mt-6 grid gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm lg:grid-cols-[minmax(0,1fr)_180px_180px]">
+    <div class="mt-6 space-y-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_180px_180px]">
       <label class="block">
         <span class="mb-2 block text-sm font-medium text-slate-700">搜索</span>
         <input
@@ -51,6 +52,84 @@
           <option value="title">按标题</option>
         </select>
       </label>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <label class="block">
+          <span class="mb-2 block text-sm font-medium text-slate-700">作者包含</span>
+          <input
+            v-model="authorFilter"
+            type="text"
+            placeholder="例如 Hutter"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          />
+        </label>
+
+        <label class="block">
+          <span class="mb-2 block text-sm font-medium text-slate-700">年份起</span>
+          <input
+            v-model.number="yearFrom"
+            type="number"
+            min="1900"
+            max="2100"
+            placeholder="例如 2020"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          />
+        </label>
+
+        <label class="block">
+          <span class="mb-2 block text-sm font-medium text-slate-700">年份止</span>
+          <input
+            v-model.number="yearTo"
+            type="number"
+            min="1900"
+            max="2100"
+            placeholder="例如 2026"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          />
+        </label>
+
+        <label class="block">
+          <span class="mb-2 block text-sm font-medium text-slate-700">DOI</span>
+          <select
+            v-model="doiFilter"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          >
+            <option value="">全部</option>
+            <option value="has">仅有 DOI</option>
+            <option value="missing">仅无 DOI</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <button
+          class="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          @click="clearFilters"
+        >
+          清空筛选
+        </button>
+        <button
+          class="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          @click="exportReadStatuses"
+        >
+          导出已读状态
+        </button>
+        <button
+          class="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          @click="triggerImportStatuses"
+        >
+          导入已读状态
+        </button>
+        <input
+          ref="importStatusesInput"
+          type="file"
+          accept="application/json"
+          class="hidden"
+          @change="handleImportStatuses"
+        />
+        <span class="text-sm text-slate-500">命中 {{ filteredTodoCards.length }} 条</span>
+      </div>
     </div>
 
     <div v-if="loading" class="py-16 text-center">
@@ -64,7 +143,7 @@
 
     <div v-else-if="filteredTodoCards.length" class="mt-6 grid gap-5 xl:grid-cols-2">
       <article
-        v-for="card in filteredTodoCards"
+        v-for="card in pagedTodoCards"
         :key="card.route_id"
         class="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg"
       >
@@ -78,8 +157,8 @@
                 {{ card.read_status === 'read' ? '已读' : '未读' }}
               </span>
             </div>
-            <h2 class="mt-4 text-xl font-semibold leading-8 text-slate-900">{{ card.title }}</h2>
-            <p class="mt-2 text-sm text-slate-600">{{ card.authors?.join(', ') || '作者信息缺失' }}</p>
+            <h2 class="mt-4 text-xl font-semibold leading-8 text-slate-900" v-html="highlightText(card.title)"></h2>
+            <p class="mt-2 text-sm text-slate-600" v-html="highlightText(card.authors?.join(', ') || '作者信息缺失')"></p>
             <p class="mt-1 text-xs text-slate-500">
               {{ card.year || '年份未知' }}<span v-if="card.journal"> · {{ card.journal }}</span>
             </p>
@@ -88,7 +167,7 @@
 
         <div class="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
           <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">预览</p>
-          <p class="mt-3 text-sm leading-7 text-slate-700">{{ card.one_line_summary }}</p>
+          <p class="mt-3 text-sm leading-7 text-slate-700" v-html="highlightText(card.one_line_summary)"></p>
           <p v-if="previewText(card)" class="mt-3 text-sm leading-7 text-slate-600">
             {{ previewText(card) }}
           </p>
@@ -121,6 +200,22 @@
       </article>
     </div>
 
+    <div v-if="filteredTodoCards.length" class="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600 shadow-sm">
+      <span>第 {{ currentPage }} / {{ totalPages }} 页（每页 {{ pageSize }} 条）</span>
+      <div class="flex items-center gap-2">
+        <button
+          class="rounded-lg border border-slate-300 px-3 py-1.5 disabled:cursor-not-allowed disabled:opacity-50"
+          :disabled="currentPage <= 1"
+          @click="currentPage = Math.max(1, currentPage - 1)"
+        >上一页</button>
+        <button
+          class="rounded-lg border border-slate-300 px-3 py-1.5 disabled:cursor-not-allowed disabled:opacity-50"
+          :disabled="currentPage >= totalPages"
+          @click="currentPage = Math.min(totalPages, currentPage + 1)"
+        >下一页</button>
+      </div>
+    </div>
+
     <div v-else class="mt-6 rounded-2xl border border-slate-200 bg-white px-4 py-12 text-center text-sm text-slate-500 shadow-sm">
       当前筛选条件下没有匹配到 Todo 卡片。
     </div>
@@ -133,14 +228,22 @@ const TODO_READ_STATUS_STORAGE_KEY = 'scholaraio:todo-read-statuses:v2'
 const { fetchJson } = useStaticSiteData()
 
 const searchQuery = ref('')
+const authorFilter = ref('')
+const yearFrom = ref(null)
+const yearTo = ref(null)
+const doiFilter = ref('')
 const statusFilter = ref('')
 const sortBy = ref('')
 const todoCards = ref([])
 const loading = ref(true)
 const errorMessage = ref('')
 const todoReadStatuses = ref({})
+const currentPage = ref(1)
+const pageSize = 24
+const importStatusesInput = ref(null)
 
 const normalizedQuery = computed(() => searchQuery.value.trim().toLowerCase())
+const normalizedAuthorFilter = computed(() => authorFilter.value.trim().toLowerCase())
 
 const matchesSearch = (values) => {
   const query = normalizedQuery.value
@@ -168,6 +271,29 @@ const filteredTodoCards = computed(() => {
     card.search_text,
   ]))
 
+  if (normalizedAuthorFilter.value) {
+    result = result.filter((card) => {
+      const authorText = (card.authors || []).join(' ').toLowerCase()
+      return authorText.includes(normalizedAuthorFilter.value)
+    })
+  }
+
+  if (Number.isFinite(Number(yearFrom.value))) {
+    const minYear = Number(yearFrom.value)
+    result = result.filter((card) => Number(card.year || 0) >= minYear)
+  }
+
+  if (Number.isFinite(Number(yearTo.value))) {
+    const maxYear = Number(yearTo.value)
+    result = result.filter((card) => Number(card.year || 0) <= maxYear)
+  }
+
+  if (doiFilter.value === 'has') {
+    result = result.filter((card) => String(card.doi || '').trim() !== '')
+  } else if (doiFilter.value === 'missing') {
+    result = result.filter((card) => String(card.doi || '').trim() === '')
+  }
+
   if (statusFilter.value) {
     result = result.filter((card) => (card.read_status || 'unread') === statusFilter.value)
   }
@@ -181,6 +307,18 @@ const filteredTodoCards = computed(() => {
   }
 
   return result
+})
+
+const totalPages = computed(() => Math.max(1, Math.ceil(filteredTodoCards.value.length / pageSize)))
+
+const pagedTodoCards = computed(() => {
+  const page = Math.min(Math.max(1, currentPage.value), totalPages.value)
+  const start = (page - 1) * pageSize
+  return filteredTodoCards.value.slice(start, start + pageSize)
+})
+
+watch(filteredTodoCards, () => {
+  currentPage.value = 1
 })
 
 const restoreTodoReadStatuses = () => {
@@ -229,6 +367,23 @@ const statusClass = (status) => {
   return classes[status] || classes.unread
 }
 
+const escapeHtml = (value) => String(value || '')
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll("'", '&#39;')
+
+const highlightText = (value) => {
+  const raw = String(value || '')
+  const safe = escapeHtml(raw)
+  const query = normalizedQuery.value
+  if (!query) return safe
+  const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const regex = new RegExp(`(${escapedQuery})`, 'ig')
+  return safe.replace(regex, '<mark class="rounded bg-yellow-200/80 px-0.5">$1</mark>')
+}
+
 const previewText = (card) => {
   const raw = String(card.core_innovation || '').trim()
   if (!raw) return ''
@@ -256,6 +411,65 @@ const loadTodoCards = async () => {
     errorMessage.value = 'Failed to load Todo snapshot.'
   } finally {
     loading.value = false
+  }
+}
+
+const clearFilters = () => {
+  searchQuery.value = ''
+  authorFilter.value = ''
+  yearFrom.value = null
+  yearTo.value = null
+  doiFilter.value = ''
+  statusFilter.value = ''
+  sortBy.value = ''
+}
+
+const exportReadStatuses = () => {
+  if (!import.meta.client) return
+  const payload = {
+    version: 1,
+    exported_at: new Date().toISOString(),
+    statuses: todoReadStatuses.value,
+  }
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `todo-read-statuses-${new Date().toISOString().slice(0, 10)}.json`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+const triggerImportStatuses = () => {
+  importStatusesInput.value?.click()
+}
+
+const handleImportStatuses = async (event) => {
+  const input = event.target
+  const file = input?.files?.[0]
+  if (!file) return
+
+  try {
+    const text = await file.text()
+    const parsed = JSON.parse(text)
+    const statuses = parsed?.statuses && typeof parsed.statuses === 'object' ? parsed.statuses : parsed
+    if (!statuses || typeof statuses !== 'object') return
+
+    const normalized = {}
+    for (const [routeId, value] of Object.entries(statuses)) {
+      if (value === 'read' || value === 'unread') normalized[routeId] = value
+    }
+
+    todoReadStatuses.value = {
+      ...todoReadStatuses.value,
+      ...normalized,
+    }
+    applyTodoReadStatuses()
+    persistTodoReadStatuses()
+  } catch (error) {
+    console.error('Failed to import read statuses:', error)
+  } finally {
+    input.value = ''
   }
 }
 
