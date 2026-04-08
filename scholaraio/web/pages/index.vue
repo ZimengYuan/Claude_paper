@@ -128,7 +128,7 @@
 </template>
 
 <script setup>
-const TODO_READ_STATUS_STORAGE_KEY = 'scholaraio:todo-read-statuses'
+const TODO_READ_STATUS_STORAGE_KEY = 'scholaraio:todo-read-statuses:v2'
 
 const { fetchJson } = useStaticSiteData()
 
