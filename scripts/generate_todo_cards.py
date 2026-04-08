@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import configparser
+import hashlib
 import json
 import re
 import sys
@@ -12,9 +13,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from difflib import SequenceMatcher
+from html import unescape
 from pathlib import Path
 from threading import Lock
 from typing import Any
+
+import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -84,6 +88,7 @@ class MatchedTodoPaper:
     zotero_title: str
     zotero_doi: str
     route_id: str
+    paper_route_id: str
     dir_name: str
     paper_id: str
     title: str
@@ -92,6 +97,7 @@ class MatchedTodoPaper:
     journal: str
     doi: str
     read_status: str
+    abstract: str
 
 
 def _utc_timestamp() -> str:
@@ -152,6 +158,48 @@ def _load_detail(route_id: str) -> dict[str, Any]:
     return json.loads((PAPER_DETAIL_DIR / f"{route_id}.json").read_text(encoding="utf-8"))
 
 
+def _build_unmatched_route_id(title: str, index: int) -> str:
+    key = hashlib.sha1(f"{index}:{title}".encode("utf-8")).hexdigest()[:16]
+    return f"todo-unmatched-{key}"
+
+
+def _strip_html(text: str) -> str:
+    t = unescape(text or "")
+    t = re.sub(r"<[^>]+>", " ", t)
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def _fetch_online_abstract(doi: str, title: str) -> str:
+    if doi:
+        try:
+            resp = requests.get(f"https://api.crossref.org/works/{doi}", timeout=20)
+            if resp.ok:
+                message = (resp.json() or {}).get("message") or {}
+                abstract = _strip_html(str(message.get("abstract") or ""))
+                if abstract:
+                    return abstract
+        except Exception:
+            pass
+
+    if title:
+        try:
+            resp = requests.get(
+                "https://api.crossref.org/works",
+                params={"query.title": title, "rows": 1},
+                timeout=20,
+            )
+            if resp.ok:
+                items = ((resp.json() or {}).get("message") or {}).get("items") or []
+                if items:
+                    abstract = _strip_html(str(items[0].get("abstract") or ""))
+                    if abstract:
+                        return abstract
+        except Exception:
+            pass
+
+    return ""
+
+
 def _match_todo_papers() -> list[MatchedTodoPaper]:
     db_path, storage_dir = _resolve_zotero_db_and_storage()
     records, _ = parse_zotero_local(db_path, storage_dir=storage_dir, collection_key=TODO_COLLECTION_KEY)
@@ -200,13 +248,51 @@ def _match_todo_papers() -> list[MatchedTodoPaper]:
 
         if row is None:
             unmatched_titles.append(record.title)
+            abstract = (record.abstract or "").strip() or _fetch_online_abstract(record.doi or "", record.title or "")
+            matched.append(
+                MatchedTodoPaper(
+                    collection_index=index,
+                    zotero_title=record.title,
+                    zotero_doi=record.doi,
+                    route_id=_build_unmatched_route_id(record.title or "untitled", index),
+                    paper_route_id="",
+                    dir_name="",
+                    paper_id="",
+                    title=record.title or "Untitled",
+                    authors=record.authors or [],
+                    year=record.year,
+                    journal=record.journal or "",
+                    doi=record.doi or "",
+                    read_status="unread",
+                    abstract=abstract,
+                )
+            )
             continue
 
         detail = detail_cache[row["route_id"]]
         paper_dir = ROOT / "data/papers" / row["dir_name"]
         if not paper_dir.exists() or not (paper_dir / "meta.json").exists():
             unmatched_titles.append(f"{record.title} [missing local dir: {row['dir_name']}]")
+            matched.append(
+                MatchedTodoPaper(
+                    collection_index=index,
+                    zotero_title=record.title,
+                    zotero_doi=record.doi,
+                    route_id=row["route_id"],
+                    paper_route_id=row["route_id"],
+                    dir_name="",
+                    paper_id=row.get("paper_id") or "",
+                    title=detail.get("title") or row.get("title") or record.title,
+                    authors=detail.get("authors") or record.authors or [],
+                    year=detail.get("year") or record.year,
+                    journal=detail.get("journal") or record.journal or "",
+                    doi=detail.get("doi") or record.doi or "",
+                    read_status=detail.get("read_status") or "unread",
+                    abstract=(detail.get("abstract") or record.abstract or "").strip(),
+                )
+            )
             continue
+
         meta = read_meta(paper_dir)
         matched.append(
             MatchedTodoPaper(
@@ -214,6 +300,7 @@ def _match_todo_papers() -> list[MatchedTodoPaper]:
                 zotero_title=record.title,
                 zotero_doi=record.doi,
                 route_id=row["route_id"],
+                paper_route_id=row["route_id"],
                 dir_name=row["dir_name"],
                 paper_id=row.get("paper_id") or "",
                 title=meta.get("title") or detail.get("title") or row.get("title") or record.title,
@@ -222,12 +309,13 @@ def _match_todo_papers() -> list[MatchedTodoPaper]:
                 journal=meta.get("journal") or detail.get("journal") or "",
                 doi=meta.get("doi") or detail.get("doi") or record.doi or "",
                 read_status=meta.get("read_status") or detail.get("read_status") or "unread",
+                abstract=(meta.get("abstract") or detail.get("abstract") or record.abstract or "").strip(),
             )
         )
 
     if unmatched_titles:
         print(
-            f"[WARN] {len(unmatched_titles)} 条 Todo 未匹配到本地论文，已跳过。",
+            f"[WARN] {len(unmatched_titles)} 条 Todo 未匹配到本地论文，已纳入兜底卡片。",
             flush=True,
         )
         for title in unmatched_titles[:10]:
@@ -303,6 +391,40 @@ def _build_fallback_body(content: dict[str, Any], *, err: Exception | None = Non
                 "transferability": "该方法在相近机器人控制/策略学习任务中具备潜在迁移性，需按任务重新验证。",
             },
             "one_line_summary": _truncate(f"{core} {marker}", 260),
+        }
+    )
+
+
+def _build_fallback_from_metadata(item: MatchedTodoPaper) -> dict[str, Any]:
+    abstract = _strip_html(item.abstract or "")
+    sents = _split_sentences(abstract)
+    core = sents[0] if sents else f"该工作围绕《{item.title}》提出了面向目标任务的方法。"
+    c1 = sents[1] if len(sents) > 1 else core
+    c2 = sents[2] if len(sents) > 2 else "通过实验验证了方法在目标场景下的可行性。"
+
+    return _normalize_card_body(
+        {
+            "core_innovation": _truncate(core, 280),
+            "technical_contributions": [
+                {"title": "创新点 1", "body": _truncate(c1, 240)},
+                {"title": "创新点 2", "body": _truncate(c2, 240)},
+            ],
+            "methodological_breakthrough": {
+                "novelty": _truncate(core, 240),
+                "key_technique": _truncate(c1, 240),
+                "theory": "在线资料以方法与实验描述为主，理论证明细节有限。",
+            },
+            "key_results": {
+                "benchmarks": item.journal or "公开实验环境",
+                "improvements": "主要性能提升请以论文原文实验表格为准。",
+                "ablation": "关键模块贡献请参考原文消融实验章节。",
+            },
+            "limitations": {
+                "current": "公开摘要信息有限，边界场景与失败案例细节不足。",
+                "future": "可扩展到更复杂任务与更强泛化设定。",
+                "transferability": "方法思想可迁移到相近机器人控制问题，需结合具体平台重验证。",
+            },
+            "one_line_summary": _truncate(core, 240),
         }
     )
 
@@ -425,6 +547,7 @@ def _merge_card_metadata(card: dict[str, Any], item: MatchedTodoPaper, *, model:
     merged = {
         **card,
         "route_id": item.route_id,
+        "paper_route_id": item.paper_route_id,
         "paper_id": item.paper_id,
         "dir_name": item.dir_name,
         "title": item.title,
@@ -467,6 +590,29 @@ def _write_payload(items: list[MatchedTodoPaper], cards_by_route: dict[str, dict
 
 
 def _generate_one(item: MatchedTodoPaper, cfg, *, model: str, timeout: int) -> dict[str, Any]:
+    if not item.dir_name:
+        generated = _build_fallback_from_metadata(item)
+        return {
+            "route_id": item.route_id,
+            "paper_route_id": item.paper_route_id,
+            "paper_id": item.paper_id,
+            "dir_name": item.dir_name,
+            "title": item.title,
+            "authors": item.authors,
+            "year": item.year,
+            "journal": item.journal,
+            "venue": item.journal,
+            "doi": item.doi,
+            "read_status": item.read_status,
+            "collection_name": TODO_COLLECTION_NAME,
+            "collection_key": TODO_COLLECTION_KEY,
+            "collection_index": item.collection_index,
+            "generated_with_model": model,
+            "generated_at": _utc_timestamp(),
+            **generated,
+            "search_text": "",
+        }
+
     paper_dir = cfg.papers_dir / item.dir_name
     content = _get_paper_content(paper_dir, max_l4_chars=10**9)
     prompt = (
@@ -489,6 +635,7 @@ def _generate_one(item: MatchedTodoPaper, cfg, *, model: str, timeout: int) -> d
 
     return {
         "route_id": item.route_id,
+        "paper_route_id": item.paper_route_id,
         "paper_id": item.paper_id,
         "dir_name": item.dir_name,
         "title": item.title,

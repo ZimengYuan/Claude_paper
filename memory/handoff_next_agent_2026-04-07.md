@@ -1,6 +1,25 @@
 # 交接给下一位 Agent（2026-04-08）
 
 ## 当前状态（最新）
+- 2026-04-08 已完成一次全量修复：Todo 卡片已从 144 补齐到 168。
+- 之前“缺失 16”与“未匹配 8”问题已处理完毕：
+  - 缺失 16：已全部生成（模型失败时自动本地兜底生成）。
+  - 未匹配 8：已纳入卡片并生成 `todo-unmatched-*` 路由；论文跳转改为优先 `paper_route_id`，无本地论文时跳 DOI 外链。
+- 当前 `todo-cards.json`：`cards.length = 168`，`collection.count = 168`。
+
+## 本轮新增改动（2026-04-08）
+1. `scripts/generate_todo_cards.py`
+	- 未匹配条目不再跳过，自动纳入卡片。
+	- 增加 Crossref 在线摘要兜底（当本地无摘要时）。
+	- 本地论文缺失 / 模型调用失败时启用启发式兜底卡片生成。
+	- 新增 `paper_route_id` 字段（用于区分 Todo 详情路由与本地论文路由）。
+2. `scholaraio/web/pages/index.vue`
+	- 论文按钮逻辑：优先 `/paper/{paper_route_id}`，否则跳 `https://doi.org/{doi}`。
+3. `scholaraio/web/pages/todo/[id].vue`
+	- 与首页一致的论文跳转逻辑，支持 DOI 外链。
+
+## 构建验证
+- 已通过：`conda run -n node22 npm run generate`
 - 首页已是 Todo 预览卡片页，旧 306 Library 卡片入口已移除。
 - 二级总结页仍是 `todo/[id]`，再跳论文详情页。
 - Todo 卡片文件：`scholaraio/web/public/site-data/todo-cards.json`

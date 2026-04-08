@@ -13,13 +13,15 @@
         >
           {{ resolvedReadStatus === 'read' ? '标记未读' : '标记已读' }}
         </button>
-        <NuxtLink
+        <a
           v-if="card"
           class="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
-          :to="paperLink(card.route_id)"
+          :href="paperLink(card)"
+          :target="paperLink(card).startsWith('http') ? '_blank' : null"
+          :rel="paperLink(card).startsWith('http') ? 'noopener noreferrer' : null"
         >
           查看论文
-        </NuxtLink>
+        </a>
       </div>
     </div>
 
@@ -180,7 +182,13 @@ const statusClass = (status) => {
   return classes[status] || classes.unread
 }
 
-const paperLink = (id) => id ? `/paper/${id}` : '#'
+const paperLink = (card) => {
+  const paperRouteId = String(card?.paper_route_id || '').trim()
+  if (paperRouteId) return `/paper/${paperRouteId}`
+  const doi = String(card?.doi || '').trim()
+  if (doi) return `https://doi.org/${doi}`
+  return '#'
+}
 
 const goBack = () => navigateTo('/')
 
