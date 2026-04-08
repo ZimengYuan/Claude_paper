@@ -67,6 +67,14 @@
             </label>
 
             <label class="block text-sm font-medium text-gray-700">
+              <span class="mb-1 block">Layout Quality</span>
+              <select v-model="renderOptions.layoutQuality" class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-50">
+                <option value="fast">Fast</option>
+                <option value="stable">Stable</option>
+              </select>
+            </label>
+
+            <label class="block text-sm font-medium text-gray-700">
               <span class="mb-1 block">Find Node</span>
               <input
                 v-model="nodeQuery"
@@ -107,6 +115,11 @@
             >
               {{ focusNeighborsOnly ? '取消聚焦邻居' : '聚焦当前节点邻居' }}
             </button>
+
+            <label class="inline-flex items-center gap-2 text-sm text-gray-700">
+              <input v-model="renderOptions.hideIsolatedNodes" type="checkbox" />
+              <span>隐藏孤立节点</span>
+            </label>
 
             <p class="text-xs text-gray-500">当前模式始终基于全库文献图谱；节点数限制仅用于前端加速渲染。</p>
           </div>
@@ -259,6 +272,10 @@ const libraryPapers = ref([])
 const nodeLimit = ref(200)
 const nodeQuery = ref('')
 const focusNeighborsOnly = ref(false)
+const renderOptions = reactive({
+  layoutQuality: 'fast',
+  hideIsolatedNodes: true,
+})
 const edgeTypeFilters = reactive({
   cites: true,
   cited_by: true,
@@ -362,6 +379,27 @@ const displayGraph = computed(() => {
       const targetId = edgeEndpointId(edge.target)
       return neighborSet.has(sourceId) && neighborSet.has(targetId)
     })
+  }
+
+  if (renderOptions.hideIsolatedNodes) {
+    const connectedIds = new Set()
+    for (const edge of visibleEdges) {
+      connectedIds.add(edgeEndpointId(edge.source))
+      connectedIds.add(edgeEndpointId(edge.target))
+    }
+    if (connectedIds.size > 0) {
+      const selectedId = selectedNode.value?.id != null ? String(selectedNode.value.id) : ''
+      visibleNodes = visibleNodes.filter((node) => {
+        const id = String(node.id)
+        return connectedIds.has(id) || (selectedId && id === selectedId)
+      })
+      const keep = new Set(visibleNodes.map((node) => String(node.id)))
+      visibleEdges = visibleEdges.filter((edge) => {
+        const sourceId = edgeEndpointId(edge.source)
+        const targetId = edgeEndpointId(edge.target)
+        return keep.has(sourceId) && keep.has(targetId)
+      })
+    }
   }
 
   return {
@@ -748,15 +786,18 @@ function renderGraph() {
     .attr('stroke', '#ffffff')
     .attr('stroke-width', 2)
 
-  node.append('text')
-    .text((d) => {
-      const label = d.label || d.title || d.id
-      return label.length > 28 ? `${label.slice(0, 25)}...` : label
-    })
-    .attr('x', (d) => nodeRadius(d) + 6)
-    .attr('y', 4)
-    .attr('font-size', '11px')
-    .attr('fill', '#1f2937')
+  const showLabels = nodes.length <= 350
+  if (showLabels) {
+    node.append('text')
+      .text((d) => {
+        const label = d.label || d.title || d.id
+        return label.length > 28 ? `${label.slice(0, 25)}...` : label
+      })
+      .attr('x', (d) => nodeRadius(d) + 6)
+      .attr('y', 4)
+      .attr('font-size', '11px')
+      .attr('fill', '#1f2937')
+  }
 
   node.append('title')
     .text((d) => d.title || d.label || d.id)
@@ -770,6 +811,9 @@ function renderGraph() {
     selectedNode.value = null
   })
 
+  let tickCount = 0
+  const maxTicks = renderOptions.layoutQuality === 'stable' ? 240 : 120
+
   simulation.on('tick', () => {
     link
       .attr('x1', (d) => d.source.x)
@@ -778,6 +822,11 @@ function renderGraph() {
       .attr('y2', (d) => d.target.y)
 
     node.attr('transform', (d) => `translate(${d.x},${d.y})`)
+
+    tickCount += 1
+    if (tickCount >= maxTicks) {
+      simulation.stop()
+    }
   })
 
   function dragstarted(event) {
@@ -826,6 +875,8 @@ watch(() => [
   edgeTypeFilters.topic_similarity,
   edgeTypeFilters.unknown,
   focusNeighborsOnly.value,
+  renderOptions.layoutQuality,
+  renderOptions.hideIsolatedNodes,
   selectedNode.value?.id,
 ], async () => {
   syncSelectedNode()
