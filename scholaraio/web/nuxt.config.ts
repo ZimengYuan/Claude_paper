@@ -4,7 +4,7 @@ import path from 'node:path'
 function loadPrerenderRoutes() {
   const manifestPath = path.resolve(process.cwd(), 'public/site-data/manifest.json')
   const todoCardsPath = path.resolve(process.cwd(), 'public/site-data/todo-cards.json')
-  const baseRoutes = ['/', '/explore', '/graph']
+  const baseRoutes = ['/', '/explore']
 
   const routes = [...baseRoutes]
 
@@ -62,6 +62,8 @@ export default defineNuxtConfig({
     }
   },
   routeRules: {
+    '/graph': { redirect: '/explore' },
+    '/graph/**': { redirect: '/explore' },
     '/**': { prerender: true }
   },
   compatibilityDate: '2024-04-03'
