@@ -4,6 +4,18 @@
 
 围绕 Claude Code 构建的科研终端。用户通过自然语言完成文献检索、阅读、讨论、分析、写作的全流程。`scholaraio` Python 包提供基础设施（PDF 解析、融合检索、主题建模、引用图谱等），Claude Code 负责理解意图、调度工具、整合结果、参与学术讨论。
 
+## 启动顺序
+
+在这个仓库里开始任何实质性工作前，必须按这个顺序：
+
+1. 先读 `CLAUDE.md`
+2. 再读仓库根目录的 `PROJECT_STATE.md`（如果存在）
+3. 然后再恢复未完成工作、判断当前约束、或决定改什么
+
+- `CLAUDE.md` / `AGENTS.md` 负责存放稳定的项目规则与架构约定。
+- `PROJECT_STATE.md` 负责存放当前仓库状态、阶段性约束、以及明确的 do / don't。
+- `memory/` 可以保留历史笔记或临时交接，但它不是权威真相源；需要时可参考，但必须自行核验。
+
 ### 交互模型
 
 用户通过 Claude Code（你）用自然语言与知识库交互。你负责理解用户意图、调用合适的 CLI 命令、整合结果、并参与学术讨论。
@@ -419,4 +431,3 @@ scripts/check-deps.sh     # hook 调用的依赖检测/安装脚本
 ```
 
 用户可通过 `/plugin marketplace add ZimoLiao/scholaraio` 安装。SkillsMP 等 skill market 通过爬取 GitHub `filename:SKILL.md` 自动索引。
-

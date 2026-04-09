@@ -38,6 +38,32 @@ scholaraio/web/dist/
 # Config with secrets
 config.local.yaml
 
+# Root-level scratch outputs / one-off scripts
+/SteadyTray_L3.json
+/brief_methods.txt
+/conclusion.json
+/csd_rating.json
+/extract_conclusion.json
+/fix_methods_phase1.py
+/hommi_rating.json
+/hord_rating.json
+/humanx_rating.json
+/identify_brief_methods.py
+/metadata.json
+/omnicontrol_rating.json
+/output.json
+/output_metadata.json
+/parse_toc.json
+/parse_toc.py
+/parse_toc_output.json
+/rating_log.txt
+/result.json
+/sensemaking.json
+/temp_directions.json
+/toc_output.json
+/transformer_rating.json
+/web_service.log
+
 # Developer docs (not published)
 docs-dev/
 

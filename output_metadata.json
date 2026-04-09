@@ -1,7 +1,0 @@
-{
-  "title": "DeepMimic: Example-Guided Deep Reinforcement Learning of Physics-Based Character Skills",
-  "authors": ["Xue Bin Peng", "Pieter Abbeel", "Sergey Levine", "Michiel van de Panne"],
-  "year": 2018,
-  "doi": "10.1145/3197517.3201311",
-  "journal": "ACM Trans. Graph."
-}

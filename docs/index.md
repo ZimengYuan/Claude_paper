@@ -15,7 +15,7 @@ ScholarAIO is a research terminal built around Claude Code. You interact with yo
 - **Topic Modeling**: BERTopic clustering with interactive HTML visualizations
 - **Citation Graph**: View references, citing papers, and shared references
 - **BibTeX Export**: Filtered export with standard citation formats
-- **Literature Exploration**: Multi-dimensional OpenAlex queries with isolated data
+- **Library Trend Desk**: Current-library analysis over `data/papers` + `data/topic_model`
 - **Workspace Management**: Organize papers into subsets for focused work
 - **22 Agent Skills**: Literature review, paper writing, gap analysis, and more
 - **MCP Server**: 31 tools for integration with Claude Desktop, Cursor, etc.
@@ -38,7 +38,6 @@ See [Installation]({{ '/docs/getting-started/installation/' | relative_url }}) f
 - [Academic Writing]({{ '/docs/guide/writing/' | relative_url }})
 - [API Reference]({{ '/docs/api/' | relative_url }})
 - [Code Map]({{ '/docs/architecture/' | relative_url }})
-- [Project Analysis: Explore Enhancement]({{ '/docs/project-analysis/01-explore-enhancement/' | relative_url }})
 - [Project Analysis: Long PDF Splitting]({{ '/docs/project-analysis/02-long-pdf-splitting/' | relative_url }})
 - [Project Analysis: General Document Ingestion]({{ '/docs/project-analysis/03-general-document-ingestion/' | relative_url }})
 

@@ -7,6 +7,18 @@
 
 ScholarAIO is a research terminal built around AI coding agents. Users interact with a local academic knowledge base through natural language, performing literature search, reading, discussion, analysis, and writing — all via CLI tools. The `scholaraio` Python package provides the infrastructure (PDF parsing, hybrid retrieval, topic modeling, citation graphs, etc.), and the coding agent is responsible for understanding user intent, invoking the right CLI commands, integrating results, and engaging in academic discussion.
 
+## Startup Protocol
+
+Before doing any substantive work in this repository:
+
+1. Read `AGENTS.md`.
+2. Read `PROJECT_STATE.md` in the repository root if it exists.
+3. Only then make architecture assumptions, resume unfinished work, or decide what to change.
+
+- `AGENTS.md` / `CLAUDE.md` store stable project rules and architecture.
+- `PROJECT_STATE.md` stores the current repository state, active constraints, and explicit do/don't guidance for the next agent.
+- `memory/` may contain historical notes or ad hoc handoff material, but it is not the canonical source of truth and should be treated as optional context that must be verified.
+
 ### Interaction Model
 
 Users interact with their knowledge base through you (the coding agent) using natural language. Your role is to understand user intent, invoke the appropriate CLI commands, synthesize results, and participate in academic discussions.

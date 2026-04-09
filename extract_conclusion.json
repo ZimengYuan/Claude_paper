@@ -1,4 +1,0 @@
-{
-  "conclusion": "In this work, we have proposed an RL method that defines reward and cost functions in a stage-wise manner within the CMORL framework [14]. Additionally, we have developed a practical CMORL algorithm by expanding PPO [15] to handle multiple objectives and constraints. The proposed method has successfully demonstrated acrobatic tasks in both simulation and real-world settings. Moreover, by comparing the proposed method with existing RL and constrained RL algorithms, we have shown the necessity of the CMORL framework. While in this work, tasks are manually segmented into stages, future research could investigate more efficient techniques for automatically dividing complex tasks into stages.",
-  "reason": "The text contains a summary of the paper's contributions, findings (demonstrating acrobatic tasks and the necessity of CMORL), and mentions future work regarding automatic task segmentation."
-}
