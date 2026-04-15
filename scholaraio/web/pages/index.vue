@@ -299,7 +299,7 @@ const previewText = (card) => {
   return raw.length > 180 ? raw.slice(0, 180) + '...' : raw
 }
 
-const todoDetailLink = (routeId) => routeId ? appBaseUrl.value + 'todo/' + routeId : '#'
+const todoDetailLink = (routeId) => routeId ? '/todo/' + routeId : '#'
 const paperLink = (card) => {
   const paperRouteId = String(card?.paper_route_id || '').trim()
   if (paperRouteId) return appBaseUrl.value + 'paper/' + paperRouteId
