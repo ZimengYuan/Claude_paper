@@ -19,13 +19,16 @@ function loadPrerenderRoutes() {
   if (existsSync(todoCardsPath)) {
     try {
       const todoCards = JSON.parse(readFileSync(todoCardsPath, 'utf-8'))
-      const todoRoutes = Array.isArray(todoCards.cards)
+      const todoRouteIds = Array.isArray(todoCards.cards)
         ? todoCards.cards
             .map((card: { route_id?: string }) => card.route_id)
             .filter(Boolean)
-            .map((routeId: string) => `/todo/${routeId}`)
         : []
-      routes.push(...todoRoutes)
+
+      routes.push(
+        ...todoRouteIds.map((routeId: string) => `/todo/${routeId}`),
+        ...todoRouteIds.map((routeId: string) => `/compass/${routeId}`)
+      )
     } catch {}
   }
 
