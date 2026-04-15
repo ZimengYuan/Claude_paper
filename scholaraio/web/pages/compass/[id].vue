@@ -86,21 +86,9 @@
                   </span>
                 </div>
 
-                <div class="mt-6 space-y-3">
-                  <div
-                    v-for="entry in heroMaterialEntries"
-                    :key="entry.label"
-                    class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/10 px-4 py-3"
-                  >
-                    <p class="text-sm font-medium text-slate-100">{{ entry.label }}</p>
-                    <span
-                      class="rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide"
-                      :class="entry.ready ? 'bg-emerald-400/15 text-emerald-100' : 'bg-white/10 text-slate-300'"
-                    >
-                      {{ entry.ready ? '已就绪' : '缺失' }}
-                    </span>
-                  </div>
-                </div>
+                <p class="mt-6 text-sm leading-7 text-slate-200">
+                  {{ heroMaterialSummary }}
+                </p>
               </div>
             </div>
           </div>
@@ -772,6 +760,16 @@ const heroStatusClass = computed(() => {
   if (readyCount === heroMaterialEntries.value.length) return 'bg-emerald-100 text-emerald-700'
   if (readyCount > 0) return 'bg-amber-100 text-amber-700'
   return 'bg-slate-100 text-slate-500'
+})
+const heroMaterialSummary = computed(() => {
+  const readyEntries = heroMaterialEntries.value.filter((entry) => entry.ready)
+  if (readyEntries.length === heroMaterialEntries.value.length) {
+    return 'Score Report、Learnpath Report 与结构化 Rating 均已导出。'
+  }
+  if (readyEntries.length) {
+    return readyEntries.map((entry) => entry.label).join('、') + ' 已导出，其余材料待补全。'
+  }
+  return '当前还没有完整的评分与报告材料。'
 })
 
 const scoreBarWidth = (value) => {
