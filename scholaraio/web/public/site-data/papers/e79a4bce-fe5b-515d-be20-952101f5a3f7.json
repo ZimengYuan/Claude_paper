@@ -1,0 +1,97 @@
+{
+  "dir_name": "Xie-2024-omnicontrol-control-any-joint-at-any-time-for-human-motion-g",
+  "title": "OmniControl: Control Any Joint at Any Time for Human Motion Generation",
+  "authors": [
+    "Yiming Xie",
+    "Varun Jampani",
+    "Lei Zhong",
+    "Deqing Sun",
+    "Huaizu Jiang"
+  ],
+  "year": 2024,
+  "journal": "",
+  "doi": "10.48550/arxiv.2310.08580",
+  "abstract": "We present a novel approach named OmniControl for incorporating flexible spatial control signals into a text-conditioned human motion generation model based on the diffusion process. Unlike previous methods that can only control the pelvis trajectory, OmniControl can incorporate flexible spatial control signals over different joints at different times with only one model. Specifically, we propose analytic spatial guidance that ensures the generated motion can tightly conform to the input control signals. At the same time, realism guidance is introduced to refine all the joints to generate more coherent motion. Both the spatial and realism guidance are essential and they are highly complementary for balancing control accuracy and motion realism. By combining them, OmniControl generates motions that are realistic, coherent, and consistent with the spatial constraints. Experiments on HumanML3D and KIT-ML datasets show that OmniControl not only achieves significant improvement over state-of-the-art methods on pelvis control but also shows promising results when incorporating the constraints over other joints.",
+  "paper_type": "todo-placeholder",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [
+    "Todo占位"
+  ],
+  "is_close_read": false,
+  "read_status": "unread",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：OmniControl: Control Any Joint at Any Time for Human Motion Generation\n\n## 1. 核心创新点\n\n提出一个面向文本条件人体动作生成的统一控制框架，使单个 diffusion 模型能够在任意时间对任意关节施加空间约束，而不再局限于 pelvis 轨迹控制。\n\n## 2. 技术创新拆解\n\n- **统一的多关节时序空间控制**：该方法将不同关节、不同时间点的空间控制信号纳入同一生成模型，目标是在一个框架内覆盖 pelvis 及其他关节的灵活控制需求。\n- **双重 guidance 的协同设计**：方法结合 analytic spatial guidance 与 realism guidance，前者强调对输入约束的贴合，后者改善全身动作的连贯性与自然性；摘要指出两者对平衡控制准确性和动作真实感具有互补作用。\n\n## 3. 方法论突破\n\n- **新颖性**：相较于以往主要围绕 pelvis 控制的方案，该工作把控制粒度扩展到任意关节与任意时间片，并尝试用单一模型统一处理多种空间约束情形。\n- **关键技术**：核心技术是在扩散式人体动作生成过程中引入 analytic spatial guidance 以强化约束满足，再通过 realism guidance 对全身关节进行协调优化，从而兼顾可控性与动作一致性。\n- **理论支撑**：摘要未披露形式化理论证明、定理、收敛分析或其他明确理论保证。\n\n## 4. 实验验证\n\n- **主要基准/场景**：摘要说明实验基于 HumanML3D 和 KIT-ML 数据集，并涉及 pelvis 控制及其他关节约束场景；摘要未披露更具体的 benchmark 设置与评测协议。\n- **性能提升**：摘要声称该方法在 pelvis control 上相较 state-of-the-art 方法取得显著提升，并在其他关节约束下表现出较好结果；摘要未披露具体 benchmark 数值、提升百分比或详细指标。\n- **消融实验**：摘要指出 spatial guidance 与 realism guidance 都是必要且互补的，但摘要未披露具体消融设置、对照项或量化消融结果。\n\n## 5. 局限与启发\n\n- **当前局限**：仅从摘要可知方法强调控制精度与动作真实感的平衡，但摘要未说明在长时序动作、稀疏或冲突控制信号、复杂文本条件下的稳定性，也未披露失败案例。\n- **未来方向**：后续值得补充不同关节类型、控制密度、时间跨度和语义复杂度下的更细粒度分析，并给出更完整的实验拆解；这些内容摘要未披露。\n- **可迁移性**：摘要表明方法在 HumanML3D 和 KIT-ML 上有效，但其向更多动作域、不同骨架定义或真实交互场景迁移的能力仍需正文实验支持，摘要未提供充分证据。\n\n## 6. 一句话总结\n\nOmniControl 试图在单一文本条件 diffusion 框架中实现任意关节、任意时刻的人体动作空间控制，并通过双重 guidance 同时维护约束一致性与动作自然性。\n",
+  "method_summary": "",
+  "score_report": "# 论文价值分析报告\n\n## 0. 论文快照\n\n- 标题: OmniControl: Control Any Joint at Any Time for Human Motion Generation\n- 作者: Yiming Xie, Varun Jampani, Lei Zhong, Deqing Sun, Huaizu Jiang\n- 年份: 2024\n- 发表信息与 Venue: arXiv (Cornell University)\n- 来源: https://arxiv.org/abs/2310.08580\n- 对比集合状态: incomplete\n- 评分置信度: low\n\n## 1. 最终结论\n\n- 总分: 5.4/10.0\n- 等级: lower priority unless the user has a narrow reason to read it\n- 阅读优先级: 低\n- 奠基潜力判断: early promise, not yet established\n- 一句话判断: 除非你正好需要这条技术线，否则优先级不高。\n\n## 2. 分项评分\n\n| 维度 | 满分 | 得分 | 评分依据 | 关键证据 |\n|---|---:|---:|---|---|\n| 发表与 Venue 信号 | 1.5 | 0.6 | 当前主要仍是 arXiv / preprint 信号，发表强度需要保守看待。 | [Meta] venue=arXiv (Cornell University) | source=https://arxiv.org/abs/2310.08580 |\n| 作者与机构信号 | 1.0 | 0.8 | 作者列表完整且与强 venue 共同出现，说明团队具备较稳的执行力与领域进入门槛。 | [Meta] authors=Yiming Xie, Varun Jampani, Lei Zhong, Deqing Sun, Huaizu Jiang |\n| 引用量与引用增速 | 2.0 | 0.8 | 按发表年限归一后，引用速度大致落在 below median，能说明这篇工作已有一定外部关注度。 | [API] citations=5 | months_since_release≈30 |\n| 被引论文质量 | 1.5 | 0.6 | 已有外部引用，但还不足以证明后续引用论文整体质量很强。 | [API] citations=5 |\n| 技术增量与新颖性 | 2.0 | 1.6 | 从标题与 summary 看，论文更像是在方法范式或任务接口上做了显式重构，而不是局部调参。 | [Summary] \"# 论文总结：OmniControl: Control Any Joint at Any Time for Human Motion Generation ## 1.\" |\n| 业界贡献 / 开源 / 产品信号 | 1.0 | 0.5 | 有可信的生态或工程外溢信号，但尚不足以视为大规模外部采用。 | [Summary] \"实验验证 - **主要基准/场景**：摘要说明实验基于 HumanML3D 和 KIT-ML 数据集，并涉及 pelvis 控制及其他关节约束场景；摘要未披露更具体的 benchmark 设置与评测协议。\" |\n| 奠基潜力 / 方向性影响 | 1.0 | 0.5 | 论文有成为方向锚点的潜力，但证据更像 early promise，而不是已形成共识。 | [Composite] publication=0.6; traction=0.8; novelty=1.6; industry=0.5 |\n\n## 3. 相似论文对比集合（5 篇）\n\n| Peer | 类别 | 论文 | arXiv | 年份 | Venue | 引用量 | 选入理由 |\n|---|---|---|---|---:|---|---:|---|\n| P1 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P2 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P3 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P4 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P5 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n\n## 4. 横向对比观察\n\n- 明显强于 peer 的点: 方法 framing 更完整，且 summary 能支持它不是单点 trick。\n- 与 peer 大体持平的点: 问题设定与实验组织和同主题 peer 大致处在同一工作带宽。\n- 明显落后于 peer 的点: peer 对比集合还不完整；若后续没有更强 follow-up 或生态采用，方向影响分会继续保守。\n\n## 5. 分数形成原因\n\n- 主要加分项: 当前主要仍是 arXiv / preprint 信号，发表强度需要保守看待。；从标题与 summary 看，论文更像是在方法范式或任务接口上做了显式重构，而不是局部调参。；引用牵引目前仍偏保守\n- 主要扣分项: peer 对比仍不完整，需要保守评分；缺少更强 citing-paper 质量证据；业界/开源外溢信号有限\n- 哪些新增证据会改变评分: 看到明确的开源、benchmark 采用或部署证据\n\n## 6. 是否值得优先读\n\n- 结论: 建议带着明确问题去读，而不是无目标通读。\n- 适合优先阅读的人: 做人形/机器人控制、生成式动作建模、策略学习或相关 benchmark 复现的人。\n- 不适合优先阅读的人: 只想看已被社区完全证明的奠基论文，或者暂时不关心该任务线的人。\n\n## 7. **Sources**:\n\n- https://arxiv.org/abs/2310.08580\n- https://openalex.org/works/W4387636034\n- https://api.crossref.org/works/10.48550/arxiv.2310.08580\n",
+  "readable_report": "# 论文先修罗盘报告模板\n\n## 0. 论文快照\n\n- 标题: OmniControl: Control Any Joint at Any Time for Human Motion Generation\n- 作者: Yiming Xie, Varun Jampani, Lei Zhong, Deqing Sun, Huaizu Jiang\n- 年份: 2024\n- 发表信息与venue: arXiv (Cornell University) | JCR 分区: N/A | CCF 等级: N/A\n- 来源: https://arxiv.org/abs/2310.08580\n- **影响力**: citations=5 (openalex) | venue=arXiv (Cornell University)\n\n## 1. 必学先修知识（按顺序）\n\n| 顺序 | 知识点 | 为什么必学 | 论文使用位置 | 证据锚点 | 难度 | 最小学习目标 | 预计时间 |\n|---|---|---|---|---|---|---|---|\n| 1 | 扩散生成与时序动作建模 | 扩散式动作生成/运动建模通常是论文的核心建模假设，不补这块很难读懂采样与条件控制。 | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"# 论文总结：OmniControl: Control Any Joint at Any Time for Human Motion Generation ## 1.\" | ⭐⭐⭐⭐ | 看懂噪声过程、条件注入和采样推断。 | 2.5h |\n\n## 2. 桥接知识（可选但有帮助）\n\n| 知识点 | 角色 | 论文使用位置 | 证据 | 难度 | 建议动作 |\n|---|---|---|---|---|---|\n| 轨迹跟踪与运动重定向 | bridge | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"# 论文总结：OmniControl: Control Any Joint at Any Time for Human Motion Generation ## 1.\" | ⭐⭐⭐ | review |\n\n## 3. 个性化增量（基于 memory.md）\n\n- 已跳过（已掌握）:\n  - 暂无明确已掌握项，按默认先修序列处理。\n- 虽然熟悉但仍保留（论文特有增量）:\n  - 扩散生成与时序动作建模：即使已有相近背景，也建议按本文的问题设定重新对齐。\n- 新出现的高优先级短板:\n  - 扩散生成与时序动作建模\n\n## 4. 推荐学习资源\n\n### 扩散生成与时序动作建模\n\n- 原论文/综述:\n  - OmniControl: Control Any Joint at Any Time for Human Motion Generation - https://arxiv.org/abs/2310.08580\n  - 同主题 peer - https://openalex.org/works/W4387636034\n- 视频（优先高质量，lang=zh 时可含中文社区）:\n  - 信息不足 - https://openalex.org/works/W4387636034\n- 说明:\n  - 先用目标论文建立术语，再用 peer 校准它在相邻方法中的位置。\n\n## 5. 建议学习顺序\n\n1. 阶段 A（基础）: 扩散生成与时序动作建模\n2. 阶段 B（机制桥接）: 轨迹跟踪与运动重定向\n3. 阶段 C（论文特有）: 扩散生成与时序动作建模\n\n## 6. 30 分钟快速起步\n\n关键实验结论: # 论文总结：OmniControl: Control Any Joint at Any Time for Human Motion Generation ## 1. 核心创新点 提出一个面向文本条件人体动作生成的统一控制框架，使单个 diffusion 模型能够在任意时间对任意关节施加空间约束，而不再局限于 pelvis 轨迹控制。\n\n## 7. **Sources**:\n\n- https://arxiv.org/abs/2310.08580\n- https://openalex.org/works/W4387636034\n- https://api.crossref.org/works/10.48550/arxiv.2310.08580\n",
+  "sensemaking": null,
+  "rating": {
+    "scheme": "paper_compass_score",
+    "publication_signal": 0.6,
+    "author_signal": 0.8,
+    "citation_traction": 0.8,
+    "citation_quality": 0.6,
+    "novelty": 1.6,
+    "industry_signal": 0.5,
+    "field_shaping": 0.5,
+    "overall_score": 5.4,
+    "rating_band": "lower priority unless the user has a narrow reason to read it",
+    "priority": "低",
+    "field_shaping_statement": "early promise, not yet established",
+    "one_line_verdict": "除非你正好需要这条技术线，否则优先级不高。",
+    "notes": "除非你正好需要这条技术线，否则优先级不高。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "OmniControl: Control Any Joint at Any Time for Human Motion Generation",
+      "authors": [
+        "Yiming Xie",
+        "Varun Jampani",
+        "Lei Zhong",
+        "Deqing Sun",
+        "Huaizu Jiang"
+      ],
+      "year": 2024,
+      "doi": "10.48550/arxiv.2310.08580",
+      "paper_type": "todo-placeholder",
+      "abstract": "We present a novel approach named OmniControl for incorporating flexible spatial control signals into a text-conditioned human motion generation model based on the diffusion process. Unlike previous methods that can only control the pelvis trajectory, OmniControl can incorporate flexible spatial control signals over different joints at different times with only one model. Specifically, we propose analytic spatial guidance that ensures the generated motion can tightly conform to the input control signals. At the same time, realism guidance is introduced to refine all the joints to generate more coherent motion. Both the spatial and realism guidance are essential and they are highly complementary for balancing control accuracy and motion realism. By combining them, OmniControl generates motions that are realistic, coherent, and consistent with the spatial constraints. Experiments on HumanML3D and KIT-ML datasets show that OmniControl not only achieves significant improvement over state-of-the-art methods on pelvis control but also shows promising results when incorporating the constraints over other joints.",
+      "route_id": "e79a4bce-fe5b-515d-be20-952101f5a3f7"
+    },
+    "markdown_stats": {
+      "lines": 17,
+      "words": 239,
+      "headings": 4
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "e79a4bce-fe5b-515d-be20-952101f5a3f7",
+  "paper_ref": "e79a4bce-fe5b-515d-be20-952101f5a3f7",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
+}

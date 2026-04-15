@@ -6,32 +6,6 @@
       </button>
 
       <div class="flex flex-wrap gap-3">
-        <button
-          v-if="card"
-          class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
-          @click="toggleReadStatus"
-        >
-          {{ resolvedReadStatus === 'read' ? '标记未读' : '标记已读' }}
-        </button>
-        <button
-          class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
-          @click="exportReadStatuses"
-        >
-          导出已读状态
-        </button>
-        <button
-          class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
-          @click="triggerImportStatuses"
-        >
-          导入已读状态
-        </button>
-        <input
-          ref="importStatusesInput"
-          type="file"
-          accept="application/json"
-          class="hidden"
-          @change="handleImportStatuses"
-        />
         <a
           v-if="card"
           class="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
@@ -139,22 +113,135 @@
           </div>
         </div>
       </section>
+
+      <section class="grid gap-6 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,0.9fr)]">
+        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-slate-900">6. Paper Compass</h2>
+              <p class="mt-2 text-sm text-slate-500">
+                这里直接挂出该 Todo 对应论文的评分报告与可读报告，不用再跳去普通论文详情页。
+              </p>
+            </div>
+            <a
+              v-if="paperDetailLink"
+              class="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+              :href="paperDetailLink"
+            >
+              打开论文详情页
+            </a>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="rounded-full border px-2.5 py-1 text-xs" :class="materialClass(Boolean(scoreReport))">Score Report</span>
+            <span class="rounded-full border px-2.5 py-1 text-xs" :class="materialClass(Boolean(readableReport))">Report</span>
+            <span class="rounded-full border px-2.5 py-1 text-xs" :class="materialClass(Boolean(paper?.rating))">Rating</span>
+          </div>
+
+          <div class="mt-6 flex flex-wrap border-b border-slate-200">
+            <button
+              v-for="tab in compassTabs"
+              :key="tab.key"
+              class="relative px-5 py-3 text-sm font-medium transition-colors"
+              :class="activeCompassTab === tab.key
+                ? 'text-blue-600 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-blue-600'
+                : 'text-slate-500 hover:text-slate-700'"
+              @click="activeCompassTab = tab.key"
+            >
+              {{ tab.label }}
+              <span
+                class="ml-2 inline-block h-1.5 w-1.5 rounded-full align-middle"
+                :class="tab.ready ? 'bg-blue-500' : 'bg-slate-300'"
+              ></span>
+            </button>
+          </div>
+
+          <div class="mt-5">
+            <div v-if="activeCompassTab === 'score-report'">
+              <div v-if="scoreReport" class="markdown-body prose max-w-none" v-html="renderMarkdown(scoreReport)"></div>
+              <p v-else class="text-sm text-slate-500">当前静态快照里还没有这篇论文的评分报告。</p>
+            </div>
+
+            <div v-if="activeCompassTab === 'report'">
+              <div v-if="readableReport" class="markdown-body prose max-w-none" v-html="renderMarkdown(readableReport)"></div>
+              <p v-else class="text-sm text-slate-500">当前静态快照里还没有这篇论文的可读报告。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h2 class="text-lg font-semibold text-slate-900">7. 评分概览</h2>
+            <div v-if="paper?.rating" class="mt-4 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-slate-500">总分</span>
+                <span class="text-lg font-semibold" :class="ratingClass(paper.rating.overall_score)">
+                  {{ overallRatingText }}
+                </span>
+              </div>
+              <div
+                v-for="entry in ratingEntries"
+                :key="entry.label"
+                class="flex items-center justify-between text-sm"
+              >
+                <span class="text-slate-500">{{ entry.label }}</span>
+                <span class="font-medium text-slate-900">{{ entry.value }}/10</span>
+              </div>
+              <p v-if="ratingNote" class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm italic text-slate-600">
+                "{{ ratingNote }}"
+              </p>
+            </div>
+            <p v-else class="mt-4 text-sm text-slate-500">当前静态快照里还没有可展示的结构化评分。</p>
+          </section>
+
+          <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h2 class="text-lg font-semibold text-slate-900">8. 关联论文快照</h2>
+            <dl v-if="linkedPaperEntries.length" class="mt-4 space-y-3 text-sm">
+              <div v-for="entry in linkedPaperEntries" :key="entry.label">
+                <dt class="text-slate-500">{{ entry.label }}</dt>
+                <dd class="mt-1 break-all text-slate-900">{{ entry.value }}</dd>
+              </div>
+            </dl>
+            <p v-else class="mt-4 text-sm text-slate-500">当前还没读取到关联论文的静态详情。</p>
+          </section>
+        </div>
+      </section>
     </div>
   </div>
 </template>
 
 <script setup>
+import { marked } from 'marked'
+
 const TODO_READ_STATUS_STORAGE_KEY = 'scholaraio:todo-read-statuses:v2'
 
 const { fetchJson } = useStaticSiteData()
+const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
 const routeId = computed(() => String(route.params.id || '').trim())
 
 const loading = ref(true)
 const errorMessage = ref('')
 const card = ref(null)
+const paper = ref(null)
+const scoreReport = ref('')
+const readableReport = ref('')
+const activeCompassTab = ref('score-report')
 const localReadStatuses = ref({})
-const importStatusesInput = ref(null)
+
+const paperRouteId = computed(() => String(card.value?.paper_route_id || '').trim())
+const appBaseUrl = computed(() => {
+  const value = String(runtimeConfig.app.baseURL || '/')
+  return value.endsWith('/') ? value : `${value}/`
+})
+const paperDetailLink = computed(() => {
+  if (!paperRouteId.value) return ''
+  return `${appBaseUrl.value}paper/${paperRouteId.value}`
+})
+const compassTabs = computed(() => [
+  { key: 'score-report', label: 'Score Report', ready: Boolean(scoreReport.value) },
+  { key: 'report', label: 'Report', ready: Boolean(readableReport.value) },
+])
 
 const resolvedReadStatus = computed(() => {
   if (!card.value) return 'unread'
@@ -184,15 +271,6 @@ const restoreReadStatuses = () => {
   }
 }
 
-const persistReadStatuses = () => {
-  if (!import.meta.client) return
-
-  try {
-    window.localStorage.setItem(TODO_READ_STATUS_STORAGE_KEY, JSON.stringify(localReadStatuses.value))
-  } catch (error) {
-    console.error('Failed to persist todo read statuses:', error)
-  }
-}
 
 const statusClass = (status) => {
   const classes = {
@@ -202,73 +280,110 @@ const statusClass = (status) => {
   return classes[status] || classes.unread
 }
 
+const materialClass = (enabled) => {
+  return enabled
+    ? 'border-blue-200 bg-blue-50 text-blue-700'
+    : 'border-slate-200 bg-slate-50 text-slate-400'
+}
+
+const ratingClass = (score) => {
+  if (score == null) return 'text-slate-400'
+  if (score >= 8) return 'text-emerald-600'
+  if (score >= 6) return 'text-amber-600'
+  return 'text-red-600'
+}
+
 const paperLink = (card) => {
-  const paperRouteId = String(card?.paper_route_id || '').trim()
-  if (paperRouteId) return `/paper/${paperRouteId}`
+  const linkedPaperRouteId = String(card?.paper_route_id || '').trim()
+  if (linkedPaperRouteId) return `${appBaseUrl.value}paper/${linkedPaperRouteId}`
   const doi = String(card?.doi || '').trim()
   if (doi) return `https://doi.org/${doi}`
   return '#'
 }
 
-const goBack = () => navigateTo('/')
+const goBack = () => navigateTo(appBaseUrl.value)
 
-const toggleReadStatus = () => {
-  if (!card.value?.route_id) return
-
-  const nextStatus = resolvedReadStatus.value === 'read' ? 'unread' : 'read'
-  card.value = { ...card.value, read_status: nextStatus }
-  localReadStatuses.value = {
-    ...localReadStatuses.value,
-    [card.value.route_id]: nextStatus,
-  }
-  persistReadStatuses()
+function keepValue(value) {
+  return value !== null && value !== undefined && value !== ''
 }
 
-const exportReadStatuses = () => {
-  if (!import.meta.client) return
-  const payload = {
-    version: 1,
-    exported_at: new Date().toISOString(),
-    statuses: localReadStatuses.value,
-  }
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = `todo-read-statuses-${new Date().toISOString().slice(0, 10)}.json`
-  a.click()
-  URL.revokeObjectURL(url)
+const ratingEntries = computed(() => {
+  const rating = paper.value?.rating
+  if (rating == null) return []
+
+  const compassEntries = [
+    { label: '发表信号', value: rating.publication_signal },
+    { label: '作者信号', value: rating.author_signal },
+    { label: '引用牵引', value: rating.citation_traction },
+    { label: '被引质量', value: rating.citation_quality },
+    { label: '新颖性', value: rating.novelty },
+    { label: '业界信号', value: rating.industry_signal },
+    { label: '方向影响', value: rating.field_shaping },
+  ].filter((entry) => keepValue(entry.value))
+
+  if (compassEntries.length) return compassEntries
+
+  return [
+    { label: '创新性', value: rating.innovation },
+    { label: '技术质量', value: rating.technical_quality },
+    { label: '实验验证', value: rating.experimental_validation },
+    { label: '写作质量', value: rating.writing_quality },
+    { label: '相关性', value: rating.relevance },
+  ].filter((entry) => keepValue(entry.value))
+})
+
+const ratingNote = computed(() => paper.value?.rating?.one_line_verdict || paper.value?.rating?.notes || '')
+
+const overallRatingText = computed(() => {
+  const score = paper.value?.rating?.overall_score
+  if (score == null) return 'n/a'
+  return `${Number(score).toFixed(1)}/10`
+})
+
+const linkedPaperEntries = computed(() => {
+  if (paper.value == null) return []
+  return [
+    { label: '标题', value: paper.value.title },
+    { label: '作者', value: Array.isArray(paper.value.authors) ? paper.value.authors.join(', ') : paper.value.authors },
+    { label: '年份', value: paper.value.year },
+    { label: '期刊 / Venue', value: paper.value.journal },
+    { label: 'DOI', value: paper.value.doi },
+    { label: '论文类型', value: paper.value.paper_type },
+    { label: 'Route ID', value: paperRouteId.value },
+  ].filter((entry) => keepValue(entry.value))
+})
+
+const applyPaperPayload = (payload) => {
+  paper.value = payload
+  scoreReport.value = payload?.score_report || ''
+  readableReport.value = payload?.readable_report || ''
+  activeCompassTab.value = (scoreReport.value || !readableReport.value) ? 'score-report' : 'report'
 }
 
-const triggerImportStatuses = () => {
-  importStatusesInput.value?.click()
-}
+const loadLinkedPaper = async (matchedCard) => {
+  paper.value = null
+  scoreReport.value = ''
+  readableReport.value = ''
 
-const handleImportStatuses = async (event) => {
-  const input = event.target
-  const file = input?.files?.[0]
-  if (!file) return
+  const linkedRouteId = String(matchedCard?.paper_route_id || '').trim()
+  if (!linkedRouteId) return
 
   try {
-    const text = await file.text()
-    const parsed = JSON.parse(text)
-    const statuses = parsed?.statuses && typeof parsed.statuses === 'object' ? parsed.statuses : parsed
-    if (!statuses || typeof statuses !== 'object') return
-
-    const normalized = {}
-    for (const [routeId, value] of Object.entries(statuses)) {
-      if (value === 'read' || value === 'unread') normalized[routeId] = value
-    }
-
-    localReadStatuses.value = {
-      ...localReadStatuses.value,
-      ...normalized,
-    }
-    persistReadStatuses()
+    const payload = await fetchJson(`papers/${linkedRouteId}.json`)
+    applyPaperPayload(payload)
   } catch (error) {
-    console.error('Failed to import read statuses:', error)
-  } finally {
-    input.value = ''
+    console.error('Failed to load linked paper snapshot:', error)
+  }
+}
+
+const renderMarkdown = (text) => {
+  if (text == null || text === '') return ''
+
+  try {
+    return marked.parse(String(text))
+  } catch (error) {
+    console.error('Markdown rendering error:', error)
+    return ''
   }
 }
 
@@ -283,6 +398,7 @@ const loadCard = async () => {
       throw new Error('Todo reading card not found in snapshot.')
     }
     card.value = matched
+    await loadLinkedPaper(matched)
   } catch (error) {
     console.error('Failed to load todo detail:', error)
     errorMessage.value = 'Failed to load Todo detail.'

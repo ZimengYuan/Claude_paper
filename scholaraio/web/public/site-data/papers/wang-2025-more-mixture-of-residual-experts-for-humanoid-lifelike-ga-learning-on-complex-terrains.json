@@ -21,6 +21,8 @@
   "citation_count": 0,
   "summary": "",
   "method_summary": "",
+  "score_report": "",
+  "readable_report": "",
   "sensemaking": null,
   "rating": 3,
   "parsed_source": {
@@ -62,5 +64,5 @@
   "route_id": "wang-2025-more-mixture-of-residual-experts-for-humanoid-lifelike-ga-learning-on-complex-terrains",
   "paper_ref": "Wang-2025-MoRE-Mixture-of-Residual-Experts-for-Humanoid-Lifelike-Ga-Learning-on-Complex-Terrains",
   "read_only": true,
-  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
 }

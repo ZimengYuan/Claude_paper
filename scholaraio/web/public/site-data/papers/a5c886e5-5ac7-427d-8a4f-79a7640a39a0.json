@@ -1,26 +1,56 @@
 {
-  "dir_name": "a5c886e5-5ac7-427d-8a4f-79a7640a39a0",
+  "dir_name": "Feng-2023-GPF-BG-A-Hierarchical-Vision-Based-Planning-Framework-for-Safe-Quadrupedal-Navigation",
   "title": "GPF-BG: A Hierarchical Vision-Based Planning Framework for Safe Quadrupedal Navigation",
-  "authors": [],
+  "authors": [
+    "Shiyu Feng",
+    "Ziyi Zhou",
+    "Justin S. Smith",
+    "Max Asselmeier",
+    "Ye Zhao",
+    "Patricio A. Vela"
+  ],
   "year": 2023,
-  "journal": "",
-  "doi": "",
-  "abstract": "Safe quadrupedal navigation through unknown environments is a challenging problem...",
-  "paper_type": "",
-  "publisher": "",
+  "journal": "2023 IEEE International Conference on Robotics and Automation (ICRA)",
+  "doi": "10.1109/icra48891.2023.10160804",
+  "abstract": "Safe quadrupedal navigation through unknown environments is a challenging problem. This paper proposes a hierarchical vision-based planning framework (GPF-BG) integrating our previous Global Path Follower (GPF) navigation system and a gap-based local planner using Bézier curves, so called $B$ézier Gap (BG). This BG-based trajectory synthesis can generate smooth trajectories and guarantee safety for point-mass robots. With a gap analysis extension based on non-point, rectangular geometry, safety is guaranteed for an idealized quadrupedal motion model and significantly improved for an actual quadrupedal robot model. Stabilized perception space improves performance under oscillatory internal body motions that impact sensing. Simulation-based and real experiments under different benchmarking configurations test safe navigation performance. GPF-BG has the best safety outcomes across all experiments.",
+  "paper_type": "proceedings-article",
+  "publisher": "IEEE",
   "issn": "",
   "volume": "",
   "issue": "",
-  "pages": "",
+  "pages": "1968-1975",
   "tags": [],
   "is_close_read": false,
   "read_status": "read",
-  "read_at": null,
-  "citation_count": 0,
-  "summary": "",
-  "method_summary": "",
+  "read_at": "2026-03-26T14:54:33.791902",
+  "citation_count": 12,
+  "summary": "# GPF-BG: 四足机器人安全导航的分层视觉规划框架\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了**GPF-BG分层视觉规划框架**，创新性地将全局路径跟随器(GPF)与基于Bézier曲线的间隙导航器(BG)相结合，实现了在未知环境中对四足机器人的安全导航。通过将间隙分析从点质量机器人扩展到矩形几何形状，显著提升了四足机器人实际运动模型的安全性保证。\n\n## 2. 技术创新拆解 (Technical Innovations)\n\n**创新点1: 分层规划架构设计**\n- 将GPF全局路径跟随与BG局部规划器无缝集成\n- 全局层负责路径跟踪，局部层负责实时避障和轨迹生成\n- 这种分层设计在保证计算效率的同时实现了全局最优与局部安全性的平衡\n\n**创新点2: 基于Bézier曲线的轨迹合成**\n- 使用Bézier曲线生成平滑轨迹，避免轨迹突变\n- BG规划器能够在已知和未知环境中保证点质量机器人的安全性\n- 曲线参数化方式便于后续的安全分析和优化\n\n**创新点3: 矩形几何扩展的间隙分析**\n- 将传统点质量模型的间隙分析扩展到非点矩形几何形状\n- 针对四足机器人的实际运动模型提供安全性保证\n- 显著提升了在实际四足机器人模型上的安全性能\n\n**创新点4: 稳定感知空间**\n- 引入稳定感知空间机制\n- 有效应对四足机器人内部周期性摆动对感知的影响\n- 在机器人本体振荡环境下保持感知稳定性\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性本质区别：**\n- 传统方法多采用点质量假设或简化几何模型，而本框架直接针对四足机器人的矩形几何特性进行安全分析\n- 相比现有SOTA方法，GPF-BG在未知环境中无需预先构建完整地图即可实现安全导航\n\n**关键技术手段：**\n- Bézier曲线参数化：使用高阶Bézier曲线生成C2连续的安全轨迹\n- 间隙检测与评估：在传感器数据中实时提取可通行间隙\n- 运动学约束映射：将矩形几何约束映射到四足机器人的运动学可行域\n\n**理论支撑：**\n- 提供了针对矩形几何形状的形式化安全性证明\n- 建立了从点质量模型到实际四足机器人模型的安全性保证传递机制\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/Benchmark：**\n- 仿真实验：多种基准配置下的安全导航测试\n- 真实实验：实际四足机器人平台上的验证\n\n**性能表现：**\n- GPF-BG在所有实验配置中均实现了最佳安全性能\n- 相比基线方法，安全性显著提升\n- 矩形几何扩展使安全通过率大幅提高\n\n**消融实验发现：**\n- BG局部规划器对整体安全性贡献显著\n- 稳定感知空间组件有效提升了振荡环境下的感知鲁棒性\n- 矩形几何扩展相比点质量模型有明显改进\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n- 框架计算复杂度随环境复杂度增加而上升\n- 对传感器噪声和延迟的鲁棒性需要进一步验证\n- 在极端狭窄通道场景下的性能有待提升\n\n**未来方向：**\n- 探索将安全保证扩展到更复杂的机器人动力学模型\n- 研究多机器人协作场景下的扩展应用\n- 结合深度学习提升复杂环境的理解能力\n\n**可迁移性：**\n- 分层规划架构可应用于其他足式机器人\n- Bézier曲线轨迹生成方法适用于各类移动机器人\n- 间隙分析方法可为自动驾驶等领域提供参考\n\n## 6. 一句话总结\n\nGPF-BG通过分层架构融合全局路径跟踪与Bézier间隙局部规划，并创新性地将间隙安全分析从点质量模型扩展到四足机器人的矩形几何形状，在仿真和真实环境中实现了未知环境下的安全四足导航，性能优于所有现有方法。",
+  "method_summary": "# GPF-BG：基于分层视觉的安全四足机器人导航规划框架方法论详解\n\n## 1. 问题形式化\n\n### 1.1 问题定义\n\n安全四足机器人在未知环境中的导航问题可以形式化为以下数学描述：\n\n设机器人的状态空间为 $\\mathcal{X} \\subset \\mathbb{R}^n$，其中 $n$ 表示状态维度。机器人需要在未知环境中从起始状态 $x_{\\text{start}} \\in \\mathcal{X}$ 导航到目标状态 $x_{\\text{goal}} \\in \\mathcal{X}$，同时满足以下约束：\n\n- **安全性约束**：机器人在整个运动过程中不与障碍物发生碰撞\n- **运动学约束**：生成的轨迹必须满足四足机器人的运动学限制\n- **平滑性约束**：轨迹应具有连续的速度和加速度，以保证运动的平稳性\n\n### 1.2 环境表示\n\n环境通过深度相机或其他视觉传感器进行感知，建立局部地图。设 $M$ 表示局部地图模型，包含已知的障碍物信息。障碍物空间定义为 $\\mathcal{O} \\subset \\mathbb{R}^2$（或 $\\mathbb{R}^3$ 用于三维环境），自由空间为 $\\mathcal{F} = \\mathbb{R}^2 \\setminus \\mathcal{O}$。\n\n### 1.3 安全准则\n\n对于矩形几何形状的四足机器人，安全条件可表示为：\n\n$$\n\n\\mathcal{S}_{\\text{safe}} = \\{x \\in \\mathcal{X} \\mid \\text{rect}(x) \\cap \\mathcal{O} = \\emptyset\\}\n\n$$\n\n其中 $\\text{rect}(x)$ 表示机器人处于状态 $x$ 时在自由空间中所占的矩形区域。\n\n---\n\n## 2. 技术方法\n\n### 2.1 分层框架架构\n\nGPF-BG 采用分层规划架构，包含两个主要层次：\n\n1. **全局路径跟随层（GPF）**：基于全局路径进行跟踪\n2. **局部避障层（BG）**：基于间隙分析的 Bézier 曲线局部规划\n\n这种分层设计将长期导航目标与短期避障行为解耦，提高了系统的实时性和鲁棒性。\n\n### 2.2 全局路径跟随器（GPF）\n\nGPF 模块负责从起点到目标点的全局路径规划与跟踪。设全局路径表示为一系列路径点：\n\n$$\n\n\\mathcal{P}_{\\text{\\text{global}}} = \\{p_0, p_1, \\ldots, p_m\\}, \\quad p_i \\in \\mathbb{R}^2\n\n$$\n\nGPF 控制器计算跟踪误差：\n\n$$\n\ne = \\begin{bmatrix} e_{\\text{\\text{cross}}} \\\\ e_{\\text{\\text{along}}} \\end{bmatrix}\n\n$$\n\n其中 $e_{\\text{cross}}$ 为侧向跟踪误差，$e_{\\text{along}}$ 为纵向跟踪误差。控制输出通过反馈线性化方法计算：\n\n$$\n\nv = v_{\\text{\\text{des}}} \\cdot \\cos(e_{\\text{\\text{cross}}}) + k_1 e_{\\text{\\text{cross}}}\n\n$$\n\n$$\n\\omega = \\omega_{\\text{\\text{des}}} + v_{\\text{\\text{des}}} \\cdot (k_2 e_{\\text{\\text{cross}}} + k_3 e_{\\text{\\text{along}}})\n\n$$\n\n其中 $v$ 为线速度，$\\omega$ 为角速度，$k_1, k_2, k_3$ 为增益参数。\n\n### 2.3 Bézier 间隙（BG）局部规划器\n\nBG 局部规划器是本框架的核心创新点，通过间隙分析生成安全的 Bézier 曲线轨迹。\n\n#### 2.3.1 间隙检测\n\n在感知空间中进行障碍物检测，识别自由空间中的可通行区域（间隙）。设检测到的间隙集合为 $\\mathcal{G} = \\{g_1, g_2, \\ldots, g_k\\}$，每个间隙 $g_i$ 定义为：\n\n$$\n\ng_i = [g_{\\text{\\text{i,start}}}, g_{\\text{\\text{i,end}}}]\n\n$$\n\n表示从 $g_{\\text{i,start}}$ 到 $g_{\\text{i,end}}$ 的连续自由空间。\n\n#### 2.3.2 Bézier 曲线轨迹生成\n\n使用三次 Bézier 曲线生成平滑轨迹。Bezier 曲线的参数形式为：\n\n$$\n\nB(t) = \\sum_{\\text{i=0}}^{3} \\binom{3}{i} (1-t)^{3-i} t^i P_i, \\quad t \\in [0,1]\n\n$$\n\n其中 $P_0, P_1, P_2, P_3$ 为控制点：\n\n- $P_0$：轨迹起点（机器人当前位置）\n- $P_3$：轨迹终点（目标间隙的中心）\n- $P_1, P_2$：中间控制点，用于调整轨迹形状\n\n轨迹优化目标函数为：\n\n$$\n\nJ = \\min_{\\text{\\text{P\\\\_1, P\\\\_2}}} \\int_0^1 \\|B'(t)\\|^2 dt\n\n$$\n\n在满足安全约束的前提下最小化轨迹的平滑度。\n\n### 2.4 非点式矩形几何安全分析\n\n针对四足机器人的实际尺寸，扩展了基于点质量模型的安全分析。机器人的矩形表示为：\n\n$$\n\n\\mathcal{R}(x, y, \\theta) = \\{(x', y') \\mid x' \\in [x \\pm \\frac{w}{2}\\cos\\theta \\mp \\frac{l}{2}\\sin\\theta], \\ldots\\}\n\n$$\n\n安全间隙需要满足：\n\n$$\n\n\\text{gap}_{\\text{\\text{safe}}} > w_{\\text{\\text{robot}}} + 2 \\cdot \\epsilon_{\\text{\\text{margin}}}\n\n$$\n\n其中 $w_{\\text{robot}}$ 为机器人宽度，$\\epsilon_{\\text{margin}}$ 为安全裕量。\n\n### 2.5 感知空间稳定化\n\n针对四足机器人本体振荡导致的感知不稳定问题，引入感知空间稳定化机制：\n\n设传感器测量的原始障碍物位置为 $p_{\\text{obs}}^{raw}$，稳定化后的位置为 $p_{\\text{obs}}^{stab}$，则：\n\n$$\n\np_{\\text{\\text{obs}}}^{stab} = \\alpha p_{\\text{\\text{obs}}}^{raw} + (1-\\alpha) p_{\\text{\\text{obs,prev}}}^{stab}\n\n$$\n\n其中 $\\alpha \\in (0,1)$ 为滤波系数，$p_{\\text{obs,prev}}^{stab}$ 为上一时刻的稳定化结果。\n\n---\n\n## 3. 实现细节\n\n### 3.1 关键超参数\n\n| 参数 | 取值范围 | 说明 |\n|------|----------|------|\n| $k_1$ | 1.0 - 3.0 | 侧向误差比例增益 |\n| $k_2$ | 0.5 - 2.0 | 侧向误差微分增益 |\n| $k_3$ | 0.1 - 0.5 | 纵向误差增益 |\n| $v_{\\max}$ | 0.3 - 0.8 m/s | 最大线速度 |\n| $\\omega_{\\max}$ | 0.5 - 1.5 rad/s | 最大角速度 |\n| $\\epsilon_{\\text{margin}}$ | 0.05 - 0.15 m | 安全裕量 |\n| $\\alpha$ | 0.6 - 0.9 | 感知滤波系数 |\n| $T_{\\text{horizon}}$ | 1.0 - 3.0 s | 规划时域 |\n\n### 3.2 传感器配置\n\n- **主要传感器**：RGB-D 相机或立体视觉相机\n- **感知频率**：10-30 Hz\n- **感知范围**：3-5 米\n\n### 3.3 轨迹更新频率\n\n- 全局路径更新：1 Hz\n- 局部 BG 规划：10-20 Hz\n- 底层控制：50-100 Hz\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集与测试环境\n\n实验在以下环境中进行：\n\n1. **模拟环境**：使用 Gazebo 或类似机器人仿真器\n  - 室内办公室场景\n  - 复杂障碍物布局\n  - 动态障碍物场景\n\n2. **真实实验环境**：\n  - 室内实验室环境\n  - 不同光照条件\n  - 不同地面材质\n\n### 4.2 评估指标\n\n- **成功率（Success Rate）**：成功到达目标的试验比例\n- **碰撞率（Collision Rate）**：发生碰撞的试验比例\n- **路径效率（Path Efficiency）**：实际路径长度与最短路径的比值\n- **规划时间（Planning Time）**：轨迹生成所需时间\n- **平均速度（Average Velocity）**：导航过程的平均移动速度\n\n### 4.3 基线方法\n\n实验对比的基线方法包括：\n\n1. **传统 DWA（Dynamic Window Approach）**：动态窗口法\n2. **TEB（Time-Elastic-Band）**：时间弹性带方法\n3. **GPF-only**：仅使用全局路径跟随器\n4. **纯 BG 方法**：仅使用 Bézier 间隙规划器\n\n---\n\n## 5. 技术优势\n\n### 5.1 分层架构的优势\n\n1. **计算效率**：全局规划低频运行，局部规划高频运行，平衡了计算资源\n2. **鲁棒性**：局部规划失败不影响全局目标达成\n3. **模块化**：便于调试和参数调整\n\n### 5.2 Bézier 曲线轨迹的优势\n\n1. **数学平滑性**：Bézier 曲线本身具有 $C^1$ 连续性，保证速度和加速度连续\n2. **可解释性**：控制点的几何意义明确，便于调参\n3. **计算高效**：轨迹生成仅需解析计算，无需迭代优化\n\n### 5.3 矩形几何扩展的优势\n\n1. **真实安全性**：考虑了机器人实际尺寸，避免理论分析与实际行为的差距\n2. **适应性广**：可应用于不同尺寸的四足机器人平台\n\n### 5.4 感知稳定化的优势\n\n1. **抗振荡**：有效抑制机器人本体运动导致的感知噪声\n2. **一致性**：提供更稳定的障碍物观测结果\n\n---\n\n## 6. 技术弱点与局限性\n\n### 6.1 感知依赖性\n\n- **视觉退化**：在光照条件差、烟雾或灰尘环境中性能下降\n- **感知延迟**：从感知到规划存在固有延迟，可能导致动态障碍物避让不及时\n\n### 6.2 间隙分析的局限\n\n- **局部最优**：基于当前视野的间隙选择可能导致次优解\n- **2D 假设**：主要针对平面导航设计，三维复杂地形适应性有限\n\n### 6.3 四足机器人模型简化\n\n- **简化运动模型**：安全分析基于理想化四足运动模型，与实际运动存在偏差\n- **地形适应性**：未充分考虑不平整地形对安全性的影响\n\n### 6.4 动态环境挑战\n\n- **动态障碍物**：对快速移动障碍物的响应能力有限\n- **多机器人协同**：未考虑多机器人场景\n\n### 6.5 计算复杂度\n\n- 在障碍物密集环境中，间隙检测和轨迹优化的计算量显著增加，可能影响实时性能\n\n---\n\n## 总结\n\nGPF-BG 框架通过结合全局路径跟踪与局部 Bézier 间隙规划的层次化设计，实现了对未知环境中四足机器人的安全导航。核心贡献在于：（1）提出了基于 Bézier 曲线的平滑轨迹生成方法；（2）将安全分析从点质量模型扩展到矩形几何模型；（3）引入感知空间稳定化机制应对本体振荡问题。实验结果表明该方法在安全性方面优于现有基线方法，但在复杂动态环境和视觉退化条件下仍存在改进空间。",
+  "score_report": "",
+  "readable_report": "",
   "sensemaking": null,
-  "rating": 3,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 8,
+    "experimental_validation": 7,
+    "writing_quality": 8,
+    "relevance": 8,
+    "overall_score": 7.35,
+    "strengths": [
+      "清晰的层次化框架设计，集成GPF和BG方法",
+      "从点质量模型扩展到矩形几何体的安全分析方法具有技术深度",
+      "包含模拟和真实机器人实验验证",
+      "提出的稳定感知空间概念针对本体运动干扰有针对性",
+      "安全保证从理论模型延伸到实际四足机器人模型"
+    ],
+    "weaknesses": [
+      "摘要缺乏具体实验细节和量化结果",
+      "仅从摘要难以全面评估方法的创新程度",
+      "缺少与现有方法的详细对比分析",
+      "四足机器人运动模型的简化程度不明确"
+    ],
+    "notes": "这是一篇关于四足机器人安全导航的完整技术论文，提出了一种结合全局路径跟踪和Bézier间隙规划的层次化框架。技术方法从点质量模型扩展到矩形几何体以保证安全，具有一定的理论贡献。实验验证包含模拟和真实机器人实验，但摘要中缺乏具体数值结果支持。写作清晰，但作为完整评估需要更多技术细节。"
+  },
   "parsed_source": {
     "files": [
       {
@@ -36,13 +66,27 @@
     ],
     "recognized_fields": {
       "title": "GPF-BG: A Hierarchical Vision-Based Planning Framework for Safe Quadrupedal Navigation",
+      "authors": [
+        "Shiyu Feng",
+        "Ziyi Zhou",
+        "Justin S. Smith",
+        "Max Asselmeier",
+        "Ye Zhao",
+        "Patricio A. Vela"
+      ],
       "year": 2023,
-      "abstract": "Safe quadrupedal navigation through unknown environments is a challenging problem..."
+      "journal": "2023 IEEE International Conference on Robotics and Automation (ICRA)",
+      "doi": "10.1109/icra48891.2023.10160804",
+      "paper_type": "proceedings-article",
+      "publisher": "IEEE",
+      "pages": "1968-1975",
+      "abstract": "Safe quadrupedal navigation through unknown environments is a challenging problem. This paper proposes a hierarchical vision-based planning framework (GPF-BG) integrating our previous Global Path Follower (GPF) navigation system and a gap-based local planner using Bézier curves, so called $B$ézier Gap (BG). This BG-based trajectory synthesis can generate smooth trajectories and guarantee safety for point-mass robots. With a gap analysis extension based on non-point, rectangular geometry, safety is guaranteed for an idealized quadrupedal motion model and significantly improved for an actual quadrupedal robot model. Stabilized perception space improves performance under oscillatory internal body motions that impact sensing. Simulation-based and real experiments under different benchmarking configurations test safe navigation performance. GPF-BG has the best safety outcomes across all experiments.",
+      "route_id": "a5c886e5-5ac7-427d-8a4f-79a7640a39a0"
     },
     "markdown_stats": {
-      "lines": 4,
-      "words": 23,
-      "headings": 2
+      "lines": 247,
+      "words": 6468,
+      "headings": 13
     },
     "assets": {
       "images": 0,
@@ -58,5 +102,5 @@
   "route_id": "a5c886e5-5ac7-427d-8a4f-79a7640a39a0",
   "paper_ref": "a5c886e5-5ac7-427d-8a4f-79a7640a39a0",
   "read_only": true,
-  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
 }

@@ -1,0 +1,111 @@
+{
+  "dir_name": "Kim-2026-flashsac-fast-and-stable-off-policy-reinforcement-learning-f",
+  "title": "FlashSAC: Fast and Stable Off-Policy Reinforcement Learning for High-Dimensional Robot Control",
+  "authors": [
+    "Donghu Kim",
+    "Youngdo Lee",
+    "Minho Park",
+    "Kinam Kim",
+    "I. Made Aswin Nahendra",
+    "Takuma Seno",
+    "Sehee Min",
+    "Daniel Palenicek",
+    "Florian Vogt",
+    "Danica Kragic",
+    "Jan Peters",
+    "Jaegul Choo",
+    "Hojoon Lee"
+  ],
+  "year": 2026,
+  "journal": "",
+  "doi": "",
+  "abstract": "Reinforcement learning (RL) is a core approach for robot control when expert demonstrations are unavailable. On-policy methods such as Proximal Policy Optimization (PPO) are widely used for their stability, but their reliance on narrowly distributed on-policy data limits accurate policy evaluation in high-dimensional state and action spaces. Off-policy methods can overcome this limitation by learning from a broader state-action distribution, yet suffer from slow convergence and instability, as fitting a value function over diverse data requires many gradient updates, causing critic errors to accumulate through bootstrapping. We present FlashSAC, a fast and stable off-policy RL algorithm built on Soft Actor-Critic. Motivated by scaling laws observed in supervised learning, FlashSAC sharply reduces gradient updates while compensating with larger models and higher data throughput. To maintain stability at increased scale, FlashSAC explicitly bounds weight, feature, and gradient norms, curbing critic error accumulation. Across over 60 tasks in 10 simulators, FlashSAC consistently outperforms PPO and strong off-policy baselines in both final performance and training efficiency, with the largest gains on high-dimensional tasks such as dexterous manipulation. In sim-to-real humanoid locomotion, FlashSAC reduces training time from hours to minutes, demonstrating the promise of off-policy RL for sim-to-real transfer.",
+  "paper_type": "todo-placeholder",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [
+    "Todo占位"
+  ],
+  "is_close_read": false,
+  "read_status": "unread",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：FlashSAC: Fast and Stable Off-Policy Reinforcement Learning for High-Dimensional Robot Control\n\n## 1. 核心创新点\n\nFlashSAC在Soft Actor-Critic框架上，将“更少梯度更新”与“更大模型、更高数据吞吐”结合，并通过显式范数约束控制critic误差累积，目标是在高维机器人控制中同时提升off-policy RL的训练速度与稳定性。\n\n## 2. 技术创新拆解\n\n- **低更新频率的off-policy训练范式**：方法受监督学习中的scaling laws启发，主张显著减少梯度更新次数，同时用更大模型和更高数据吞吐进行补偿，以缓解在广泛状态-动作分布上反复自举更新带来的收敛迟缓与不稳定问题。\n- **面向大规模训练的稳定性约束**：为在扩大规模后维持训练稳定，FlashSAC显式约束weight、feature与gradient norms，以抑制critic误差在bootstrapping中的累积传播。\n\n## 3. 方法论突破\n\n- **新颖性**：相较常见依赖大量梯度更新的off-policy做法，FlashSAC把优化重点转向“少更新、强吞吐、大发布容量”的训练设计，并将其系统化地嵌入SAC。\n- **关键技术**：核心技术包括减少gradient updates、扩大模型容量、提高数据吞吐，以及对权重、特征和梯度范数进行显式边界控制。\n- **理论支撑**：摘要给出的理论层面信息主要是用范数约束解释critic误差累积的抑制机制；摘要未披露具体理论证明、定理或收敛性推导。\n\n## 4. 实验验证\n\n- **主要基准/场景**：摘要称该方法在10个模拟器的60多个任务上进行评估，并包含sim-to-real humanoid locomotion；摘要未披露具体benchmark名称。\n- **性能提升**：摘要称FlashSAC在最终性能和训练效率上持续优于PPO及强off-policy基线，在高维任务如dexterous manipulation上收益最大；在人形locomotion的sim-to-real设置中，训练时间由小时级降至分钟级。摘要未披露具体数值提升幅度。\n- **消融实验**：摘要未披露具体消融实验设计或各组件单独贡献。\n\n## 5. 局限与启发\n\n- **当前局限**：摘要未给出任务级别结果、失败案例、资源开销权衡或实现细节；虽然强调更大模型与更高数据吞吐，但摘要未披露相应计算/内存成本。\n- **未来方向**：后续需要在更多真实机器人平台、不同感知输入形态以及更广泛的高维控制场景中验证其稳定性与效率边界。\n- **可迁移性**：摘要只明确报告了sim-to-real humanoid locomotion的迁移表现；对其他机器人形态、任务族和现实扰动条件的可迁移性，摘要未提供充分证据。\n\n## 6. 一句话总结\n\nFlashSAC试图用“少更新 + 大吞吐 + 范数约束”的SAC变体，让高维机器人控制中的off-policy强化学习更快且更稳。\n",
+  "method_summary": "",
+  "score_report": "# 论文价值分析报告\n\n## 0. 论文快照\n\n- 标题: FlashSAC: Fast and Stable Off-Policy Reinforcement Learning for High-Dimensional Robot Control\n- 作者: Donghu Kim, Youngdo Lee, Minho Park, Kinam Kim, I. Made Aswin Nahendra, Takuma Seno, Sehee Min, Daniel Palenicek, Florian Vogt, Danica Kragic, Jan Peters, Jaegul Choo, Hojoon Lee\n- 年份: 2026\n- 发表信息与 Venue: arXiv (Cornell University)\n- 来源: /home/nie/Claude/papers/scholaraio/data/papers/Kim-2026-flashsac-fast-and-stable-off-policy-reinforcement-learning-f/paper.md\n- 对比集合状态: incomplete\n- 评分置信度: low\n\n## 1. 最终结论\n\n- 总分: 4.4/10.0\n- 等级: lower priority unless the user has a narrow reason to read it\n- 阅读优先级: 低\n- 奠基潜力判断: early promise, not yet established\n- 一句话判断: 除非你正好需要这条技术线，否则优先级不高。\n\n## 2. 分项评分\n\n| 维度 | 满分 | 得分 | 评分依据 | 关键证据 |\n|---|---:|---:|---|---|\n| 发表与 Venue 信号 | 1.5 | 0.6 | 当前主要仍是 arXiv / preprint 信号，发表强度需要保守看待。 | [Meta] venue=arXiv (Cornell University) | source=/home/nie/Claude/papers/scholaraio/data/papers/Kim-2026-flashsac-fast-and-stable-off-policy-reinforcement-learning-f/paper.md |\n| 作者与机构信号 | 1.0 | 0.8 | 作者列表完整且与强 venue 共同出现，说明团队具备较稳的执行力与领域进入门槛。 | [Meta] authors=Donghu Kim, Youngdo Lee, Minho Park, Kinam Kim, I. Made Aswin Nahendra, Takuma Seno |\n| 引用量与引用增速 | 2.0 | 0.3 | 缺少稳定的引用计数来源，只能按信息不足处理。 | 信息不足 |\n| 被引论文质量 | 1.5 | 0.3 | 没有可验证的 citing-paper 样本，无法给出更高的外部采纳质量分。 | 信息不足 |\n| 技术增量与新颖性 | 2.0 | 1.4 | 技术增量清楚可见，既有方法名义上的新部件，也有任务层面的重新组织。 | [Summary] \"# 论文总结：FlashSAC: Fast and Stable Off-Policy Reinforcement Learning for High-Dimensional Robot Control ## 1.\" |\n| 业界贡献 / 开源 / 产品信号 | 1.0 | 0.5 | 有可信的生态或工程外溢信号，但尚不足以视为大规模外部采用。 | [Summary] \"实验验证 - **主要基准/场景**：摘要称该方法在10个模拟器的60多个任务上进行评估，并包含sim-to-real humanoid locomotion；摘要未披露具体benchmark名称。\" |\n| 奠基潜力 / 方向性影响 | 1.0 | 0.5 | 论文有成为方向锚点的潜力，但证据更像 early promise，而不是已形成共识。 | [Composite] publication=0.6; traction=0.3; novelty=1.4; industry=0.5 |\n\n## 3. 相似论文对比集合（5 篇）\n\n| Peer | 类别 | 论文 | arXiv | 年份 | Venue | 引用量 | 选入理由 |\n|---|---|---|---|---:|---|---:|---|\n| P1 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P2 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P3 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P4 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P5 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n\n## 4. 横向对比观察\n\n- 明显强于 peer 的点: 方法 framing 更完整，且 summary 能支持它不是单点 trick。\n- 与 peer 大体持平的点: 问题设定与实验组织和同主题 peer 大致处在同一工作带宽。\n- 明显落后于 peer 的点: peer 对比集合还不完整；若后续没有更强 follow-up 或生态采用，方向影响分会继续保守。\n\n## 5. 分数形成原因\n\n- 主要加分项: 当前主要仍是 arXiv / preprint 信号，发表强度需要保守看待。；技术增量清楚可见，既有方法名义上的新部件，也有任务层面的重新组织。；引用牵引目前仍偏保守\n- 主要扣分项: peer 对比仍不完整，需要保守评分；缺少更强 citing-paper 质量证据；业界/开源外溢信号有限\n- 哪些新增证据会改变评分: 拿到稳定的引用计数与随时间增长情况；看到明确的开源、benchmark 采用或部署证据\n\n## 6. 是否值得优先读\n\n- 结论: 建议带着明确问题去读，而不是无目标通读。\n- 适合优先阅读的人: 做人形/机器人控制、生成式动作建模、策略学习或相关 benchmark 复现的人。\n- 不适合优先阅读的人: 只想看已被社区完全证明的奠基论文，或者暂时不关心该任务线的人。\n\n## 7. **Sources**:\n\n- /home/nie/Claude/papers/scholaraio/data/papers/Kim-2026-flashsac-fast-and-stable-off-policy-reinforcement-learning-f/paper.md\n- https://openalex.org/works/W7151342152\n- 信息不足\n",
+  "readable_report": "# 论文先修罗盘报告模板\n\n## 0. 论文快照\n\n- 标题: FlashSAC: Fast and Stable Off-Policy Reinforcement Learning for High-Dimensional Robot Control\n- 作者: Donghu Kim, Youngdo Lee, Minho Park, Kinam Kim, I. Made Aswin Nahendra, Takuma Seno, Sehee Min, Daniel Palenicek, Florian Vogt, Danica Kragic, Jan Peters, Jaegul Choo, Hojoon Lee\n- 年份: 2026\n- 发表信息与venue: arXiv (Cornell University) | JCR 分区: N/A | CCF 等级: N/A\n- 来源: /home/nie/Claude/papers/scholaraio/data/papers/Kim-2026-flashsac-fast-and-stable-off-policy-reinforcement-learning-f/paper.md\n- **影响力**: citations待验证 | venue=arXiv (Cornell University)\n\n## 1. 必学先修知识（按顺序）\n\n| 顺序 | 知识点 | 为什么必学 | 论文使用位置 | 证据锚点 | 难度 | 最小学习目标 | 预计时间 |\n|---|---|---|---|---|---|---|---|\n| 1 | 强化学习与策略优化 | 论文直接围绕策略更新、样本效率或在线控制展开，先搞懂策略学习目标和更新稳定性。 | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"# 论文总结：FlashSAC: Fast and Stable Off-Policy Reinforcement Learning for High-Dimensional Robot Control ## 1.\" | ⭐⭐⭐ | 看懂状态-动作-回报、优势估计和策略更新目标。 | 2h |\n| 2 | 模仿学习与示范数据利用 | 如果论文依赖演示数据或偏好反馈，先修模仿学习能帮助理解监督信号从哪里来。 | [Summary/Abstract] 与论文主线直接相关 | [Abstract] \"Reinforcement learning (RL) is a core approach for robot control when expert demonstrations are unavailable.\" | ⭐⭐⭐ | 看懂演示数据如何进入训练目标，以及和强化学习如何结合。 | 1.5h |\n\n## 2. 桥接知识（可选但有帮助）\n\n| 知识点 | 角色 | 论文使用位置 | 证据 | 难度 | 建议动作 |\n|---|---|---|---|---|---|\n| 全身动力学与接触约束 | bridge | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"实验验证 - **主要基准/场景**：摘要称该方法在10个模拟器的60多个任务上进行评估，并包含sim-to-real humanoid locomotion；摘要未披露具体benchmark名称。\" | ⭐⭐⭐ | review |\n| 轨迹跟踪与运动重定向 | bridge | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"实验验证 - **主要基准/场景**：摘要称该方法在10个模拟器的60多个任务上进行评估，并包含sim-to-real humanoid locomotion；摘要未披露具体benchmark名称。\" | ⭐⭐⭐ | review |\n| 力控与接触建模 | bridge | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"# 论文总结：FlashSAC: Fast and Stable Off-Policy Reinforcement Learning for High-Dimensional Robot Control ## 1.\" | ⭐⭐⭐ | review |\n\n## 3. 个性化增量（基于 memory.md）\n\n- 已跳过（已掌握）:\n  - 暂无明确已掌握项，按默认先修序列处理。\n- 虽然熟悉但仍保留（论文特有增量）:\n  - 强化学习与策略优化：即使已有相近背景，也建议按本文的问题设定重新对齐。\n- 新出现的高优先级短板:\n  - 强化学习与策略优化\n  - 模仿学习与示范数据利用\n\n## 4. 推荐学习资源\n\n### 强化学习与策略优化\n\n- 原论文/综述:\n  - FlashSAC: Fast and Stable Off-Policy Reinforcement Learning for High-Dimensional Robot Control - /home/nie/Claude/papers/scholaraio/data/papers/Kim-2026-flashsac-fast-and-stable-off-policy-reinforcement-learning-f/paper.md\n  - 同主题 peer - https://openalex.org/works/W7151342152\n- 视频（优先高质量，lang=zh 时可含中文社区）:\n  - 信息不足 - https://openalex.org/works/W7151342152\n- 说明:\n  - 先用目标论文建立术语，再用 peer 校准它在相邻方法中的位置。\n### 模仿学习与示范数据利用\n\n- 原论文/综述:\n  - FlashSAC: Fast and Stable Off-Policy Reinforcement Learning for High-Dimensional Robot Control - /home/nie/Claude/papers/scholaraio/data/papers/Kim-2026-flashsac-fast-and-stable-off-policy-reinforcement-learning-f/paper.md\n  - 同主题 peer - 信息不足\n- 视频（优先高质量，lang=zh 时可含中文社区）:\n  - 信息不足 - 信息不足\n- 说明:\n  - 先用目标论文建立术语，再用 peer 校准它在相邻方法中的位置。\n\n## 5. 建议学习顺序\n\n1. 阶段 A（基础）: 强化学习与策略优化、模仿学习与示范数据利用\n2. 阶段 B（机制桥接）: 全身动力学与接触约束、轨迹跟踪与运动重定向\n3. 阶段 C（论文特有）: 模仿学习与示范数据利用\n\n## 6. 30 分钟快速起步\n\n关键实验结论: # 论文总结：FlashSAC: Fast and Stable Off-Policy Reinforcement Learning for High-Dimensional Robot Control ## 1. 核心创新点 FlashSAC在Soft Actor-Critic框架上，将“更少梯度更新”与“更大模型、更高数据吞吐”结合，并通过显式范数约束控制critic误差累积，目标是在高维机器人控制中同时提升off-policy RL的训练速度与稳定性。\n\n## 7. **Sources**:\n\n- /home/nie/Claude/papers/scholaraio/data/papers/Kim-2026-flashsac-fast-and-stable-off-policy-reinforcement-learning-f/paper.md\n- https://openalex.org/works/W7151342152\n- 信息不足\n",
+  "sensemaking": null,
+  "rating": {
+    "scheme": "paper_compass_score",
+    "publication_signal": 0.6,
+    "author_signal": 0.8,
+    "citation_traction": 0.3,
+    "citation_quality": 0.3,
+    "novelty": 1.4,
+    "industry_signal": 0.5,
+    "field_shaping": 0.5,
+    "overall_score": 4.4,
+    "rating_band": "lower priority unless the user has a narrow reason to read it",
+    "priority": "低",
+    "field_shaping_statement": "early promise, not yet established",
+    "one_line_verdict": "除非你正好需要这条技术线，否则优先级不高。",
+    "notes": "除非你正好需要这条技术线，否则优先级不高。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "FlashSAC: Fast and Stable Off-Policy Reinforcement Learning for High-Dimensional Robot Control",
+      "authors": [
+        "Donghu Kim",
+        "Youngdo Lee",
+        "Minho Park",
+        "Kinam Kim",
+        "I. Made Aswin Nahendra",
+        "Takuma Seno",
+        "Sehee Min",
+        "Daniel Palenicek",
+        "Florian Vogt",
+        "Danica Kragic",
+        "Jan Peters",
+        "Jaegul Choo",
+        "Hojoon Lee"
+      ],
+      "year": 2026,
+      "paper_type": "todo-placeholder",
+      "abstract": "Reinforcement learning (RL) is a core approach for robot control when expert demonstrations are unavailable. On-policy methods such as Proximal Policy Optimization (PPO) are widely used for their stability, but their reliance on narrowly distributed on-policy data limits accurate policy evaluation in high-dimensional state and action spaces. Off-policy methods can overcome this limitation by learning from a broader state-action distribution, yet suffer from slow convergence and instability, as fitting a value function over diverse data requires many gradient updates, causing critic errors to accumulate through bootstrapping. We present FlashSAC, a fast and stable off-policy RL algorithm built on Soft Actor-Critic. Motivated by scaling laws observed in supervised learning, FlashSAC sharply reduces gradient updates while compensating with larger models and higher data throughput. To maintain stability at increased scale, FlashSAC explicitly bounds weight, feature, and gradient norms, curbing critic error accumulation. Across over 60 tasks in 10 simulators, FlashSAC consistently outperforms PPO and strong off-policy baselines in both final performance and training efficiency, with the largest gains on high-dimensional tasks such as dexterous manipulation. In sim-to-real humanoid locomotion, FlashSAC reduces training time from hours to minutes, demonstrating the promise of off-policy RL for sim-to-real transfer."
+    },
+    "markdown_stats": {
+      "lines": 17,
+      "words": 294,
+      "headings": 4
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "eb0af461-194d-5897-8337-b95933de000d",
+  "paper_ref": "eb0af461-194d-5897-8337-b95933de000d",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
+}

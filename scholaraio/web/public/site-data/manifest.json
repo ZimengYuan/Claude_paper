@@ -1,13 +1,10 @@
 {
   "version": 1,
-  "generated_at": "2026-04-02T13:25:11+00:00",
+  "generated_at": "2026-04-15T09:10:34+00:00",
   "paper_routes": [
     "/paper/3b9cc908-b308-4b5a-962e-311aa7b7e93e",
-    "/paper/unknown-58",
     "/paper/wang-2025-1000-layer-networks-for-self-supervised-rl",
-    "/paper/wang---2025---1000-layer-networks-for-self-supervised-rl-scaling-depth-can-enable-new-goal-reaching-capabilities",
     "/paper/2c4f1cb5-c5a0-49e9-bbcc-fcea79206bf3",
-    "/paper/dee96bd8-6b16-4626-a307-0b4bffb9325d",
     "/paper/bf09916f-26e1-428e-a78d-e92430d16d5b",
     "/paper/9b3bcc83-38fd-461f-9eb4-a5be5e16e444",
     "/paper/def57da3-7090-4c48-8798-ae42133b5fb3",
@@ -29,7 +26,6 @@
     "/paper/33e1e83c-5e55-4fb9-bbed-47e04a32dde1",
     "/paper/010b2613-b08c-4bd8-85ea-226e37d886ef",
     "/paper/75bb705f-7927-4fe2-9570-8f0d87dc4da3",
-    "/paper/75bb705f-7927-4fe2-9570-8f0d87dc4da3-2",
     "/paper/478ec593-a30b-490b-9af8-dc83347a2edd",
     "/paper/176546f6-4ead-47c7-bc6c-bd8fa33ca9b1",
     "/paper/e098921e-bae5-4c89-9bf3-7f4ac7c725f0",
@@ -50,7 +46,6 @@
     "/paper/unknown-2022-ase-large-scale-reusable-adversarial-skill-embeddings-for-physically-simulated-characters",
     "/paper/peng---2022---ase-large-scale-reusable-adversarial-skill-embeddings-for-physically-simulated-characters",
     "/paper/peng-2022-ase-large-scale-reusable-adversarial-skill-embeddings-for-physically-simulated-characters-6",
-    "/paper/vaswani-2017-attention-is-all-you-need",
     "/paper/8c28a166-612a-4321-8466-f53fd1af40ed",
     "/paper/b7ed1450-4f2b-487e-a9a9-87775a4d7c15",
     "/paper/32c445ab-187a-48b7-9cab-c97efc59231c",
@@ -70,8 +65,8 @@
     "/paper/1f37a3b3-1a71-4b00-93af-b2dda7096634",
     "/paper/61dfb779-3c7f-49d3-9085-60cfbee8714c",
     "/paper/caf9d4a2-f32b-40c2-a536-54e151a24cb6",
-    "/paper/calm-2023-calm-conditional-adversarial-latent-models-for-directable-virtual-characters",
     "/paper/4ca20c17-5c02-4ddd-8501-4ce4fad10a01",
+    "/paper/3ee0c693-be8d-5758-a71d-3c530dd1e2c9",
     "/paper/a2e516cd-c613-4456-af0c-5f2b7eb9e2e5",
     "/paper/5dd2ec9b-0436-47d3-bcad-420aabc1c907",
     "/paper/9cf4a8fe-85b4-44dd-93ea-7a2b5dcee113",
@@ -87,22 +82,18 @@
     "/paper/6613d9da-63f5-49c5-af0b-1df8e4114592",
     "/paper/e1df1ea3-8660-4ab3-9e9f-ee3235f04efa",
     "/paper/surana-lim-cully-2023-efficient-learning-of-locomotion-skills-through-the-discovery-of-diverse-environmental-trajectory-generator-priors",
-    "/paper/10.4324-9781315524177-19",
     "/paper/7d6fca86-d6b0-4f66-a74f-0cbd5adb9e00",
-    "/paper/sawdayee---2025---dance-like-a-chicken-low-rank-stylization-for-human-motion-diffusion",
     "/paper/db40d7da-8299-4035-b402-ebf75fa185b1",
     "/paper/ef8ae30d-6cb6-4fae-ac5f-8253b580e438",
     "/paper/fa747a30-0869-4197-89b6-0380bf1091d7",
     "/paper/peng-2018-deepmimic-example-guided-deep-reinforcement-learning-of-physics-based-character-skills-5",
     "/paper/91a35c2e-a527-4ae9-ae81-85cf41e0b346",
-    "/paper/91a35c2e-a527-4ae9-ae81-85cf41e0b346-2",
     "/paper/200153e8-5780-4713-a0e8-b77f270d9f52",
     "/paper/a1ebc6b6-6dfb-4f12-9590-2183a1a3db31",
     "/paper/70d0223c-332d-4b83-88f5-3f5489ca120e",
     "/paper/cc97f825-cfa1-4696-a170-e9704a7a34ec",
     "/paper/d76428ef-edcc-467b-8bbb-e7e806f06d49",
     "/paper/b67913f6-d222-4ba4-ac58-950468724724",
-    "/paper/b67913f6-d222-4ba4-ac58-950468724724-2",
     "/paper/226e38b7-2351-4117-b403-1b764637aa83",
     "/paper/95488d6e-88ed-4877-afb2-459b61ad92c1",
     "/paper/3b0c079d-fe76-4b91-a46d-b64c85bd6a59",
@@ -117,21 +108,20 @@
     "/paper/93f55381-4905-44fa-bd23-c16970cc1a4e",
     "/paper/8aadef1e-66cb-4668-ace6-f3ba8482db55",
     "/paper/8aadef1e-66cb-4668-ace6-f3ba8482db55-2",
+    "/paper/7c22d32f-f159-54dc-992c-22b9fcf7f06a",
     "/paper/bd480aa8-bbbd-491f-9bf7-b24918266b76",
-    "/paper/bd480aa8-bbbd-491f-9bf7-b24918266b76-2",
     "/paper/b25042b1-b687-468a-b725-f88f496ac4d4",
     "/paper/24a2754c-caa6-420a-be3e-4f91341d30c5",
+    "/paper/4e545160-b5e2-5626-aed5-0219a8dc77e5",
     "/paper/7b5ef9c4-cde4-4f1c-af86-cb8b5726f53e",
     "/paper/dd45e393-6553-4db3-a106-a21056efa336",
     "/paper/98512a66-a7da-4e49-b591-c5fc49582fdd",
     "/paper/5ed9fa9c-5bf7-40ca-81fb-c58d97483124",
-    "/paper/5ed9fa9c-5bf7-40ca-81fb-c58d97483124-2",
     "/paper/a10d8706-1f68-4be2-92ea-601a69658743",
     "/paper/yang-2025-egm-efficiently-learning-general-motion-tracking-policy",
     "/paper/ecf9e4c3-1798-40de-a4b1-6bafb15532bb",
     "/paper/yang---2025---egm-efficiently-learning-general-motion-tracking-policy-for-high-dynamic-humanoid-whole-body-contro",
     "/paper/37e781cd-8551-4b42-84a8-e1b137efeb90",
-    "/paper/liu---2026---ego-vision-world-model-for-humanoid-contact-planning",
     "/paper/f2cc6e98-732b-4ee5-8a9f-35c48648d683",
     "/paper/edbd1aec-067f-4cad-8c2a-47e750eb7322",
     "/paper/kobayashi-2025-emergent-temporal-abstractions-in-autoregressive-models-enable-hierarchical-reinforcement-learning-4",
@@ -146,6 +136,7 @@
     "/paper/f92b48fb-dfad-4e21-8a3c-12746ff4d119",
     "/paper/8900cb95-8e17-4bdb-ac00-a86b295c18af",
     "/paper/7e1aa972-ea70-4a30-9e03-359ee16014a8",
+    "/paper/eb0af461-194d-5897-8337-b95933de000d",
     "/paper/b5472ccf-2f10-4487-9cf9-f965425b3747",
     "/paper/eb46c7c6-9c1e-4a66-8d1c-6cba3efadc6b",
     "/paper/113005c5-293b-487d-91de-a7dd5d010259",
@@ -168,11 +159,9 @@
     "/paper/86264dc5-23de-4929-918c-15b1c7aae38d",
     "/paper/647d1f90-fb96-463c-ae85-8e12561bbc77",
     "/paper/a5c886e5-5ac7-427d-8a4f-79a7640a39a0",
-    "/paper/a5c886e5-5ac7-427d-8a4f-79a7640a39a0-2",
     "/paper/1bada491-d47c-4edc-a3e7-7ee933ae9840",
     "/paper/87d00d1c-099f-4923-84c7-5b8934521a0b",
     "/paper/1c1d7aeb-3c48-49c8-9ebf-c18ba9fdf72e",
-    "/paper/wang---2025---guiding-energy-efficient-locomotion-through-impact-mitigation-rewards",
     "/paper/6278c98b-d77f-4aae-9f07-eef6ec9dfc3b",
     "/paper/50d5f970-eba2-493b-942a-8d55f22794b4",
     "/paper/10.5220-0011319700003271",
@@ -192,6 +181,7 @@
     "/paper/0c2def8b-1094-4a79-8550-5a0363b8a87e",
     "/paper/ac911f49-577e-47d3-b825-ae6a2e9c5b15",
     "/paper/3d3a7041-8e82-4e15-b6b1-13019b0d2571",
+    "/paper/f111450f-ce36-522b-8fca-f6af12c3097e",
     "/paper/969f4c56-0604-41d8-89ce-31a09fd09222",
     "/paper/fd7667a9-4510-4795-ad22-dfa77a5c7ec5",
     "/paper/4c0ce110-5d44-4392-bf78-15e7e5dbd266",
@@ -209,7 +199,6 @@
     "/paper/25071b54-9729-4879-a88f-be1b750a7d6b",
     "/paper/f0f39d03-4db8-41fa-8e24-708458a20c06",
     "/paper/fb6729d4-5485-4dc7-b6b7-508272918fc3",
-    "/paper/liang-2026-interreal-a-unified-physics-based-imitation-framework-for-learning-human-object-interaction-skills-5",
     "/paper/30b32cfd-7d16-4827-a3a1-7bde0160e0ad",
     "/paper/ec40e599-95e5-49e1-bc1e-f469d376ef70",
     "/paper/9866ec1e-d9ed-4c8d-9779-f78757378e18",
@@ -221,9 +210,7 @@
     "/paper/4f41cb46-c655-4052-8bc7-9470bfe37f1a",
     "/paper/7337863f-4bb3-4776-9171-03de4317d9f8",
     "/paper/3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999",
-    "/paper/3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999-2",
     "/paper/6716a708-7e3e-451c-98b8-dc991c19a143",
-    "/paper/6716a708-7e3e-451c-98b8-dc991c19a143-2",
     "/paper/141cbbbb-8f49-43f8-a078-fb605568df82",
     "/paper/e08db2f1-ca17-474f-a4e0-898ecb5790c5",
     "/paper/a62e6ae5-d30d-4ded-ad6b-1c041cdb0c6a",
@@ -232,9 +219,7 @@
     "/paper/1846fc2a-e72c-4b45-abe1-3241d59970eb",
     "/paper/01af3c0a-a20a-4d42-8217-582da60a6f7b",
     "/paper/af71634d-4124-4e4b-9f8b-8ae85b7f232f",
-    "/paper/10.1109-icra48891.2023.10161559",
     "/paper/2ae4fa55-b1b9-4ec5-99c6-3237eb4b6882",
-    "/paper/2ae4fa55-b1b9-4ec5-99c6-3237eb4b6882-2",
     "/paper/24249068-4d8c-4ceb-bb61-7e0f54e17913",
     "/paper/2ee7d888-8cca-4910-97cb-c71e59a7c1a7",
     "/paper/03dc1032-38dc-4d24-848a-bb44ea2996ea",
@@ -244,7 +229,6 @@
     "/paper/10.1145-3487983.3488301",
     "/paper/5fc7e0c4-6d3f-491e-9b3e-e5cf66091eb3",
     "/paper/daa171db-f56b-473d-a87c-30c45374f312",
-    "/paper/daa171db-f56b-473d-a87c-30c45374f312-2",
     "/paper/59bda03b-b238-427f-9245-ba01c8e964bd",
     "/paper/59bda03b-b238-427f-9245-ba01c8e964bd-2",
     "/paper/dafdc125-15d7-40f7-b5a6-bed046e76d85",
@@ -256,23 +240,22 @@
     "/paper/10.36227-techrxiv.23264429.v1",
     "/paper/c53b83ae-2eb0-4de9-b207-d24c848f30f8",
     "/paper/608f86a4-8d7a-4563-8d30-76fc6ec4f1b3",
-    "/paper/608f86a4-8d7a-4563-8d30-76fc6ec4f1b3-2",
     "/paper/ba43ffe4-c428-40be-b298-eaa0c0f030ec",
-    "/paper/ba43ffe4-c428-40be-b298-eaa0c0f030ec-2",
     "/paper/ccdb9cb7-35f7-4a36-aff7-6b5fe342c527",
     "/paper/31e7a177-775e-4e2b-a044-202777efe8da",
     "/paper/luo-2026-look-forward-to-walk-backward",
     "/paper/ae3def39-aa3f-4775-bf15-9aa17807273f",
+    "/paper/8dfb576b-1721-569f-a263-8034c20173b4",
     "/paper/d1fc92d9-4f81-4249-9865-0b0976c37343",
     "/paper/cc31ee0a-52e9-4468-b243-2714e9338a4d",
     "/paper/wang-2025-more-mixture-of-residual-experts-for-humanoid-lifelike-ga-learning-on-complex-terrains",
     "/paper/wang---2025---more-mixture-of-residual-experts-for-humanoid-lifelike-gaits-learning-on-complex-terrains",
-    "/paper/10.1109-icdm59182.2024.00085",
     "/paper/c6874636-9a0a-46fe-bbab-0429a3365750",
     "/paper/7ec4baa6-8727-47c9-bb06-f55d845583eb",
     "/paper/3c9d0e4f-40e9-44e7-a751-5a8e70e1faaa",
     "/paper/10518d31-96b8-487f-b8e8-e65b458fd20c",
     "/paper/9e88c8c9-f59c-4bc2-9c0c-0b469f867888",
+    "/paper/12da2c34-092b-5e9a-9909-2739e77975e7",
     "/paper/7af0b60e-a512-4903-950a-fbf4a74aa5d0",
     "/paper/9997e1a5-e8a8-4650-95f2-819fe81fba9d",
     "/paper/34764023-68ec-409c-b428-1313f16e6bb0",
@@ -281,16 +264,15 @@
     "/paper/3ba1181b-b8b5-434e-be09-3421dc5f698e",
     "/paper/0702e663-5787-4cc2-ab83-f956a136b35c",
     "/paper/35039b19-3e2b-410a-8757-2ef4b49053a7",
-    "/paper/35039b19-3e2b-410a-8757-2ef4b49053a7-2",
     "/paper/6a1a434f-6d97-445e-8fdc-31621455ced5",
     "/paper/ae3bdbcf-d3f4-442a-9d62-6d83a560ac3a",
     "/paper/65ffd6d3-b585-4062-8247-eb627d44486b",
     "/paper/cfb731a7-ace7-4eae-ae0b-630fb7d68183",
+    "/paper/e79a4bce-fe5b-515d-be20-952101f5a3f7",
     "/paper/aea6cbaa-82fc-46ff-806a-4552f1283b09",
     "/paper/fc63571f-4435-4f71-992b-c5a670fee029",
     "/paper/ea4ccd80-c0c4-4c40-87f1-569530dd515f",
     "/paper/321abf7c-4230-4120-9806-c69a5df59acc",
-    "/paper/huang---2025---one-shot-humanoid-whole-body-motion-learning",
     "/paper/6592cebe-8e68-4242-a8e4-8699512a10ad",
     "/paper/1e6f574d-7c38-4ead-be30-d2ec37d339ea",
     "/paper/42d3d72f-45b5-40c8-b0cd-c99fa4cd8ccb",
@@ -299,6 +281,7 @@
     "/paper/0c058050-5e23-49ad-a0ba-f1cb8f4db7cb",
     "/paper/ea18113d-d13f-4ee1-b360-2b9ad367b8c5",
     "/paper/b25e12ca-7f68-483a-b571-f30b2c1779cd",
+    "/paper/00659ae5-72d9-55bf-84ac-554294e6c41e",
     "/paper/fcecb3c7-5748-4b44-bf3e-98ce2d09ef1e",
     "/paper/c672c557-4027-4980-a943-de2356368919",
     "/paper/d0200169-3b6f-4a1c-afd6-110488b33583",
@@ -332,7 +315,6 @@
     "/paper/2b8c1198-e72a-4e41-9268-81af553e833f",
     "/paper/ff9c67e9-56cc-42ee-850a-9273c7dda6f5",
     "/paper/a629eef0-ba8a-4ad6-9841-cf47522c5ca4",
-    "/paper/ff9c67e9-56cc-42ee-850a-9273c7dda6f5-2",
     "/paper/9b2672ba-18db-4c54-923a-9670520a23a4",
     "/paper/7c0b0dbc-5eae-4bcd-981d-e9007de44a06",
     "/paper/370221ed-b8b4-446c-b032-88d1cff5ce3b",
@@ -351,7 +333,7 @@
     "/paper/b90c74e4-0277-4a1a-a474-5be10d516721",
     "/paper/96f552fb-5ce0-4ecc-8042-2fdd8ff12d10",
     "/paper/2103decb-aeb5-4578-993f-f36fab0c0652",
-    "/paper/10.17771-pucrio.acad.75552",
+    "/paper/1aaecd9c-f09f-5604-a353-61b634b6df08",
     "/paper/d92fc7f9-bb07-4141-96ec-e3362be8b8d8",
     "/paper/d18d1043-2946-4bac-84af-93f238c7f35c",
     "/paper/551ce2b2-2c9f-4a3f-9d0e-556c7c201fb2",
@@ -360,14 +342,12 @@
     "/paper/d41213e4-58ff-49d7-bde1-60fb1062bd88",
     "/paper/cfc4833a-f575-4e2e-8d21-a917b6452763",
     "/paper/c8d49a0a-4836-4df3-bbb2-55a213c6c9ff",
-    "/paper/cfc4833a-f575-4e2e-8d21-a917b6452763-2",
     "/paper/3a7ed178-b7f9-4d02-a296-589e1a893a11",
     "/paper/630e199c-7a54-426d-bffd-cc86102acd00",
     "/paper/109c8325-6b29-4a5a-b979-d6dea9bc5bdf",
     "/paper/0c11ffa8-50f6-47d8-9e7e-eeee9d1be816",
     "/paper/bae01627-c3c8-4896-b03f-1bf707304102",
     "/paper/f89a7c14-2f89-4531-a084-630c274e620f",
-    "/paper/placeholder-id-123",
     "/paper/10.20944-preprints202503.1431.v1",
     "/paper/dea37e71-f59e-4dc8-bcac-60fd59f3f1bd",
     "/paper/2523d364-3089-4b87-b353-9fad77fb46a9",
@@ -405,15 +385,11 @@
     "/paper/e55f4975-377c-43a2-9af3-12b8d184d666",
     "/paper/f1b57e7c-0f84-4cdc-93b3-360845324cc8",
     "/paper/c057124d-e8e6-41d7-b772-c64000fb415f",
-    "/paper/li---2025---thor-towards-human-level-whole-body-reactions-for-intense-contact-rich-environments",
     "/paper/25c6fe90-bed2-4454-82bb-ee1c9fe463f4",
     "/paper/8a18e845-e47c-4fe8-a86d-f224f8d45230",
     "/paper/01238ced-8977-4a2e-a478-b28b9e891a73",
-    "/paper/10.3724-sp.j.1218.2011.00324",
     "/paper/4e3c81bf-7242-47d4-a1d5-578c2307d426",
-    "/paper/10.1201-b11502-15",
     "/paper/98d214e7-c809-4fac-af47-3058059c0c17",
-    "/paper/huang---2025---towards-adaptable-humanoid-control-via-adaptive-motion-tracking",
     "/paper/c45a64ac-b0ec-499b-a0d5-b2cb3a0ddd22",
     "/paper/7ba78ce2-b2f3-423b-bcbb-5d96620510d5",
     "/paper/dbd91878-5d10-479b-82db-63ec0dc140e1",
@@ -424,6 +400,7 @@
     "/paper/fcb3c30e-9989-4912-b22f-8df8517e8998",
     "/paper/f3411563-81e6-4f4d-b28f-bb36510d6bf6",
     "/paper/8e7b3e07-bf14-4b0a-ae8b-6d06427a68c1",
+    "/paper/631a595a-829c-5ccd-8d32-deb7fbb2a005",
     "/paper/4f9fae76-d88f-4bb9-ae17-5241a3825f64",
     "/paper/cde45d2e-024a-42c5-b951-2213767ef0b6",
     "/paper/ze---2025---twist2-scalable-portable-and-holistic-humanoid-data-collection-system",
@@ -432,9 +409,7 @@
     "/paper/861c993b-2eb1-4da7-9d25-847a3ebda1dc",
     "/paper/4967eb28-eb8b-4aad-bdaf-aaeddccfa986",
     "/paper/10.1109-humanoids.2014.7041476",
-    "/paper/yin-2025-unitracker-learning-universal-whole-body-motion-tracker-for-humanoid-robots",
     "/paper/1227f449-6927-4e21-8352-cddeedee0b26",
-    "/paper/yin---2025---unitracker-learning-universal-whole-body-motion-tracker-for-humanoid-robots",
     "/paper/d9653bb7-a643-4418-b61d-4a2b98bdada8",
     "/paper/luo-2023-universal_humanoid_motion_representations_for_physics-based_control",
     "/paper/fd9e75d5-0714-46bf-94af-7caf8bd94a52",
@@ -449,11 +424,9 @@
     "/paper/10.1109-icra57147.2024.10610977",
     "/paper/03d28772-a041-484a-9817-ae27d7dd9445",
     "/paper/5201da0b-6797-42f8-9dee-a87618e7b2e2",
-    "/paper/5201da0b-6797-42f8-9dee-a87618e7b2e2-2",
     "/paper/c1f383d4-b9dd-4898-89c3-a640fd6fca46",
     "/paper/10.15607-rss.2025.xxi.068",
     "/paper/560d20b9-9c7a-4538-ad11-c46717a72c47",
-    "/paper/molnar-2025-whole-body-inverse-dynamics-mpc-for-legged-loco-manipulation",
     "/paper/852e1fab-71d3-41bb-bd64-82f184efbd2e",
     "/paper/eb055dbf-4f7f-4182-ae46-6c2f0493ce24",
     "/paper/a59ed449-4639-409a-8fbe-69f1750ebda6",
@@ -463,7 +436,6 @@
     "/paper/jiang---2025---wholebodyvla-towards-unified-latent-vla-for-whole-body-loco-manipulation-control",
     "/paper/858f1b15-ce3f-4da5-a3b1-23e637f726bb",
     "/paper/fb3d82b8-525c-4135-93b4-b53873fdc91b",
-    "/paper/mei---2026---world-models-that-know-when-they-don-t-know---controllable-video-generation-with-calibrated-uncertai",
     "/paper/f8bf1043-050e-494b-80af-fca460396267",
     "/paper/671d9394-23eb-4871-9f38-d701464fa25b",
     "/paper/mishra-raj-xiao-manocha-2026-morfic-fixing-value-miscalibration",
@@ -480,13 +452,6 @@
       "title": "$Ψ_0$: An Open Foundation Model Towards Universal Humanoid Loco-Manipulation"
     },
     {
-      "route_id": "unknown-58",
-      "paper_ref": "unknown-58",
-      "paper_id": "unknown-58",
-      "dir_name": "-None-",
-      "title": ""
-    },
-    {
       "route_id": "wang-2025-1000-layer-networks-for-self-supervised-rl",
       "paper_ref": "Wang-2025-1000-Layer-Networks-for-Self-Supervised-RL",
       "paper_id": "Wang-2025-1000-Layer-Networks-for-Self-Supervised-RL",
@@ -494,25 +459,11 @@
       "title": "1000 Layer Networks for Self Supervised RL"
     },
     {
-      "route_id": "wang---2025---1000-layer-networks-for-self-supervised-rl-scaling-depth-can-enable-new-goal-reaching-capabilities",
-      "paper_ref": "Wang 等 - 2025 - 1000 Layer Networks for Self-Supervised RL Scaling Depth Can Enable New Goal-Reaching Capabilities",
-      "paper_id": "Wang 等 - 2025 - 1000 Layer Networks for Self-Supervised RL Scaling Depth Can Enable New Goal-Reaching Capabilities",
-      "dir_name": "-None-1000-Layer-Networks-for-Self-Supervised-RL-Scalin",
-      "title": "1000 Layer Networks for Self-Supervised RL: Scaling Depth Can Enable New Goal-Reaching Capabilities"
-    },
-    {
       "route_id": "2c4f1cb5-c5a0-49e9-bbcc-fcea79206bf3",
       "paper_ref": "2c4f1cb5-c5a0-49e9-bbcc-fcea79206bf3",
       "paper_id": "2c4f1cb5-c5a0-49e9-bbcc-fcea79206bf3",
       "dir_name": "Wang-2025-1000-Layer-Networks-for-Self-Supervised-RL-Scaling-Depth-Can-Enable-New-Goal-Reaching-Capabilities",
       "title": "1000 Layer Networks for Self-Supervised RL: Scaling Depth Can Enable New Goal-Reaching Capabilities"
-    },
-    {
-      "route_id": "dee96bd8-6b16-4626-a307-0b4bffb9325d",
-      "paper_ref": "dee96bd8-6b16-4626-a307-0b4bffb9325d",
-      "paper_id": "dee96bd8-6b16-4626-a307-0b4bffb9325d",
-      "dir_name": "Learning-2026-1Introduction",
-      "title": "1Introduction"
     },
     {
       "route_id": "bf09916f-26e1-428e-a78d-e92430d16d5b",
@@ -656,13 +607,6 @@
     },
     {
       "route_id": "75bb705f-7927-4fe2-9570-8f0d87dc4da3",
-      "paper_ref": "75bb705f-7927-4fe2-9570-8f0d87dc4da3",
-      "paper_id": "75bb705f-7927-4fe2-9570-8f0d87dc4da3",
-      "dir_name": "75bb705f-7927-4fe2-9570-8f0d87dc4da3",
-      "title": "Agile and Versatile Robot Locomotion via Kernel-based Residual Learning"
-    },
-    {
-      "route_id": "75bb705f-7927-4fe2-9570-8f0d87dc4da3-2",
       "paper_ref": "75bb705f-7927-4fe2-9570-8f0d87dc4da3",
       "paper_id": "75bb705f-7927-4fe2-9570-8f0d87dc4da3",
       "dir_name": "Carroll-2023-Agile-and-Versatile-Robot-Locomotion-via-Kernel-based-Residual-Learning",
@@ -809,13 +753,6 @@
       "title": "ASE: Large-Scale Reusable Adversarial Skill Embeddings for Physically Simulated Characters"
     },
     {
-      "route_id": "vaswani-2017-attention-is-all-you-need",
-      "paper_ref": "Vaswani-2017-Attention-Is-All-You-Need",
-      "paper_id": "Vaswani-2017-Attention-Is-All-You-Need",
-      "dir_name": "Vaswani-2017-Attention-Is-All-You-Need",
-      "title": "Attention Is All You Need"
-    },
-    {
       "route_id": "8c28a166-612a-4321-8466-f53fd1af40ed",
       "paper_ref": "8c28a166-612a-4321-8466-f53fd1af40ed",
       "paper_id": "8c28a166-612a-4321-8466-f53fd1af40ed",
@@ -949,18 +886,18 @@
       "title": "BRIC: Bridging Kinematic Plans and Physical Control at Test Time"
     },
     {
-      "route_id": "calm-2023-calm-conditional-adversarial-latent-models-for-directable-virtual-characters",
-      "paper_ref": "Calm-2023-CALM-Conditional-Adversarial-Latent-Models-for-Directable-Virtual-Characters",
-      "paper_id": "Calm-2023-CALM-Conditional-Adversarial-Latent-Models-for-Directable-Virtual-Characters",
-      "dir_name": "Calm-2023-CALM-Conditional-Adversarial-Latent-Models-for-Directable-Virtual-Characters",
-      "title": "CALM Conditional Adversarial Latent Models for Directable Virtual Characters"
-    },
-    {
       "route_id": "4ca20c17-5c02-4ddd-8501-4ce4fad10a01",
       "paper_ref": "4ca20c17-5c02-4ddd-8501-4ce4fad10a01",
       "paper_id": "4ca20c17-5c02-4ddd-8501-4ce4fad10a01",
       "dir_name": "Tessler-2023-CALM-Conditional-Adversarial-Latent-Models-for-Directable-Virtual-Characters",
       "title": "CALM: Conditional Adversarial Latent Models  for Directable Virtual Characters"
+    },
+    {
+      "route_id": "3ee0c693-be8d-5758-a71d-3c530dd1e2c9",
+      "paper_ref": "3ee0c693-be8d-5758-a71d-3c530dd1e2c9",
+      "paper_id": "3ee0c693-be8d-5758-a71d-3c530dd1e2c9",
+      "dir_name": "Olkin-2026-chasing-autonomy-dynamic-retargeting-and-control-guided-rl-f",
+      "title": "Chasing Autonomy: Dynamic Retargeting and Control Guided RL for Performant and Controllable Humanoid Running"
     },
     {
       "route_id": "a2e516cd-c613-4456-af0c-5f2b7eb9e2e5",
@@ -1068,24 +1005,10 @@
       "title": "Cully 2023 Efficient Learning of Locomotion Skills through the Discovery of Diverse Environmental Trajectory Generator Priors"
     },
     {
-      "route_id": "10.4324-9781315524177-19",
-      "paper_ref": "10.4324-9781315524177-19",
-      "paper_id": "10.4324-9781315524177-19",
-      "dir_name": "Sawdayee-2025-Dance-Like-a-Chicken-Low-Rank-Stylization-for-Hum",
-      "title": "Dance Like a Chicken: Low-Rank Stylization for Human Motion Diffusion"
-    },
-    {
       "route_id": "7d6fca86-d6b0-4f66-a74f-0cbd5adb9e00",
       "paper_ref": "7d6fca86-d6b0-4f66-a74f-0cbd5adb9e00",
       "paper_id": "7d6fca86-d6b0-4f66-a74f-0cbd5adb9e00",
       "dir_name": "Sawdayee-2025-Dance-Like-a-Chicken-Low-Rank-Stylization-for-Human-Motion-Diffusion",
-      "title": "Dance Like a Chicken: Low-Rank Stylization for Human Motion Diffusion"
-    },
-    {
-      "route_id": "sawdayee---2025---dance-like-a-chicken-low-rank-stylization-for-human-motion-diffusion",
-      "paper_ref": "Sawdayee 等 - 2025 - Dance Like a Chicken Low-Rank Stylization for Human Motion Diffusion",
-      "paper_id": "Sawdayee 等 - 2025 - Dance Like a Chicken Low-Rank Stylization for Human Motion Diffusion",
-      "dir_name": "University-None-Dance-Like-a-Chicken-Low-Rank-Stylization-for-Hum",
       "title": "Dance Like a Chicken: Low-Rank Stylization for Human Motion Diffusion"
     },
     {
@@ -1118,13 +1041,6 @@
     },
     {
       "route_id": "91a35c2e-a527-4ae9-ae81-85cf41e0b346",
-      "paper_ref": "91a35c2e-a527-4ae9-ae81-85cf41e0b346",
-      "paper_id": "91a35c2e-a527-4ae9-ae81-85cf41e0b346",
-      "dir_name": "91a35c2e-a527-4ae9-ae81-85cf41e0b346",
-      "title": "DeepWalk: Omnidirectional Bipedal Gait by Deep Reinforcement Learning"
-    },
-    {
-      "route_id": "91a35c2e-a527-4ae9-ae81-85cf41e0b346-2",
       "paper_ref": "91a35c2e-a527-4ae9-ae81-85cf41e0b346",
       "paper_id": "91a35c2e-a527-4ae9-ae81-85cf41e0b346",
       "dir_name": "Rodriguez-2021-DeepWalk-Omnidirectional-Bipedal-Gait-by-Deep-Reinforcement-Learning",
@@ -1170,13 +1086,6 @@
       "paper_ref": "b67913f6-d222-4ba4-ac58-950468724724",
       "paper_id": "b67913f6-d222-4ba4-ac58-950468724724",
       "dir_name": "Huang-2024-DiffuseLoco-Real-Time-Legged-Locomotion-Control-with-Diffusion-from-Offline-Datasets",
-      "title": "DiffuseLoco: Real-Time Legged Locomotion Control with Diffusion from Offline Datasets"
-    },
-    {
-      "route_id": "b67913f6-d222-4ba4-ac58-950468724724-2",
-      "paper_ref": "b67913f6-d222-4ba4-ac58-950468724724",
-      "paper_id": "b67913f6-d222-4ba4-ac58-950468724724",
-      "dir_name": "b67913f6-d222-4ba4-ac58-950468724724",
       "title": "DiffuseLoco: Real-Time Legged Locomotion Control with Diffusion from Offline Datasets"
     },
     {
@@ -1278,17 +1187,17 @@
       "title": "DreamWaQ: Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination via Deep Reinforcement Learning"
     },
     {
+      "route_id": "7c22d32f-f159-54dc-992c-22b9fcf7f06a",
+      "paper_ref": "7c22d32f-f159-54dc-992c-22b9fcf7f06a",
+      "paper_id": "7c22d32f-f159-54dc-992c-22b9fcf7f06a",
+      "dir_name": "Gao-2026-drift-based-policy-optimization-native-one-step-policy-learn",
+      "title": "Drift-Based Policy Optimization: Native One-Step Policy Learning for Online Robot Control"
+    },
+    {
       "route_id": "bd480aa8-bbbd-491f-9bf7-b24918266b76",
       "paper_ref": "bd480aa8-bbbd-491f-9bf7-b24918266b76",
       "paper_id": "bd480aa8-bbbd-491f-9bf7-b24918266b76",
       "dir_name": "Jenelten-2024-DTC-Deep-Tracking-Control",
-      "title": "DTC: Deep Tracking Control"
-    },
-    {
-      "route_id": "bd480aa8-bbbd-491f-9bf7-b24918266b76-2",
-      "paper_ref": "bd480aa8-bbbd-491f-9bf7-b24918266b76",
-      "paper_id": "bd480aa8-bbbd-491f-9bf7-b24918266b76",
-      "dir_name": "bd480aa8-bbbd-491f-9bf7-b24918266b76",
       "title": "DTC: Deep Tracking Control"
     },
     {
@@ -1304,6 +1213,13 @@
       "paper_id": "24a2754c-caa6-420a-be3e-4f91341d30c5",
       "dir_name": "Li-2023-Dynamic-Locomotion-of-a-Quadruped-Robot-with-Active-Spine-via-Model-Predictive-Control",
       "title": "Dynamic Locomotion of a Quadruped Robot with Active Spine via Model Predictive Control"
+    },
+    {
+      "route_id": "4e545160-b5e2-5626-aed5-0219a8dc77e5",
+      "paper_ref": "4e545160-b5e2-5626-aed5-0219a8dc77e5",
+      "paper_id": "4e545160-b5e2-5626-aed5-0219a8dc77e5",
+      "dir_name": "Zhang-2026-dynamic-whole-body-dancing-with-humanoid-robots-a-model-base",
+      "title": "Dynamic Whole-Body Dancing with Humanoid Robots -- A Model-Based Control Approach"
     },
     {
       "route_id": "7b5ef9c4-cde4-4f1c-af86-cb8b5726f53e",
@@ -1328,13 +1244,6 @@
     },
     {
       "route_id": "5ed9fa9c-5bf7-40ca-81fb-c58d97483124",
-      "paper_ref": "5ed9fa9c-5bf7-40ca-81fb-c58d97483124",
-      "paper_id": "5ed9fa9c-5bf7-40ca-81fb-c58d97483124",
-      "dir_name": "5ed9fa9c-5bf7-40ca-81fb-c58d97483124",
-      "title": "Efficient Learning of Locomotion Skills through the Discovery of Diverse Environmental Trajectory Generator Priors"
-    },
-    {
-      "route_id": "5ed9fa9c-5bf7-40ca-81fb-c58d97483124-2",
       "paper_ref": "5ed9fa9c-5bf7-40ca-81fb-c58d97483124",
       "paper_id": "5ed9fa9c-5bf7-40ca-81fb-c58d97483124",
       "dir_name": "Surana-2023-Efficient-Learning-of-Locomotion-Skills-through-the-Discovery-of-Diverse-Environmental-Trajectory-Generator-Priors",
@@ -1373,13 +1282,6 @@
       "paper_ref": "37e781cd-8551-4b42-84a8-e1b137efeb90",
       "paper_id": "37e781cd-8551-4b42-84a8-e1b137efeb90",
       "dir_name": "Liu-2025-Ego-Vision-World-Model-for-Humanoid-Contact-Planning",
-      "title": "Ego-Vision World Model for Humanoid Contact Planning"
-    },
-    {
-      "route_id": "liu---2026---ego-vision-world-model-for-humanoid-contact-planning",
-      "paper_ref": "Liu 等 - 2026 - Ego-Vision World Model for Humanoid Contact Planning",
-      "paper_id": "Liu 等 - 2026 - Ego-Vision World Model for Humanoid Contact Planning",
-      "dir_name": "Liu-None-Ego-Vision-World-Model-for-Humanoid-Contact-Planni",
       "title": "Ego-Vision World Model for Humanoid Contact Planning"
     },
     {
@@ -1479,6 +1381,13 @@
       "paper_id": "7e1aa972-ea70-4a30-9e03-359ee16014a8",
       "dir_name": "Mentzer-2023-Finite-Scalar-Quantization-VQ-VAE-Made-Simple",
       "title": "Finite Scalar Quantization: VQ-VAE Made Simple"
+    },
+    {
+      "route_id": "eb0af461-194d-5897-8337-b95933de000d",
+      "paper_ref": "eb0af461-194d-5897-8337-b95933de000d",
+      "paper_id": "eb0af461-194d-5897-8337-b95933de000d",
+      "dir_name": "Kim-2026-flashsac-fast-and-stable-off-policy-reinforcement-learning-f",
+      "title": "FlashSAC: Fast and Stable Off-Policy Reinforcement Learning for High-Dimensional Robot Control"
     },
     {
       "route_id": "b5472ccf-2f10-4487-9cf9-f965425b3747",
@@ -1635,13 +1544,6 @@
       "title": "GPF-BG: A Hierarchical Vision-Based Planning Framework for Safe Quadrupedal Navigation"
     },
     {
-      "route_id": "a5c886e5-5ac7-427d-8a4f-79a7640a39a0-2",
-      "paper_ref": "a5c886e5-5ac7-427d-8a4f-79a7640a39a0",
-      "paper_id": "a5c886e5-5ac7-427d-8a4f-79a7640a39a0",
-      "dir_name": "a5c886e5-5ac7-427d-8a4f-79a7640a39a0",
-      "title": "GPF-BG: A Hierarchical Vision-Based Planning Framework for Safe Quadrupedal Navigation"
-    },
-    {
       "route_id": "1bada491-d47c-4edc-a3e7-7ee933ae9840",
       "paper_ref": "1bada491-d47c-4edc-a3e7-7ee933ae9840",
       "paper_id": "1bada491-d47c-4edc-a3e7-7ee933ae9840",
@@ -1660,13 +1562,6 @@
       "paper_ref": "1c1d7aeb-3c48-49c8-9ebf-c18ba9fdf72e",
       "paper_id": "1c1d7aeb-3c48-49c8-9ebf-c18ba9fdf72e",
       "dir_name": "Wang-2025-Guiding-Energy-Efficient-Locomotion-through-Impact-Mitigation-Rewards",
-      "title": "Guiding Energy-Efficient Locomotion through Impact Mitigation Rewards"
-    },
-    {
-      "route_id": "wang---2025---guiding-energy-efficient-locomotion-through-impact-mitigation-rewards",
-      "paper_ref": "Wang 等 - 2025 - Guiding energy-efficient locomotion through impact mitigation rewards",
-      "paper_id": "Wang 等 - 2025 - Guiding energy-efficient locomotion through impact mitigation rewards",
-      "dir_name": "Wang-None-Guiding-Energy-Efficient-Locomotion-through-Impact",
       "title": "Guiding Energy-Efficient Locomotion through Impact Mitigation Rewards"
     },
     {
@@ -1803,6 +1698,13 @@
       "title": "Human Motion Diffusion Model"
     },
     {
+      "route_id": "f111450f-ce36-522b-8fca-f6af12c3097e",
+      "paper_ref": "f111450f-ce36-522b-8fca-f6af12c3097e",
+      "paper_id": "f111450f-ce36-522b-8fca-f6af12c3097e",
+      "dir_name": "Yan-2026-human-robot-copilot-for-data-efficient-imitation-learning",
+      "title": "Human-Robot Copilot for Data-Efficient Imitation Learning"
+    },
+    {
       "route_id": "969f4c56-0604-41d8-89ce-31a09fd09222",
       "paper_ref": "969f4c56-0604-41d8-89ce-31a09fd09222",
       "paper_id": "969f4c56-0604-41d8-89ce-31a09fd09222",
@@ -1922,13 +1824,6 @@
       "title": "InterPrior: Scaling Generative Control for Physics-Based Human-Object Interactions"
     },
     {
-      "route_id": "liang-2026-interreal-a-unified-physics-based-imitation-framework-for-learning-human-object-interaction-skills-5",
-      "paper_ref": "Liang-2026-InterReal-A-Unified-Physics-Based-Imitation-Framework-for-Learning-Human-Object-Interaction-Skills-5",
-      "paper_id": "Liang-2026-InterReal-A-Unified-Physics-Based-Imitation-Framework-for-Learning-Human-Object-Interaction-Skills-5",
-      "dir_name": "Liang-2026-InterReal-A-Unified-Physics-Based-Imitation-Frame",
-      "title": "InterReal: A Unified Physics-Based Imitation Framework for Learning Human-Object Interaction Skills"
-    },
-    {
       "route_id": "30b32cfd-7d16-4827-a3a1-7bde0160e0ad",
       "paper_ref": "30b32cfd-7d16-4827-a3a1-7bde0160e0ad",
       "paper_id": "30b32cfd-7d16-4827-a3a1-7bde0160e0ad",
@@ -2002,25 +1897,11 @@
       "route_id": "3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999",
       "paper_ref": "3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999",
       "paper_id": "3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999",
-      "dir_name": "3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999",
-      "title": "Learning agile and dynamic motor skills for legged robots"
-    },
-    {
-      "route_id": "3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999-2",
-      "paper_ref": "3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999",
-      "paper_id": "3c9c1e4d-6e37-4f51-95e4-eadb8e1d0999",
       "dir_name": "Hwangbo-2019-Learning-agile-and-dynamic-motor-skills-for-legged-robots",
       "title": "Learning agile and dynamic motor skills for legged robots"
     },
     {
       "route_id": "6716a708-7e3e-451c-98b8-dc991c19a143",
-      "paper_ref": "6716a708-7e3e-451c-98b8-dc991c19a143",
-      "paper_id": "6716a708-7e3e-451c-98b8-dc991c19a143",
-      "dir_name": "6716a708-7e3e-451c-98b8-dc991c19a143",
-      "title": "Learning Agile Locomotion Skills with a Mentor"
-    },
-    {
-      "route_id": "6716a708-7e3e-451c-98b8-dc991c19a143-2",
       "paper_ref": "6716a708-7e3e-451c-98b8-dc991c19a143",
       "paper_id": "6716a708-7e3e-451c-98b8-dc991c19a143",
       "dir_name": "Iscen-2021-Learning-Agile-Locomotion-Skills-with-a-Mentor",
@@ -2083,21 +1964,7 @@
       "title": "Learning Neural Observer-Predictor Models for Limb-level Sampling-based Locomotion Planning"
     },
     {
-      "route_id": "10.1109-icra48891.2023.10161559",
-      "paper_ref": "10.1109-icra48891.2023.10161559",
-      "paper_id": "10.1109-icra48891.2023.10161559",
-      "dir_name": "Kulkarni-None-Learning-Neural-Observer-Predictor-Models-for-Limb",
-      "title": "Learning Neural Observer-Predictor Models for Limb-level Sampling-based Locomotion Planning"
-    },
-    {
       "route_id": "2ae4fa55-b1b9-4ec5-99c6-3237eb4b6882",
-      "paper_ref": "2ae4fa55-b1b9-4ec5-99c6-3237eb4b6882",
-      "paper_id": "2ae4fa55-b1b9-4ec5-99c6-3237eb4b6882",
-      "dir_name": "2ae4fa55-b1b9-4ec5-99c6-3237eb4b6882",
-      "title": "Learning Robust and Agile Legged Locomotion Using Adversarial Motion Priors"
-    },
-    {
-      "route_id": "2ae4fa55-b1b9-4ec5-99c6-3237eb4b6882-2",
       "paper_ref": "2ae4fa55-b1b9-4ec5-99c6-3237eb4b6882",
       "paper_id": "2ae4fa55-b1b9-4ec5-99c6-3237eb4b6882",
       "dir_name": "Wu-2023-Learning-Robust-and-Agile-Legged-Locomotion-Using-Adversarial-Motion-Priors",
@@ -2164,13 +2031,6 @@
       "paper_ref": "daa171db-f56b-473d-a87c-30c45374f312",
       "paper_id": "daa171db-f56b-473d-a87c-30c45374f312",
       "dir_name": "Seo-2023-Learning-to-Walk-by-Steering-Perceptive-Quadrupedal-Locomotion-in-Dynamic-Environments",
-      "title": "Learning to Walk by Steering: Perceptive Quadrupedal Locomotion in Dynamic Environments"
-    },
-    {
-      "route_id": "daa171db-f56b-473d-a87c-30c45374f312-2",
-      "paper_ref": "daa171db-f56b-473d-a87c-30c45374f312",
-      "paper_id": "daa171db-f56b-473d-a87c-30c45374f312",
-      "dir_name": "daa171db-f56b-473d-a87c-30c45374f312",
       "title": "Learning to Walk by Steering: Perceptive Quadrupedal Locomotion in Dynamic Environments"
     },
     {
@@ -2247,13 +2107,6 @@
       "route_id": "608f86a4-8d7a-4563-8d30-76fc6ec4f1b3",
       "paper_ref": "608f86a4-8d7a-4563-8d30-76fc6ec4f1b3",
       "paper_id": "608f86a4-8d7a-4563-8d30-76fc6ec4f1b3",
-      "dir_name": "608f86a4-8d7a-4563-8d30-76fc6ec4f1b3",
-      "title": "Learning-based legged locomotion; state of the art and future perspectives"
-    },
-    {
-      "route_id": "608f86a4-8d7a-4563-8d30-76fc6ec4f1b3-2",
-      "paper_ref": "608f86a4-8d7a-4563-8d30-76fc6ec4f1b3",
-      "paper_id": "608f86a4-8d7a-4563-8d30-76fc6ec4f1b3",
       "dir_name": "Ha-2024-Learning-based-legged-locomotion-state-of-the-art-and-future-perspectives",
       "title": "Learning-based legged locomotion; state of the art and future perspectives"
     },
@@ -2262,13 +2115,6 @@
       "paper_ref": "ba43ffe4-c428-40be-b298-eaa0c0f030ec",
       "paper_id": "ba43ffe4-c428-40be-b298-eaa0c0f030ec",
       "dir_name": "Cheng-2023-Legs-as-Manipulator-Pushing-Quadrupedal-Agility-Beyond-Locomotion",
-      "title": "Legs as Manipulator: Pushing Quadrupedal Agility Beyond Locomotion"
-    },
-    {
-      "route_id": "ba43ffe4-c428-40be-b298-eaa0c0f030ec-2",
-      "paper_ref": "ba43ffe4-c428-40be-b298-eaa0c0f030ec",
-      "paper_id": "ba43ffe4-c428-40be-b298-eaa0c0f030ec",
-      "dir_name": "ba43ffe4-c428-40be-b298-eaa0c0f030ec",
       "title": "Legs as Manipulator: Pushing Quadrupedal Agility Beyond Locomotion"
     },
     {
@@ -2300,6 +2146,13 @@
       "title": "Look Forward to Walk Backward: Efficient Terrain Memory for Backward Locomotion with Forward Vision"
     },
     {
+      "route_id": "8dfb576b-1721-569f-a263-8034c20173b4",
+      "paper_ref": "8dfb576b-1721-569f-a263-8034c20173b4",
+      "paper_id": "8dfb576b-1721-569f-a263-8034c20173b4",
+      "dir_name": "Zhao-2026-make-tracking-easy-neural-motion-retargeting-for-humanoid-wh",
+      "title": "Make Tracking Easy: Neural Motion Retargeting for Humanoid Whole-body Control"
+    },
+    {
       "route_id": "d1fc92d9-4f81-4249-9865-0b0976c37343",
       "paper_ref": "d1fc92d9-4f81-4249-9865-0b0976c37343",
       "paper_id": "d1fc92d9-4f81-4249-9865-0b0976c37343",
@@ -2326,13 +2179,6 @@
       "paper_id": "Wang 等 - 2025 - MoRE Mixture of Residual Experts for Humanoid Lifelike Gaits Learning on Complex Terrains",
       "dir_name": "-None-MoRE-Mixture-of-Residual-Experts",
       "title": "MoRE: Mixture of Residual Experts"
-    },
-    {
-      "route_id": "10.1109-icdm59182.2024.00085",
-      "paper_ref": "10.1109-icdm59182.2024.00085",
-      "paper_id": "10.1109-icdm59182.2024.00085",
-      "dir_name": "Wang-2025-MoRE-Mixture-of-Residual-Experts-for-Humanoid-Lif",
-      "title": "MoRE: Mixture of Residual Experts for Humanoid Lifelike Gaits Learning on Complex Terrains"
     },
     {
       "route_id": "c6874636-9a0a-46fe-bbab-0429a3365750",
@@ -2368,6 +2214,13 @@
       "paper_id": "9e88c8c9-f59c-4bc2-9c0c-0b469f867888",
       "dir_name": "Zhang-2025-Motion-Priors-Reimagined-Adapting-Flat-Terrain-Skills-for-Complex-Quadruped-Mobility-2",
       "title": "Motion Priors Reimagined: Adapting Flat-Terrain Skills for Complex Quadruped Mobility"
+    },
+    {
+      "route_id": "12da2c34-092b-5e9a-9909-2739e77975e7",
+      "paper_ref": "12da2c34-092b-5e9a-9909-2739e77975e7",
+      "paper_id": "12da2c34-092b-5e9a-9909-2739e77975e7",
+      "dir_name": "Tan-2026-motionrft-unified-reinforcement-fine-tuning-for-text-to-moti",
+      "title": "MotionRFT: Unified Reinforcement Fine-Tuning for Text-to-Motion Generation"
     },
     {
       "route_id": "7af0b60e-a512-4903-950a-fbf4a74aa5d0",
@@ -2422,13 +2275,6 @@
       "route_id": "35039b19-3e2b-410a-8757-2ef4b49053a7",
       "paper_ref": "35039b19-3e2b-410a-8757-2ef4b49053a7",
       "paper_id": "35039b19-3e2b-410a-8757-2ef4b49053a7",
-      "dir_name": "35039b19-3e2b-410a-8757-2ef4b49053a7",
-      "title": "Next Steps: Learning a Disentangled Gait Representation for Versatile Quadruped Locomotion"
-    },
-    {
-      "route_id": "35039b19-3e2b-410a-8757-2ef4b49053a7-2",
-      "paper_ref": "35039b19-3e2b-410a-8757-2ef4b49053a7",
-      "paper_id": "35039b19-3e2b-410a-8757-2ef4b49053a7",
       "dir_name": "Mitchell-2022-Next-Steps-Learning-a-Disentangled-Gait-Representation-for-Versatile-Quadruped-Locomotion",
       "title": "Next Steps: Learning a Disentangled Gait Representation for Versatile Quadruped Locomotion"
     },
@@ -2461,6 +2307,13 @@
       "title": "OmniClone: engineering a robust, all-rounder whole-body humanoid teleoperation system"
     },
     {
+      "route_id": "e79a4bce-fe5b-515d-be20-952101f5a3f7",
+      "paper_ref": "e79a4bce-fe5b-515d-be20-952101f5a3f7",
+      "paper_id": "e79a4bce-fe5b-515d-be20-952101f5a3f7",
+      "dir_name": "Xie-2024-omnicontrol-control-any-joint-at-any-time-for-human-motion-g",
+      "title": "OmniControl: Control Any Joint at Any Time for Human Motion Generation"
+    },
+    {
       "route_id": "aea6cbaa-82fc-46ff-806a-4552f1283b09",
       "paper_ref": "aea6cbaa-82fc-46ff-806a-4552f1283b09",
       "paper_id": "aea6cbaa-82fc-46ff-806a-4552f1283b09",
@@ -2486,13 +2339,6 @@
       "paper_ref": "321abf7c-4230-4120-9806-c69a5df59acc",
       "paper_id": "321abf7c-4230-4120-9806-c69a5df59acc",
       "dir_name": "Huang-2025-One-shot-Humanoid-Whole-body-Motion-Learning",
-      "title": "One-shot Humanoid Whole-body Motion Learning"
-    },
-    {
-      "route_id": "huang---2025---one-shot-humanoid-whole-body-motion-learning",
-      "paper_ref": "Huang 等 - 2025 - One-shot humanoid whole-body motion learning",
-      "paper_id": "Huang 等 - 2025 - One-shot humanoid whole-body motion learning",
-      "dir_name": "Huang-None-One-shot-Humanoid-Whole-body-Motion-Learning",
       "title": "One-shot Humanoid Whole-body Motion Learning"
     },
     {
@@ -2550,6 +2396,13 @@
       "paper_id": "b25e12ca-7f68-483a-b571-f30b2c1779cd",
       "dir_name": "Karunratanakul-2024-Optimizing-Diffusion-Noise-Can-Serve-As-Universal-Motion-Priors-2",
       "title": "Optimizing Diffusion Noise Can Serve As Universal Motion Priors"
+    },
+    {
+      "route_id": "00659ae5-72d9-55bf-84ac-554294e6c41e",
+      "paper_ref": "00659ae5-72d9-55bf-84ac-554294e6c41e",
+      "paper_id": "00659ae5-72d9-55bf-84ac-554294e6c41e",
+      "dir_name": "Nguyen-2026-optimizing-neurorobot-policy-under-limited-demonstration-dat",
+      "title": "Optimizing Neurorobot Policy under Limited Demonstration Data through Preference Regret"
     },
     {
       "route_id": "fcecb3c7-5748-4b44-bf3e-98ce2d09ef1e",
@@ -2783,13 +2636,6 @@
       "title": "Rapid Locomotion via Reinforcement Learning"
     },
     {
-      "route_id": "ff9c67e9-56cc-42ee-850a-9273c7dda6f5-2",
-      "paper_ref": "ff9c67e9-56cc-42ee-850a-9273c7dda6f5",
-      "paper_id": "ff9c67e9-56cc-42ee-850a-9273c7dda6f5",
-      "dir_name": "ff9c67e9-56cc-42ee-850a-9273c7dda6f5",
-      "title": "Rapid Locomotion via Reinforcement Learning"
-    },
-    {
       "route_id": "9b2672ba-18db-4c54-923a-9670520a23a4",
       "paper_ref": "9b2672ba-18db-4c54-923a-9670520a23a4",
       "paper_id": "9b2672ba-18db-4c54-923a-9670520a23a4",
@@ -2916,11 +2762,11 @@
       "title": "Risk-Aware Reinforcement Learning with Bandit-Based Adaptation for Quadrupedal Locomotion"
     },
     {
-      "route_id": "10.17771-pucrio.acad.75552",
-      "paper_ref": "10.17771-pucrio.acad.75552",
-      "paper_id": "10.17771-pucrio.acad.75552",
-      "dir_name": "Zeng-None-Risk-Aware-Reinforcement-Learning-with-Bandit-Base",
-      "title": "Risk-Aware Reinforcement Learning with Bandit-Based Adaptation for Quadrupedal Locomotion"
+      "route_id": "1aaecd9c-f09f-5604-a353-61b634b6df08",
+      "paper_ref": "1aaecd9c-f09f-5604-a353-61b634b6df08",
+      "paper_id": "1aaecd9c-f09f-5604-a353-61b634b6df08",
+      "dir_name": "Narayanan-2026-rk-mpc-residual-koopman-model-predictive-control-for-quadrup",
+      "title": "RK-MPC: Residual Koopman Model Predictive Control for Quadruped Locomotion in Offroad Environments"
     },
     {
       "route_id": "d92fc7f9-bb07-4141-96ec-e3362be8b8d8",
@@ -2979,13 +2825,6 @@
       "title": "Robust quadruped jumping via deep reinforcement learning"
     },
     {
-      "route_id": "cfc4833a-f575-4e2e-8d21-a917b6452763-2",
-      "paper_ref": "cfc4833a-f575-4e2e-8d21-a917b6452763",
-      "paper_id": "cfc4833a-f575-4e2e-8d21-a917b6452763",
-      "dir_name": "cfc4833a-f575-4e2e-8d21-a917b6452763",
-      "title": "Robust Quadruped Jumping via Deep Reinforcement Learning"
-    },
-    {
       "route_id": "3a7ed178-b7f9-4d02-a296-589e1a893a11",
       "paper_ref": "3a7ed178-b7f9-4d02-a296-589e1a893a11",
       "paper_id": "3a7ed178-b7f9-4d02-a296-589e1a893a11",
@@ -3025,13 +2864,6 @@
       "paper_ref": "f89a7c14-2f89-4531-a084-630c274e620f",
       "paper_id": "f89a7c14-2f89-4531-a084-630c274e620f",
       "dir_name": "Liu-2026-Scaling-Tasks-Not-Samples-Mastering-Humanoid-Control-through-Multi-Task-Model-Based-Reinforcement-Learning",
-      "title": "Scaling Tasks, Not Samples: Mastering Humanoid Control through Multi-Task Model-Based Reinforcement Learning"
-    },
-    {
-      "route_id": "placeholder-id-123",
-      "paper_ref": "placeholder-id-123",
-      "paper_id": "placeholder-id-123",
-      "dir_name": "Liu-2026-Scaling_Tasks_Not_Samples",
       "title": "Scaling Tasks, Not Samples: Mastering Humanoid Control through Multi-Task Model-Based Reinforcement Learning"
     },
     {
@@ -3294,13 +3126,6 @@
       "title": "Thor: Towards Human-Level Whole-Body Reactions for Intense Contact-Rich Environments"
     },
     {
-      "route_id": "li---2025---thor-towards-human-level-whole-body-reactions-for-intense-contact-rich-environments",
-      "paper_ref": "Li 等 - 2025 - Thor towards human-level whole-body reactions for intense contact-rich environments",
-      "paper_id": "Li 等 - 2025 - Thor towards human-level whole-body reactions for intense contact-rich environments",
-      "dir_name": "Li-None-Thor-Towards-Human-Level-Whole-Body-Reactions-for",
-      "title": "Thor: Towards Human-Level Whole-Body Reactions for Intense Contact-Rich Environments"
-    },
-    {
       "route_id": "25c6fe90-bed2-4454-82bb-ee1c9fe463f4",
       "paper_ref": "25c6fe90-bed2-4454-82bb-ee1c9fe463f4",
       "paper_id": "25c6fe90-bed2-4454-82bb-ee1c9fe463f4",
@@ -3322,13 +3147,6 @@
       "title": "Toward Humanoid Brain-Body Co-design: Joint Optimization of Control and Morphology for Fall Recovery"
     },
     {
-      "route_id": "10.3724-sp.j.1218.2011.00324",
-      "paper_ref": "10.3724-sp.j.1218.2011.00324",
-      "paper_id": "10.3724-sp.j.1218.2011.00324",
-      "dir_name": "Yue-None-Toward-Humanoid-Brain-Body-Co-design-Joint-Optimi",
-      "title": "Toward Humanoid Brain-Body Co-design: Joint Optimization of Control and Morphology for Fall Recovery"
-    },
-    {
       "route_id": "4e3c81bf-7242-47d4-a1d5-578c2307d426",
       "paper_ref": "4e3c81bf-7242-47d4-a1d5-578c2307d426",
       "paper_id": "4e3c81bf-7242-47d4-a1d5-578c2307d426",
@@ -3336,24 +3154,10 @@
       "title": "Toward Reliable Sim-to-Real Predictability for MoE-based Robust Quadrupedal Locomotion"
     },
     {
-      "route_id": "10.1201-b11502-15",
-      "paper_ref": "10.1201-b11502-15",
-      "paper_id": "10.1201-b11502-15",
-      "dir_name": "Huang-2025-Towards-Adaptable-Humanoid-Control-via-Adaptive-Mo",
-      "title": "Towards Adaptable Humanoid Control via Adaptive Motion Tracking"
-    },
-    {
       "route_id": "98d214e7-c809-4fac-af47-3058059c0c17",
       "paper_ref": "98d214e7-c809-4fac-af47-3058059c0c17",
       "paper_id": "98d214e7-c809-4fac-af47-3058059c0c17",
       "dir_name": "Huang-2025-Towards-Adaptable-Humanoid-Control-via-Adaptive-Motion-Tracking",
-      "title": "Towards Adaptable Humanoid Control via Adaptive Motion Tracking"
-    },
-    {
-      "route_id": "huang---2025---towards-adaptable-humanoid-control-via-adaptive-motion-tracking",
-      "paper_ref": "Huang 等 - 2025 - Towards adaptable humanoid control via adaptive motion tracking",
-      "paper_id": "Huang 等 - 2025 - Towards adaptable humanoid control via adaptive motion tracking",
-      "dir_name": "Huang-None-Towards-Adaptable-Humanoid-Control-via-Adaptive-Mo",
       "title": "Towards Adaptable Humanoid Control via Adaptive Motion Tracking"
     },
     {
@@ -3427,6 +3231,13 @@
       "title": "TTT-Parkour: Rapid Test-Time Training for Perceptive Robot Parkour"
     },
     {
+      "route_id": "631a595a-829c-5ccd-8d32-deb7fbb2a005",
+      "paper_ref": "631a595a-829c-5ccd-8d32-deb7fbb2a005",
+      "paper_id": "631a595a-829c-5ccd-8d32-deb7fbb2a005",
+      "dir_name": "Bronars-2026-tune-to-learn-how-controller-gains-shape-robot-policy-learni",
+      "title": "Tune to Learn: How Controller Gains Shape Robot Policy Learning"
+    },
+    {
       "route_id": "4f9fae76-d88f-4bb9-ae17-5241a3825f64",
       "paper_ref": "4f9fae76-d88f-4bb9-ae17-5241a3825f64",
       "paper_id": "4f9fae76-d88f-4bb9-ae17-5241a3825f64",
@@ -3483,24 +3294,10 @@
       "title": "Unified Humanoid Fall-Safety Policy from a Few Demonstrations"
     },
     {
-      "route_id": "yin-2025-unitracker-learning-universal-whole-body-motion-tracker-for-humanoid-robots",
-      "paper_ref": "Yin-2025-UniTracker-Learning-Universal-Whole-Body-Motion-Tracker-for-Humanoid-Robots",
-      "paper_id": "Yin-2025-UniTracker-Learning-Universal-Whole-Body-Motion-Tracker-for-Humanoid-Robots",
-      "dir_name": "Yin-2025-UniTracker-Learning-Universal-Whole-Body-Motion-T",
-      "title": "UniTracker: Learning Universal Whole-Body Motion Tracker for Humanoid Robots"
-    },
-    {
       "route_id": "1227f449-6927-4e21-8352-cddeedee0b26",
       "paper_ref": "1227f449-6927-4e21-8352-cddeedee0b26",
       "paper_id": "1227f449-6927-4e21-8352-cddeedee0b26",
       "dir_name": "Yin-2025-UniTracker-Learning-Universal-Whole-Body-Motion-Tracker-for-Humanoid-Robots",
-      "title": "UniTracker: Learning Universal Whole-Body Motion Tracker for Humanoid Robots"
-    },
-    {
-      "route_id": "yin---2025---unitracker-learning-universal-whole-body-motion-tracker-for-humanoid-robots",
-      "paper_ref": "Yin 等 - 2025 - UniTracker Learning Universal Whole-Body Motion Tracker for Humanoid Robots",
-      "paper_id": "Yin 等 - 2025 - UniTracker Learning Universal Whole-Body Motion Tracker for Humanoid Robots",
-      "dir_name": "Yin-None-UniTracker-Learning-Universal-Whole-Body-Motion-T",
       "title": "UniTracker: Learning Universal Whole-Body Motion Tracker for Humanoid Robots"
     },
     {
@@ -3598,13 +3395,6 @@
       "route_id": "5201da0b-6797-42f8-9dee-a87618e7b2e2",
       "paper_ref": "5201da0b-6797-42f8-9dee-a87618e7b2e2",
       "paper_id": "5201da0b-6797-42f8-9dee-a87618e7b2e2",
-      "dir_name": "5201da0b-6797-42f8-9dee-a87618e7b2e2",
-      "title": "Visual-Inertial and Leg Odometry Fusion for Dynamic Locomotion"
-    },
-    {
-      "route_id": "5201da0b-6797-42f8-9dee-a87618e7b2e2-2",
-      "paper_ref": "5201da0b-6797-42f8-9dee-a87618e7b2e2",
-      "paper_id": "5201da0b-6797-42f8-9dee-a87618e7b2e2",
       "dir_name": "Dhedin-2023-Visual-Inertial-and-Leg-Odometry-Fusion-for-Dynamic-Locomotion",
       "title": "Visual-Inertial and Leg Odometry Fusion for Dynamic Locomotion"
     },
@@ -3628,13 +3418,6 @@
       "paper_id": "560d20b9-9c7a-4538-ad11-c46717a72c47",
       "dir_name": "Dai-2026-Walk-the-PLANC-Physics-Guided-RL-for-Agile-Humanoid-Locomotion-on-Constrained-Footholds",
       "title": "Walk the PLANC: Physics-Guided RL for Agile Humanoid Locomotion on Constrained Footholds"
-    },
-    {
-      "route_id": "molnar-2025-whole-body-inverse-dynamics-mpc-for-legged-loco-manipulation",
-      "paper_ref": "Molnar-2025-Whole-Body-Inverse-Dynamics-MPC-for-Legged-Loco-Manipulation",
-      "paper_id": "Molnar-2025-Whole-Body-Inverse-Dynamics-MPC-for-Legged-Loco-Manipulation",
-      "dir_name": "Molnar-2025-Whole-Body-Inverse-Dynamics-MPC-for-Legged-Loco-Manipulation",
-      "title": "Whole Body Inverse Dynamics MPC for Legged Loco Manipulation"
     },
     {
       "route_id": "852e1fab-71d3-41bb-bd64-82f184efbd2e",
@@ -3698,13 +3481,6 @@
       "paper_id": "fb3d82b8-525c-4135-93b4-b53873fdc91b",
       "dir_name": "Mei-2025-World-Models-That-Know-When-They-Dont-Know-Controllable-Video-Generation-with-Calibrated-Uncertainty",
       "title": "World Models That Know When They Don't Know: Controllable Video Generation with Calibrated Uncertainty"
-    },
-    {
-      "route_id": "mei---2026---world-models-that-know-when-they-don-t-know---controllable-video-generation-with-calibrated-uncertai",
-      "paper_ref": "Mei 等 - 2026 - World Models That Know When They Don't Know - Controllable Video Generation with Calibrated Uncertai",
-      "paper_id": "Mei 等 - 2026 - World Models That Know When They Don't Know - Controllable Video Generation with Calibrated Uncertai",
-      "dir_name": "Mei1-None-World-Models-That-Know-When-They-Dont-Know-Contr",
-      "title": "World Models That Know When They Don’t Know: Controllable Video Generation with Calibrated Uncertainty"
     },
     {
       "route_id": "f8bf1043-050e-494b-80af-fca460396267",

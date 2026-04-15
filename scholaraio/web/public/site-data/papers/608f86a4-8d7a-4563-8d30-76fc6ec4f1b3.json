@@ -1,13 +1,20 @@
 {
-  "dir_name": "608f86a4-8d7a-4563-8d30-76fc6ec4f1b3",
+  "dir_name": "Ha-2024-Learning-based-legged-locomotion-state-of-the-art-and-future-perspectives",
   "title": "Learning-based legged locomotion; state of the art and future perspectives",
-  "authors": [],
+  "authors": [
+    "Sehoon Ha",
+    "Joonho Lee",
+    "M. V. D. Panne",
+    "Zhaoming Xie",
+    "Wenhao Yu",
+    "Majid Khadiv"
+  ],
   "year": 2024,
-  "journal": "",
-  "doi": "",
-  "abstract": "Legged locomotion holds the premise of universal mobility...",
-  "paper_type": "",
-  "publisher": "",
+  "journal": "arXiv.org",
+  "doi": "10.48550/arXiv.2406.01152",
+  "abstract": "Legged locomotion holds the premise of universal mobility, a critical capability for many real-world robotic applications. Both model-based and learning-based approaches have advanced the field of legged locomotion in the past three decades. In recent years, however, a number of factors have dramatically accelerated progress in learning-based methods, including the rise of deep learning, rapid progress in simulating robotic systems, and the availability of high-performance and affordable hardware. This article aims to give a brief history of the field, to summarize recent efforts in learning locomotion skills for quadrupeds, and to provide researchers new to the area with an understanding of the key issues involved. With the recent proliferation of humanoid robots, we further outline the rapid rise of analogous methods for bipedal locomotion. We conclude with a discussion of open problems as well as related societal impact.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
   "issn": "",
   "volume": "",
   "issue": "",
@@ -16,11 +23,28 @@
   "is_close_read": false,
   "read_status": "read",
   "read_at": null,
-  "citation_count": 0,
-  "summary": "",
-  "method_summary": "",
+  "citation_count": 37,
+  "summary": "# 论文总结：Learning-based legged locomotion; state of the art and future perspectives\n\n## 1. 核心创新点\n\n本文不是提出新的 locomotion 控制算法，而是把 learning-based legged locomotion 重新定义为一个跨层共设计问题：硬件可控性、物理仿真、MDP 设计和 仿真到真实 迁移必须一起看。它解决的核心痛点是领域知识分散、术语不统一、方法比较口径不一致，因此给出了一个从 quadruped 到 biped/humanoid 的机制化技术地图。\n\n## 2. 技术创新拆解\n\n- **跨层共设计视角**：把硬件、仿真、控制算法和部署迁移放进同一分析框架，强调性能来自系统协同而不是单点 trick；它的重要性在于能直接定位瓶颈到底是接触建模、传感、控制频率还是结构先验。\n- **MDP 设计拆解**：将 locomotion 明确拆成 dynamics、observation、reward、action space 和 learning framework 等模块，并分别总结 proprioception、exteroception、history buffer、imitation reward、PD/torque/structured action 的取舍；这让不同论文的经验可以横向比较。\n- **仿真到真实 机制归纳**：把现实迁移归纳为 good system design、system identification、域随机化 和 domain adaptation 四条主线，并指出机器人 DRL 的所谓 model-free 仍然依赖物理模拟器；这解释了为什么有些策略能直接上机、有些则会失效。\n- **从四足扩展到双足和新任务**：不仅总结 quadruped，还把 biped/humanoid、wheeled-legged、loco-manipulation 和 foundation models 纳入统一叙事；它的重要性在于把未来可迁移的设计原则和真正困难的新问题区分开来。\n\n## 3. 方法论突破\n\n- **新颖性**：本质区别不在于提出新控制器，而在于把学习型腿式运动从单一 policy 学习改写为一个多层设计空间：硬件决定可控性，仿真决定数据效率，MDP 设计决定可学习性，迁移机制决定现实可用性。相比只比算法优劣的常规综述，这种分层机制视角更接近真实系统瓶颈。\n- **关键技术**：核心手段是机制化分类与对照：按 observation、reward、action、learning framework、仿真到真实、OC+RL hybrid 分层梳理，并用代表性工作和图表串起硬件演化、模拟器演化与方法演化；它的技术价值是把隐式经验显式化为可复用的设计原则。\n- **理论支撑**：文中没有提出新的定理、收敛证明或严格理论界限；理论部分主要是 MDP、RL、IL、optimal control 的基础回顾，以及对 model-free 在机器人中实际仍依赖物理模拟这一概念的澄清。\n\n## 4. 实验验证\n\n- **主要基准/场景**：文中没有作者自建 benchmark 或统一测试集；主要覆盖的任务和平台是平地速度跟踪、rough terrain、stepping stones、parkour、confined spaces、vision-based locomotion、wheeled-legged transition 和 loco-manipulation 等代表性场景，但这些都是被综述论文各自使用的任务，不是本文的统一评测。\n- **性能提升**：没有给出本文相对 baseline 的量化提升；作为综述，正文中的数字更多是在描述硬件、模拟器和研究热度的演化趋势，而不是可直接对比的性能指标。\n- **消融实验**：没有消融实验；文章用跨论文对照和机制分类来说明哪些组件更关键，例如 privileged learning、history stack、域随机化、低增益 PD 和安全约束。\n\n## 5. 局限与启发\n\n- **当前局限**：作为 survey，它不提供新的实证验证，很多判断依赖已发表工作的实验设置，跨论文可比性有限；此外，随着 2024 年后 humanoid、vision-language 和 foundation model 相关结果继续快速迭代，文章的覆盖面天然会过时。\n- **未来方向**：它开启的方向很明确：更少人工 reward engineering 的无监督 skill discovery，更可微且能处理 contact 的 differentiable simulation，更稳健的 safety-constrained locomotion，以及把 locomotion 与 manipulation、perception、foundation models 结合成统一的 general-purpose robot stack。\n- **可迁移性**：这套分析框架对其他 contact-rich embodied tasks 很可迁移，尤其是 manipulation、whole-body control、navigation 和 mobile manipulation；但具体算法不能直接照搬，因为接触模式、硬件带宽和稳定性约束在不同机器人上差异很大。\n\n## 6. 一句话总结\n\n如果只记住一句话：这篇文章把 learning-based legged locomotion 从谁的 PPO 更强重新定义成硬件、仿真、MDP 设计和 仿真到真实 如何协同的系统问题，因此它更像一张面向未来的技术地图，而不是一篇单点算法论文。\n",
+  "method_summary": "# 学习式腿足机器人运动：方法论综述\n\n## 1. 问题形式化\n\n腿足机器人运动学习问题可形式化为**强化学习（RL）框架下的序贯决策问题**。给定机器人的状态空间 $\\mathcal{S}$、动作空间 $\\mathcal{A}$、奖励函数 $r(s,a)$ 和转移动力学 $p(s^\\prime|s,a)$，目标是学习一个策略 $\\pi(a|s)$ 使累积奖励期望最大化：\n\n$$\n\nJ(\\pi) = \\mathbb{E}_{\\text{\\tau \\sim \\pi}}[ \\sum_{\\text{t=0}}^{T} \\gamma^t r(s_t, a_t) ]\n\n$$\n\n其中 $\\tau$ 表示轨迹，$\\gamma \\in [0,1)$ 为折扣因子，$T$ 为 horizon 长度。\n\n**状态空间**通常包括：\n\n- 关节位置 $q \\in \\mathbb{R}^n$、速度 $\\dot{q} \\in \\mathbb{R}^n$\n- 基座姿态（Roll, Pitch, Yaw）和线速度/角速度\n- 接触状态（是否触地）\n- 目标速度或参考轨迹\n\n**动作空间**通常为关节力矩或位置指令：\n\n- $a = \\tau \\in \\mathbb{R}^n$（力矩控制）\n- $a = q_{\\text{des}} \\in \\mathbb{R}^n$（位置控制）\n\n**奖励函数**通常为多目标加权组合：\n\n$$\n\nr = w_1 r_{\\text{\\text{追踪}}} + w_2 r_{\\text{\\text{效率}}} + w_3 r_{\\text{\\text{平稳}}} + w_4 r_{\\text{\\text{生存}}}\n\n$$\n\n## 2. 技术方法\n\n### 2.1 深度强化学习（Deep RL）\n\n**策略网络架构**通常采用 Actor-Critic 框架：\n\n- **Actor（策略网络）**：$\\pi_\\theta(a|s)$，输出动作分布\n- **Critic（价值网络）**：$V_\\phi(s)$ 或 $Q_\\phi(s,a)$，估计状态/动作价值\n\n常用算法包括：\n\n| 算法类别 | 代表方法 | 特点 |\n|---------|---------|------|\n| 离散动作 | DQN, Rainbow DQN | 动作空间离散化 |\n| 连续动作 | DDPG, TD3, SAC | 适用于连续控制 |\n| 策略梯度 | PPO, TRPO | 稳定性好，sample-efficient |\n| 离线 RL | CQL, IQL | 利用预采集数据 |\n\n### 2.2 模仿学习（Imitation Learning）\n\n**行为克隆（Behavioral Cloning）**：\n\n$$\n\n\\min_\\theta \\mathbb{E}_{\\text{(s,a) \\sim \\mathcal{D}}}[L(\\pi_\\theta(a|s), a)]\n\n$$\n\n**逆强化学习（IRL）**：\n\n$$\n\n\\max_{\\text{\\pi}} \\min_{\\text{\\lambda \\geq 0}} -\\lambda \\mathbb{E}_{\\text{\\tau \\sim \\pi}}[R(\\tau)] + \\log \\mathbb{E}_{\\text{\\tau \\sim \\pi\\_0}}[e^{R(\\tau)/\\lambda}]\n\n$$\n\n### 2.3 奖励塑造（Reward Shaping）\n\n- **追踪奖励**：$r_{\\text{追踪}} = -\\alpha \\|v_{\\text{des}} - v_{\\text{actual}}\\|^2$\n- **能量效率奖励**：$r_{\\text{效率}} = -\\beta \\|\\tau\\|^2$\n- **姿态惩罚**：$r_{\\text{姿态}} = -\\gamma \\|\\text{pitch/roll}\\|^2$\n- **触地冲击惩罚**：$r_{\\text{冲击}} = -\\delta \\cdot \\text{impact_force}$\n\n### 2.4 Sim-to-Real 迁移\n\n**域随机化（Domain Randomization）**：\n\n- 物理参数随机化：质量、摩擦、关节阻尼\n- 动力学扰动：延迟、噪声、外力\n\n**域自适应（Domain Adaptation）**：\n\n- 系统识别（System Identification）\n- 在线自适应（Online Adaptation）\n\n## 3. 实现细节\n\n### 3.1 关键超参数\n\n| 参数 | 典型值 | 说明 |\n|-----|-------|------|\n| 学习率 | $3\\times10^{-4}$ | Adam 优化器 |\n| Batch size | 4096-65536 | 取决于模拟器并行度 |\n| Gamma | 0.99 | 折扣因子 |\n| GAE lambda | 0.95 | PPO/GAE 参数 |\n| Horizon (T) | 24-1000 | 每次 rollout 步数 |\n| 网络层数 | 2-4 层 | MLP 或 LSTM |\n| 隐藏层维度 | 256-1024 | 取决于状态/动作维度 |\n\n### 3.2 观察与动作规格化\n\n- 观察归一化：$s_{\\text{norm}} = (s - \\mu_s) / \\sigma_s$\n- 动作输出：\\tanh 激活后映射到 [-1, 1] 范围\n- 奖励缩放：通常不显式缩放，但可调整权重\n\n### 3.3 训练基础设施\n\n- **模拟器**：MuJoCo、Isaac Gym、PyBullet\n- **并行环境数**：1000-10000 个并行环境\n- **总训练步数**：$10^8$-$10^9$ 步\n\n## 4. 实验设置\n\n### 4.1 基准平台\n\n| 机器人类型 | 代表平台 | 自由度 |\n|-----------|---------|--------|\n| 四足 | Unitree A1/Aliengo, ANYmal | 12-16 |\n| 双足 | Atlas, Digit, Cassie | 20-30 |\n| 六足 | RHex, MAX | 6-18 |\n\n### 4.2 评估指标\n\n- **任务成功率**：到达目标、爬楼梯、穿越不平地形\n- **平均前向速度**：$\\bar{v} = \\frac{1}{T} \\sum v_t$\n- **能耗效率**：$E = \\frac{1}{d} \\int \\|\\tau\\| dt$\n- **轨迹追踪误差**：$\\text{RMSE}(p - p_{\\text{target}})$\n- **跌倒频率**：$\\frac{\\text{跌倒次数}}{\\text{总试验次数}}$\n\n### 4.3 基线方法\n\n| 类别 | 方法 | 描述 |\n|-----|-----|------|\n| Model-based | WBC + MPC | 基于优化的层级控制 |\n| Learning (RL) | PPO/SAC | 无模型深度 RL |\n| Learning (IL) | BC | 行为克隆 |\n| Hybrid | RL + WBC | 学习 + 跟踪控制 |\n\n## 5. 技术优势\n\n### 5.1 相比传统方法的优势\n\n1. **自动策略发现**：无需人工设计复杂的分层控制器\n2. **端到端学习**：可直接优化最终任务性能\n3. **处理复杂地形**：对非结构化环境的适应性更强\n4. **持续改进**：可通过更多数据不断提升性能\n5. **处理高维状态空间**：深度学习自然处理高维感知输入\n\n### 5.2 学习范式的优势\n\n- **样本效率提升**：PPO、IMPALA 等算法提高 sample efficiency\n- **sim-to-real 有效性**：域随机化显著降低现实部署难度\n- **多任务学习**：同一策略可泛化到多种任务\n- **硬件进步**：GPU 加速模拟、专用 RL 芯片\n\n## 6. 技术弱点\n\n### 6.1 当前局限性\n\n1. **样本复杂度**：尽管改善，仍需大量训练样本（$10^8$+ 步）\n2. **安全性保证**：缺乏形式化安全验证，可能产生危险动作\n3. **sim-to-real 差距**：复杂接触动力学仍难以精确模拟\n4. **灾难性遗忘**：多任务学习时可能遗忘先前技能\n5. **可解释性**：深度策略决策过程不透明，难以调试\n\n### 6.2 实际部署挑战\n\n| 挑战 | 具体问题 |\n|-----|---------|\n| 传感器噪声 | 视觉里程计漂移、IMU 零偏 |\n| 执行延迟 | 命令执行与感知的时间差 |\n| 硬件限制 | 计算资源有限、电池续航 |\n| 泛化能力 | 对训练分布外场景的鲁棒性 |\n| 持续适应 | 磨损、关节间隙变化 |\n\n### 6.3 开放问题\n\n- **样本高效学习**：减少对大规模模拟的依赖\n- **安全学习**：在保证安全的前提下探索\n- **多模态感知融合**：视觉-本体感觉-触觉融合\n- **动态环境适应**：移动障碍物、非平整地形\n- **能效优化**：在能耗约束下优化运动效率\n- **人机协作**：在人类环境中安全交互\n\n---\n\n**总结**：该综述涵盖的方法表明，学习式腿足运动已从纯学术研究走向实际应用。当前主流方法基于深度强化学习，结合模仿学习和奖励工程，在模拟环境中训练后通过 sim-to-real 迁移部署到真实机器人。未来的发展方向将聚焦于提高样本效率、增强安全保证、以及实现动态环境中的持续自适应能力。",
+  "score_report": "# 论文价值分析报告\n\n## 0. 论文快照\n\n- 标题: Learning-based legged locomotion; state of the art and future perspectives\n- 作者: Sehoon Ha, Joonho Lee, M. V. D. Panne, Zhaoming Xie, Wenhao Yu, Majid Khadiv\n- 年份: 2024\n- 发表信息与 Venue: arXiv (Cornell University)\n- 来源: https://arxiv.org/abs/2406.01152\n- 对比集合状态: incomplete\n- 评分置信度: low\n\n## 1. 最终结论\n\n- 总分: 5.2/10.0\n- 等级: lower priority unless the user has a narrow reason to read it\n- 阅读优先级: 低\n- 奠基潜力判断: early promise, not yet established\n- 一句话判断: 除非你正好需要这条技术线，否则优先级不高。\n\n## 2. 分项评分\n\n| 维度 | 满分 | 得分 | 评分依据 | 关键证据 |\n|---|---:|---:|---|---|\n| 发表与 Venue 信号 | 1.5 | 0.6 | 当前主要仍是 arXiv / preprint 信号，发表强度需要保守看待。 | [Meta] venue=arXiv (Cornell University) | source=https://arxiv.org/abs/2406.01152 |\n| 作者与机构信号 | 1.0 | 0.8 | 作者列表完整且与强 venue 共同出现，说明团队具备较稳的执行力与领域进入门槛。 | [Meta] authors=Sehoon Ha, Joonho Lee, M. V. D. Panne, Zhaoming Xie, Wenhao Yu, Majid Khadiv |\n| 引用量与引用增速 | 2.0 | 0.8 | 按发表年限归一后，引用速度大致落在 below median，能说明这篇工作已有一定外部关注度。 | [API] citations=1 | months_since_release≈30 |\n| 被引论文质量 | 1.5 | 0.6 | 已有外部引用，但还不足以证明后续引用论文整体质量很强。 | [API] citations=1 |\n| 技术增量与新颖性 | 2.0 | 1.4 | 技术增量清楚可见，既有方法名义上的新部件，也有任务层面的重新组织。 | [Summary] \" **MDP 设计拆解**：将 locomotion 明确拆成 dynamics、observation、reward、action space 和 learning framework 等模块，并分别总结 proprioception、exteroception、history buffer、imitation reward、PD/torque/struc...\" |\n| 业界贡献 / 开源 / 产品信号 | 1.0 | 0.5 | 有可信的生态或工程外溢信号，但尚不足以视为大规模外部采用。 | [Summary] \"核心创新点 本文不是提出新的 locomotion 控制算法，而是把 learning-based legged locomotion 重新定义为一个跨层共设计问题：硬件可控性、物理仿真、MDP 设计和 sim-to-real 迁移必须一起看。它解决的核心痛点是领域知识分散、术语不统一、方法比较口径不一致，因此给出了一个从 quadruped 到 biped...\" |\n| 奠基潜力 / 方向性影响 | 1.0 | 0.5 | 论文有成为方向锚点的潜力，但证据更像 early promise，而不是已形成共识。 | [Composite] publication=0.6; traction=0.8; novelty=1.4; industry=0.5 |\n\n## 3. 相似论文对比集合（5 篇）\n\n| Peer | 类别 | 论文 | arXiv | 年份 | Venue | 引用量 | 选入理由 |\n|---|---|---|---|---:|---|---:|---|\n| P1 | classic | A Terradynamics of Legged Locomotion on Granular Media | https://arxiv.org/abs/1303.7065v1 | 2013 | Science | 449 | 该方向较早期的代表性工作，用于校准技术增量与方向延续性（关键词重合：legged, locomotion）。 |\n| P2 | classic | Legged Robots that Keep on Learning: Fine-Tuning Locomotion Policies in the Real World | https://arxiv.org/abs/2110.05457v1 | 2021 | 2022 International Conference on Robotics and Automation (ICRA) | 91 | 该方向较早期的代表性工作，用于校准技术增量与方向延续性（关键词重合：learning, legged, locomotion）。 |\n| P3 | classic | Combining Learning-based Locomotion Policy with Model-based Manipulation for Legged Mobile Manipulators | https://arxiv.org/abs/2201.03871v1 | 2022 | IEEE Robotics and Automation Letters | 75 | 该方向较早期的代表性工作，用于校准技术增量与方向延续性（关键词重合：based, learning, legged）。 |\n| P4 | classic | Multiple chaotic central pattern generators with learning for legged locomotion and malfunction compensation | https://arxiv.org/abs/1407.3269v1 | 2014 | Information Sciences | 52 | 该方向较早期的代表性工作，用于校准技术增量与方向延续性（关键词重合：learning, legged, locomotion）。 |\n| P5 | classic | Safe Reinforcement Learning for Legged Locomotion | https://arxiv.org/abs/2203.02638v1 | 2022 | 2022 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) | 35 | 该方向较早期的代表性工作，用于校准技术增量与方向延续性（关键词重合：learning, legged, locomotion）。 |\n\n## 4. 横向对比观察\n\n- 明显强于 peer 的点: 方法 framing 更完整，且 summary 能支持它不是单点 trick。\n- 与 peer 大体持平的点: 问题设定与实验组织和同主题 peer 大致处在同一工作带宽。\n- 明显落后于 peer 的点: peer 对比集合还不完整；若后续没有更强 follow-up 或生态采用，方向影响分会继续保守。\n\n## 5. 分数形成原因\n\n- 主要加分项: 当前主要仍是 arXiv / preprint 信号，发表强度需要保守看待。；技术增量清楚可见，既有方法名义上的新部件，也有任务层面的重新组织。；引用牵引目前仍偏保守\n- 主要扣分项: peer 对比仍不完整，需要保守评分；缺少更强 citing-paper 质量证据；业界/开源外溢信号有限\n- 哪些新增证据会改变评分: 看到明确的开源、benchmark 采用或部署证据\n\n## 6. 是否值得优先读\n\n- 结论: 建议带着明确问题去读，而不是无目标通读。\n- 适合优先阅读的人: 做人形/机器人控制、生成式动作建模、策略学习或相关 benchmark 复现的人。\n- 不适合优先阅读的人: 只想看已被社区完全证明的奠基论文，或者暂时不关心该任务线的人。\n\n## 7. **Sources**:\n\n- https://arxiv.org/abs/2406.01152\n- https://openalex.org/works/W4399400885\n- https://api.crossref.org/works/10.48550/arxiv.2406.01152\n",
+  "readable_report": "# 论文先修罗盘报告模板\n\n## 0. 论文快照\n\n- 标题: Learning-based legged locomotion; state of the art and future perspectives\n- 作者: Sehoon Ha, Joonho Lee, M. V. D. Panne, Zhaoming Xie, Wenhao Yu, Majid Khadiv\n- 年份: 2024\n- 发表信息与venue: arXiv (Cornell University) | JCR 分区: N/A | CCF 等级: N/A\n- 来源: https://arxiv.org/abs/2406.01152\n- **影响力**: citations=1 (openalex) | venue=arXiv (Cornell University)\n\n## 1. 必学先修知识（按顺序）\n\n| 顺序 | 知识点 | 为什么必学 | 论文使用位置 | 证据锚点 | 难度 | 最小学习目标 | 预计时间 |\n|---|---|---|---|---|---|---|---|\n| 1 | 强化学习与策略优化 | 论文直接围绕策略更新、样本效率或在线控制展开，先搞懂策略学习目标和更新稳定性。 | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"方法论突破 - **新颖性**：本质区别不在于提出新控制器，而在于把学习型腿式运动从单一 policy 学习改写为一个多层设计空间：硬件决定可控性，仿真决定数据效率，MDP 设计决定可学习性，迁移机制决定现实可用性。相比只比算法优劣的常规综述，这种分层机制视角更接近真实系统瓶颈。\" | ⭐⭐⭐ | 看懂状态-动作-回报、优势估计和策略更新目标。 | 2h |\n| 2 | 模仿学习与示范数据利用 | 如果论文依赖演示数据或偏好反馈，先修模仿学习能帮助理解监督信号从哪里来。 | [Summary/Abstract] 与论文主线直接相关 | [Summary] \" **MDP 设计拆解**：将 locomotion 明确拆成 dynamics、observation、reward、action space 和 learning framework 等模块，并分别总结 proprioception、exteroception、history buffer、imitation reward、PD/torque/struc...\" | ⭐⭐⭐ | 看懂演示数据如何进入训练目标，以及和强化学习如何结合。 | 1.5h |\n| 3 | 世界模型与动力学建模 | 论文若显式建模状态转移、潜变量或规划，就需要先理解模型误差如何影响控制。 | [Summary/Abstract] 与论文主线直接相关 | [Abstract] \"Both model-based and learning-based approaches have advanced the field of legged locomotion in the past three decades.\" | ⭐⭐⭐⭐ | 看懂状态转移建模、滚动预测和规划接口。 | 2.5h |\n| 4 | 模型预测控制与最优控制 | 涉及 MPC/优化器/残差控制的论文，必须先理解时域优化和约束处理。 | [Summary/Abstract] 与论文主线直接相关 | [Summary] \" **理论支撑**：文中没有提出新的定理、收敛证明或严格理论界限；理论部分主要是 MDP、RL、IL、optimal control 的基础回顾，以及对 model-free 在机器人中实际仍依赖物理模拟这一概念的澄清。\" | ⭐⭐⭐⭐ | 看懂滚动优化、代价函数和约束项。 | 2.5h |\n\n## 2. 桥接知识（可选但有帮助）\n\n| 知识点 | 角色 | 论文使用位置 | 证据 | 难度 | 建议动作 |\n|---|---|---|---|---|---|\n| 全身动力学与接触约束 | bridge | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"# 论文总结：Learning-based legged locomotion; state of the art and future perspectives ## 1.\" | ⭐⭐⭐ | review |\n| 轨迹跟踪与运动重定向 | bridge | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"# 论文总结：Learning-based legged locomotion; state of the art and future perspectives ## 1.\" | ⭐⭐⭐ | review |\n| 视觉表示与视频条件建模 | bridge | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"实验验证 - **主要基准/场景**：文中没有作者自建 benchmark 或统一测试集；主要覆盖的任务和平台是平地速度跟踪、rough terrain、stepping stones、parkour、confined spaces、vision-based locomotion、wheeled-legged transition 和 loco-manipu...\" | ⭐⭐⭐ | review |\n\n## 3. 个性化增量（基于 memory.md）\n\n- 已跳过（已掌握）:\n  - 暂无明确已掌握项，按默认先修序列处理。\n- 虽然熟悉但仍保留（论文特有增量）:\n  - 强化学习与策略优化：即使已有相近背景，也建议按本文的问题设定重新对齐。\n- 新出现的高优先级短板:\n  - 强化学习与策略优化\n  - 模仿学习与示范数据利用\n\n## 4. 推荐学习资源\n\n### 强化学习与策略优化\n\n- 原论文/综述:\n  - Learning-based legged locomotion; state of the art and future perspectives - https://arxiv.org/abs/2406.01152\n  - 同主题 peer - https://arxiv.org/abs/1303.7065v1\n- 视频（优先高质量，lang=zh 时可含中文社区）:\n  - 信息不足 - https://arxiv.org/abs/1303.7065v1\n- 说明:\n  - 先用目标论文建立术语，再用 peer 校准它在相邻方法中的位置。\n### 模仿学习与示范数据利用\n\n- 原论文/综述:\n  - Learning-based legged locomotion; state of the art and future perspectives - https://arxiv.org/abs/2406.01152\n  - 同主题 peer - https://arxiv.org/abs/2110.05457v1\n- 视频（优先高质量，lang=zh 时可含中文社区）:\n  - 信息不足 - https://arxiv.org/abs/2110.05457v1\n- 说明:\n  - 先用目标论文建立术语，再用 peer 校准它在相邻方法中的位置。\n\n## 5. 建议学习顺序\n\n1. 阶段 A（基础）: 强化学习与策略优化、模仿学习与示范数据利用\n2. 阶段 B（机制桥接）: 全身动力学与接触约束、轨迹跟踪与运动重定向\n3. 阶段 C（论文特有）: 世界模型与动力学建模、模型预测控制与最优控制\n\n## 6. 30 分钟快速起步\n\n关键实验结论: # 论文总结：Learning-based legged locomotion; state of the art and future perspectives ## 1. 核心创新点 本文不是提出新的 locomotion 控制算法，而是把 learning-based legged locomotion 重新定义为一个跨层共设计问题：硬件可控性、物理仿真、MDP 设计和 sim-to-real 迁移必须一起看。它解决的核心痛点是领域知识分散、术语不统一、方法比较口径不一致，因此给出了一个从 quadruped 到 biped/humanoid 的机制化技术地图。\n\n## 7. **Sources**:\n\n- https://arxiv.org/abs/2406.01152\n- https://openalex.org/works/W4399400885\n- https://api.crossref.org/works/10.48550/arxiv.2406.01152\n",
   "sensemaking": null,
-  "rating": 3,
+  "rating": {
+    "scheme": "paper_compass_score",
+    "publication_signal": 0.6,
+    "author_signal": 0.8,
+    "citation_traction": 0.8,
+    "citation_quality": 0.6,
+    "novelty": 1.4,
+    "industry_signal": 0.5,
+    "field_shaping": 0.5,
+    "overall_score": 5.2,
+    "rating_band": "lower priority unless the user has a narrow reason to read it",
+    "priority": "低",
+    "field_shaping_statement": "early promise, not yet established",
+    "one_line_verdict": "除非你正好需要这条技术线，否则优先级不高。",
+    "notes": "除非你正好需要这条技术线，否则优先级不高。"
+  },
   "parsed_source": {
     "files": [
       {
@@ -36,16 +60,29 @@
     ],
     "recognized_fields": {
       "title": "Learning-based legged locomotion; state of the art and future perspectives",
+      "authors": [
+        "Sehoon Ha",
+        "Joonho Lee",
+        "M. V. D. Panne",
+        "Zhaoming Xie",
+        "Wenhao Yu",
+        "Majid Khadiv"
+      ],
       "year": 2024,
-      "abstract": "Legged locomotion holds the premise of universal mobility..."
+      "journal": "arXiv.org",
+      "doi": "10.48550/arXiv.2406.01152",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Legged locomotion holds the premise of universal mobility, a critical capability for many real-world robotic applications. Both model-based and learning-based approaches have advanced the field of legged locomotion in the past three decades. In recent years, however, a number of factors have dramatically accelerated progress in learning-based methods, including the rise of deep learning, rapid progress in simulating robotic systems, and the availability of high-performance and affordable hardware. This article aims to give a brief history of the field, to summarize recent efforts in learning locomotion skills for quadrupeds, and to provide researchers new to the area with an understanding of the key issues involved. With the recent proliferation of humanoid robots, we further outline the rapid rise of analogous methods for bipedal locomotion. We conclude with a discussion of open problems as well as related societal impact.",
+      "route_id": "608f86a4-8d7a-4563-8d30-76fc6ec4f1b3"
     },
     "markdown_stats": {
-      "lines": 4,
-      "words": 21,
-      "headings": 2
+      "lines": 784,
+      "words": 28108,
+      "headings": 45
     },
     "assets": {
-      "images": 0,
+      "images": 9,
       "has_layout": false,
       "content_lists": []
     },
@@ -58,5 +95,5 @@
   "route_id": "608f86a4-8d7a-4563-8d30-76fc6ec4f1b3",
   "paper_ref": "608f86a4-8d7a-4563-8d30-76fc6ec4f1b3",
   "read_only": true,
-  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
 }

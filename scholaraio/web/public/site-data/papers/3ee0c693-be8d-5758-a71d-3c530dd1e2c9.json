@@ -1,0 +1,95 @@
+{
+  "dir_name": "Olkin-2026-chasing-autonomy-dynamic-retargeting-and-control-guided-rl-f",
+  "title": "Chasing Autonomy: Dynamic Retargeting and Control Guided RL for Performant and Controllable Humanoid Running",
+  "authors": [
+    "Zachary Olkin",
+    "William D. Compton",
+    "Ryan M. Bena",
+    "Aaron D. Ames"
+  ],
+  "year": 2026,
+  "journal": "",
+  "doi": "10.48550/arxiv.2603.25902",
+  "abstract": "Humanoid robots have the promise of locomoting like humans, including fast and dynamic running. Recently, reinforcement learning (RL) controllers that can mimic human motions have become popular as they can generate very dynamic behaviors, but they are often restricted to single motion play-back which hinders their deployment in long duration and autonomous locomotion. In this paper, we present a pipeline to dynamically retarget human motions through an optimization routine with hard constraints to generate improved periodic reference libraries from a single human demonstration. We then study the effect of both the reference motion and the reward structure on the reference and commanded velocity tracking, concluding that a goal-conditioned and control-guided reward which tracks dynamically optimized human data results in the best performance. We deploy the policy on hardware, demonstrating its speed and endurance by achieving running speeds of up to 3.3 m/s on a Unitree G1 robot and traversing hundreds of meters in real-world environments. Additionally, to demonstrate the controllability of the locomotion, we use the controller in a full perception and planning autonomy stack for obstacle avoidance while running outdoors.",
+  "paper_type": "todo-placeholder",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [
+    "Todo占位"
+  ],
+  "is_close_read": false,
+  "read_status": "unread",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：Chasing Autonomy: Dynamic Retargeting and Control Guided RL for Performant and Controllable Humanoid Running\n\n## 1. 核心创新点\n\n该工作提出一条面向人形机器人自主跑步的强化学习管线：先通过带硬约束的优化对单次人类跑步示范进行动态重定向，构造更适合机器人执行的周期性参考动作库，再结合 目标条件化 与 control-guided 的奖励设计训练策略，以兼顾速度表现与可控性。\n\n## 2. 技术创新拆解\n\n- **动态重定向参考库构建**：论文从单个人类示范出发，通过带硬约束的优化例程生成改进后的周期性参考动作库，目标是突破传统单段 motion playback 对长期自主运动的限制。摘要表明其重点不只是模仿人类动作，而是将参考轨迹处理为更适合持续跑步控制的训练信号。\n- **面向控制目标的奖励设计分析**：论文研究了参考动作形式与奖励结构对参考速度跟踪和指令速度跟踪的影响，并给出一个高层结论：跟踪动态优化后的人类数据、且采用 目标条件化 与 control-guided reward 的策略表现最好。摘要未披露具体 reward 公式、模块拆分或更细粒度训练配置。\n\n## 3. 方法论突破\n\n- **新颖性**：新意在于把“动态重定向的人类参考动作”与“面向任务目标和控制约束的 RL 奖励”系统结合，用于支持既高动态又可长时自主运行的人形机器人跑步，而不是局限于单一动作回放。\n- **关键技术**：核心技术包括：基于硬约束优化的人类动作动态重定向、由单次示范扩展得到的周期性参考库，以及同时关注 reference velocity 和 commanded velocity tracking 的 目标条件化/control-guided 强化学习训练框架。\n- **理论支撑**：摘要未披露形式化理论证明、稳定性定理或收敛性分析；仅说明采用了带硬约束的优化与控制引导的奖励设计。\n\n## 4. 实验验证\n\n- **主要基准/场景**：摘要未披露标准 benchmark 名称或公开评测套件；仅说明在 Unitree G1 硬件上进行了真实机器人部署，并展示了户外跑步与障碍规避自主运行。\n- **性能提升**：摘要给出的结果是：所提出的奖励与参考动作组合取得最佳性能；硬件上最高跑步速度达到 3.3 m/s，并可在真实环境中连续穿越数百米。摘要未披露相对基线提升百分比、完整比较对象或统计显著性。\n- **消融实验**：摘要提到研究了参考动作与奖励结构对速度跟踪的影响，可视为存在因素分析或消融方向；但摘要未披露具体 ablation 设置、数值结果、对照组明细或误差分解。\n\n## 5. 局限与启发\n\n- **当前局限**：基于摘要可确认的方法已在 Unitree G1 上展示效果，但摘要未说明在不同机器人形态、不同地形条件、不同传感噪声水平下的系统性验证范围；同时参考库由单次人类示范出发，其对动作多样性的覆盖程度也未展开。\n- **未来方向**：后续更值得补充的是跨平台验证、更复杂户外场景下的稳健性评测、长时自主运行中的失败模式分析，以及对参考库生成与奖励设计各组成部分的更细致公开实验。\n- **可迁移性**：摘要展示了与完整 perception/planning autonomy stack 的集成潜力，但跨机器人平台迁移、对新跑步风格或不同任务指令的泛化能力仍未被摘要充分披露，因此可迁移性目前只能作谨慎乐观判断。\n\n## 6. 一句话总结\n\n这篇工作将动态重定向的人类跑步参考与 control-guided RL 结合，在摘要层面展示了人形机器人从“会跑”走向“能持续自主、可控地跑”的方法方向。\n",
+  "method_summary": "",
+  "score_report": "# 论文价值分析报告\n\n## 0. 论文快照\n\n- 标题: Chasing Autonomy: Dynamic Retargeting and Control Guided RL for Performant and Controllable Humanoid Running\n- 作者: Zachary Olkin, William D. Compton, Ryan M. Bena, Aaron D. Ames\n- 年份: 2026\n- 发表信息与 Venue: arXiv (Cornell University)\n- 来源: https://arxiv.org/abs/2603.25902\n- 对比集合状态: incomplete\n- 评分置信度: low\n\n## 1. 最终结论\n\n- 总分: 4.4/10.0\n- 等级: lower priority unless the user has a narrow reason to read it\n- 阅读优先级: 低\n- 奠基潜力判断: early promise, not yet established\n- 一句话判断: 除非你正好需要这条技术线，否则优先级不高。\n\n## 2. 分项评分\n\n| 维度 | 满分 | 得分 | 评分依据 | 关键证据 |\n|---|---:|---:|---|---|\n| 发表与 Venue 信号 | 1.5 | 0.6 | 当前主要仍是 arXiv / preprint 信号，发表强度需要保守看待。 | [Meta] venue=arXiv (Cornell University) | source=https://arxiv.org/abs/2603.25902 |\n| 作者与机构信号 | 1.0 | 0.8 | 作者列表完整且与强 venue 共同出现，说明团队具备较稳的执行力与领域进入门槛。 | [Meta] authors=Zachary Olkin, William D. Compton, Ryan M. Bena, Aaron D. Ames |\n| 引用量与引用增速 | 2.0 | 0.3 | 缺少稳定的引用计数来源，只能按信息不足处理。 | 信息不足 |\n| 被引论文质量 | 1.5 | 0.3 | 没有可验证的 citing-paper 样本，无法给出更高的外部采纳质量分。 | 信息不足 |\n| 技术增量与新颖性 | 2.0 | 1.4 | 技术增量清楚可见，既有方法名义上的新部件，也有任务层面的重新组织。 | [Summary] \"# 论文总结：Chasing Autonomy: Dynamic Retargeting and Control Guided RL for Performant and Controllable Humanoid Running ## 1.\" |\n| 业界贡献 / 开源 / 产品信号 | 1.0 | 0.5 | 有可信的生态或工程外溢信号，但尚不足以视为大规模外部采用。 | [Summary] \"实验验证 - **主要基准/场景**：摘要未披露标准 benchmark 名称或公开评测套件；仅说明在 Unitree G1 硬件上进行了真实机器人部署，并展示了户外跑步与障碍规避自主运行。\" |\n| 奠基潜力 / 方向性影响 | 1.0 | 0.5 | 论文有成为方向锚点的潜力，但证据更像 early promise，而不是已形成共识。 | [Composite] publication=0.6; traction=0.3; novelty=1.4; industry=0.5 |\n\n## 3. 相似论文对比集合（5 篇）\n\n| Peer | 类别 | 论文 | arXiv | 年份 | Venue | 引用量 | 选入理由 |\n|---|---|---|---|---:|---|---:|---|\n| P1 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P2 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P3 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P4 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P5 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n\n## 4. 横向对比观察\n\n- 明显强于 peer 的点: 方法 framing 更完整，且 summary 能支持它不是单点 trick。\n- 与 peer 大体持平的点: 问题设定与实验组织和同主题 peer 大致处在同一工作带宽。\n- 明显落后于 peer 的点: peer 对比集合还不完整；若后续没有更强 follow-up 或生态采用，方向影响分会继续保守。\n\n## 5. 分数形成原因\n\n- 主要加分项: 当前主要仍是 arXiv / preprint 信号，发表强度需要保守看待。；技术增量清楚可见，既有方法名义上的新部件，也有任务层面的重新组织。；引用牵引目前仍偏保守\n- 主要扣分项: peer 对比仍不完整，需要保守评分；缺少更强 citing-paper 质量证据；业界/开源外溢信号有限\n- 哪些新增证据会改变评分: 拿到稳定的引用计数与随时间增长情况；看到明确的开源、benchmark 采用或部署证据\n\n## 6. 是否值得优先读\n\n- 结论: 建议带着明确问题去读，而不是无目标通读。\n- 适合优先阅读的人: 做人形/机器人控制、生成式动作建模、策略学习或相关 benchmark 复现的人。\n- 不适合优先阅读的人: 只想看已被社区完全证明的奠基论文，或者暂时不关心该任务线的人。\n\n## 7. **Sources**:\n\n- https://arxiv.org/abs/2603.25902\n- https://openalex.org/works/W7143380664\n- https://api.crossref.org/works/10.48550/arxiv.2603.25902\n",
+  "readable_report": "# 论文先修罗盘报告模板\n\n## 0. 论文快照\n\n- 标题: Chasing Autonomy: Dynamic Retargeting and Control Guided RL for Performant and Controllable Humanoid Running\n- 作者: Zachary Olkin, William D. Compton, Ryan M. Bena, Aaron D. Ames\n- 年份: 2026\n- 发表信息与venue: arXiv (Cornell University) | JCR 分区: N/A | CCF 等级: N/A\n- 来源: https://arxiv.org/abs/2603.25902\n- **影响力**: citations待验证 | venue=arXiv (Cornell University)\n\n## 1. 必学先修知识（按顺序）\n\n| 顺序 | 知识点 | 为什么必学 | 论文使用位置 | 证据锚点 | 难度 | 最小学习目标 | 预计时间 |\n|---|---|---|---|---|---|---|---|\n| 1 | 强化学习与策略优化 | 论文直接围绕策略更新、样本效率或在线控制展开，先搞懂策略学习目标和更新稳定性。 | [Summary/Abstract] 与论文主线直接相关 | [Abstract] \"Recently, reinforcement learning (RL) controllers that can mimic human motions have become popular as they can generate very dynamic behaviors, but they are often restricted to sin...\" | ⭐⭐⭐ | 看懂状态-动作-回报、优势估计和策略更新目标。 | 2h |\n| 2 | 模仿学习与示范数据利用 | 如果论文依赖演示数据或偏好反馈，先修模仿学习能帮助理解监督信号从哪里来。 | [Summary/Abstract] 与论文主线直接相关 | [Abstract] \"In this paper, we present a pipeline to dynamically retarget human motions through an optimization routine with hard constraints to generate improved periodic reference libraries f...\" | ⭐⭐⭐ | 看懂演示数据如何进入训练目标，以及和强化学习如何结合。 | 1.5h |\n\n## 2. 桥接知识（可选但有帮助）\n\n| 知识点 | 角色 | 论文使用位置 | 证据 | 难度 | 建议动作 |\n|---|---|---|---|---|---|\n| 全身动力学与接触约束 | bridge | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"# 论文总结：Chasing Autonomy: Dynamic Retargeting and Control Guided RL for Performant and Controllable Humanoid Running ## 1.\" | ⭐⭐⭐ | review |\n| 轨迹跟踪与运动重定向 | bridge | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"# 论文总结：Chasing Autonomy: Dynamic Retargeting and Control Guided RL for Performant and Controllable Humanoid Running ## 1.\" | ⭐⭐⭐ | review |\n| 力控与接触建模 | bridge | [Summary/Abstract] 与论文主线直接相关 | [Abstract] \"Recently, reinforcement learning (RL) controllers that can mimic human motions have become popular as they can generate very dynamic behaviors, but they are often restricted to sin...\" | ⭐⭐⭐ | review |\n\n## 3. 个性化增量（基于 memory.md）\n\n- 已跳过（已掌握）:\n  - 暂无明确已掌握项，按默认先修序列处理。\n- 虽然熟悉但仍保留（论文特有增量）:\n  - 强化学习与策略优化：即使已有相近背景，也建议按本文的问题设定重新对齐。\n- 新出现的高优先级短板:\n  - 强化学习与策略优化\n  - 模仿学习与示范数据利用\n\n## 4. 推荐学习资源\n\n### 强化学习与策略优化\n\n- 原论文/综述:\n  - Chasing Autonomy: Dynamic Retargeting and Control Guided RL for Performant and Controllable Humanoid Running - https://arxiv.org/abs/2603.25902\n  - 同主题 peer - https://openalex.org/works/W7143380664\n- 视频（优先高质量，lang=zh 时可含中文社区）:\n  - 信息不足 - https://openalex.org/works/W7143380664\n- 说明:\n  - 先用目标论文建立术语，再用 peer 校准它在相邻方法中的位置。\n### 模仿学习与示范数据利用\n\n- 原论文/综述:\n  - Chasing Autonomy: Dynamic Retargeting and Control Guided RL for Performant and Controllable Humanoid Running - https://arxiv.org/abs/2603.25902\n  - 同主题 peer - https://api.crossref.org/works/10.48550/arxiv.2603.25902\n- 视频（优先高质量，lang=zh 时可含中文社区）:\n  - 信息不足 - https://api.crossref.org/works/10.48550/arxiv.2603.25902\n- 说明:\n  - 先用目标论文建立术语，再用 peer 校准它在相邻方法中的位置。\n\n## 5. 建议学习顺序\n\n1. 阶段 A（基础）: 强化学习与策略优化、模仿学习与示范数据利用\n2. 阶段 B（机制桥接）: 全身动力学与接触约束、轨迹跟踪与运动重定向\n3. 阶段 C（论文特有）: 模仿学习与示范数据利用\n\n## 6. 30 分钟快速起步\n\n关键实验结论: # 论文总结：Chasing Autonomy: Dynamic Retargeting and Control Guided RL for Performant and Controllable Humanoid Running ## 1. 核心创新点 该工作提出一条面向人形机器人自主跑步的强化学习管线：先通过带硬约束的优化对单次人类跑步示范进行动态重定向，构造更适合机器人执行的周期性参考动作库，再结合 goal-conditioned 与 control-guided 的奖励设计训练策略，以兼顾速度表现与可控性。\n\n## 7. **Sources**:\n\n- https://arxiv.org/abs/2603.25902\n- https://openalex.org/works/W7143380664\n- https://api.crossref.org/works/10.48550/arxiv.2603.25902\n",
+  "sensemaking": null,
+  "rating": {
+    "scheme": "paper_compass_score",
+    "publication_signal": 0.6,
+    "author_signal": 0.8,
+    "citation_traction": 0.3,
+    "citation_quality": 0.3,
+    "novelty": 1.4,
+    "industry_signal": 0.5,
+    "field_shaping": 0.5,
+    "overall_score": 4.4,
+    "rating_band": "lower priority unless the user has a narrow reason to read it",
+    "priority": "低",
+    "field_shaping_statement": "early promise, not yet established",
+    "one_line_verdict": "除非你正好需要这条技术线，否则优先级不高。",
+    "notes": "除非你正好需要这条技术线，否则优先级不高。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "Chasing Autonomy: Dynamic Retargeting and Control Guided RL for Performant and Controllable Humanoid Running",
+      "authors": [
+        "Zachary Olkin",
+        "William D. Compton",
+        "Ryan M. Bena",
+        "Aaron D. Ames"
+      ],
+      "year": 2026,
+      "doi": "10.48550/arxiv.2603.25902",
+      "paper_type": "todo-placeholder",
+      "abstract": "Humanoid robots have the promise of locomoting like humans, including fast and dynamic running. Recently, reinforcement learning (RL) controllers that can mimic human motions have become popular as they can generate very dynamic behaviors, but they are often restricted to single motion play-back which hinders their deployment in long duration and autonomous locomotion. In this paper, we present a pipeline to dynamically retarget human motions through an optimization routine with hard constraints to generate improved periodic reference libraries from a single human demonstration. We then study the effect of both the reference motion and the reward structure on the reference and commanded velocity tracking, concluding that a goal-conditioned and control-guided reward which tracks dynamically optimized human data results in the best performance. We deploy the policy on hardware, demonstrating its speed and endurance by achieving running speeds of up to 3.3 m/s on a Unitree G1 robot and traversing hundreds of meters in real-world environments. Additionally, to demonstrate the controllability of the locomotion, we use the controller in a full perception and planning autonomy stack for obstacle avoidance while running outdoors.",
+      "route_id": "3ee0c693-be8d-5758-a71d-3c530dd1e2c9"
+    },
+    "markdown_stats": {
+      "lines": 17,
+      "words": 267,
+      "headings": 4
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "3ee0c693-be8d-5758-a71d-3c530dd1e2c9",
+  "paper_ref": "3ee0c693-be8d-5758-a71d-3c530dd1e2c9",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
+}

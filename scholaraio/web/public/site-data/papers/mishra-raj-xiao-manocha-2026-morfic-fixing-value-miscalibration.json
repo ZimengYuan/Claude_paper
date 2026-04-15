@@ -21,6 +21,8 @@
   "citation_count": 0,
   "summary": "",
   "method_summary": "",
+  "score_report": "",
+  "readable_report": "",
   "sensemaking": null,
   "rating": 3,
   "parsed_source": {
@@ -62,5 +64,5 @@
   "route_id": "mishra-raj-xiao-manocha-2026-morfic-fixing-value-miscalibration",
   "paper_ref": "Mishra-Raj-Xiao-Manocha-2026-MorFiC-fixing-value-miscalibration",
   "read_only": true,
-  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
 }

@@ -26,6 +26,8 @@
   "citation_count": 20,
   "summary": "",
   "method_summary": "",
+  "score_report": "",
+  "readable_report": "",
   "sensemaking": null,
   "rating": 3,
   "parsed_source": {
@@ -78,5 +80,5 @@
   "route_id": "3a9cce36-4da3-424e-ab5f-283dad5ead7a",
   "paper_ref": "3a9cce36-4da3-424e-ab5f-283dad5ead7a",
   "read_only": true,
-  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
 }

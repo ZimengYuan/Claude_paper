@@ -2,14 +2,14 @@
   {
     "name": "current-library",
     "title": "Current Library",
-    "count": 468,
+    "count": 440,
     "query": {
       "scope": "main library",
       "papers_dir": "data/papers",
       "topic_model": "data/topic_model"
     },
     "source": "local-library",
-    "fetched_at": "2026-03-27T01:42:36",
+    "fetched_at": "2026-04-15T17:09:56",
     "has_search_index": true,
     "has_semantic_index": true,
     "has_topics": true,

@@ -25,6 +25,8 @@
   "citation_count": 0,
   "summary": "",
   "method_summary": "",
+  "score_report": "",
+  "readable_report": "",
   "sensemaking": null,
   "rating": 3,
   "parsed_source": {
@@ -69,5 +71,5 @@
   "route_id": "li---2025---periodic-bipedal-gait-learning-using-reward-composition-based-on-a-novel-gait-planner-for-humanoid-r",
   "paper_ref": "Li 等 - 2025 - Periodic Bipedal Gait Learning Using Reward Composition Based on a Novel Gait Planner for Humanoid R",
   "read_only": true,
-  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
 }

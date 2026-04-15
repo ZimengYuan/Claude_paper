@@ -1,0 +1,89 @@
+{
+  "dir_name": "Narayanan-2026-rk-mpc-residual-koopman-model-predictive-control-for-quadrup",
+  "title": "RK-MPC: Residual Koopman Model Predictive Control for Quadruped Locomotion in Offroad Environments",
+  "authors": [
+    "Sriram S. K. S. Narayanan",
+    "Umesh Vaidya"
+  ],
+  "year": 2026,
+  "journal": "",
+  "doi": "",
+  "abstract": "This paper presents Residual Koopman MPC (RK-MPC), a Koopman-based, data-driven model predictive control framework for quadruped locomotion that improves prediction fidelity while preserving real-time tractability. RK-MPC augments a nominal template model with a compact linear residual predictor learned from data in lifted coordinates, enabling systematic correction of model mismatch induced by contact variability and terrain disturbances with provable bounds on multi-step prediction error. The learned residual model is embedded within a convex quadratic-program MPC formulation, yielding a receding-horizon controller that runs onboard at 500 Hz and retains the structure and constraint-handling advantages of optimization-based control. We evaluate RK-MPC in both Gazebo simulation and Unitree Go1 hardware experiments, demonstrating reliable blind locomotion across contact disturbances, multiple gait schedules, and challenging off-road terrains including grass, gravel, snow, and ice. We further compare against Koopman/EDMD baselines using alternative observable dictionaries, including monomial and $SE(3)$-structured bases, and show that the residual correction improves multi-step prediction and closed-loop performance while reducing sensitivity to the choice of observables. Overall, RK-MPC provides a practical, hardware-validated pathway for data-driven predictive control of quadrupeds in unstructured environments. See https://sriram-2502.github.io/rk-mpc for implementation videos.",
+  "paper_type": "todo-placeholder",
+  "publisher": "",
+  "issn": "",
+  "volume": "",
+  "issue": "",
+  "pages": "",
+  "tags": [
+    "Todo占位"
+  ],
+  "is_close_read": false,
+  "read_status": "unread",
+  "read_at": null,
+  "citation_count": 0,
+  "summary": "# 论文总结：RK-MPC: Residual Koopman Model Predictive Control for Quadruped Locomotion in Offroad Environments\n\n## 1. 核心创新点\n\nRK-MPC 将 Koopman 框架下的数据驱动残差建模与 MPC 结合：在名义 template model 之上，于 lifted coordinates 中学习紧凑线性 residual predictor，用于系统性修正四足机器人越野行走中的接触变化与地形扰动导致的模型失配，同时保持凸二次规划 MPC 的实时可解性。\n\n## 2. 技术创新拆解\n\n- **残差 Koopman 预测建模**：方法不是直接替换原有动力学，而是在名义模型之外叠加一个由数据学习得到的线性残差预测器，从而在保留可优化结构的同时提高多步预测保真度。\n- **面向实机的优化控制集成**：论文将该残差模型嵌入 convex QP 形式的 receding-horizon MPC，并在 Gazebo 与 Unitree Go1 实机上进行验证；摘要指出控制器可板载运行在 500 Hz。\n\n## 3. 方法论突破\n\n- **新颖性**：相较于仅依赖名义模型或标准 Koopman/EDMD 近似的做法，RK-MPC 通过 lifted coordinates 中的残差校正来缓解 contact variability 和 terrain disturbances 带来的建模误差，并试图降低对 observable dictionary 选择的敏感性。\n- **关键技术**：核心技术是先用数据学习一个紧凑线性 residual predictor，再将其与名义 template model 组合为预测模型，并纳入 MPC 的 convex quadratic-program formulation 以执行约束处理和滚动优化。\n- **理论支撑**：摘要声称该方法具有 multi-step prediction error 的可证明界，但摘要未披露具体理论证明、假设条件、定理形式或推导过程。\n\n## 4. 实验验证\n\n- **主要基准/场景**：摘要未披露标准 benchmark 名称；仅说明实验覆盖 Gazebo 仿真与 Unitree Go1 硬件，并涉及 contact disturbances、multiple gait schedules 以及 grass、gravel、snow、ice 等越野地形。\n- **性能提升**：摘要给出的结论是：残差校正可提升 multi-step prediction 与 closed-loop performance，降低对 observable dictionaries 的敏感性，并支持板载 500 Hz 运行；摘要未披露具体提升数值或统计显著性细节。\n- **消融实验**：摘要提到与 Koopman/EDMD baselines 及不同 observable dictionaries（如 monomial、SE(3)-structured bases）进行了比较，但摘要未披露具体消融设计、评价指标、数值结果或各组成模块的独立贡献。\n\n## 5. 局限与启发\n\n- **当前局限**：从摘要可见，方法已在单一已指明平台与若干越野场景中验证，但摘要未披露训练数据规模、失败案例、长时稳定性、能耗代价或极端工况下的鲁棒性边界。\n- **未来方向**：后续值得补充更系统的公开 benchmark、跨平台实证、分布外地形测试，以及更完整的理论与误差界验证，以明确方法的适用范围与失效模式。\n- **可迁移性**：摘要显示该方法对 Unitree Go1 和若干非结构化地形具有可行性，但其向其他四足平台、不同执行器配置、不同速度范围或更复杂接触动力学场景的可迁移性，摘要未给出直接证据。\n\n## 6. 一句话总结\n\nRK-MPC 是一种将残差 Koopman 预测器嵌入凸 QP-MPC 的四足越野控制框架，摘要表明其兼顾实时性与鲁棒预测，但未披露详细数值和消融证据。\n",
+  "method_summary": "",
+  "score_report": "# 论文价值分析报告\n\n## 0. 论文快照\n\n- 标题: RK-MPC: Residual Koopman Model Predictive Control for Quadruped Locomotion in Offroad Environments\n- 作者: Sriram S. K. S. Narayanan, Umesh Vaidya\n- 年份: 2026\n- 发表信息与 Venue: arXiv (Cornell University)\n- 来源: /home/nie/Claude/papers/scholaraio/data/papers/Narayanan-2026-rk-mpc-residual-koopman-model-predictive-control-for-quadrup/paper.md\n- 对比集合状态: incomplete\n- 评分置信度: low\n\n## 1. 最终结论\n\n- 总分: 4.2/10.0\n- 等级: lower priority unless the user has a narrow reason to read it\n- 阅读优先级: 低\n- 奠基潜力判断: early promise, not yet established\n- 一句话判断: 除非你正好需要这条技术线，否则优先级不高。\n\n## 2. 分项评分\n\n| 维度 | 满分 | 得分 | 评分依据 | 关键证据 |\n|---|---:|---:|---|---|\n| 发表与 Venue 信号 | 1.5 | 0.6 | 当前主要仍是 arXiv / preprint 信号，发表强度需要保守看待。 | [Meta] venue=arXiv (Cornell University) | source=/home/nie/Claude/papers/scholaraio/data/papers/Narayanan-2026-rk-mpc-residual-koopman-model-predictive-control-for-quadrup/paper.md |\n| 作者与机构信号 | 1.0 | 0.6 | 有基本的协作团队形态，但缺少更强的历史 track record 证据。 | [Meta] authors=Sriram S. K. S. Narayanan, Umesh Vaidya |\n| 引用量与引用增速 | 2.0 | 0.3 | 缺少稳定的引用计数来源，只能按信息不足处理。 | 信息不足 |\n| 被引论文质量 | 1.5 | 0.3 | 没有可验证的 citing-paper 样本，无法给出更高的外部采纳质量分。 | 信息不足 |\n| 技术增量与新颖性 | 2.0 | 1.4 | 技术增量清楚可见，既有方法名义上的新部件，也有任务层面的重新组织。 | [Summary] \"# 论文总结：RK-MPC: Residual Koopman Model Predictive Control for Quadruped Locomotion in Offroad Environments ## 1.\" |\n| 业界贡献 / 开源 / 产品信号 | 1.0 | 0.5 | 有可信的生态或工程外溢信号，但尚不足以视为大规模外部采用。 | [Summary] \"实验验证 - **主要基准/场景**：摘要未披露标准 benchmark 名称；仅说明实验覆盖 Gazebo 仿真与 Unitree Go1 硬件，并涉及 contact disturbances、multiple gait schedules 以及 grass、gravel、snow、ice 等越野地形。\" |\n| 奠基潜力 / 方向性影响 | 1.0 | 0.5 | 论文有成为方向锚点的潜力，但证据更像 early promise，而不是已形成共识。 | [Composite] publication=0.6; traction=0.3; novelty=1.4; industry=0.5 |\n\n## 3. 相似论文对比集合（5 篇）\n\n| Peer | 类别 | 论文 | arXiv | 年份 | Venue | 引用量 | 选入理由 |\n|---|---|---|---|---:|---|---:|---|\n| P1 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P2 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P3 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P4 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n| P5 | 信息不足 | 信息不足 | 信息不足 | N/A | N/A | 0 | 当前没有足够的 peer 候选。 |\n\n## 4. 横向对比观察\n\n- 明显强于 peer 的点: 方法 framing 更完整，且 summary 能支持它不是单点 trick。\n- 与 peer 大体持平的点: 问题设定与实验组织和同主题 peer 大致处在同一工作带宽。\n- 明显落后于 peer 的点: peer 对比集合还不完整；若后续没有更强 follow-up 或生态采用，方向影响分会继续保守。\n\n## 5. 分数形成原因\n\n- 主要加分项: 当前主要仍是 arXiv / preprint 信号，发表强度需要保守看待。；技术增量清楚可见，既有方法名义上的新部件，也有任务层面的重新组织。；引用牵引目前仍偏保守\n- 主要扣分项: peer 对比仍不完整，需要保守评分；缺少更强 citing-paper 质量证据；业界/开源外溢信号有限\n- 哪些新增证据会改变评分: 拿到稳定的引用计数与随时间增长情况；看到明确的开源、benchmark 采用或部署证据\n\n## 6. 是否值得优先读\n\n- 结论: 建议带着明确问题去读，而不是无目标通读。\n- 适合优先阅读的人: 做人形/机器人控制、生成式动作建模、策略学习或相关 benchmark 复现的人。\n- 不适合优先阅读的人: 只想看已被社区完全证明的奠基论文，或者暂时不关心该任务线的人。\n\n## 7. **Sources**:\n\n- /home/nie/Claude/papers/scholaraio/data/papers/Narayanan-2026-rk-mpc-residual-koopman-model-predictive-control-for-quadrup/paper.md\n- https://openalex.org/works/W7152330593\n- 信息不足\n",
+  "readable_report": "# 论文先修罗盘报告模板\n\n## 0. 论文快照\n\n- 标题: RK-MPC: Residual Koopman Model Predictive Control for Quadruped Locomotion in Offroad Environments\n- 作者: Sriram S. K. S. Narayanan, Umesh Vaidya\n- 年份: 2026\n- 发表信息与venue: arXiv (Cornell University) | JCR 分区: N/A | CCF 等级: N/A\n- 来源: /home/nie/Claude/papers/scholaraio/data/papers/Narayanan-2026-rk-mpc-residual-koopman-model-predictive-control-for-quadrup/paper.md\n- **影响力**: citations待验证 | venue=arXiv (Cornell University)\n\n## 1. 必学先修知识（按顺序）\n\n| 顺序 | 知识点 | 为什么必学 | 论文使用位置 | 证据锚点 | 难度 | 最小学习目标 | 预计时间 |\n|---|---|---|---|---|---|---|---|\n| 1 | 模型预测控制与最优控制 | 涉及 MPC/优化器/残差控制的论文，必须先理解时域优化和约束处理。 | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"# 论文总结：RK-MPC: Residual Koopman Model Predictive Control for Quadruped Locomotion in Offroad Environments ## 1.\" | ⭐⭐⭐⭐ | 看懂滚动优化、代价函数和约束项。 | 2.5h |\n\n## 2. 桥接知识（可选但有帮助）\n\n| 知识点 | 角色 | 论文使用位置 | 证据 | 难度 | 建议动作 |\n|---|---|---|---|---|---|\n| Koopman 表示与系统辨识 | bridge | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"# 论文总结：RK-MPC: Residual Koopman Model Predictive Control for Quadruped Locomotion in Offroad Environments ## 1.\" | ⭐⭐⭐⭐ | review |\n| 全身动力学与接触约束 | bridge | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"# 论文总结：RK-MPC: Residual Koopman Model Predictive Control for Quadruped Locomotion in Offroad Environments ## 1.\" | ⭐⭐⭐ | review |\n| 轨迹跟踪与运动重定向 | bridge | [Summary/Abstract] 与论文主线直接相关 | [Summary] \"# 论文总结：RK-MPC: Residual Koopman Model Predictive Control for Quadruped Locomotion in Offroad Environments ## 1.\" | ⭐⭐⭐ | review |\n\n## 3. 个性化增量（基于 memory.md）\n\n- 已跳过（已掌握）:\n  - 暂无明确已掌握项，按默认先修序列处理。\n- 虽然熟悉但仍保留（论文特有增量）:\n  - 模型预测控制与最优控制：即使已有相近背景，也建议按本文的问题设定重新对齐。\n- 新出现的高优先级短板:\n  - 模型预测控制与最优控制\n\n## 4. 推荐学习资源\n\n### 模型预测控制与最优控制\n\n- 原论文/综述:\n  - RK-MPC: Residual Koopman Model Predictive Control for Quadruped Locomotion in Offroad Environments - /home/nie/Claude/papers/scholaraio/data/papers/Narayanan-2026-rk-mpc-residual-koopman-model-predictive-control-for-quadrup/paper.md\n  - 同主题 peer - https://openalex.org/works/W7152330593\n- 视频（优先高质量，lang=zh 时可含中文社区）:\n  - 信息不足 - https://openalex.org/works/W7152330593\n- 说明:\n  - 先用目标论文建立术语，再用 peer 校准它在相邻方法中的位置。\n\n## 5. 建议学习顺序\n\n1. 阶段 A（基础）: 模型预测控制与最优控制\n2. 阶段 B（机制桥接）: Koopman 表示与系统辨识、全身动力学与接触约束\n3. 阶段 C（论文特有）: 模型预测控制与最优控制\n\n## 6. 30 分钟快速起步\n\n关键实验结论: # 论文总结：RK-MPC: Residual Koopman Model Predictive Control for Quadruped Locomotion in Offroad Environments ## 1. 核心创新点 RK-MPC 将 Koopman 框架下的数据驱动残差建模与 MPC 结合：在名义 template model 之上，于 lifted coordinates 中学习紧凑线性 residual predictor，用于系统性修正四足机器人越野行走中的接触变化与地形扰动导致的模型失配，同时保持凸二次规划 MPC 的实时可解性。\n\n## 7. **Sources**:\n\n- /home/nie/Claude/papers/scholaraio/data/papers/Narayanan-2026-rk-mpc-residual-koopman-model-predictive-control-for-quadrup/paper.md\n- https://openalex.org/works/W7152330593\n- 信息不足\n",
+  "sensemaking": null,
+  "rating": {
+    "scheme": "paper_compass_score",
+    "publication_signal": 0.6,
+    "author_signal": 0.6,
+    "citation_traction": 0.3,
+    "citation_quality": 0.3,
+    "novelty": 1.4,
+    "industry_signal": 0.5,
+    "field_shaping": 0.5,
+    "overall_score": 4.2,
+    "rating_band": "lower priority unless the user has a narrow reason to read it",
+    "priority": "低",
+    "field_shaping_statement": "early promise, not yet established",
+    "one_line_verdict": "除非你正好需要这条技术线，否则优先级不高。",
+    "notes": "除非你正好需要这条技术线，否则优先级不高。"
+  },
+  "parsed_source": {
+    "files": [
+      {
+        "name": "meta.json",
+        "kind": "structured_metadata",
+        "exists": true
+      },
+      {
+        "name": "paper.md",
+        "kind": "parsed_markdown",
+        "exists": true
+      }
+    ],
+    "recognized_fields": {
+      "title": "RK-MPC: Residual Koopman Model Predictive Control for Quadruped Locomotion in Offroad Environments",
+      "authors": [
+        "Sriram S. K. S. Narayanan",
+        "Umesh Vaidya"
+      ],
+      "year": 2026,
+      "paper_type": "todo-placeholder",
+      "abstract": "This paper presents Residual Koopman MPC (RK-MPC), a Koopman-based, data-driven model predictive control framework for quadruped locomotion that improves prediction fidelity while preserving real-time tractability. RK-MPC augments a nominal template model with a compact linear residual predictor learned from data in lifted coordinates, enabling systematic correction of model mismatch induced by contact variability and terrain disturbances with provable bounds on multi-step prediction error. The learned residual model is embedded within a convex quadratic-program MPC formulation, yielding a receding-horizon controller that runs onboard at 500 Hz and retains the structure and constraint-handling advantages of optimization-based control. We evaluate RK-MPC in both Gazebo simulation and Unitree Go1 hardware experiments, demonstrating reliable blind locomotion across contact disturbances, multiple gait schedules, and challenging off-road terrains including grass, gravel, snow, and ice. We further compare against Koopman/EDMD baselines using alternative observable dictionaries, including monomial and $SE(3)$-structured bases, and show that the residual correction improves multi-step prediction and closed-loop performance while reducing sensitivity to the choice of observables. Overall, RK-MPC provides a practical, hardware-validated pathway for data-driven predictive control of quadrupeds in unstructured environments. See https://sriram-2502.github.io/rk-mpc for implementation videos."
+    },
+    "markdown_stats": {
+      "lines": 17,
+      "words": 263,
+      "headings": 4
+    },
+    "assets": {
+      "images": 0,
+      "has_layout": false,
+      "content_lists": []
+    },
+    "generator_input": {
+      "file": "paper.md",
+      "mode": "parsed_markdown",
+      "note": "Generated materials use the parsed paper.md content as source input."
+    }
+  },
+  "route_id": "1aaecd9c-f09f-5604-a353-61b634b6df08",
+  "paper_ref": "1aaecd9c-f09f-5604-a353-61b634b6df08",
+  "read_only": true,
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
+}

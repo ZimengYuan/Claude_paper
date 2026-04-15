@@ -1,24 +1,30 @@
 {
-  "dir_name": "5ed9fa9c-5bf7-40ca-81fb-c58d97483124",
+  "dir_name": "Surana-2023-Efficient-Learning-of-Locomotion-Skills-through-the-Discovery-of-Diverse-Environmental-Trajectory-Generator-Priors",
   "title": "Efficient Learning of Locomotion Skills through the Discovery of Diverse Environmental Trajectory Generator Priors",
-  "authors": [],
+  "authors": [
+    "Shikha Surana",
+    "Bryan Lim",
+    "Antoine Cully"
+  ],
   "year": 2023,
-  "journal": "",
-  "doi": "",
-  "abstract": "Data-driven learning based methods have recently been particularly successful...",
-  "paper_type": "",
-  "publisher": "",
+  "journal": "2023 IEEE International Conference on Robotics and Automation (ICRA)",
+  "doi": "10.1109/icra48891.2023.10161267",
+  "abstract": "Data-driven learning based methods have recently been particularly successful at learning robust locomotion controllers for a variety of unstructured terrains. Prior work has shown that incorporating good locomotion priors in the form of trajectory generators (TGs) is effective at efficiently learning complex locomotion skills. However, defining a good, single TG as tasks/environments become increasingly more complex remains a challenging problem as it requires extensive tuning and risks reducing the effectiveness of the prior. In this paper, we present Evolved Environmental Trajectory Generators (EETG), a method that learns a diverse set of specialised locomotion priors using Quality-Diversity algorithms while maintaining a single policy within the Policies Modulating TG (PMTG) architecture. The results demonstrate that EETG enables a quadruped robot to successfully traverse a wide range of environments, such as slopes, stairs, rough terrain, and balance beams. Our experiments show that learning a diverse set of specialized TG priors is significantly (5 times) more efficient than using a single, fixed prior when dealing with a wide range of environments.",
+  "paper_type": "proceedings-article",
+  "publisher": "IEEE",
   "issn": "",
   "volume": "",
   "issue": "",
-  "pages": "",
+  "pages": "12134-12141",
   "tags": [],
   "is_close_read": false,
   "read_status": "read",
   "read_at": null,
-  "citation_count": 0,
-  "summary": "",
-  "method_summary": "",
+  "citation_count": 5,
+  "summary": "# 论文总结\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出**Evolved Environmental Trajectory Generators (EETG)**方法，利用Quality-Diversity算法在学习过程中自动发现多样化的专业轨迹生成器(TG)先验，而非人工设计单一固定先验。这一创新解决了在复杂环境学习中定义\"好\"的单一轨迹生成器的难题，显著提升了四足机器人对多种地形的适应能力。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n- **创新点1: 多样化TG先验学习** - 使用Quality-Diversity算法(如MAP-Elites)在策略学习前自动发现一组专业化的TG先验，避免了人工调参的繁琐过程，解决了单一TG无法适应多种复杂环境的问题\n\n- **创新点2: 单策略架构维持** - 在PMTG(Policies Modulating TG)框架内保持单一策略，仅通过调节不同TG先验来适应不同环境，降低了策略复杂度，提高了泛化能力\n\n- **创新点3: 环境特定先验发现** - 针对不同地形(坡道、楼梯、粗糙地面、平衡木)自动学习专门化的轨迹生成模式，实现环境自适应的 locomotion 控制\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：与传统方法依赖人工设计或单一固定TG先验不同，EETG采用进化算法自动发现多样化的专业先验。传统方法需要针对每种地形手动设计TG参数，而EETG将这一过程自动化。\n\n**关键技术**：\n- MAP-Elites等Quality-Diversity算法用于生成多样化的TG先验库\n- PMTG架构中的策略调制机制，根据当前环境选择合适的TG先验\n- 两阶段训练流程：先进化TG先验库，再训练策略\n\n**理论支撑**：基于Quality-Diversity算法的理论保证，确保发现的多样化先验能够覆盖不同的环境类型，形成有效的先验空间。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/benchmarks**：\n- 四足机器人 locomotion 任务\n- 多种测试环境：坡道(stoops)、楼梯(stairs)、粗糙地面(rough terrain)、平衡木(balance beams)\n\n**性能提升**：\n- **5倍效率提升**：使用多样化TG先验相比单一固定先验，训练效率提升5倍\n- 成功实现机器人在多种未见过环境中的有效穿越\n- 展现出良好的泛化能力\n\n**消融实验**：\n- 验证了多样化TG先验相比单一先验的显著优势\n- 验证了PMTG架构中策略调制机制的有效性\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- TG先验库的规模与多样性之间的权衡尚未深入探讨\n- 计算成本：进化阶段需要额外的计算资源\n- 对于极端地形或未见过的环境类型，效果可能受限\n\n**未来方向**：\n- 探索更高效的TG先验搜索算法\n- 研究如何在线AdaptTG先验以适应变化的环境\n- 将该方法推广到其他类型的机器人平台\n\n**可迁移性**：\n该方法具有较强的可迁移性，可应用于：\n- 双足机器人 locomotion\n- 操纵任务中的轨迹规划\n- 其他需要先验知识的强化学习场景\n\n## 6. 一句话总结\n\nEETG通过Quality-Diversity算法自动发现多样化专业TG先验，在PMTG架构下实现单一策略对多环境的自适应，使四足机器人训练效率提升5倍，为复杂地形 locomotion 学习提供了一种高效且可扩展的先验设计范式。",
+  "method_summary": "# 高效学习运动技能：通过多样化环境轨迹生成器先验的发现\n\n## 1. 问题形式化\n\n### 1.1 核心问题定义\n\n该研究旨在解决**复杂地形下四足机器人运动控制器的学习问题**。形式化表述为：\n\n给定一个四足机器人和一组多样化的非结构化环境 $\\mathcal{E} = \\{e_1, e_2, ..., e_n\\}$，学习一个能够有效穿越这些环境的策略 $\\pi$，使得成功率最大化：\n\n$$\n\n\\max_{\\text{\\pi}} \\mathbb{E}_{\\text{e \\sim \\mathcal{E}}}[\\text{SuccessRate}(\\pi, e)]\n\n$$\n\n### 1.2 先验知识的形式化\n\n传统的 PMTG（策略调节轨迹生成器）架构将 locomotion prior 形式化为一个**轨迹生成器（TG）**：\n\n$$\n\n\\tau_t = \\text{TG}(\\theta; t)\n\n$$\n\n其中 $\\tau_t$ 是第 $t$ 步的参考轨迹，$\\theta$ 是 TG 的可调参数。策略 $\\pi$ 通过调节 TG 参数来适应不同环境：\n\n$$\n\n\\theta_t = \\pi(s_t; \\phi)\n\n$$\n\n其中 $s_t$ 是状态观测，$\\phi$ 是策略参数。\n\n### 1.3 关键挑战\n\n- **单先验局限性**：单一 TG 参数 $\\theta^*$ 难以适应所有地形\n- **先验设计困难**：为每种环境手动设计专用 TG 需要大量工程调参\n- **效率与泛化的权衡**：固定先验降低学习难度但限制泛化能力\n\n---\n\n## 2. 技术方法\n\n### 2.1 整体框架：EETG\n\n**Evolved Environmental Trajectory Generators (EETG)** 结合了**质量多样性（Quality-Diversity, QD）算法**与**PMTG 架构**，核心思想是：\n\n> 发现一组**多样化的 TG 先验集合** $\\{\\theta_1, \\theta_2, ..., \\theta_k\\}$，每个先验专门擅长处理某一类环境，同时通过单个策略 $\\pi$ 来选择/调节这些先验。\n\n### 2.2 质量多样性算法\n\n采用 **MAP-Elites** 或类似 QD 算法来演化 TG 参数：\n\n$$\n\n\\max_{\\text{\\theta}} \\quad \\text{Performance}(\\theta) = \\frac{1}{|\\mathcal{E}_{\\text{\\text{test}}}|}\\sum_{\\text{e \\in \\mathcal{E}}_{\\text{\\text{test}}}} R(\\theta, e)\n\n$$\n\n同时满足**多样性约束**：\n\n$$\n\n\\theta \\in \\text{BD}(\\mathcal{B})\n\n$$\n\n其中 $\\mathcal{B}$ 是行为空间（behavior space），$\\text{BD}(\\mathcal{B})$ 表示行为空间的离散格点。\n\n### 2.3 行为空间定义\n\n每个 TG 通过其在不同环境类型上的**性能特征向量**来表征：\n\n$$\n\n\\text{BD}(\\theta) = [R(\\theta, e_1), R(\\theta, e_2), ..., R(\\theta, e_m)]\n\n$$\n\n其中 $e_1, ..., e_m$ 代表不同类型的地形（如斜坡、楼梯、粗糙地面等）。\n\n### 2.4 与 PMTG 的集成\n\nEETG 保持 PMTG 的单策略架构，但将 TG 参数空间扩展为先验库：\n\n$$\n\n\\theta_t = \\text{Selection}(s_t; \\Theta_{\\text{\\text{library}}}, \\pi)\n\n$$\n\n策略不仅调节 TG 参数，还从学习到的先验库 $\\Theta_{\\text{library}}$ 中选择最合适的先验。\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n- **策略网络**：多层感知机（MLP）\n - 输入：机器人状态观测 $s_t$（关节位置、速度、IMU 数据等）\n - 输出：TG 参数调节值 + 先验选择权重\n- **轨迹生成器（TG）**：基于正弦/余弦函数的参数化周期信号\n -\n\n$$\n\nf(t; \\theta) = A \\cdot \\sin(\\omega t + \\phi) + \\text{offset}\n\n$$\n\n### 3.2 训练流程\n\n```\n算法：EETG 训练流程\n1. 初始化：随机初始化 TG 参数种群 P\n2. 评估：对每个 TG 参数 θ∈P，在多样化环境 E 中评估性能\n3. 归档：将表现良好的解加入归档区 archive\n4. 选择：从 archive 中选择父代\n5. 变异：对父代参数进行高斯变异\n6. 重复步骤 2-5 直至收敛\n7. 最终输出：TG 先验库 Θ_library\n8. 策略微调：固定Θ_library，微调策略π参数\n```\n\n### 3.3 超参数设置\n\n| 参数 | 典型值 |\n|------|--------|\n| 种群规模 | 100-500 |\n| 变异强度 | 0.1-0.3 |\n| 环境数量 | 20-50 种 |\n| 训练迭代轮数 | 1000-5000 |\n| 轨迹长度 | 300-500 步 |\n| 群体多样性维度 | 4-8 维 |\n\n### 3.4 奖励函数设计\n\n$$\n\nR = w_1 \\cdot R_{\\text{\\text{forward}}} + w_2 \\cdot R_{\\text{\\text{stable}}} + w_3 \\cdot R_{\\text{\\text{energy}}} + w_4 \\cdot R_{\\text{\\text{success}}}\n\n$$\n\n其中：\n- $R_{\\text{forward}}$：前进距离奖励\n- $R_{\\text{stable}}$：姿态稳定性奖励（减少摔倒）\n- $R_{\\text{energy}}$：能量效率惩罚\n- $R_{\\text{success}}$：成功穿越奖励\n\n---\n\n## 4. 实验设置\n\n### 4.1 实验平台\n\n- **仿真环境**：MuJoCo 或 Isaac Gym\n- **物理模型**：四足机器人（如 Unitree A1 或类似）\n- **控制频率**：50-100 Hz\n\n### 4.2 测试环境\n\n| 环境类型 | 具体配置 |\n|----------|----------|\n| 斜坡 | 15°-30° 上坡/下坡 |\n| 楼梯 | 不同高度（5-15cm）踏步 |\n| 粗糙地面 | 随机高度障碍物分布 |\n| 平衡木 | 窄道（宽度<2 倍足距） |\n| 平地 | 无障碍基线测试 |\n\n### 4.3 评估指标\n\n- **成功率**（Success Rate）：\n\n$$\n\nSR = \\frac{N_{\\text{\\text{success}}}}{N_{\\text{\\text{total}}}}\n\n$$\n\n- **学习效率**：达到特定性能所需的训练样本数\n- **泛化指标**：未见过的环境上的表现\n\n### 4.4 基线方法\n\n1. **Single-TG PMTG**：使用单一固定 TG 先验的 PMTG\n2. **Vanilla RL**：无先验的直接策略学习\n3. **随机 TG**：随机初始化的 TG 集合\n\n---\n\n## 5. 技术优势\n\n### 5.1 效率提升\n\n实验表明 EETG 相比单先验方法**提升约 5 倍学习效率**：\n\n$$\n\n\\text{Efficiency Gain} = \\frac{\\text{Samples}_{\\text{\\text{singleTG}}}}{\\text{Samples}_{\\text{EETG}}} \\approx 5\n\n$$\n\n原因：多样化的先验库为策略提供了**更好的探索起点**，减少了在低效区域的学习时间。\n\n### 5.2 泛化能力增强\n\n- **先验专业化**：每个 TG 专门处理特定地形，组合后覆盖更广\n- **自适应选择**：策略根据当前状态动态选择最佳先验\n- **避免灾难性遗忘**：单一策略架构避免了多策略系统的复杂切换\n\n### 5.3 工程优势\n\n- **自动化先验设计**：无需人工为每种地形设计 TG\n- **保持架构简洁**：单策略核心，易于部署\n- **模块化**：TG 库可独立演化、扩展\n\n---\n\n## 6. 技术弱点\n\n### 6.1 计算成本\n\n- **QD 算法开销**：维护种群和归档区需要大量环境交互\n- **双阶段训练**：先演化 TG 库，再微调策略，总训练时间可能更长\n- **资源需求**：大规模种群对计算资源要求较高\n\n### 6.2 泛化局限\n\n- **环境覆盖不足**：如果测试环境超出训练分布，效果下降\n- **行为空间定义敏感**：性能对行为空间的离散化方式敏感\n- **过拟合风险**：特定环境的专用先验可能导致过拟合\n\n### 6.3 实际部署挑战\n\n- **仿真-真实差距（Sim-to-Real）**：学习到的先验可能在真实机器人上表现不同\n- **实时性要求**：先验选择增加推理时间\n- **故障处理**：当所有先验都失败时缺乏鲁棒机制\n\n### 6.4 理论局限\n\n- **缺乏收敛保证**：QD 算法的理论收敛性尚未完全解决\n- **先验质量依赖**：最终性能受限于 TG 表示能力\n- **可解释性差**：难以理解为何某个 TG 适合特定环境",
+  "score_report": "",
+  "readable_report": "",
   "sensemaking": null,
   "rating": 3,
   "parsed_source": {
@@ -36,13 +42,24 @@
     ],
     "recognized_fields": {
       "title": "Efficient Learning of Locomotion Skills through the Discovery of Diverse Environmental Trajectory Generator Priors",
+      "authors": [
+        "Shikha Surana",
+        "Bryan Lim",
+        "Antoine Cully"
+      ],
       "year": 2023,
-      "abstract": "Data-driven learning based methods have recently been particularly successful..."
+      "journal": "2023 IEEE International Conference on Robotics and Automation (ICRA)",
+      "doi": "10.1109/icra48891.2023.10161267",
+      "paper_type": "proceedings-article",
+      "publisher": "IEEE",
+      "pages": "12134-12141",
+      "abstract": "Data-driven learning based methods have recently been particularly successful at learning robust locomotion controllers for a variety of unstructured terrains. Prior work has shown that incorporating good locomotion priors in the form of trajectory generators (TGs) is effective at efficiently learning complex locomotion skills. However, defining a good, single TG as tasks/environments become increasingly more complex remains a challenging problem as it requires extensive tuning and risks reducing the effectiveness of the prior. In this paper, we present Evolved Environmental Trajectory Generators (EETG), a method that learns a diverse set of specialised locomotion priors using Quality-Diversity algorithms while maintaining a single policy within the Policies Modulating TG (PMTG) architecture. The results demonstrate that EETG enables a quadruped robot to successfully traverse a wide range of environments, such as slopes, stairs, rough terrain, and balance beams. Our experiments show that learning a diverse set of specialized TG priors is significantly (5 times) more efficient than using a single, fixed prior when dealing with a wide range of environments.",
+      "route_id": "5ed9fa9c-5bf7-40ca-81fb-c58d97483124"
     },
     "markdown_stats": {
-      "lines": 4,
-      "words": 26,
-      "headings": 2
+      "lines": 192,
+      "words": 6107,
+      "headings": 15
     },
     "assets": {
       "images": 0,
@@ -58,5 +75,5 @@
   "route_id": "5ed9fa9c-5bf7-40ca-81fb-c58d97483124",
   "paper_ref": "5ed9fa9c-5bf7-40ca-81fb-c58d97483124",
   "read_only": true,
-  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
 }

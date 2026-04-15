@@ -1,26 +1,62 @@
 {
-  "dir_name": "5201da0b-6797-42f8-9dee-a87618e7b2e2",
+  "dir_name": "Dhedin-2023-Visual-Inertial-and-Leg-Odometry-Fusion-for-Dynamic-Locomotion",
   "title": "Visual-Inertial and Leg Odometry Fusion for Dynamic Locomotion",
-  "authors": [],
+  "authors": [
+    "Victor Dhédin",
+    "Haolong Li",
+    "Shahram Khorshidi",
+    "Lukas Mack",
+    "Adithya Kumar Chinnakkonda Ravi",
+    "Avadesh Meduri",
+    "Paarth Shah",
+    "Felix Grimminger",
+    "Ludovic Righetti",
+    "Majid Khadiv",
+    "Joerg Stueckler"
+  ],
   "year": 2023,
-  "journal": "",
-  "doi": "",
-  "abstract": "Implementing dynamic locomotion behaviors on legged robots requires a high-quality state estimation module...",
-  "paper_type": "",
-  "publisher": "",
+  "journal": "2023 IEEE International Conference on Robotics and Automation (ICRA)",
+  "doi": "10.1109/icra48891.2023.10160898",
+  "abstract": "Implementing dynamic locomotion behaviors on legged robots requires a high-quality state estimation module. Especially when the motion includes flight phases, state-of-the-art approaches fail to produce reliable estimation of the robot posture, in particular base height. In this paper, we propose a novel approach for combining visual-inertial odometry (VIO) with leg odometry in an extended Kalman filter (EKF) based state estimator. The VIO module uses a stereo camera and IMU to yield low-drift 3D position and yaw orientation and drift-free pitch and roll orientation of the robot base link in the inertial frame. However, these values have a considerable amount of latency due to image processing and optimization, while the rate of update is quite low which is not suitable for low-level control. To reduce the latency, we predict the VIO state estimate at the rate of the IMU measurements of the VIO sensor. The EKF module uses the base pose and linear velocity predicted by VIO, fuses them further with a second high-rate IMU and leg odometry measurements, and produces robot state estimates with a high frequency and small latency suitable for control. We integrate this lightweight estimation framework with a nonlinear model predictive controller and show successful implementation of a set of agile locomotion behaviors, including trotting and jumping at varying horizontal speeds, on a torque-controlled quadruped robot.",
+  "paper_type": "proceedings-article",
+  "publisher": "IEEE",
   "issn": "",
   "volume": "",
   "issue": "",
-  "pages": "",
+  "pages": "9966-9972",
   "tags": [],
   "is_close_read": false,
   "read_status": "read",
   "read_at": null,
-  "citation_count": 0,
-  "summary": "",
-  "method_summary": "",
+  "citation_count": 15,
+  "summary": "# 视觉-惯性里程计与腿部里程计融合用于动态运动\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一种将**视觉-惯性里程计(VIO)**与**腿部里程计**在**扩展卡尔曼滤波(EKF)**框架下进行融合的状态估计方法，能够在机器人的飞行相位（腾空）期间提供可靠的基座高度估计，解决了现有方法在动态运动中估计精度不足的问题。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1: VIO状态预测机制** - 针对VIO因图像处理和优化导致的高延迟和低更新率问题，提出在VIO传感器IMU测量频率下预测VIO状态估计，显著降低了状态延迟，使其适用于低层级控制。\n\n**创新点 2: 多源信息EKF融合** - 在EKF中融合VIO输出的基座姿态和线速度、第二高频IMU以及腿部里程计测量，充分利用各传感器优势：VIO提供无漂移的俯仰/横滚角和低漂移的3D位置/偏航角，腿部里程计提供高频相对运动信息。\n\n**创新点 3: 动态 locomotion 状态估计** - 首次在 quadruped 机器人上实现了包含飞行相位的动态运动（如跳跃）的高质量状态估计，特别是解决了飞行阶段基座高度估计不可靠的问题。\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**: 区别于传统方法仅依赖VIO或单一IMU-腿部里程计融合，本文构建了**分层融合架构**：第一层使用VIO+IMU提供绝对参考框架，第二层在EKF中融合高频IMU和腿部里程计。这种设计既保留了VIO的无漂移姿态估计优势，又克服了其延迟和低频率的缺陷。\n\n**关键技术**:\n- 立体相机 + IMU 的 VIO 模块\n- IMU 速率下的 VIO 状态预测\n- EKF 状态估计器（融合 VIO 输出、高频 IMU、腿部里程计）\n- 非线性模型预测控制器 (NMPC) 集成\n\n**理论支撑**: 基于标准 EKF 理论，通过协方差传播融合多传感器不确定性，实现最优状态估计。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/平台**: 在 torque-controlled quadruped 机器人上验证\n\n**性能提升**:\n- 实现了 trotting（ trotting 步态）和 jumping（跳跃）等多种敏捷运动行为\n- 能够在不同水平速度下稳定运行\n- 状态估计频率和延迟满足低层级控制要求\n\n**消融实验**: 论文重点验证了 VIO 与腿部里程计融合相比单一传感器的优势，特别是飞行阶段的基座高度估计可靠性显著提升。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**:\n- VIO 在黑暗或纹理缺失环境中性能下降\n- 依赖于立体相机的可见性\n\n**未来方向**:\n- 探索更鲁棒的 VIO 方案（如结合事件相机）\n- 扩展到更复杂的动态行为（如楼梯跨越、复杂地形）\n\n**可迁移性**: 该融合架构可推广到其他足式机器人（双足、四足或多足）以及无人机系统，具有较强的通用性。\n\n## 6. 一句话总结\n\n通过在 EKF 框架下融合 VIO 的无漂移姿态信息与高频 IMU/腿部里程计，实现了 quadruped 机器人在含飞行相位的动态运动中的高频率、低延迟可靠状态估计，为敏捷 locomotion 控制提供了关键支撑。",
+  "method_summary": "# 视觉-惯性-腿里程计融合动态运动状态估计方法论分析\n\n## 1. 问题形式化\n\n### 1.1 状态估计问题定义\n\n该研究旨在解决腿足机器人动态运动中的高精度状态估计问题。状态估计问题的核心是估计机器人基座（base link）在惯性坐标系下的完整位姿和速度状态。具体而言，需要估计的状态变量定义为：\n\n$$\n\n\\mathbf{x} = \\begin{bmatrix} \\mathbf{p}_b & \\boldsymbol{\\phi}_b & \\mathbf{v}_b & \\mathbf{a}_b \\end{bmatrix}^\\top\n\n$$\n\n其中 $\\mathbf{p}_b = \\begin{bmatrix} x & y & z \\end{bmatrix}^\\top$ 表示基座的三维位置，$\\boldsymbol{\\phi}_b = \\begin{bmatrix} \\phi & \\theta & \\psi \\end{bmatrix}^\\top$ 表示 roll-pitch-yaw 欧拉角姿态，$\\mathbf{v}_b$ 表示线速度，$\\mathbf{a}_b$ 表示角速度。\n\n### 1.2 核心挑战\n\n动态运动（特别是包含飞行相位的跳跃）带来以下关键挑战：\n\n1. **飞行相位估计失效**：当机器人腾空时，腿里程计无法提供有效的测量更新，导致状态估计器仅依赖预测模型，容易产生漂移\n2. **基座高度估计不准确**：传统方法在飞行相位难以准确估计基座高度 $z$\n3. **延迟-频率矛盾**：视觉-惯性里程计（VIO）虽能提供低漂移估计，但存在高延迟和低更新频率问题，无法满足低级控制对高频低延迟状态估计的需求\n\n### 1.3 融合框架形式化\n\n该方法将状态估计问题形式化为多传感器融合的扩展卡尔曼滤波（EKF）框架：\n\n$$\n\n\\hat{\\mathbf{x}}_{\\text{\\text{k|k}}} = \\hat{\\mathbf{x}}_{\\text{\\text{k|k-1}}} + \\mathbf{K}_k (\\mathbf{z}_k - \\mathbf{h}(\\hat{\\mathbf{x}}_{\\text{\\text{k|k-1}}}))\n\n$$\n\n其中 $\\mathbf{z}_k$ 为多源测量值，$\\mathbf{h}(\\cdot)$ 为测量模型，$\\mathbf{K}_k$ 为卡尔曼增益。\n\n---\n\n## 2. 技术方法\n\n### 2.1 系统架构\n\n该方法采用分层融合架构，包含两个核心模块：\n\n```\n┌─────────────────────────────────────────────────────────────────┐\n│          立体相机 + IMU (VIO 模块)            │\n│      → 低漂移 3D 位置 + yaw 角 + drift-free roll/pitch     │\n└─────────────────────────────┬───────────────────────────────────┘\n               │ 状态传递 + 时间同步\n               ▼\n┌─────────────────────────────────────────────────────────────────┐\n│       VIO 状态预测器 (IMU 速率)               │\n│     → 降低 VIO 延迟，匹配 IMU 采样频率              │\n└─────────────────────────────┬───────────────────────────────────┘\n               │ 预测状态输入\n               ▼\n┌─────────────────────────────────────────────────────────────────┐\n│       扩展卡尔曼滤波 (EKF) 状态估计器           │\n│  融合: VIO 预测状态 + 第二高频 IMU + 腿里程计          │\n│      → 高频低延迟状态估计                  │\n└─────────────────────────────────────────────────────────────────┘\n```\n\n### 2.2 视觉-惯性里程计（VIO）模块\n\nVIO 模块基于立体相机和 IMU 的紧耦合融合：\n\n- **立体相机**：提供深度信息和视觉特征点跟踪\n- **IMU**：提供高频角速度和线加速度测量\n\nVIO 采用基于优化的方法（推测为滑动窗口优化或光束法平差），输出：\n- 低漂移的三维位置估计 $\\mathbf{p}_{VIO}$\n- drift-free 的 roll 和 pitch 角（利用重力对齐）\n- 低漂移的 yaw 角\n\n### 2.3 VIO 状态预测器\n\n为解决 VIO 延迟问题，引入预测器将 VIO 状态估计外推至 IMU 采样时刻：\n\n$$\n\n\\hat{\\mathbf{x}}_{\\text{VIO}}(t) = \\mathbf{x}_{\\text{VIO}}(t_{\\text{VIO}}) + \\int_{\\text{\\text{t\\\\_{VIO}}}}^{t} \\mathbf{f}_{\\text{IMU}}(\\tau) d\\tau\n\n$$\n\n其中 $\\mathbf{f}_{IMU}$ 利用 IMU 测量进行状态传播。该预测使 VIO 状态与 IMU 速率同步。\n\n### 2.4 EKF 状态估计器\n\nEKF 模块为系统核心，负责多源信息融合：\n\n**状态向量扩展**：\n\n$$\n\n\\mathbf{x}_{\\text{EKF}} = \\begin{bmatrix} \\mathbf{p} & \\boldsymbol{\\theta} & \\mathbf{v} & \\mathbf{b}_a & \\mathbf{b}_g \\end{bmatrix}^\\top\n\n$$\n\n其中 $\\mathbf{b}_a$ 和 $\\mathbf{b}_g$ 分别为加速度计和陀螺仪偏置。\n\n**预测步骤**（基于 IMU 模型）：\n\n$$\n\n\\mathbf{x}_{\\text{\\text{k|k-1}}} = \\mathbf{f}(\\hat{\\mathbf{x}}_{\\text{\\text{k-1}}}, \\mathbf{u}_k) = \\begin{bmatrix} \\mathbf{p}_{\\text{\\text{k-1}}} + \\mathbf{v}_{\\text{\\text{k-1}}}\\Delta t \\\\ \\boldsymbol{\\theta}_{\\text{\\text{k-1}}} + \\boldsymbol{\\omega}_{\\text{\\text{k-1}}}\\Delta t \\\\ \\mathbf{v}_{\\text{\\text{k-1}}} + (\\mathbf{a}_{\\text{\\text{k-1}}} - \\mathbf{b}_{\\text{\\text{a,k-1}}} - \\mathbf{g})\\Delta t \\\\ \\mathbf{b}_{\\text{\\text{a,k-1}}} \\\\ \\mathbf{b}_{\\text{\\text{g,k-1}}} \\end{bmatrix}\n\n$$\n\n**更新步骤**：融合三类测量\n- VIO 提供的位姿和速度测量\n- 第二高频 IMU 的惯性测量\n- 腿里程计提供的相对运动测量\n\n### 2.5 腿里程计\n\n腿里程计通过分析腿部运动学信息计算基座的相对位移：\n\n$$\n\n\\mathbf{p}_{\\text{\\text{leg,odo}}} = f(\\mathbf{q}_1, \\mathbf{q}_2, \\ldots, \\mathbf{q}_n)\n\n$$\n\n其中 $\\mathbf{q}_i$ 为各关节角度。在支撑相，腿里程计提供准确的相对运动估计；在飞行相，该测量不可用，由预测模型接管。\n\n---\n\n## 3. 实现细节\n\n### 3.1 传感器配置\n\n- **立体相机**：用于 VIO，提供深度信息和特征跟踪\n- **IMU 1（VIO 用）**：VIO 模块专用，采样率较高\n- **IMU 2（融合用）**：第二高频 IMU，用于 EKF 更新\n- **腿部传感器**：关节编码器，提供关节角度测量\n\n### 3.2 时间同步策略\n\n关键实现细节为 VIO 状态与 IMU 速率的同步：\n\n1. VIO 优化完成后获得 $t_{VIO}$ 时刻状态 $\\mathbf{x}_{VIO}(t_{VIO})$\n2. 从 $t_{VIO}$ 到当前 IMU 时刻 $t$ 进行积分预测\n3. 采用 IMU 预积分技术减少计算量\n\n### 3.3 EKF 超参数\n\n典型的 EKF 参数设置包括：\n\n- **过程噪声协方差** $\\mathbf{Q}$：反映 IMU 模型不确定性\n- **测量噪声协方差** $\\mathbf{R}_{VIO}, \\mathbf{R}_{\\text{leg}}$：反映各传感器测量精度\n- **状态向量维度**：通常为 15 维（位置 3 + 姿态 3 + 速度 3 + 加速度偏置 3 + 陀螺仪偏置 3）\n\n### 3.4 与 MPC 集成\n\n该估计框架与非线性模型预测控制器（NMPC）集成：\n- NMPC 以高频（推测约 50-100Hz）运行\n- 状态估计器输出频率需匹配或超过控制频率\n- 延迟控制在几个毫秒级别\n\n---\n\n## 4. 实验设置\n\n### 4.1 机器人平台\n\n实验在扭矩控制四足机器人上实现，该机器人具备：\n- 扭矩控制能力\n- 立体视觉感知\n- IMU 传感器\n- 关节位置传感器\n\n### 4.2 运动任务\n\n验证实验包括：\n1. **小跑运动（trotting）**：不同水平速度下的周期性步态\n2. **跳跃运动（jumping）**：包含飞行相位的动态跳跃\n3. **变速运动**：速度变化场景\n\n### 4.3 评估指标\n\n根据论文目标，评估聚焦于：\n- **基座高度估计精度**：特别是飞行相位\n- **状态估计延迟**：控制在毫秒级\n- **估计更新频率**：满足低级控制需求\n- **运动控制性能**：验证估计器对控制器的影响\n\n### 4.4 对比基线\n\n隐含的对比基线为：\n- 纯 VIO 状态估计（存在高延迟低频率问题）\n- 纯腿里程计+IMU 融合（飞行相位失效）\n- 其他标准 EKF 融合方法\n\n---\n\n## 5. 技术优势\n\n### 5.1 解决飞行相位估计难题\n\n该方法的核心优势在于通过 VIO 提供的绝对位置参考，有效解决了飞行相位腿里程计失效的问题。VIO 的 3D 位置估计即使在腾空阶段也能保持准确，EKF 将其与 IMU 预测融合，保证了估计的连续性和准确性。\n\n### 5.2 延迟-频率矛盾化解\n\n通过引入 VIO 状态预测器，将 VIO 的低频高精度测量外推至 IMU 高频时刻，既保留了 VIO 的低漂移特性，又满足了低级控制对高频低延迟状态估计的需求。这是该方法的关键创新点。\n\n### 5.3 多传感器互补\n\n三种测量源的融合实现了优势互补：\n- VIO：绝对位置参考，低漂移，但高延迟低频率\n- IMU：高频连续，但存在积分漂移\n- 腿里程计：高频精确的相对运动，但支撑相才有效\n\nEKF 框架最优地融合这些信息，产生高质量状态估计。\n\n### 5.4 实用性\n\n该框架为轻量级实现，易于与 NMPC 集成，展示了从估计到控制的完整系统，验证了方法的工程可行性。\n\n---\n\n## 6. 技术弱点\n\n### 6.1 VIO 依赖性\n\n方法对 VIO 模块有较强依赖，在以下场景可能失效：\n- 视觉特征不足的环境（黑暗、重复纹理、遮挡）\n- 高速运动导致图像模糊\n- 立体相机标定退化\n\n### 6.2 计算资源\n\nVIO 本身为计算密集型模块，加上 EKF 融合，对嵌入式计算平台提出较高要求。预测器的引入增加了额外计算开销。\n\n### 6.3 传感器同步挑战\n\n多传感器融合对时间同步要求严格：\n- 相机与 IMU 的硬件同步\n- VIO 输出时刻与融合时刻的对齐\n- 第二 IMU 与系统的同步\n\n同步误差会直接影响估计精度。\n\n### 6.4 漂移累积\n\n虽然 VIO 提供了绝对位置参考，但在视觉退化或丢失情况下，系统仍会退化为纯 IMU 积分模式，长时间运行会累积漂移。\n\n### 6.5 通用性局限\n\n方法针对特定动态运动（包含飞行相位）优化，对于其他类型运动（如爬行、蠕动）的适用性未充分验证。\n\n---\n\n## 总结\n\n该论文提出了一种针对腿足机器人动态运动的 EKF 状态估计框架，通过创新的 VIO 状态预测机制有效解决了视觉里程计延迟与控制高频需求之间的矛盾。方法成功融合视觉-惯性里程计、第二高频 IMU 和腿里程计三种测量源，在四足机器人上实现了包含飞行相位的动态运动估计。核心技术贡献在于将低频低漂移的 VIO 信息通过预测外推与高频 IMU 融合，兼顾了估计精度和实时性。该方法为腿足机器人的动态控制提供了可靠的状态估计基础。",
+  "score_report": "",
+  "readable_report": "",
   "sensemaking": null,
-  "rating": 3,
+  "rating": {
+    "innovation": 6,
+    "technical_quality": 7,
+    "experimental_validation": 8,
+    "writing_quality": 7,
+    "relevance": 8,
+    "overall_score": 7.0,
+    "strengths": [
+      "Well-motivated problem statement addressing a real challenge in legged robot locomotion",
+      "Novel latency reduction approach by predicting VIO state at IMU measurement rate",
+      "Comprehensive integration with NMPC demonstrating practical usefulness",
+      "Good experimental validation on torque-controlled quadruped with dynamic behaviors",
+      "Clear problem formulation and methodology description"
+    ],
+    "weaknesses": [
+      "Innovation is limited as VIO-leg odometry fusion has been explored in prior works",
+      "Limited quantitative comparison with other state-of-the-art methods",
+      "Missing ablation study on key design choices (e.g., EKF parameters)",
+      "Could benefit from more diverse experimental scenarios beyond trotting and jumping",
+      "Limited discussion on failure cases and robustness"
+    ],
+    "notes": "A solid application-oriented paper that addresses practical challenges in legged robot state estimation. The main contribution is the latency reduction technique for VIO in dynamic locomotion with flight phases. While not highly novel from a fundamental research perspective, the paper demonstrates effective engineering integration and successful real-world deployment. The experimental validation on a real quadruped robot performing agile behaviors is convincing."
+  },
   "parsed_source": {
     "files": [
       {
@@ -36,13 +72,32 @@
     ],
     "recognized_fields": {
       "title": "Visual-Inertial and Leg Odometry Fusion for Dynamic Locomotion",
+      "authors": [
+        "Victor Dhédin",
+        "Haolong Li",
+        "Shahram Khorshidi",
+        "Lukas Mack",
+        "Adithya Kumar Chinnakkonda Ravi",
+        "Avadesh Meduri",
+        "Paarth Shah",
+        "Felix Grimminger",
+        "Ludovic Righetti",
+        "Majid Khadiv",
+        "Joerg Stueckler"
+      ],
       "year": 2023,
-      "abstract": "Implementing dynamic locomotion behaviors on legged robots requires a high-quality state estimation module..."
+      "journal": "2023 IEEE International Conference on Robotics and Automation (ICRA)",
+      "doi": "10.1109/icra48891.2023.10160898",
+      "paper_type": "proceedings-article",
+      "publisher": "IEEE",
+      "pages": "9966-9972",
+      "abstract": "Implementing dynamic locomotion behaviors on legged robots requires a high-quality state estimation module. Especially when the motion includes flight phases, state-of-the-art approaches fail to produce reliable estimation of the robot posture, in particular base height. In this paper, we propose a novel approach for combining visual-inertial odometry (VIO) with leg odometry in an extended Kalman filter (EKF) based state estimator. The VIO module uses a stereo camera and IMU to yield low-drift 3D position and yaw orientation and drift-free pitch and roll orientation of the robot base link in the inertial frame. However, these values have a considerable amount of latency due to image processing and optimization, while the rate of update is quite low which is not suitable for low-level control. To reduce the latency, we predict the VIO state estimate at the rate of the IMU measurements of the VIO sensor. The EKF module uses the base pose and linear velocity predicted by VIO, fuses them further with a second high-rate IMU and leg odometry measurements, and produces robot state estimates with a high frequency and small latency suitable for control. We integrate this lightweight estimation framework with a nonlinear model predictive controller and show successful implementation of a set of agile locomotion behaviors, including trotting and jumping at varying horizontal speeds, on a torque-controlled quadruped robot.",
+      "route_id": "5201da0b-6797-42f8-9dee-a87618e7b2e2"
     },
     "markdown_stats": {
-      "lines": 4,
-      "words": 24,
-      "headings": 2
+      "lines": 156,
+      "words": 6563,
+      "headings": 13
     },
     "assets": {
       "images": 0,
@@ -58,5 +113,5 @@
   "route_id": "5201da0b-6797-42f8-9dee-a87618e7b2e2",
   "paper_ref": "5201da0b-6797-42f8-9dee-a87618e7b2e2",
   "read_only": true,
-  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
 }

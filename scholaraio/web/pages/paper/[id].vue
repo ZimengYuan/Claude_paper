@@ -69,6 +69,16 @@
               <p v-else class="text-sm text-gray-500">No method summary found for this paper.</p>
             </div>
 
+            <div v-if="activeTab === 'score-report'">
+              <div v-if="scoreReport" class="markdown-body prose max-w-none" v-html="renderMarkdown(scoreReport)"></div>
+              <p v-else class="text-sm text-gray-500">No score report found for this paper.</p>
+            </div>
+
+            <div v-if="activeTab === 'report'">
+              <div v-if="readableReport" class="markdown-body prose max-w-none" v-html="renderMarkdown(readableReport)"></div>
+              <p v-else class="text-sm text-gray-500">No readable report found for this paper.</p>
+            </div>
+
             <div v-if="activeTab === 'sensemaking'">
               <div v-if="hasSensemaking" class="space-y-4">
                 <div class="grid gap-3 md:grid-cols-2">
@@ -146,10 +156,12 @@
 
         <div class="mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
           <h3 class="font-semibold text-gray-900">Materials</h3>
-          <p class="mt-1 text-xs text-gray-500">summary / method / rating / sensemaking</p>
+          <p class="mt-1 text-xs text-gray-500">summary / method / score report / report / rating / sensemaking</p>
           <div class="mt-3 flex flex-wrap gap-2">
             <span class="rounded-full border px-2 py-0.5 text-xs" :class="materialClass(Boolean(summary))">Summary</span>
             <span class="rounded-full border px-2 py-0.5 text-xs" :class="materialClass(Boolean(method))">Method</span>
+            <span class="rounded-full border px-2 py-0.5 text-xs" :class="materialClass(Boolean(scoreReport))">Score Report</span>
+            <span class="rounded-full border px-2 py-0.5 text-xs" :class="materialClass(Boolean(readableReport))">Report</span>
             <span class="rounded-full border px-2 py-0.5 text-xs" :class="materialClass(Boolean(paper.rating))">Rating</span>
             <span class="rounded-full border px-2 py-0.5 text-xs" :class="materialClass(hasSensemaking)">Sensemaking</span>
           </div>
@@ -169,8 +181,8 @@
               <span>{{ entry.value }}/10</span>
             </div>
           </div>
-          <div v-if="paper.rating.notes" class="mt-3 text-sm italic text-gray-600">
-            "{{ paper.rating.notes }}"
+          <div v-if="ratingNote" class="mt-3 text-sm italic text-gray-600">
+            "{{ ratingNote }}"
           </div>
         </div>
 
@@ -249,11 +261,15 @@ const errorMessage = ref('')
 const paper = ref(null)
 const summary = ref('')
 const method = ref('')
+const scoreReport = ref('')
+const readableReport = ref('')
 const activeTab = ref('summary')
 
 const contentTabs = computed(() => [
   { key: 'summary', label: 'Summary', ready: Boolean(summary.value) },
   { key: 'method', label: 'Method', ready: Boolean(method.value) },
+  { key: 'score-report', label: 'Score Report', ready: Boolean(scoreReport.value) },
+  { key: 'report', label: 'Report', ready: Boolean(readableReport.value) },
   { key: 'sensemaking', label: 'Sensemaking', ready: hasSensemaking.value },
 ])
 
@@ -263,6 +279,8 @@ const applyPaperPayload = (payload) => {
   paper.value = payload
   summary.value = payload.summary || ''
   method.value = payload.method_summary || ''
+  scoreReport.value = payload.score_report || ''
+  readableReport.value = payload.readable_report || ''
 }
 
 const ratingClass = (score) => {
@@ -333,6 +351,19 @@ const metadataEntries = computed(() => {
 const ratingEntries = computed(() => {
   const rating = paper.value?.rating
   if (rating == null) return []
+
+  const compassEntries = [
+    { label: '发表信号', value: rating.publication_signal },
+    { label: '作者信号', value: rating.author_signal },
+    { label: '引用牵引', value: rating.citation_traction },
+    { label: '被引质量', value: rating.citation_quality },
+    { label: '新颖性', value: rating.novelty },
+    { label: '业界信号', value: rating.industry_signal },
+    { label: '方向影响', value: rating.field_shaping },
+  ].filter((entry) => keepValue(entry.value))
+
+  if (compassEntries.length) return compassEntries
+
   return [
     { label: '创新性', value: rating.innovation },
     { label: '技术质量', value: rating.technical_quality },
@@ -341,6 +372,8 @@ const ratingEntries = computed(() => {
     { label: '相关性', value: rating.relevance },
   ].filter((entry) => keepValue(entry.value))
 })
+
+const ratingNote = computed(() => paper.value?.rating?.one_line_verdict || paper.value?.rating?.notes || '')
 
 const overallRatingText = computed(() => {
   const score = paper.value?.rating?.overall_score

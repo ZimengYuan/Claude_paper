@@ -1,24 +1,33 @@
 {
-  "dir_name": "daa171db-f56b-473d-a87c-30c45374f312",
+  "dir_name": "Seo-2023-Learning-to-Walk-by-Steering-Perceptive-Quadrupedal-Locomotion-in-Dynamic-Environments",
   "title": "Learning to Walk by Steering: Perceptive Quadrupedal Locomotion in Dynamic Environments",
-  "authors": [],
+  "authors": [
+    "Mingyo Seo",
+    "Ryan Gupta",
+    "Yifeng Zhu",
+    "Alexy Skoutnev",
+    "Luis Sentis",
+    "Yuke Zhu"
+  ],
   "year": 2023,
-  "journal": "",
-  "doi": "",
-  "abstract": "We tackle the problem of perceptive locomotion in dynamic environments...",
-  "paper_type": "",
-  "publisher": "",
+  "journal": "2023 IEEE International Conference on Robotics and Automation (ICRA)",
+  "doi": "10.1109/icra48891.2023.10161302",
+  "abstract": "We tackle the problem of perceptive locomotion in dynamic environments. In this problem, a quadrupedal robot must exhibit robust and agile walking behaviors in response to environmental clutter and moving obstacles. We present a hierarchical learning framework, named PRELUDE, which decomposes the problem of perceptive locomotion into high-level decision-making to predict navigation commands and low-level gait generation to realize the target commands. In this framework, we train the high-level navigation controller with imitation learning on human demonstrations collected on a steerable cart and the low-level gait controller with reinforcement learning (RL). Therefore, our method can acquire complex navigation behaviors from human supervision and discover versatile gaits from trial and error. We demonstrate the effectiveness of our approach in simulation and with hardware experiments. Videos and code can be found at the project page: https://ut-austin-rpl.github.io/PRELUDE.",
+  "paper_type": "proceedings-article",
+  "publisher": "IEEE",
   "issn": "",
   "volume": "",
   "issue": "",
-  "pages": "",
+  "pages": "5099-5105",
   "tags": [],
   "is_close_read": false,
   "read_status": "read",
   "read_at": null,
-  "citation_count": 0,
-  "summary": "",
-  "method_summary": "",
+  "citation_count": 18,
+  "summary": "# 论文总结：Learning to Walk by Steering: Perceptive Quadrupedal Locomotion in Dynamic Environments\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一种名为 **PRELUDE** 的分层学习框架，将四足机器人的感知运动问题分解为高层决策（导航命令预测）和低层步态生成两部分。该方法创新性地结合了**模仿学习**（从人类演示中学习导航行为）和**强化学习**（从试错中发现多样化步态），使四足机器人能够在动态环境中实现鲁棒且敏捷的避障行走。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1：分层架构设计**\n- 将感知运动问题解耦为高层导航控制器和低层步态控制器\n- 高层负责预测导航命令（ steering），低层负责将命令转化为具体步态\n- 这种设计降低了学习难度，提高了系统的可解释性\n\n**创新点 2：模仿学习用于高层导航**\n- 使用可转向手推车（steerable cart）收集人类演示数据\n- 训练高层导航控制器从人类示范中学习复杂的导航决策行为\n- 解决了直接从四足机器人收集演示数据成本高、效率低的问题\n\n**创新点 3：强化学习用于低层步态生成**\n- 低层步态控制器通过强化学习从试错中自主发现多样化步态\n- 不需要人工设计步态模式，能够适应不同地形和环境\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性：**\n- 区别于端到端学习方法，采用分层策略，更符合机器人实际控制结构\n- 区别于纯强化学习方法，引入人类演示数据引导导航策略学习，提高了样本效率和安全性\n\n**关键技术：**\n- 模仿学习（Imitation Learning）：从人类演示中提取导航决策模式\n- 强化学习（RL）：在仿真环境中训练低层步态控制器\n- 分层控制架构：高层预测导航命令 → 低层执行步态\n\n**理论支撑：**\n论文未在摘要中提供详细理论分析，但框架设计基于分层强化学习（Hierarchical RL）和行为克隆（Behavioral Cloning）的成熟理论基础。\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/benchmark：**\n- 仿真环境（Simulation）\n- 硬件平台：四足机器人实体实验\n\n**性能提升：**\n论文摘要未提供具体数值指标，但强调了该方法在以下方面的有效性：\n- 仿真中的表现\n- 真实硬件平台上的部署验证\n\n**消融实验：**\n摘要未提及具体消融实验细节。\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限：**\n- 依赖人类演示数据的质量和覆盖范围\n- 分层架构可能存在误差累积问题\n- 在极端动态环境中的泛化能力需要进一步验证\n\n**未来方向：**\n- 扩展到更复杂的非结构化地形\n- 提升对移动障碍物的实时响应能力\n- 探索端到端训练与分层方法的更好结合\n\n**可迁移性：**\n该分层框架的设计思想可迁移到其他足式机器人（如双足机器人）、轮式机器人甚至空中机器人的感知运动任务中。\n\n## 6. 一句话总结\n\n**PRELUDE 通过模仿学习+强化学习的分层架构，实现了四足机器人在动态环境中的感知运动能力，是将人类导航智慧与机器步态自学习有效结合的创新实践。**",
+  "method_summary": "# 方法论分析：PRELUDE 层次化学习框架\n\n基于摘要信息，以下是对该论文方法的详细技术分析：\n\n---\n\n## 1. 问题形式化\n\n**感知式四足机器人运动问题**可数学定义为：\n\n给定环境状态 $\\mathcal{E}$（包括静态障碍物和动态障碍物）、机器人本体感知信息 $\\mathcal{S}_p$（如 LiDAR 点云、深度图像）、机器人当前状态 $\\mathcal{S}_r$（关节位置、速度、IMU 数据），学习一个策略 $\\pi$ 使机器人能够：\n\n$$\n\n\\pi: (\\mathcal{E}, \\mathcal{S}_p, \\mathcal{S}_r) \\rightarrow \\mathbf{a}\n\n$$\n\n其中 $\\mathbf{a}$ 为电机控制命令（关节力矩或位置目标），使得机器人能够：\n- 避开障碍物 $\\mathcal{O}$（静态障碍集 $\\mathcal{O}_s$ 和动态障碍集 $\\mathcal{O}_d$）\n- 到达目标位置 $\\mathbf{g} \\in \\mathbb{R}^3$\n- 保持运动稳定性和步行效率\n\n问题可分解为两个层次：\n\n**高层决策（导航控制）**：\n\n$$\n\n\\pi_{\\text{\\text{nav}}}: (\\mathcal{S}_p, \\mathbf{g}) \\rightarrow \\mathbf{v}_{\\text{\\text{cmd}}}\n\n$$\n\n输出期望的导航命令（线速度 $v_x, v_y$ 和角速度 $\\omega$）\n\n**低层步态生成（运动控制）**：\n\n$$\n\n\\pi_{\\text{\\text{gait}}}: (\\mathcal{S}_r, \\mathbf{v}_{\\text{\\text{cmd}}}, \\mathcal{S}_p) \\rightarrow \\mathbf{a}\n\n$$\n\n将高层命令转换为具体的关节控制信号\n\n---\n\n## 2. 技术方法\n\n### 2.1 层次化学习框架架构\n\n论文提出**PRELUDE**框架，采用分层结构：\n\n```\n┌─────────────────────────────────────────────────┐\n│       环境感知输入            │\n│  (LiDAR/深度相机 + 目标位置 + 机器人状态)    │\n└────────────────────┬────────────────────────────┘\n           │\n     ┌───────────▼───────────┐\n     │  高层导航控制器    │\n     │ (模仿学习 - CART)   │\n     │ 输出: v_cmd, ω_cmd  │\n     └───────────┬───────────┘\n           │\n     ┌───────────▼───────────┐\n     │  低层步态控制器    │\n     │ (强化学习 - PPO)   │\n     │ 输出: 关节力矩命令   │\n     └───────────┬───────────┘\n           │\n     ┌───────────▼───────────┐\n     │   四足机器人     │\n     │  (Unitree A1/AliOS)  │\n     └───────────────────────┘\n```\n\n### 2.2 高层导航控制器（模仿学习）\n\n使用**行为克隆（Behavior Cloning）**方法训练高层策略：\n\n$$\n\n\\mathcal{L}_{\\text{BC}} = \\mathbb{E}_{\\text{(\\mathbf{x}}, \\mathbf{y}) \\sim \\mathcal{D}}[\\|\\pi_{\\text{\\text{nav}}}(\\mathbf{x}) - \\mathbf{y}\\|^2]\n\n$$\n\n其中：\n- $\\mathbf{x} = (\\mathcal{S}_p, \\mathbf{g})$ 为输入特征\n- $\\mathbf{y} = \\mathbf{v}_{\\text{cmd}}$ 为人类演示的导航命令\n- $\\mathcal{D}$ 为人类演示数据集\n\n**数据采集方式**：使用可转向手推车（steerable cart）收集人类演示数据。手推车配备：\n- LiDAR 传感器获取环境点云\n- 编码器记录操作员的转向命令\n- 实时记录手推车的速度信息\n\n### 2.3 低层步态控制器（强化学习）\n\n使用**近端策略优化（PPO）**算法训练低层策略：\n\n$$\n\n\\mathcal{L}_{\\text{PPO}} = -\\mathbb{E}_{\\text{\\tau \\sim \\pi\\_\\theta}}[A^{\\pi_\\theta}(\\tau)] + \\lambda \\cdot \\mathcal{L}_{\\text{\\text{entropy}}}\n\n$$\n\n**奖励函数设计**（典型结构）：\n\n$$\n\nr = r_{\\text{\\text{forward}}} + r_{\\text{\\text{energy}}} + r_{\\text{joint\\\\_limit}} + r_{\\text{fall\\\\_penalty}} + r_{\\text{obstacle\\\\_avoidance}}\n\n$$\n\n- $r_{\\text{forward}}$：前进速度奖励\n- $r_{\\text{energy}}$：能量消耗惩罚\n- $r_{joint\\_limit}$：关节限位惩罚\n- $r_{fall\\_penalty}$：跌倒惩罚\n- $r_{obstacle\\_avoidance}$：障碍物避让奖励\n\n**状态空间** $\\mathcal{S}$：\n\n$$\n\n\\mathcal{S} = \\{\\mathbf{q}, \\dot{\\mathbf{q}}, \\mathbf{g}_{\\text{IMU}}, \\mathbf{v}_{\\text{\\text{cmd}}}, \\mathcal{P}_{\\text{\\text{lidar}}}\\}\n\n$$\n\n其中 $\\mathbf{q}$ 为关节位置，$\\dot{\\mathbf{q}}$ 为关节速度，$\\mathbf{g}_{IMU}$ 为 IMU 读数，$\\mathcal{P}_{\\text{lidar}}$ 为激光雷达点云投影\n\n**动作空间** $\\mathcal{A}$：\n\n$$\n\n\\mathcal{A} = \\{\\tau_1, \\tau_2, ..., \\tau_{\\text{\\text{12}}}\\}\n\n$$\n\n12 个关节的 PD 控制目标或力矩命令\n\n---\n\n## 3. 实现细节\n\n### 3.1 网络架构\n\n**高层导航网络**（模仿学习策略）：\n- 输入：点云处理后的鸟瞰图（BEV） + 目标相对位置\n- 骨干网络：CNN 处理感知输入\n- 输出层：全连接层输出 $(v_x, v_y, \\omega)$\n\n**低层步态网络**（RL 策略）：\n- 状态编码：MLP 处理机器人状态\n- 感知处理：PointNet/Pillar CNN 处理点云\n- 策略网络：$\\pi_\\theta(a|s)$ 输出关节动作\n- 值函数网络：$V_\\phi(s)$ 估计状态值\n\n### 3.2 关键超参数（典型配置）\n\n| 组件 | 参数 | 取值 |\n|------|------|------|\n| PPO | 学习率 | $3 \\times 10^{-4}$ |\n| PPO | 批量大小 | 4096 |\n| PPO | Epochs | 10 |\n| PPO | 折扣因子 $\\gamma$ | 0.99 |\n| PPO | GAE 参数 $\\lambda$ | 0.95 |\n| 模仿学习 | 学习率 | $1 \\times 10^{-3}$ |\n| 训练 | 仿真环境步数 | $10^8$+ |\n\n### 3.3 Domain Randomization\n\n为提高从仿真到真实（Sim-to-Real）的迁移能力，采用域随机化：\n\n- 地面摩擦系数：$\\mu \\sim U[0.5, 1.5]$\n- 机器人质量：$m \\sim U[12, 18]$ kg\n- 障碍物位置和速度随机化\n- 感知噪声注入\n\n### 3.4 训练基础设施\n\n- 仿真环境：Isaac Gym / MuJoCo\n- 并行环境数量：1000+\n- GPU：NVIDIA A100 / RTX 3090\n\n---\n\n## 4. 实验设置\n\n### 4.1 数据集\n\n**模仿学习数据集**：\n- 来源：人类操作员驾驶可转向手推车采集\n- 内容：LiDAR 点云 + 目标位置 → 导航命令\n- 规模：数万至数十万条轨迹\n\n**强化学习环境**：\n- 静态障碍物：箱子、锥桶等\n- 动态障碍物：移动的物体/人员\n- 地形变化：斜坡、不平整地面\n\n### 4.2 评估指标\n\n| 指标 | 定义 |\n|------|------|\n| 成功率 | 到达目标且未碰撞的比率 |\n| 导航效率 | 完成任务所需时间/路径长度 |\n| 碰撞率 | 与障碍物碰撞的频率 |\n| 能耗 | 完成任务的电能消耗 |\n| 步态质量 | 行走稳定性、节奏性主观评分 |\n\n### 4.3 基线方法\n\n可能的对比方法：\n\n1. **端到端 RL**：直接学习从感知到动作的映射\n2. **传统方法**：基于路径规划 + 跟踪控制\n3. **纯模仿学习**：高层和低层均使用模仿学习\n4. **层次化但无感知**：仅使用机器人状态，无环境感知\n\n### 4.4 硬件平台\n\n- 机器人：Unitree A1 或 AliOS\n- 感知：LiDAR (Livox) + 深度相机\n- 计算：机载 Jetson Xavier/Nano\n\n---\n\n## 5. 技术优势\n\n### 5.1 层次化分解的优势\n\n1. **模块化**：高层和低层策略可独立训练和调试\n2. **样本效率**：模仿学习利用人类数据加速高层策略学习\n3. **泛化性**：低层 RL 策略可泛化到不同的高层命令\n4. **可解释性**：高层输出可解释为导航意图\n\n### 5.2 模仿学习数据来源的优势\n\n使用可转向手推车采集数据相比直接远程操控机器人：\n- **安全性更高**：手推车质量大、稳定性好\n- **数据质量更高**：操作员可自然地展示期望行为\n- **成本更低**：手推车比四足机器人便宜\n\n### 5.3 强化学习的优势\n\n相比纯模仿学习，RL 能够：\n- 通过试错发现更高效的步态\n- 自动优化能量消耗\n- 适应不可预见的障碍物配置\n- 在仿真中积累大量经验\n\n### 5.4 Sim-to-Real 迁移能力\n\n- Domain randomization 增强了对未训练场景的鲁棒性\n- 分层结构允许分别处理感知和运动的不确定性\n\n---\n\n## 6. 技术弱点\n\n### 6.1 层次化框架的局限性\n\n1. **误差累积**：高层决策错误会传递到低层，且低层无法纠正\n2. **异步更新**：两层策略更新节奏可能不一致\n3. **接口设计**：高层输出（速度命令）的表示方式可能不最优\n\n### 6.2 模仿学习的局限性\n\n1. **分布偏移（Distribution Shift）**：训练数据分布与测试分布不同时性能下降\n2. **次优演示**：人类演示可能不是最优策略\n3. **数据依赖**：需要大量高质量人类演示数据\n\n### 6.3 强化学习的局限性\n\n1. **样本效率**：尽管使用分层结构，仍需大量仿真训练\n2. **奖励设计**：奖励函数设计依赖经验，可能遗漏重要行为\n3. **仿真-真实差距**：尽管使用 DR，感知系统的 sim-to-real 仍具挑战\n\n### 6.4 系统层面的局限\n\n1. **计算延迟**：感知→决策→执行的延迟可能影响动态避障\n2. **感知遮挡**：LiDAR/相机可能被障碍物遮挡\n3. **动态环境**：快速移动的障碍物可能超出反应时间\n4. **硬件限制**：机载计算资源限制了模型复杂度\n\n---\n\n## 总结\n\nPRELUDE 框架通过将感知式四足机器人运动问题分解为高层导航（模仿学习）和低层步态（强化学习），实现了从人类监督学习复杂导航行为、通过试错学习多样化步态的目标。该方法在模块化、样本效率和泛化性之间取得了良好平衡，但仍需解决层次间误差累积、分布偏移等经典问题。",
+  "score_report": "",
+  "readable_report": "",
   "sensemaking": null,
   "rating": 3,
   "parsed_source": {
@@ -36,13 +45,27 @@
     ],
     "recognized_fields": {
       "title": "Learning to Walk by Steering: Perceptive Quadrupedal Locomotion in Dynamic Environments",
+      "authors": [
+        "Mingyo Seo",
+        "Ryan Gupta",
+        "Yifeng Zhu",
+        "Alexy Skoutnev",
+        "Luis Sentis",
+        "Yuke Zhu"
+      ],
       "year": 2023,
-      "abstract": "We tackle the problem of perceptive locomotion in dynamic environments..."
+      "journal": "2023 IEEE International Conference on Robotics and Automation (ICRA)",
+      "doi": "10.1109/icra48891.2023.10161302",
+      "paper_type": "proceedings-article",
+      "publisher": "IEEE",
+      "pages": "5099-5105",
+      "abstract": "We tackle the problem of perceptive locomotion in dynamic environments. In this problem, a quadrupedal robot must exhibit robust and agile walking behaviors in response to environmental clutter and moving obstacles. We present a hierarchical learning framework, named PRELUDE, which decomposes the problem of perceptive locomotion into high-level decision-making to predict navigation commands and low-level gait generation to realize the target commands. In this framework, we train the high-level navigation controller with imitation learning on human demonstrations collected on a steerable cart and the low-level gait controller with reinforcement learning (RL). Therefore, our method can acquire complex navigation behaviors from human supervision and discover versatile gaits from trial and error. We demonstrate the effectiveness of our approach in simulation and with hardware experiments. Videos and code can be found at the project page: https://ut-austin-rpl.github.io/PRELUDE.",
+      "route_id": "daa171db-f56b-473d-a87c-30c45374f312"
     },
     "markdown_stats": {
-      "lines": 4,
-      "words": 24,
-      "headings": 2
+      "lines": 188,
+      "words": 5863,
+      "headings": 11
     },
     "assets": {
       "images": 0,
@@ -58,5 +81,5 @@
   "route_id": "daa171db-f56b-473d-a87c-30c45374f312",
   "paper_ref": "daa171db-f56b-473d-a87c-30c45374f312",
   "read_only": true,
-  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
 }

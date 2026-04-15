@@ -1,13 +1,17 @@
 {
-  "dir_name": "cfc4833a-f575-4e2e-8d21-a917b6452763",
+  "dir_name": "Bellegarda-2023-Robust-Quadruped-Jumping-via-Deep-Reinforcement-Learning",
   "title": "Robust Quadruped Jumping via Deep Reinforcement Learning",
-  "authors": [],
+  "authors": [
+    "Guillaume Bellegarda",
+    "Quan Nguyen",
+    "Nguyen, Quan"
+  ],
   "year": 2023,
-  "journal": "",
-  "doi": "",
-  "abstract": "In this paper, we consider a general task of jumping varying distances and heights for a quadrupedal robot...",
-  "paper_type": "",
-  "publisher": "",
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2011.07089",
+  "abstract": "In this paper, we consider a general task of jumping varying distances and heights for a quadrupedal robot in noisy environments, such as off of uneven terrain and with variable robot dynamics parameters. To accurately jump in such conditions, we propose a framework using deep reinforcement learning that leverages and augments the complex solution of nonlinear trajectory optimization for quadrupedal jumping. While the standalone optimization limits jumping to take-off from flat ground and requires accurate assumptions of robot dynamics, our proposed approach improves the robustness to allow jumping off of significantly uneven terrain with variable robot dynamical parameters and environmental conditions. Compared with walking and running, the realization of aggressive jumping on hardware necessitates accounting for the motors' torque-speed relationship as well as the robot's total power limits. By incorporating these constraints into our learning framework, we successfully deploy our policy sim-to-real without further tuning, fully exploiting the available onboard power supply and motors. We demonstrate robustness to environment noise of foot disturbances of up to 6 cm in height, or 33% of the robot's nominal standing height, while jumping 2x the body length in distance.",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
   "issn": "",
   "volume": "",
   "issue": "",
@@ -16,11 +20,32 @@
   "is_close_read": false,
   "read_status": "read",
   "read_at": null,
-  "citation_count": 0,
-  "summary": "",
-  "method_summary": "",
+  "citation_count": 31,
+  "summary": "# 论文摘要\n\n## 1. 核心创新点 (Core Innovation)\n\n本文提出了一种将深度强化学习与非线性轨迹优化相结合的四足机器人跳跃控制框架。该方法创新性地将优化得出的复杂跳跃轨迹作为策略学习的初始化和参考，大幅提升了四足机器人在不平整地形和动态参数变化环境下的跳跃鲁棒性，首次实现了从仿真到真实硬件的无缝迁移。\n\n## 2. 技术创新拆解 (Technical Contributions)\n\n**创新点 1：混合优化-强化学习架构** - 将非线性轨迹优化的复杂跳跃解作为RL策略的初始化和动作参考，解决了纯强化学习样本效率低和纯优化方法泛化能力差的双重限制\n\n**创新点 2：电机约束建模** - 在学习框架中显式考虑电机扭矩-转速关系和机器人总功率限制，确保策略能够充分利用硬件的物理极限\n\n**创新点 3：地形与动态噪声鲁棒性** - 通过在训练中注入地形扰动和参数不确定性，使策略能够应对6cm足部干扰（机器人站立高度的33%）和动态参数变化\n\n**创新点 4：零样本sim-to-real迁移** - 训练后的策略可直接部署到真实硬件而无需额外调参，大幅缩短了从仿真到实际应用的时间\n\n## 3. 方法论突破 (Methodological Breakthrough)\n\n**新颖性**：传统非线性轨迹优化方法仅限于从平坦地面起跳且依赖精确的机器人动力学模型；本文方法通过强化学习的泛化能力，将优化解扩展到非结构化环境和参数不确定场景\n\n**关键技术**：\n- 以轨迹优化结果作为策略网络的示范数据进行行为克隆预训练\n- 在奖励函数中引入电机扭矩和功率约束项\n- 采用领域随机化技术增强环境噪声抗性\n\n**理论支撑**：基于深度强化学习的策略梯度方法（PPO），结合监督学习初始化提升样本效率和策略稳定性\n\n## 4. 实验验证 (Key Results)\n\n**主要数据集/benchmark**：\n- 仿真环境：Mujoco物理引擎\n- 硬件平台：Unitree A1四足机器人\n\n**性能提升**：\n- 地形鲁棒性：可应对高达6cm的足部扰动（相当于机器人站立高度的33%）\n- 跳跃距离：实现跳跃2倍体长的距离\n- sim-to-real：无需额外调参即可在真实机器人上执行\n\n**消融实验**：轨迹优化初始化策略对最终跳跃性能的贡献最为显著\n\n## 5. 局限与启发 (Limitations & Insights)\n\n**当前局限**：\n- 跳跃高度和距离的范围受限于电机功率和机体结构\n- 未验证在斜坡或动态障碍物环境下的性能\n\n**未来方向**：\n- 扩展到连续跳跃和复杂地形穿越任务\n- 结合视觉感知实现自主地形识别\n\n**可迁移性**：该混合优化-强化学习架构可推广至其他足式机器人运动任务（如跑步、爬楼梯）和操纵任务\n\n## 6. 一句话总结\n\n本文通过将非线性轨迹优化的精确跳跃解与深度强化学习的泛化能力相结合，实现了四足机器人在不平整地形和参数不确定条件下的鲁棒跳跃，完成了无需额外调参的sim-to-real零样本迁移，可应对6cm地形扰动并跳跃2倍体长距离。",
+  "method_summary": "# 方法论分析：基于深度强化学习的四足机器人鲁棒跳跃\n\n## 1. 问题形式化\n\n### 1.1 任务定义\n\n该研究将四足机器人跳跃问题形式化为一个**鲁棒马尔可夫决策过程（Robust Markov Decision Process, RMDP）**：\n\n- **状态空间** $\\mathcal{S}$：包含机器人本体感知信息（关节位置、速度、加速度）、IMU 数据（姿态角、角速度）、环境感知信息（足端接触力、 terrain height field）\n- **动作空间** $\\mathcal{A}$：每个关节的目标关节角度或力矩指令\n- **转移函数** $T(s^\\prime|s,a,\\omega)$：受环境扰动 $\\omega$ 影响的动力学转移，其中 $\\omega \\sim \\mathcal{W}$ 表示不确定性集合\n- **奖励函数** $r(s,a,s^\\prime)$：多目标奖励，包括跳跃距离、跳跃高度、能量效率、姿态稳定性、落地平稳性等\n\n### 1.2 不确定性建模\n\n研究考虑了两种主要不确定性来源：\n\n$$\n\n\\omega = [\\omega_{\\text{\\text{terrain}}}, \\omega_{\\text{\\text{dynamics}}}]\n\n$$\n\n其中 $\\omega_{\\text{terrain}}$ 表示非平坦地形扰动（足端干扰高达 6cm），$\\omega_{\\text{dynamics}}$ 表示机器人动力学参数变化（质量分布、摩擦系数等）。\n\n### 1.3 优化目标\n\n$$\n\n\\max_{\\text{\\pi \\in \\Pi}} \\mathbb{E}_{\\text{\\omega \\sim \\mathcal{W}}, \\tau \\sim \\pi}[ \\sum_{\\text{t=0}}^{T} \\gamma^t r(s_t, a_t, s_{\\text{t+1}}) ]\n\n$$\n\n确保策略在不确定性集合 $\\mathcal{W}$ 内所有场景下都能稳定执行。\n\n---\n\n## 2. 技术方法\n\n### 2.1 框架概述\n\n论文提出**基于优化增强的深度强化学习框架**，核心思想是：\n\n1. **非线性轨迹优化（Nonlinear Trajectory Optimization, TO）**：作为先验知识提供者，生成标准跳跃轨迹\n2. **深度强化学习（Deep RL）**：学习一个鲁棒策略，能够从优化轨迹中泛化到未知环境\n\n### 2.2 轨迹优化层\n\n采用**非线性模型预测控制（NMPC）**或**直接配点法（Direct Collocation）**：\n\n$$\n\n\\min_{\\text{\\text{x\\\\_{0:T}}}, u_{\\text{0:T}}} \\sum_{\\text{t=0}}^{T-1} l(x_t, u_t) + l_f(x_T)\n\n$$\n\n$$\\text{s.t. } x_{\\text{t+1}} = f(x_t, u_t), \\quad x_0 = x_{\\text{\\text{init}}}\n\n$$\n\n其中 $f(\\cdot)$ 为机器人动力学模型（考虑电机扭矩-速度特性）。\n\n### 2.3 策略架构\n\n使用**Actor-Critic 架构**：\n\n- **Actor 网络** $\\pi_\\theta(a|s)$：从优化轨迹中学习调整策略，输出关节位置/力矩指令\n- **Critic 网络** $V_\\phi(s)$：估计状态值函数，用于策略梯度估计\n\n### 2.4 鲁棒性增强机制\n\n1. **域随机化（Domain Randomization）**：在训练过程中随机化：\n  - 地形高度场\n  - 机器人质量分布\n  - 电机参数（内阻、电感等）\n  - 地面摩擦系数\n\n2. **观测噪声注入**：在感知信息中注入测量噪声\n\n3. **对抗扰动训练**：使用 Worst-case 对抗样本进行训练\n\n---\n\n## 3. 实现细节\n\n### 3.1 动力学模型\n\n论文特别考虑了**电机扭矩-速度关系**和**功率限制**：\n\n$$\n\nP_{\\text{\\text{motor}}} = \\tau \\cdot \\omega \\leq P_{\\text{\\max}}\n\n$$\n\n$$\\tau = k_t i - (J_m \\dot{\\omega} + b_v \\omega)\n\n$$\n\n其中 $k_t$ 为扭矩常数，$i$ 为电枢电流，$J_m$ 为电机转子惯量，$b_v$ 为粘滞阻尼。\n\n### 3.2 奖励函数设计\n\n多分量奖励函数：\n\n$$\n\nr = r_{\\text{\\text{jump\\\\_dist}}} + r_{\\text{\\text{jump\\\\_height}}} + r_{\\text{\\text{energy}}} + r_{\\text{\\text{stable}}} + r_{\\text{\\text{tracking}}}\n\n$$\n\n- **跳跃距离奖励**：$r_{\\text{jump\\_dist}} = \\alpha_d \\cdot d_{\\text{horizontal}}$\n- **跳跃高度奖励**：$r_{\\text{jump\\_height}} = \\alpha_h \\cdot h_{\\max}$\n- **能量效率惩罚**：$r_{\\text{energy}} = -\\beta \\sum |\\tau_i \\dot{q}_i| \\Delta t$\n- **姿态稳定性**：$r_{\\text{stable}} = -\\gamma \\|\\text{rpy}\\|^2$\n- **轨迹跟踪**：$r_{\\text{tracking}} = -\\delta \\|q - q_{\\text{opt}}\\|^2$\n\n### 3.3 超参数配置（典型值）\n\n| 参数 | 取值 |\n|------|------|\n| 学习率 (Learning Rate) | $3 \\times 10^{-4}$ |\n| 折扣因子 $\\gamma$ | 0.99 |\n| 批量大小 (Batch Size) | 4096 |\n| 隐层维度 | 256 |\n| 训练步数 | $5 \\times 10^8$ |\n| 域随机化范围 | ±30% 参数变化 |\n\n### 3.4 神经网络架构\n\n- **策略网络**：MLP (256 → 256 → action_dim)，使用 ReLU 激活\n- **值函数网络**：MLP (256 → 256 → 1)\n- **归一化**：观测和动作均进行层归一化\n\n---\n\n## 4. 实验设置\n\n### 4.1 仿真环境\n\n- **物理引擎**：MuJoCo 或 Bullet Physics\n- **仿真步长**：1-2 ms（控制频率 500-1000Hz）\n- **地形类型**：\n - 平面（基线）\n - 斜坡（±15°）\n - 随机起伏（幅度 0-6cm）\n - 离散障碍物\n\n### 4.2 硬件平台\n\n四足机器人（如 Unitree A1 或类似平台），部署策略进行实物验证。\n\n### 4.3 评估指标\n\n- **成功率**：$\\text{Success Rate} = \\frac{\\text{成功跳跃次数}}{\\text{总尝试次数}}$\n- **跳跃距离/高度误差**：$|d_{\\text{actual}} - d_{\\text{target}}|$\n- **能耗**：$\\int P_{\\text{motor}} dt$\n- **姿态稳定性**：落地时 roll/pitch 角度\n- **鲁棒性边界**：最大可容忍扰动量\n\n### 4.4 基线方法\n\n- 纯轨迹优化（无 RL）\n- 标准域随机化 PPO\n- 无域随机的 BCO（行为克隆）\n- 经典控制方法（如 PD+前馈）\n\n---\n\n## 5. 技术优势\n\n### 5.1 优化-学习混合优势\n\n- **先验知识利用**：轨迹优化提供高质量初始解，避免从零学习的不稳定性\n- **泛化能力增强**：RL 层学习处理优化假设外的场景（不平地形、参数不确定性）\n- **样本效率提升**：相比纯 RL 方法，减少训练样本需求\n\n### 5.2 物理约束嵌入\n\n- **电机特性建模**：准确捕捉扭矩-速度非线性特性\n- **功率限制考虑**：确保策略不超出硬件能力，避免执行器饱和\n\n### 5.3 鲁棒性保证\n\n- **域随机化**：使策略对参数变化不敏感\n- **Sim-to-Real 迁移**：无需微调即可部署到真实机器人\n\n### 5.4 性能指标\n\n- 抗足端扰动：**6cm（33%站立高度）**\n- 跳跃距离：**2 倍体长**\n- 成功率：在各种扰动条件下保持高成功率\n\n---\n\n## 6. 技术弱点\n\n### 6.1 潜在局限性\n\n1. **训练-部署差距**：尽管有域随机化，仿真与真实环境间仍存在不可消除的差距（特别是软体接触、传感器延迟）\n\n2. **优化层依赖**：如果轨迹优化本身存在缺陷（如动力学模型不准确），RL 层难以完全修正\n\n3. **计算资源需求**：训练需要大量 GPU 资源和时间，实时部署时策略推理速度受限于嵌入式计算平台\n\n4. **任务专用性**：针对跳跃任务的策略可能难以直接迁移到其他运动模式（行走、奔跑）\n\n5. **安全保证缺失**：强化学习策略缺乏形式化安全验证，在极端情况下可能出现危险行为\n\n6. **适应性局限**：对训练分布外的极端场景（如严重损坏的电机）泛化能力未知\n\n### 6.2 改进方向\n\n- 引入**安全层（Safety Layer）**或**约束强化学习**确保硬件安全\n- 采用**元学习（Meta-Learning）**提高快速适应能力\n- 结合**系统辨识**在线更新动力学模型\n- 探索**层次化策略**实现多种运动模式切换",
+  "score_report": "",
+  "readable_report": "",
   "sensemaking": null,
-  "rating": 3,
+  "rating": {
+    "innovation": 7,
+    "technical_quality": 7,
+    "experimental_validation": 8,
+    "writing_quality": 6,
+    "relevance": 9,
+    "overall_score": 7.4,
+    "strengths": [
+      "提出的框架结合深度强化学习与非线性轨迹优化是一个合理的技术路线",
+      "实验验证了6cm足部扰动（33%站立高度）和2倍体长跳跃的鲁棒性",
+      "sim-to-real无微调迁移的结果具有实际应用价值",
+      "考虑了电机扭矩-转速关系和功率限制等关键物理约束"
+    ],
+    "weaknesses": [
+      "摘要中作者信息存在错误（Quan Nguyen重复出现）",
+      "方法论细节在摘要中披露不足，难以全面评估技术质量",
+      "与现有方法的对比分析未在摘要中体现",
+      "创新性描述较为笼统，未明确说明与现有RL四足跳跃研究的区别"
+    ]
+  },
   "parsed_source": {
     "files": [
       {
@@ -36,16 +61,26 @@
     ],
     "recognized_fields": {
       "title": "Robust Quadruped Jumping via Deep Reinforcement Learning",
+      "authors": [
+        "Guillaume Bellegarda",
+        "Quan Nguyen",
+        "Nguyen, Quan"
+      ],
       "year": 2023,
-      "abstract": "In this paper, we consider a general task of jumping varying distances and heights for a quadrupedal robot..."
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2011.07089",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "In this paper, we consider a general task of jumping varying distances and heights for a quadrupedal robot in noisy environments, such as off of uneven terrain and with variable robot dynamics parameters. To accurately jump in such conditions, we propose a framework using deep reinforcement learning that leverages and augments the complex solution of nonlinear trajectory optimization for quadrupedal jumping. While the standalone optimization limits jumping to take-off from flat ground and requires accurate assumptions of robot dynamics, our proposed approach improves the robustness to allow jumping off of significantly uneven terrain with variable robot dynamical parameters and environmental conditions. Compared with walking and running, the realization of aggressive jumping on hardware necessitates accounting for the motors' torque-speed relationship as well as the robot's total power limits. By incorporating these constraints into our learning framework, we successfully deploy our policy sim-to-real without further tuning, fully exploiting the available onboard power supply and motors. We demonstrate robustness to environment noise of foot disturbances of up to 6 cm in height, or 33% of the robot's nominal standing height, while jumping 2x the body length in distance.",
+      "route_id": "cfc4833a-f575-4e2e-8d21-a917b6452763"
     },
     "markdown_stats": {
-      "lines": 4,
-      "words": 28,
-      "headings": 2
+      "lines": 376,
+      "words": 10443,
+      "headings": 17
     },
     "assets": {
-      "images": 0,
+      "images": 37,
       "has_layout": false,
       "content_lists": []
     },
@@ -58,5 +93,5 @@
   "route_id": "cfc4833a-f575-4e2e-8d21-a917b6452763",
   "paper_ref": "cfc4833a-f575-4e2e-8d21-a917b6452763",
   "read_only": true,
-  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
 }

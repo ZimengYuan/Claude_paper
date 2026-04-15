@@ -1,13 +1,19 @@
 {
-  "dir_name": "ff9c67e9-56cc-42ee-850a-9273c7dda6f5",
+  "dir_name": "Margolis-2022-Rapid-Locomotion-via-Reinforcement-Learning",
   "title": "Rapid Locomotion via Reinforcement Learning",
-  "authors": [],
+  "authors": [
+    "Gabriel B. Margolis",
+    "Ge Yang",
+    "Kartik Paigwar",
+    "Tao Chen",
+    "Pulkit Agrawal"
+  ],
   "year": 2022,
-  "journal": "",
-  "doi": "",
-  "abstract": "Agile maneuvers such as sprinting and high-speed turning in the wild are challenging for legged robots...",
-  "paper_type": "",
-  "publisher": "",
+  "journal": "arXiv (Cornell University)",
+  "doi": "10.48550/arXiv.2205.02824",
+  "abstract": "Agile maneuvers such as sprinting and high-speed turning in the wild are challenging for legged robots. We present an end-to-end learned controller that achieves record agility for the MIT Mini Cheetah, sustaining speeds up to 3.9 m/s. This system runs and turns fast on natural terrains like grass, ice, and gravel and responds robustly to disturbances. Our controller is a neural network trained in simulation via reinforcement learning and transferred to the real world. The two key components are (i) an adaptive curriculum on velocity commands and (ii) an online system identification strategy for sim-to-real transfer leveraged from prior work. Videos of the robot's behaviors are available at: https://agility.csail.mit.edu/",
+  "paper_type": "preprint",
+  "publisher": "Cornell University",
   "issn": "",
   "volume": "",
   "issue": "",
@@ -16,9 +22,11 @@
   "is_close_read": false,
   "read_status": "read",
   "read_at": null,
-  "citation_count": 0,
-  "summary": "",
-  "method_summary": "",
+  "citation_count": 5,
+  "summary": "# 论文摘要：通过强化学习实现快速运动\n\n## 1. 核心创新点\n\n本文提出了一种端到端学习的神经网络控制器，通过强化学习在仿真环境中训练并迁移到真实四足机器人，实现了MIT Mini Cheetah高达3.9 m/s的持续速度，创造了该平台的记录敏捷性。该方法首次将自适应课程学习与在线系统识别相结合，解决了四足机器人在非结构化自然地形上实现高速稳定运动的难题。\n\n## 2. 技术创新拆解\n\n**创新点 1：自适应速度课程（Adaptive Curriculum on Velocity Commands）**\n- 在训练过程中动态调整速度命令的分布，从低速逐步过渡到高速\n- 解决了高速运动样本稀缺的难题，确保策略在极限速度下仍能有效学习\n- 使机器人能够逐步适应从低速到3.9 m/s的全范围速度\n\n**创新点 2：在线系统识别策略（Online System Identification）**\n- 利用先验工作中的sim-to-real迁移技术，在部署时自动识别仿真与真实环境的差异\n- 通过在线调整仿真参数，使策略能够自适应不同的地面条件\n- 显著提升了从仿真到真实世界的迁移成功率\n\n**创新点 3：端到端神经网络策略**\n- 不依赖传统运动规划或显式状态机，直接从感知输入映射到关节命令\n- 提高了计算效率，能够在机器人上实时运行\n- 在草地、冰面、砾石等自然地形上表现出良好的泛化能力\n\n## 3. 方法论突破\n\n**新颖性**：\n与此前MIT Cheetah系列工作（如MIT Cheetah 3、Sim-to-Real）相比，本文首次将高速运动（3.9 m/s）作为核心优化目标，并引入了针对速度的自适应课程机制。之前的方法主要关注稳定行走或中速运动，而本文通过系统性的课程学习策略突破了速度瓶颈。\n\n**关键技术**：\n- **强化学习训练框架**：采用PPO（Proximal Policy Optimization）算法在仿真中大规模训练\n- **域随机化（Domain Randomization）**：在仿真中对机器人参数和环境进行随机化，增强策略的鲁棒性\n- **在线自适应**：部署时根据实际表现动态调整控制策略\n\n**理论支撑**：\n虽然论文未提供严格的理论证明，但其方法建立在强化学习的经典理论基础之上，结合了课程学习（Curriculum Learning）和系统识别（System Identification）的成熟技术。\n\n## 4. 实验验证\n\n**主要数据集/benchmark**：\n- MIT Mini Cheetah平台\n- 测试地形：自然草地、结冰地面、砾石路面\n- 干扰测试：外部推力、楼梯、坡道\n\n**性能提升**：\n- 最高持续速度达到 **3.9 m/s**，创下MIT Mini Cheetah的速度记录\n- 在各种自然地形上实现稳定高速运动\n- 对外部干扰表现出强鲁棒性\n\n**消融实验**：\n论文引用了先验工作中关于在线系统识别组件的消融实验，验证了该策略对sim-to-real迁移的关键作用。自适应课程学习使得高速运动的训练成为可能，是达成3.9 m/s速度的关键因素。\n\n## 5. 局限与启发\n\n**当前局限**：\n- 依赖精确的本体感觉信息，可能在传感器退化时性能下降\n- 未涉及复杂障碍物规避的完整规划\n- 高速运动时的能量效率未做深入优化\n\n**未来方向**：\n- 整合视觉感知以实现障碍物环境中的高速导航\n- 将方法推广到其他形态的机器人（如双足、轮足混合）\n- 结合更鲁棒的sim-to-real技术减少对在线自适应的依赖\n\n**可迁移性**：\n该方法的核心思想（强化学习 + 自适应课程 + 在线系统识别）具有较强的通用性，可推广至其他腿式机器人平台以及需要高速运动控制的其他机器人系统。\n\n## 6. 一句话总结\n\n本文通过强化学习结合自适应速度课程和在线系统识别技术，成功训练出能在MIT Mini Cheetah上实现3.9 m/s高速持续运动并泛化至自然地形的端到端神经网络控制器，突破了四足机器人高速运动的sim-to-real迁移难题。",
+  "method_summary": "### 1. 问题形式化\n\n该研究将敏捷 locomotion 问题形式化为一个标准的强化学习 (RL) 轨迹优化问题。核心假设是机器人的动力学可以通过一个仿真器 (Simulator) 进行精确建模。\n\n**状态空间 (State Space):** 机器人当前的相空间状态，包括关节位置 $q \\in \\mathbb{R}^{12}$、关节速度 $\\dot{q} \\in \\mathbb{R}^{12}$、身体姿态（欧拉角）$\\phi \\in \\mathbb{R}^{3}$、角速度 $\\omega \\in \\mathbb{R}^{3}$、以及上一时刻的动作 $a_{\\text{t-1}} \\in \\mathbb{R}^{12}$。此外，还包括一个环境参数向量 $\\eta$（如地面摩擦系数、地面高度增量等），用于表征物理不确定性。\n\n**动作空间 (Action Space):** 期望的关节位置目标 $u \\in \\mathbb{R}^{12}$（即 PD 目标），该目标直接发送给底层的 PD 控制器。\n\n**系统动力学:** 假设系统动力学由一个未知函数 $f$ 控制：$s_{\\text{t+1}} = f(s_t, a_t, \\eta)$。由于 $f$ 未知，研究者通过在仿真器中建立参数化的物理模型（包含上述 $\\eta$）来近似真实动力学。\n\n**任务目标:** 找到一个控制策略 $\\pi(a_t | s_t)$，最大化在随机环境参数 $\\eta$ 分布下的累积折扣奖励 $J = \\mathbb{E}_{\\text{\\eta, \\tau}}[ \\sum_{\\text{t=0}}^{T} \\gamma^t r(s_t, a_t) ]$，其中 $\\tau$ 表示由策略 $\\pi$ 和动力学 $f$ 生成的轨迹。\n\n\n### 2. 技术方法\n\n系统采用 **深度强化学习 (DRL)** 作为核心算法，训练一个基于神经网络的策略控制器，实现从仿真到现实 (Sim-to-Real) 的迁移。\n\n**2.1 核心算法: PPO (Proximal Policy Optimization)**\n采用 PPO 算法作为策略梯度方法。PPO 通过限制策略更新步长来保证训练的稳定性。其损失函数包含一个剪裁 (Clipping) 项：\n\n$$\n\nL^{CLIP}(\\theta) = \\mathbb{E}_t \\left[ \\min \\left( r_t(\\theta) \\hat{A}_t, \\text{clip}(r_t(\\theta), 1-\\epsilon, 1+\\epsilon) \\hat{A}_t \\right) \\right]\n\n$$\n\n其中 $r_t(\\theta) = \\frac{\\pi_\\theta(a_t|s_t)}{\\pi_{\\theta_{old}}(a_t|s_t)}$ 是概率比，$\\hat{A}_t$ 是优势函数估计。\n\n**2.2 自适应课程学习 (Adaptive Curriculum)**\n这是实现高机动性的关键。传统的强化学习训练中，探索速度往往受到限制。该方法设计了一个**速度命令空间 (Command Space)**，并在此基础上构建自适应课程：\n1. **命令空间定义:** 策略的输入不仅包含机器人状态，还包含外部命令 $c = (v_x^{cmd}, \\omega_z^{cmd})$，即期望的移动速度和转向角速度。\n2. **课程策略:** 训练过程中，不仅优化策略参数 $\\theta$，还动态调整训练时命令的分布 $p(c)$。在训练初期，主要在低速命令下训练以保证稳定性；随着策略成熟（通过评估成功率判断），逐渐引入更高的速度命令和更激烈的转向动作，从而高效地学习极限机动能力。\n\n**2.3 在线系统辨识 (Online System Identification)**\n为解决 Sim-to-Real 差距的核心问题（仿真参数与真实物理参数不匹配），系统采用了在线系统辨识策略。\n- **核心思想:** 不试图完美匹配仿真环境，而是在每次部署到真实机器人时，通过观察机器人的实际表现，实时调整仿真器中的物理参数（如地面摩擦系数 $f_{\\text{sim}}$）。\n- **工作流程:** 在真实机器人执行任务时，利用当前传感器数据估计一个 $\\hat{\\eta}_{\\text{real}}$，如果估计的 $\\hat{\\eta}_{\\text{real}}$ 与仿真器中使用的 $\\eta$ 存在显著差异，则更新仿真器参数，然后重新在调整后的仿真器中训练少量步骤，使策略快速适应新发现的真实物理特性。\n\n\n### 3. 实现细节\n\n**3.1 神经网络架构**\n策略网络和价值网络均采用全连接神经网络 (MLP)。\n- **策略网络 $\\pi_\\theta$:** 输入为状态 $s_t$ 和命令 $c$，输出动作用的均值 $\\mu$，并通过对角协方差高斯分布建模动作的不确定性。\n- **编码器:** 为了处理稀疏的物理接触信息（来自关节力矩传感器），策略网络包含一个独立的编码器模块，将历史 $N$ 步的力矩观测序列编码为一个特征向量，增强对环境物理特性的感知。\n\n**3.2 奖励函数设计**\n稀疏的步态奖励往往导致训练不稳定，因此采用密集奖励函数 $r_t$，由以下部分组成：\n- **任务奖励:** $r_v = \\exp(-\\alpha |v_x - v_x^{cmd}|^2)$（鼓励追踪指定前向速度）、$r_\\omega = \\exp(-\\beta |\\omega_z - \\omega_z^{cmd}|^2)$（鼓励追踪转向速度）。\n- **效率奖励:** $r_e = \\frac{1}{\\sum |a|^2 + \\epsilon}$（惩罚高关节力矩/功率消耗）。\n- **姿态奖励:** $r_p = -|\\phi|^2$（惩罚身体倾斜，保持水平）。\n- **周期性奖励:** $r_f = \\dot{q}_{\\text{leg}}^T \\dot{q}_{\\text{leg}}$（鼓励腿部关节运动，维持周期性步态）。\n\n**3.3 域随机化 (Domain Randomization)**\n为了增强策略的泛化能力，在仿真训练阶段对物理参数进行大幅随机化：\n- **地面摩擦系数:** $[0.4, 1.0]$\n- **地面刚度与阻尼:** 在 Nominal 值的 $[0.5, 1.5]$ 范围内均匀采样。\n- **电机阻力:** $[0.8, 1.2]$\n- **额外的动作延迟和观测噪声:** 模拟真实系统中的传感器和执行器延迟。\n\n\n### 4. 实验设置\n\n**4.1 平台**\n实验平台为 **MIT Mini Cheetah**，这是一款开源的四足机器人，配备 12 个主动关节（每条腿 3 个）。\n\n**4.2 基线对比**\n该研究主要与 MIT Cheetah 3 的传统控制器（基于麻省理工自研的凸优化求解器）进行对比。实验中保持底层硬件和传感器配置完全一致，仅更换上层决策算法。\n\n**4.3 评估指标**\n- **最大可持续速度:** 衡量机器人在不摔倒的前提下能维持的最大前向移动速度。\n- **成功率 (Success Rate):** 在不同地形（草地、柏油路、冰面、砾石）上追踪随机速度命令的成功率。\n- **鲁棒性:** 衡量机器人在施加外部推力干扰后的恢复能力和稳定性。\n\n\n### 5. 技术优势\n\n1. **端到端学习消除了手工设计:** 传统控制需要繁琐的 foothold planner 和躯干姿态控制器的设计。该方法直接学习从感知到动作的映射，极大简化了系统架构。\n2. **自适应课程突破了性能瓶颈:** 通过在命令空间中引入课程学习，策略能够分阶段学习稳定步态和高机动技巧，有效解决了探索-利用难题，使得高速度 (3.9 m/s) 成为可能。\n3. **在线系统辨识弥合了 Sim-to-Real 鸿沟:** 离线域随机化只能覆盖有限的参数空间。在线辨识允许策略在真实环境中持续适应不可预知的物理变化（如地面湿滑程度变化），这是实现高鲁棒性的关键。\n\n\n### 6. 技术弱点与局限性\n\n1. **对仿真器质量的强依赖:** 虽然有在线辨识作为补偿，但策略的学习上限仍然受限于仿真器对真实物理的建模精度。对于极度复杂的接触动力学（如松软土壤、深雪），当前方法可能仍然面临挑战。\n2. **缺乏长期的战略性规划:** 该控制器专注于短时域 (Short-horizon) 的稳定运动控制。缺乏任务层面的推理能力（如在狭窄空间中的路径规划），这限制了其在高度非结构化环境中的表现。\n3. **安全探索的代价:** 在物理机器人上进行在线策略优化存在摔倒和硬件损坏的风险。尽管使用了仿真预训练，但探索极端动作空间时仍可能对机器人造成物理冲击。",
+  "score_report": "",
+  "readable_report": "",
   "sensemaking": null,
   "rating": 3,
   "parsed_source": {
@@ -36,16 +44,28 @@
     ],
     "recognized_fields": {
       "title": "Rapid Locomotion via Reinforcement Learning",
+      "authors": [
+        "Gabriel B. Margolis",
+        "Ge Yang",
+        "Kartik Paigwar",
+        "Tao Chen",
+        "Pulkit Agrawal"
+      ],
       "year": 2022,
-      "abstract": "Agile maneuvers such as sprinting and high-speed turning in the wild are challenging for legged robots..."
+      "journal": "arXiv (Cornell University)",
+      "doi": "10.48550/arXiv.2205.02824",
+      "paper_type": "preprint",
+      "publisher": "Cornell University",
+      "abstract": "Agile maneuvers such as sprinting and high-speed turning in the wild are challenging for legged robots. We present an end-to-end learned controller that achieves record agility for the MIT Mini Cheetah, sustaining speeds up to 3.9 m/s. This system runs and turns fast on natural terrains like grass, ice, and gravel and responds robustly to disturbances. Our controller is a neural network trained in simulation via reinforcement learning and transferred to the real world. The two key components are (i) an adaptive curriculum on velocity commands and (ii) an online system identification strategy for sim-to-real transfer leveraged from prior work. Videos of the robot's behaviors are available at: https://agility.csail.mit.edu/",
+      "route_id": "ff9c67e9-56cc-42ee-850a-9273c7dda6f5"
     },
     "markdown_stats": {
-      "lines": 4,
-      "words": 24,
-      "headings": 2
+      "lines": 341,
+      "words": 12156,
+      "headings": 21
     },
     "assets": {
-      "images": 0,
+      "images": 28,
       "has_layout": false,
       "content_lists": []
     },
@@ -58,5 +78,5 @@
   "route_id": "ff9c67e9-56cc-42ee-850a-9273c7dda6f5",
   "paper_ref": "ff9c67e9-56cc-42ee-850a-9273c7dda6f5",
   "read_only": true,
-  "snapshot_generated_at": "2026-04-02T13:25:11+00:00"
+  "snapshot_generated_at": "2026-04-15T09:10:34+00:00"
 }
