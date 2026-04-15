@@ -11,46 +11,34 @@
           当前卡片 {{ filteredTodoCards.length }} / {{ todoCards.length }}
         </span>
         <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5">
-          已读本地保存，不回写后台
+          Todo 默认全部按未读展示
         </span>
       </div>
     </div>
 
     <div class="mt-6 space-y-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_180px_180px]">
-      <label class="block">
-        <span class="mb-2 block text-sm font-medium text-slate-700">搜索</span>
-        <input
-          v-model="searchQuery"
-          type="text"
-          placeholder="搜索标题、作者、术语、结论..."
-          class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-        />
-      </label>
+      <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_180px]">
+        <label class="block">
+          <span class="mb-2 block text-sm font-medium text-slate-700">搜索</span>
+          <input
+            v-model="searchQuery"
+            type="text"
+            placeholder="搜索标题、作者、术语、结论..."
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          />
+        </label>
 
-      <label class="block">
-        <span class="mb-2 block text-sm font-medium text-slate-700">状态</span>
-        <select
-          v-model="statusFilter"
-          class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-        >
-          <option value="">全部</option>
-          <option value="unread">未读</option>
-          <option value="read">已读</option>
-        </select>
-      </label>
-
-      <label class="block">
-        <span class="mb-2 block text-sm font-medium text-slate-700">排序</span>
-        <select
-          v-model="sortBy"
-          class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-        >
-          <option value="">Todo 顺序</option>
-          <option value="year">按年份</option>
-          <option value="title">按标题</option>
-        </select>
-      </label>
+        <label class="block">
+          <span class="mb-2 block text-sm font-medium text-slate-700">排序</span>
+          <select
+            v-model="sortBy"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          >
+            <option value="">Todo 顺序</option>
+            <option value="year">按年份</option>
+            <option value="title">按标题</option>
+          </select>
+        </label>
       </div>
 
       <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -108,25 +96,6 @@
         >
           清空筛选
         </button>
-        <button
-          class="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-          @click="exportReadStatuses"
-        >
-          导出已读状态
-        </button>
-        <button
-          class="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-          @click="triggerImportStatuses"
-        >
-          导入已读状态
-        </button>
-        <input
-          ref="importStatusesInput"
-          type="file"
-          accept="application/json"
-          class="hidden"
-          @change="handleImportStatuses"
-        />
         <span class="text-sm text-slate-500">命中 {{ filteredTodoCards.length }} 条</span>
       </div>
     </div>
@@ -173,13 +142,6 @@
         </div>
 
         <div class="mt-5 flex flex-wrap gap-3">
-          <button
-            class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
-            @click="toggleTodoReadStatus(card.route_id)"
-          >
-            {{ card.read_status === 'read' ? '标记未读' : '标记已读' }}
-          </button>
-
           <NuxtLink
             class="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
             :to="todoDetailLink(card.route_id)"
@@ -222,25 +184,25 @@
 </template>
 
 <script setup>
-const TODO_READ_STATUS_STORAGE_KEY = 'scholaraio:todo-read-statuses:v2'
-
 const { fetchJson } = useStaticSiteData()
+const runtimeConfig = useRuntimeConfig()
 
 const searchQuery = ref('')
 const authorFilter = ref('')
 const yearFrom = ref(null)
 const yearTo = ref(null)
 const doiFilter = ref('')
-const statusFilter = ref('')
 const sortBy = ref('')
 const todoCards = ref([])
 const loading = ref(true)
 const errorMessage = ref('')
-const todoReadStatuses = ref({})
 const currentPage = ref(1)
 const pageSize = 24
-const importStatusesInput = ref(null)
 
+const appBaseUrl = computed(() => {
+  const value = String(runtimeConfig.app.baseURL || '/')
+  return value.endsWith('/') ? value : value + '/'
+})
 const normalizedQuery = computed(() => searchQuery.value.trim().toLowerCase())
 const normalizedAuthorFilter = computed(() => authorFilter.value.trim().toLowerCase())
 
@@ -248,16 +210,6 @@ const matchesSearch = (values) => {
   const query = normalizedQuery.value
   if (!query) return true
   return values.some((value) => String(value || '').toLowerCase().includes(query))
-}
-
-const applyTodoReadStatuses = () => {
-  todoCards.value = todoCards.value.map((card) => {
-    const localStatus = todoReadStatuses.value[card.route_id]
-    const readStatus = localStatus === 'read' || localStatus === 'unread'
-      ? localStatus
-      : (card.read_status || 'unread')
-    return { ...card, read_status: readStatus }
-  })
 }
 
 const filteredTodoCards = computed(() => {
@@ -293,10 +245,6 @@ const filteredTodoCards = computed(() => {
     result = result.filter((card) => String(card.doi || '').trim() === '')
   }
 
-  if (statusFilter.value) {
-    result = result.filter((card) => (card.read_status || 'unread') === statusFilter.value)
-  }
-
   if (sortBy.value === 'year') {
     result = [...result].sort((a, b) => (b.year || 0) - (a.year || 0))
   } else if (sortBy.value === 'title') {
@@ -320,44 +268,6 @@ watch(filteredTodoCards, () => {
   currentPage.value = 1
 })
 
-const restoreTodoReadStatuses = () => {
-  if (!import.meta.client) return
-
-  try {
-    const raw = window.localStorage.getItem(TODO_READ_STATUS_STORAGE_KEY)
-    if (!raw) return
-    const parsed = JSON.parse(raw)
-    if (parsed && typeof parsed === 'object') {
-      todoReadStatuses.value = parsed
-    }
-  } catch (error) {
-    console.error('Failed to restore todo read statuses:', error)
-  }
-}
-
-const persistTodoReadStatuses = () => {
-  if (!import.meta.client) return
-
-  try {
-    window.localStorage.setItem(TODO_READ_STATUS_STORAGE_KEY, JSON.stringify(todoReadStatuses.value))
-  } catch (error) {
-    console.error('Failed to persist todo read statuses:', error)
-  }
-}
-
-const toggleTodoReadStatus = (routeId) => {
-  const card = todoCards.value.find(item => item.route_id === routeId)
-  if (!card) return
-
-  const nextStatus = card.read_status === 'read' ? 'unread' : 'read'
-  card.read_status = nextStatus
-  todoReadStatuses.value = {
-    ...todoReadStatuses.value,
-    [routeId]: nextStatus,
-  }
-  persistTodoReadStatuses()
-}
-
 const statusClass = (status) => {
   const classes = {
     unread: 'bg-slate-100 text-slate-600',
@@ -379,22 +289,22 @@ const highlightText = (value) => {
   const query = normalizedQuery.value
   if (!query) return safe
   const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const regex = new RegExp(`(${escapedQuery})`, 'ig')
+  const regex = new RegExp('(' + escapedQuery + ')', 'ig')
   return safe.replace(regex, '<mark class="rounded bg-yellow-200/80 px-0.5">$1</mark>')
 }
 
 const previewText = (card) => {
   const raw = String(card.core_innovation || '').trim()
   if (!raw) return ''
-  return raw.length > 180 ? `${raw.slice(0, 180)}...` : raw
+  return raw.length > 180 ? raw.slice(0, 180) + '...' : raw
 }
 
-const todoDetailLink = (routeId) => routeId ? `/todo/${routeId}` : '#'
+const todoDetailLink = (routeId) => routeId ? appBaseUrl.value + 'todo/' + routeId : '#'
 const paperLink = (card) => {
   const paperRouteId = String(card?.paper_route_id || '').trim()
-  if (paperRouteId) return `/paper/${paperRouteId}`
+  if (paperRouteId) return appBaseUrl.value + 'paper/' + paperRouteId
   const doi = String(card?.doi || '').trim()
-  if (doi) return `https://doi.org/${doi}`
+  if (doi) return 'https://doi.org/' + doi
   return '#'
 }
 
@@ -403,8 +313,11 @@ const loadTodoCards = async () => {
   errorMessage.value = ''
   try {
     const todoData = await fetchJson('todo-cards.json')
-    todoCards.value = Array.isArray(todoData?.cards) ? todoData.cards : []
-    applyTodoReadStatuses()
+    const cards = Array.isArray(todoData?.cards) ? todoData.cards : []
+    todoCards.value = cards.map((card) => ({
+      ...card,
+      read_status: 'unread',
+    }))
   } catch (error) {
     console.error('Failed to load todo cards:', error)
     errorMessage.value = 'Failed to load Todo snapshot.'
@@ -419,61 +332,8 @@ const clearFilters = () => {
   yearFrom.value = null
   yearTo.value = null
   doiFilter.value = ''
-  statusFilter.value = ''
   sortBy.value = ''
 }
 
-const exportReadStatuses = () => {
-  if (!import.meta.client) return
-  const payload = {
-    version: 1,
-    exported_at: new Date().toISOString(),
-    statuses: todoReadStatuses.value,
-  }
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = `todo-read-statuses-${new Date().toISOString().slice(0, 10)}.json`
-  a.click()
-  URL.revokeObjectURL(url)
-}
-
-const triggerImportStatuses = () => {
-  importStatusesInput.value?.click()
-}
-
-const handleImportStatuses = async (event) => {
-  const input = event.target
-  const file = input?.files?.[0]
-  if (!file) return
-
-  try {
-    const text = await file.text()
-    const parsed = JSON.parse(text)
-    const statuses = parsed?.statuses && typeof parsed.statuses === 'object' ? parsed.statuses : parsed
-    if (!statuses || typeof statuses !== 'object') return
-
-    const normalized = {}
-    for (const [routeId, value] of Object.entries(statuses)) {
-      if (value === 'read' || value === 'unread') normalized[routeId] = value
-    }
-
-    todoReadStatuses.value = {
-      ...todoReadStatuses.value,
-      ...normalized,
-    }
-    applyTodoReadStatuses()
-    persistTodoReadStatuses()
-  } catch (error) {
-    console.error('Failed to import read statuses:', error)
-  } finally {
-    input.value = ''
-  }
-}
-
-onMounted(async () => {
-  restoreTodoReadStatuses()
-  await loadTodoCards()
-})
+onMounted(loadTodoCards)
 </script>

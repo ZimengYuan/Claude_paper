@@ -35,8 +35,8 @@
               <span class="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">
                 Todo Detail
               </span>
-              <span class="rounded-full px-3 py-1 text-xs font-medium" :class="statusClass(resolvedReadStatus)">
-                {{ resolvedReadStatus === 'read' ? '已读' : '未读' }}
+              <span class="rounded-full px-3 py-1 text-xs font-medium" :class="statusClass(card.read_status || 'unread')">
+                {{ (card.read_status || 'unread') === 'read' ? '已读' : '未读' }}
               </span>
             </div>
             <h1 class="mt-4 text-3xl font-semibold leading-tight text-slate-900">{{ card.title }}</h1>
@@ -67,10 +67,10 @@
         <div class="mt-4 grid gap-4">
           <div
             v-for="(item, index) in card.technical_contributions"
-            :key="`${card.route_id}-${index}`"
+            :key="card.route_id + '-' + index"
             class="rounded-2xl border border-slate-200 bg-slate-50 p-4"
           >
-            <p class="text-sm font-semibold text-slate-900">{{ item.title || `创新点 ${index + 1}` }}</p>
+            <p class="text-sm font-semibold text-slate-900">{{ item.title || ('创新点 ' + (index + 1)) }}</p>
             <p class="mt-2 text-sm leading-7 text-slate-700">{{ item.body }}</p>
           </div>
         </div>
@@ -120,7 +120,7 @@
             <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Compass Snapshot</p>
             <h2 class="mt-2 text-lg font-semibold text-slate-900">6. Paper Compass</h2>
             <p class="mt-2 text-sm text-slate-500">
-              评分报告与学习路径已迁移到独立页面，Todo 详情页这里只保留摘要入口，避免长下拉。
+              评分报告与学习路径已经单独拆到 Compass 页面。Todo 详情这里只保留一个紧凑入口，避免继续往下堆内容。
             </p>
           </div>
           <a
@@ -131,7 +131,7 @@
           </a>
         </div>
 
-        <div class="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+        <div class="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
           <div class="rounded-[28px] border border-slate-900 bg-[radial-gradient(circle_at_top_left,_rgba(96,165,250,0.28),_transparent_42%),linear-gradient(135deg,_#020617,_#111827_52%,_#1e293b)] p-6 text-white shadow-sm">
             <div class="flex flex-wrap items-start justify-between gap-4">
               <div>
@@ -145,7 +145,7 @@
               </span>
             </div>
             <p class="mt-5 text-sm leading-8 text-slate-100">
-              {{ ratingNote || '完整的评分理由、学习路径和原始报告已经拆到独立 Compass 页面。' }}
+              {{ ratingNote || '完整的评分依据与学习路径已经拆到独立 Compass 页面。' }}
             </p>
             <div class="mt-5 flex flex-wrap gap-2">
               <span
@@ -159,35 +159,22 @@
             </div>
           </div>
 
-          <div class="space-y-4">
-            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">关联论文</p>
-              <dl v-if="linkedPaperEntries.length" class="mt-4 space-y-3 text-sm">
-                <div v-for="entry in linkedPaperEntries" :key="entry.label">
-                  <dt class="text-slate-500">{{ entry.label }}</dt>
-                  <dd class="mt-1 break-all text-slate-900">{{ entry.value }}</dd>
-                </div>
-              </dl>
-              <p v-else class="mt-4 text-sm text-slate-500">当前还没读取到关联论文的静态详情。</p>
+          <div class="rounded-2xl border border-slate-200 bg-white p-5">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-semibold text-slate-900">评分维度</p>
+              <span class="text-xs text-slate-400">{{ ratingEntries.length ? (ratingEntries.length + ' 项') : '暂无' }}</span>
             </div>
-
-            <div class="rounded-2xl border border-slate-200 bg-white p-5">
-              <div class="flex items-center justify-between">
-                <p class="text-sm font-semibold text-slate-900">评分维度</p>
-                <span class="text-xs text-slate-400">{{ ratingEntries.length ? `${ratingEntries.length} 项` : '暂无' }}</span>
+            <div v-if="ratingEntries.length" class="mt-4 grid gap-3 sm:grid-cols-2">
+              <div
+                v-for="entry in ratingEntries"
+                :key="entry.label"
+                class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3"
+              >
+                <p class="text-xs font-medium uppercase tracking-wide text-slate-400">{{ entry.label }}</p>
+                <p class="mt-2 text-lg font-semibold text-slate-900">{{ entry.value }}/10</p>
               </div>
-              <div v-if="ratingEntries.length" class="mt-4 grid gap-3 sm:grid-cols-2">
-                <div
-                  v-for="entry in ratingEntries"
-                  :key="entry.label"
-                  class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3"
-                >
-                  <p class="text-xs font-medium uppercase tracking-wide text-slate-400">{{ entry.label }}</p>
-                  <p class="mt-2 text-lg font-semibold text-slate-900">{{ entry.value }}/10</p>
-                </div>
-              </div>
-              <p v-else class="mt-4 text-sm text-slate-500">当前静态快照里还没有可展示的结构化评分。</p>
             </div>
+            <p v-else class="mt-4 text-sm text-slate-500">当前静态快照里还没有可展示的结构化评分。</p>
           </div>
         </div>
       </section>
@@ -196,8 +183,6 @@
 </template>
 
 <script setup>
-const TODO_READ_STATUS_STORAGE_KEY = 'scholaraio:todo-read-statuses:v2'
-
 const { fetchJson } = useStaticSiteData()
 const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
@@ -209,42 +194,16 @@ const card = ref(null)
 const paper = ref(null)
 const scoreReport = ref('')
 const readableReport = ref('')
-const localReadStatuses = ref({})
 
-const paperRouteId = computed(() => String(card.value?.paper_route_id || '').trim())
 const appBaseUrl = computed(() => {
   const value = String(runtimeConfig.app.baseURL || '/')
-  return value.endsWith('/') ? value : `${value}/`
+  return value.endsWith('/') ? value : value + '/'
 })
-const compassDetailLink = computed(() => `${appBaseUrl.value}compass/${routeId.value}`)
-
-const resolvedReadStatus = computed(() => {
-  if (!card.value) return 'unread'
-  const localStatus = localReadStatuses.value[card.value.route_id]
-  if (localStatus === 'read' || localStatus === 'unread') {
-    return localStatus
-  }
-  return card.value.read_status || 'unread'
-})
+const compassDetailLink = computed(() => appBaseUrl.value + 'compass/' + routeId.value)
 
 useHead(() => ({
-  title: card.value ? `${card.value.title} | Todo Reading Card` : 'Todo Reading Card',
+  title: card.value ? card.value.title + ' | Todo Reading Card' : 'Todo Reading Card',
 }))
-
-const restoreReadStatuses = () => {
-  if (!import.meta.client) return
-
-  try {
-    const raw = window.localStorage.getItem(TODO_READ_STATUS_STORAGE_KEY)
-    if (!raw) return
-    const parsed = JSON.parse(raw)
-    if (parsed && typeof parsed === 'object') {
-      localReadStatuses.value = parsed
-    }
-  } catch (error) {
-    console.error('Failed to restore todo read statuses:', error)
-  }
-}
 
 const statusClass = (status) => {
   const classes = {
@@ -269,9 +228,9 @@ const ratingClass = (score) => {
 
 const paperLink = (todoCard) => {
   const linkedPaperRouteId = String(todoCard?.paper_route_id || '').trim()
-  if (linkedPaperRouteId) return `${appBaseUrl.value}paper/${linkedPaperRouteId}`
+  if (linkedPaperRouteId) return appBaseUrl.value + 'paper/' + linkedPaperRouteId
   const doi = String(todoCard?.doi || '').trim()
-  if (doi) return `https://doi.org/${doi}`
+  if (doi) return 'https://doi.org/' + doi
   return '#'
 }
 
@@ -309,18 +268,7 @@ const ratingNote = computed(() => paper.value?.rating?.one_line_verdict || paper
 const overallRatingText = computed(() => {
   const score = paper.value?.rating?.overall_score
   if (score == null) return 'n/a'
-  return `${Number(score).toFixed(1)}/10`
-})
-
-const linkedPaperEntries = computed(() => {
-  if (paper.value == null) return []
-  return [
-    { label: '标题', value: paper.value.title },
-    { label: '年份', value: paper.value.year },
-    { label: '期刊 / Venue', value: paper.value.journal },
-    { label: 'DOI', value: paper.value.doi },
-    { label: 'Route ID', value: paperRouteId.value },
-  ].filter((entry) => keepValue(entry.value))
+  return Number(score).toFixed(1) + '/10'
 })
 
 const compassMaterialEntries = computed(() => [
@@ -344,7 +292,7 @@ const loadLinkedPaper = async (matchedCard) => {
   if (!linkedRouteId) return
 
   try {
-    const payload = await fetchJson(`papers/${linkedRouteId}.json`)
+    const payload = await fetchJson('papers/' + linkedRouteId + '.json')
     applyPaperPayload(payload)
   } catch (error) {
     console.error('Failed to load linked paper snapshot:', error)
@@ -361,7 +309,10 @@ const loadCard = async () => {
     if (!matched) {
       throw new Error('Todo reading card not found in snapshot.')
     }
-    card.value = matched
+    card.value = {
+      ...matched,
+      read_status: 'unread',
+    }
     await loadLinkedPaper(matched)
   } catch (error) {
     console.error('Failed to load todo detail:', error)
@@ -371,8 +322,5 @@ const loadCard = async () => {
   }
 }
 
-onMounted(async () => {
-  restoreReadStatuses()
-  await loadCard()
-})
+onMounted(loadCard)
 </script>
