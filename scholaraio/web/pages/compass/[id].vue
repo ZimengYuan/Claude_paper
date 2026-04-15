@@ -97,46 +97,136 @@
             <div>
               <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Score Layer</p>
               <h2 class="mt-2 text-2xl font-semibold text-slate-950">Score Report</h2>
-              <p class="mt-2 text-sm text-slate-500">先看分数结构和结论，再往下读完整评分原文。</p>
+              <p class="mt-2 text-sm text-slate-500">先看结构化结论和分项评分，再按需展开原始报告。</p>
             </div>
             <span class="rounded-full border px-3 py-1 text-xs font-medium" :class="materialClass(Boolean(scoreReport))">
               {{ scoreReport ? '已就绪' : '缺失' }}
             </span>
           </div>
 
-          <div v-if="structuredScore.conclusion.length" class="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-            <div
-              v-for="entry in structuredScore.conclusion"
-              :key="entry.label"
-              class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4"
-            >
-              <p class="text-xs font-medium uppercase tracking-wide text-slate-400">{{ entry.label }}</p>
-              <p class="mt-2 text-sm leading-7 text-slate-900">{{ entry.value }}</p>
+          <div v-if="structuredScore.snapshot.length || structuredScore.conclusion.length || structuredScore.oneLine" class="mt-6 grid gap-4 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+            <div v-if="structuredScore.snapshot.length" class="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
+              <p class="text-sm font-semibold text-slate-900">论文快照</p>
+              <dl class="mt-4 space-y-3 text-sm">
+                <div v-for="entry in structuredScore.snapshot" :key="entry.label">
+                  <dt class="text-slate-500">{{ entry.label }}</dt>
+                  <dd class="mt-1 break-words text-slate-900">{{ entry.value }}</dd>
+                </div>
+              </dl>
+            </div>
+
+            <div class="space-y-4">
+              <div v-if="structuredScore.conclusion.length" class="grid gap-3 md:grid-cols-2">
+                <div
+                  v-for="entry in structuredScore.conclusion"
+                  :key="entry.label"
+                  class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4"
+                >
+                  <p class="text-xs font-medium uppercase tracking-wide text-slate-400">{{ entry.label }}</p>
+                  <p class="mt-2 text-sm leading-7 text-slate-900">{{ entry.value }}</p>
+                </div>
+              </div>
+
+              <div v-if="structuredScore.oneLine" class="rounded-[28px] border border-blue-100 bg-[linear-gradient(135deg,_rgba(239,246,255,0.9),_rgba(248,250,252,1))] p-5">
+                <p class="text-sm font-semibold text-slate-900">一句话判断</p>
+                <p class="mt-3 text-sm leading-8 text-slate-800">{{ structuredScore.oneLine }}</p>
+              </div>
             </div>
           </div>
 
-          <div v-if="ratingEntries.length" class="mt-6 grid gap-4 md:grid-cols-2">
-            <div
-              v-for="entry in ratingEntries"
-              :key="entry.label"
-              class="rounded-3xl border border-slate-200 bg-slate-50 p-5"
-            >
-              <div class="flex items-center justify-between gap-4">
-                <p class="text-sm font-semibold text-slate-900">{{ entry.label }}</p>
-                <p class="text-lg font-semibold text-slate-950">{{ entry.value }}/10</p>
-              </div>
-              <div class="mt-4 h-2 overflow-hidden rounded-full bg-slate-200">
-                <div
-                  class="h-full rounded-full bg-[linear-gradient(90deg,_#1d4ed8,_#60a5fa)]"
-                  :style="{ width: scoreBarWidth(entry.value) }"
-                ></div>
+          <div v-if="structuredScore.scoringRows.length" class="mt-6 space-y-4">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Scoring Breakdown</p>
+              <h3 class="mt-2 text-xl font-semibold text-slate-950">分项评分</h3>
+            </div>
+            <div class="grid gap-4 xl:grid-cols-2">
+              <article
+                v-for="row in structuredScore.scoringRows"
+                :key="row.dimension"
+                class="rounded-[28px] border border-slate-200 bg-slate-50 p-5"
+              >
+                <div class="flex items-start justify-between gap-4">
+                  <div>
+                    <p class="text-base font-semibold text-slate-950">{{ row.dimension }}</p>
+                    <p class="mt-1 text-xs text-slate-400">满分 {{ row.fullMark }}</p>
+                  </div>
+                  <span class="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700">
+                    {{ row.score }}/{{ row.fullMark }}
+                  </span>
+                </div>
+                <div class="mt-4 h-2 overflow-hidden rounded-full bg-slate-200">
+                  <div
+                    class="h-full rounded-full bg-[linear-gradient(90deg,_#1d4ed8,_#60a5fa)]"
+                    :style="{ width: scoreRatioWidth(row.score, row.fullMark) }"
+                  ></div>
+                </div>
+                <div class="mt-4 space-y-3">
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">评分依据</p>
+                    <p class="mt-2 text-sm leading-7 text-slate-700">{{ row.rationale }}</p>
+                  </div>
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">关键证据</p>
+                    <p class="mt-2 text-sm leading-7 text-slate-700">{{ row.evidence }}</p>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div v-if="structuredScore.peers.length" class="mt-6 space-y-4">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Peer Set</p>
+              <h3 class="mt-2 text-xl font-semibold text-slate-950">相似论文对比集合</h3>
+            </div>
+            <div class="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+              <article
+                v-for="peer in structuredScore.peers"
+                :key="peer.peer + '-' + peer.title"
+                class="rounded-[28px] border border-slate-200 bg-white p-5"
+              >
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">{{ peer.peer }}</span>
+                  <span v-if="peer.category" class="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">{{ peer.category }}</span>
+                  <span v-if="peer.year" class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs text-slate-500">{{ peer.year }}</span>
+                </div>
+                <h4 class="mt-4 text-base font-semibold leading-7 text-slate-950">{{ peer.title }}</h4>
+                <p v-if="peer.venue" class="mt-2 text-sm text-slate-500">{{ peer.venue }}</p>
+                <p v-if="peer.citations" class="mt-2 text-xs font-medium text-slate-400">引用量 {{ peer.citations }}</p>
+                <p class="mt-4 text-sm leading-7 text-slate-700">{{ peer.reason }}</p>
+                <a
+                  v-if="peer.arxiv"
+                  class="mt-4 inline-flex rounded-xl border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700 transition hover:bg-blue-100"
+                  :href="peer.arxiv"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  查看来源
+                </a>
+              </article>
+            </div>
+          </div>
+
+          <div v-if="structuredScore.observations.length" class="mt-6 space-y-4">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Comparison Notes</p>
+              <h3 class="mt-2 text-xl font-semibold text-slate-950">横向对比观察</h3>
+            </div>
+            <div class="grid gap-3 md:grid-cols-3">
+              <div
+                v-for="entry in structuredScore.observations"
+                :key="entry.label"
+                class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4"
+              >
+                <p class="text-xs font-medium uppercase tracking-wide text-slate-400">{{ entry.label }}</p>
+                <p class="mt-2 text-sm leading-7 text-slate-900">{{ entry.value }}</p>
               </div>
             </div>
           </div>
 
           <div v-if="structuredScore.reasons.length" class="mt-6 rounded-[28px] border border-slate-200 bg-slate-50 p-5">
             <p class="text-sm font-semibold text-slate-900">分数形成原因</p>
-            <div class="mt-4 grid gap-3 md:grid-cols-2">
+            <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               <div
                 v-for="entry in structuredScore.reasons"
                 :key="entry.label"
@@ -148,11 +238,47 @@
             </div>
           </div>
 
-          <div
-            v-if="scoreReport"
-            class="markdown-body prose prose-slate mt-6 max-w-none rounded-[28px] border border-slate-200 bg-slate-50/80 p-6 prose-headings:font-semibold prose-h1:text-2xl prose-h2:mt-8 prose-p:leading-8 prose-li:leading-7 prose-table:w-full"
-            v-html="renderMarkdown(scoreReport)"
-          ></div>
+          <div v-if="structuredScore.priority.length || structuredScore.sources.length" class="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+            <div v-if="structuredScore.priority.length" class="rounded-[28px] border border-slate-200 bg-white p-5">
+              <p class="text-sm font-semibold text-slate-900">是否值得优先读</p>
+              <div class="mt-4 grid gap-3 md:grid-cols-3">
+                <div
+                  v-for="entry in structuredScore.priority"
+                  :key="entry.label"
+                  class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4"
+                >
+                  <p class="text-xs font-medium uppercase tracking-wide text-slate-400">{{ entry.label }}</p>
+                  <p class="mt-2 text-sm leading-7 text-slate-900">{{ entry.value }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="structuredScore.sources.length" class="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
+              <p class="text-sm font-semibold text-slate-900">Sources</p>
+              <div class="mt-4 flex flex-wrap gap-3">
+                <a
+                  v-for="source in structuredScore.sources"
+                  :key="source.url"
+                  class="rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm text-blue-700 transition hover:bg-blue-100"
+                  :href="source.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {{ source.label || source.url }}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <details v-if="scoreReport" class="mt-6 overflow-hidden rounded-[28px] border border-slate-200 bg-slate-50/80">
+            <summary class="cursor-pointer list-none px-5 py-4 text-sm font-semibold text-slate-900">查看原始 Score Report 文本</summary>
+            <div class="border-t border-slate-200 p-5">
+              <div
+                class="markdown-body prose prose-slate max-w-none prose-headings:font-semibold prose-h1:text-2xl prose-h2:mt-8 prose-p:leading-8 prose-li:leading-7 prose-table:w-full"
+                v-html="renderMarkdown(scoreReport)"
+              ></div>
+            </div>
+          </details>
           <p v-else class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm text-slate-500">
             当前静态快照里还没有这篇论文的评分报告。
           </p>
@@ -581,9 +707,33 @@ const parseReadableReport = (markdown) => {
 
 const parseScoreReport = (markdown) => {
   const sections = splitMarkdownSections(markdown)
+  const conclusionEntries = parseBulletEntries(findSectionBody(sections, '最终结论'))
+
   return {
-    conclusion: parseBulletEntries(findSectionBody(sections, '最终结论')).filter((entry) => entry.label && entry.label !== '一句话判断'),
+    snapshot: parseBulletEntries(findSectionBody(sections, '论文快照')),
+    conclusion: conclusionEntries.filter((entry) => entry.label && entry.label !== '一句话判断'),
+    oneLine: conclusionEntries.find((entry) => entry.label === '一句话判断')?.value || '',
+    scoringRows: parseMarkdownTable(findSectionBody(sections, '分项评分')).map((row) => ({
+      dimension: row['维度'] || '',
+      fullMark: row['满分'] || '',
+      score: row['得分'] || '',
+      rationale: row['评分依据'] || '',
+      evidence: row['关键证据'] || '',
+    })).filter((row) => row.dimension),
+    peers: parseMarkdownTable(findSectionBody(sections, '相似论文对比集合')).map((row) => ({
+      peer: row['Peer'] || '',
+      category: row['类别'] || '',
+      title: row['论文'] || '',
+      arxiv: row['arXiv'] || '',
+      year: row['年份'] || '',
+      venue: row['Venue'] || '',
+      citations: row['引用量'] || '',
+      reason: row['选入理由'] || '',
+    })).filter((row) => row.title),
+    observations: parseBulletEntries(findSectionBody(sections, '横向对比观察')),
     reasons: parseBulletEntries(findSectionBody(sections, '分数形成原因')),
+    priority: parseBulletEntries(findSectionBody(sections, '是否值得优先读')),
+    sources: parseSourceLinks(findSectionBody(sections, 'Sources')),
   }
 }
 
@@ -594,6 +744,13 @@ const scoreBarWidth = (value) => {
   const numeric = Number(value)
   if (!Number.isFinite(numeric)) return '0%'
   return String(Math.min(Math.max(numeric, 0), 10) * 10) + '%'
+}
+
+const scoreRatioWidth = (score, fullMark) => {
+  const earned = Number(score)
+  const total = Number(fullMark)
+  if (!Number.isFinite(earned) || !Number.isFinite(total) || total <= 0) return '0%'
+  return String(Math.min(Math.max(earned / total, 0), 1) * 100) + '%'
 }
 
 const goBackToTodo = () => navigateTo(todoDetailLink.value)
