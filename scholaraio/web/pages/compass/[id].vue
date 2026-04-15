@@ -30,20 +30,17 @@
         <section class="relative overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm">
           <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.16),_transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(15,23,42,0.08),_transparent_32%)]"></div>
           <div class="relative p-8">
-            <div class="flex flex-wrap items-start justify-between gap-6">
-              <div class="max-w-3xl">
+            <div class="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_320px]">
+              <div>
                 <div class="flex flex-wrap items-center gap-2">
                   <span class="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">
                     Paper Compass
                   </span>
-                  <span class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-500">
-                    {{ card.generated_with_model || 'gpt-5.4-mini' }}
-                  </span>
                   <span
                     class="rounded-full px-3 py-1 text-xs font-medium"
-                    :class="paper?.rating ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'"
+                    :class="heroStatusClass"
                   >
-                    {{ paper?.rating ? '评分已导出' : '评分待补全' }}
+                    {{ heroStatusText }}
                   </span>
                 </div>
 
@@ -54,37 +51,54 @@
                   <span v-if="card.doi"> · DOI: {{ card.doi }}</span>
                 </p>
 
-                <div class="mt-8 grid gap-4 lg:grid-cols-2">
-                  <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Todo Summary</p>
-                    <p class="mt-3 text-base leading-8 text-slate-800">{{ card.one_line_summary }}</p>
-                  </div>
-                  <div class="rounded-3xl border border-slate-200 bg-white p-5">
-                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Compass Verdict</p>
-                    <p class="mt-3 text-base leading-8 text-slate-800">
-                      {{ ratingNote || '当前静态快照里还没有更细的 verdict，完整内容会随着评分报告一并更新。' }}
-                    </p>
+                <div class="mt-8 rounded-[28px] border border-slate-200 bg-slate-50 p-6">
+                  <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">核心判断</p>
+                  <p class="mt-3 text-base leading-8 text-slate-800">
+                    {{ heroSummaryText }}
+                  </p>
+
+                  <div v-if="showTodoSummarySnippet" class="mt-5 border-t border-slate-200 pt-5">
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Todo Summary</p>
+                    <p class="mt-2 text-sm leading-7 text-slate-600">{{ card.one_line_summary }}</p>
                   </div>
                 </div>
               </div>
 
-              <div class="w-full max-w-sm rounded-[28px] border border-slate-900 bg-[linear-gradient(135deg,_#020617,_#111827_54%,_#1d4ed8)] p-6 text-white shadow-lg">
+              <div class="w-full rounded-[28px] border border-slate-900 bg-[linear-gradient(135deg,_#020617,_#111827_54%,_#1d4ed8)] p-6 text-white shadow-lg">
                 <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-300">Overall Score</p>
                 <div class="mt-4 flex items-end gap-3">
                   <p class="text-5xl font-semibold leading-none">{{ overallRatingText }}</p>
                   <span class="pb-1 text-sm text-slate-300">/ 10</span>
                 </div>
-                <p class="mt-5 text-sm leading-8 text-slate-100">
-                  {{ overallSummaryText }}
-                </p>
-                <div class="mt-6 grid grid-cols-3 gap-3">
-                  <div
-                    v-for="entry in materialEntries"
-                    :key="entry.label"
-                    class="rounded-2xl border border-white/10 bg-white/10 px-3 py-3 text-center"
+
+                <div class="mt-5 flex flex-wrap gap-2">
+                  <span
+                    v-if="overallGradeText"
+                    class="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white"
                   >
-                    <p class="text-[11px] uppercase tracking-wide text-slate-300">{{ entry.label }}</p>
-                    <p class="mt-2 text-sm font-semibold text-white">{{ entry.ready ? 'Ready' : 'Pending' }}</p>
+                    {{ overallGradeText }}
+                  </span>
+                  <span
+                    v-if="readingPriorityText"
+                    class="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white"
+                  >
+                    {{ readingPriorityText }}
+                  </span>
+                </div>
+
+                <div class="mt-6 space-y-3">
+                  <div
+                    v-for="entry in heroMaterialEntries"
+                    :key="entry.label"
+                    class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/10 px-4 py-3"
+                  >
+                    <p class="text-sm font-medium text-slate-100">{{ entry.label }}</p>
+                    <span
+                      class="rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide"
+                      :class="entry.ready ? 'bg-emerald-400/15 text-emerald-100' : 'bg-white/10 text-slate-300'"
+                    >
+                      {{ entry.ready ? '已就绪' : '缺失' }}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -489,12 +503,6 @@ const sourceLink = computed(() => {
   return doi ? 'https://doi.org/' + doi : ''
 })
 
-const materialEntries = computed(() => [
-  { label: 'Score', ready: Boolean(scoreReport.value) },
-  { label: 'Report', ready: Boolean(readableReport.value) },
-  { label: 'Rating', ready: Boolean(paper.value?.rating) },
-])
-
 const keepValue = (value) => value !== null && value !== undefined && value !== ''
 
 const ratingEntries = computed(() => {
@@ -520,20 +528,6 @@ const ratingEntries = computed(() => {
     { label: '写作质量', value: rating.writing_quality },
     { label: '相关性', value: rating.relevance },
   ].filter((entry) => keepValue(entry.value))
-})
-
-const ratingNote = computed(() => paper.value?.rating?.one_line_verdict || paper.value?.rating?.notes || '')
-const overallScore = computed(() => paper.value?.rating?.overall_score)
-const overallRatingText = computed(() => {
-  if (overallScore.value == null) return 'n/a'
-  return Number(overallScore.value).toFixed(1)
-})
-const overallSummaryText = computed(() => {
-  if (ratingNote.value) return ratingNote.value
-  if (overallScore.value == null) {
-    return '当前还没有完整的结构化评分，但相关入口和版式已经独立出来，后续补内容时不会再挤在 Todo 详情页。'
-  }
-  return '评分已经落到静态快照里，下面可以直接看维度拆解和完整报告正文。'
 })
 
 const splitMarkdownSections = (markdown) => {
@@ -739,6 +733,46 @@ const parseScoreReport = (markdown) => {
 
 const structuredReport = computed(() => parseReadableReport(readableReport.value))
 const structuredScore = computed(() => parseScoreReport(scoreReport.value))
+
+const conclusionValue = (label) => {
+  return structuredScore.value.conclusion.find((entry) => entry.label === label)?.value || ''
+}
+
+const ratingNote = computed(() => paper.value?.rating?.one_line_verdict || paper.value?.rating?.notes || '')
+const overallScore = computed(() => paper.value?.rating?.overall_score)
+const overallRatingText = computed(() => {
+  if (overallScore.value == null) return 'n/a'
+  return Number(overallScore.value).toFixed(1)
+})
+const overallGradeText = computed(() => conclusionValue('等级'))
+const readingPriorityText = computed(() => conclusionValue('阅读优先级'))
+const heroSummaryText = computed(() => {
+  if (structuredScore.value.oneLine) return structuredScore.value.oneLine
+  if (ratingNote.value) return ratingNote.value
+  if (card.value?.one_line_summary) return card.value.one_line_summary
+  return '当前静态快照里还没有更细的 verdict，完整内容会随着评分报告一并更新。'
+})
+const showTodoSummarySnippet = computed(() => {
+  const summary = String(card.value?.one_line_summary || '').trim()
+  return Boolean(summary) && summary !== heroSummaryText.value
+})
+const heroMaterialEntries = computed(() => [
+  { label: 'Score Report', ready: Boolean(scoreReport.value) },
+  { label: 'Learnpath Report', ready: Boolean(readableReport.value) },
+  { label: '结构化 Rating', ready: Boolean(paper.value?.rating) },
+])
+const heroStatusText = computed(() => {
+  const readyCount = heroMaterialEntries.value.filter((entry) => entry.ready).length
+  if (readyCount === heroMaterialEntries.value.length) return '评分与报告已就绪'
+  if (readyCount > 0) return '部分材料已就绪'
+  return '材料待补全'
+})
+const heroStatusClass = computed(() => {
+  const readyCount = heroMaterialEntries.value.filter((entry) => entry.ready).length
+  if (readyCount === heroMaterialEntries.value.length) return 'bg-emerald-100 text-emerald-700'
+  if (readyCount > 0) return 'bg-amber-100 text-amber-700'
+  return 'bg-slate-100 text-slate-500'
+})
 
 const scoreBarWidth = (value) => {
   const numeric = Number(value)
