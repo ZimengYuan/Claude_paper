@@ -59,7 +59,7 @@
 
         <div class="aio-writeback-panel aio-detail-writeback">
           <div>
-            <p class="aio-kicker">Read Status Writeback</p>
+            <p class="aio-kicker">已读状态同步</p>
             <p class="aio-muted">{{ readStatusHint }}</p>
           </div>
           <div class="aio-token-actions">

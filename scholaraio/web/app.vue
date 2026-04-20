@@ -1,12 +1,19 @@
 <template>
   <div class="aio-shell">
     <nav class="aio-nav">
-      <NuxtLink to="/" class="aio-nav-logo">~/scholaraio</NuxtLink>
       <div class="aio-nav-links">
-        <NuxtLink to="/" :class="{ active: route.path === '/' }">Library</NuxtLink>
-        <NuxtLink to="/explore" :class="{ active: route.path.startsWith('/explore') }">Explore</NuxtLink>
+        <NuxtLink to="/" :class="{ active: route.path === '/' }">Todo</NuxtLink>
+        <NuxtLink to="/explore" :class="{ active: route.path.startsWith('/explore') }">趋势</NuxtLink>
       </div>
-      <div class="aio-nav-meta">static snapshot · read status writeback</div>
+      <button
+        class="aio-theme-toggle"
+        type="button"
+        :aria-label="themeToggleLabel"
+        :title="themeToggleLabel"
+        @click="toggleTheme"
+      >
+        {{ themeIcon }}
+      </button>
     </nav>
     <main class="aio-page">
       <NuxtPage />
@@ -16,6 +23,31 @@
 
 <script setup>
 const route = useRoute()
+const theme = ref('night')
+
+const applyTheme = (value) => {
+  if (!import.meta.client) return
+  document.documentElement.dataset.theme = value
+}
+
+const themeIcon = computed(() => theme.value === 'day' ? '☾' : '☀')
+const themeToggleLabel = computed(() => theme.value === 'day' ? '切换夜间模式' : '切换日间模式')
+
+const toggleTheme = () => {
+  theme.value = theme.value === 'day' ? 'night' : 'day'
+  applyTheme(theme.value)
+  if (import.meta.client) {
+    window.localStorage.setItem('scholaraio.theme', theme.value)
+  }
+}
+
+onMounted(() => {
+  const saved = window.localStorage.getItem('scholaraio.theme')
+  if (saved === 'day' || saved === 'night') {
+    theme.value = saved
+  }
+  applyTheme(theme.value)
+})
 </script>
 
 <style>
@@ -33,9 +65,63 @@ const route = useRoute()
   --aio-amber: #f59e0b;
   --aio-purple: #a78bfa;
   --aio-red: #fb7185;
+  --aio-page-bg:
+    radial-gradient(circle at 18% -8%, rgba(74, 222, 154, 0.10), transparent 30rem),
+    radial-gradient(circle at 92% 10%, rgba(96, 165, 250, 0.08), transparent 28rem),
+    var(--aio-bg);
+  --aio-shell-bg: linear-gradient(180deg, rgba(13, 15, 17, 0.98), rgba(13, 15, 17, 1));
+  --aio-nav-bg: rgba(13, 15, 17, 0.82);
+  --aio-soft-surface: rgba(255, 255, 255, 0.03);
+  --aio-panel-bg: rgba(255, 255, 255, 0.025);
+  --aio-control-bg: rgba(13, 15, 17, 0.84);
+  --aio-control-focus-bg: rgba(17, 21, 25, 0.95);
+  --aio-writeback-bg: rgba(13, 15, 17, 0.42);
+  --aio-card-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.020));
+  --aio-card-hover-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.030));
+  --aio-card-border: rgba(255, 255, 255, 0.15);
+  --aio-card-shadow: 0 18px 42px rgba(0, 0, 0, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --aio-card-hover-shadow: 0 22px 52px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  --aio-card-accent: linear-gradient(180deg, rgba(74, 222, 154, 0.86), rgba(96, 165, 250, 0.58));
+  --aio-button-text: #07100b;
+  --aio-button-hover-bg: #6ee7ad;
   --aio-font-serif: "Noto Serif SC", "Songti SC", Georgia, serif;
   --aio-font-sans: Inter, "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif;
   --aio-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+:root[data-theme="day"] {
+  --aio-bg: #f4f1ea;
+  --aio-bg-soft: #fffaf2;
+  --aio-bg-mute: #ebe5d8;
+  --aio-border: rgba(35, 31, 24, 0.12);
+  --aio-border-strong: rgba(35, 31, 24, 0.20);
+  --aio-text: #1f1c18;
+  --aio-text-soft: #514a3f;
+  --aio-text-muted: #7a7164;
+  --aio-accent: #137a4f;
+  --aio-blue: #2563eb;
+  --aio-amber: #a95f00;
+  --aio-purple: #7c3aed;
+  --aio-red: #be123c;
+  --aio-page-bg:
+    radial-gradient(circle at 16% -8%, rgba(19, 122, 79, 0.12), transparent 30rem),
+    radial-gradient(circle at 92% 10%, rgba(37, 99, 235, 0.10), transparent 28rem),
+    var(--aio-bg);
+  --aio-shell-bg: linear-gradient(180deg, rgba(244, 241, 234, 0.98), rgba(244, 241, 234, 1));
+  --aio-nav-bg: rgba(244, 241, 234, 0.86);
+  --aio-soft-surface: rgba(255, 255, 255, 0.52);
+  --aio-panel-bg: rgba(255, 255, 255, 0.48);
+  --aio-control-bg: rgba(255, 252, 246, 0.92);
+  --aio-control-focus-bg: rgba(255, 255, 255, 0.98);
+  --aio-writeback-bg: rgba(255, 252, 246, 0.58);
+  --aio-card-bg: rgba(255, 255, 255, 0.58);
+  --aio-card-hover-bg: rgba(255, 255, 255, 0.82);
+  --aio-card-border: rgba(35, 31, 24, 0.14);
+  --aio-card-shadow: 0 16px 34px rgba(44, 36, 24, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  --aio-card-hover-shadow: 0 18px 38px rgba(44, 36, 24, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  --aio-card-accent: linear-gradient(180deg, rgba(19, 122, 79, 0.70), rgba(37, 99, 235, 0.46));
+  --aio-button-text: #f9fff9;
+  --aio-button-hover-bg: #0f6e47;
 }
 
 html {
@@ -44,10 +130,7 @@ html {
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at 18% -8%, rgba(74, 222, 154, 0.10), transparent 30rem),
-    radial-gradient(circle at 92% 10%, rgba(96, 165, 250, 0.08), transparent 28rem),
-    var(--aio-bg);
+  background: var(--aio-page-bg);
   color: var(--aio-text);
   font-family: var(--aio-font-sans);
 }
@@ -66,30 +149,21 @@ textarea {
 
 .aio-shell {
   min-height: 100vh;
-  background: linear-gradient(180deg, rgba(13, 15, 17, 0.98), rgba(13, 15, 17, 1));
+  background: var(--aio-shell-bg);
 }
 
 .aio-nav {
   position: fixed;
   inset: 0 0 auto;
   z-index: 50;
-  display: grid;
+  display: flex;
   min-height: 64px;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  gap: 18px;
+  justify-content: center;
   border-bottom: 1px solid var(--aio-border);
-  background: rgba(13, 15, 17, 0.82);
+  background: var(--aio-nav-bg);
   padding: 0 28px;
   backdrop-filter: blur(18px);
-}
-
-.aio-nav-logo {
-  justify-self: start;
-  color: var(--aio-text);
-  font-family: var(--aio-font-mono);
-  font-size: 13px;
-  letter-spacing: 0;
 }
 
 .aio-nav-links {
@@ -97,7 +171,7 @@ textarea {
   align-items: center;
   gap: 4px;
   border: 1px solid var(--aio-border);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--aio-soft-surface);
   padding: 4px;
 }
 
@@ -115,11 +189,27 @@ textarea {
   color: var(--aio-accent);
 }
 
-.aio-nav-meta {
-  justify-self: end;
+.aio-theme-toggle {
+  position: absolute;
+  right: 28px;
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--aio-border);
+  background: var(--aio-soft-surface);
+  cursor: pointer;
   color: var(--aio-text-muted);
   font-family: var(--aio-font-mono);
-  font-size: 11px;
+  font-size: 15px;
+  line-height: 1;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+
+.aio-theme-toggle:hover {
+  border-color: rgba(74, 222, 154, 0.45);
+  color: var(--aio-accent);
 }
 
 .aio-page {
@@ -160,12 +250,8 @@ textarea {
   letter-spacing: 0;
 }
 
-.aio-subtitle {
-  margin: 18px 0 0;
-  max-width: 720px;
-  color: var(--aio-text-soft);
-  font-size: 15px;
-  line-height: 1.9;
+.aio-hero .aio-title:first-child {
+  margin-top: 0;
 }
 
 .aio-hero-stats {
@@ -199,7 +285,7 @@ textarea {
 
 .aio-panel {
   border: 1px solid var(--aio-border);
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--aio-panel-bg);
 }
 
 .aio-filter-panel {
@@ -234,7 +320,7 @@ textarea {
   width: 100%;
   border: 1px solid var(--aio-border);
   border-radius: 0;
-  background: rgba(13, 15, 17, 0.84);
+  background: var(--aio-control-bg);
   color: var(--aio-text);
   font-size: 14px;
   outline: none;
@@ -245,7 +331,7 @@ textarea {
 .aio-input:focus,
 .aio-select:focus {
   border-color: rgba(74, 222, 154, 0.60);
-  background: rgba(17, 21, 25, 0.95);
+  background: var(--aio-control-focus-bg);
 }
 
 .aio-input::placeholder {
@@ -268,7 +354,7 @@ textarea {
   gap: 14px;
   margin-top: 16px;
   border: 1px solid var(--aio-border);
-  background: rgba(13, 15, 17, 0.42);
+  background: var(--aio-writeback-bg);
   padding: 14px;
 }
 
@@ -304,17 +390,17 @@ textarea {
 .aio-button {
   background: var(--aio-accent);
   border-color: rgba(74, 222, 154, 0.75);
-  color: #07100b;
+  color: var(--aio-button-text);
 }
 
 .aio-button:hover {
-  background: #6ee7ad;
+  background: var(--aio-button-hover-bg);
 }
 
 .aio-button-secondary,
 .aio-read-toggle,
 .aio-text-link {
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--aio-soft-surface);
   color: var(--aio-text-soft);
 }
 
@@ -360,39 +446,42 @@ textarea {
 .aio-card-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
   margin-top: 18px;
-  border-top: 1px solid var(--aio-border);
-  border-left: 1px solid var(--aio-border);
 }
 
 .aio-card {
   display: flex;
   min-height: 310px;
   flex-direction: column;
-  border-right: 1px solid var(--aio-border);
-  border-bottom: 1px solid var(--aio-border);
-  background: rgba(255, 255, 255, 0.018);
+  border: 1px solid var(--aio-card-border);
+  background: var(--aio-card-bg);
+  box-shadow: var(--aio-card-shadow);
+  border-radius: 4px;
+  overflow: hidden;
   padding: 22px;
   position: relative;
-  transition: background 160ms ease, transform 160ms ease;
+  transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
 .aio-card::before {
   content: "";
   position: absolute;
-  inset: 0 auto auto 0;
-  width: 100%;
-  height: 2px;
-  background: transparent;
-  transition: background 160ms ease;
+  inset: 18px auto 18px 0;
+  width: 3px;
+  background: var(--aio-card-accent);
+  opacity: 0.72;
+  transition: opacity 160ms ease;
 }
 
 .aio-card:hover {
-  background: rgba(255, 255, 255, 0.045);
+  border-color: var(--aio-border-strong);
+  background: var(--aio-card-hover-bg);
+  box-shadow: var(--aio-card-hover-shadow);
 }
 
 .aio-card:hover::before {
-  background: var(--aio-accent);
+  opacity: 1;
 }
 
 .aio-card-main {
@@ -825,12 +914,7 @@ textarea {
 
 @media (max-width: 900px) {
   .aio-nav {
-    grid-template-columns: minmax(0, 1fr) auto;
     padding: 0 18px;
-  }
-
-  .aio-nav-meta {
-    display: none;
   }
 
   .aio-hero,
@@ -853,21 +937,14 @@ textarea {
 
 @media (max-width: 640px) {
   .aio-nav {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: start;
-    min-height: 94px;
-    align-content: center;
-    gap: 8px;
+    min-height: 64px;
     padding: 0 12px;
   }
 
-  .aio-nav-links {
-    justify-self: start;
-  }
-
-  .aio-nav-logo {
-    font-size: 12px;
+  .aio-theme-toggle {
+    right: 12px;
+    width: 34px;
+    height: 34px;
   }
 
   .aio-nav-links a {
@@ -876,7 +953,7 @@ textarea {
   }
 
   .aio-page {
-    padding-top: 94px;
+    padding-top: 64px;
   }
 
   .aio-content,

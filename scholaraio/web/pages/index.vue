@@ -2,24 +2,20 @@
   <div class="aio-content">
     <section class="aio-hero">
       <div>
-        <p class="aio-kicker">// Todo Snapshot · ScholarAIO</p>
-        <h1 class="aio-title">Todo Reading Cards</h1>
-        <p class="aio-subtitle">
-          这里汇总 Zotero Todo collection 的阅读卡片，按静态快照展示；首页卡片和详情页都可以直接写回已读状态。
-        </p>
+        <h1 class="aio-title">Todo 阅读卡片</h1>
       </div>
       <div class="aio-hero-stats">
         <div class="aio-stat">
           <div class="aio-stat-value">{{ filteredTodoCards.length }}</div>
-          <div class="aio-stat-label">visible cards</div>
+          <div class="aio-stat-label">当前显示</div>
         </div>
         <div class="aio-stat">
           <div class="aio-stat-value">{{ todoCards.length }}</div>
-          <div class="aio-stat-label">total todo</div>
+          <div class="aio-stat-label">全部 Todo</div>
         </div>
         <div class="aio-stat">
           <div class="aio-stat-value">{{ unreadCount }}</div>
-          <div class="aio-stat-label">unread</div>
+          <div class="aio-stat-label">未读</div>
         </div>
       </div>
     </section>
@@ -27,7 +23,7 @@
     <section class="aio-panel aio-filter-panel">
       <div class="aio-field-grid primary">
         <label class="aio-field">
-          <span>Search</span>
+          <span>搜索</span>
           <input
             v-model="searchQuery"
             type="text"
@@ -37,7 +33,7 @@
         </label>
 
         <label class="aio-field">
-          <span>Sort</span>
+          <span>排序</span>
           <select v-model="sortBy" class="aio-select">
             <option value="">Todo 顺序</option>
             <option value="year">按年份</option>
@@ -48,7 +44,7 @@
 
       <div class="aio-field-grid secondary">
         <label class="aio-field">
-          <span>Author</span>
+          <span>作者</span>
           <input
             v-model="authorFilter"
             type="text"
@@ -58,7 +54,7 @@
         </label>
 
         <label class="aio-field">
-          <span>Year From</span>
+          <span>起始年份</span>
           <input
             v-model.number="yearFrom"
             type="number"
@@ -70,7 +66,7 @@
         </label>
 
         <label class="aio-field">
-          <span>Year To</span>
+          <span>结束年份</span>
           <input
             v-model.number="yearTo"
             type="number"
@@ -93,13 +89,13 @@
 
       <div class="aio-filter-actions">
         <button class="aio-button-secondary" @click="clearFilters">清空筛选</button>
-        <button class="aio-button-secondary" @click="loadTodoCards">刷新快照</button>
-        <span class="aio-muted">matched {{ filteredTodoCards.length }} / {{ todoCards.length }}</span>
+        <button class="aio-button-secondary" @click="loadTodoCards">刷新数据</button>
+        <span class="aio-muted">匹配 {{ filteredTodoCards.length }} / {{ todoCards.length }}</span>
       </div>
 
       <div class="aio-writeback-panel">
         <div>
-          <p class="aio-kicker">Read Status Writeback</p>
+          <p class="aio-kicker">已读状态同步</p>
           <p class="aio-muted">{{ writebackHint }}</p>
         </div>
         <div class="aio-token-actions">
@@ -156,7 +152,7 @@
 
     <div v-if="loading" class="aio-state">
       <div class="aio-spinner"></div>
-      <p>Loading Todo snapshot...</p>
+      <p>正在加载阅读卡片...</p>
     </div>
 
     <div v-else-if="errorMessage" class="aio-state error">
@@ -165,8 +161,8 @@
 
     <template v-else>
       <section class="aio-section-header">
-        <h2>// Reading Queue · Todo</h2>
-        <span class="aio-muted">page {{ currentPage }} / {{ totalPages }}</span>
+        <h2>阅读队列</h2>
+        <span class="aio-muted">第 {{ currentPage }} / {{ totalPages }} 页</span>
       </section>
 
       <div v-if="filteredTodoCards.length" class="aio-card-grid">
