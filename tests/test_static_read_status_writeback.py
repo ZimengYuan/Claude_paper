@@ -121,10 +121,14 @@ def test_read_status_workflow_is_static_pages_compatible() -> None:
 
 
 def test_static_page_uses_github_workflow_writeback() -> None:
+    index_page = (WEB_ROOT / "pages" / "index.vue").read_text(encoding="utf-8")
     paper_page = (WEB_ROOT / "pages" / "paper" / "[id].vue").read_text(encoding="utf-8")
     todo_page = (WEB_ROOT / "pages" / "todo" / "[id].vue").read_text(encoding="utf-8")
     composable = (WEB_ROOT / "composables" / "useStaticSiteData.js").read_text(encoding="utf-8")
 
+    assert "api.github.com/repos" in index_page
+    assert "toggleCardReadStatus" in index_page
+    assert '@click.stop.prevent="toggleCardReadStatus(card)"' in index_page
     assert "api.github.com/repos" in paper_page
     assert "workflow_dispatch" in paper_page
     assert "setReadStatusOverride" in paper_page

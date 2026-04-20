@@ -6,12 +6,12 @@
       </button>
 
       <button
-        v-if="card && githubWritebackReady"
+        v-if="card"
         class="aio-button"
-        :disabled="savingReadStatus"
+        :disabled="savingReadStatus || !githubWritebackReady"
         @click="toggleReadStatus"
       >
-        {{ savingReadStatus ? '保存中...' : ((card.read_status || 'unread') === 'read' ? '标记未读' : '标记已读') }}
+        {{ readStatusButtonLabel }}
       </button>
     </div>
 
@@ -33,6 +33,9 @@
               <span class="aio-pill" :class="statusClass(card.read_status || 'unread')">
                 {{ readStatusLabel(card.read_status) }}
               </span>
+              <span v-if="readStatusPending" class="aio-pill is-syncing">
+                等待部署
+              </span>
               <span class="aio-pill">{{ card.year || 'n.d.' }}</span>
             </div>
             <h1 class="aio-paper-title">{{ card.title }}</h1>
@@ -53,6 +56,35 @@
         <p v-if="readStatusMessage" class="aio-message success">
           {{ readStatusMessage }}
         </p>
+
+        <div class="aio-writeback-panel aio-detail-writeback">
+          <div>
+            <p class="aio-kicker">Read Status Writeback</p>
+            <p class="aio-muted">{{ readStatusHint }}</p>
+          </div>
+          <div class="aio-token-actions">
+            <button class="aio-button-secondary" @click="showGithubTokenInput = !showGithubTokenInput">
+              {{ githubToken ? '更换令牌' : '配置令牌' }}
+            </button>
+            <button
+              v-if="githubToken"
+              class="aio-button-secondary"
+              @click="clearGithubToken"
+            >
+              清除令牌
+            </button>
+            <a
+              v-if="githubActionsUrl"
+              class="aio-button-secondary"
+              :href="githubActionsUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              查看 Actions
+            </a>
+          </div>
+        </div>
+
         <div v-if="showGithubTokenInput" class="aio-token-box">
           <label class="aio-field" for="todo-github-token">
             <span>GitHub token</span>
@@ -75,7 +107,9 @@
               清除
             </button>
           </div>
-          <p class="aio-muted aio-token-note">令牌只保存在当前浏览器，用来触发仓库 workflow_dispatch。</p>
+          <p class="aio-muted aio-token-note">
+            令牌只保存在当前浏览器，用来触发仓库 workflow_dispatch。换浏览器、无痕窗口或清理浏览器数据后，需要重新填写。
+          </p>
         </div>
       </header>
 
@@ -227,6 +261,7 @@ const errorMessage = ref('')
 const readStatusError = ref('')
 const readStatusMessage = ref('')
 const savingReadStatus = ref(false)
+const readStatusPending = ref(false)
 const card = ref(null)
 const paper = ref(null)
 const scoreReport = ref('')
@@ -252,6 +287,22 @@ const githubWritebackReady = computed(() => Boolean(
   && githubRef.value
   && githubReadStatusWorkflow.value
 ))
+const githubActionsUrl = computed(() => {
+  if (!githubOwner.value || !githubRepo.value) return ''
+  return `https://github.com/${githubOwner.value}/${githubRepo.value}/actions/workflows/${githubReadStatusWorkflow.value}`
+})
+const readStatusButtonLabel = computed(() => {
+  if (!githubWritebackReady.value) return '写回未配置'
+  if (savingReadStatus.value) return '提交中...'
+  return (card.value?.read_status || 'unread') === 'read' ? '标记未读' : '标记已读'
+})
+const readStatusHint = computed(() => {
+  if (!githubWritebackReady.value) return '当前静态页缺少仓库或 workflow 配置，只能浏览快照。'
+  if (savingReadStatus.value) return '正在触发 workflow_dispatch；当前浏览器会先显示新状态。'
+  if (readStatusPending.value) return '已提交写回，等待 GitHub Pages 重新部署后静态快照会同步。'
+  if (!githubToken.value) return '首次标记已读前需要配置一次 GitHub token。'
+  return '令牌已在当前浏览器保存；点击按钮即可触发 GitHub Actions 写回。'
+})
 
 useHead(() => ({
   title: card.value ? card.value.title + ' | Todo Reading Card' : 'Todo Reading Card',
@@ -276,6 +327,10 @@ const errorText = (error, fallback) => {
 }
 
 const githubApiErrorText = async (response) => {
+  if (response.status === 401) return 'GitHub token 无效或已过期，请重新保存 token。'
+  if (response.status === 403) return 'GitHub token 权限不足；需要能触发 Actions workflow_dispatch。'
+  if (response.status === 404) return '找不到仓库或 read-status workflow，请检查部署配置。'
+
   try {
     const payload = await response.json()
     if (payload?.message) return payload.message
@@ -317,6 +372,7 @@ const saveGithubToken = () => {
   }
   showGithubTokenInput.value = false
   readStatusError.value = ''
+  readStatusMessage.value = '令牌已保存在当前浏览器。'
 }
 
 const clearGithubToken = () => {
@@ -325,6 +381,7 @@ const clearGithubToken = () => {
   if (import.meta.client) {
     window.localStorage.removeItem('scholaraio.githubToken')
   }
+  readStatusMessage.value = '已清除当前浏览器里的 GitHub token。'
 }
 
 const materialClass = (enabled) => {
@@ -414,6 +471,7 @@ const loadCard = async () => {
   errorMessage.value = ''
   readStatusError.value = ''
   readStatusMessage.value = ''
+  readStatusPending.value = false
   try {
     const todoData = await fetchJson('todo-cards.json')
     const cards = Array.isArray(todoData?.cards) ? todoData.cards : []
@@ -453,6 +511,7 @@ const toggleReadStatus = async () => {
   }
 
   savingReadStatus.value = true
+  readStatusPending.value = false
   readStatusError.value = ''
   readStatusMessage.value = ''
   card.value = {
@@ -490,7 +549,8 @@ const toggleReadStatus = async () => {
       throw new Error(await githubApiErrorText(response))
     }
 
-    readStatusMessage.value = '已提交 GitHub Actions 写回；部署完成后静态快照会同步。'
+    readStatusPending.value = true
+    readStatusMessage.value = '已提交 GitHub Actions 写回；当前浏览器已先显示新状态，部署完成后静态快照会同步。'
   } catch (error) {
     card.value = {
       ...card.value,
@@ -504,6 +564,7 @@ const toggleReadStatus = async () => {
       }
     }
     setReadStatusOverride([routeId.value, card.value, paper.value].filter(Boolean), previousCardStatus)
+    readStatusPending.value = false
     readStatusError.value = errorText(error, 'Failed to update read status.')
   } finally {
     savingReadStatus.value = false
