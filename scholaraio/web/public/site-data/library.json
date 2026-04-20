@@ -4585,7 +4585,8 @@
         "field_shaping": 0.8,
         "notes": "这是足式机器人中把模型规划与学习控制联结得很扎实的高质量论文，引用增长快、真实机器人验证强，值得优先阅读，但更像高价值整合而非彻底新范式。"
       },
-      "route_id": "bd480aa8-bbbd-491f-9bf7-b24918266b76"
+      "route_id": "bd480aa8-bbbd-491f-9bf7-b24918266b76",
+      "read_at": "2026-04-20T12:42:55+00:00"
     },
     {
       "dir_name": "Jeon-2023-Benchmarking-Potential-Based-Rewards-for-Learning-Humanoid-Locomotion",
