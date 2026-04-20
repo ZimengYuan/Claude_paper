@@ -27,6 +27,7 @@ class TestLibraryService:
         cfg = _make_cfg(tmp_path, tmp_papers, tmp_db)
         build_index(tmp_papers, tmp_db)
         write_summary(tmp_papers / 'Smith-2023-Turbulence', 'summary body')
+        write_method(tmp_papers / 'Smith-2023-Turbulence', 'method body')
 
         results = list_papers(cfg, query='boundary layers', show_all=False)
 
@@ -42,7 +43,9 @@ class TestLibraryService:
         cfg = _make_cfg(tmp_path, tmp_papers, tmp_db)
         build_index(tmp_papers, tmp_db)
         write_summary(tmp_papers / 'Smith-2023-Turbulence', 'summary body')
+        write_method(tmp_papers / 'Smith-2023-Turbulence', 'method body')
         write_summary(tmp_papers / 'Wang-2024-DeepLearning', 'summary body')
+        write_method(tmp_papers / 'Wang-2024-DeepLearning', 'method body')
 
         ws_dir = tmp_path / 'workspace' / 'fluid-project'
         create_workspace(ws_dir)

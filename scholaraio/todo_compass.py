@@ -15,7 +15,6 @@ from scholaraio.generate import _get_paper_content
 from scholaraio.ingest.metadata._api import query_crossref, query_openalex
 from scholaraio.metrics import call_llm
 from scholaraio.papers import best_citation, read_meta, read_summary, write_meta
-from scholaraio.sources.arxiv import search_arxiv
 
 
 SKILLS_ROOT = Path.home() / ".codex/skills"
@@ -220,6 +219,8 @@ def _cached_query_openalex(doi: str, title: str) -> dict[str, Any]:
 @lru_cache(maxsize=512)
 def _cached_search_arxiv(query: str, top_k: int) -> list[dict[str, Any]]:
     try:
+        from scholaraio.sources.arxiv import search_arxiv
+
         return _json_copy(search_arxiv(query, top_k=top_k))
     except Exception:
         return []

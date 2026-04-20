@@ -6,14 +6,14 @@
           <div class="flex items-center">
             <div>
               <NuxtLink to="/" class="text-xl font-bold text-gray-900">ScholarAIO</NuxtLink>
-              <p class="text-xs text-gray-500">静态快照站点（不支持在线分析与写回）</p>
+              <p class="text-xs text-gray-500">静态快照站点（已读状态可写回）</p>
             </div>
             <div class="ml-6 flex flex-wrap gap-2 md:ml-10 md:space-x-4">
               <NuxtLink to="/" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100" :class="{ 'bg-gray-100': route.path === '/' }">Library</NuxtLink>
               <NuxtLink to="/explore" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100" :class="{ 'bg-gray-100': route.path.startsWith('/explore') }">Explore</NuxtLink>
             </div>
           </div>
-          <div class="text-xs text-gray-500">Static export from local data/papers · read-only</div>
+          <div class="text-xs text-gray-500">Static export from local data/papers</div>
         </div>
       </div>
     </nav>
