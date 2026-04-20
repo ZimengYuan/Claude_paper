@@ -6,6 +6,14 @@
       </button>
 
       <div class="flex flex-wrap gap-3">
+        <button
+          v-if="card && githubWritebackReady"
+          class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+          :disabled="savingReadStatus"
+          @click="toggleReadStatus"
+        >
+          {{ savingReadStatus ? '保存中...' : ((card.read_status || 'unread') === 'read' ? '标记未读' : '标记已读') }}
+        </button>
         <a
           v-if="card"
           class="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
@@ -36,7 +44,7 @@
                 Todo Detail
               </span>
               <span class="rounded-full px-3 py-1 text-xs font-medium" :class="statusClass(card.read_status || 'unread')">
-                {{ (card.read_status || 'unread') === 'read' ? '已读' : '未读' }}
+                {{ readStatusLabel(card.read_status) }}
               </span>
             </div>
             <h1 class="mt-4 text-3xl font-semibold leading-tight text-slate-900">{{ card.title }}</h1>
@@ -45,6 +53,39 @@
               {{ card.year || '年份未知' }}<span v-if="card.journal"> · {{ card.journal }}</span>
               <span v-if="card.doi"> · DOI: {{ card.doi }}</span>
             </p>
+            <p v-if="readStatusError" class="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+              {{ readStatusError }}
+            </p>
+            <p v-if="readStatusMessage" class="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
+              {{ readStatusMessage }}
+            </p>
+            <div v-if="showGithubTokenInput" class="mt-3 rounded-lg border border-slate-200 bg-white p-3 text-sm shadow-sm">
+              <label class="block text-xs font-medium text-slate-500" for="todo-github-token">GitHub token</label>
+              <div class="mt-2 flex flex-col gap-2 sm:flex-row">
+                <input
+                  id="todo-github-token"
+                  v-model="githubTokenDraft"
+                  type="password"
+                  autocomplete="off"
+                  class="min-w-0 flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  placeholder="repo/workflow token"
+                >
+                <button
+                  class="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white transition hover:bg-slate-700"
+                  @click="saveGithubToken"
+                >
+                  保存
+                </button>
+                <button
+                  v-if="githubToken"
+                  class="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+                  @click="clearGithubToken"
+                >
+                  清除
+                </button>
+              </div>
+              <p class="mt-2 text-xs text-slate-500">令牌只保存在当前浏览器，用来触发仓库 workflow_dispatch。</p>
+            </div>
           </div>
           <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-500">
             生成模型：{{ card.generated_with_model || 'gpt-5.4-mini' }}
@@ -183,23 +224,41 @@
 </template>
 
 <script setup>
-const { fetchJson, applyReadStatusOverride } = useStaticSiteData()
+const { fetchJson, applyReadStatusOverride, setReadStatusOverride } = useStaticSiteData()
 const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
 const routeId = computed(() => String(route.params.id || '').trim())
 
 const loading = ref(true)
 const errorMessage = ref('')
+const readStatusError = ref('')
+const readStatusMessage = ref('')
+const savingReadStatus = ref(false)
 const card = ref(null)
 const paper = ref(null)
 const scoreReport = ref('')
 const readableReport = ref('')
+const githubToken = ref('')
+const githubTokenDraft = ref('')
+const showGithubTokenInput = ref(false)
+const browserGithubOwner = ref('')
+const browserGithubRepo = ref('')
 
 const appBaseUrl = computed(() => {
   const value = String(runtimeConfig.app.baseURL || '/')
   return value.endsWith('/') ? value : value + '/'
 })
 const compassDetailLink = computed(() => appBaseUrl.value + 'compass/' + routeId.value)
+const githubOwner = computed(() => String(runtimeConfig.public?.githubOwner || browserGithubOwner.value || '').trim())
+const githubRepo = computed(() => String(runtimeConfig.public?.githubRepo || browserGithubRepo.value || '').trim())
+const githubRef = computed(() => String(runtimeConfig.public?.githubRef || 'main').trim())
+const githubReadStatusWorkflow = computed(() => String(runtimeConfig.public?.githubReadStatusWorkflow || 'read-status.yml').trim())
+const githubWritebackReady = computed(() => Boolean(
+  githubOwner.value
+  && githubRepo.value
+  && githubRef.value
+  && githubReadStatusWorkflow.value
+))
 
 useHead(() => ({
   title: card.value ? card.value.title + ' | Todo Reading Card' : 'Todo Reading Card',
@@ -211,6 +270,68 @@ const statusClass = (status) => {
     read: 'bg-emerald-100 text-emerald-700',
   }
   return classes[status] || classes.unread
+}
+
+const readStatusLabel = (status) => status === 'read' ? '已读' : '未读'
+
+const errorText = (error, fallback) => {
+  return error?.data?.message
+    || error?.data?.statusMessage
+    || error?.statusMessage
+    || error?.message
+    || fallback
+}
+
+const githubApiErrorText = async (response) => {
+  try {
+    const payload = await response.json()
+    if (payload?.message) return payload.message
+  } catch {}
+  return `GitHub API returned ${response.status}`
+}
+
+const inferGithubRepository = () => {
+  if (!import.meta.client) return
+
+  const host = window.location.hostname
+  const ownerMatch = host.match(/^(.+)\.github\.io$/)
+  if (ownerMatch && !browserGithubOwner.value) {
+    browserGithubOwner.value = ownerMatch[1]
+  }
+
+  const segments = window.location.pathname.split('/').filter(Boolean)
+  if (segments.length && !browserGithubRepo.value) {
+    browserGithubRepo.value = segments[0]
+  }
+}
+
+const loadGithubToken = () => {
+  if (!import.meta.client) return
+  const saved = window.localStorage.getItem('scholaraio.githubToken') || ''
+  githubToken.value = saved
+  githubTokenDraft.value = saved
+}
+
+const saveGithubToken = () => {
+  const token = githubTokenDraft.value.trim()
+  if (!token) {
+    readStatusError.value = '请输入可触发 Actions 的 GitHub token。'
+    return
+  }
+  githubToken.value = token
+  if (import.meta.client) {
+    window.localStorage.setItem('scholaraio.githubToken', token)
+  }
+  showGithubTokenInput.value = false
+  readStatusError.value = ''
+}
+
+const clearGithubToken = () => {
+  githubToken.value = ''
+  githubTokenDraft.value = ''
+  if (import.meta.client) {
+    window.localStorage.removeItem('scholaraio.githubToken')
+  }
 }
 
 const materialClass = (enabled) => {
@@ -278,9 +399,13 @@ const compassMaterialEntries = computed(() => [
 ])
 
 const applyPaperPayload = (payload) => {
-  paper.value = payload
-  scoreReport.value = payload?.score_report || ''
-  readableReport.value = payload?.readable_report || ''
+  const hydrated = applyReadStatusOverride({
+    route_id: card.value?.paper_route_id || routeId.value,
+    ...payload,
+  })
+  paper.value = hydrated
+  scoreReport.value = hydrated?.score_report || ''
+  readableReport.value = hydrated?.readable_report || ''
 }
 
 const loadLinkedPaper = async (matchedCard) => {
@@ -302,6 +427,8 @@ const loadLinkedPaper = async (matchedCard) => {
 const loadCard = async () => {
   loading.value = true
   errorMessage.value = ''
+  readStatusError.value = ''
+  readStatusMessage.value = ''
   try {
     const todoData = await fetchJson('todo-cards.json')
     const cards = Array.isArray(todoData?.cards) ? todoData.cards : []
@@ -322,5 +449,85 @@ const loadCard = async () => {
   }
 }
 
-onMounted(loadCard)
+const toggleReadStatus = async () => {
+  if (!card.value || savingReadStatus.value) return
+  if (!githubWritebackReady.value) {
+    readStatusError.value = '当前页面没有 GitHub 写回配置。'
+    return
+  }
+
+  const previousCardStatus = card.value.read_status || 'unread'
+  const previousPaperStatus = paper.value?.read_status || previousCardStatus
+  const previousPaperReadAt = paper.value?.read_at
+  const nextStatus = previousCardStatus === 'read' ? 'unread' : 'read'
+  const token = githubToken.value.trim()
+  if (!token) {
+    showGithubTokenInput.value = true
+    readStatusError.value = '首次写回需要 GitHub token。'
+    return
+  }
+
+  savingReadStatus.value = true
+  readStatusError.value = ''
+  readStatusMessage.value = ''
+  card.value = {
+    ...card.value,
+    read_status: nextStatus,
+  }
+  if (paper.value) {
+    paper.value = {
+      ...paper.value,
+      read_status: nextStatus,
+    }
+  }
+  setReadStatusOverride([routeId.value, card.value, paper.value].filter(Boolean), nextStatus)
+
+  try {
+    const response = await fetch(`https://api.github.com/repos/${githubOwner.value}/${githubRepo.value}/actions/workflows/${githubReadStatusWorkflow.value}/dispatches`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/vnd.github+json',
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+      body: JSON.stringify({
+        ref: githubRef.value,
+        inputs: {
+          paper_ref: routeId.value,
+          status: nextStatus,
+          title: card.value.title || '',
+        },
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error(await githubApiErrorText(response))
+    }
+
+    readStatusMessage.value = '已提交 GitHub Actions 写回；部署完成后静态快照会同步。'
+  } catch (error) {
+    card.value = {
+      ...card.value,
+      read_status: previousCardStatus,
+    }
+    if (paper.value) {
+      paper.value = {
+        ...paper.value,
+        read_status: previousPaperStatus,
+        read_at: previousPaperReadAt,
+      }
+    }
+    setReadStatusOverride([routeId.value, card.value, paper.value].filter(Boolean), previousCardStatus)
+    readStatusError.value = errorText(error, 'Failed to update read status.')
+  } finally {
+    savingReadStatus.value = false
+  }
+}
+
+onMounted(() => {
+  inferGithubRepository()
+  loadGithubToken()
+  loadCard()
+})
 </script>

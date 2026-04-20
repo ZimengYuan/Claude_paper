@@ -122,11 +122,17 @@ def test_read_status_workflow_is_static_pages_compatible() -> None:
 
 def test_static_page_uses_github_workflow_writeback() -> None:
     paper_page = (WEB_ROOT / "pages" / "paper" / "[id].vue").read_text(encoding="utf-8")
+    todo_page = (WEB_ROOT / "pages" / "todo" / "[id].vue").read_text(encoding="utf-8")
     composable = (WEB_ROOT / "composables" / "useStaticSiteData.js").read_text(encoding="utf-8")
 
     assert "api.github.com/repos" in paper_page
     assert "workflow_dispatch" in paper_page
     assert "setReadStatusOverride" in paper_page
+    assert "api.github.com/repos" in todo_page
+    assert "workflow_dispatch" in todo_page
+    assert "setReadStatusOverride" in todo_page
+    assert "paper_ref: routeId.value" in todo_page
+    assert "标记已读" in todo_page
     assert "READ_STATUS_OVERRIDES_KEY" in composable
 
 
