@@ -14,15 +14,6 @@
         >
           {{ savingReadStatus ? '保存中...' : ((card.read_status || 'unread') === 'read' ? '标记未读' : '标记已读') }}
         </button>
-        <a
-          v-if="card"
-          class="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
-          :href="paperLink(card)"
-          :target="paperLink(card).startsWith('http') ? '_blank' : null"
-          :rel="paperLink(card).startsWith('http') ? 'noopener noreferrer' : null"
-        >
-          查看论文
-        </a>
       </div>
     </div>
 
@@ -345,14 +336,6 @@ const ratingClass = (score) => {
   if (score >= 8) return 'text-emerald-300'
   if (score >= 6) return 'text-amber-300'
   return 'text-rose-300'
-}
-
-const paperLink = (todoCard) => {
-  const linkedPaperRouteId = String(todoCard?.paper_route_id || '').trim()
-  if (linkedPaperRouteId) return appBaseUrl.value + 'paper/' + linkedPaperRouteId
-  const doi = String(todoCard?.doi || '').trim()
-  if (doi) return 'https://doi.org/' + doi
-  return '#'
 }
 
 const goBack = () => navigateTo(appBaseUrl.value)

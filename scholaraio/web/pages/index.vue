@@ -148,15 +148,6 @@
           >
             查看总结
           </NuxtLink>
-
-          <a
-            class="rounded-xl border border-blue-200 bg-blue-50 px-4 py-2.5 text-sm font-medium text-blue-700 transition hover:bg-blue-100"
-            :href="paperLink(card)"
-            :target="paperLink(card).startsWith('http') ? '_blank' : null"
-            :rel="paperLink(card).startsWith('http') ? 'noopener noreferrer' : null"
-          >
-            查看论文
-          </a>
         </div>
       </article>
     </div>
@@ -300,14 +291,6 @@ const previewText = (card) => {
 }
 
 const todoDetailLink = (routeId) => routeId ? '/todo/' + routeId : '#'
-const paperLink = (card) => {
-  const paperRouteId = String(card?.paper_route_id || '').trim()
-  if (paperRouteId) return appBaseUrl.value + 'paper/' + paperRouteId
-  const doi = String(card?.doi || '').trim()
-  if (doi) return 'https://doi.org/' + doi
-  return '#'
-}
-
 const loadTodoCards = async () => {
   loading.value = true
   errorMessage.value = ''
