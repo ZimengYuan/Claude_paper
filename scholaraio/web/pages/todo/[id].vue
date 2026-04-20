@@ -1,189 +1,195 @@
 <template>
-  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-    <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-      <button class="text-sm font-medium text-blue-600 transition hover:text-blue-800" @click="goBack">
+  <div class="aio-detail-page">
+    <div class="aio-detail-topbar">
+      <button class="aio-text-link" @click="goBack">
         ← 返回 Todo 列表
       </button>
 
-      <div class="flex flex-wrap gap-3">
-        <button
-          v-if="card && githubWritebackReady"
-          class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
-          :disabled="savingReadStatus"
-          @click="toggleReadStatus"
-        >
-          {{ savingReadStatus ? '保存中...' : ((card.read_status || 'unread') === 'read' ? '标记未读' : '标记已读') }}
-        </button>
-      </div>
+      <button
+        v-if="card && githubWritebackReady"
+        class="aio-button"
+        :disabled="savingReadStatus"
+        @click="toggleReadStatus"
+      >
+        {{ savingReadStatus ? '保存中...' : ((card.read_status || 'unread') === 'read' ? '标记未读' : '标记已读') }}
+      </button>
     </div>
 
-    <div v-if="loading" class="py-16 text-center">
-      <div class="mx-auto h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
-      <p class="mt-4 text-sm text-slate-500">Loading Todo detail...</p>
+    <div v-if="loading" class="aio-state">
+      <div class="aio-spinner"></div>
+      <p>Loading Todo detail...</p>
     </div>
 
-    <div v-else-if="errorMessage" class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+    <div v-else-if="errorMessage" class="aio-state error">
       {{ errorMessage }}
     </div>
 
-    <div v-else-if="card" class="space-y-6">
-      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div class="flex flex-wrap items-start justify-between gap-4">
+    <article v-else-if="card">
+      <header class="aio-paper-header">
+        <div class="aio-split-top">
           <div>
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">
-                Todo Detail
-              </span>
-              <span class="rounded-full px-3 py-1 text-xs font-medium" :class="statusClass(card.read_status || 'unread')">
+            <div class="aio-pill-row">
+              <span class="aio-pill is-ready">Todo Detail</span>
+              <span class="aio-pill" :class="statusClass(card.read_status || 'unread')">
                 {{ readStatusLabel(card.read_status) }}
               </span>
+              <span class="aio-pill">{{ card.year || 'n.d.' }}</span>
             </div>
-            <h1 class="mt-4 text-3xl font-semibold leading-tight text-slate-900">{{ card.title }}</h1>
-            <p class="mt-3 text-sm text-slate-600">{{ card.authors?.join(', ') || '作者信息缺失' }}</p>
-            <p class="mt-1 text-xs text-slate-500">
-              {{ card.year || '年份未知' }}<span v-if="card.journal"> · {{ card.journal }}</span>
+            <h1 class="aio-paper-title">{{ card.title }}</h1>
+            <p class="aio-paper-meta">
+              {{ card.authors?.join(', ') || '作者信息缺失' }}
+              <span v-if="card.journal"> · {{ card.journal }}</span>
               <span v-if="card.doi"> · DOI: {{ card.doi }}</span>
             </p>
-            <p v-if="readStatusError" class="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-              {{ readStatusError }}
-            </p>
-            <p v-if="readStatusMessage" class="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
-              {{ readStatusMessage }}
-            </p>
-            <div v-if="showGithubTokenInput" class="mt-3 rounded-lg border border-slate-200 bg-white p-3 text-sm shadow-sm">
-              <label class="block text-xs font-medium text-slate-500" for="todo-github-token">GitHub token</label>
-              <div class="mt-2 flex flex-col gap-2 sm:flex-row">
-                <input
-                  id="todo-github-token"
-                  v-model="githubTokenDraft"
-                  type="password"
-                  autocomplete="off"
-                  class="min-w-0 flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  placeholder="repo/workflow token"
-                >
-                <button
-                  class="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white transition hover:bg-slate-700"
-                  @click="saveGithubToken"
-                >
-                  保存
-                </button>
-                <button
-                  v-if="githubToken"
-                  class="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
-                  @click="clearGithubToken"
-                >
-                  清除
-                </button>
-              </div>
-              <p class="mt-2 text-xs text-slate-500">令牌只保存在当前浏览器，用来触发仓库 workflow_dispatch。</p>
-            </div>
           </div>
-          <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-500">
+          <div class="aio-model-box">
             生成模型：{{ card.generated_with_model || 'gpt-5.4-mini' }}
           </div>
         </div>
+
+        <p v-if="readStatusError" class="aio-message error">
+          {{ readStatusError }}
+        </p>
+        <p v-if="readStatusMessage" class="aio-message success">
+          {{ readStatusMessage }}
+        </p>
+        <div v-if="showGithubTokenInput" class="aio-token-box">
+          <label class="aio-field" for="todo-github-token">
+            <span>GitHub token</span>
+            <input
+              id="todo-github-token"
+              v-model="githubTokenDraft"
+              type="password"
+              autocomplete="off"
+              class="aio-input"
+              placeholder="repo/workflow token"
+            >
+          </label>
+          <div class="aio-token-actions">
+            <button class="aio-button" @click="saveGithubToken">保存</button>
+            <button
+              v-if="githubToken"
+              class="aio-button-secondary"
+              @click="clearGithubToken"
+            >
+              清除
+            </button>
+          </div>
+          <p class="aio-muted aio-token-note">令牌只保存在当前浏览器，用来触发仓库 workflow_dispatch。</p>
+        </div>
+      </header>
+
+      <section class="aio-callout aio-callout-accent">
+        <p class="aio-kicker">One-line summary</p>
+        <p>{{ card.one_line_summary }}</p>
       </section>
 
-      <section class="rounded-3xl border border-slate-900 bg-slate-950 p-6 text-white shadow-sm">
-        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-300">一句话总结</p>
-        <p class="mt-3 text-base leading-8 text-slate-100">{{ card.one_line_summary }}</p>
+      <section class="aio-note-section">
+        <p class="aio-kicker">01</p>
+        <h2>核心创新点</h2>
+        <p class="aio-note-body">{{ card.core_innovation }}</p>
       </section>
 
-      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 class="text-lg font-semibold text-slate-900">1. 核心创新点</h2>
-        <p class="mt-4 text-sm leading-8 text-slate-700">{{ card.core_innovation }}</p>
-      </section>
-
-      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 class="text-lg font-semibold text-slate-900">2. 技术创新拆解</h2>
-        <div class="mt-4 grid gap-4">
+      <section class="aio-note-section">
+        <p class="aio-kicker">02</p>
+        <h2>技术创新拆解</h2>
+        <div class="aio-two-col">
           <div
             v-for="(item, index) in card.technical_contributions"
             :key="card.route_id + '-' + index"
-            class="rounded-2xl border border-slate-200 bg-slate-50 p-4"
+            class="aio-cell"
           >
-            <p class="text-sm font-semibold text-slate-900">{{ item.title || ('创新点 ' + (index + 1)) }}</p>
-            <p class="mt-2 text-sm leading-7 text-slate-700">{{ item.body }}</p>
+            <h3>{{ item.title || ('创新点 ' + (index + 1)) }}</h3>
+            <p>{{ item.body }}</p>
           </div>
         </div>
       </section>
 
-      <section class="grid gap-6 xl:grid-cols-2">
-        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 class="text-lg font-semibold text-slate-900">3. 方法论突破</h2>
-          <div class="mt-4 space-y-4 text-sm leading-7 text-slate-700">
-            <p><span class="font-semibold text-slate-900">新颖性：</span>{{ card.methodological_breakthrough.novelty }}</p>
-            <p><span class="font-semibold text-slate-900">关键技术：</span>{{ card.methodological_breakthrough.key_technique }}</p>
-            <p><span class="font-semibold text-slate-900">理论支撑：</span>{{ card.methodological_breakthrough.theory }}</p>
+      <section class="aio-note-section">
+        <p class="aio-kicker">03</p>
+        <h2>方法论突破</h2>
+        <div class="aio-note-body">
+          <div class="aio-key-row">
+            <strong>新颖性</strong>
+            <span>{{ card.methodological_breakthrough?.novelty }}</span>
           </div>
-        </div>
-
-        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 class="text-lg font-semibold text-slate-900">4. 实验验证</h2>
-          <div class="mt-4 space-y-4 text-sm leading-7 text-slate-700">
-            <p><span class="font-semibold text-slate-900">主要 benchmark：</span>{{ card.key_results.benchmarks }}</p>
-            <p><span class="font-semibold text-slate-900">性能提升：</span>{{ card.key_results.improvements }}</p>
-            <p><span class="font-semibold text-slate-900">关键贡献组件：</span>{{ card.key_results.ablation }}</p>
+          <div class="aio-key-row">
+            <strong>关键技术</strong>
+            <span>{{ card.methodological_breakthrough?.key_technique }}</span>
           </div>
-        </div>
-      </section>
-
-      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 class="text-lg font-semibold text-slate-900">5. 局限与启发</h2>
-        <div class="mt-4 grid gap-4 md:grid-cols-3">
-          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <p class="text-sm font-semibold text-slate-900">当前局限</p>
-            <p class="mt-2 text-sm leading-7 text-slate-700">{{ card.limitations.current }}</p>
-          </div>
-          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <p class="text-sm font-semibold text-slate-900">未来方向</p>
-            <p class="mt-2 text-sm leading-7 text-slate-700">{{ card.limitations.future }}</p>
-          </div>
-          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <p class="text-sm font-semibold text-slate-900">可迁移性</p>
-            <p class="mt-2 text-sm leading-7 text-slate-700">{{ card.limitations.transferability }}</p>
+          <div class="aio-key-row">
+            <strong>理论支撑</strong>
+            <span>{{ card.methodological_breakthrough?.theory }}</span>
           </div>
         </div>
       </section>
 
-      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div class="flex flex-wrap items-start justify-between gap-4">
+      <section class="aio-note-section">
+        <p class="aio-kicker">04</p>
+        <h2>实验验证</h2>
+        <div class="aio-note-body">
+          <div class="aio-key-row">
+            <strong>Benchmark</strong>
+            <span>{{ card.key_results?.benchmarks }}</span>
+          </div>
+          <div class="aio-key-row">
+            <strong>性能提升</strong>
+            <span>{{ card.key_results?.improvements }}</span>
+          </div>
+          <div class="aio-key-row">
+            <strong>消融组件</strong>
+            <span>{{ card.key_results?.ablation }}</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="aio-note-section">
+        <p class="aio-kicker">05</p>
+        <h2>局限与启发</h2>
+        <div class="aio-three-col">
+          <div class="aio-cell">
+            <h3>当前局限</h3>
+            <p>{{ card.limitations?.current }}</p>
+          </div>
+          <div class="aio-cell">
+            <h3>未来方向</h3>
+            <p>{{ card.limitations?.future }}</p>
+          </div>
+          <div class="aio-cell">
+            <h3>可迁移性</h3>
+            <p>{{ card.limitations?.transferability }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="aio-note-section">
+        <div class="aio-split-top">
           <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Compass Snapshot</p>
-            <h2 class="mt-2 text-lg font-semibold text-slate-900">6. Paper Compass</h2>
-            <p class="mt-2 text-sm text-slate-500">
-              评分报告与学习路径已经单独拆到 Compass 页面。Todo 详情这里只保留一个紧凑入口，避免继续往下堆内容。
-            </p>
+            <p class="aio-kicker">06</p>
+            <h2>Paper Compass</h2>
           </div>
-          <a
-            class="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
-            :href="compassDetailLink"
-          >
-            打开完整 Compass
-          </a>
+          <a class="aio-button" :href="compassDetailLink">打开完整 Compass</a>
         </div>
 
-        <div class="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-          <div class="rounded-[28px] border border-slate-900 bg-[radial-gradient(circle_at_top_left,_rgba(96,165,250,0.28),_transparent_42%),linear-gradient(135deg,_#020617,_#111827_52%,_#1e293b)] p-6 text-white shadow-sm">
-            <div class="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-300">Quick Verdict</p>
-                <p class="mt-4 text-4xl font-semibold leading-none" :class="ratingClass(paper?.rating?.overall_score)">
-                  {{ overallRatingText }}
-                </p>
-              </div>
-              <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-slate-100">
-                {{ paper?.rating ? '结构化评分已就绪' : '等待评分快照' }}
+        <div class="aio-compass-card">
+          <div class="aio-verdict">
+            <div class="aio-split-top">
+              <p class="aio-kicker">Quick Verdict</p>
+              <span class="aio-pill" :class="paper?.rating ? 'is-ready' : 'is-muted'">
+                {{ paper?.rating ? '评分已就绪' : '等待评分' }}
               </span>
             </div>
-            <p class="mt-5 text-sm leading-8 text-slate-100">
+            <p class="aio-score" :class="ratingClass(paper?.rating?.overall_score)">
+              {{ overallRatingText }}
+            </p>
+            <p class="aio-note-body">
               {{ ratingNote || '完整的评分依据与学习路径已经拆到独立 Compass 页面。' }}
             </p>
-            <div class="mt-5 flex flex-wrap gap-2">
+            <div class="aio-pill-row">
               <span
                 v-for="entry in compassMaterialEntries"
                 :key="entry.label"
-                class="rounded-full border px-2.5 py-1 text-xs"
+                class="aio-pill"
                 :class="materialClass(entry.ready)"
               >
                 {{ entry.label }}
@@ -191,26 +197,22 @@
             </div>
           </div>
 
-          <div class="rounded-2xl border border-slate-200 bg-white p-5">
-            <div class="flex items-center justify-between">
-              <p class="text-sm font-semibold text-slate-900">评分维度</p>
-              <span class="text-xs text-slate-400">{{ ratingEntries.length ? (ratingEntries.length + ' 项') : '暂无' }}</span>
+          <div v-if="ratingEntries.length" class="aio-rating-grid">
+            <div
+              v-for="entry in ratingEntries"
+              :key="entry.label"
+              class="aio-rating-cell"
+            >
+              <span>{{ entry.label }}</span>
+              <strong>{{ entry.value }}/10</strong>
             </div>
-            <div v-if="ratingEntries.length" class="mt-4 grid gap-3 sm:grid-cols-2">
-              <div
-                v-for="entry in ratingEntries"
-                :key="entry.label"
-                class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3"
-              >
-                <p class="text-xs font-medium uppercase tracking-wide text-slate-400">{{ entry.label }}</p>
-                <p class="mt-2 text-lg font-semibold text-slate-900">{{ entry.value }}/10</p>
-              </div>
-            </div>
-            <p v-else class="mt-4 text-sm text-slate-500">当前静态快照里还没有可展示的结构化评分。</p>
+          </div>
+          <div v-else class="aio-cell">
+            <p>当前静态快照里还没有可展示的结构化评分。</p>
           </div>
         </div>
       </section>
-    </div>
+    </article>
   </div>
 </template>
 
@@ -257,8 +259,8 @@ useHead(() => ({
 
 const statusClass = (status) => {
   const classes = {
-    unread: 'bg-slate-100 text-slate-600',
-    read: 'bg-emerald-100 text-emerald-700',
+    unread: 'is-unread',
+    read: 'is-read',
   }
   return classes[status] || classes.unread
 }
@@ -327,15 +329,15 @@ const clearGithubToken = () => {
 
 const materialClass = (enabled) => {
   return enabled
-    ? 'border-blue-200 bg-blue-50 text-blue-700'
-    : 'border-slate-200 bg-slate-50 text-slate-400'
+    ? 'is-ready'
+    : 'is-muted'
 }
 
 const ratingClass = (score) => {
-  if (score == null) return 'text-slate-300'
-  if (score >= 8) return 'text-emerald-300'
-  if (score >= 6) return 'text-amber-300'
-  return 'text-rose-300'
+  if (score == null) return 'score-empty'
+  if (score >= 8) return 'score-high'
+  if (score >= 6) return 'score-mid'
+  return 'score-low'
 }
 
 const goBack = () => navigateTo(appBaseUrl.value)

@@ -1,39 +1,44 @@
 <template>
-  <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <div class="rounded-3xl border border-blue-200 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 px-6 py-8 text-white shadow-xl">
-      <p class="text-xs font-semibold uppercase tracking-[0.3em] text-blue-200">Todo Snapshot</p>
-      <h1 class="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Todo Reading Cards</h1>
-      <p class="mt-3 max-w-3xl text-sm leading-7 text-slate-200 sm:text-base">
-        这里只保留 Zotero <code class="rounded bg-white/10 px-1.5 py-0.5 text-blue-100">Todo</code> collection 的阅读卡片。
-      </p>
-      <div class="mt-5 flex flex-wrap gap-3 text-sm text-blue-100">
-        <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5">
-          当前卡片 {{ filteredTodoCards.length }} / {{ todoCards.length }}
-        </span>
-        <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5">
-          Todo 默认全部按未读展示
-        </span>
+  <div class="aio-content">
+    <section class="aio-hero">
+      <div>
+        <p class="aio-kicker">// Todo Snapshot · ScholarAIO</p>
+        <h1 class="aio-title">Todo Reading Cards</h1>
+        <p class="aio-subtitle">
+          这里汇总 Zotero Todo collection 的阅读卡片，按静态快照展示，已读状态可以直接从详情页写回仓库。
+        </p>
       </div>
-    </div>
+      <div class="aio-hero-stats">
+        <div class="aio-stat">
+          <div class="aio-stat-value">{{ filteredTodoCards.length }}</div>
+          <div class="aio-stat-label">visible cards</div>
+        </div>
+        <div class="aio-stat">
+          <div class="aio-stat-value">{{ todoCards.length }}</div>
+          <div class="aio-stat-label">total todo</div>
+        </div>
+        <div class="aio-stat">
+          <div class="aio-stat-value">{{ unreadCount }}</div>
+          <div class="aio-stat-label">unread</div>
+        </div>
+      </div>
+    </section>
 
-    <div class="mt-6 space-y-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_180px]">
-        <label class="block">
-          <span class="mb-2 block text-sm font-medium text-slate-700">搜索</span>
+    <section class="aio-panel aio-filter-panel">
+      <div class="aio-field-grid primary">
+        <label class="aio-field">
+          <span>Search</span>
           <input
             v-model="searchQuery"
             type="text"
             placeholder="搜索标题、作者、术语、结论..."
-            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-          />
+            class="aio-input"
+          >
         </label>
 
-        <label class="block">
-          <span class="mb-2 block text-sm font-medium text-slate-700">排序</span>
-          <select
-            v-model="sortBy"
-            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-          >
+        <label class="aio-field">
+          <span>Sort</span>
+          <select v-model="sortBy" class="aio-select">
             <option value="">Todo 顺序</option>
             <option value="year">按年份</option>
             <option value="title">按标题</option>
@@ -41,47 +46,44 @@
         </label>
       </div>
 
-      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <label class="block">
-          <span class="mb-2 block text-sm font-medium text-slate-700">作者包含</span>
+      <div class="aio-field-grid secondary">
+        <label class="aio-field">
+          <span>Author</span>
           <input
             v-model="authorFilter"
             type="text"
             placeholder="例如 Hutter"
-            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-          />
+            class="aio-input"
+          >
         </label>
 
-        <label class="block">
-          <span class="mb-2 block text-sm font-medium text-slate-700">年份起</span>
+        <label class="aio-field">
+          <span>Year From</span>
           <input
             v-model.number="yearFrom"
             type="number"
             min="1900"
             max="2100"
             placeholder="例如 2020"
-            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-          />
+            class="aio-input"
+          >
         </label>
 
-        <label class="block">
-          <span class="mb-2 block text-sm font-medium text-slate-700">年份止</span>
+        <label class="aio-field">
+          <span>Year To</span>
           <input
             v-model.number="yearTo"
             type="number"
             min="1900"
             max="2100"
             placeholder="例如 2026"
-            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-          />
+            class="aio-input"
+          >
         </label>
 
-        <label class="block">
-          <span class="mb-2 block text-sm font-medium text-slate-700">DOI</span>
-          <select
-            v-model="doiFilter"
-            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-          >
+        <label class="aio-field">
+          <span>DOI</span>
+          <select v-model="doiFilter" class="aio-select">
             <option value="">全部</option>
             <option value="has">仅有 DOI</option>
             <option value="missing">仅无 DOI</option>
@@ -89,88 +91,83 @@
         </label>
       </div>
 
-      <div class="flex flex-wrap items-center gap-3">
-        <button
-          class="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-          @click="clearFilters"
-        >
-          清空筛选
-        </button>
-        <span class="text-sm text-slate-500">命中 {{ filteredTodoCards.length }} 条</span>
+      <div class="aio-filter-actions">
+        <button class="aio-button-secondary" @click="clearFilters">清空筛选</button>
+        <span class="aio-muted">matched {{ filteredTodoCards.length }} / {{ todoCards.length }}</span>
       </div>
+    </section>
+
+    <div v-if="loading" class="aio-state">
+      <div class="aio-spinner"></div>
+      <p>Loading Todo snapshot...</p>
     </div>
 
-    <div v-if="loading" class="py-16 text-center">
-      <div class="mx-auto h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
-      <p class="mt-4 text-sm text-slate-500">Loading Todo snapshot...</p>
-    </div>
-
-    <div v-else-if="errorMessage" class="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+    <div v-else-if="errorMessage" class="aio-state error">
       {{ errorMessage }}
     </div>
 
-    <div v-else-if="filteredTodoCards.length" class="mt-6 grid gap-5 xl:grid-cols-2">
-      <article
-        v-for="card in pagedTodoCards"
-        :key="card.route_id"
-        class="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg"
-      >
-        <div class="flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">
-                Todo
-              </span>
-              <span class="rounded-full px-3 py-1 text-xs font-medium" :class="statusClass(card.read_status)">
+    <template v-else>
+      <section class="aio-section-header">
+        <h2>// Reading Queue · Todo</h2>
+        <span class="aio-muted">page {{ currentPage }} / {{ totalPages }}</span>
+      </section>
+
+      <div v-if="filteredTodoCards.length" class="aio-card-grid">
+        <NuxtLink
+          v-for="card in pagedTodoCards"
+          :key="card.route_id"
+          class="aio-card aio-todo-card"
+          :to="todoDetailLink(card.route_id)"
+        >
+          <div class="aio-card-top">
+            <div class="aio-pill-row">
+              <span class="aio-pill is-ready">Todo</span>
+              <span class="aio-pill" :class="statusClass(card.read_status)">
                 {{ card.read_status === 'read' ? '已读' : '未读' }}
               </span>
             </div>
-            <h2 class="mt-4 text-xl font-semibold leading-8 text-slate-900" v-html="highlightText(card.title)"></h2>
-            <p class="mt-2 text-sm text-slate-600" v-html="highlightText(card.authors?.join(', ') || '作者信息缺失')"></p>
-            <p class="mt-1 text-xs text-slate-500">
-              {{ card.year || '年份未知' }}<span v-if="card.journal"> · {{ card.journal }}</span>
-            </p>
+            <span class="aio-pill">{{ card.year || 'n.d.' }}</span>
           </div>
-        </div>
 
-        <div class="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">预览</p>
-          <p class="mt-3 text-sm leading-7 text-slate-700" v-html="highlightText(card.one_line_summary)"></p>
-          <p v-if="previewText(card)" class="mt-3 text-sm leading-7 text-slate-600">
-            {{ previewText(card) }}
+          <h2 class="aio-card-title" v-html="highlightText(card.title)"></h2>
+          <p class="aio-card-authors" v-html="highlightText(card.authors?.join(', ') || '作者信息缺失')"></p>
+          <p class="aio-card-meta">
+            <span v-if="card.journal">{{ card.journal }}</span>
+            <span v-else>期刊信息缺失</span>
+            <span v-if="card.doi"> · DOI: {{ card.doi }}</span>
           </p>
-        </div>
 
-        <div class="mt-5 flex flex-wrap gap-3">
-          <NuxtLink
-            class="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
-            :to="todoDetailLink(card.route_id)"
-          >
-            查看总结
-          </NuxtLink>
-        </div>
-      </article>
-    </div>
+          <div class="aio-card-summary">
+            <p v-html="highlightText(card.one_line_summary)"></p>
+            <div v-if="previewText(card)" class="aio-card-preview">
+              {{ previewText(card) }}
+            </div>
+          </div>
 
-    <div v-if="filteredTodoCards.length" class="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600 shadow-sm">
-      <span>第 {{ currentPage }} / {{ totalPages }} 页（每页 {{ pageSize }} 条）</span>
-      <div class="flex items-center gap-2">
-        <button
-          class="rounded-lg border border-slate-300 px-3 py-1.5 disabled:cursor-not-allowed disabled:opacity-50"
-          :disabled="currentPage <= 1"
-          @click="currentPage = Math.max(1, currentPage - 1)"
-        >上一页</button>
-        <button
-          class="rounded-lg border border-slate-300 px-3 py-1.5 disabled:cursor-not-allowed disabled:opacity-50"
-          :disabled="currentPage >= totalPages"
-          @click="currentPage = Math.min(totalPages, currentPage + 1)"
-        >下一页</button>
+          <div class="aio-card-action">查看总结 →</div>
+        </NuxtLink>
       </div>
-    </div>
 
-    <div v-else class="mt-6 rounded-2xl border border-slate-200 bg-white px-4 py-12 text-center text-sm text-slate-500 shadow-sm">
-      当前筛选条件下没有匹配到 Todo 卡片。
-    </div>
+      <div v-if="filteredTodoCards.length" class="aio-pagination">
+        <span class="aio-muted">第 {{ currentPage }} / {{ totalPages }} 页 · 每页 {{ pageSize }} 条</span>
+        <div class="aio-pagination-controls">
+          <button
+            class="aio-button-secondary"
+            :disabled="currentPage <= 1"
+            @click="currentPage = Math.max(1, currentPage - 1)"
+          >上一页</button>
+          <button
+            class="aio-button-secondary"
+            :disabled="currentPage >= totalPages"
+            @click="currentPage = Math.min(totalPages, currentPage + 1)"
+          >下一页</button>
+        </div>
+      </div>
+
+      <div v-else class="aio-state">
+        当前筛选条件下没有匹配到 Todo 卡片。
+      </div>
+    </template>
   </div>
 </template>
 
@@ -196,6 +193,7 @@ const appBaseUrl = computed(() => {
 })
 const normalizedQuery = computed(() => searchQuery.value.trim().toLowerCase())
 const normalizedAuthorFilter = computed(() => authorFilter.value.trim().toLowerCase())
+const unreadCount = computed(() => todoCards.value.filter((card) => (card.read_status || 'unread') !== 'read').length)
 
 const matchesSearch = (values) => {
   const query = normalizedQuery.value
@@ -261,8 +259,8 @@ watch(filteredTodoCards, () => {
 
 const statusClass = (status) => {
   const classes = {
-    unread: 'bg-slate-100 text-slate-600',
-    read: 'bg-emerald-100 text-emerald-700',
+    unread: 'is-unread',
+    read: 'is-read',
   }
   return classes[status] || classes.unread
 }
@@ -281,7 +279,7 @@ const highlightText = (value) => {
   if (!query) return safe
   const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   const regex = new RegExp('(' + escapedQuery + ')', 'ig')
-  return safe.replace(regex, '<mark class="rounded bg-yellow-200/80 px-0.5">$1</mark>')
+  return safe.replace(regex, '<mark class="aio-mark">$1</mark>')
 }
 
 const previewText = (card) => {
