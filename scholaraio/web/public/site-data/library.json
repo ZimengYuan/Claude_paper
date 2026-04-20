@@ -10598,7 +10598,8 @@
         "one_line_verdict": "除非你正好需要这条技术线，否则优先级不高。",
         "notes": "除非你正好需要这条技术线，否则优先级不高。"
       },
-      "route_id": "95488d6e-88ed-4877-afb2-459b61ad92c1"
+      "route_id": "95488d6e-88ed-4877-afb2-459b61ad92c1",
+      "read_at": "2026-04-20T14:06:26+00:00"
     },
     {
       "dir_name": "Wang-2025-1000-Layer-Networks-for-Self-Supervised-RL-Scaling-Depth-Can-Enable-New-Goal-Reaching-Capabilities",
