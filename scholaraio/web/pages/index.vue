@@ -184,7 +184,7 @@
 </template>
 
 <script setup>
-const { fetchJson } = useStaticSiteData()
+const { fetchJson, applyReadStatusOverride } = useStaticSiteData()
 const runtimeConfig = useRuntimeConfig()
 
 const searchQuery = ref('')
@@ -314,9 +314,9 @@ const loadTodoCards = async () => {
   try {
     const todoData = await fetchJson('todo-cards.json')
     const cards = Array.isArray(todoData?.cards) ? todoData.cards : []
-    todoCards.value = cards.map((card) => ({
+    todoCards.value = cards.map((card) => applyReadStatusOverride({
       ...card,
-      read_status: 'unread',
+      read_status: card.read_status || 'unread',
     }))
   } catch (error) {
     console.error('Failed to load todo cards:', error)

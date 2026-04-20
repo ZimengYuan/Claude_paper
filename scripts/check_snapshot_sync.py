@@ -49,6 +49,38 @@ def _count_local_papers(papers_dir: Path) -> int:
     return sum(1 for d in papers_dir.iterdir() if d.is_dir() and (d / "meta.json").exists())
 
 
+def _count_local_papers_with_materials(papers_dir: Path) -> int:
+    count = 0
+    for paper_dir in papers_dir.iterdir():
+        if not paper_dir.is_dir():
+            continue
+        meta_path = paper_dir / "meta.json"
+        if not meta_path.exists():
+            continue
+        try:
+            meta = _read_json(meta_path)
+        except json.JSONDecodeError:
+            continue
+
+        summary_ready = False
+        summary_path = paper_dir / "summary.md"
+        if summary_path.exists():
+            summary_ready = bool(summary_path.read_text(encoding="utf-8").strip())
+        if not summary_ready:
+            summary_ready = bool(str(meta.get("summary") or "").strip())
+
+        method_ready = False
+        method_path = paper_dir / "method.md"
+        if method_path.exists():
+            method_ready = bool(method_path.read_text(encoding="utf-8").strip())
+        if not method_ready:
+            method_ready = bool(str(meta.get("method_summary") or "").strip())
+
+        if summary_ready and method_ready:
+            count += 1
+    return count
+
+
 def _resolve_zotero_db(explicit: str | None) -> Path | None:
     if explicit:
         p = Path(explicit)
@@ -142,17 +174,30 @@ def main() -> None:
 
     todo_path = snapshot_dir / "todo-cards.json"
     library_path = snapshot_dir / "library.json"
+    manifest_path = snapshot_dir / "manifest.json"
+    explore_current_path = snapshot_dir / "explore" / "current-library.json"
 
     todo_payload = _read_json(todo_path) if todo_path.exists() else {}
     library_payload = _read_json(library_path) if library_path.exists() else {}
+    manifest_payload = _read_json(manifest_path) if manifest_path.exists() else {}
+    explore_current_payload = _read_json(explore_current_path) if explore_current_path.exists() else {}
 
     summary: dict[str, Any] = {
         "todo_snapshot_collection_count": (todo_payload.get("collection") or {}).get("count"),
         "todo_snapshot_cards_len": len(todo_payload.get("cards") or []),
         "todo_snapshot_generated_at": todo_payload.get("generated_at"),
-        "library_snapshot_papers_len": len(library_payload.get("papers") or []),
+        "library_snapshot_cards_len": len(library_payload.get("papers") or []),
         "library_snapshot_generated_at": library_payload.get("generated_at"),
+        "manifest_snapshot_papers_len": len(manifest_payload.get("papers") or []),
+        "manifest_snapshot_generated_at": manifest_payload.get("generated_at"),
+        "explore_snapshot_count": explore_current_payload.get("count"),
+        "explore_snapshot_generated_at": (
+            explore_current_payload.get("snapshot_generated_at") or explore_current_payload.get("generated_at")
+        ),
         "local_papers_with_meta": _count_local_papers(papers_dir) if papers_dir.exists() else None,
+        "local_papers_with_materials": (
+            _count_local_papers_with_materials(papers_dir) if papers_dir.exists() else None
+        ),
     }
 
     zotero_db = _resolve_zotero_db(args.zotero_db)
@@ -167,30 +212,44 @@ def main() -> None:
 
     diff_rows = [
         DiffRow(
-            name="Todo 卡片数 vs Zotero Todo(含PDF)",
+            name="Todo 卡片数 vs Zotero Todo 总条目",
             left_name="todo_snapshot_cards_len",
             left=summary.get("todo_snapshot_cards_len"),
-            right_name="zotero_todo_items_with_pdf_attachment",
-            right=summary.get("zotero_todo_items_with_pdf_attachment"),
-        ),
-        DiffRow(
-            name="Todo collection.count vs Zotero Todo 总条目",
-            left_name="todo_snapshot_collection_count",
-            left=summary.get("todo_snapshot_collection_count"),
             right_name="zotero_todo_items",
             right=summary.get("zotero_todo_items"),
         ),
         DiffRow(
-            name="Library 快照数 vs 本地 data/papers",
-            left_name="library_snapshot_papers_len",
-            left=summary.get("library_snapshot_papers_len"),
+            name="Todo collection.count vs cards.length",
+            left_name="todo_snapshot_collection_count",
+            left=summary.get("todo_snapshot_collection_count"),
+            right_name="todo_snapshot_cards_len",
+            right=summary.get("todo_snapshot_cards_len"),
+        ),
+        DiffRow(
+            name="Library 卡片快照数 vs 本地有阅读材料论文",
+            left_name="library_snapshot_cards_len",
+            left=summary.get("library_snapshot_cards_len"),
+            right_name="local_papers_with_materials",
+            right=summary.get("local_papers_with_materials"),
+        ),
+        DiffRow(
+            name="Manifest 全量论文数 vs 本地 data/papers",
+            left_name="manifest_snapshot_papers_len",
+            left=summary.get("manifest_snapshot_papers_len"),
             right_name="local_papers_with_meta",
             right=summary.get("local_papers_with_meta"),
         ),
         DiffRow(
-            name="Library 快照数 vs Zotero 全库条目",
-            left_name="library_snapshot_papers_len",
-            left=summary.get("library_snapshot_papers_len"),
+            name="Explore current-library count vs 本地 data/papers",
+            left_name="explore_snapshot_count",
+            left=summary.get("explore_snapshot_count"),
+            right_name="local_papers_with_meta",
+            right=summary.get("local_papers_with_meta"),
+        ),
+        DiffRow(
+            name="本地 data/papers vs Zotero 全库条目",
+            left_name="local_papers_with_meta",
+            left=summary.get("local_papers_with_meta"),
             right_name="zotero_all_items",
             right=summary.get("zotero_all_items"),
         ),

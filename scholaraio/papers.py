@@ -280,6 +280,16 @@ def user_notes_path(paper_d: Path) -> Path:
     return paper_d / "user.md"
 
 
+def score_report_path(paper_d: Path) -> Path:
+    """Return the score.md path for a paper."""
+    return paper_d / "score.md"
+
+
+def readable_report_path(paper_d: Path) -> Path:
+    """Return the report.md path for a paper."""
+    return paper_d / "report.md"
+
+
 def read_summary(paper_d: Path) -> str | None:
     """Read summary.md from a paper directory.
 
@@ -356,6 +366,58 @@ def write_method(paper_d: Path, content: str) -> None:
 
     p = method_path(paper_d)
     p.write_text(content, encoding="utf-8")
+
+
+def read_score_report(paper_d: Path) -> str | None:
+    """Read score.md from a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+
+    Returns:
+        Content of score.md, or None if not exists.
+    """
+    p = score_report_path(paper_d)
+    if p.exists():
+        return p.read_text(encoding="utf-8")
+    return None
+
+
+def write_score_report(paper_d: Path, content: str) -> None:
+    """Write score.md to a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+        content: Score report content to write.
+    """
+    p = score_report_path(paper_d)
+    p.write_text(content.strip() + "\n", encoding="utf-8")
+
+
+def read_readable_report(paper_d: Path) -> str | None:
+    """Read report.md from a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+
+    Returns:
+        Content of report.md, or None if not exists.
+    """
+    p = readable_report_path(paper_d)
+    if p.exists():
+        return p.read_text(encoding="utf-8")
+    return None
+
+
+def write_readable_report(paper_d: Path, content: str) -> None:
+    """Write report.md to a paper directory.
+
+    Args:
+        paper_d: Paper directory path.
+        content: Readable report content to write.
+    """
+    p = readable_report_path(paper_d)
+    p.write_text(content.strip() + "\n", encoding="utf-8")
 
 
 def read_sensemaking(paper_d: Path) -> dict | None:

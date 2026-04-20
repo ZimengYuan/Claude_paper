@@ -21,6 +21,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from scholaraio.metadata_quality import collect_metadata_issues, normalize_title_key
 from scholaraio.papers import iter_paper_dirs
 
 _log = logging.getLogger(__name__)
@@ -56,6 +57,7 @@ def audit_papers(papers_dir: Path) -> list[Issue]:
 
     # DOI duplicate detection
     doi_map: dict[str, list[str]] = {}
+    title_map: dict[str, list[tuple[str, str]]] = {}
 
     for pdir in iter_paper_dirs(papers_dir):
         pid = pdir.name
@@ -69,6 +71,9 @@ def audit_papers(papers_dir: Path) -> list[Issue]:
         except Exception as e:
             issues.append(Issue(pid, "error", "invalid_json", f"JSON 解析失败: {e}"))
             continue
+
+        for quality_issue in collect_metadata_issues(data):
+            issues.append(Issue(pid, quality_issue.severity, quality_issue.rule, quality_issue.message))
 
         # -- Missing fields --
         _check_missing(issues, pid, data)
@@ -87,6 +92,10 @@ def audit_papers(papers_dir: Path) -> list[Issue]:
         if doi:
             doi_map.setdefault(doi, []).append(pid)
 
+        title_key = normalize_title_key(str(data.get("title") or ""))
+        if title_key:
+            title_map.setdefault(title_key, []).append((pid, str(data.get("title") or "")))
+
     # DOI duplicates
     for doi, pids in doi_map.items():
         if len(pids) > 1:
@@ -94,10 +103,28 @@ def audit_papers(papers_dir: Path) -> list[Issue]:
                 others = [p for p in pids if p != pid]
                 issues.append(Issue(pid, "error", "duplicate_doi", f"DOI 重复: {doi} (同: {', '.join(others)})"))
 
+    for entries in title_map.values():
+        if len(entries) > 1:
+            display_title = next((title for _, title in entries if title), entries[0][0])
+            for pid, _title in entries:
+                others = [other_pid for other_pid, _ in entries if other_pid != pid]
+                issues.append(
+                    Issue(pid, "warning", "duplicate_title", f"标题重复: {display_title[:120]} (同: {', '.join(others)})")
+                )
+
+    unique_issues: list[Issue] = []
+    seen: set[tuple[str, str, str, str]] = set()
+    for issue in issues:
+        key = (issue.paper_id, issue.severity, issue.rule, issue.message)
+        if key in seen:
+            continue
+        seen.add(key)
+        unique_issues.append(issue)
+
     # Sort: error > warning > info
     severity_order = {"error": 0, "warning": 1, "info": 2}
-    issues.sort(key=lambda x: (severity_order.get(x.severity, 9), x.paper_id))
-    return issues
+    unique_issues.sort(key=lambda x: (severity_order.get(x.severity, 9), x.paper_id))
+    return unique_issues
 
 
 def _check_missing(issues: list[Issue], pid: str, data: dict) -> None:

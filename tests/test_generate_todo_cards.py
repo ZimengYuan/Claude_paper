@@ -105,7 +105,7 @@ def test_metadata_fallback_is_not_plain_abstract_echo() -> None:
     assert "摘要" in card["key_results"]["improvements"]
 
 
-def test_merge_card_metadata_forces_unread_status() -> None:
+def test_merge_card_metadata_preserves_item_read_status() -> None:
     existing_card = {
         "read_status": "read",
         "core_innovation": "old",
@@ -118,7 +118,7 @@ def test_merge_card_metadata_forces_unread_status() -> None:
 
     merged = _merge_card_metadata(existing_card, _sample_item(read_status="read"), model="gpt-5.4-mini")
 
-    assert merged["read_status"] == "unread"
+    assert merged["read_status"] == "read"
 
 
 def test_card_needs_quality_refresh_for_placeholder_results() -> None:

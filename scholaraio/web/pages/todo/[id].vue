@@ -183,7 +183,7 @@
 </template>
 
 <script setup>
-const { fetchJson } = useStaticSiteData()
+const { fetchJson, applyReadStatusOverride } = useStaticSiteData()
 const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
 const routeId = computed(() => String(route.params.id || '').trim())
@@ -309,10 +309,10 @@ const loadCard = async () => {
     if (!matched) {
       throw new Error('Todo reading card not found in snapshot.')
     }
-    card.value = {
+    card.value = applyReadStatusOverride({
       ...matched,
-      read_status: 'unread',
-    }
+      read_status: matched.read_status || 'unread',
+    })
     await loadLinkedPaper(matched)
   } catch (error) {
     console.error('Failed to load todo detail:', error)

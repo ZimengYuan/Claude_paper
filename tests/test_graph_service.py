@@ -211,3 +211,23 @@ def test_build_graph_returns_dynamic_graph_summary(tmp_path, tmp_papers, tmp_db)
     assert result['edges'] == len(result['graph']['edges'])
     assert result['graph']['mode'] == 'citation'
     assert result['graph']['stats']['papers'] == 2
+
+
+def test_citation_graph_tolerates_string_year_values(tmp_path, tmp_papers, tmp_db):
+    cfg = _make_cfg(tmp_path)
+
+    meta_a = read_meta(tmp_papers / 'Smith-2023-Turbulence')
+    meta_a['year'] = 'XXXX'
+    meta_a['references'] = ['10.5678/fluid.2024.002']
+    write_meta(tmp_papers / 'Smith-2023-Turbulence', meta_a)
+
+    meta_b = read_meta(tmp_papers / 'Wang-2024-DeepLearning')
+    meta_b['doi'] = '10.5678/fluid.2024.002'
+    write_meta(tmp_papers / 'Wang-2024-DeepLearning', meta_b)
+
+    build_index(tmp_papers, tmp_db, rebuild=True)
+    graph = get_graph(cfg, mode='citation', scope='library', max_nodes=10)
+
+    assert graph['mode'] == 'citation'
+    assert graph['stats']['papers'] == 2
+    assert len(graph['nodes']) >= 2

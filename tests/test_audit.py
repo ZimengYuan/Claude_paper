@@ -58,3 +58,48 @@ class TestAuditDetection:
             assert issue.severity in ("error", "warning", "info")
             assert issue.rule
             assert issue.message
+
+    def test_audit_reports_duplicate_titles_and_invalid_year(self, tmp_papers):
+        bad = tmp_papers / "Bad-XXXX-Intro"
+        bad.mkdir()
+        (bad / "meta.json").write_text(
+            json.dumps(
+                {
+                    "id": "dddd-4444",
+                    "title": "1Introduction",
+                    "authors": ["Broken Parser"],
+                    "first_author_lastname": "Broken",
+                    "year": "XXXX",
+                    "doi": "",
+                    "paper_type": "journal-article",
+                }
+            ),
+            encoding="utf-8",
+        )
+        (bad / "paper.md").write_text("# 1Introduction\n\nSome content", encoding="utf-8")
+
+        dup = tmp_papers / "Jones-2025-Turbulence"
+        dup.mkdir()
+        (dup / "meta.json").write_text(
+            json.dumps(
+                {
+                    "id": "eeee-5555",
+                    "title": "Turbulence modeling in boundary layers",
+                    "authors": ["Alice Jones"],
+                    "first_author_lastname": "Jones",
+                    "year": 2025,
+                    "doi": "10.5555/jfm.2025.001",
+                    "paper_type": "journal-article",
+                }
+            ),
+            encoding="utf-8",
+        )
+        (dup / "paper.md").write_text("# Turbulence modeling in boundary layers\n\nMore content", encoding="utf-8")
+
+        issues = audit_papers(tmp_papers)
+        rules = {(issue.paper_id, issue.rule) for issue in issues}
+
+        assert ("Bad-XXXX-Intro", "invalid_year") in rules
+        assert ("Bad-XXXX-Intro", "section_heading_title") in rules
+        assert ("Smith-2023-Turbulence", "duplicate_title") in rules
+        assert ("Jones-2025-Turbulence", "duplicate_title") in rules

@@ -838,7 +838,7 @@ def _merge_card_metadata(card: dict[str, Any], item: MatchedTodoPaper, *, model:
         "journal": item.journal,
         "venue": item.journal,
         "doi": item.doi,
-        "read_status": "unread",
+        "read_status": item.read_status or card.get("read_status") or "unread",
         "collection_name": TODO_COLLECTION_NAME,
         "collection_key": TODO_COLLECTION_KEY,
         "collection_index": item.collection_index,

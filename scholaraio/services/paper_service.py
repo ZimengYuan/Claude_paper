@@ -6,6 +6,8 @@ from scholaraio.papers import (
     best_citation,
     read_meta,
     read_method,
+    read_readable_report,
+    read_score_report,
     read_sensemaking,
     read_summary,
     set_read_status,
@@ -103,6 +105,8 @@ def get_paper_detail(cfg, paper_ref: str) -> dict:
 
     summary = read_summary(paper_dir) or meta.get("summary") or ""
     method_summary = read_method(paper_dir) or meta.get("method_summary") or ""
+    score_report = read_score_report(paper_dir) or ""
+    readable_report = read_readable_report(paper_dir) or ""
     sensemaking = read_sensemaking(paper_dir)
 
     tags = meta.get("tags") or []
@@ -128,6 +132,8 @@ def get_paper_detail(cfg, paper_ref: str) -> dict:
         "citation_count": best_citation(meta),
         "summary": summary,
         "method_summary": method_summary,
+        "score_report": score_report,
+        "readable_report": readable_report,
         "sensemaking": sensemaking,
         "rating": meta.get("rating") or None,
         "parsed_source": _parsed_source_payload(paper_dir, meta, markdown),

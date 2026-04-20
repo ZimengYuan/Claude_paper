@@ -5,6 +5,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
+from scholaraio.metadata_quality import normalize_year_value
 from scholaraio.papers import best_citation, iter_paper_dirs, read_meta
 from scholaraio.services.common import ServiceError, resolve_paper_dir
 from scholaraio.workspace import read_paper_ids
@@ -69,7 +70,7 @@ def _paper_record_from_meta(paper_dir: Path, meta: dict) -> dict[str, Any]:
         "doi": meta.get("doi") or "",
         "authors": meta.get("authors") or [],
         "first_author": _first_author(meta),
-        "year": meta.get("year"),
+        "year": normalize_year_value(meta.get("year")),
         "journal": meta.get("journal") or "",
         "tags": meta.get("tags") or [],
         "citation_count": best_citation(meta),
@@ -268,7 +269,7 @@ def _topic_paper_brief(meta: dict[str, Any], local_papers: dict[str, dict[str, A
         "paper_id": paper_id,
         "paper_ref": local.get("paper_ref") or local.get("dir_name") or paper_id,
         "title": title,
-        "year": meta.get("year") or local.get("year"),
+        "year": normalize_year_value(meta.get("year")) or normalize_year_value(local.get("year")),
         "first_author": first_author,
         "citation_count": max(_best_citation_value(meta.get("citation_count")), int(local.get("citation_count") or 0)),
     }
@@ -325,7 +326,7 @@ def _truncate_graph(
             -degree.get(node["id"], 0),
             -(int(node.get("paper_count") or 0)),
             -(int(node.get("citation_count") or 0)),
-            -(int(node.get("year") or 0)),
+            -_safe_int(node.get("year"), 0),
             node.get("label") or node.get("id") or "",
         )
 
@@ -405,7 +406,7 @@ def _project_or_library_candidates(
     papers.sort(
         key=lambda record: (
             -(int(record.get("citation_count") or 0)),
-            -(int(record.get("year") or 0)),
+            -_safe_int(record.get("year"), 0),
             record.get("title") or record.get("dir_name") or record["id"],
         )
     )
@@ -659,7 +660,7 @@ def _build_structure_graph(
             key=lambda paper_id: (
                 -ranking.get(paper_id, 0.0),
                 -(int(local_papers[paper_id].get("citation_count") or 0)),
-                -(int(local_papers[paper_id].get("year") or 0)),
+                -_safe_int(local_papers[paper_id].get("year"), 0),
                 local_papers[paper_id].get("title") or local_papers[paper_id].get("dir_name") or paper_id,
             ),
         )
@@ -954,7 +955,7 @@ def _build_topic_graph(
         papers.sort(
             key=lambda paper: (
                 -(int(paper.get("citation_count") or 0)),
-                -(int(paper.get("year") or 0)),
+                -_safe_int(paper.get("year"), 0),
                 paper.get("title") or paper.get("paper_ref") or "",
             )
         )

@@ -36,6 +36,7 @@ from typing import Any
 
 from scholaraio.config import Config
 from scholaraio.log import ui
+from scholaraio.metadata_quality import collect_metadata_issues, normalize_meta_for_ingest, normalize_title_key
 from scholaraio.metrics import timer
 
 _log = logging.getLogger(__name__)
@@ -78,6 +79,7 @@ class InboxCtx:
         inbox_dir: inbox 目录路径。
         papers_dir: 已入库论文目录路径。
         existing_dois: 已入库论文的 DOI → JSON 路径映射（用于去重）。
+        existing_titles: 已入库论文的规范化标题 → JSON 路径列表。
         cfg: 全局配置。
         opts: 运行选项（dry_run, no_api, force 等）。
         pending_dir: 无 DOI 论文的待审目录。
@@ -91,6 +93,7 @@ class InboxCtx:
     inbox_dir: Path
     papers_dir: Path
     existing_dois: dict[str, Path]
+    existing_titles: dict[str, list[Path]]
     cfg: Config
     opts: dict[str, Any]
 
@@ -444,6 +447,8 @@ def step_ingest(ctx: InboxCtx) -> StepResult:
         ctx.status = "failed"
         return StepResult.FAIL
 
+    ctx.meta = normalize_meta_for_ingest(ctx.meta)
+
     if not (ctx.meta.title or "").strip() and not (ctx.meta.abstract or "").strip():
         _log.error("ingest failed: no title and no abstract")
         ui("跳过：无标题且无摘要，无法入库")
@@ -459,19 +464,49 @@ def step_ingest(ctx: InboxCtx) -> StepResult:
             ctx.meta.abstract = abstract
             _log.debug("abstract backfilled from MD (%d chars)", len(abstract))
 
+    blocking_issues = [issue for issue in collect_metadata_issues(ctx.meta) if issue.blocks_ingest]
+    if blocking_issues:
+        _move_to_pending(
+            ctx,
+            issue="metadata_quality",
+            message="元数据质量不足，已转入 pending 待人工确认",
+            extra={
+                "quality_rules": [issue.rule for issue in blocking_issues],
+                "quality_messages": [issue.message for issue in blocking_issues],
+            },
+        )
+        ctx.status = "needs_review"
+        return StepResult.FAIL
+
     papers_dir = ctx.papers_dir
     papers_dir.mkdir(parents=True, exist_ok=True)
     new_stem = generate_new_stem(ctx.meta)
+    title_key = normalize_title_key(ctx.meta.title or "")
+
+    if title_key and title_key in ctx.existing_titles:
+        existing_dirs = sorted({path.parent.name for path in ctx.existing_titles[title_key]})
+        _move_to_pending(
+            ctx,
+            issue="duplicate_title",
+            message="标题与已入库论文重复，已转入 pending 待人工确认",
+            extra={"duplicate_title_of": existing_dirs, "normalized_title": title_key},
+        )
+        ctx.status = "needs_review"
+        return StepResult.FAIL
+
+    paper_d = papers_dir / new_stem
+    if paper_d.exists():
+        _move_to_pending(
+            ctx,
+            issue="directory_collision",
+            message="目标目录名已存在，已转入 pending 待人工确认",
+            extra={"existing_dir": paper_d.name},
+        )
+        ctx.status = "needs_review"
+        return StepResult.FAIL
 
     # Assign UUID
     ctx.meta.id = generate_uuid()
-
-    # Create per-paper directory
-    paper_d = papers_dir / new_stem
-    suffix = 2
-    while paper_d.exists():
-        paper_d = papers_dir / f"{new_stem}-{suffix}"
-        suffix += 1
 
     paper_d.mkdir(parents=True)
     new_json = paper_d / "meta.json"
@@ -493,6 +528,8 @@ def step_ingest(ctx: InboxCtx) -> StepResult:
 
     if ctx.meta.doi and ctx.meta.doi.strip():
         ctx.existing_dois[ctx.meta.doi.lower().strip()] = new_json
+    if title_key:
+        ctx.existing_titles.setdefault(title_key, []).append(new_json)
 
     # Update papers_registry immediately so UUID lookup works before rebuild
     _update_registry(ctx.cfg, ctx.meta, paper_d.name)
@@ -731,6 +768,7 @@ def _process_inbox(
     papers_dir: Path,
     pending_dir: Path,
     existing_dois: dict[str, Path],
+    existing_titles: dict[str, list[Path]],
     inbox_steps: list[str],
     cfg: Config,
     opts: dict[str, Any],
@@ -746,6 +784,7 @@ def _process_inbox(
         papers_dir: 已入库论文目录。
         pending_dir: 待审目录。
         existing_dois: 已入库 DOI 映射（会被原地更新）。
+        existing_titles: 已入库标题映射（会被原地更新）。
         inbox_steps: inbox 作用域步骤名列表。
         cfg: 全局配置。
         opts: 运行选项。
@@ -900,6 +939,7 @@ def _process_inbox(
             inbox_dir=inbox_dir,
             papers_dir=papers_dir,
             existing_dois=existing_dois,
+            existing_titles=existing_titles,
             cfg=cfg,
             opts=file_opts,
             pending_dir=pending_dir,
@@ -989,6 +1029,7 @@ def run_pipeline(
     # ---- Inbox scope ----
     if inbox_steps:
         existing_dois = _collect_existing_dois(papers_dir)
+        existing_titles = _collect_existing_titles(papers_dir)
 
         # Process regular inbox
         _result = _process_inbox(
@@ -996,6 +1037,7 @@ def run_pipeline(
             papers_dir,
             pending_dir,
             existing_dois,
+            existing_titles,
             inbox_steps,
             cfg,
             opts,
@@ -1012,6 +1054,7 @@ def run_pipeline(
                 papers_dir,
                 pending_dir,
                 existing_dois,
+                existing_titles,
                 inbox_steps,
                 cfg,
                 opts,
@@ -1030,6 +1073,7 @@ def run_pipeline(
                 papers_dir,
                 pending_dir,
                 existing_dois,
+                existing_titles,
                 doc_steps,
                 cfg,
                 opts,
@@ -1167,6 +1211,7 @@ def import_external(
     papers_dir = cfg.papers_dir
     pending_dir = cfg._root / "data" / "pending"
     existing_dois = _collect_existing_dois(papers_dir)
+    existing_titles = _collect_existing_titles(papers_dir)
 
     opts: dict[str, Any] = {"dry_run": dry_run, "no_api": no_api}
     stats: dict[str, int] = {"ingested": 0, "duplicate": 0, "needs_review": 0, "failed": 0, "skipped": 0}
@@ -1189,6 +1234,7 @@ def import_external(
             inbox_dir=cfg._root / "data" / "inbox",  # not actually used
             papers_dir=papers_dir,
             existing_dois=existing_dois,
+            existing_titles=existing_titles,
             cfg=cfg,
             opts=opts,
             pending_dir=pending_dir,
@@ -1483,6 +1529,25 @@ def _collect_existing_dois(papers_dir: Path) -> dict[str, Path]:
         except Exception as e:
             _log.debug("failed to read %s: %s", json_path.name, e)
     return dois
+
+
+def _collect_existing_titles(papers_dir: Path) -> dict[str, list[Path]]:
+    from scholaraio.papers import iter_paper_dirs
+
+    titles: dict[str, list[Path]] = {}
+    if not papers_dir.exists():
+        return titles
+    for pdir in iter_paper_dirs(papers_dir):
+        json_path = pdir / "meta.json"
+        try:
+            data = json.loads(json_path.read_text(encoding="utf-8"))
+        except Exception as e:
+            _log.debug("failed to read %s: %s", json_path.name, e)
+            continue
+        title_key = normalize_title_key(str(data.get("title") or ""))
+        if title_key:
+            titles.setdefault(title_key, []).append(json_path)
+    return titles
 
 
 def _parse_detect_json(text: str) -> dict:

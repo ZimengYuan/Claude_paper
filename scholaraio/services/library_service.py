@@ -6,6 +6,8 @@ from scholaraio.papers import (
     iter_paper_dirs,
     read_meta,
     read_method,
+    read_readable_report,
+    read_score_report,
     read_sensemaking,
     read_summary,
 )
@@ -36,6 +38,8 @@ def _material_flags(paper_dir, meta: dict) -> dict[str, bool]:
     return {
         "summary": _has_text(read_summary(paper_dir) or meta.get("summary")),
         "method": _has_text(read_method(paper_dir) or meta.get("method_summary")),
+        "score_report": _has_text(read_score_report(paper_dir)),
+        "report": _has_text(read_readable_report(paper_dir)),
         "rating": bool(meta.get("rating")),
         "sensemaking": bool(read_sensemaking(paper_dir)),
     }

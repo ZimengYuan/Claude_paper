@@ -25,6 +25,7 @@ STATIC_SITE_VERSION = 1
 GRAPH_MODES = ("citation", "structure", "topic")
 GRAPH_MAX_NODES = 120
 GRAPH_MIN_SHARED = 2
+TODO_SNAPSHOT_FILENAME = "todo-cards.json"
 
 
 def _timestamp() -> str:
@@ -197,6 +198,28 @@ def _safe_graph(cfg, *, mode: str, scope: str, project: str = "") -> dict[str, A
     return payload
 
 
+def _load_preserved_todo_snapshot(output_dir: Path) -> tuple[str | None, int]:
+    """Load an existing Todo snapshot so export can restore it after clearing site-data."""
+    candidates = [Path(output_dir) / TODO_SNAPSHOT_FILENAME]
+    canonical = Path(__file__).resolve().parent / "web" / "public" / "site-data" / TODO_SNAPSHOT_FILENAME
+    if canonical not in candidates:
+        candidates.append(canonical)
+
+    for path in candidates:
+        if not path.exists():
+            continue
+        try:
+            raw = path.read_text(encoding="utf-8")
+            payload = json.loads(raw)
+        except (OSError, json.JSONDecodeError):
+            continue
+        cards = payload.get("cards") or []
+        if not isinstance(cards, list):
+            continue
+        return raw, len(cards)
+    return None, 0
+
+
 def export_static_site_data(cfg, output_dir: Path) -> dict[str, Any]:
     """Export a read-only ScholarAIO web snapshot for static hosting.
 
@@ -208,6 +231,7 @@ def export_static_site_data(cfg, output_dir: Path) -> dict[str, Any]:
         Summary information about the exported snapshot.
     """
     output_dir = Path(output_dir)
+    preserved_todo_raw, preserved_todo_count = _load_preserved_todo_snapshot(output_dir)
     if output_dir.exists():
         shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -299,6 +323,8 @@ def export_static_site_data(cfg, output_dir: Path) -> dict[str, Any]:
         "projects": projects,
     }
     _write_json(output_dir / "manifest.json", manifest)
+    if preserved_todo_raw:
+        _write_text(output_dir / TODO_SNAPSHOT_FILENAME, preserved_todo_raw)
     _write_text(output_dir / ".generated", generated_at + "\n")
 
     return {
@@ -306,6 +332,7 @@ def export_static_site_data(cfg, output_dir: Path) -> dict[str, Any]:
         "papers_exported": exported_papers,
         "library_cards": len(library_cards),
         "projects": len(projects),
+        "todo_cards": preserved_todo_count,
         "output_dir": str(output_dir),
     }
 

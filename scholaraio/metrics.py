@@ -753,49 +753,52 @@ def _call_codex_mcp(
     max_tokens: int,
     timeout: int,
 ) -> tuple[str, int, int, int, str]:
-    """OpenAI Codex via MCP tool (codex-cli).
-
-    Uses subprocess to call Claude Code with the codex-cli MCP tool.
-    """
+    """OpenAI Codex via native codex CLI."""
     import subprocess
+    import tempfile
 
-    # Build the full prompt with system message if provided
     full_prompt = prompt
     if system:
         full_prompt = f"{system}\n\n{prompt}"
 
-    # Use claude CLI to call the MCP tool
-    # The --print flag makes it output just the result
-    cmd = [
-        "claude",
-        "--print",
-        "-p",
-        full_prompt,
-        "--allowed-tools",
-        "mcp__codex-cli__codex",
-        "--dangerously-skip-permissions",
-    ]
-
-    # Add model parameter if specified
     model = getattr(llm_cfg, "model", "gpt-5.3-codex")
-    if model and model != "gpt-5.3-codex":
-        cmd.extend(["--model", model])
+    with tempfile.NamedTemporaryFile(prefix="scholaraio-codex-", suffix=".txt", delete=False) as out_file:
+        out_path = Path(out_file.name)
 
     try:
+        cmd = [
+            "codex",
+            "exec",
+            "--skip-git-repo-check",
+            "--sandbox",
+            "read-only",
+            "-",
+            "--output-last-message",
+            str(out_path),
+        ]
+        if model:
+            cmd.extend(["-m", model])
+
         result = subprocess.run(
             cmd,
+            input=full_prompt,
             capture_output=True,
             text=True,
             timeout=timeout,
         )
 
         if result.returncode != 0:
-            stderr = result.stderr.strip()
-            raise RuntimeError(f"MCP call failed: {stderr}")
+            stderr = (result.stderr or "").strip()
+            stdout = (result.stdout or "").strip()
+            detail = stderr or stdout or "unknown codex exec failure"
+            raise RuntimeError(f"Codex CLI call failed: {detail}")
 
-        content = result.stdout.strip()
+        content = out_path.read_text(encoding="utf-8").strip() if out_path.exists() else ""
+        if not content:
+            content = (result.stdout or "").strip()
+        if not content:
+            raise RuntimeError("Codex CLI returned empty content")
 
-        # Note: MCP tool doesn't return token usage, so we estimate
         tokens_in = len(full_prompt) // 4  # rough estimate
         tokens_out = len(content) // 4  # rough estimate
         tokens_total = tokens_in + tokens_out
@@ -804,7 +807,9 @@ def _call_codex_mcp(
 
     except FileNotFoundError:
         raise RuntimeError(
-            "Claude Code CLI not found. Please ensure 'claude' is installed and in PATH."
+            "Codex CLI not found. Please ensure 'codex' is installed and in PATH."
         ) from None
     except subprocess.TimeoutExpired:
-        raise RuntimeError(f"MCP call timed out after {timeout} seconds") from None
+        raise RuntimeError(f"Codex CLI call timed out after {timeout} seconds") from None
+    finally:
+        out_path.unlink(missing_ok=True)

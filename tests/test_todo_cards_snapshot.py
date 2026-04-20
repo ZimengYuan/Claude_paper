@@ -16,8 +16,11 @@ def test_todo_cards_snapshot_count_consistent() -> None:
     count = (payload.get('collection') or {}).get('count')
 
     assert isinstance(cards, list)
+    assert cards, 'todo cards snapshot should not be empty'
     assert count == len(cards)
-    assert len(cards) == 168
+
+    collection_indexes = [card.get('collection_index') for card in cards]
+    assert collection_indexes == list(range(len(cards))), 'collection_index should be contiguous and ordered'
 
 
 def test_todo_cards_have_unique_route_and_paper_target() -> None:

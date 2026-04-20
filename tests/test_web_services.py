@@ -7,7 +7,7 @@ import sys
 
 from scholaraio.config import Config, PathsConfig
 from scholaraio.index import build_index
-from scholaraio.papers import read_meta, write_meta, write_method, write_summary
+from scholaraio.papers import read_meta, write_meta, write_method, write_readable_report, write_score_report, write_summary
 from scholaraio.services.knowledge_service import add_knowledge_note, add_paper_summary_note, list_tags, search_knowledge_notes
 from scholaraio.services.library_service import list_papers
 from scholaraio.services.paper_service import get_paper_detail, update_paper_read_status, update_paper_tags
@@ -35,6 +35,8 @@ class TestLibraryService:
         assert results[0]['citation_count'] == 12
         assert results[0]['has_summary'] is True
         assert results[0]['materials']['summary'] is True
+        assert results[0]['materials']['score_report'] is False
+        assert results[0]['materials']['report'] is False
 
     def test_list_papers_can_be_scoped_to_project_subset(self, tmp_path, tmp_papers, tmp_db):
         cfg = _make_cfg(tmp_path, tmp_papers, tmp_db)
@@ -92,6 +94,31 @@ class TestPaperService:
         assert 'user_notes' not in detail
 
 
+    def test_get_paper_detail_includes_compass_reports(self, tmp_path, tmp_papers, tmp_db):
+        cfg = _make_cfg(tmp_path, tmp_papers, tmp_db)
+        paper_dir = tmp_papers / 'Smith-2023-Turbulence'
+        write_score_report(paper_dir, '# score report')
+        write_readable_report(paper_dir, '# readable report')
+        meta = read_meta(paper_dir)
+        meta['rating'] = {
+            'publication_signal': 1.2,
+            'author_signal': 0.8,
+            'citation_traction': 1.4,
+            'citation_quality': 0.9,
+            'novelty': 1.6,
+            'industry_signal': 0.5,
+            'field_shaping': 1.0,
+            'overall_score': 7.4,
+        }
+        write_meta(paper_dir, meta)
+
+        detail = get_paper_detail(cfg, 'Smith-2023-Turbulence')
+
+        assert detail['score_report'].strip() == '# score report'
+        assert detail['readable_report'].strip() == '# readable report'
+        assert detail['rating']['overall_score'] == 7.4
+
+
     def test_get_paper_detail_includes_parsed_source_payload(self, tmp_path, tmp_papers, tmp_db):
         cfg = _make_cfg(tmp_path, tmp_papers, tmp_db)
         paper_dir = tmp_papers / 'Smith-2023-Turbulence'
@@ -122,7 +149,7 @@ class TestPaperService:
         meta = read_meta(paper_dir)
 
         assert status_result == {'success': True, 'read_status': 'read'}
-        assert tags_result == {'success': True, 'tags': ['ml', 'physics']}
+        assert tags_result == {'success': True, 'tags': ['ml', 'physics'], 'is_close_read': False}
         assert meta['read_status'] == 'read'
         assert meta['tags'] == ['ml', 'physics']
 

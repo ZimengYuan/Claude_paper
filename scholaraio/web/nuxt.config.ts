@@ -41,6 +41,14 @@ const prerenderRoutes = loadPrerenderRoutes()
 export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   modules: ['@nuxtjs/tailwindcss'],
+  runtimeConfig: {
+    public: {
+      githubOwner: process.env.NUXT_PUBLIC_GITHUB_OWNER || '',
+      githubRepo: process.env.NUXT_PUBLIC_GITHUB_REPO || '',
+      githubRef: process.env.NUXT_PUBLIC_GITHUB_REF || 'main',
+      githubReadStatusWorkflow: process.env.NUXT_PUBLIC_GITHUB_READ_STATUS_WORKFLOW || 'read-status.yml'
+    }
+  },
   app: {
     baseURL: process.env.NUXT_APP_BASE_URL || '/',
     head: {

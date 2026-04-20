@@ -45,7 +45,7 @@ def test_todo_cards_schema_and_id_quality() -> None:
 
         assert route_id, 'route_id is required'
         assert title, f'title is required for {route_id}'
-        assert read_status in {'unread', 'reading', 'done'}, f'invalid read_status for {route_id}: {read_status}'
+        assert read_status in {'unread', 'read'}, f'invalid read_status for {route_id}: {read_status}'
 
         doi = str(card.get('doi') or '').strip()
         if doi:
@@ -54,6 +54,7 @@ def test_todo_cards_schema_and_id_quality() -> None:
         route_ids.append(route_id)
 
     assert len(route_ids) == len(set(route_ids)), 'duplicate route_id in todo cards'
+    assert (payload.get('collection') or {}).get('count') == len(cards), 'todo collection count mismatch'
 
 
 def test_navigation_no_knowledge_entry() -> None:

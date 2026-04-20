@@ -1,0 +1,105 @@
+name: Update Read Status
+
+on:
+  workflow_dispatch:
+    inputs:
+      paper_ref:
+        description: Paper route id, paper id, DOI, directory name, or /paper/<id> path
+        required: true
+      status:
+        description: New read status
+        required: true
+        type: choice
+        options:
+          - read
+          - unread
+      title:
+        description: Paper title shown in the workflow run
+        required: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "read-status-${{ github.ref }}"
+  cancel-in-progress: false
+
+jobs:
+  update-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Update static read status
+        run: python scripts/update_read_status_snapshot.py --paper-ref "$PAPER_REF" --status "$STATUS"
+        env:
+          PAPER_REF: ${{ inputs.paper_ref }}
+          STATUS: ${{ inputs.status }}
+
+      - name: Commit read status
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- scholaraio/web/public/site-data
+          if [ -d data/papers ]; then
+            git add -- data/papers
+          fi
+          if git diff --cached --quiet; then
+            echo "No read-status changes to commit."
+          else
+            git commit -m "Mark paper $PAPER_REF as $STATUS"
+            git push
+          fi
+        env:
+          PAPER_REF: ${{ inputs.paper_ref }}
+          STATUS: ${{ inputs.status }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: scholaraio/web/package-lock.json
+
+      - name: Install web dependencies
+        working-directory: scholaraio/web
+        run: npm ci
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v4
+
+      - name: Generate static Nuxt site
+        working-directory: scholaraio/web
+        run: npm run generate
+        env:
+          NUXT_APP_BASE_URL: "${{ steps.pages.outputs.base_path }}/"
+          NUXT_PUBLIC_GITHUB_OWNER: "${{ github.repository_owner }}"
+          NUXT_PUBLIC_GITHUB_REPO: "${{ github.event.repository.name }}"
+          NUXT_PUBLIC_GITHUB_REF: "${{ github.ref_name }}"
+          NUXT_PUBLIC_GITHUB_READ_STATUS_WORKFLOW: "read-status.yml"
+
+      - name: Add .nojekyll
+        run: touch scholaraio/web/.output/public/.nojekyll
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: scholaraio/web/.output/public
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

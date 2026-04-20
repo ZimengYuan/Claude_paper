@@ -41,6 +41,10 @@ jobs:
         run: npm run generate
         env:
           NUXT_APP_BASE_URL: "${{ steps.pages.outputs.base_path }}/"
+          NUXT_PUBLIC_GITHUB_OWNER: "${{ github.repository_owner }}"
+          NUXT_PUBLIC_GITHUB_REPO: "${{ github.event.repository.name }}"
+          NUXT_PUBLIC_GITHUB_REF: "${{ github.ref_name }}"
+          NUXT_PUBLIC_GITHUB_READ_STATUS_WORKFLOW: "read-status.yml"
 
       - name: Add .nojekyll
         run: touch scholaraio/web/.output/public/.nojekyll
