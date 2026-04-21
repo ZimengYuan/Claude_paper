@@ -36,6 +36,14 @@ RESULT_SIGNAL_RE = re.compile(
 )
 
 
+def _has_sufficient_source(analysis_source: str, source_confidence: str) -> bool:
+    if analysis_source == "fulltext" and source_confidence == "high":
+        return True
+    if analysis_source == "metadata+web" and source_confidence in {"medium", "high"}:
+        return True
+    return False
+
+
 @dataclass(frozen=True)
 class AuditFinding:
     priority: int
@@ -84,8 +92,9 @@ def audit_card(card: dict[str, Any]) -> AuditFinding | None:
     analysis_source = str(card.get("analysis_source") or "").strip()
     source_confidence = str(card.get("source_confidence") or "").strip()
     generation_mode = str(card.get("generation_mode") or "").strip()
+    has_sufficient_source = _has_sufficient_source(analysis_source, source_confidence)
 
-    if analysis_source != "fulltext" or source_confidence != "high":
+    if not has_sufficient_source:
         reasons.append("metadata-only or limited source")
     if generation_mode == "fallback":
         reasons.append("fallback generation")
@@ -100,14 +109,14 @@ def audit_card(card: dict[str, Any]) -> AuditFinding | None:
         str(key_results.get(key) or "")
         for key in ("benchmarks", "improvements", "ablation")
     )
-    if not RESULT_SIGNAL_RE.search(key_result_text):
+    if (not RESULT_SIGNAL_RE.search(key_result_text)) and (not has_sufficient_source or generic_hits):
         reasons.append("no clear numeric result signal")
 
     if not reasons:
         return None
 
     priority = 3
-    if analysis_source != "fulltext" or source_confidence != "high" or generation_mode == "fallback":
+    if not has_sufficient_source or generation_mode == "fallback":
         priority = 1
     elif generic_hits:
         priority = 2

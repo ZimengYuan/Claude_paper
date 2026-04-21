@@ -52,3 +52,17 @@ def test_metadata_only_card_requires_priority_web_context() -> None:
 
 def test_specific_fulltext_card_does_not_require_web_context() -> None:
     assert audit_card(_base_card()) is None
+
+
+def test_web_supplemented_metadata_card_is_accepted() -> None:
+    assert audit_card(
+        _base_card(
+            analysis_source="metadata+web",
+            source_confidence="medium",
+            key_results={
+                "benchmarks": "公开项目页确认使用真实机器人平台验证。",
+                "improvements": "公开摘要报告比基线更稳定，但没有给出统一百分比。",
+                "ablation": "项目页提供组件对照说明。",
+            },
+        )
+    ) is None
