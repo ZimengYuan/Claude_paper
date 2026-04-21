@@ -18,7 +18,7 @@
 
     <div v-if="loading" class="aio-state">
       <div class="aio-spinner"></div>
-      <p>Loading Paper Compass...</p>
+      <p>正在加载 Paper Compass...</p>
     </div>
 
     <div v-else-if="errorMessage" class="aio-state error">
@@ -68,7 +68,7 @@
         <section v-if="hasVisibleScoreContent" id="score" class="aio-note-section">
           <div class="aio-split-top">
             <div>
-              <p class="aio-kicker">Value Layer</p>
+              <p class="aio-kicker">价值判断</p>
               <h2>为什么这样判断</h2>
               <p class="aio-muted">只保留能解释阅读价值的评分依据和对比信息。</p>
             </div>
@@ -90,7 +90,7 @@
 
           <div v-if="visibleScoringRows.length" class="aio-section-stack">
             <div>
-              <p class="aio-kicker">Scoring Breakdown</p>
+              <p class="aio-kicker">评分拆解</p>
               <h3>分项评分</h3>
             </div>
             <div class="aio-two-col">
@@ -125,7 +125,7 @@
 
           <div v-if="visiblePeers.length" class="aio-section-stack">
             <div>
-              <p class="aio-kicker">Peer Set</p>
+              <p class="aio-kicker">对比集合</p>
               <h3>相似论文对比集合</h3>
             </div>
             <div class="aio-three-col">
@@ -158,7 +158,7 @@
 
           <div v-if="visibleObservations.length" class="aio-section-stack">
             <div>
-              <p class="aio-kicker">Comparison Notes</p>
+              <p class="aio-kicker">横向观察</p>
               <h3>横向对比观察</h3>
             </div>
             <div class="aio-three-col">
@@ -175,7 +175,7 @@
 
           <div v-if="visibleReasons.length" class="aio-section-stack">
             <div>
-              <p class="aio-kicker">Score Rationale</p>
+              <p class="aio-kicker">评分原因</p>
               <h3>分数形成原因</h3>
             </div>
             <div class="aio-three-col">
@@ -208,7 +208,7 @@
         <section v-if="hasVisibleReadableContent" id="report" class="aio-note-section">
           <div class="aio-split-top">
             <div>
-              <p class="aio-kicker">Readable Layer</p>
+              <p class="aio-kicker">阅读补充</p>
               <h2>读前补充</h2>
               <p class="aio-muted">只展示读懂这篇论文之前真正需要补的内容。</p>
             </div>
@@ -227,7 +227,7 @@
 
             <div v-if="visiblePrerequisites.length" class="aio-section-stack">
               <div>
-                <p class="aio-kicker">Prerequisites</p>
+                <p class="aio-kicker">先修知识</p>
                 <h3>必学先修知识</h3>
               </div>
               <div class="aio-two-col">
@@ -237,7 +237,7 @@
                   class="aio-cell"
                 >
                   <div class="aio-split-top">
-                    <span class="aio-pill">Step {{ item.order || '-' }}</span>
+                    <span class="aio-pill">第 {{ item.order || '-' }} 步</span>
                     <span v-if="item.time" class="aio-muted">{{ item.time }}</span>
                   </div>
                   <h3>{{ item.title }}</h3>
@@ -262,7 +262,7 @@
 
             <div v-if="visibleBridges.length" class="aio-section-stack">
               <div>
-                <p class="aio-kicker">Bridge Topics</p>
+                <p class="aio-kicker">桥接概念</p>
                 <h3>桥接知识</h3>
               </div>
               <div class="aio-three-col">
@@ -304,7 +304,7 @@
 
             <div v-if="visibleLearningOrder.length" class="aio-section-stack">
               <div>
-                <p class="aio-kicker">Learning Order</p>
+                <p class="aio-kicker">学习顺序</p>
                 <h3>建议学习顺序</h3>
               </div>
               <div class="aio-inline-list">
@@ -321,7 +321,7 @@
 
             <div v-if="visibleResources.length" class="aio-section-stack">
               <div>
-                <p class="aio-kicker">Resources</p>
+                <p class="aio-kicker">补充资源</p>
                 <h3>推荐学习资源</h3>
               </div>
               <div class="aio-two-col">
@@ -342,9 +342,25 @@
         </section>
       </template>
 
-      <p v-else class="aio-empty-note">
-        这篇论文暂无额外 Compass 内容，请回到 Todo 查看摘要。
-      </p>
+      <section v-else class="aio-compass-empty">
+        <p class="aio-kicker">Compass 尚未生成</p>
+        <h2>这篇论文目前没有可展示的 Compass 内容</h2>
+        <p>
+          评分依据和读前补充都为空时，页面不再显示占位灰块；先回到 Todo 摘要阅读，等静态快照补齐后这里会自动呈现完整 Compass。
+        </p>
+        <div class="aio-empty-actions">
+          <NuxtLink class="aio-button" :to="todoDetailPath">回到 Todo 摘要</NuxtLink>
+          <a
+            v-if="sourceLink"
+            class="aio-button-secondary"
+            :href="sourceLink"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            查看原论文
+          </a>
+        </div>
+      </section>
     </article>
   </div>
 </template>
@@ -404,6 +420,51 @@ const isLowInformationText = (value) => {
 const hasUsefulText = (value) => !isLowInformationText(value)
 
 const hasUsefulEntry = (entry) => hasUsefulText(entry?.value)
+
+const TEXT_TRANSLATIONS = [
+  ['weak field-shaping evidence so far', '目前还没有足够证据支持其具备奠基性影响'],
+  ['early promise, not yet established', '有早期潜力，但尚未形成稳定共识'],
+  ['lower priority unless the user has a narrow reason to read it', '低优先级，除非你正好关注这条技术线'],
+  ['solid and worth reading', '质量较稳，值得阅读'],
+  ['high priority', '高优先级'],
+  ['medium priority', '中等优先级'],
+  ['low priority', '低优先级'],
+  ['strong field-shaping evidence', '有较强的方向影响证据'],
+  ['weak field-shaping evidence', '方向影响证据偏弱'],
+  ['not yet established', '尚未形成稳定共识'],
+  ['above median', '高于中位水平'],
+  ['around median', '接近中位水平'],
+  ['below median', '低于中位水平'],
+  ['incomplete', '不完整'],
+  ['low confidence', '低置信度'],
+]
+
+const CATEGORY_TRANSLATIONS = {
+  classic: '经典',
+  recent: '近期',
+  survey: '综述',
+  review: '综述',
+}
+
+const escapeRegExp = (value) => String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+const localizeCompassText = (value) => {
+  let text = cleanInlineMarkdown(value)
+  if (!text) return ''
+
+  const exactMatch = TEXT_TRANSLATIONS.find(([source]) => text.toLowerCase() === source)
+  if (exactMatch) return exactMatch[1]
+
+  for (const [source, target] of TEXT_TRANSLATIONS) {
+    text = text.replace(new RegExp(escapeRegExp(source), 'gi'), target)
+  }
+  return text
+}
+
+const displayEntry = (entry) => ({
+  ...entry,
+  value: localizeCompassText(entry.value),
+})
 
 const sourceLink = computed(() => {
   const doi = String(card.value?.doi || '').trim()
@@ -634,17 +695,17 @@ const overallRatingText = computed(() => {
 const overallGradeText = computed(() => conclusionValue('等级'))
 const readingPriorityText = computed(() => conclusionValue('阅读优先级'))
 const heroSummaryText = computed(() => {
-  if (structuredScore.value.oneLine) return structuredScore.value.oneLine
-  if (ratingNote.value) return ratingNote.value
+  if (structuredScore.value.oneLine) return localizeCompassText(structuredScore.value.oneLine)
+  if (ratingNote.value) return localizeCompassText(ratingNote.value)
   return ''
 })
 const heroMetricEntries = computed(() => {
   const entries = []
   if (overallScore.value != null) {
-    entries.push({ label: 'Overall Score', value: overallRatingText.value + '/10', primary: true })
+    entries.push({ label: '综合评分', value: overallRatingText.value + '/10', primary: true })
   }
-  if (overallGradeText.value) entries.push({ label: '等级', value: overallGradeText.value })
-  if (readingPriorityText.value) entries.push({ label: '阅读优先级', value: readingPriorityText.value })
+  if (overallGradeText.value) entries.push({ label: '等级', value: localizeCompassText(overallGradeText.value) })
+  if (readingPriorityText.value) entries.push({ label: '阅读优先级', value: localizeCompassText(readingPriorityText.value) })
   return entries
 })
 
@@ -653,21 +714,31 @@ const visibleScoreConclusion = computed(() => {
   return structuredScore.value.conclusion
     .filter((entry) => !duplicatedLabels.has(entry.label))
     .filter(hasUsefulEntry)
+    .map(displayEntry)
 })
 
 const visibleScoringRows = computed(() => structuredScore.value.scoringRows.filter((row) => (
   hasUsefulText(row.dimension) &&
   (hasUsefulText(row.rationale) || hasUsefulText(row.evidence) || Number.isFinite(Number(row.score)))
-)))
+)).map((row) => ({
+  ...row,
+  rationale: localizeCompassText(row.rationale),
+  evidence: localizeCompassText(row.evidence),
+})))
 
 const visiblePeers = computed(() => structuredScore.value.peers.filter((peer) => (
   hasUsefulText(peer.title) &&
   (hasUsefulText(peer.reason) || hasUsefulText(peer.arxiv) || hasUsefulText(peer.venue))
-)))
+)).map((peer) => ({
+  ...peer,
+  category: CATEGORY_TRANSLATIONS[String(peer.category || '').toLowerCase()] || localizeCompassText(peer.category),
+  citations: localizeCompassText(peer.citations),
+  reason: localizeCompassText(peer.reason),
+})))
 
-const visibleObservations = computed(() => structuredScore.value.observations.filter(hasUsefulEntry))
-const visibleReasons = computed(() => structuredScore.value.reasons.filter(hasUsefulEntry))
-const visiblePriority = computed(() => structuredScore.value.priority.filter(hasUsefulEntry))
+const visibleObservations = computed(() => structuredScore.value.observations.filter(hasUsefulEntry).map(displayEntry))
+const visibleReasons = computed(() => structuredScore.value.reasons.filter(hasUsefulEntry).map(displayEntry))
+const visiblePriority = computed(() => structuredScore.value.priority.filter(hasUsefulEntry).map(displayEntry))
 const hasVisibleScoreContent = computed(() => (
   visibleScoreConclusion.value.length > 0 ||
   visibleScoringRows.value.length > 0 ||

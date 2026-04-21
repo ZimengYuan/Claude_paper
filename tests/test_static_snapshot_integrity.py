@@ -80,20 +80,28 @@ def test_graph_route_redirected_to_explore() -> None:
     assert "navigateTo('/explore'" in graph_page
 
 
-def test_todo_card_layout_avoids_stretched_blank_cards() -> None:
+def test_todo_card_layout_keeps_queue_cards_aligned() -> None:
     root = _root()
     app_vue = (root / 'scholaraio' / 'web' / 'app.vue').read_text(encoding='utf-8')
 
     card_grid = re.search(r'\.aio-card-grid\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
     card_block = re.search(r'\.aio-card\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
-    card_footer = re.search(r'\.aio-card-footer\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+    todo_card = re.search(r'\.aio-todo-card\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+    todo_title = re.search(r'\.aio-todo-card \.aio-card-title\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+    todo_summary = re.search(r'\.aio-todo-card \.aio-card-summary\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+    todo_footer = re.search(r'\.aio-todo-card \.aio-card-footer\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+    card_footer = re.search(r'^\.aio-card-footer\s*\{(?P<body>.*?)\n\}', app_vue, re.S | re.M)
     accent_bar = re.search(r'\.aio-card::before\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
     hero = re.search(r'\.aio-hero\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
     hero_stats = re.search(r'\.aio-hero-stats\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
 
-    assert card_grid and 'align-items: start;' in card_grid.group('body')
+    assert card_grid and 'align-items: stretch;' in card_grid.group('body')
     assert card_block and 'min-height:' not in card_block.group('body')
-    assert card_footer and 'margin-top: auto;' not in card_footer.group('body')
+    assert todo_card and 'min-height: 418px;' in todo_card.group('body')
+    assert todo_title and '-webkit-line-clamp: 3;' in todo_title.group('body')
+    assert todo_summary and 'min-height: 130px;' in todo_summary.group('body')
+    assert todo_footer and 'margin-top: auto;' in todo_footer.group('body')
+    assert card_footer and 'margin-top: 18px;' in card_footer.group('body')
     assert accent_bar and 'inset: 0 auto 0 0;' in accent_bar.group('body')
     assert '18px auto 18px' not in accent_bar.group('body')
     assert hero and 'flex-direction: column;' in hero.group('body')
@@ -137,6 +145,7 @@ def test_compass_page_uses_todo_design_system() -> None:
 def test_compass_page_hides_duplicate_and_empty_material() -> None:
     root = _root()
     compass_page = (root / 'scholaraio' / 'web' / 'pages' / 'compass' / '[id].vue').read_text(encoding='utf-8')
+    app_vue = (root / 'scholaraio' / 'web' / 'app.vue').read_text(encoding='utf-8')
     template = compass_page.split('<script setup>')[0]
 
     assert 'showTodoSummarySnippet' not in compass_page
@@ -148,10 +157,15 @@ def test_compass_page_hides_duplicate_and_empty_material() -> None:
     assert '材料缺失' not in compass_page
     assert 'structuredScore.snapshot' not in template
     assert 'structuredReport.snapshot' not in template
+    assert 'class="aio-empty-note"' not in template
+    assert 'class="aio-compass-empty"' in compass_page
+    assert 'border: 1px dashed' not in app_vue.split('.aio-compass-empty')[1].split('.aio-compass-empty h2')[0]
     assert 'v-if="hasVisibleScoreContent"' in compass_page
     assert 'v-if="hasVisibleReadableContent"' in compass_page
     assert 'visiblePeers' in compass_page
     assert 'visibleResources' in compass_page
+    assert '目前还没有足够证据支持其具备奠基性影响' in compass_page
+    assert '低优先级，除非你正好关注这条技术线' in compass_page
 
 
 def test_todo_detail_uses_dynamic_compass_metrics() -> None:
