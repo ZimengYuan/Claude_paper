@@ -134,6 +134,26 @@ def test_compass_page_uses_todo_design_system() -> None:
     assert 'todoRouteIds.map((routeId: string) => `/compass/${routeId}`)' in config
 
 
+def test_compass_page_hides_duplicate_and_empty_material() -> None:
+    root = _root()
+    compass_page = (root / 'scholaraio' / 'web' / 'pages' / 'compass' / '[id].vue').read_text(encoding='utf-8')
+    template = compass_page.split('<script setup>')[0]
+
+    assert 'showTodoSummarySnippet' not in compass_page
+    assert 'heroMaterialEntries' not in compass_page
+    assert 'heroStatusText' not in compass_page
+    assert '查看原始 Score Report 文本' not in compass_page
+    assert '当前静态快照里还没有这篇论文的评分报告' not in compass_page
+    assert '当前静态快照里还没有这篇论文的可读报告' not in compass_page
+    assert '材料缺失' not in compass_page
+    assert 'structuredScore.snapshot' not in template
+    assert 'structuredReport.snapshot' not in template
+    assert 'v-if="hasVisibleScoreContent"' in compass_page
+    assert 'v-if="hasVisibleReadableContent"' in compass_page
+    assert 'visiblePeers' in compass_page
+    assert 'visibleResources' in compass_page
+
+
 def test_todo_detail_uses_dynamic_compass_metrics() -> None:
     root = _root()
     todo_page = (root / 'scholaraio' / 'web' / 'pages' / 'todo' / '[id].vue').read_text(encoding='utf-8')
