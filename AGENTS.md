@@ -277,6 +277,21 @@ Three backend protocols supported: `openai-compat` (DeepSeek / OpenAI / vLLM / O
 - **User-facing text**: CLI output, help text, and error messages are in Chinese.
 - **Code comments**: English, added only when logic is not self-evident.
 
+## Static Web UI Release Checklist
+
+For any visible UI change under `scholaraio/web/`, complete the full release loop before reporting success:
+
+1. Make the scoped code change.
+2. Add or update a focused regression test for the exact UI failure mode when practical.
+3. Run the relevant tests, and run `npm run generate` from `scholaraio/web` for static-site changes.
+4. Inspect the affected page locally or with a headless browser screenshot; do not rely only on code review for layout-sensitive changes.
+5. Commit and push the change when the user expects to inspect it online.
+6. Wait for GitHub Pages deployment or verify that the live page has picked up the new build.
+7. Check the deployed page with a cache-busting URL such as `?v=<commit>`.
+8. Report the commit hash, online URL, tests/builds run, and pages inspected.
+
+UI-specific rule: dynamic content groups must not render fake empty cards, gray placeholder blocks, or layout gaps for missing items. If a section has no real content, hide it. If the last row is incomplete, let the real items wrap or stretch naturally.
+
 ## Agent Skills
 
 Skills are defined in `.claude/skills/` directory (also discoverable via `.agents/skills/` symlink), following the [Agent Skills](https://agentskills.io) open standard. Each skill is a folder containing a `SKILL.md` file (YAML frontmatter + instructions).

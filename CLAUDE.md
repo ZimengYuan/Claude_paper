@@ -280,6 +280,21 @@ LLM API key 查找顺序：
 - **用户界面文本**：CLI 输出、帮助文本、错误提示用中文。
 - **代码注释**：英文，仅在逻辑不自明时添加。
 
+## 静态 Web UI 发布验收流程
+
+凡是修改 `scholaraio/web/` 下可见 UI，汇报完成前必须走完整发布闭环：
+
+1. 先做范围清晰的代码修改。
+2. 能加回归测试时，为这次 UI 失败模式补一个聚焦测试。
+3. 跑相关测试；静态站点改动还要在 `scholaraio/web` 下运行 `npm run generate`。
+4. 用本地预览或 headless browser 截图检查受影响页面；布局敏感问题不能只看代码判断。
+5. 用户需要线上检查时，提交并 push。
+6. 等 GitHub Pages 部署完成，或确认线上页面已经拿到新构建。
+7. 用 `?v=<commit>` 这类 cache-busting URL 检查线上页面。
+8. 最终汇报 commit hash、线上 URL、已跑的测试/构建、以及实际检查过的页面。
+
+UI 细则：动态内容组不允许用假空卡、灰色占位块或缺项空格来补齐布局。没有真实内容的 section 直接隐藏；最后一行不满时，让真实卡片自然换行或自动铺开。
+
 ## Claude Code Skills
 
 Skills 定义在 `.claude/skills/` 目录，遵循 [Agent Skills](https://agentskills.io) 开放标准。每个 skill 是一个文件夹，包含 `SKILL.md`（YAML frontmatter + 指令）。根目录 `skills/` 为指向 `.claude/skills/` 的符号链接，供 Claude Code 插件系统发现。
