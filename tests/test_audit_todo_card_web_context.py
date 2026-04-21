@@ -54,6 +54,10 @@ def test_specific_fulltext_card_does_not_require_web_context() -> None:
     assert audit_card(_base_card()) is None
 
 
+def test_web_supplemented_fulltext_card_is_accepted() -> None:
+    assert audit_card(_base_card(analysis_source="fulltext+web")) is None
+
+
 def test_web_supplemented_metadata_card_is_accepted() -> None:
     assert audit_card(
         _base_card(

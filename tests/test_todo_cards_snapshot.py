@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from scripts.generate_todo_cards import DUAL_PROFESSOR_PROTOCOL, DUAL_PROFESSOR_ROLES
+
 
 def _load_todo_cards() -> dict:
     root = Path(__file__).resolve().parents[1]
@@ -40,3 +42,16 @@ def test_todo_cards_have_unique_route_and_paper_target() -> None:
         if paper_route_id or doi:
             continue
         assert route_id.startswith('todo-unmatched-'), f"Card {route_id} has neither paper_route_id nor DOI"
+
+
+def test_todo_cards_use_dual_professor_generation_protocol() -> None:
+    payload = _load_todo_cards()
+    cards = payload.get('cards') or []
+
+    assert cards
+    for card in cards:
+        route_id = str(card.get('route_id') or '').strip()
+        assert card.get('generation_protocol') == DUAL_PROFESSOR_PROTOCOL, route_id
+        assert card.get('reviewer_count') == 2, route_id
+        assert card.get('reviewer_roles') == list(DUAL_PROFESSOR_ROLES), route_id
+        assert card.get('generation_mode') == 'dual_agent_synthesis', route_id

@@ -39,6 +39,8 @@ RESULT_SIGNAL_RE = re.compile(
 def _has_sufficient_source(analysis_source: str, source_confidence: str) -> bool:
     if analysis_source == "fulltext" and source_confidence == "high":
         return True
+    if analysis_source == "fulltext+web" and source_confidence == "high":
+        return True
     if analysis_source == "metadata+web" and source_confidence in {"medium", "high"}:
         return True
     return False

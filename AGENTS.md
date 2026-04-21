@@ -296,6 +296,8 @@ UI-specific rule: dynamic content groups must not render fake empty cards, gray 
 
 When generating or refreshing Todo reading cards, use local full text as the primary evidence, but search the web for supplemental context before finalizing card content. Consider official paper pages, arXiv/OpenReview/publisher pages, project pages, GitHub repositories, benchmark pages, and citation/metadata services. Add web-derived information only when it improves the card's reading value, fills missing benchmark/result/context gaps, or corrects stale metadata; omit it when sources are weak, redundant, or not clearly relevant.
 
+Todo cards must use the dual-professor protocol. Generate two independent analyses first: both reviewers are senior AI + robotics professors with meaning/principle reasoning and critical thinking, and they must not see each other's output. One reviewer emphasizes the paper's underlying research meaning and mechanism; the other emphasizes experimental validity, baselines, limitations, and deployment boundaries. The final card is a synthesis of the two independent reviews, not a raw concatenation. Keep the published card schema focused on the final summary, with lightweight provenance fields such as `generation_protocol=dual_professor_synthesis_v1`, `reviewer_count=2`, and reviewer role names.
+
 Keep external material clearly subordinate to evidence: do not invent benchmark numbers, claims, code availability, or adoption signals. Prefer concise phrasing such as "online project page reports..." or "public metadata suggests..." when the claim comes from web context rather than local full text.
 
 Before publishing a Todo card refresh, audit the current snapshot with:
