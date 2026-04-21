@@ -13,6 +13,9 @@ python3 scripts/generate_todo_cards.py \
   --refresh-fallback-only \
   --timeout 900
 
+python3 scripts/audit_todo_card_web_context.py \
+  --output workspace/todo_card_web_context_audit.md
+
 python3 scripts/sync_todo_summaries.py
 
 python3 scripts/generate_todo_compass_materials.py \
@@ -34,6 +37,7 @@ git add \
   scholaraio/web/pages/index.vue \
   scholaraio/web/public/site-data/todo-cards.json \
   scripts/check_snapshot_sync.py \
+  scripts/audit_todo_card_web_context.py \
   scripts/generate_todo_cards.py \
   scripts/generate_todo_compass_materials.py \
   scripts/publish_todo_cards.sh \

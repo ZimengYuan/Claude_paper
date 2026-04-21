@@ -292,6 +292,20 @@ For any visible UI change under `scholaraio/web/`, complete the full release loo
 
 UI-specific rule: dynamic content groups must not render fake empty cards, gray placeholder blocks, or layout gaps for missing items. If a section has no real content, hide it. If the last row is incomplete, let the real items wrap or stretch naturally.
 
+## Todo Card Generation And Web Supplementation
+
+When generating or refreshing Todo reading cards, use local full text as the primary evidence, but search the web for supplemental context before finalizing card content. Consider official paper pages, arXiv/OpenReview/publisher pages, project pages, GitHub repositories, benchmark pages, and citation/metadata services. Add web-derived information only when it improves the card's reading value, fills missing benchmark/result/context gaps, or corrects stale metadata; omit it when sources are weak, redundant, or not clearly relevant.
+
+Keep external material clearly subordinate to evidence: do not invent benchmark numbers, claims, code availability, or adoption signals. Prefer concise phrasing such as "online project page reports..." or "public metadata suggests..." when the claim comes from web context rather than local full text.
+
+Before publishing a Todo card refresh, audit the current snapshot with:
+
+```
+python3 scripts/audit_todo_card_web_context.py --output workspace/todo_card_web_context_audit.md
+```
+
+Use the audit to prioritize web supplementation: metadata-only, limited-source, fallback, and generic "not disclosed" cards should be refreshed first.
+
 ## Agent Skills
 
 Skills are defined in `.claude/skills/` directory (also discoverable via `.agents/skills/` symlink), following the [Agent Skills](https://agentskills.io) open standard. Each skill is a folder containing a `SKILL.md` file (YAML frontmatter + instructions).

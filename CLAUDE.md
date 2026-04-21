@@ -295,6 +295,20 @@ LLM API key 查找顺序：
 
 UI 细则：动态内容组不允许用假空卡、灰色占位块或缺项空格来补齐布局。没有真实内容的 section 直接隐藏；最后一行不满时，让真实卡片自然换行或自动铺开。
 
+## Todo 卡片生成与联网补充
+
+生成或刷新 Todo 阅读卡片时，以本地全文为主证据，但在定稿前必须搜索网上内容作为补充。可优先查看官方论文页、arXiv / OpenReview / 出版商页面、项目主页、GitHub 仓库、benchmark 页面、引用与元数据服务。只有当联网信息能提升卡片阅读价值、补足 benchmark / 结果 / 背景缺口、或纠正过期元数据时才写入卡片；来源弱、重复、或相关性不清楚时直接不加入。
+
+外部信息必须服从证据边界：不要编造 benchmark 数字、论文宣称、代码可用性或社区采用情况。来自网络而非本地全文的内容，用简洁表述区分来源，例如“在线项目页显示...”或“公开元数据提示...”。
+
+发布 Todo 卡片刷新前，用下面命令审计当前快照：
+
+```
+python3 scripts/audit_todo_card_web_context.py --output workspace/todo_card_web_context_audit.md
+```
+
+按审计结果安排联网补充优先级：metadata-only、limited-source、fallback、以及大量“未披露/无法确认”的卡片优先刷新。
+
 ## Claude Code Skills
 
 Skills 定义在 `.claude/skills/` 目录，遵循 [Agent Skills](https://agentskills.io) 开放标准。每个 skill 是一个文件夹，包含 `SKILL.md`（YAML frontmatter + 指令）。根目录 `skills/` 为指向 `.claude/skills/` 的符号链接，供 Claude Code 插件系统发现。
