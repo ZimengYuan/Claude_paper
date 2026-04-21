@@ -205,7 +205,7 @@
           <NuxtLink class="aio-button" :to="compassDetailLink">打开完整 Compass</NuxtLink>
         </div>
 
-        <div class="aio-compass-card">
+        <div class="aio-compass-card" :class="{ 'is-single': !todoMetricEntries.length }">
           <div class="aio-verdict">
             <div class="aio-split-top">
               <p class="aio-kicker">Quick Verdict</p>
@@ -231,18 +231,16 @@
             </div>
           </div>
 
-          <div v-if="ratingEntries.length" class="aio-rating-grid">
+          <div v-if="todoMetricEntries.length" class="aio-metric-panel">
             <div
-              v-for="entry in ratingEntries"
+              v-for="entry in todoMetricEntries"
               :key="entry.label"
-              class="aio-rating-cell"
+              class="aio-metric"
+              :class="{ primary: entry.primary }"
             >
               <span>{{ entry.label }}</span>
-              <strong>{{ entry.value }}/10</strong>
+              <strong>{{ entry.value }}</strong>
             </div>
-          </div>
-          <div v-else class="aio-cell">
-            <p>当前静态快照里还没有可展示的结构化评分。</p>
           </div>
         </div>
       </section>
@@ -428,6 +426,18 @@ const overallRatingText = computed(() => {
   const score = paper.value?.rating?.overall_score
   if (score == null) return 'n/a'
   return Number(score).toFixed(1) + '/10'
+})
+
+const todoMetricEntries = computed(() => {
+  const entries = []
+  const score = paper.value?.rating?.overall_score
+  if (score != null) {
+    entries.push({ label: 'Overall Score', value: Number(score).toFixed(1) + '/10', primary: true })
+  }
+  for (const entry of ratingEntries.value) {
+    entries.push({ label: entry.label, value: entry.value + '/10' })
+  }
+  return entries
 })
 
 const compassMaterialEntries = computed(() => [

@@ -88,12 +88,17 @@ def test_todo_card_layout_avoids_stretched_blank_cards() -> None:
     card_block = re.search(r'\.aio-card\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
     card_footer = re.search(r'\.aio-card-footer\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
     accent_bar = re.search(r'\.aio-card::before\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+    hero = re.search(r'\.aio-hero\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+    hero_stats = re.search(r'\.aio-hero-stats\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
 
     assert card_grid and 'align-items: start;' in card_grid.group('body')
     assert card_block and 'min-height:' not in card_block.group('body')
     assert card_footer and 'margin-top: auto;' not in card_footer.group('body')
     assert accent_bar and 'inset: 0 auto 0 0;' in accent_bar.group('body')
     assert '18px auto 18px' not in accent_bar.group('body')
+    assert hero and 'flex-direction: column;' in hero.group('body')
+    assert hero and 'grid-template-columns: minmax(0, 1fr) auto;' not in hero.group('body')
+    assert hero_stats and 'grid-template-columns: repeat(3, minmax(0, 1fr));' in hero_stats.group('body')
 
 
 def test_todo_compass_routes_use_internal_paths() -> None:
@@ -120,8 +125,20 @@ def test_compass_page_uses_todo_design_system() -> None:
     assert 'class="aio-paper-header"' in compass_page
     assert 'class="aio-compass-card"' in compass_page
     assert 'class="aio-note-section"' in compass_page
+    assert 'class="aio-metric-panel"' in compass_page
+    assert 'class="aio-rating-grid"' not in compass_page
     assert 'rounded-[32px]' not in compass_page
     assert 'bg-[linear-gradient' not in compass_page
     assert 'text-slate-' not in compass_page
     assert 'todoRouteIds.map((routeId: string) => `/todo/${routeId}`)' in config
     assert 'todoRouteIds.map((routeId: string) => `/compass/${routeId}`)' in config
+
+
+def test_todo_detail_uses_dynamic_compass_metrics() -> None:
+    root = _root()
+    todo_page = (root / 'scholaraio' / 'web' / 'pages' / 'todo' / '[id].vue').read_text(encoding='utf-8')
+
+    assert 'class="aio-metric-panel"' in todo_page
+    assert 'todoMetricEntries.length' in todo_page
+    assert 'class="aio-rating-grid"' not in todo_page
+    assert "'is-single': !todoMetricEntries.length" in todo_page

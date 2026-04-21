@@ -73,22 +73,15 @@
           </div>
         </div>
 
-        <div class="aio-rating-grid">
-          <div class="aio-rating-cell">
-            <span>Overall Score</span>
-            <strong>{{ overallRatingText }}/10</strong>
-          </div>
-          <div class="aio-rating-cell">
-            <span>等级</span>
-            <strong>{{ overallGradeText || '待判断' }}</strong>
-          </div>
-          <div class="aio-rating-cell">
-            <span>阅读优先级</span>
-            <strong>{{ readingPriorityText || '待判断' }}</strong>
-          </div>
-          <div class="aio-rating-cell">
-            <span>材料状态</span>
-            <strong>{{ heroStatusText }}</strong>
+        <div class="aio-metric-panel">
+          <div
+            v-for="entry in heroMetricEntries"
+            :key="entry.label"
+            class="aio-metric"
+            :class="{ primary: entry.primary }"
+          >
+            <span>{{ entry.label }}</span>
+            <strong>{{ entry.value }}</strong>
           </div>
         </div>
       </section>
@@ -737,6 +730,16 @@ const heroMaterialEntries = computed(() => [
   { label: 'Learnpath Report', ready: Boolean(readableReport.value) },
   { label: '结构化 Rating', ready: Boolean(paper.value?.rating) },
 ])
+const heroMetricEntries = computed(() => {
+  const entries = []
+  if (overallScore.value != null) {
+    entries.push({ label: 'Overall Score', value: overallRatingText.value + '/10', primary: true })
+  }
+  if (overallGradeText.value) entries.push({ label: '等级', value: overallGradeText.value })
+  if (readingPriorityText.value) entries.push({ label: '阅读优先级', value: readingPriorityText.value })
+  entries.push({ label: '材料状态', value: heroStatusText.value })
+  return entries
+})
 const heroStatusText = computed(() => {
   const readyCount = heroMaterialEntries.value.filter((entry) => entry.ready).length
   if (readyCount === heroMaterialEntries.value.length) return '评分与报告已就绪'
