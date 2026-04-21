@@ -23,6 +23,130 @@ LEARNPATH_SKILL_DIR = SKILLS_ROOT / "paper-compass-learnpath"
 MEMORY_DEFAULT_PATH = Path.home() / "Documents/know/memory.md"
 PEER_COUNT = 5
 
+_MEMORY_LEVEL_RANK = {
+    "unknown": 0,
+    "basic": 1,
+    "familiar": 2,
+    "mastered": 3,
+}
+
+_MEMORY_LEVEL_ALIASES = {
+    "unknown": "unknown",
+    "未知": "unknown",
+    "不熟": "unknown",
+    "不了解": "unknown",
+    "basic": "basic",
+    "基础": "basic",
+    "了解": "basic",
+    "入门": "basic",
+    "familiar": "familiar",
+    "熟悉": "familiar",
+    "会用": "familiar",
+    "掌握基础": "familiar",
+    "mastered": "mastered",
+    "掌握": "mastered",
+    "已掌握": "mastered",
+    "精通": "mastered",
+}
+
+_CONCEPT_MEMORY_ALIASES: dict[str, tuple[str, ...]] = {
+    "强化学习与策略优化": (
+        "reinforcement learning",
+        "rl",
+        "ppo",
+        "sac",
+        "q-learning",
+        "policy gradient",
+        "actor critic",
+        "offline rl",
+        "online rl",
+        "强化学习",
+        "策略优化",
+    ),
+    "模仿学习与示范数据利用": (
+        "imitation learning",
+        "behavior cloning",
+        "behaviour cloning",
+        "bc",
+        "dagger",
+        "demonstration",
+        "teleoperation",
+        "模仿学习",
+        "行为克隆",
+        "示范数据",
+        "遥操作",
+    ),
+    "扩散生成与时序动作建模": (
+        "diffusion",
+        "diffusion policy",
+        "denoising",
+        "flow matching",
+        "text-to-motion",
+        "扩散",
+        "去噪",
+        "动作生成",
+        "时序动作",
+    ),
+    "Transformer 与自回归序列建模": (
+        "transformer",
+        "attention",
+        "autoregressive",
+        "sequence modeling",
+        "序列建模",
+        "自回归",
+        "注意力",
+    ),
+    "世界模型与动力学建模": (
+        "world model",
+        "dynamics model",
+        "koopman",
+        "mpc",
+        "model predictive control",
+        "世界模型",
+        "动力学",
+        "预测控制",
+    ),
+    "全身动力学与接触约束": (
+        "whole-body",
+        "whole body",
+        "contact",
+        "centroidal dynamics",
+        "impedance",
+        "全身控制",
+        "接触约束",
+        "质心动力学",
+        "阻抗",
+    ),
+    "轨迹跟踪与运动重定向": (
+        "motion retargeting",
+        "trajectory tracking",
+        "tracking policy",
+        "reference motion",
+        "轨迹跟踪",
+        "运动重定向",
+        "动作重定向",
+        "参考动作",
+    ),
+    "Sim-to-Real 与鲁棒性迁移": (
+        "sim-to-real",
+        "domain randomization",
+        "robustness",
+        "transfer",
+        "仿真到真实",
+        "域随机化",
+        "鲁棒",
+        "迁移",
+    ),
+    "视觉语言动作模型": (
+        "vla",
+        "vision-language-action",
+        "vlm",
+        "openvla",
+        "视觉语言",
+        "视觉语言动作",
+    ),
+}
+
 _STOPWORDS = {
     "a", "an", "the", "of", "in", "on", "for", "and", "by", "to", "with", "its", "their", "from",
     "using", "via", "towards", "toward", "through", "into", "under", "over", "that", "this", "these",
@@ -396,6 +520,57 @@ def load_memory_payload(memory_path: str | Path | None = None) -> dict[str, Any]
     return {"loaded": False, "path": str(path), "content": ""}
 
 
+def _normalize_memory_text(value: str) -> str:
+    return re.sub(r"[^a-z0-9\u4e00-\u9fff]+", "", str(value or "").lower())
+
+
+def _normalize_memory_level(value: str) -> str | None:
+    raw = str(value or "").strip().lower()
+    if not raw:
+        return None
+    raw = re.sub(r"[`*_（）()\[\]【】]+", "", raw).strip()
+    return _MEMORY_LEVEL_ALIASES.get(raw)
+
+
+def parse_learning_memory(content: str) -> dict[str, str]:
+    """Parse flexible learning memory Markdown into topic -> normalized level."""
+    entries: dict[str, str] = {}
+
+    def add(topic: str, level: str | None) -> None:
+        clean_topic = re.sub(r"\s+", " ", str(topic or "").strip(" -|:："))
+        normalized_level = _normalize_memory_level(level or "")
+        if not clean_topic or normalized_level is None:
+            return
+        previous = entries.get(clean_topic)
+        if previous and _MEMORY_LEVEL_RANK[previous] >= _MEMORY_LEVEL_RANK[normalized_level]:
+            return
+        entries[clean_topic] = normalized_level
+
+    for raw_line in str(content or "").splitlines():
+        line = raw_line.strip().lstrip("\ufeff")
+        if not line or line.startswith("#"):
+            continue
+
+        if line.startswith("|") and line.endswith("|"):
+            cells = [cell.strip() for cell in line.strip("|").split("|")]
+            if len(cells) >= 2 and not set(cells[0]) <= {"-", ":"}:
+                if cells[0].lower() not in {"topic", "concept", "知识点"}:
+                    add(cells[0], cells[1])
+            continue
+
+        checklist_match = re.match(r"^[-*]\s*\[([ xX])\]\s*(.+)$", line)
+        if checklist_match:
+            checked, topic = checklist_match.groups()
+            add(topic, "familiar" if checked.lower() == "x" else "unknown")
+            continue
+
+        bullet_match = re.match(r"^[-*]\s+(.+?)\s*[:：]\s*([A-Za-z\u4e00-\u9fff_-]+)(?:\s+#.*)?\s*$", line)
+        if bullet_match:
+            add(bullet_match.group(1), bullet_match.group(2))
+
+    return entries
+
+
 def build_compass_context(paper_dir: Path, *, memory_path: str | Path | None = None, max_l4_chars: int = 9000) -> dict[str, Any]:
     meta = read_meta(paper_dir)
     content = _get_paper_content(paper_dir, max_l4_chars=max_l4_chars)
@@ -515,7 +690,13 @@ def _report_prompt(context: dict[str, Any], score_report: str) -> str:
     memory = context["memory"]
     peer_pack = context["peer_pack"]
     source_lines = "\n".join(f"- {item}" for item in context["available_sources"]) or "- 信息不足"
-    memory_block = memory["content"] if memory.get("loaded") else f"memory 未加载；默认路径 {memory.get('path')} 不存在。"
+    memory_content = str(memory.get("content") or "")
+    if memory.get("loaded") and parse_learning_memory(memory_content):
+        memory_block = memory_content
+        memory_instruction = "如果 memory 中没有命中任何已掌握或熟悉概念，可以只列新出现短板；不要生成空占位。"
+    else:
+        memory_block = "memory 为空或未加载。"
+        memory_instruction = "省略 Section 3 个性化增量，不要输出 memory 未加载、暂无已掌握项等占位话术。"
     target_payload = {
         "title": meta.get("title") or "",
         "authors": meta.get("authors") or [],
@@ -533,7 +714,8 @@ def _report_prompt(context: dict[str, Any], score_report: str) -> str:
 3. 每个 must/bridge 概念都尽量给出 [Section] \"quote\" 证据；没有把握时写信息不足。
 4. Section 4 的资源只能使用我提供的候选链接；没有合适资源就写信息不足，不要编造 URL。
 5. Section 6 只能写关键实验结论: ...。
-6. 只输出最终 Markdown，不要代码块，不要额外解释。
+6. {memory_instruction}
+7. 只输出最终 Markdown，不要代码块，不要额外解释。
 
 模板：
 {assets['learnpath_template']}
@@ -1059,21 +1241,63 @@ def _candidate_concepts(context: dict[str, Any]) -> tuple[list[dict[str, str]], 
 
 def _memory_delta(context: dict[str, Any], must_rows: list[dict[str, str]]) -> tuple[list[str], list[str], list[str]]:
     memory = context.get("memory") or {}
-    content = str(memory.get("content") or "").lower()
-    if not memory.get("loaded") or not content:
-        retained = [f"{must_rows[0]['concept']}：即使已有相近背景，也建议按本文的问题设定重新对齐。"] if must_rows else []
-        return [], retained, [row["concept"] for row in must_rows[:2]]
+    content = str(memory.get("content") or "")
+    if not memory.get("loaded") or not content.strip():
+        return [], [], []
+
+    entries = parse_learning_memory(content)
+    if not entries:
+        return [], [], []
+
+    normalized_entries = [
+        (_normalize_memory_text(topic), level, topic)
+        for topic, level in entries.items()
+    ]
+
+    def level_for(row: dict[str, str]) -> tuple[str | None, str | None]:
+        concept = str(row.get("concept") or "")
+        aliases = list(_CONCEPT_MEMORY_ALIASES.get(concept, ()))
+        aliases.extend(
+            token
+            for token in re.split(r"[^a-zA-Z0-9\u4e00-\u9fff]+", concept)
+            if len(token) >= 2
+        )
+        normalized_aliases = [_normalize_memory_text(alias) for alias in aliases if alias]
+        normalized_concept = _normalize_memory_text(concept)
+        candidates = [normalized_concept, *normalized_aliases]
+        best_level: str | None = None
+        best_topic: str | None = None
+        for topic_norm, level, topic in normalized_entries:
+            if not topic_norm:
+                continue
+            matched = any(
+                candidate and (
+                    candidate in topic_norm
+                    or topic_norm in candidate
+                )
+                for candidate in candidates
+            )
+            if not matched:
+                continue
+            if best_level is None or _MEMORY_LEVEL_RANK[level] > _MEMORY_LEVEL_RANK[best_level]:
+                best_level = level
+                best_topic = topic
+        return best_level, best_topic
 
     skipped: list[str] = []
     retained: list[str] = []
     new_gaps: list[str] = []
     for row in must_rows:
-        tokens = [token.lower() for token in re.split(r"[^a-zA-Z0-9\u4e00-\u9fff]+", row["concept"]) if token]
-        if any(token in content for token in tokens[:3]):
-            skipped.append(row["concept"])
-            retained.append(f"{row['concept']}：memory 里有相近背景，但本文用法更贴近 {context['meta'].get('title') or '当前论文'}。")
+        concept = row["concept"]
+        level, matched_topic = level_for(row)
+        if level == "mastered":
+            skipped.append(f"{concept}：memory 标记为已掌握（{matched_topic}）。")
+        elif level == "familiar":
+            retained.append(f"{concept}：已有相近背景（{matched_topic}），但建议按本文机制快速对齐。")
+        elif level == "basic":
+            new_gaps.append(f"{concept}：memory 仅为基础了解，建议补到能读懂本文细节。")
         else:
-            new_gaps.append(row["concept"])
+            new_gaps.append(concept)
     return skipped[:2], retained[:2], new_gaps[:3]
 
 
@@ -1132,9 +1356,21 @@ def _fallback_readable_report(context: dict[str, Any], score_report: str) -> str
     stage_b = "、".join(row["concept"] for row in bridge_rows[:2]) or "实验协议"
     stage_c = "、".join(row["concept"] for row in must_rows[2:4]) or (must_rows[-1]["concept"] if must_rows else "论文特有机制")
 
-    skipped_lines = "\n".join(f"  - {item}" for item in skipped) or "  - 暂无明确已掌握项，按默认先修序列处理。"
-    retained_lines = "\n".join(f"  - {item}" for item in retained) or "  - 暂无，需要跟着论文语境重新过一遍核心术语。"
-    gap_lines = "\n".join(f"  - {item}" for item in new_gaps) or "  - 当前最缺的是把任务设定、方法结构和实验协议对齐起来。"
+    personalized_blocks: list[str] = []
+    if skipped:
+        personalized_blocks.append("- 已跳过（已掌握）:\n" + "\n".join(f"  - {item}" for item in skipped))
+    if retained:
+        personalized_blocks.append("- 虽然熟悉但仍保留（论文特有增量）:\n" + "\n".join(f"  - {item}" for item in retained))
+    if new_gaps:
+        personalized_blocks.append("- 新出现的高优先级短板:\n" + "\n".join(f"  - {item}" for item in new_gaps))
+    personalized_section = ""
+    if personalized_blocks:
+        personalized_section = "\n".join([
+            "## 3. 个性化增量（基于 memory.md）",
+            "",
+            "\n".join(personalized_blocks),
+            "",
+        ])
     all_sources = [paper_url] + [src for src in sources if src != paper_url]
     source_lines = "\n".join(f"- {source}" for source in all_sources[:3])
 
@@ -1161,14 +1397,7 @@ def _fallback_readable_report(context: dict[str, Any], score_report: str) -> str
 |---|---|---|---|---|---|
 {chr(10).join(bridge_table)}
 
-## 3. 个性化增量（基于 memory.md）
-
-- 已跳过（已掌握）:
-{skipped_lines}
-- 虽然熟悉但仍保留（论文特有增量）:
-{retained_lines}
-- 新出现的高优先级短板:
-{gap_lines}
+{personalized_section}
 
 ## 4. 推荐学习资源
 

@@ -306,6 +306,28 @@ python3 scripts/audit_todo_card_web_context.py --output workspace/todo_card_web_
 
 Use the audit to prioritize web supplementation: metadata-only, limited-source, fallback, and generic "not disclosed" cards should be refreshed first.
 
+## Compass Learning Memory
+
+Todo Compass personalizes prerequisite filtering with a global learning memory at `~/Documents/know/memory.md`. This file is local user profile state, not a paper source and not a repository state source. Do not commit the user's real memory file; only commit templates, scripts, and derived static reports when appropriate.
+
+Supported entries:
+
+```
+- PPO: mastered
+- Diffusion Policy: familiar
+- Transformer: basic
+```
+
+Levels are `mastered`, `familiar`, `basic`, and `unknown`. Only `mastered` and `familiar` should reduce or skip prerequisite content. `basic` means the concept should usually remain as a gap, and `unknown` must never be treated as learned.
+
+When the user says they have understood a concept, update the global memory with:
+
+```
+python3 scripts/update_learning_memory.py --topic "PPO" --level mastered
+```
+
+Then regenerate Compass materials for affected Todo cards before publishing, so the static web snapshot reflects the updated personalization. If the memory file is absent or empty, hide the "personalized delta" section instead of showing "memory not loaded" or other placeholder text.
+
 ## Agent Skills
 
 Skills are defined in `.claude/skills/` directory (also discoverable via `.agents/skills/` symlink), following the [Agent Skills](https://agentskills.io) open standard. Each skill is a folder containing a `SKILL.md` file (YAML frontmatter + instructions).

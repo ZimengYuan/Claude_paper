@@ -309,6 +309,28 @@ python3 scripts/audit_todo_card_web_context.py --output workspace/todo_card_web_
 
 按审计结果安排联网补充优先级：metadata-only、limited-source、fallback、以及大量“未披露/无法确认”的卡片优先刷新。
 
+## Compass 学习记忆
+
+Todo Compass 使用全局学习记忆 `~/Documents/know/memory.md` 做先修知识筛选。这个文件是用户本地学习画像，不是论文证据源，也不是仓库状态源。不要把用户真实 memory 文件提交进仓库；仓库里只提交模板、维护脚本和必要的静态派生结果。
+
+支持格式：
+
+```
+- PPO: mastered
+- Diffusion Policy: familiar
+- Transformer: basic
+```
+
+等级为 `mastered`、`familiar`、`basic`、`unknown`。只有 `mastered` 和 `familiar` 可以压缩或跳过先修内容；`basic` 仍应作为待补短板处理；`unknown` 绝不能被当作已掌握。
+
+当用户说“我搞懂了某个概念”时，用下面命令更新全局记忆：
+
+```
+python3 scripts/update_learning_memory.py --topic "PPO" --level mastered
+```
+
+随后重新生成受影响 Todo 卡片的 Compass materials，再发布静态页面，让网页上的个性化筛选反映最新学习状态。如果 memory 文件不存在或为空，隐藏“个性化增量”区域，不要显示 “memory 未加载” 或其他占位话术。
+
 ## Claude Code Skills
 
 Skills 定义在 `.claude/skills/` 目录，遵循 [Agent Skills](https://agentskills.io) 开放标准。每个 skill 是一个文件夹，包含 `SKILL.md`（YAML frontmatter + 指令）。根目录 `skills/` 为指向 `.claude/skills/` 的符号链接，供 Claude Code 插件系统发现。

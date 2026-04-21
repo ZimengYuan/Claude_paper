@@ -5,9 +5,12 @@ import json
 from scholaraio.config import Config, PathsConfig
 from scholaraio.papers import read_meta, write_summary
 from scholaraio.todo_compass import (
+    _memory_delta,
+    build_compass_context,
     ensure_todo_placeholder_paper,
     generate_compass_readable_report,
     generate_compass_score_report,
+    parse_learning_memory,
     parse_compass_score_report,
 )
 
@@ -112,11 +115,54 @@ def test_generate_compass_reports_with_fallback(tmp_path):
         '## 1. 核心创新点\n论文把 Koopman 动力学、强化学习和全身控制串成统一闭环。\n\n## 2. 实验结果\n在 humanoid locomotion 任务上表现稳定。\n',
     )
 
-    score_md, rating = generate_compass_score_report(cfg, paper_dir, model='fallback')
-    report_md = generate_compass_readable_report(cfg, paper_dir, score_report=score_md, model='fallback')
+    context = build_compass_context(paper_dir, memory_path=tmp_path / 'missing-memory.md')
+    score_md, rating = generate_compass_score_report(cfg, paper_dir, context=context, model='fallback')
+    report_md = generate_compass_readable_report(cfg, paper_dir, score_report=score_md, context=context, model='fallback')
 
     assert '## 2. 分项评分' in score_md
     assert rating['scheme'] == 'paper_compass_score'
     assert rating['overall_score'] <= 10.0
     assert '## 1. 必学先修知识（按顺序）' in report_md
     assert '强化学习与策略优化' in report_md
+    assert '## 3. 个性化增量' not in report_md
+
+
+def test_parse_learning_memory_respects_explicit_levels():
+    memory = """
+| Topic | Level |
+|---|---|
+| PPO | mastered |
+- Diffusion Policy: familiar
+- Quantization: unknown  # user has not learned it yet
+- [x] Sim-to-Real
+- [ ] Graph Search
+"""
+
+    entries = parse_learning_memory(memory)
+
+    assert entries['PPO'] == 'mastered'
+    assert entries['Diffusion Policy'] == 'familiar'
+    assert entries['Quantization'] == 'unknown'
+    assert entries['Sim-to-Real'] == 'familiar'
+    assert entries['Graph Search'] == 'unknown'
+
+
+def test_memory_delta_uses_levels_instead_of_raw_text_matches():
+    context = {
+        'memory': {
+            'loaded': True,
+            'content': '- PPO: mastered\n- Diffusion Policy: familiar\n- Quantization: unknown\n',
+        },
+        'meta': {'title': 'Example Paper'},
+    }
+    must_rows = [
+        {'concept': '强化学习与策略优化'},
+        {'concept': '扩散生成与时序动作建模'},
+        {'concept': 'Quantization'},
+    ]
+
+    skipped, retained, new_gaps = _memory_delta(context, must_rows)
+
+    assert skipped == ['强化学习与策略优化：memory 标记为已掌握（PPO）。']
+    assert retained == ['扩散生成与时序动作建模：已有相近背景（Diffusion Policy），但建议按本文机制快速对齐。']
+    assert new_gaps == ['Quantization']
