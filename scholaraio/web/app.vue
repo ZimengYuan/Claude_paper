@@ -84,9 +84,9 @@ onMounted(() => {
   --aio-card-accent: linear-gradient(180deg, rgba(74, 222, 154, 0.86), rgba(96, 165, 250, 0.58));
   --aio-button-text: #07100b;
   --aio-button-hover-bg: #6ee7ad;
-  --aio-font-serif: "Noto Serif SC", "Songti SC", Georgia, serif;
-  --aio-font-sans: Inter, "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif;
-  --aio-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  --aio-font-serif: "Source Serif 4", "Noto Serif SC", "Songti SC", Georgia, serif;
+  --aio-font-sans: "Inter", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --aio-font-mono: "IBM Plex Mono", "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
 }
 
 :root[data-theme="day"] {
