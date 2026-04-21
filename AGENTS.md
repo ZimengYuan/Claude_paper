@@ -96,7 +96,7 @@ When the main agent delegates paper analysis to a subagent, information flows at
 | `workspace.py` | Workspace paper subset management (reuses search/export) |
 | `export.py` | BibTeX export |
 | `audit.py` | Data quality audit + repair |
-| `sources/` | Data source adapters (local / endnote / zotero) |
+| `sources/` | External source adapters (arXiv / endnote / zotero) |
 | `cli.py` | Full CLI entry point |
 | `mcp_server.py` | MCP server (31 tools) |
 | `setup.py` | Environment detection + setup wizard |
@@ -243,8 +243,8 @@ The external `data/explore/` silo has been removed.
 
 ### sources/ Abstraction Layer
 
-`sources/local.py` iterates `data/papers/` subdirectories, yielding `(paper_id, meta_dict, md_path)` tuples (paper_id is UUID).
-`papers.py` provides path helpers; all modules access paper paths through it.
+`sources/` contains external source adapters such as arXiv, Endnote, and Zotero.
+Local paper iteration is handled through `papers.py` path helpers (`iter_paper_dirs`, `read_meta`, `paper_dir`, etc.); do not add a parallel local source adapter unless a new caller genuinely needs that abstraction.
 
 ## Configuration
 

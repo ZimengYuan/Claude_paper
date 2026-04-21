@@ -202,7 +202,7 @@ scholaraio metrics            查看 LLM 用量统计
 ```
 scholaraio/          # Python 包——CLI、MCP 服务器、所有核心模块
   ingest/            #   PDF 解析 + 元数据提取流水线
-  sources/           #   数据源适配（local / Endnote / Zotero）
+  sources/           #   外部数据源适配（arXiv / Endnote / Zotero）
 
 .claude/skills/      # 22 个 agent skills（AgentSkills.io 格式）
 .agents/skills/      # ↑ 符号链接，方便跨 agent 发现

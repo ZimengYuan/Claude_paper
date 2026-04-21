@@ -201,7 +201,7 @@ scholaraio metrics            View LLM usage stats
 ```
 scholaraio/          # Python package — CLI, MCP server, and all core modules
   ingest/            #   PDF parsing + metadata extraction pipeline
-  sources/           #   Data source adapters (local / Endnote / Zotero)
+  sources/           #   External source adapters (arXiv / Endnote / Zotero)
 
 .claude/skills/      # 22 agent skills (AgentSkills.io format)
 .agents/skills/      # ↑ symlink for cross-agent discovery

@@ -71,13 +71,21 @@ def test_nuxt_prerender_without_knowledge_base_route() -> None:
     assert "const baseRoutes = ['/', '/explore', '/graph']" in config
 
 
-def test_graph_route_redirected_to_explore() -> None:
+def test_graph_route_redirected_to_explore_without_page() -> None:
     root = _root()
     config = (root / 'scholaraio' / 'web' / 'nuxt.config.ts').read_text(encoding='utf-8')
-    graph_page = (root / 'scholaraio' / 'web' / 'pages' / 'graph.vue').read_text(encoding='utf-8')
+    graph_page = root / 'scholaraio' / 'web' / 'pages' / 'graph.vue'
     assert "'/graph': { redirect: '/explore' }" in config
     assert "'/graph/**': { redirect: '/explore' }" in config
-    assert "navigateTo('/explore'" in graph_page
+    assert not graph_page.exists()
+
+
+def test_static_snapshot_omits_unused_legacy_payloads() -> None:
+    site_data = _site_data_root(_root())
+    assert not (site_data / '.generated').exists()
+    assert not (site_data / 'knowledge.json').exists()
+    assert not (site_data / 'explore' / 'index.json').exists()
+    assert not (site_data / 'graphs').exists()
 
 
 def test_todo_card_layout_keeps_queue_cards_aligned() -> None:

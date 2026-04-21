@@ -11,10 +11,8 @@ from typing import Any
 
 from scholaraio.config import load_config
 from scholaraio.papers import iter_paper_dirs, read_meta
-from scholaraio.services.common import ServiceError
-from scholaraio.services.explore_service import get_explore_library, list_explore_libraries
-from scholaraio.services.graph_service import get_graph
-from scholaraio.services.knowledge_service import get_knowledge, list_tags
+from scholaraio.services.explore_service import get_explore_library
+from scholaraio.services.knowledge_service import list_tags
 from scholaraio.services.library_service import list_papers
 from scholaraio.services.paper_service import get_paper_detail
 from scholaraio.services.project_service import list_projects
@@ -22,9 +20,6 @@ from scholaraio.workspace import read_paper_ids
 
 
 STATIC_SITE_VERSION = 1
-GRAPH_MODES = ("citation", "structure", "topic")
-GRAPH_MAX_NODES = 120
-GRAPH_MIN_SHARED = 2
 TODO_SNAPSHOT_FILENAME = "todo-cards.json"
 
 
@@ -154,50 +149,6 @@ def _project_payloads(cfg) -> tuple[list[dict[str, Any]], dict[str, list[str]]]:
     return enriched, project_memberships
 
 
-def _empty_graph(mode: str, scope: str, *, project: str = "", message: str = "") -> dict[str, Any]:
-    payload = {
-        "mode": mode,
-        "scope": scope,
-        "nodes": [],
-        "edges": [],
-        "stats": {
-            "nodes": 0,
-            "edges": 0,
-            "papers": 0,
-            "external": 0,
-            "topics": 0,
-            "concepts": 0,
-            "edge_types": {},
-        },
-        "truncated": False,
-        "hidden_nodes": 0,
-        "message": message,
-    }
-    if project:
-        payload["project"] = project
-    return payload
-
-
-def _safe_graph(cfg, *, mode: str, scope: str, project: str = "") -> dict[str, Any]:
-    try:
-        payload = get_graph(
-            cfg,
-            mode=mode,
-            scope=scope,
-            project=project,
-            min_shared=GRAPH_MIN_SHARED,
-            max_nodes=GRAPH_MAX_NODES,
-        )
-    except ServiceError as exc:
-        payload = _empty_graph(mode, scope, project=project, message=exc.message)
-    except Exception as exc:  # pragma: no cover - defensive
-        payload = _empty_graph(mode, scope, project=project, message=str(exc))
-
-    if project:
-        payload["project"] = project
-    return payload
-
-
 def _load_preserved_todo_snapshot(output_dir: Path) -> tuple[str | None, int]:
     """Load an existing Todo snapshot so export can restore it after clearing site-data."""
     candidates = [Path(output_dir) / TODO_SNAPSHOT_FILENAME]
@@ -264,56 +215,12 @@ def export_static_site_data(cfg, output_dir: Path) -> dict[str, Any]:
         _write_json(paper_dir / f"{row['route_id']}.json", _inject_route_ids(detail, route_map))
         exported_papers += 1
 
-    knowledge_payload = {
-        "version": STATIC_SITE_VERSION,
-        "generated_at": generated_at,
-        "read_only": True,
-        "content": get_knowledge(cfg),
-        "tags": list_tags(cfg),
-    }
-    _write_json(output_dir / "knowledge.json", knowledge_payload)
-
-    explore_index = _inject_route_ids(list_explore_libraries(cfg), route_map)
     explore_detail = _inject_route_ids(get_explore_library(cfg, "current-library"), route_map)
     roadmap_path = cfg.topics_model_dir / "roadmap.md"
     explore_detail["roadmap"] = roadmap_path.read_text(encoding="utf-8") if roadmap_path.exists() else ""
     explore_detail["read_only"] = True
     explore_detail["snapshot_generated_at"] = generated_at
-    _write_json(output_dir / "explore" / "index.json", explore_index)
     _write_json(output_dir / "explore" / "current-library.json", explore_detail)
-
-    graph_index = {
-        "version": STATIC_SITE_VERSION,
-        "generated_at": generated_at,
-        "read_only": True,
-        "library": {},
-        "projects": [],
-    }
-
-    for mode in GRAPH_MODES:
-        graph_payload = _inject_route_ids(_safe_graph(cfg, mode=mode, scope="library"), route_map)
-        rel_path = f"graphs/library/{mode}.json"
-        _write_json(output_dir / rel_path, graph_payload)
-        graph_index["library"][mode] = rel_path
-
-    for project in projects:
-        project_entry = {
-            "name": project["name"],
-            "slug": project["slug"],
-            "paper_count": project["paper_count"],
-            "files": {},
-        }
-        for mode in GRAPH_MODES:
-            graph_payload = _inject_route_ids(
-                _safe_graph(cfg, mode=mode, scope="project", project=project["name"]),
-                route_map,
-            )
-            rel_path = f"graphs/projects/{project['slug']}/{mode}.json"
-            _write_json(output_dir / rel_path, graph_payload)
-            project_entry["files"][mode] = rel_path
-        graph_index["projects"].append(project_entry)
-
-    _write_json(output_dir / "graphs" / "index.json", graph_index)
 
     manifest = {
         "version": STATIC_SITE_VERSION,
@@ -325,7 +232,6 @@ def export_static_site_data(cfg, output_dir: Path) -> dict[str, Any]:
     _write_json(output_dir / "manifest.json", manifest)
     if preserved_todo_raw:
         _write_text(output_dir / TODO_SNAPSHOT_FILENAME, preserved_todo_raw)
-    _write_text(output_dir / ".generated", generated_at + "\n")
 
     return {
         "generated_at": generated_at,

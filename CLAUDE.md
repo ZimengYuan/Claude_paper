@@ -94,7 +94,7 @@ MinerU 解析的 Markdown 保留了高质量公式（LaTeX）和图片附件（`
 | `export.py` | BibTeX / RIS / Markdown 文献列表 / DOCX 导出 |
 | `citation_styles.py` | 引用格式管理（内置 APA/Vancouver/Chicago/MLA + 动态加载自定义格式，存于 `data/citation_styles/`） |
 | `audit.py` | 数据质量审计 + 修复 |
-| `sources/` | 数据源适配（local / endnote / zotero） |
+| `sources/` | 外部数据源适配（arXiv / endnote / zotero） |
 | `cli.py` | 全量 CLI 入口 |
 | `mcp_server.py` | MCP 服务端（31 tools） |
 | `setup.py` | 环境检测 + 安装向导 |
@@ -245,8 +245,8 @@ pending.json 中 `issue` 字段标识原因：
 
 ### sources/ 抽象层
 
-`sources/local.py` 遍历 `data/papers/` 子目录，产出 `(paper_id, meta_dict, md_path)` 三元组（paper_id 为 UUID）。
-`papers.py` 提供路径 helper，所有模块通过它访问论文路径。
+`sources/` 存放 arXiv、Endnote、Zotero 等外部数据源适配器。
+本地论文遍历统一走 `papers.py` 路径 helper（`iter_paper_dirs`、`read_meta`、`paper_dir` 等）；除非有新的真实调用方需要，不要再加平行的 local source adapter。
 
 ## 配置
 
