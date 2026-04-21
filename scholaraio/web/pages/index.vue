@@ -268,10 +268,6 @@ const browserGithubOwner = ref('')
 const browserGithubRepo = ref('')
 const pageSize = 24
 
-const appBaseUrl = computed(() => {
-  const value = String(runtimeConfig.app.baseURL || '/')
-  return value.endsWith('/') ? value : value + '/'
-})
 const normalizedQuery = computed(() => searchQuery.value.trim().toLowerCase())
 const normalizedAuthorFilter = computed(() => authorFilter.value.trim().toLowerCase())
 const unreadCount = computed(() => todoCards.value.filter((card) => (card.read_status || 'unread') !== 'read').length)

@@ -202,7 +202,7 @@
             <p class="aio-kicker">06</p>
             <h2>Paper Compass</h2>
           </div>
-          <a class="aio-button" :href="compassDetailLink">打开完整 Compass</a>
+          <NuxtLink class="aio-button" :to="compassDetailLink">打开完整 Compass</NuxtLink>
         </div>
 
         <div class="aio-compass-card">
@@ -272,11 +272,7 @@ const showGithubTokenInput = ref(false)
 const browserGithubOwner = ref('')
 const browserGithubRepo = ref('')
 
-const appBaseUrl = computed(() => {
-  const value = String(runtimeConfig.app.baseURL || '/')
-  return value.endsWith('/') ? value : value + '/'
-})
-const compassDetailLink = computed(() => appBaseUrl.value + 'compass/' + routeId.value)
+const compassDetailLink = computed(() => '/compass/' + routeId.value)
 const githubOwner = computed(() => String(runtimeConfig.public?.githubOwner || browserGithubOwner.value || '').trim())
 const githubRepo = computed(() => String(runtimeConfig.public?.githubRepo || browserGithubRepo.value || '').trim())
 const githubRef = computed(() => String(runtimeConfig.public?.githubRef || 'main').trim())
@@ -397,7 +393,7 @@ const ratingClass = (score) => {
   return 'score-low'
 }
 
-const goBack = () => navigateTo(appBaseUrl.value)
+const goBack = () => navigateTo('/')
 
 const keepValue = (value) => value !== null && value !== undefined && value !== ''
 

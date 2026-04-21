@@ -220,7 +220,7 @@ textarea {
 .aio-content {
   margin: 0 auto;
   max-width: 1180px;
-  padding: 42px 22px 76px;
+  padding: 28px 22px 76px;
 }
 
 .aio-hero {
@@ -229,7 +229,7 @@ textarea {
   gap: 30px;
   align-items: end;
   border-bottom: 1px solid var(--aio-border);
-  padding: 46px 0 34px;
+  padding: 24px 0 28px;
 }
 
 .aio-kicker {
@@ -244,9 +244,9 @@ textarea {
   max-width: 820px;
   color: var(--aio-text);
   font-family: var(--aio-font-serif);
-  font-size: clamp(42px, 7vw, 86px);
+  font-size: clamp(38px, 6vw, 76px);
   font-weight: 500;
-  line-height: 0.98;
+  line-height: 1.02;
   letter-spacing: 0;
 }
 
@@ -447,12 +447,12 @@ textarea {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
+  align-items: start;
   margin-top: 18px;
 }
 
 .aio-card {
   display: flex;
-  min-height: 310px;
   flex-direction: column;
   border: 1px solid var(--aio-card-border);
   background: var(--aio-card-bg);
@@ -467,7 +467,7 @@ textarea {
 .aio-card::before {
   content: "";
   position: absolute;
-  inset: 18px auto 18px 0;
+  inset: 0 auto 0 0;
   width: 3px;
   background: var(--aio-card-accent);
   opacity: 0.72;
@@ -543,10 +543,10 @@ textarea {
 }
 
 .aio-card-title {
-  margin: 18px 0 0;
+  margin: 14px 0 0;
   color: var(--aio-text);
   font-family: var(--aio-font-serif);
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 500;
   line-height: 1.24;
   letter-spacing: 0;
@@ -561,9 +561,9 @@ textarea {
 }
 
 .aio-card-summary {
-  margin-top: 18px;
+  margin-top: 15px;
   border-top: 1px solid var(--aio-border);
-  padding-top: 16px;
+  padding-top: 14px;
 }
 
 .aio-card-summary p {
@@ -585,8 +585,8 @@ textarea {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-top: auto;
-  padding-top: 22px;
+  margin-top: 18px;
+  padding-top: 0;
 }
 
 .aio-card-open {
@@ -904,6 +904,167 @@ textarea {
   font-family: var(--aio-font-serif);
   font-size: 23px;
   font-weight: 500;
+}
+
+.aio-compass-summary {
+  margin-top: 14px;
+  line-height: 1.8;
+}
+
+.aio-section-stack {
+  display: grid;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.aio-section-stack h3 {
+  margin: 0;
+  color: var(--aio-text);
+  font-family: var(--aio-font-serif);
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.aio-cell-accent {
+  background:
+    radial-gradient(circle at top left, rgba(74, 222, 154, 0.10), transparent 18rem),
+    var(--aio-bg-soft);
+}
+
+.aio-meter {
+  height: 7px;
+  margin-top: 14px;
+  overflow: hidden;
+  border: 1px solid var(--aio-border);
+  background: var(--aio-bg-mute);
+}
+
+.aio-meter-fill {
+  height: 100%;
+  background: var(--aio-card-accent);
+}
+
+.aio-empty-note {
+  margin: 18px 0 0;
+  border: 1px dashed var(--aio-border-strong);
+  color: var(--aio-text-muted);
+  font-size: 14px;
+  line-height: 1.7;
+  padding: 16px;
+}
+
+.aio-source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.aio-source-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  color: var(--aio-blue);
+  font-family: var(--aio-font-mono);
+  font-size: 12px;
+  padding: 0 11px;
+}
+
+.aio-source-link:hover {
+  border-color: rgba(74, 222, 154, 0.45);
+  color: var(--aio-accent);
+}
+
+.aio-inline-list {
+  display: grid;
+  gap: 10px;
+}
+
+.aio-learning-step {
+  display: flex;
+  gap: 12px;
+  border: 1px solid var(--aio-border);
+  background: var(--aio-bg-soft);
+  padding: 14px;
+}
+
+.aio-learning-step p {
+  margin: 0;
+  color: var(--aio-text-soft);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.aio-step-index {
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--aio-border-strong);
+  color: var(--aio-accent);
+  font-family: var(--aio-font-mono);
+  font-size: 12px;
+}
+
+.aio-raw-report {
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid var(--aio-border);
+  background: var(--aio-bg-soft);
+}
+
+.aio-raw-summary {
+  cursor: pointer;
+  color: var(--aio-text);
+  font-family: var(--aio-font-mono);
+  font-size: 12px;
+  padding: 14px 16px;
+}
+
+.aio-markdown {
+  border-top: 1px solid var(--aio-border);
+  color: var(--aio-text-soft);
+  font-size: 14px;
+  line-height: 1.9;
+  overflow: auto;
+  padding: 16px;
+}
+
+.aio-markdown.compact {
+  margin-top: 12px;
+  border-top: 0;
+  padding: 0;
+}
+
+.aio-markdown :where(h1, h2, h3, h4) {
+  color: var(--aio-text);
+  font-family: var(--aio-font-serif);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.aio-markdown :where(p, ul, ol, table) {
+  margin: 12px 0 0;
+}
+
+.aio-markdown a {
+  color: var(--aio-blue);
+}
+
+.aio-markdown table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.aio-markdown th,
+.aio-markdown td {
+  border: 1px solid var(--aio-border);
+  padding: 8px;
+  text-align: left;
+  vertical-align: top;
 }
 
 @keyframes aio-spin {

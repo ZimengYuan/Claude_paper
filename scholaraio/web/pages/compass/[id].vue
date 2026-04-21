@@ -1,449 +1,470 @@
 <template>
-  <div class="min-h-screen bg-[linear-gradient(180deg,_#f8fafc_0%,_#eef2ff_32%,_#f8fafc_100%)]">
-    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-      <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <button class="text-sm font-medium text-blue-600 transition hover:text-blue-800" @click="goBackToTodo">
-          ← 返回 Todo 详情
-        </button>
+  <div class="aio-detail-page aio-compass-detail-page">
+    <div class="aio-detail-topbar">
+      <button class="aio-text-link" @click="goBackToTodo">
+        ← 返回 Todo 详情
+      </button>
 
-        <a
-          v-if="sourceLink"
-          class="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
-          :href="sourceLink"
-          :target="sourceLink.startsWith('http') ? '_blank' : null"
-          :rel="sourceLink.startsWith('http') ? 'noopener noreferrer' : null"
-        >
-          查看原论文
-        </a>
-      </div>
+      <a
+        v-if="sourceLink"
+        class="aio-button-secondary"
+        :href="sourceLink"
+        :target="sourceLink.startsWith('http') ? '_blank' : null"
+        :rel="sourceLink.startsWith('http') ? 'noopener noreferrer' : null"
+      >
+        查看原论文
+      </a>
+    </div>
 
-      <div v-if="loading" class="py-20 text-center">
-        <div class="mx-auto h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
-        <p class="mt-4 text-sm text-slate-500">Loading Paper Compass...</p>
-      </div>
+    <div v-if="loading" class="aio-state">
+      <div class="aio-spinner"></div>
+      <p>Loading Paper Compass...</p>
+    </div>
 
-      <div v-else-if="errorMessage" class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-        {{ errorMessage }}
-      </div>
+    <div v-else-if="errorMessage" class="aio-state error">
+      {{ errorMessage }}
+    </div>
 
-      <div v-else-if="card" class="space-y-6">
-        <section class="relative overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm">
-          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.16),_transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(15,23,42,0.08),_transparent_32%)]"></div>
-          <div class="relative p-8">
-            <div class="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_320px]">
-              <div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <span class="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">
-                    Paper Compass
-                  </span>
-                  <span
-                    class="rounded-full px-3 py-1 text-xs font-medium"
-                    :class="heroStatusClass"
-                  >
-                    {{ heroStatusText }}
-                  </span>
-                </div>
-
-                <h1 class="mt-5 text-4xl font-semibold leading-tight text-slate-950">{{ card.title }}</h1>
-                <p class="mt-4 text-sm text-slate-600">{{ card.authors?.join(', ') || '作者信息缺失' }}</p>
-                <p class="mt-1 text-xs text-slate-500">
-                  {{ card.year || '年份未知' }}<span v-if="card.journal"> · {{ card.journal }}</span>
-                  <span v-if="card.doi"> · DOI: {{ card.doi }}</span>
-                </p>
-
-                <div class="mt-8 rounded-[28px] border border-slate-200 bg-slate-50 p-6">
-                  <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">核心判断</p>
-                  <p class="mt-3 text-base leading-8 text-slate-800">
-                    {{ heroSummaryText }}
-                  </p>
-
-                  <div v-if="showTodoSummarySnippet" class="mt-5 border-t border-slate-200 pt-5">
-                    <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Todo Summary</p>
-                    <p class="mt-2 text-sm leading-7 text-slate-600">{{ card.one_line_summary }}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="w-full rounded-[28px] border border-slate-900 bg-[linear-gradient(135deg,_#020617,_#111827_54%,_#1d4ed8)] p-6 text-white shadow-lg">
-                <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-300">Overall Score</p>
-                <div class="mt-4 flex items-end gap-3">
-                  <p class="text-5xl font-semibold leading-none">{{ overallRatingText }}</p>
-                  <span class="pb-1 text-sm text-slate-300">/ 10</span>
-                </div>
-
-                <div class="mt-5 flex flex-wrap gap-2">
-                  <span
-                    v-if="overallGradeText"
-                    class="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white"
-                  >
-                    {{ overallGradeText }}
-                  </span>
-                  <span
-                    v-if="readingPriorityText"
-                    class="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white"
-                  >
-                    {{ readingPriorityText }}
-                  </span>
-                </div>
-
-                <p class="mt-6 text-sm leading-7 text-slate-200">
-                  {{ heroMaterialSummary }}
-                </p>
-              </div>
+    <article v-else-if="card">
+      <header class="aio-paper-header">
+        <div class="aio-split-top">
+          <div>
+            <div class="aio-pill-row">
+              <span class="aio-pill is-ready">Paper Compass</span>
+              <span class="aio-pill" :class="heroStatusClass">
+                {{ heroStatusText }}
+              </span>
+              <span class="aio-pill">{{ card.year || 'n.d.' }}</span>
             </div>
+            <h1 class="aio-paper-title">{{ card.title }}</h1>
+            <p class="aio-paper-meta">
+              {{ card.authors?.join(', ') || '作者信息缺失' }}
+              <span v-if="card.journal"> · {{ card.journal }}</span>
+              <span v-if="card.doi"> · DOI: {{ card.doi }}</span>
+            </p>
           </div>
-        </section>
+          <div class="aio-model-box">
+            阅读优先级：{{ readingPriorityText || '待判断' }}
+          </div>
+        </div>
+      </header>
 
-        <section id="score" class="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm scroll-mt-24">
-          <div class="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Score Layer</p>
-              <h2 class="mt-2 text-2xl font-semibold text-slate-950">Score Report</h2>
-              <p class="mt-2 text-sm text-slate-500">先看结构化结论和分项评分，再按需展开原始报告。</p>
-            </div>
-            <span class="rounded-full border px-3 py-1 text-xs font-medium" :class="materialClass(Boolean(scoreReport))">
-              {{ scoreReport ? '已就绪' : '缺失' }}
+      <section class="aio-compass-card">
+        <div class="aio-verdict">
+          <div class="aio-split-top">
+            <p class="aio-kicker">核心判断</p>
+            <span class="aio-pill" :class="materialClass(Boolean(scoreReport || readableReport))">
+              {{ scoreReport || readableReport ? '材料已就绪' : '材料缺失' }}
             </span>
           </div>
-
-          <div v-if="structuredScore.snapshot.length || structuredScore.conclusion.length || structuredScore.oneLine" class="mt-6 grid gap-4 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-            <div v-if="structuredScore.snapshot.length" class="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
-              <p class="text-sm font-semibold text-slate-900">论文快照</p>
-              <dl class="mt-4 space-y-3 text-sm">
-                <div v-for="entry in structuredScore.snapshot" :key="entry.label">
-                  <dt class="text-slate-500">{{ entry.label }}</dt>
-                  <dd class="mt-1 break-words text-slate-900">{{ entry.value }}</dd>
-                </div>
-              </dl>
-            </div>
-
-            <div class="space-y-4">
-              <div v-if="structuredScore.conclusion.length" class="grid gap-3 md:grid-cols-2">
-                <div
-                  v-for="entry in structuredScore.conclusion"
-                  :key="entry.label"
-                  class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4"
-                >
-                  <p class="text-xs font-medium uppercase tracking-wide text-slate-400">{{ entry.label }}</p>
-                  <p class="mt-2 text-sm leading-7 text-slate-900">{{ entry.value }}</p>
-                </div>
-              </div>
-
-              <div v-if="structuredScore.oneLine" class="rounded-[28px] border border-blue-100 bg-[linear-gradient(135deg,_rgba(239,246,255,0.9),_rgba(248,250,252,1))] p-5">
-                <p class="text-sm font-semibold text-slate-900">一句话判断</p>
-                <p class="mt-3 text-sm leading-8 text-slate-800">{{ structuredScore.oneLine }}</p>
-              </div>
-            </div>
-          </div>
-
-          <div v-if="structuredScore.scoringRows.length" class="mt-6 space-y-4">
-            <div>
-              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Scoring Breakdown</p>
-              <h3 class="mt-2 text-xl font-semibold text-slate-950">分项评分</h3>
-            </div>
-            <div class="grid gap-4 xl:grid-cols-2">
-              <article
-                v-for="row in structuredScore.scoringRows"
-                :key="row.dimension"
-                class="rounded-[28px] border border-slate-200 bg-slate-50 p-5"
-              >
-                <div class="flex items-start justify-between gap-4">
-                  <div>
-                    <p class="text-base font-semibold text-slate-950">{{ row.dimension }}</p>
-                    <p class="mt-1 text-xs text-slate-400">满分 {{ row.fullMark }}</p>
-                  </div>
-                  <span class="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700">
-                    {{ row.score }}/{{ row.fullMark }}
-                  </span>
-                </div>
-                <div class="mt-4 h-2 overflow-hidden rounded-full bg-slate-200">
-                  <div
-                    class="h-full rounded-full bg-[linear-gradient(90deg,_#1d4ed8,_#60a5fa)]"
-                    :style="{ width: scoreRatioWidth(row.score, row.fullMark) }"
-                  ></div>
-                </div>
-                <div class="mt-4 space-y-3">
-                  <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">评分依据</p>
-                    <p class="mt-2 text-sm leading-7 text-slate-700">{{ row.rationale }}</p>
-                  </div>
-                  <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">关键证据</p>
-                    <p class="mt-2 text-sm leading-7 text-slate-700">{{ row.evidence }}</p>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </div>
-
-          <div v-if="structuredScore.peers.length" class="mt-6 space-y-4">
-            <div>
-              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Peer Set</p>
-              <h3 class="mt-2 text-xl font-semibold text-slate-950">相似论文对比集合</h3>
-            </div>
-            <div class="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
-              <article
-                v-for="peer in structuredScore.peers"
-                :key="peer.peer + '-' + peer.title"
-                class="rounded-[28px] border border-slate-200 bg-white p-5"
-              >
-                <div class="flex flex-wrap items-center gap-2">
-                  <span class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">{{ peer.peer }}</span>
-                  <span v-if="peer.category" class="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">{{ peer.category }}</span>
-                  <span v-if="peer.year" class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs text-slate-500">{{ peer.year }}</span>
-                </div>
-                <h4 class="mt-4 text-base font-semibold leading-7 text-slate-950">{{ peer.title }}</h4>
-                <p v-if="peer.venue" class="mt-2 text-sm text-slate-500">{{ peer.venue }}</p>
-                <p v-if="peer.citations" class="mt-2 text-xs font-medium text-slate-400">引用量 {{ peer.citations }}</p>
-                <p class="mt-4 text-sm leading-7 text-slate-700">{{ peer.reason }}</p>
-                <a
-                  v-if="peer.arxiv"
-                  class="mt-4 inline-flex rounded-xl border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700 transition hover:bg-blue-100"
-                  :href="peer.arxiv"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  查看来源
-                </a>
-              </article>
-            </div>
-          </div>
-
-          <div v-if="structuredScore.observations.length" class="mt-6 space-y-4">
-            <div>
-              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Comparison Notes</p>
-              <h3 class="mt-2 text-xl font-semibold text-slate-950">横向对比观察</h3>
-            </div>
-            <div class="grid gap-3 md:grid-cols-3">
-              <div
-                v-for="entry in structuredScore.observations"
-                :key="entry.label"
-                class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4"
-              >
-                <p class="text-xs font-medium uppercase tracking-wide text-slate-400">{{ entry.label }}</p>
-                <p class="mt-2 text-sm leading-7 text-slate-900">{{ entry.value }}</p>
-              </div>
-            </div>
-          </div>
-
-          <div v-if="structuredScore.reasons.length" class="mt-6 rounded-[28px] border border-slate-200 bg-slate-50 p-5">
-            <p class="text-sm font-semibold text-slate-900">分数形成原因</p>
-            <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-              <div
-                v-for="entry in structuredScore.reasons"
-                :key="entry.label"
-                class="rounded-2xl border border-slate-200 bg-white px-4 py-4"
-              >
-                <p class="text-xs font-medium uppercase tracking-wide text-slate-400">{{ entry.label }}</p>
-                <p class="mt-2 text-sm leading-7 text-slate-700">{{ entry.value }}</p>
-              </div>
-            </div>
-          </div>
-
-          <div v-if="structuredScore.priority.length || structuredScore.sources.length" class="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
-            <div v-if="structuredScore.priority.length" class="rounded-[28px] border border-slate-200 bg-white p-5">
-              <p class="text-sm font-semibold text-slate-900">是否值得优先读</p>
-              <div class="mt-4 grid gap-3 md:grid-cols-3">
-                <div
-                  v-for="entry in structuredScore.priority"
-                  :key="entry.label"
-                  class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4"
-                >
-                  <p class="text-xs font-medium uppercase tracking-wide text-slate-400">{{ entry.label }}</p>
-                  <p class="mt-2 text-sm leading-7 text-slate-900">{{ entry.value }}</p>
-                </div>
-              </div>
-            </div>
-
-            <div v-if="structuredScore.sources.length" class="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
-              <p class="text-sm font-semibold text-slate-900">Sources</p>
-              <div class="mt-4 flex flex-wrap gap-3">
-                <a
-                  v-for="source in structuredScore.sources"
-                  :key="source.url"
-                  class="rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm text-blue-700 transition hover:bg-blue-100"
-                  :href="source.url"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {{ source.label || source.url }}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <details v-if="scoreReport" class="mt-6 overflow-hidden rounded-[28px] border border-slate-200 bg-slate-50/80">
-            <summary class="cursor-pointer list-none px-5 py-4 text-sm font-semibold text-slate-900">查看原始 Score Report 文本</summary>
-            <div class="border-t border-slate-200 p-5">
-              <div
-                class="markdown-body prose prose-slate max-w-none prose-headings:font-semibold prose-h1:text-2xl prose-h2:mt-8 prose-p:leading-8 prose-li:leading-7 prose-table:w-full"
-                v-html="renderMarkdown(scoreReport)"
-              ></div>
-            </div>
-          </details>
-          <p v-else class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm text-slate-500">
-            当前静态快照里还没有这篇论文的评分报告。
+          <p class="aio-note-body">{{ heroSummaryText }}</p>
+          <p v-if="showTodoSummarySnippet" class="aio-muted aio-compass-summary">
+            {{ card.one_line_summary }}
           </p>
-        </section>
-
-        <section id="report" class="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm scroll-mt-24">
-          <div class="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Readable Layer</p>
-              <h2 class="mt-2 text-2xl font-semibold text-slate-950">Report / Learnpath</h2>
-              <p class="mt-2 text-sm text-slate-500">把学习路径拆成可扫读的信息块，优先看先修、顺序和快速起步。</p>
-            </div>
-            <span class="rounded-full border px-3 py-1 text-xs font-medium" :class="materialClass(Boolean(readableReport))">
-              {{ readableReport ? '已就绪' : '缺失' }}
+          <div class="aio-pill-row">
+            <span
+              v-for="entry in heroMaterialEntries"
+              :key="entry.label"
+              class="aio-pill"
+              :class="materialClass(entry.ready)"
+            >
+              {{ entry.label }}
             </span>
           </div>
+        </div>
 
-          <div v-if="readableReport && structuredReport.hasStructuredContent" class="mt-6 space-y-6">
-            <div class="grid gap-4 xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
-              <div class="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
-                <p class="text-sm font-semibold text-slate-900">论文快照</p>
-                <dl class="mt-4 space-y-3 text-sm">
-                  <div v-for="entry in structuredReport.snapshot" :key="entry.label">
-                    <dt class="text-slate-500">{{ entry.label }}</dt>
-                    <dd class="mt-1 break-words text-slate-900">{{ entry.value }}</dd>
-                  </div>
-                </dl>
+        <div class="aio-rating-grid">
+          <div class="aio-rating-cell">
+            <span>Overall Score</span>
+            <strong>{{ overallRatingText }}/10</strong>
+          </div>
+          <div class="aio-rating-cell">
+            <span>等级</span>
+            <strong>{{ overallGradeText || '待判断' }}</strong>
+          </div>
+          <div class="aio-rating-cell">
+            <span>阅读优先级</span>
+            <strong>{{ readingPriorityText || '待判断' }}</strong>
+          </div>
+          <div class="aio-rating-cell">
+            <span>材料状态</span>
+            <strong>{{ heroStatusText }}</strong>
+          </div>
+        </div>
+      </section>
+
+      <section id="score" class="aio-note-section">
+        <div class="aio-split-top">
+          <div>
+            <p class="aio-kicker">Score Layer</p>
+            <h2>Score Report</h2>
+            <p class="aio-muted">先看结构化结论和分项评分，再按需展开原始报告。</p>
+          </div>
+          <span class="aio-pill" :class="materialClass(Boolean(scoreReport))">
+            {{ scoreReport ? '已就绪' : '缺失' }}
+          </span>
+        </div>
+
+        <div
+          v-if="structuredScore.snapshot.length || structuredScore.conclusion.length || structuredScore.oneLine"
+          class="aio-two-col"
+        >
+          <div v-if="structuredScore.snapshot.length" class="aio-cell">
+            <h3>论文快照</h3>
+            <div class="aio-note-body">
+              <div
+                v-for="entry in structuredScore.snapshot"
+                :key="entry.label"
+                class="aio-key-row"
+              >
+                <strong>{{ entry.label }}</strong>
+                <span>{{ entry.value }}</span>
               </div>
+            </div>
+          </div>
 
-              <div class="rounded-[28px] border border-blue-100 bg-[linear-gradient(135deg,_rgba(239,246,255,0.9),_rgba(248,250,252,1))] p-5">
-                <p class="text-sm font-semibold text-slate-900">30 分钟快速起步</p>
+          <div class="aio-cell">
+            <h3>最终结论</h3>
+            <p v-if="structuredScore.oneLine" class="aio-note-body">
+              {{ structuredScore.oneLine }}
+            </p>
+            <div v-if="structuredScore.conclusion.length" class="aio-note-body">
+              <div
+                v-for="entry in structuredScore.conclusion"
+                :key="entry.label"
+                class="aio-key-row"
+              >
+                <strong>{{ entry.label }}</strong>
+                <span>{{ entry.value }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="structuredScore.scoringRows.length" class="aio-section-stack">
+          <div>
+            <p class="aio-kicker">Scoring Breakdown</p>
+            <h3>分项评分</h3>
+          </div>
+          <div class="aio-two-col">
+            <article
+              v-for="row in structuredScore.scoringRows"
+              :key="row.dimension"
+              class="aio-cell"
+            >
+              <div class="aio-split-top">
+                <h3>{{ row.dimension }}</h3>
+                <span class="aio-pill is-ready">{{ row.score }}/{{ row.fullMark }}</span>
+              </div>
+              <div class="aio-meter">
                 <div
-                  class="markdown-body prose prose-slate mt-4 max-w-none prose-p:leading-8 prose-strong:text-slate-900"
-                  v-html="renderMarkdown(structuredReport.quickStartMarkdown || '当前报告里还没有快速起步块。')"
+                  class="aio-meter-fill"
+                  :style="{ width: scoreRatioWidth(row.score, row.fullMark) }"
                 ></div>
               </div>
-            </div>
-
-            <div v-if="structuredReport.prerequisites.length" class="space-y-4">
-              <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Prerequisites</p>
-                <h3 class="mt-2 text-xl font-semibold text-slate-950">必学先修知识</h3>
-              </div>
-              <div class="grid gap-4 xl:grid-cols-2">
-                <article
-                  v-for="item in structuredReport.prerequisites"
-                  :key="item.order + '-' + item.title"
-                  class="rounded-[28px] border border-slate-200 bg-slate-50 p-5"
-                >
-                  <div class="flex items-center justify-between gap-3">
-                    <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-500">
-                      Step {{ item.order || '-' }}
-                    </span>
-                    <span v-if="item.time" class="text-xs text-slate-400">{{ item.time }}</span>
-                  </div>
-                  <h4 class="mt-4 text-lg font-semibold text-slate-950">{{ item.title }}</h4>
-                  <p class="mt-3 text-sm leading-7 text-slate-700">{{ item.reason }}</p>
-                  <div class="mt-4 space-y-2 text-sm text-slate-600">
-                    <p v-if="item.goal"><span class="font-medium text-slate-900">最小目标：</span>{{ item.goal }}</p>
-                    <p v-if="item.location"><span class="font-medium text-slate-900">论文位置：</span>{{ item.location }}</p>
-                    <p v-if="item.evidence"><span class="font-medium text-slate-900">证据锚点：</span>{{ item.evidence }}</p>
-                  </div>
-                </article>
-              </div>
-            </div>
-
-            <div v-if="structuredReport.bridges.length" class="space-y-4">
-              <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Bridge Topics</p>
-                <h3 class="mt-2 text-xl font-semibold text-slate-950">桥接知识</h3>
-              </div>
-              <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                <article
-                  v-for="item in structuredReport.bridges"
-                  :key="item.title"
-                  class="rounded-3xl border border-slate-200 bg-white p-5"
-                >
-                  <p class="text-base font-semibold text-slate-950">{{ item.title }}</p>
-                  <div class="mt-4 space-y-2 text-sm leading-7 text-slate-700">
-                    <p v-if="item.role"><span class="font-medium text-slate-900">角色：</span>{{ item.role }}</p>
-                    <p v-if="item.location"><span class="font-medium text-slate-900">论文位置：</span>{{ item.location }}</p>
-                    <p v-if="item.evidence"><span class="font-medium text-slate-900">证据：</span>{{ item.evidence }}</p>
-                    <p v-if="item.action"><span class="font-medium text-slate-900">建议动作：</span>{{ item.action }}</p>
-                  </div>
-                </article>
-              </div>
-            </div>
-
-            <div v-if="structuredReport.personalizedMarkdown" class="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
-              <p class="text-sm font-semibold text-slate-900">个性化增量</p>
-              <div
-                class="markdown-body prose prose-slate mt-4 max-w-none prose-p:leading-8 prose-li:leading-7"
-                v-html="renderMarkdown(structuredReport.personalizedMarkdown)"
-              ></div>
-            </div>
-
-            <div v-if="structuredReport.learningOrder.length" class="space-y-4">
-              <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Learning Order</p>
-                <h3 class="mt-2 text-xl font-semibold text-slate-950">建议学习顺序</h3>
-              </div>
-              <div class="grid gap-3">
-                <div
-                  v-for="(item, index) in structuredReport.learningOrder"
-                  :key="index"
-                  class="flex gap-4 rounded-3xl border border-slate-200 bg-white px-5 py-4"
-                >
-                  <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
-                    {{ index + 1 }}
-                  </div>
-                  <p class="pt-1 text-sm leading-7 text-slate-700">{{ item }}</p>
+              <div class="aio-note-body">
+                <div class="aio-key-row">
+                  <strong>评分依据</strong>
+                  <span>{{ row.rationale }}</span>
+                </div>
+                <div class="aio-key-row">
+                  <strong>关键证据</strong>
+                  <span>{{ row.evidence }}</span>
                 </div>
               </div>
-            </div>
+            </article>
+          </div>
+        </div>
 
-            <div v-if="structuredReport.resources.length" class="space-y-4">
-              <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Resources</p>
-                <h3 class="mt-2 text-xl font-semibold text-slate-950">推荐学习资源</h3>
+        <div v-if="structuredScore.peers.length" class="aio-section-stack">
+          <div>
+            <p class="aio-kicker">Peer Set</p>
+            <h3>相似论文对比集合</h3>
+          </div>
+          <div class="aio-three-col">
+            <article
+              v-for="peer in structuredScore.peers"
+              :key="peer.peer + '-' + peer.title"
+              class="aio-cell"
+            >
+              <div class="aio-pill-row">
+                <span class="aio-pill">{{ peer.peer }}</span>
+                <span v-if="peer.category" class="aio-pill is-ready">{{ peer.category }}</span>
+                <span v-if="peer.year" class="aio-pill">{{ peer.year }}</span>
               </div>
-              <div class="grid gap-4 xl:grid-cols-2">
-                <article
-                  v-for="resource in structuredReport.resources"
-                  :key="resource.title"
-                  class="rounded-[28px] border border-slate-200 bg-white p-5"
-                >
-                  <h4 class="text-lg font-semibold text-slate-950">{{ resource.title }}</h4>
-                  <div
-                    class="markdown-body prose prose-slate mt-4 max-w-none prose-p:leading-8 prose-li:leading-7 prose-a:text-blue-700"
-                    v-html="renderMarkdown(resource.body)"
-                  ></div>
-                </article>
-              </div>
-            </div>
+              <h3>{{ peer.title }}</h3>
+              <p v-if="peer.venue" class="aio-muted">{{ peer.venue }}</p>
+              <p v-if="peer.citations" class="aio-muted">引用量 {{ peer.citations }}</p>
+              <p>{{ peer.reason }}</p>
+              <a
+                v-if="peer.arxiv"
+                class="aio-source-link"
+                :href="peer.arxiv"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                查看来源
+              </a>
+            </article>
+          </div>
+        </div>
 
-            <div v-if="structuredReport.sources.length" class="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
-              <p class="text-sm font-semibold text-slate-900">Sources</p>
-              <div class="mt-4 flex flex-wrap gap-3">
-                <a
-                  v-for="entry in structuredReport.sources"
-                  :key="entry.url"
-                  class="rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm text-blue-700 transition hover:bg-blue-100"
-                  :href="entry.url"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {{ entry.label || entry.url }}
-                </a>
+        <div v-if="structuredScore.observations.length" class="aio-section-stack">
+          <div>
+            <p class="aio-kicker">Comparison Notes</p>
+            <h3>横向对比观察</h3>
+          </div>
+          <div class="aio-three-col">
+            <div
+              v-for="entry in structuredScore.observations"
+              :key="entry.label"
+              class="aio-cell"
+            >
+              <h3>{{ entry.label }}</h3>
+              <p>{{ entry.value }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="structuredScore.reasons.length" class="aio-section-stack">
+          <div>
+            <p class="aio-kicker">Score Rationale</p>
+            <h3>分数形成原因</h3>
+          </div>
+          <div class="aio-three-col">
+            <div
+              v-for="entry in structuredScore.reasons"
+              :key="entry.label"
+              class="aio-cell"
+            >
+              <h3>{{ entry.label }}</h3>
+              <p>{{ entry.value }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="structuredScore.priority.length || structuredScore.sources.length" class="aio-two-col">
+          <div v-if="structuredScore.priority.length" class="aio-cell">
+            <h3>是否值得优先读</h3>
+            <div class="aio-note-body">
+              <div
+                v-for="entry in structuredScore.priority"
+                :key="entry.label"
+                class="aio-key-row"
+              >
+                <strong>{{ entry.label }}</strong>
+                <span>{{ entry.value }}</span>
               </div>
             </div>
           </div>
 
+          <div v-if="structuredScore.sources.length" class="aio-cell">
+            <h3>Sources</h3>
+            <div class="aio-source-list">
+              <a
+                v-for="source in structuredScore.sources"
+                :key="source.url"
+                class="aio-source-link"
+                :href="source.url"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ source.label || source.url }}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <details v-if="scoreReport" class="aio-raw-report">
+          <summary class="aio-raw-summary">查看原始 Score Report 文本</summary>
           <div
-            v-else-if="readableReport"
-            class="markdown-body prose prose-slate mt-6 max-w-none rounded-[28px] border border-slate-200 bg-white p-6 prose-headings:font-semibold prose-h1:text-2xl prose-h2:mt-8 prose-p:leading-8 prose-li:leading-7"
-            v-html="renderMarkdown(readableReport)"
+            class="aio-markdown"
+            v-html="renderMarkdown(scoreReport)"
           ></div>
-          <p v-else class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm text-slate-500">
-            当前静态快照里还没有这篇论文的可读报告。
-          </p>
-        </section>
-      </div>
-    </div>
+        </details>
+        <p v-else class="aio-empty-note">
+          当前静态快照里还没有这篇论文的评分报告。
+        </p>
+      </section>
+
+      <section id="report" class="aio-note-section">
+        <div class="aio-split-top">
+          <div>
+            <p class="aio-kicker">Readable Layer</p>
+            <h2>Report / Learnpath</h2>
+            <p class="aio-muted">把学习路径拆成可扫读的信息块，优先看先修、顺序和快速起步。</p>
+          </div>
+          <span class="aio-pill" :class="materialClass(Boolean(readableReport))">
+            {{ readableReport ? '已就绪' : '缺失' }}
+          </span>
+        </div>
+
+        <div v-if="readableReport && structuredReport.hasStructuredContent" class="aio-section-stack">
+          <div class="aio-two-col">
+            <div class="aio-cell">
+              <h3>论文快照</h3>
+              <div class="aio-note-body">
+                <div
+                  v-for="entry in structuredReport.snapshot"
+                  :key="entry.label"
+                  class="aio-key-row"
+                >
+                  <strong>{{ entry.label }}</strong>
+                  <span>{{ entry.value }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="aio-cell aio-cell-accent">
+              <h3>30 分钟快速起步</h3>
+              <div
+                class="aio-markdown compact"
+                v-html="renderMarkdown(structuredReport.quickStartMarkdown || '当前报告里还没有快速起步块。')"
+              ></div>
+            </div>
+          </div>
+
+          <div v-if="structuredReport.prerequisites.length" class="aio-section-stack">
+            <div>
+              <p class="aio-kicker">Prerequisites</p>
+              <h3>必学先修知识</h3>
+            </div>
+            <div class="aio-two-col">
+              <article
+                v-for="item in structuredReport.prerequisites"
+                :key="item.order + '-' + item.title"
+                class="aio-cell"
+              >
+                <div class="aio-split-top">
+                  <span class="aio-pill">Step {{ item.order || '-' }}</span>
+                  <span v-if="item.time" class="aio-muted">{{ item.time }}</span>
+                </div>
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.reason }}</p>
+                <div class="aio-note-body">
+                  <div v-if="item.goal" class="aio-key-row">
+                    <strong>最小目标</strong>
+                    <span>{{ item.goal }}</span>
+                  </div>
+                  <div v-if="item.location" class="aio-key-row">
+                    <strong>论文位置</strong>
+                    <span>{{ item.location }}</span>
+                  </div>
+                  <div v-if="item.evidence" class="aio-key-row">
+                    <strong>证据锚点</strong>
+                    <span>{{ item.evidence }}</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div v-if="structuredReport.bridges.length" class="aio-section-stack">
+            <div>
+              <p class="aio-kicker">Bridge Topics</p>
+              <h3>桥接知识</h3>
+            </div>
+            <div class="aio-three-col">
+              <article
+                v-for="item in structuredReport.bridges"
+                :key="item.title"
+                class="aio-cell"
+              >
+                <h3>{{ item.title }}</h3>
+                <div class="aio-note-body">
+                  <div v-if="item.role" class="aio-key-row">
+                    <strong>角色</strong>
+                    <span>{{ item.role }}</span>
+                  </div>
+                  <div v-if="item.location" class="aio-key-row">
+                    <strong>论文位置</strong>
+                    <span>{{ item.location }}</span>
+                  </div>
+                  <div v-if="item.evidence" class="aio-key-row">
+                    <strong>证据</strong>
+                    <span>{{ item.evidence }}</span>
+                  </div>
+                  <div v-if="item.action" class="aio-key-row">
+                    <strong>建议动作</strong>
+                    <span>{{ item.action }}</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div v-if="structuredReport.personalizedMarkdown" class="aio-cell">
+            <h3>个性化增量</h3>
+            <div
+              class="aio-markdown compact"
+              v-html="renderMarkdown(structuredReport.personalizedMarkdown)"
+            ></div>
+          </div>
+
+          <div v-if="structuredReport.learningOrder.length" class="aio-section-stack">
+            <div>
+              <p class="aio-kicker">Learning Order</p>
+              <h3>建议学习顺序</h3>
+            </div>
+            <div class="aio-inline-list">
+              <div
+                v-for="(item, index) in structuredReport.learningOrder"
+                :key="index"
+                class="aio-learning-step"
+              >
+                <span class="aio-step-index">{{ index + 1 }}</span>
+                <p>{{ item }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="structuredReport.resources.length" class="aio-section-stack">
+            <div>
+              <p class="aio-kicker">Resources</p>
+              <h3>推荐学习资源</h3>
+            </div>
+            <div class="aio-two-col">
+              <article
+                v-for="resource in structuredReport.resources"
+                :key="resource.title"
+                class="aio-cell"
+              >
+                <h3>{{ resource.title }}</h3>
+                <div
+                  class="aio-markdown compact"
+                  v-html="renderMarkdown(resource.body)"
+                ></div>
+              </article>
+            </div>
+          </div>
+
+          <div v-if="structuredReport.sources.length" class="aio-cell">
+            <h3>Sources</h3>
+            <div class="aio-source-list">
+              <a
+                v-for="entry in structuredReport.sources"
+                :key="entry.url"
+                class="aio-source-link"
+                :href="entry.url"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ entry.label || entry.url }}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          v-else-if="readableReport"
+          class="aio-markdown aio-raw-report"
+          v-html="renderMarkdown(readableReport)"
+        ></div>
+        <p v-else class="aio-empty-note">
+          当前静态快照里还没有这篇论文的可读报告。
+        </p>
+      </section>
+    </article>
   </div>
 </template>
 
@@ -451,7 +472,6 @@
 import { marked } from 'marked'
 
 const { fetchJson } = useStaticSiteData()
-const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
 const routeId = computed(() => String(route.params.id || '').trim())
 
@@ -462,12 +482,7 @@ const paper = ref(null)
 const scoreReport = ref('')
 const readableReport = ref('')
 
-const paperRouteId = computed(() => String(card.value?.paper_route_id || '').trim())
-const appBaseUrl = computed(() => {
-  const value = String(runtimeConfig.app.baseURL || '/')
-  return value.endsWith('/') ? value : value + '/'
-})
-const todoDetailLink = computed(() => appBaseUrl.value + 'todo/' + routeId.value)
+const todoDetailPath = computed(() => '/todo/' + routeId.value)
 
 useHead(() => ({
   title: card.value ? card.value.title + ' | Paper Compass' : 'Paper Compass',
@@ -482,40 +497,13 @@ const cleanInlineMarkdown = (value) => String(value || '')
 
 const materialClass = (enabled) => {
   return enabled
-    ? 'border-blue-200 bg-blue-50 text-blue-700'
-    : 'border-slate-200 bg-slate-50 text-slate-400'
+    ? 'is-ready'
+    : 'is-muted'
 }
 
 const sourceLink = computed(() => {
   const doi = String(card.value?.doi || '').trim()
   return doi ? 'https://doi.org/' + doi : ''
-})
-
-const keepValue = (value) => value !== null && value !== undefined && value !== ''
-
-const ratingEntries = computed(() => {
-  const rating = paper.value?.rating
-  if (rating == null) return []
-
-  const compassEntries = [
-    { label: '发表信号', value: rating.publication_signal },
-    { label: '作者信号', value: rating.author_signal },
-    { label: '引用牵引', value: rating.citation_traction },
-    { label: '被引质量', value: rating.citation_quality },
-    { label: '新颖性', value: rating.novelty },
-    { label: '业界信号', value: rating.industry_signal },
-    { label: '方向影响', value: rating.field_shaping },
-  ].filter((entry) => keepValue(entry.value))
-
-  if (compassEntries.length) return compassEntries
-
-  return [
-    { label: '创新性', value: rating.innovation },
-    { label: '技术质量', value: rating.technical_quality },
-    { label: '实验验证', value: rating.experimental_validation },
-    { label: '写作质量', value: rating.writing_quality },
-    { label: '相关性', value: rating.relevance },
-  ].filter((entry) => keepValue(entry.value))
 })
 
 const splitMarkdownSections = (markdown) => {
@@ -757,27 +745,10 @@ const heroStatusText = computed(() => {
 })
 const heroStatusClass = computed(() => {
   const readyCount = heroMaterialEntries.value.filter((entry) => entry.ready).length
-  if (readyCount === heroMaterialEntries.value.length) return 'bg-emerald-100 text-emerald-700'
-  if (readyCount > 0) return 'bg-amber-100 text-amber-700'
-  return 'bg-slate-100 text-slate-500'
+  if (readyCount === heroMaterialEntries.value.length) return 'is-ready'
+  if (readyCount > 0) return 'is-syncing'
+  return 'is-muted'
 })
-const heroMaterialSummary = computed(() => {
-  const readyEntries = heroMaterialEntries.value.filter((entry) => entry.ready)
-  if (readyEntries.length === heroMaterialEntries.value.length) {
-    return 'Score Report、Learnpath Report 与结构化 Rating 均已导出。'
-  }
-  if (readyEntries.length) {
-    return readyEntries.map((entry) => entry.label).join('、') + ' 已导出，其余材料待补全。'
-  }
-  return '当前还没有完整的评分与报告材料。'
-})
-
-const scoreBarWidth = (value) => {
-  const numeric = Number(value)
-  if (!Number.isFinite(numeric)) return '0%'
-  return String(Math.min(Math.max(numeric, 0), 10) * 10) + '%'
-}
-
 const scoreRatioWidth = (score, fullMark) => {
   const earned = Number(score)
   const total = Number(fullMark)
@@ -785,7 +756,7 @@ const scoreRatioWidth = (score, fullMark) => {
   return String(Math.min(Math.max(earned / total, 0), 1) * 100) + '%'
 }
 
-const goBackToTodo = () => navigateTo(todoDetailLink.value)
+const goBackToTodo = () => navigateTo(todoDetailPath.value)
 
 const renderMarkdown = (text) => {
   if (!text) return ''

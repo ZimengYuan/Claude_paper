@@ -78,3 +78,50 @@ def test_graph_route_redirected_to_explore() -> None:
     assert "'/graph': { redirect: '/explore' }" in config
     assert "'/graph/**': { redirect: '/explore' }" in config
     assert "navigateTo('/explore'" in graph_page
+
+
+def test_todo_card_layout_avoids_stretched_blank_cards() -> None:
+    root = _root()
+    app_vue = (root / 'scholaraio' / 'web' / 'app.vue').read_text(encoding='utf-8')
+
+    card_grid = re.search(r'\.aio-card-grid\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+    card_block = re.search(r'\.aio-card\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+    card_footer = re.search(r'\.aio-card-footer\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+    accent_bar = re.search(r'\.aio-card::before\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+
+    assert card_grid and 'align-items: start;' in card_grid.group('body')
+    assert card_block and 'min-height:' not in card_block.group('body')
+    assert card_footer and 'margin-top: auto;' not in card_footer.group('body')
+    assert accent_bar and 'inset: 0 auto 0 0;' in accent_bar.group('body')
+    assert '18px auto 18px' not in accent_bar.group('body')
+
+
+def test_todo_compass_routes_use_internal_paths() -> None:
+    root = _root()
+    todo_page = (root / 'scholaraio' / 'web' / 'pages' / 'todo' / '[id].vue').read_text(encoding='utf-8')
+    compass_page = (root / 'scholaraio' / 'web' / 'pages' / 'compass' / '[id].vue').read_text(encoding='utf-8')
+
+    assert "const compassDetailLink = computed(() => '/compass/' + routeId.value)" in todo_page
+    assert '<NuxtLink class="aio-button" :to="compassDetailLink">打开完整 Compass</NuxtLink>' in todo_page
+    assert "const goBack = () => navigateTo('/')" in todo_page
+    assert "runtimeConfig.app.baseURL" not in todo_page
+
+    assert "const todoDetailPath = computed(() => '/todo/' + routeId.value)" in compass_page
+    assert 'const goBackToTodo = () => navigateTo(todoDetailPath.value)' in compass_page
+    assert "runtimeConfig.app.baseURL" not in compass_page
+
+
+def test_compass_page_uses_todo_design_system() -> None:
+    root = _root()
+    compass_page = (root / 'scholaraio' / 'web' / 'pages' / 'compass' / '[id].vue').read_text(encoding='utf-8')
+    config = (root / 'scholaraio' / 'web' / 'nuxt.config.ts').read_text(encoding='utf-8')
+
+    assert 'class="aio-detail-page aio-compass-detail-page"' in compass_page
+    assert 'class="aio-paper-header"' in compass_page
+    assert 'class="aio-compass-card"' in compass_page
+    assert 'class="aio-note-section"' in compass_page
+    assert 'rounded-[32px]' not in compass_page
+    assert 'bg-[linear-gradient' not in compass_page
+    assert 'text-slate-' not in compass_page
+    assert 'todoRouteIds.map((routeId: string) => `/todo/${routeId}`)' in config
+    assert 'todoRouteIds.map((routeId: string) => `/compass/${routeId}`)' in config
