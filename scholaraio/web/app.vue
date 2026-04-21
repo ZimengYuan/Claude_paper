@@ -853,22 +853,26 @@ textarea {
 
 .aio-two-col,
 .aio-three-col {
-  display: grid;
-  gap: 1px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
   margin-top: 16px;
-  border: 1px solid var(--aio-border);
-  background: var(--aio-border);
+  border: 0;
+  background: transparent;
 }
 
-.aio-two-col {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.aio-two-col > .aio-cell {
+  min-width: min(320px, 100%);
+  flex: 1 1 calc(50% - 7px);
 }
 
-.aio-three-col {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.aio-three-col > .aio-cell {
+  min-width: min(240px, 100%);
+  flex: 1 1 calc(33.333% - 10px);
 }
 
 .aio-cell {
+  border: 1px solid var(--aio-border);
   background: var(--aio-bg-soft);
   padding: 18px;
 }

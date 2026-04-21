@@ -168,6 +168,28 @@ def test_compass_page_hides_duplicate_and_empty_material() -> None:
     assert '低优先级，除非你正好关注这条技术线' in compass_page
 
 
+def test_dynamic_content_grids_do_not_render_empty_gray_slots() -> None:
+    root = _root()
+    app_vue = (root / 'scholaraio' / 'web' / 'app.vue').read_text(encoding='utf-8')
+
+    dynamic_grid = re.search(r'\.aio-two-col,\n\.aio-three-col\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+    two_cell = re.search(r'\.aio-two-col > \.aio-cell\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+    three_cell = re.search(r'\.aio-three-col > \.aio-cell\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+    cell = re.search(r'^\.aio-cell\s*\{(?P<body>.*?)\n\}', app_vue, re.S | re.M)
+    compass_card = re.search(r'\.aio-compass-card\s*\{(?P<body>.*?)\n\}', app_vue, re.S)
+
+    assert dynamic_grid
+    assert 'display: flex;' in dynamic_grid.group('body')
+    assert 'flex-wrap: wrap;' in dynamic_grid.group('body')
+    assert 'background: transparent;' in dynamic_grid.group('body')
+    assert 'background: var(--aio-border);' not in dynamic_grid.group('body')
+    assert 'gap: 1px;' not in dynamic_grid.group('body')
+    assert two_cell and 'flex: 1 1 calc(50% - 7px);' in two_cell.group('body')
+    assert three_cell and 'flex: 1 1 calc(33.333% - 10px);' in three_cell.group('body')
+    assert cell and 'border: 1px solid var(--aio-border);' in cell.group('body')
+    assert compass_card and 'background: var(--aio-border);' in compass_card.group('body')
+
+
 def test_todo_detail_uses_dynamic_compass_metrics() -> None:
     root = _root()
     todo_page = (root / 'scholaraio' / 'web' / 'pages' / 'todo' / '[id].vue').read_text(encoding='utf-8')
