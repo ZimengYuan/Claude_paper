@@ -107,9 +107,9 @@ def test_metadata_fallback_is_not_plain_abstract_echo() -> None:
     assert "摘要" in card["key_results"]["improvements"]
 
 
-def test_merge_card_metadata_preserves_item_read_status() -> None:
+def test_merge_card_metadata_preserves_existing_card_read_status() -> None:
     existing_card = {
-        "read_status": "read",
+        "read_status": "unread",
         "generation_protocol": DUAL_PROFESSOR_PROTOCOL,
         "reviewer_count": 2,
         "reviewer_roles": list(DUAL_PROFESSOR_ROLES),
@@ -123,9 +123,29 @@ def test_merge_card_metadata_preserves_item_read_status() -> None:
 
     merged = _merge_card_metadata(existing_card, _sample_item(read_status="read"), model="gpt-5.4-mini")
 
-    assert merged["read_status"] == "read"
+    assert merged["read_status"] == "unread"
     assert merged["generation_protocol"] == DUAL_PROFESSOR_PROTOCOL
     assert merged["reviewer_count"] == 2
+
+
+def test_merge_card_metadata_uses_item_read_status_for_new_card() -> None:
+    merged = _merge_card_metadata(
+        {
+            "generation_protocol": DUAL_PROFESSOR_PROTOCOL,
+            "reviewer_count": 2,
+            "reviewer_roles": list(DUAL_PROFESSOR_ROLES),
+            "core_innovation": "old",
+            "technical_contributions": [{"title": "a", "body": "b"}, {"title": "c", "body": "d"}],
+            "methodological_breakthrough": {"novelty": "n", "key_technique": "k", "theory": "t"},
+            "key_results": {"benchmarks": "b", "improvements": "i", "ablation": "a"},
+            "limitations": {"current": "c", "future": "f", "transferability": "tr"},
+            "one_line_summary": "summary",
+        },
+        _sample_item(read_status="read"),
+        model="gpt-5.4-mini",
+    )
+
+    assert merged["read_status"] == "read"
 
 
 def test_card_needs_quality_refresh_for_placeholder_results() -> None:
