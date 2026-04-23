@@ -204,5 +204,10 @@ def test_todo_detail_uses_dynamic_compass_metrics() -> None:
 
     assert 'class="aio-metric-panel"' in todo_page
     assert 'todoMetricEntries.length' in todo_page
+    assert "entries.push({ label: '综合评分'" in todo_page
+    assert "entry.fullMark ? formatScore(entry.fullMark) : '10'" in todo_page
+    assert "formatScore(entry.value) + '/' + fullMark" in todo_page
+    assert 'Overall Score' not in todo_page
+    assert 'Quick Verdict' not in todo_page
     assert 'class="aio-rating-grid"' not in todo_page
     assert "'is-single': !todoMetricEntries.length" in todo_page

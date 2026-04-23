@@ -208,7 +208,7 @@
         <div class="aio-compass-card" :class="{ 'is-single': !todoMetricEntries.length }">
           <div class="aio-verdict">
             <div class="aio-split-top">
-              <p class="aio-kicker">Quick Verdict</p>
+              <p class="aio-kicker">快速判断</p>
               <span class="aio-pill" :class="paper?.rating ? 'is-ready' : 'is-muted'">
                 {{ paper?.rating ? '评分已就绪' : '等待评分' }}
               </span>
@@ -395,28 +395,34 @@ const goBack = () => navigateTo('/')
 
 const keepValue = (value) => value !== null && value !== undefined && value !== ''
 
+const formatScore = (value) => {
+  const number = Number(value)
+  if (!Number.isFinite(number)) return String(value)
+  return (Math.round(number * 10) / 10).toFixed(1)
+}
+
 const ratingEntries = computed(() => {
   const rating = paper.value?.rating
   if (rating == null) return []
 
   const compassEntries = [
-    { label: '发表信号', value: rating.publication_signal },
-    { label: '作者信号', value: rating.author_signal },
-    { label: '引用牵引', value: rating.citation_traction },
-    { label: '被引质量', value: rating.citation_quality },
-    { label: '新颖性', value: rating.novelty },
-    { label: '业界信号', value: rating.industry_signal },
-    { label: '方向影响', value: rating.field_shaping },
+    { label: '发表信号', value: rating.publication_signal, fullMark: 1.5 },
+    { label: '作者信号', value: rating.author_signal, fullMark: 1.0 },
+    { label: '引用牵引', value: rating.citation_traction, fullMark: 2.0 },
+    { label: '被引质量', value: rating.citation_quality, fullMark: 1.5 },
+    { label: '新颖性', value: rating.novelty, fullMark: 2.0 },
+    { label: '业界信号', value: rating.industry_signal, fullMark: 1.0 },
+    { label: '方向影响', value: rating.field_shaping, fullMark: 1.0 },
   ].filter((entry) => keepValue(entry.value))
 
   if (compassEntries.length) return compassEntries
 
   return [
-    { label: '创新性', value: rating.innovation },
-    { label: '技术质量', value: rating.technical_quality },
-    { label: '实验验证', value: rating.experimental_validation },
-    { label: '写作质量', value: rating.writing_quality },
-    { label: '相关性', value: rating.relevance },
+    { label: '创新性', value: rating.innovation, fullMark: 10 },
+    { label: '技术质量', value: rating.technical_quality, fullMark: 10 },
+    { label: '实验验证', value: rating.experimental_validation, fullMark: 10 },
+    { label: '写作质量', value: rating.writing_quality, fullMark: 10 },
+    { label: '相关性', value: rating.relevance, fullMark: 10 },
   ].filter((entry) => keepValue(entry.value))
 })
 
@@ -425,25 +431,26 @@ const ratingNote = computed(() => paper.value?.rating?.one_line_verdict || paper
 const overallRatingText = computed(() => {
   const score = paper.value?.rating?.overall_score
   if (score == null) return 'n/a'
-  return Number(score).toFixed(1) + '/10'
+  return formatScore(score) + '/10'
 })
 
 const todoMetricEntries = computed(() => {
   const entries = []
   const score = paper.value?.rating?.overall_score
   if (score != null) {
-    entries.push({ label: 'Overall Score', value: Number(score).toFixed(1) + '/10', primary: true })
+    entries.push({ label: '综合评分', value: formatScore(score) + '/10', primary: true })
   }
   for (const entry of ratingEntries.value) {
-    entries.push({ label: entry.label, value: entry.value + '/10' })
+    const fullMark = entry.fullMark ? formatScore(entry.fullMark) : '10'
+    entries.push({ label: entry.label, value: formatScore(entry.value) + '/' + fullMark })
   }
   return entries
 })
 
 const compassMaterialEntries = computed(() => [
-  { label: 'Score Report', ready: Boolean(scoreReport.value) },
-  { label: 'Report', ready: Boolean(readableReport.value) },
-  { label: 'Rating', ready: Boolean(paper.value?.rating) },
+  { label: '评分报告', ready: Boolean(scoreReport.value) },
+  { label: '读前补充', ready: Boolean(readableReport.value) },
+  { label: '评分数据', ready: Boolean(paper.value?.rating) },
 ])
 
 const applyPaperPayload = (payload) => {
