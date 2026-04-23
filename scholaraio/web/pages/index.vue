@@ -27,7 +27,7 @@
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="搜索标题、作者、术语、结论..."
+            placeholder="搜索标题、术语、结论..."
             class="aio-input"
           >
         </label>
@@ -35,22 +35,21 @@
         <label class="aio-field">
           <span>排序</span>
           <select v-model="sortBy" class="aio-select">
-            <option value="">Todo 顺序</option>
-            <option value="year">按年份</option>
             <option value="title">按标题</option>
+            <option value="year">按年份</option>
+            <option value="todo">Todo 顺序</option>
           </select>
         </label>
       </div>
 
       <div class="aio-field-grid secondary">
         <label class="aio-field">
-          <span>作者</span>
-          <input
-            v-model="authorFilter"
-            type="text"
-            placeholder="例如 Hutter"
-            class="aio-input"
-          >
+          <span>阅读状态</span>
+          <select v-model="readStatusFilter" class="aio-select">
+            <option value="">全部状态</option>
+            <option value="unread">仅未读</option>
+            <option value="read">仅已读</option>
+          </select>
         </label>
 
         <label class="aio-field">
@@ -248,11 +247,11 @@ const { fetchJson, applyReadStatusOverride, setReadStatusOverride } = useStaticS
 const runtimeConfig = useRuntimeConfig()
 
 const searchQuery = ref('')
-const authorFilter = ref('')
+const readStatusFilter = ref('')
 const yearFrom = ref(null)
 const yearTo = ref(null)
 const doiFilter = ref('')
-const sortBy = ref('')
+const sortBy = ref('title')
 const todoCards = ref([])
 const loading = ref(true)
 const errorMessage = ref('')
@@ -269,7 +268,6 @@ const browserGithubRepo = ref('')
 const pageSize = 24
 
 const normalizedQuery = computed(() => searchQuery.value.trim().toLowerCase())
-const normalizedAuthorFilter = computed(() => authorFilter.value.trim().toLowerCase())
 const unreadCount = computed(() => todoCards.value.filter((card) => (card.read_status || 'unread') !== 'read').length)
 const githubOwner = computed(() => String(runtimeConfig.public?.githubOwner || browserGithubOwner.value || '').trim())
 const githubRepo = computed(() => String(runtimeConfig.public?.githubRepo || browserGithubRepo.value || '').trim())
@@ -299,21 +297,46 @@ const matchesSearch = (values) => {
   return values.some((value) => String(value || '').toLowerCase().includes(query))
 }
 
-const filteredTodoCards = computed(() => {
-  let result = todoCards.value.filter((card) => matchesSearch([
-    card.title,
-    card.journal,
-    card.doi,
-    ...(card.authors || []),
-    card.one_line_summary,
-    card.search_text,
-  ]))
+const objectValues = (value) => {
+  if (!value || typeof value !== 'object') return []
+  return Object.values(value).flatMap((item) => {
+    if (Array.isArray(item)) return item.flatMap(objectValues)
+    if (item && typeof item === 'object') return objectValues(item)
+    return [item]
+  })
+}
 
-  if (normalizedAuthorFilter.value) {
-    result = result.filter((card) => {
-      const authorText = (card.authors || []).join(' ').toLowerCase()
-      return authorText.includes(normalizedAuthorFilter.value)
-    })
+const searchableCardValues = (card) => [
+  card.title,
+  card.zotero_title,
+  card.journal,
+  card.venue,
+  card.doi,
+  card.year,
+  card.core_innovation,
+  card.one_line_summary,
+  ...objectValues(card.technical_contributions || []),
+  ...objectValues(card.methodological_breakthrough || {}),
+  ...objectValues(card.key_results || {}),
+  ...objectValues(card.limitations || {}),
+]
+
+const compareTodoTitle = (a, b) => {
+  const titleCompare = String(a.title || '').localeCompare(String(b.title || ''), 'zh-Hans-CN', {
+    numeric: true,
+    sensitivity: 'base',
+  })
+  if (titleCompare !== 0) return titleCompare
+  return (a.collection_index || 0) - (b.collection_index || 0)
+}
+
+const filteredTodoCards = computed(() => {
+  let result = todoCards.value.filter((card) => matchesSearch(searchableCardValues(card)))
+
+  if (readStatusFilter.value === 'read') {
+    result = result.filter((card) => (card.read_status || 'unread') === 'read')
+  } else if (readStatusFilter.value === 'unread') {
+    result = result.filter((card) => (card.read_status || 'unread') !== 'read')
   }
 
   if (yearFrom.value !== null && yearFrom.value !== '' && Number.isFinite(Number(yearFrom.value))) {
@@ -333,11 +356,11 @@ const filteredTodoCards = computed(() => {
   }
 
   if (sortBy.value === 'year') {
-    result = [...result].sort((a, b) => (b.year || 0) - (a.year || 0))
-  } else if (sortBy.value === 'title') {
-    result = [...result].sort((a, b) => String(a.title || '').localeCompare(String(b.title || ''), 'zh-Hans-CN'))
-  } else {
+    result = [...result].sort((a, b) => ((b.year || 0) - (a.year || 0)) || compareTodoTitle(a, b))
+  } else if (sortBy.value === 'todo') {
     result = [...result].sort((a, b) => (a.collection_index || 0) - (b.collection_index || 0))
+  } else {
+    result = [...result].sort(compareTodoTitle)
   }
 
   return result
@@ -542,11 +565,11 @@ const loadTodoCards = async () => {
 
 const clearFilters = () => {
   searchQuery.value = ''
-  authorFilter.value = ''
+  readStatusFilter.value = ''
   yearFrom.value = null
   yearTo.value = null
   doiFilter.value = ''
-  sortBy.value = ''
+  sortBy.value = 'title'
 }
 
 onMounted(() => {

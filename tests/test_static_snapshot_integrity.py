@@ -211,3 +211,20 @@ def test_todo_detail_uses_dynamic_compass_metrics() -> None:
     assert 'Quick Verdict' not in todo_page
     assert 'class="aio-rating-grid"' not in todo_page
     assert "'is-single': !todoMetricEntries.length" in todo_page
+
+
+def test_homepage_filters_default_to_title_and_read_status() -> None:
+    root = _root()
+    index_page = (root / 'scholaraio' / 'web' / 'pages' / 'index.vue').read_text(encoding='utf-8')
+
+    assert "const sortBy = ref('title')" in index_page
+    assert "sortBy.value = 'title'" in index_page
+    assert '<span>阅读状态</span>' in index_page
+    assert '<option value="unread">仅未读</option>' in index_page
+    assert '<option value="read">仅已读</option>' in index_page
+    assert "readStatusFilter.value === 'read'" in index_page
+    assert "readStatusFilter.value === 'unread'" in index_page
+    assert 'authorFilter' not in index_page
+    assert 'normalizedAuthorFilter' not in index_page
+    assert '搜索标题、作者' not in index_page
+    assert '...(card.authors || [])' not in index_page
