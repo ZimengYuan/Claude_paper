@@ -330,6 +330,39 @@ def _build_unmatched_route_id(
     return f"todo-unmatched-{key}"
 
 
+def _deduplicate_todo_route_ids(items: list[MatchedTodoPaper]) -> list[MatchedTodoPaper]:
+    route_counts: dict[str, int] = {}
+    for item in items:
+        route_counts[item.route_id] = route_counts.get(item.route_id, 0) + 1
+
+    seen_routes: dict[str, int] = {}
+    used_routes: set[str] = set()
+    deduped: list[MatchedTodoPaper] = []
+    for item in items:
+        base_route_id = item.route_id
+        seen_routes[base_route_id] = seen_routes.get(base_route_id, 0) + 1
+        if route_counts[base_route_id] == 1 and base_route_id not in used_routes:
+            used_routes.add(base_route_id)
+            deduped.append(item)
+            continue
+
+        if seen_routes[base_route_id] == 1 and base_route_id not in used_routes:
+            used_routes.add(base_route_id)
+            deduped.append(item)
+            continue
+
+        suffix = f"todo-{item.collection_index:04d}"
+        route_id = f"{base_route_id}-{suffix}"
+        suffix_counter = 2
+        while route_id in used_routes:
+            route_id = f"{base_route_id}-{suffix}-{suffix_counter}"
+            suffix_counter += 1
+        used_routes.add(route_id)
+        deduped.append(replace(item, route_id=route_id))
+
+    return deduped
+
+
 def _strip_html(text: str) -> str:
     t = unescape(text or "")
     t = re.sub(r"<[^>]+>", " ", t)
@@ -634,7 +667,7 @@ def _match_todo_papers() -> list[MatchedTodoPaper]:
         if len(unmatched_titles) > 10:
             print(f"  ... 其余 {len(unmatched_titles) - 10} 条省略", flush=True)
 
-    return matched
+    return _deduplicate_todo_route_ids(matched)
 
 
 def _build_prompt(paper_dir: Path, *, max_l4_chars: int = DEFAULT_MAX_L4_CHARS) -> str:

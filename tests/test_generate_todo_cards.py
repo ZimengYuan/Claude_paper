@@ -9,6 +9,7 @@ from scripts.generate_todo_cards import (
     _build_fallback_from_metadata,
     _build_unmatched_route_id,
     _card_needs_quality_refresh,
+    _deduplicate_todo_route_ids,
     _find_existing_card,
     _merge_card_metadata,
     _resolve_llm_config,
@@ -70,6 +71,16 @@ def test_unmatched_route_id_uses_title_year_author_without_doi() -> None:
     )
 
     assert route_a != route_b
+
+
+def test_deduplicate_todo_route_ids_keeps_collection_items_unique() -> None:
+    first = _sample_item(collection_index=10, route_id="paper-1", paper_route_id="paper-1")
+    second = _sample_item(collection_index=11, route_id="paper-1", paper_route_id="paper-1")
+
+    deduped = _deduplicate_todo_route_ids([first, second])
+
+    assert [item.route_id for item in deduped] == ["paper-1", "paper-1-todo-0011"]
+    assert [item.paper_route_id for item in deduped] == ["paper-1", "paper-1"]
 
 
 def test_existing_card_lookup_reuses_card_when_route_changes() -> None:
