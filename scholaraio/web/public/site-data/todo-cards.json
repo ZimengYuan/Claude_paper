@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "generated_at": "2026-04-22T13:58:53+00:00",
+  "generated_at": "2026-04-23T06:05:57+00:00",
   "collection": {
     "key": "RECF7KND",
     "name": "Todo",
-    "count": 172
+    "count": 170
   },
   "cards": [
     {
@@ -11475,126 +11475,6 @@
       "synthesizer_model": "gpt-5.4-mini",
       "search_text": "MotionRFT: Unified Reinforcement Fine-Tuning for Text-to-Motion Generation\nXiaofeng Tan Wanjiang Weng Hongsong Wang Fang Zhao Xin Geng Liang Wang\n2026\n10.48550/arxiv.2603.27185\n把 text-to-motion 的后训练重构为“文本锚定的统一奖励空间 + step-wise 强化微调”两层框架：MotionReward 让异构 motion 表示共享同一语义奖励，EasyTune 则避免整条去噪轨迹上的高成本反传，从而同时缓解单表示、单目标和高显存这三个结构性瓶颈。\n文本锚定的统一奖励空间 逐步去噪的 EasyTune\nMotionReward 将 joint、rotation 等异构 motion 映射到共享语义空间，以文本为锚点学习多维 reward，兼顾语义一致性、真实性/现实感和人类偏好；Self-refinement Preference Learning 进一步用自举式偏好对增强语义学习，减少对额外人工标注的依赖。 EasyTune 把对完整 denoising trajectory 的整轨迹反传改成 step-wise 更新，切断 recursive gradient dependence，从而在更低峰值显存下获得更密集、更细粒度的优化信号，并把奖励直接作用到去噪过程的中间步骤。\n相较于只换 reward 头或只做单一指标对齐的方法，这篇工作同时重构了奖励表示、监督维度和优化路径：奖励可跨表示共享，目标可多维联合，优化则从整条逆扩散链改为 step-aware 更新。\nMotionReward 负责把异构动作投到文本锚定的共享语义空间，并用多维 reward 与自举式偏好学习做统一建模；EasyTune 负责在每个去噪步上做局部优化，以 step-wise reward 最大化替代完整轨迹回传。\n论文对“recursive gradient dependence”给出了机制层面的解释，说明整轨迹反传为何会引入递归链式依赖和显存压力；但从当前信息看，没有看到完整的收敛性或最优性证明，因此更像优化机理分析，而不是严格理论闭环。\n主要验证覆盖 HumanML3D、KIT-ML，以及 joint-based ACMDM、rotation-based HY Motion 等公开设置；reward 模型还在语义检索和 human preference 测试上评估。\n在 MLD 上，EasyTune 取得 FID 0.132、峰值显存 22.10 GB，并较 DRaFT 最多节省 15.22 GB；完整 MotionRFT 进一步把 FID 压到 0.101。与此同时，在 joint-based ACMDM 上 FID 相对下降 22.9%，在 rotation-based HY Motion 上 R-Precision 提升 12.6%、FID 改善 23.3%。\n消融显示 step optimization 明显优于 chain optimization：同一 MLD 基座下，FID 从 0.172 降到 0.132，峰值显存从 24.21 GB 降到 22.10 GB，说明切断递归梯度是主要效率来源；在此基础上，MotionRFT 还能继续把 FID 压到 0.101，表明统一奖励空间和训练策略带来额外增益，SPL 主要提升语义检索和偏好相关指标。\n当前公开形态是 arXiv 预印本，验证主要集中在 text-to-motion 及少数公开设置；MotionReward 仍然是 data-driven reward，不能直接解决真实 humanoid 场景中的物理可行性、接触和动力学约束，reward hacking 只能缓解而不能被理论性排除。\n更自然的下一步是把 reward 与 physics simulation、contact 和 dynamics 约束结合，并把这套后训练思路扩展到 motion editing、instruction-conditioned motion generation 或更一般的序列生成任务。\n在 text-to-motion 内部，它对 kinematic、joint、rotation 以及 diffusion/flow 设置都表现出较强迁移；但 EasyTune 依赖中间噪声状态本身仍可被 reward 评估，因此跨到图像或更抽象生成空间并不是即插即用，需要重新定义共享语义空间和奖励。\nMotionRFT 把 text-to-motion 后训练从“单表示、整轨迹反传”改成“文本锚定统一奖励空间上的逐步优化”，因此能同时提升语义对齐、降低显存开销，并缓解梯度稀疏问题。",
       "zotero_title": "MotionRFT: Unified Reinforcement Fine-Tuning for Text-to-Motion Generation"
-    },
-    {
-      "route_id": "todo-unmatched-24164dceaa669c9b",
-      "paper_route_id": "",
-      "paper_id": "",
-      "dir_name": "",
-      "title": "A Steerable Model with Emergent Capabilities",
-      "authors": [],
-      "year": 2026,
-      "journal": "",
-      "venue": "",
-      "doi": "",
-      "read_status": "unread",
-      "collection_name": "Todo",
-      "collection_key": "RECF7KND",
-      "collection_index": 170,
-      "analysis_source": "metadata",
-      "source_confidence": "limited",
-      "generation_mode": "dual_agent_synthesis",
-      "generated_with_model": "gpt-5.4-mini",
-      "generated_at": "2026-04-22T13:58:53+00:00",
-      "core_innovation": "从公开摘要看，这篇工作尝试把机器人学习的核心对象从任务专用控制器转向可 steer 的 robotic foundation model，并把核心卖点放在泛化是否出现 step-change。若摘要主张成立，它改变的不只是单点任务优化，而是模型如何被定义、被引导以及如何衡量能力跃迁。",
-      "technical_contributions": [
-        {
-          "title": "可引导式机器人基础模型",
-          "body": "作者提出一个面向机器人控制的 steerable foundation model 概念，希望用单一模型承载更广泛的控制与泛化能力。但摘要没有披露架构、输入/输出接口、动作表示、训练数据来源或部署方式，因此目前只能确认方向，不能还原实现。"
-        },
-        {
-          "title": "以泛化跃迁作为主要主张",
-          "body": "论文把 emergent capabilities 与 generalization 的质变作为主要价值点，强调的不是常规渐进改良，而是能力阈值是否被跨越。不过摘要没有公开具体 benchmark、对照基线、失败案例或统计结果，这一贡献仍属于定性主张。"
-        }
-      ],
-      "methodological_breakthrough": {
-        "novelty": "创新点在于把 steerability 与涌现式泛化放到同一个机器人基础模型框架中，意图让统一条件化建模同时支持可控输出和跨场景泛化；但是否构成真正的方法学突破，仍需要完整实验来证明。",
-        "key_technique": "就公开信息而言，最接近的技术表述只能是统一条件化建模或可引导接口。摘要未说明 steering 机制、训练目标、数据构成、条件注入方式或模型规模，因此无法进一步细化关键技术路径。",
-        "theory": "摘要未披露理论证明、泛化分析或机制解释；最多只能谨慎推断，作者可能假设更统一的表示与条件控制会带来更强的跨场景泛化，但这仍只是推断而非已验证理论。"
-      },
-      "key_results": {
-        "benchmarks": "摘要未披露具体 benchmark、任务集合、机器人平台或评测协议，无法确认模型在哪些场景中被验证。",
-        "improvements": "公开信息只给出 step-change in generalization 的定性判断，没有数值提升、成功率、样本效率、绝对指标、统计显著性或与哪些基线比较。",
-        "ablation": "摘要未披露消融实验，也没有说明哪些组件、数据规模或控制条件被逐项对照，因此无法判断改进主要来自规模、数据覆盖、训练目标还是 steering 机制。"
-      },
-      "limitations": {
-        "current": "当前证据几乎只来自标题和一句摘要式主张，公开补充线索不足；缺少架构细节、benchmark、定量结果、消融、真实机器人部署和失败案例，因而无法评估可复现性与实际边界。",
-        "future": "后续需要公开完整实验设置、对比基线、跨任务与跨平台评测、分解式消融和复现实验，才能验证所谓 emergent capabilities 是否稳健、可复现且具有工程意义。",
-        "transferability": "目前不能据此断言其能直接迁移到不同机器人形态、更复杂动作空间或开放世界操作任务；如果 steerability 依赖特定数据格式、动作表示或硬件平台，跨平台迁移边界仍未知。"
-      },
-      "one_line_summary": "这篇工作试图把可 steer 的机器人基础模型与泛化质变绑定起来，但公开信息不足以核验其具体机制、实验强度和迁移边界。",
-      "generation_protocol": "dual_professor_synthesis_v1",
-      "reviewer_count": 2,
-      "reviewer_roles": [
-        "professor_a_meaning_principles",
-        "professor_b_critical_validation"
-      ],
-      "synthesizer_model": "gpt-5.4-mini",
-      "search_text": "A Steerable Model with Emergent Capabilities\n2026\n从公开摘要看，这篇工作尝试把机器人学习的核心对象从任务专用控制器转向可 steer 的 robotic foundation model，并把核心卖点放在泛化是否出现 step-change。若摘要主张成立，它改变的不只是单点任务优化，而是模型如何被定义、被引导以及如何衡量能力跃迁。\n可引导式机器人基础模型 以泛化跃迁作为主要主张\n作者提出一个面向机器人控制的 steerable foundation model 概念，希望用单一模型承载更广泛的控制与泛化能力。但摘要没有披露架构、输入/输出接口、动作表示、训练数据来源或部署方式，因此目前只能确认方向，不能还原实现。 论文把 emergent capabilities 与 generalization 的质变作为主要价值点，强调的不是常规渐进改良，而是能力阈值是否被跨越。不过摘要没有公开具体 benchmark、对照基线、失败案例或统计结果，这一贡献仍属于定性主张。\n创新点在于把 steerability 与涌现式泛化放到同一个机器人基础模型框架中，意图让统一条件化建模同时支持可控输出和跨场景泛化；但是否构成真正的方法学突破，仍需要完整实验来证明。\n就公开信息而言，最接近的技术表述只能是统一条件化建模或可引导接口。摘要未说明 steering 机制、训练目标、数据构成、条件注入方式或模型规模，因此无法进一步细化关键技术路径。\n摘要未披露理论证明、泛化分析或机制解释；最多只能谨慎推断，作者可能假设更统一的表示与条件控制会带来更强的跨场景泛化，但这仍只是推断而非已验证理论。\n摘要未披露具体 benchmark、任务集合、机器人平台或评测协议，无法确认模型在哪些场景中被验证。\n公开信息只给出 step-change in generalization 的定性判断，没有数值提升、成功率、样本效率、绝对指标、统计显著性或与哪些基线比较。\n摘要未披露消融实验，也没有说明哪些组件、数据规模或控制条件被逐项对照，因此无法判断改进主要来自规模、数据覆盖、训练目标还是 steering 机制。\n当前证据几乎只来自标题和一句摘要式主张，公开补充线索不足；缺少架构细节、benchmark、定量结果、消融、真实机器人部署和失败案例，因而无法评估可复现性与实际边界。\n后续需要公开完整实验设置、对比基线、跨任务与跨平台评测、分解式消融和复现实验，才能验证所谓 emergent capabilities 是否稳健、可复现且具有工程意义。\n目前不能据此断言其能直接迁移到不同机器人形态、更复杂动作空间或开放世界操作任务；如果 steerability 依赖特定数据格式、动作表示或硬件平台，跨平台迁移边界仍未知。\n这篇工作试图把可 steer 的机器人基础模型与泛化质变绑定起来，但公开信息不足以核验其具体机制、实验强度和迁移边界。",
-      "zotero_title": "A Steerable Model with Emergent Capabilities"
-    },
-    {
-      "route_id": "todo-unmatched-c4cb2ae11cd723dc",
-      "paper_route_id": "",
-      "paper_id": "",
-      "dir_name": "",
-      "title": "A Mechanistic Analysis of Sim-and-Real Co-Training in Generative Robot Policies",
-      "authors": [
-        "Yu Lei",
-        "Minghuan Liu",
-        "Abhiram Maddukuri",
-        "Zhenyu Jiang",
-        "Yuke Zhu"
-      ],
-      "year": 2026,
-      "journal": "",
-      "venue": "",
-      "doi": "",
-      "read_status": "unread",
-      "collection_name": "Todo",
-      "collection_key": "RECF7KND",
-      "collection_index": 171,
-      "analysis_source": "metadata",
-      "source_confidence": "limited",
-      "generation_mode": "dual_agent_synthesis",
-      "generated_with_model": "gpt-5.4-mini",
-      "generated_at": "2026-04-22T13:58:26+00:00",
-      "core_innovation": "这篇工作把生成式机器人策略中的 sim-and-real co-training 从“经验上有效的配方”推进为一个机制分析问题：它关注少量真实数据与大量 surrogate 数据联合训练时，究竟是哪些表示关系在起作用。作者提出两个内在效应，其中 structured representation alignment 通过在跨域表示对齐与域可辨识性之间取得平衡来主导下游表现，而 importance reweighting effect 主要通过域相关的动作加权调制起次级作用。",
-      "technical_contributions": [
-        {
-          "title": "双效应机制分解",
-          "body": "作者将 sim-and-real co-training 的收益拆成两个可讨论的内在效应：structured representation alignment 和 importance reweighting effect。前者强调跨域对齐与域可辨识性的平衡，后者强调域相关信号对动作权重的调制，使原本笼统的“混合仿真和真实数据”变成可分析的机制框架。"
-        },
-        {
-          "title": "受控实验与统一解释",
-          "body": "摘要声称结合 toy model 的受控实验，以及 sim-and-sim / sim-and-real 机器人操控实验来验证上述机制，并据此统一解释近期若干 co-training 技术。作者还基于这一机制提出一个简单方法，但摘要没有公开方法名、实现细节或量化收益。"
-        }
-      ],
-      "methodological_breakthrough": {
-        "novelty": "新意在于把 co-training 的问题从“怎样混合更多数据”改写成“哪些内在机制决定混合训练是否真的有利于可迁移表示”。这更接近原理分析，而不是单纯的经验调参。",
-        "key_technique": "通过理论分析结合 toy model，再用受控的 sim-and-sim 与 sim-and-real 操作实验，分离观察表示对齐和重要性重加权两类效应。关键不在复杂网络模块，而在于对训练机制做可解释分解。",
-        "theory": "摘要明确提到理论分析，但没有给出定理、假设条件、证明结构或适用边界；因此只能确认存在机制层面的理论解释，不能把它理解为完整的形式化保证。"
-      },
-      "key_results": {
-        "benchmarks": "摘要仅披露在 toy model 以及 sim-and-sim / sim-and-real robot manipulation experiments 上验证机制；未公开具体 benchmark 名称、任务集合、数据规模或评价指标。",
-        "improvements": "摘要声称所提出的简单方法可以持续优于先前 approaches，但没有给出提升幅度、统计显著性或逐任务结果，因而只能确认存在正向经验结论，不能量化收益。",
-        "ablation": "摘要没有展开正式消融表，但通过受控实验支持了两种效应的区分及其主次关系；具体到各机制分量的定量归因仍未公开。"
-      },
-      "limitations": {
-        "current": "仅凭摘要无法核实理论是否足够严格、实验覆盖面是否充分、真实机器人部署边界在哪里，以及结果是否对任务类型或数据配比高度敏感。",
-        "future": "后续需要正文或代码进一步确认方法细节、定理与证明、数据配比敏感性、真实任务规模、统计显著性，以及是否还存在其他未识别的机制因素。",
-        "transferability": "现有证据主要针对 generative robot policies 的 sim-and-real co-training；对非生成式策略、纯真实数据训练、其他 embodied 任务或不同机器人形态的迁移性，摘要没有直接证据。"
-      },
-      "one_line_summary": "这篇论文把生成式机器人策略的 sim-and-real co-training 解释为一个可分解的机制问题：主要靠表示对齐与域可辨识性的平衡，次要靠动作加权调制，并据此提出一个细节未公开的简单改进方法。",
-      "generation_protocol": "dual_professor_synthesis_v1",
-      "reviewer_count": 2,
-      "reviewer_roles": [
-        "professor_a_meaning_principles",
-        "professor_b_critical_validation"
-      ],
-      "synthesizer_model": "gpt-5.4-mini",
-      "search_text": "A Mechanistic Analysis of Sim-and-Real Co-Training in Generative Robot Policies\nYu Lei Minghuan Liu Abhiram Maddukuri Zhenyu Jiang Yuke Zhu\n2026\n这篇工作把生成式机器人策略中的 sim-and-real co-training 从“经验上有效的配方”推进为一个机制分析问题：它关注少量真实数据与大量 surrogate 数据联合训练时，究竟是哪些表示关系在起作用。作者提出两个内在效应，其中 structured representation alignment 通过在跨域表示对齐与域可辨识性之间取得平衡来主导下游表现，而 importance reweighting effect 主要通过域相关的动作加权调制起次级作用。\n双效应机制分解 受控实验与统一解释\n作者将 sim-and-real co-training 的收益拆成两个可讨论的内在效应：structured representation alignment 和 importance reweighting effect。前者强调跨域对齐与域可辨识性的平衡，后者强调域相关信号对动作权重的调制，使原本笼统的“混合仿真和真实数据”变成可分析的机制框架。 摘要声称结合 toy model 的受控实验，以及 sim-and-sim / sim-and-real 机器人操控实验来验证上述机制，并据此统一解释近期若干 co-training 技术。作者还基于这一机制提出一个简单方法，但摘要没有公开方法名、实现细节或量化收益。\n新意在于把 co-training 的问题从“怎样混合更多数据”改写成“哪些内在机制决定混合训练是否真的有利于可迁移表示”。这更接近原理分析，而不是单纯的经验调参。\n通过理论分析结合 toy model，再用受控的 sim-and-sim 与 sim-and-real 操作实验，分离观察表示对齐和重要性重加权两类效应。关键不在复杂网络模块，而在于对训练机制做可解释分解。\n摘要明确提到理论分析，但没有给出定理、假设条件、证明结构或适用边界；因此只能确认存在机制层面的理论解释，不能把它理解为完整的形式化保证。\n摘要仅披露在 toy model 以及 sim-and-sim / sim-and-real robot manipulation experiments 上验证机制；未公开具体 benchmark 名称、任务集合、数据规模或评价指标。\n摘要声称所提出的简单方法可以持续优于先前 approaches，但没有给出提升幅度、统计显著性或逐任务结果，因而只能确认存在正向经验结论，不能量化收益。\n摘要没有展开正式消融表，但通过受控实验支持了两种效应的区分及其主次关系；具体到各机制分量的定量归因仍未公开。\n仅凭摘要无法核实理论是否足够严格、实验覆盖面是否充分、真实机器人部署边界在哪里，以及结果是否对任务类型或数据配比高度敏感。\n后续需要正文或代码进一步确认方法细节、定理与证明、数据配比敏感性、真实任务规模、统计显著性，以及是否还存在其他未识别的机制因素。\n现有证据主要针对 generative robot policies 的 sim-and-real co-training；对非生成式策略、纯真实数据训练、其他 embodied 任务或不同机器人形态的迁移性，摘要没有直接证据。\n这篇论文把生成式机器人策略的 sim-and-real co-training 解释为一个可分解的机制问题：主要靠表示对齐与域可辨识性的平衡，次要靠动作加权调制，并据此提出一个细节未公开的简单改进方法。",
-      "zotero_title": "A Mechanistic Analysis of Sim-and-Real Co-Training in Generative Robot Policies"
     }
   ]
 }
