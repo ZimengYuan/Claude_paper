@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
@@ -140,6 +141,12 @@ def audit_cards(cards: list[dict[str, Any]]) -> list[AuditFinding]:
     return sorted(findings, key=lambda item: (item.priority, item.collection_index if item.collection_index is not None else 10**9, item.title))
 
 
+def quality_gate_failed(findings: list[AuditFinding], *, fail_on_priority: int) -> bool:
+    if fail_on_priority <= 0:
+        return False
+    return any(finding.priority <= fail_on_priority for finding in findings)
+
+
 def render_markdown(findings: list[AuditFinding], *, total_cards: int, snapshot_path: Path) -> str:
     counts = Counter(finding.priority for finding in findings)
     lines = [
@@ -177,6 +184,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Audit Todo cards that likely need web-context supplementation.")
     parser.add_argument("--todo-cards", default=str(DEFAULT_TODO_CARDS), help="Path to todo-cards.json")
     parser.add_argument("--output", default="", help="Optional Markdown report path")
+    parser.add_argument(
+        "--fail-on-priority",
+        type=int,
+        default=0,
+        choices=[0, 1, 2, 3],
+        help="Exit non-zero if any finding has priority <= this value. Use 2 to block P1/P2 cards.",
+    )
     args = parser.parse_args()
 
     todo_path = Path(args.todo_cards)
@@ -191,6 +205,12 @@ def main() -> None:
         output_path.write_text(report, encoding="utf-8")
 
     print(report)
+    if quality_gate_failed(findings, fail_on_priority=args.fail_on_priority):
+        print(
+            f"Quality gate failed: found Todo card audit findings at P{args.fail_on_priority} or higher.",
+            file=sys.stderr,
+        )
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

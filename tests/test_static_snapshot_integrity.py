@@ -27,6 +27,26 @@ def test_library_snapshot_not_empty() -> None:
     assert len(papers) > 0
 
 
+def test_explore_snapshot_contains_full_library_index() -> None:
+    root = _root()
+    site_data = _site_data_root(root)
+    explore_payload = _read_json(site_data / 'explore' / 'current-library.json')
+    library_payload = _read_json(site_data / 'library.json')
+
+    explore_papers = explore_payload.get('papers') or []
+    library_papers = library_payload.get('papers') or []
+
+    assert explore_papers, 'explore snapshot must export a full-library paper index'
+    assert len(explore_papers) == explore_payload.get('count')
+    assert len(explore_papers) >= len(library_papers)
+
+    sample = explore_papers[0]
+    assert 'route_id' in sample
+    assert 'has_materials' in sample
+    assert 'materials' in sample
+    assert 'citation_count' in sample
+
+
 def test_todo_cards_schema_and_id_quality() -> None:
     root = _root()
     todo_cards = _site_data_root(root) / 'todo-cards.json'

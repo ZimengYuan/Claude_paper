@@ -8,10 +8,11 @@
             <h1 class="text-3xl font-semibold tracking-tight">Library Trend Desk</h1>
             <p class="mt-3 text-sm leading-6 text-slate-200">用于快速查看论文库结构、趋势与优先阅读建议。</p>
           </div>
-          <div class="grid grid-cols-1 gap-3 sm:grid-cols-1">
-            <div class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3 backdrop-blur">
-              <div class="text-xs uppercase tracking-wide text-slate-300">Papers</div>
-              <div class="mt-2 text-2xl font-semibold">{{ formatCount(selectedLibrary?.count || 0) }}</div>
+          <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:min-w-[520px]">
+            <div v-for="card in heroMetricCards" :key="card.label" class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3 backdrop-blur">
+              <div class="text-xs uppercase tracking-wide text-slate-300">{{ card.label }}</div>
+              <div class="mt-2 text-2xl font-semibold">{{ card.value }}</div>
+              <p class="mt-1 text-[11px] text-slate-300">{{ card.help }}</p>
             </div>
           </div>
         </div>
@@ -43,7 +44,8 @@
           </div>
           <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
             <div class="text-xs uppercase tracking-wide text-slate-500">Current Scope</div>
-            <div class="mt-2 font-medium">{{ formatCount(selectedLibrary.count) }} papers</div>
+            <div class="mt-2 font-medium">{{ formatCount(libraryPapers.length || selectedLibrary.count) }} full-library papers</div>
+            <p class="mt-1 text-xs text-slate-500">{{ formatCount(materialStats.ready) }} material-ready cards</p>
           </div>
         </div>
 
@@ -83,7 +85,7 @@
               <article class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4">
                 <div class="text-xs uppercase tracking-wide text-slate-500">Read Progress</div>
                 <div class="mt-2 text-2xl font-semibold text-slate-900">{{ formatPercent(readStats.readRate) }}</div>
-                <p class="mt-1 text-xs text-slate-500">{{ formatCount(readStats.read) }} read / {{ formatCount(readStats.total) }} total</p>
+                <p class="mt-1 text-xs text-slate-500">{{ formatCount(readStats.read) }} read / {{ formatCount(readStats.total) }} full library</p>
               </article>
               <article class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4">
                 <div class="text-xs uppercase tracking-wide text-slate-500">Backlog</div>
@@ -100,6 +102,61 @@
                 <div class="mt-2 text-2xl font-semibold text-slate-900">{{ formatCount(dataQualityStats.missingAbstract) }}</div>
                 <p class="mt-1 text-xs text-slate-500">quality watch</p>
               </article>
+            </div>
+
+            <div class="mb-6 grid gap-4 xl:grid-cols-[minmax(0,1.1fr),minmax(0,0.9fr)]">
+              <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <h3 class="text-base font-semibold text-slate-900">Library Coverage Matrix</h3>
+                    <p class="mt-1 text-xs text-slate-500">全库层面的材料、评分和阅读覆盖率，不再只看有材料的子集。</p>
+                  </div>
+                  <span class="rounded-full bg-white px-3 py-1 text-xs text-slate-600">{{ formatCount(libraryPapers.length) }} papers indexed</span>
+                </div>
+                <div class="mt-4 grid gap-3 md:grid-cols-2">
+                  <article v-for="row in materialCoverageRows" :key="row.key" class="rounded-xl border border-slate-200 bg-white px-3 py-3">
+                    <div class="flex items-center justify-between gap-3 text-xs">
+                      <span class="font-medium text-slate-700">{{ row.label }}</span>
+                      <span class="text-slate-500">{{ formatCount(row.count) }} · {{ formatPercent(row.share) }}</span>
+                    </div>
+                    <div class="mt-2 h-2 overflow-hidden rounded-full bg-slate-100">
+                      <div class="h-full rounded-full" :style="{ width: percentWidth(row.share), backgroundColor: row.color }"></div>
+                    </div>
+                  </article>
+                </div>
+              </section>
+
+              <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-1">
+                <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <h3 class="text-base font-semibold text-slate-900">Read Status</h3>
+                  <div class="mt-3 space-y-3">
+                    <div v-for="row in readStatusRows" :key="row.status" class="space-y-1.5">
+                      <div class="flex items-center justify-between text-xs text-slate-500">
+                        <span>{{ row.label }}</span>
+                        <span>{{ formatCount(row.count) }} · {{ formatPercent(row.share) }}</span>
+                      </div>
+                      <div class="h-2 overflow-hidden rounded-full bg-white">
+                        <div class="h-full rounded-full bg-slate-800" :style="{ width: percentWidth(row.share) }"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <h3 class="text-base font-semibold text-slate-900">Paper Types</h3>
+                  <div v-if="typeBreakdown.length" class="mt-3 space-y-3">
+                    <div v-for="item in typeBreakdown" :key="item.name" class="space-y-1.5">
+                      <div class="flex items-center justify-between text-xs text-slate-500">
+                        <span class="truncate">{{ item.name }}</span>
+                        <span>{{ formatCount(item.count) }}</span>
+                      </div>
+                      <div class="h-2 overflow-hidden rounded-full bg-white">
+                        <div class="h-full rounded-full bg-blue-500" :style="{ width: percentWidth(item.share) }"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-else class="mt-3 text-sm text-slate-500">No type breakdown available.</div>
+                </div>
+              </section>
             </div>
 
             <div class="mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-4">
@@ -338,22 +395,103 @@
                 <div v-else class="mt-3 text-sm text-slate-500">All papers are read or queue unavailable.</div>
               </div>
             </div>
+
+            <div class="mt-6 grid gap-4 xl:grid-cols-4">
+              <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <h4 class="text-sm font-semibold text-slate-900">High-impact Unread</h4>
+                <p class="mt-1 text-xs text-slate-500">高引用但未读，适合补全基础脉络。</p>
+                <div v-if="highImpactUnread.length" class="mt-4 space-y-2">
+                  <button v-for="paper in highImpactUnread" :key="paper.route_id || paper.paper_id" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-left hover:bg-slate-50" @click="openPaperRef(paper.route_id || paper.paper_id)">
+                    <div class="text-[11px] text-slate-500">{{ paper.year || '?' }} · {{ formatCount(paper.citation_count || paper.cited_by_count || 0) }} cites</div>
+                    <div class="mt-1 line-clamp-2 text-sm font-medium text-slate-800">{{ paper.title }}</div>
+                  </button>
+                </div>
+                <div v-else class="mt-3 text-sm text-slate-500">No high-impact unread papers.</div>
+              </section>
+
+              <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <h4 class="text-sm font-semibold text-slate-900">Recent Strong Scores</h4>
+                <p class="mt-1 text-xs text-slate-500">近年高评分论文，适合判断当前方向。</p>
+                <div v-if="recentStrongScores.length" class="mt-4 space-y-2">
+                  <button v-for="paper in recentStrongScores" :key="paper.route_id || paper.paper_id" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-left hover:bg-slate-50" @click="openPaperRef(paper.route_id || paper.paper_id)">
+                    <div class="text-[11px] text-slate-500">{{ paper.year || '?' }} · score {{ formatScore(overallScore(paper)) }}</div>
+                    <div class="mt-1 line-clamp-2 text-sm font-medium text-slate-800">{{ paper.title }}</div>
+                  </button>
+                </div>
+                <div v-else class="mt-3 text-sm text-slate-500">No scored recent papers yet.</div>
+              </section>
+
+              <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <h4 class="text-sm font-semibold text-slate-900">Important Missing Materials</h4>
+                <p class="mt-1 text-xs text-slate-500">高引用但 summary/method 不完整。</p>
+                <div v-if="importantMissingMaterials.length" class="mt-4 space-y-2">
+                  <button v-for="paper in importantMissingMaterials" :key="paper.route_id || paper.paper_id" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-left hover:bg-slate-50" @click="openPaperRef(paper.route_id || paper.paper_id)">
+                    <div class="text-[11px] text-slate-500">{{ formatCount(paper.citation_count || paper.cited_by_count || 0) }} cites · material gap</div>
+                    <div class="mt-1 line-clamp-2 text-sm font-medium text-slate-800">{{ paper.title }}</div>
+                  </button>
+                </div>
+                <div v-else class="mt-3 text-sm text-slate-500">No important material gaps.</div>
+              </section>
+
+              <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <h4 class="text-sm font-semibold text-slate-900">Todo Card Refresh</h4>
+                <p class="mt-1 text-xs text-slate-500">弱来源或仍含不确定表述的卡片。</p>
+                <div v-if="todoRefreshQueue.length" class="mt-4 space-y-2">
+                  <button v-for="card in todoRefreshQueue" :key="card.route_id" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-left hover:bg-slate-50" @click="openTodoRef(card.route_id || card.paper_route_id)">
+                    <div class="text-[11px] text-slate-500">{{ card.analysis_source || 'unknown source' }}</div>
+                    <div class="mt-1 line-clamp-2 text-sm font-medium text-slate-800">{{ card.title }}</div>
+                  </button>
+                </div>
+                <div v-else class="mt-3 text-sm text-slate-500">No Todo refresh queue.</div>
+              </section>
+            </div>
+
+            <section class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <h3 class="text-base font-semibold text-slate-900">Data Quality Watchlist</h3>
+                  <p class="mt-1 text-xs text-slate-500">这些不是论文质量判断，而是当前库数据是否足以支持搜索、评分和趋势分析。</p>
+                </div>
+                <span class="rounded-full bg-white px-3 py-1 text-xs text-slate-600">{{ qualityIssueRows.length }} checks</span>
+              </div>
+              <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                <article v-for="row in qualityIssueRows" :key="row.key" class="rounded-xl border border-slate-200 bg-white px-3 py-3">
+                  <div class="flex items-center justify-between gap-3">
+                    <h4 class="text-sm font-medium text-slate-800">{{ row.label }}</h4>
+                    <span class="rounded-full px-2 py-0.5 text-[11px] font-medium" :class="row.count ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'">
+                      {{ row.count ? 'watch' : 'ok' }}
+                    </span>
+                  </div>
+                  <div class="mt-2 text-2xl font-semibold text-slate-900">{{ formatCount(row.count) }}</div>
+                  <p class="mt-1 text-xs leading-5 text-slate-500">{{ row.help }}</p>
+                </article>
+              </div>
+            </section>
           </div>
 
           <div v-if="exploreTab === 'papers'">
             <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <h3 class="text-base font-semibold text-slate-900">Representative Papers</h3>
-                <p class="mt-1 text-xs text-slate-500">从“高引用代表作”和“近年论文”两个视角观察当前主库的技术重心。</p>
+                <h3 class="text-base font-semibold text-slate-900">Full-library Paper Browser</h3>
+                <p class="mt-1 text-xs text-slate-500">基于全库轻量索引浏览论文，不再只展示代表样本。</p>
                 <p class="mt-1 text-xs text-slate-400">显示 {{ displayedResults.length }} / {{ paperResultTotal }}</p>
                 <p v-if="selectedTopic" class="mt-1 text-xs text-blue-600">Topic filter: {{ selectedTopic }}</p>
               </div>
-              <div class="inline-flex rounded-full border border-slate-200 bg-slate-50 p-1 text-sm">
+              <div class="flex flex-wrap gap-1 rounded-2xl border border-slate-200 bg-slate-50 p-1 text-sm">
+                <button class="rounded-full px-4 py-2 transition" :class="paperView === 'all' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'" @click="paperView = 'all'">
+                  All
+                </button>
                 <button class="rounded-full px-4 py-2 transition" :class="paperView === 'top' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'" @click="paperView = 'top'">
                   Top Cited
                 </button>
                 <button class="rounded-full px-4 py-2 transition" :class="paperView === 'recent' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'" @click="paperView = 'recent'">
                   Recent Papers
+                </button>
+                <button class="rounded-full px-4 py-2 transition" :class="paperView === 'scored' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'" @click="paperView = 'scored'">
+                  Scored
+                </button>
+                <button class="rounded-full px-4 py-2 transition" :class="paperView === 'gaps' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'" @click="paperView = 'gaps'">
+                  Material Gaps
                 </button>
               </div>
             </div>
@@ -365,11 +503,11 @@
               <article v-for="(paper, index) in displayedResults" :key="paper.route_id || paper.paper_id || paper.title || index" class="flex h-full flex-col rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:-translate-y-0.5 hover:shadow-md">
                 <div class="flex items-start justify-between gap-3">
                   <div class="min-w-0">
-                    <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">#{{ index + 1 }} · {{ paperView === 'top' ? 'citation leader' : 'recent sample' }}</div>
+                    <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">#{{ index + 1 }} · {{ paperViewLabel }}</div>
                     <h4 class="mt-2 line-clamp-2 text-base font-semibold text-slate-900">{{ paper.title }}</h4>
                   </div>
                   <span class="shrink-0 rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700">
-                    {{ formatCount(paper.cited_by_count || 0) }} cites
+                    {{ formatCount(paper.citation_count || paper.cited_by_count || 0) }} cites
                   </span>
                 </div>
 
@@ -427,9 +565,10 @@ const router = useRouter()
 
 const selectedLibrary = ref(null)
 const libraryPapers = ref([])
+const todoCards = ref([])
 const loading = ref(true)
 const errorMessage = ref('')
-const paperView = ref('top')
+const paperView = ref('all')
 const visiblePaperCount = ref(12)
 const exploreTab = ref('trends')
 const activeTopicId = ref(null)
@@ -459,9 +598,45 @@ const topicOverview = computed(() => selectedLibrary.value?.topic_overview || []
 const topAuthors = computed(() => trendOverview.value.top_authors || [])
 const topJournals = computed(() => trendOverview.value.top_journals || [])
 const trendHighlights = computed(() => trendOverview.value.trend_highlights || [])
-const topPapers = computed(() => selectedLibrary.value?.papers_sample || [])
-const recentPapers = computed(() => trendOverview.value.recent_papers_sample || [])
-const allPaperResults = computed(() => paperView.value === 'recent' ? recentPapers.value : topPapers.value)
+const typeBreakdown = computed(() => trendOverview.value.type_breakdown || [])
+
+function citationOf(paper) {
+  return Number(paper?.citation_count || paper?.cited_by_count || 0)
+}
+
+function overallScore(paper) {
+  return Number(paper?.rating?.overall_score || paper?.rating?.overall || 0)
+}
+
+function isRead(paper) {
+  const status = String(paper?.read_status || '').toLowerCase()
+  return status === 'read' || status === 'done'
+}
+
+const allPaperResults = computed(() => {
+  const papers = [...libraryPapers.value]
+  if (paperView.value === 'top') {
+    return papers.sort((a, b) => citationOf(b) - citationOf(a) || Number(b.year || 0) - Number(a.year || 0))
+  }
+  if (paperView.value === 'recent') {
+    return papers.sort((a, b) => Number(b.year || 0) - Number(a.year || 0) || citationOf(b) - citationOf(a))
+  }
+  if (paperView.value === 'scored') {
+    return papers.filter((paper) => overallScore(paper) > 0).sort((a, b) => overallScore(b) - overallScore(a) || Number(b.year || 0) - Number(a.year || 0))
+  }
+  if (paperView.value === 'gaps') {
+    return papers.filter((paper) => !paper?.has_materials).sort((a, b) => citationOf(b) - citationOf(a) || Number(b.year || 0) - Number(a.year || 0))
+  }
+  return papers.sort((a, b) => String(a.title || '').localeCompare(String(b.title || '')))
+})
+
+const paperViewLabel = computed(() => ({
+  all: 'full library',
+  top: 'citation leader',
+  recent: 'recent paper',
+  scored: 'scored paper',
+  gaps: 'material gap',
+}[paperView.value] || 'paper'))
 
 const STOPWORDS = new Set([
   'the', 'and', 'for', 'with', 'from', 'into', 'towards', 'toward', 'based', 'using', 'via', 'under', 'over',
@@ -618,7 +793,7 @@ const fadingTopics = computed(() => topicMomentumRows.value
 
 const readStats = computed(() => {
   const total = libraryPapers.value.length
-  const read = libraryPapers.value.filter((paper) => ['read', 'done'].includes(String(paper?.read_status || '').toLowerCase())).length
+  const read = libraryPapers.value.filter((paper) => isRead(paper)).length
   const reading = libraryPapers.value.filter((paper) => String(paper?.read_status || '').toLowerCase() === 'reading').length
   const unread = Math.max(0, total - read - reading)
   return {
@@ -630,18 +805,74 @@ const readStats = computed(() => {
   }
 })
 
+const readStatusRows = computed(() => {
+  const total = libraryPapers.value.length || 1
+  const rows = [
+    ['read', 'Read'],
+    ['reading', 'Reading'],
+    ['unread', 'Unread'],
+    ['skipped', 'Skipped'],
+  ]
+  return rows.map(([status, label]) => {
+    const count = libraryPapers.value.filter((paper) => String(paper?.read_status || 'unread').toLowerCase() === status).length
+    return { status, label, count, share: count / total }
+  }).filter((row) => row.count > 0 || row.status !== 'skipped')
+})
+
+const materialStats = computed(() => {
+  const papers = libraryPapers.value
+  return {
+    total: papers.length,
+    ready: papers.filter((paper) => paper?.has_materials).length,
+    summary: papers.filter((paper) => paper?.materials?.summary || paper?.has_summary).length,
+    method: papers.filter((paper) => paper?.materials?.method).length,
+    score: papers.filter((paper) => paper?.materials?.score_report).length,
+    report: papers.filter((paper) => paper?.materials?.report).length,
+    rating: papers.filter((paper) => paper?.materials?.rating || overallScore(paper) > 0).length,
+    sensemaking: papers.filter((paper) => paper?.materials?.sensemaking).length,
+  }
+})
+
+const materialCoverageRows = computed(() => {
+  const total = materialStats.value.total || 1
+  return [
+    { key: 'ready', label: 'Summary + Method ready', count: materialStats.value.ready, color: '#10b981' },
+    { key: 'summary', label: 'Summary available', count: materialStats.value.summary, color: '#3b82f6' },
+    { key: 'method', label: 'Method note available', count: materialStats.value.method, color: '#06b6d4' },
+    { key: 'score', label: 'Compass score available', count: materialStats.value.score, color: '#f59e0b' },
+    { key: 'report', label: 'Compass report available', count: materialStats.value.report, color: '#f97316' },
+    { key: 'sensemaking', label: 'Sensemaking available', count: materialStats.value.sensemaking, color: '#334155' },
+  ].map((row) => ({ ...row, share: row.count / total }))
+})
+
 const dataQualityStats = computed(() => {
   const papers = libraryPapers.value
   const total = papers.length || 1
   const missingDoi = papers.filter((paper) => !String(paper?.doi || '').trim()).length
   const missingYear = papers.filter((paper) => !Number(paper?.year || 0)).length
   const missingAbstract = papers.filter((paper) => !String(paper?.abstract || '').trim()).length
+  const missingCitation = papers.filter((paper) => citationOf(paper) <= 0).length
+  const missingMaterials = papers.filter((paper) => !paper?.has_materials).length
+  const missingRating = papers.filter((paper) => overallScore(paper) <= 0).length
   return {
     missingDoi,
     missingYear,
     missingAbstract,
+    missingCitation,
+    missingMaterials,
+    missingRating,
     missingDoiRate: missingDoi / total,
   }
+})
+
+const heroMetricCards = computed(() => {
+  const todoCount = todoCards.value.length
+  return [
+    { label: 'Full Library', value: formatCount(libraryPapers.value.length || selectedLibrary.value?.count || 0), help: 'all papers' },
+    { label: 'Materials', value: formatPercent(materialStats.value.total ? materialStats.value.ready / materialStats.value.total : 0), help: `${formatCount(materialStats.value.ready)} ready` },
+    { label: 'Todo', value: formatCount(todoCount), help: 'reading queue' },
+    { label: 'Read', value: formatPercent(readStats.value.readRate), help: `${formatCount(readStats.value.read)} done` },
+  ]
 })
 
 const representativeTimeline = computed(() => {
@@ -682,6 +913,58 @@ const priorityReadingQueue = computed(() => {
 
   return candidates.slice(0, 10)
 })
+
+const highImpactUnread = computed(() => libraryPapers.value
+  .filter((paper) => !isRead(paper) && citationOf(paper) > 0)
+  .sort((a, b) => citationOf(b) - citationOf(a) || Number(b.year || 0) - Number(a.year || 0))
+  .slice(0, 5)
+)
+
+const recentStrongScores = computed(() => {
+  const maxYear = fullYearRange.value[fullYearRange.value.length - 1] || new Date().getFullYear()
+  return libraryPapers.value
+    .filter((paper) => Number(paper?.year || 0) >= maxYear - 3 && overallScore(paper) > 0)
+    .sort((a, b) => overallScore(b) - overallScore(a) || citationOf(b) - citationOf(a))
+    .slice(0, 5)
+})
+
+const importantMissingMaterials = computed(() => libraryPapers.value
+  .filter((paper) => !paper?.has_materials)
+  .sort((a, b) => citationOf(b) - citationOf(a) || Number(b.year || 0) - Number(a.year || 0))
+  .slice(0, 5)
+)
+
+const UNCERTAINTY_MARKERS = ['摘要未披露', '未披露', '无法确认', '文中未清楚披露', 'not disclosed', 'unclear']
+
+function todoCardNeedsRefresh(card) {
+  const source = String(card?.analysis_source || '').toLowerCase()
+  if (source === 'metadata' || source === 'metadata+web') return true
+  const text = [
+    card?.one_line_summary,
+    card?.core_innovation,
+    card?.key_results?.benchmarks,
+    card?.key_results?.improvements,
+    card?.key_results?.ablation,
+  ].join('\n')
+  return UNCERTAINTY_MARKERS.some((marker) => text.includes(marker))
+}
+
+const todoRefreshQueue = computed(() => todoCards.value
+  .filter((card) => todoCardNeedsRefresh(card))
+  .slice(-12)
+  .reverse()
+)
+
+const qualityIssueRows = computed(() => [
+  { key: 'doi', label: 'Missing DOI', count: dataQualityStats.value.missingDoi, help: '影响去重、引用和外部跳转。' },
+  { key: 'year', label: 'Missing Year', count: dataQualityStats.value.missingYear, help: '影响时间趋势与近年排序。' },
+  { key: 'abstract', label: 'Missing Abstract', count: dataQualityStats.value.missingAbstract, help: '影响主题识别、搜索和卡片质量。' },
+  { key: 'citation', label: 'No Citation Count', count: dataQualityStats.value.missingCitation, help: '影响高影响论文排序。' },
+  { key: 'materials', label: 'Material Gaps', count: dataQualityStats.value.missingMaterials, help: 'summary/method 不完整，无法形成稳定阅读页。' },
+  { key: 'rating', label: 'Missing Rating', count: dataQualityStats.value.missingRating, help: '影响高价值论文筛选。' },
+  { key: 'todoWeak', label: 'Todo Weak Sources', count: todoRefreshQueue.value.length, help: '需要重新补充网页上下文或重生成卡片。' },
+  { key: 'topic', label: 'Topic Model Missing', count: selectedLibrary.value?.has_topics ? 0 : 1, help: '影响真实 topic readiness 与 roadmap。' },
+])
 
 watch(paperView, () => {
   visiblePaperCount.value = 12
@@ -725,6 +1008,11 @@ function formatCount(value) {
   return new Intl.NumberFormat('en-US').format(Number(value || 0))
 }
 
+function formatScore(value) {
+  const score = Number(value || 0)
+  return Number.isFinite(score) ? score.toFixed(score >= 10 ? 0 : 1) : '0'
+}
+
 function formatPercent(value) {
   const ratio = Number(value || 0)
   if (!Number.isFinite(ratio)) return '0%'
@@ -753,17 +1041,27 @@ function openPaperRef(paperRef) {
   router.push(`/paper/${value}`)
 }
 
+function openTodoRef(routeId) {
+  const value = String(routeId || '').trim()
+  if (!value) return
+  router.push(`/todo/${value}`)
+}
+
 const loadExploreSnapshot = async () => {
   loading.value = true
   errorMessage.value = ''
   try {
-    const [data, library] = await Promise.all([
+    const [data, library, todoSnapshot] = await Promise.all([
       fetchJson('explore/current-library.json'),
       fetchJson('library.json').catch(() => ({ papers: [] })),
+      fetchJson('todo-cards.json').catch(() => ({ cards: [] })),
     ])
 
     selectedLibrary.value = data
-    libraryPapers.value = Array.isArray(library?.papers) ? library.papers : []
+    libraryPapers.value = Array.isArray(data?.papers)
+      ? data.papers
+      : (Array.isArray(library?.papers) ? library.papers : [])
+    todoCards.value = Array.isArray(todoSnapshot?.cards) ? todoSnapshot.cards : []
     if (topicOverview.value.length > 0) {
       activeTopicId.value = topicOverview.value[0].topic_id
     }

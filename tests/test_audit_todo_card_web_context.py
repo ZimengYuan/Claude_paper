@@ -1,4 +1,4 @@
-from scripts.audit_todo_card_web_context import audit_card
+from scripts.audit_todo_card_web_context import audit_card, quality_gate_failed
 
 
 def _base_card(**overrides):
@@ -70,3 +70,38 @@ def test_web_supplemented_metadata_card_is_accepted() -> None:
             },
         )
     ) is None
+
+
+def test_quality_gate_blocks_findings_at_or_above_threshold() -> None:
+    p1 = audit_card(
+        _base_card(
+            analysis_source="metadata",
+            source_confidence="limited",
+            key_results={
+                "benchmarks": "摘要未披露具体 benchmark。",
+                "improvements": "摘要未披露具体数值。",
+                "ablation": "摘要未披露消融。",
+            },
+        )
+    )
+    assert p1 is not None
+
+    assert quality_gate_failed([p1], fail_on_priority=0) is False
+    assert quality_gate_failed([p1], fail_on_priority=1) is True
+
+
+def test_quality_gate_allows_lower_priority_findings_when_threshold_is_strict() -> None:
+    p2 = audit_card(
+        _base_card(
+            key_results={
+                "benchmarks": "文中未清楚披露具体 benchmark。",
+                "improvements": "文中未清楚披露具体数值。",
+                "ablation": "消融实验需结合全文。",
+            },
+        )
+    )
+    assert p2 is not None
+    assert p2.priority == 2
+
+    assert quality_gate_failed([p2], fail_on_priority=1) is False
+    assert quality_gate_failed([p2], fail_on_priority=2) is True

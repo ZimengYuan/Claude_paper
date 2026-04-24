@@ -430,6 +430,16 @@ Skills are invoked with namespace prefix: `/scholaraio:search`, `/scholaraio:sho
 - **MinerU key**: PDF → Markdown cloud conversion. Without it, only manual `.md` placement works
 - Embedding model (Qwen3-Embedding-0.6B, ~1.2GB) auto-downloads on first embed/vsearch. International users: set `embed.source` to `huggingface` in `config.yaml`
 
+### Zotero Integration Notes
+
+- **Data direction**: Zotero → ScholarAIO only; reverse sync is not supported
+- **Zotero MCP**: the user's `zotero-mcp` environment is read-only and has no write permission
+- **Local Zotero**: `zotero.sqlite` lives under `/home/nie/Zotero/` and should be treated only as a data source
+- **Scheduled sync**: a cron job is configured to check Zotero / ScholarAIO consistency and import new papers every Sunday at 9:00 AM
+  - Script: `scripts/check_zotero_sync.py`
+  - Log: `data/zotero_sync.log`
+  - Manual run: `python scripts/check_zotero_sync.py`
+
 ## Key Conventions
 
 - **Workspace isolation**: All user output (writing, notes, drafts) goes in the `workspace/` directory. When creating new files (literature reviews, research notes), default to `workspace/`, not the project root or `scholaraio/` source directory

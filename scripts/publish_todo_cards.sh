@@ -14,7 +14,8 @@ python3 scripts/generate_todo_cards.py \
   --timeout 900
 
 python3 scripts/audit_todo_card_web_context.py \
-  --output workspace/todo_card_web_context_audit.md
+  --output workspace/todo_card_web_context_audit.md \
+  --fail-on-priority 2
 
 python3 scripts/sync_todo_summaries.py
 

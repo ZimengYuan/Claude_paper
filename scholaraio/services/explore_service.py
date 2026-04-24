@@ -9,7 +9,16 @@ from pathlib import Path
 from statistics import median
 from typing import Any
 
-from scholaraio.papers import best_citation, iter_paper_dirs, read_meta
+from scholaraio.papers import (
+    best_citation,
+    iter_paper_dirs,
+    method_path,
+    read_meta,
+    readable_report_path,
+    score_report_path,
+    sensemaking_path,
+    summary_path,
+)
 from scholaraio.services.common import ServiceError
 
 
@@ -101,6 +110,15 @@ def _safe_year(value: Any) -> int:
 
 def _paper_brief_from_meta(paper_dir: Path, meta: dict[str, Any]) -> dict[str, Any]:
     paper_ref = str(meta.get('id') or paper_dir.name)
+    materials = {
+        'summary': summary_path(paper_dir).exists() or bool(str(meta.get('summary') or '').strip()),
+        'method': method_path(paper_dir).exists() or bool(str(meta.get('method_summary') or '').strip()),
+        'score_report': score_report_path(paper_dir).exists(),
+        'report': readable_report_path(paper_dir).exists(),
+        'rating': bool(meta.get('rating')),
+        'sensemaking': sensemaking_path(paper_dir).exists(),
+    }
+    citation_count = best_citation(meta)
     return {
         'paper_ref': paper_ref,
         'paper_id': str(meta.get('id') or ''),
@@ -111,7 +129,14 @@ def _paper_brief_from_meta(paper_dir: Path, meta: dict[str, Any]) -> dict[str, A
         'year': meta.get('year'),
         'journal': meta.get('journal') or '',
         'type': meta.get('paper_type') or '',
-        'cited_by_count': best_citation(meta),
+        'tags': meta.get('tags') or [],
+        'read_status': meta.get('read_status') or 'unread',
+        'has_summary': bool(materials['summary']),
+        'has_materials': bool(materials['summary'] and materials['method']),
+        'materials': materials,
+        'rating': meta.get('rating') or None,
+        'citation_count': citation_count,
+        'cited_by_count': citation_count,
         'abstract': meta.get('abstract') or '',
     }
 
@@ -550,6 +575,7 @@ def get_explore_library(cfg, name: str) -> dict[str, Any]:
         'has_semantic_index': _has_index_table(cfg, 'paper_vectors'),
         'has_topics': _topic_model_exists(cfg),
         'topic_info': _load_topic_info(cfg),
+        'papers': cards,
         'papers_sample': _sample_papers(cards, limit=12),
         'topic_overview': _topic_overview(cfg, limit=8),
         'trend_overview': _build_trend_overview(cards),

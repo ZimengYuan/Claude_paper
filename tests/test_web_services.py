@@ -276,5 +276,9 @@ class TestWebBridge:
         assert detail['count'] == 2
         assert detail['query']['scope'] == 'main library'
         assert detail['topic_info'] == {'n_topics': 2, 'n_papers': 2}
+        assert len(detail['papers']) == 2
+        assert detail['papers'][0]['has_materials'] is False
+        assert detail['papers'][0]['materials']['summary'] is False
+        assert detail['papers'][0]['read_status'] == 'unread'
         assert detail['papers_sample'][0]['title'] == 'Turbulence modeling in boundary layers'
         assert detail['trend_overview']['top_journals'][0]['name'] == 'Journal of Fluid Mechanics'
